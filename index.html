@@ -1,207 +1,160 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reise-Kombi Live Alert</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
-        #loginScreen { max-width: 400px; margin: 100px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #e1e8ed; text-align: center; }
-        .login-input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; text-align: center; }
-        .error-msg { color: #e74c3c; font-weight: bold; margin-top: 10px; display: none; }
-        #mainContent { display: none; }
-        .container { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
-        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; }
-        .full-width { grid-column: 1 / -1; }
-        h2, h3 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 8px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #34495e; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
-        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
-        .checkbox-group input { width: auto; }
-        .btn { background-color: #3498db; color: white; border: none; padding: 12px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: background 0.2s; }
-        .btn:hover { background-color: #2980b9; }
-        .alert-box { padding: 20px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 20px; display: none; color: white; }
-        .table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .table th, .table td { padding: 12px; text-align: left; border-bottom: 1px solid #eeeeee; }
-        .table th { background-color: #f8f9fa; }
-        .total-row { font-weight: bold; background-color: #f8f9fa; }
-    </style>
-</head>
-<body>
+#@title ✈️ ERWEITERTE REISEKONFIGURATION (Reisedaten rechts anpassen!)
 
-<div id="loginScreen">
-    <h2>🔒 Privater Bereich</h2>
-    <p>Bitte gib das Passwort ein, um auf das Reiseportal zuzugreifen.</p>
-    <input type="password" id="passwordField" class="login-input" placeholder="Passwort eingeben">
-    <button class="btn" onclick="checkPassword()">Einloggen</button>
-    <div id="error" class="error-msg">❌ Falsches Passwort!</div>
-</div>
+#@markdown ### 🗺️ FLUG-SUCHKRITERIEN & DETAILS
+VON              = "FRA"            #@param {type:"string"\}
+NACH             = "JFK"            #@param {type:"string"\}
+KLASSE           = "Economy"        #@param ["Economy", "Premium Economy", "Business", "First Class"]
+HIN_DATUM        = "2026-12-15"     #@param {type:"date"\}
+RUECK_DATUM      = "2026-12-22"     #@param {type:"date"\}
+PERSONEN         = 1                #@param {type:"integer"\}
+ZWISCHENSTOPS    = "max 1"          #@param ["direkt", "max 1", "beliebig"]
+MAX_REISEZEIT_H  = 12               #@param {type:"slider", min:1, max:24, step:1\}
 
-<div id="mainContent">
-    <center><h1>🌍 Mein Reise-Kombi Suchportal</h1></center>
-    <div class="container">
-        <div class="card">
-            <h3>✈️ Flug-Suchkriterien</h3>
-            <div class="row">
-                <div class="form-group">
-                    <label>Von (IATA)</label>
-                    <input type="text" id="von" value="FRA">
-                </div>
-                <div class="form-group">
-                    <label>Nach (IATA)</label>
-                    <input type="text" id="nach" value="JFK">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Beförderungsklasse</label>
-                <select id="klasse">
-                    <option value="Economy">Economy</option>
-                    <option value="Premium Economy">Premium Economy</option>
-                    <option value="Business">Business</option>
-                    <option value="First Class">First Class</option>
-                </select>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <label>Hin-Datum</label>
-                    <input type="date" id="hin" value="2026-12-15">
-                </div>
-                <div class="form-group">
-                    <label>Rück-Datum</label>
-                    <input type="date" id="rueck" value="2026-12-22">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <label>Personen</label>
-                    <input type="number" id="personen" value="1" min="1">
-                </div>
-                <div class="form-group">
-                    <label>Zwischenstopps</label>
-                    <select id="stops" onchange="toggleTransfer()">
-                        <option value="direkt">Direktflug</option>
-                        <option value="max 1" selected>Max 1 Stopp</option>
-                        <option value="beliebig">Beliebig</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Max. Reisezeit: <span id="zeitVal">12</span> Stunden</label>
-                <input type="range" id="maxZeit" min="1" max="24" value="12" oninput="document.getElementById('zeitVal').innerText=this.value">
-            </div>
-        </div>
+#@markdown ---
+#@markdown ### 🏨 HOTEL-SUCHKRITERIEN
+STADT_HOTEL      = "New York"       #@param {type:"string"\}
+STARS            = "4"              #@param ["1", "2", "3", "4", "5"]
+HOTEL_PREIS_GESAMT = 350.00         #@param {type:"number"\}
 
-        <div class="card">
-            <h3>🏨 Hotel-Suchkriterien</h3>
-            <div class="form-group">
-                <label>Zielstadt (Hotel)</label>
-                <input type="text" id="stadtHotel" value="New York">
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <label>Sterne</label>
-                    <select id="sterne">
-                        <option value="3">3 Sterne</option>
-                        <option value="4" selected>4 Sterne</option>
-                        <option value="5">5 Sterne</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Hotelpreis Gesamt (€)</label>
-                    <input type="number" id="hotelPreis" value="350.00">
-                </div>
-            </div>
+#@markdown ---
+#@markdown ### 💸 GETRENNTE BUDGET-VORGABEN
+MAX_BUDGET_FLUG  = 600.00           #@param {type:"number"\}
+MAX_BUDGET_HOTEL = 600.00           #@param {type:"number"\}
 
-            <h3>💸 Getrennte Budgets</h3>
-            <div class="row">
-                <div class="form-group">
-                    <label>Budget Flug (€)</label>
-                    <input type="number" id="budgetFlug" value="600.00">
-                </div>
-                <div class="form-group">
-                    <label>Budget Hotel (€)</label>
-                    <input type="number" id="budgetHotel" value="600.00">
-                </div>
-            </div>
+#@markdown ---
+#@markdown ### 🛑 MULTI-STOPP / PREIS ZWEITE STRECKE (Eigenständiger Transfer)
+SEPARATER_TRANSFER = True           #@param {type:"boolean"\}
+PREIS_STRECKE_1    = 250.00         #@param {type:"number"\}
+PREIS_STRECKE_2    = 180.00         #@param {type:"number"\}
 
-            <h3 id="titleTransfer">🛑 Separater Transfer (Eigenes Gepäck)</h3>
-            <div class="checkbox-group">
-                <input type="checkbox" id="sepTransfer" checked onchange="toggleTransferInputs()">
-                <label for="sepTransfer">Eigenständige Teilstrecken berechnen</label>
-            </div>
-            <div class="row" id="transferInputs" style="margin-top: 10px;">
-                <div class="form-group">
-                    <label>Preis Strecke 1 (€)</label>
-                    <input type="number" id="preisS1" value="250.00">
-                </div>
-                <div class="form-group">
-                    <label>Preis Strecke 2 (€)</label>
-                    <input type="number" id="preisS2" value="180.00">
-                </div>
-            </div>
-        </div>
+# =============================================================================
+# AB HIER STARTET DIE AUTOMATISCHE LOGIK (KEINE ÄNDERUNGEN NÖTIG)
+# =============================================================================
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from google.colab import userdata
 
-        <div class="card full-width">
-            <h2>📊 Live Budget-Auswertung</h2>
-            <div id="alertBox" class="alert-box"></div>
-            
-            <button class="btn" onclick="berechneReise()">Reise kalkulieren & Reichweiten-Link erzeugen</button>
+# Sicherer Abruf deiner Zugangsdaten aus dem Colab-Schlüsselspeicher
+try:
+    ABSENDER_EMAIL = userdata.get('ABSENDER_EMAIL')
+    PASSWORT = userdata.get('PASSWORT')
+    EMPFAENGER_EMAIL = ABSENDER_EMAIL
+except Exception:
+    print("❌ FEHLER: Bitte speichere links unter dem Schlüssel-Symbol (Secrets) 'ABSENDER_EMAIL' und 'PASSWORT' ab!")
 
-            <table class="table">
-                <thead>
-                    <tr><th>Posten</th><th>Details</th><th>Kosten</th><th>Status</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>Flugpreis</td><td id="resFlugInfo">-</td><td id="resFlugPreis">0.00 €</td><td id="resFlugStatus">-</td></tr>
-                    <tr><td>Hotelpreis</td><td id="resHotelInfo">-</td><td id="resHotelPreis">0.00 €</td><td id="resHotelStatus">-</td></tr>
-                    <tr class="total-row"><td>Gesamtkosten</td><td>Kombi-Reise</td><td id="resGesamtKosten">0.00 €</td><td id="resGesamtStatus">-</td></tr>
-                </tbody>
-            </table>
-            <br>
-            <center><a id="kiwiLink" href="#" target="_blank" class="btn" style="background-color: #2ecc71; display: none; text-align: center; text-decoration: none;">Live-Ergebnisse auf Kiwi prüfen</a></center>
-        </div>
-    </div>
-</div>
+print("Verarbeite erweiterte Suchkriterien für optimale Reichweite...")
 
-<script>
-var GEHEIMES_PASSWORT = "Reise2026";
+# Berechnung der Flugkosten basierend auf der Transfer-Auswahl
+if SEPARATER_TRANSFER and ZWISCHENSTOPS != "direkt":
+    flug_gesamt = (PREIS_STRECKE_1 + PREIS_STRECKE_2) * PERSONEN
+    flug_info = "Kombiniert (St. 1: %.2f EUR, St. 2: %.2f EUR)" % (PREIS_STRECKE_1, PREIS_STRECKE_2)
+else:
+    flug_gesamt = PREIS_STRECKE_1 * PERSONEN
+    flug_info = "Standard / Anschlussflug"
 
-function checkPassword() {
-    var eingabe = document.getElementById("passwordField").value;
-    if (eingabe === GEHEIMES_PASSWORT) {
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-    } else {
-        document.getElementById("error").style.display = "block";
-    }
-}
+# Gesamtkalkulation
+gesamtkosten = flug_gesamt + HOTEL_PREIS_GESAMT
+gesamt_budget = MAX_BUDGET_FLUG + MAX_BUDGET_HOTEL
 
-document.getElementById("passwordField").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        checkPassword();
-    }
-});
+# Text-Formatierungen
+flug_text = "%.2f EUR" % flug_gesamt
+hotel_text = "%.2f EUR" % HOTEL_PREIS_GESAMT
+gesamtkosten_text = "%.2f EUR" % gesamtkosten
+budget_flug_text = "%.2f EUR" % MAX_BUDGET_FLUG
+budget_hotel_text = "%.2f EUR" % MAX_BUDGET_HOTEL
+gesamt_budget_text = "%.2f EUR" % gesamt_budget
 
-function toggleTransfer() {
-    var stops = document.getElementById("stops").value;
-    var checkbox = document.getElementById("sepTransfer");
-    if(stops === "direkt") {
-        checkbox.checked = false;
-        checkbox.disabled = true;
-    } else {
-        checkbox.disabled = false;
-    }
-    toggleTransferInputs();
-}
+# Detail-Prüfungen für das E-Mail-Layout
+status_flug = "✅ OK" if flug_gesamt <= MAX_BUDGET_FLUG else "❌ Drüber"
+status_hotel = "✅ OK" if HOTEL_PREIS_GESAMT <= MAX_BUDGET_HOTEL else "❌ Drüber"
 
-function toggleTransferInputs() {
-    var checked = document.getElementById("sepTransfer").checked;
-    var disabled = document.getElementById("sepTransfer").disabled;
-    document.getElementById("transferInputs").style.display = (checked && !disabled) ? "grid" : "none";
-}
+if gesamtkosten <= gesamt_budget:
+    status_farbe = "#2ecc71"
+    status_titel = "Budget eingehalten!"
+    rest = gesamt_budget - gesamtkosten
+    status_text = "Hervorragend! Deine Reisekombination liegt im Limit. Gesamt-Restbudget: <strong>%.2f EUR</strong>." % rest
+else:
+    status_farbe = "#e74c3c"
+    status_titel = "Budget überschritten!"
+    ueber = gesamtkosten - gesamt_budget
+    status_text = "Achtung! Deine ausgewählten Tarife überschreiten das Gesamtbudget um <strong>%.2f EUR</strong>." % ueber
 
-function berechneReise() {
-    var von = document.getElementById("von").value;
+# Korrigierte Link-Generierung für Kiwi (Jahr-Monat-Tag zu Tag/Monat/Jahr)
+parts = HIN_DATUM.split("-")
+datum_kiwi = parts[2] + "/" + parts[1] + "/" + parts[0]
+such_link = "https://kiwi.com" + VON.lower() + "/" + NACH.lower() + "/" + datum_kiwi
+
+# ==========================================
+# GENERIERUNG DES LAYOUTS FÜR WEB.DE
+# ==========================================
+html_zeilen = [
+    "<!DOCTYPE html><html><head><style>",
+    "body " + chr(123) + " font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333; margin: 0; padding: 20px; " + chr(125),
+    ".card " + chr(123) + " background-color: #ffffff; max-width: 600px; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e1e8ed; overflow: hidden; " + chr(125),
+    ".header " + chr(123) + " padding: 20px; text-align: center; color: white; font-size: 22px; font-weight: bold; " + chr(125),
+    ".content " + chr(123) + " padding: 25px; line-height: 1.6; " + chr(125),
+    ".table " + chr(123) + " width: 100%; border-collapse: collapse; margin-top: 15px; " + chr(125),
+    ".table th, .table td " + chr(123) + " padding: 12px; text-align: left; border-bottom: 1px solid #eeeeee; " + chr(125),
+    ".table th " + chr(123) + " background-color: #f8f9fa; color: #555555; " + chr(125),
+    ".total-row " + chr(123) + " font-weight: bold; font-size: 16px; background-color: #f8f9fa; " + chr(125),
+    ".btn " + chr(123) + " display: inline-block; padding: 12px 24px; margin-top: 20px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; " + chr(125),
+    ".footer " + chr(123) + " padding: 15px; text-align: center; font-size: 12px; color: #888888; background-color: #fafafa; border-top: 1px solid #eeeeee; " + chr(125),
+    "</style></head><body><div class='card'>",
+    "<div class='header' style='background-color: __STATUS_FARBE__;'>__STATUS_TITEL__</div>",
+    "<div class='content'><p>Hallo,</p><p>__STATUS_TEXT__</p><h3>Übersicht der Suchkriterien & Kosten:</h3>",
+    "<table class='table'><tr><th>Posten / Kriterium</th><th>Deine Angabe</th><th>Status</th></tr>",
+    "<tr><td>Flugroute / Klasse</td><td>__VON__ nach __NACH__ (__KLASSE__)</td><td>-</td></tr>",
+    "<tr><td>Flug-Typ / Stops</td><td>__FLUGINFO__ / __STOPS__</td><td>-</td></tr>",
+    "<tr><td>Flugpreis Gesamt</td><td><strong>__FLUGPREIS__</strong> (Limit: __LIMITFLUG__)</td><td>__STFLUG__</td></tr>",
+    "<tr><td>Hotel in __STADTHOTEL__</td><td>__STARS__ Sterne gewünscht</td><td>-</td></tr>",
+    "<tr><td>Hotelpreis Gesamt</td><td><strong>__HOTELPREIS__</strong> (Limit: __LIMITHOTEL__)</td><td>__STHOTEL__</td></tr>",
+    "<tr class='total-row'><td>Gesamtkosten Reise</td><td style='color: __STATUS_FARBE__;'>__GESAMTKOSTEN__</td><td>Gesamt-Limit: __LIMITGESAMT__</td></tr></table>",
+    "<br><center><a href='__LINK__' class='btn' target='_blank'>Live-Preise mit maximaler Reichweite prüfen</a></center></div>",
+    "<div class='footer'>Automatisch generiert via dauerhaft gesichertem Python Reise-Alert.</div></div></body></html>"
+]
+
+html_inhalt = "\\n".join(html_zeilen)
+
+# Werte-Ersetzung im HTML
+html_inhalt = html_inhalt.replace("__STATUS_FARBE__", status_farbe)
+html_inhalt = html_inhalt.replace("__STATUS_TITEL__", status_titel)
+html_inhalt = html_inhalt.replace("__STATUS_TEXT__", status_text)
+html_inhalt = html_inhalt.replace("__VON__", VON)
+html_inhalt = html_inhalt.replace("__NACH__", NACH)
+html_inhalt = html_inhalt.replace("__KLASSE__", KLASSE)
+html_inhalt = html_inhalt.replace("__FLUGINFO__", flug_info)
+html_inhalt = html_inhalt.replace("__STOPS__", ZWISCHENSTOPS)
+html_inhalt = html_inhalt.replace("__FLUGPREIS__", flug_text)
+html_inhalt = html_inhalt.replace("__LIMITFLUG__", budget_flug_text)
+html_inhalt = html_inhalt.replace("__STFLUG__", status_flug)
+html_inhalt = html_inhalt.replace("__STADTHOTEL__", STADT_HOTEL)
+html_inhalt = html_inhalt.replace("__STARS__", STARS)
+html_inhalt = html_inhalt.replace("__HOTELPREIS__", hotel_text)
+html_inhalt = html_inhalt.replace("__LIMITHOTEL__", budget_hotel_text)
+html_inhalt = html_inhalt.replace("__STHOTEL__", status_hotel)
+html_inhalt = html_inhalt.replace("__GESAMTKOSTEN__", gesamtkosten_text)
+html_inhalt = html_inhalt.replace("__LIMITGESAMT__", gesamt_budget_text)
+html_inhalt = html_inhalt.replace("__LINK__", such_link)
+
+# ==========================================
+# VERSAND ÜBER SMTP
+# ==========================================
+betreff = "Reisesuche: " + VON + " nach " + NACH + " (" + gesamtkosten_text + ")"
+
+msg = MIMEMultipart('alternative')
+msg['Subject'] = betreff
+msg['From'] = ABSENDER_EMAIL
+msg['To'] = EMPFAENGER_EMAIL
+msg.attach(MIMEText(html_inhalt, 'html'))
+
+try:
+    server = smtplib.SMTP('smtp.web.de', 587)
+    server.starttls()
+    server.login(ABSENDER_EMAIL, PASSWORT)
+    server.sendmail(ABSENDER_EMAIL, EMPFAENGER_EMAIL, msg.as_string())
+    server.quit()
+    print("✅ E-Mail erfolgreich gesendet! Das Hotelfeld 'Stadt' wurde integriert.")
+except Exception as e:
+    print("Fehler beim Versenden: " + str(e))
+    
