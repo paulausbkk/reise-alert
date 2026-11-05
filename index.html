@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✈️ Reise-Kombi Live Alert</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; }
+        .full-width { grid-column: 1 / -1; }
+        h2, h3 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 8px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; color: #34495e; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .checkbox-group input { width: auto; }
+        .btn { background-color: #3498db; color: white; border: none; padding: 12px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; transition: background 0.2s; }
+        .btn:hover { background-color: #2980b9; }
+        .alert-box { padding: 20px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 20px; display: none; color: white; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .table th, .table td { padding: 12px; text-align: left; border-bottom: 1px solid #eeeeee; }
+        .table th { background-color: #f8f9fa; }
+        .total-row { font-weight: bold; background-color: #f8f9fa; }
+    </style>
+</head>
+<body>
+
+<center><h1>🌍 Mein Reise-Kombi Suchportal</h1></center>
+
+<div class="container">
+    
+    <!-- LINKER BEREICH: FLUGSUCHE -->
+    <div class="card">
+        <h3>✈️ Flug-Suchkriterien</h3>
+        <div class="row">
+            <div class="form-group">
+                <label>Von (IATA)</label>
+                <input type="text" id="von" value="FRA">
+            </div>
+            <div class="form-group">
+                <label>Nach (IATA)</label>
+                <input type="text" id="nach" value="JFK">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Beförderungsklasse</label>
+            <select id="klasse">
+                <option value="Economy">Economy</option>
+                <option value="Premium Economy">Premium Economy</option>
+                <option value="Business">Business</option>
+                <option value="First Class">First Class</option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label>Hin-Datum</label>
+                <input type="date" id="hin" value="2026-12-15">
+            </div>
+            <div class="form-group">
+                <label>Rück-Datum</label>
+                <input type="date" id="rueck" value="2026-12-22">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label>Personen</label>
+                <input type="number" id="personen" value="1" min="1">
+            </div>
+            <div class="form-group">
+                <label>Zwischenstopps</label>
+                <select id="stops" onchange="toggleTransfer()">
+                    <option value="direkt">Direktflug</option>
+                    <option value="max 1" selected>Max 1 Stopp</option>
+                    <option value="beliebig">Beliebig</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Max. Reisezeit: <span id="zeitVal">12</span> Stunden</label>
+            <input type="range" id="maxZeit" min="1" max="24" value="12" oninput="document.getElementById('zeitVal').innerText=this.value">
+        </div>
+    </div>
+
+    <!-- RECHTER BEREICH: HOTEL, BUDGET & MULTI-STOPP -->
+    <div class="card">
+        <h3>🏨 Hotel-Suchkriterien</h3>
+        <div class="form-group">
+            <label>Zielstadt (Hotel)</label>
+            <input type="text" id="stadtHotel" value="New York">
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label>Sterne</label>
+                <select id="sterne">
+                    <option value="3">3 Sterne</option>
+                    <option value="4" selected>4 Sterne</option>
+                    <option value="5">5 Sterne</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Hotelpreis Gesamt (€)</label>
+                <input type="number" id="hotelPreis" value="350.00">
+            </div>
+        </div>
+
+        <h3>💸 Getrennte Budgets</h3>
+        <div class="row">
+            <div class="form-group">
+                <label>Budget Flug (€)</label>
+                <input type="number" id="budgetFlug" value="600.00">
+            </div>
+            <div class="form-group">
+                <label>Budget Hotel (€)</label>
+                <input type="number" id="budgetHotel" value="600.00">
+            </div>
+        </div>
+
+        <h3 id="titleTransfer">🛑 Separater Transfer (Eigenes Gepäck)</h3>
+        <div class="checkbox-group">
+            <input type="checkbox" id="sepTransfer" checked onchange="toggleTransferInputs()">
+            <label for="sepTransfer">Eigenständige Teilstrecken berechnen</label>
+        </div>
+        <div class="row" id="transferInputs" style="margin-top: 10px;">
+            <div class="form-group">
+                <label>Preis Strecke 1 (€)</label>
+                <input type="number" id="preisS1" value="250.00">
+            </div>
+            <div class="form-group">
+                <label>Preis Strecke 2 (€)</label>
+                <input type="number" id="preisS2" value="180.00">
+            </div>
+        </div>
+    </div>
+
+    <!-- ERGEBNIS-ANZEIGE -->
+    <div class="card full-width">
+        <h2>📊 Live Budget-Auswertung</h2>
+        <div id="alertBox" class="alert-box"></div>
+        
+        <button class="btn" onclick="berechneReise()">Reise kalkulieren & Reichweiten-Link erzeugen</button>
+
+        <table class="table">
+            <thead>
+                <tr><th>Posten</th><th>Details</th><th>Kosten</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Flugpreis</td><td id="resFlugInfo">-</td><td id="resFlugPreis">0.00 €</td><td id="resFlugStatus">-</td></tr>
+                <tr><td>Hotelpreis</td><td id="resHotelInfo">-</td><td id="resHotelPreis">0.00 €</td><td id="resHotelStatus">-</td></tr>
+                <tr class="total-row"><td>Gesamtkosten</td><td>Kombi-Reise</td><td id="resGesamtKosten">0.00 €</td><td id="resGesamtStatus">-</td></tr>
+            </tbody>
+        </table>
+        <br>
+        <center><a id="kiwiLink" href="#" target="_blank" class="btn" style="background-color: #2ecc71; display: none; text-align: center; text-decoration: none;">Live-Ergebnisse auf Kiwi prüfen</a></center>
+    </div>
+</div>
+
+<script>
+function toggleTransfer() {
+    var stops = document.getElementById("stops").value;
+    var checkbox = document.getElementById("sepTransfer");
+    if(stops === "direkt") {
+        checkbox.checked = false;
+        checkbox.disabled = true;
+    } else {
+        checkbox.disabled = false;
+    }
+    toggleTransferInputs();
+}
+
+function toggleTransferInputs() {
+    var checked = document.getElementById("sepTransfer").checked;
+    var disabled = document.getElementById("sepTransfer").disabled;
+    document.getElementById("transferInputs").style.display = (checked && !disabled) ? "grid" : "none";
+}
+
+function berechneReise() {
+    // Werte auslesen
+    var von = document.getElementById("von").value;
+    var nach = document.getElementById("nach").value;
+    var personen = parseInt(document.getElementById("personen").value);
+    var stops = document.getElementById("stops").value;
+    var maxZeit = document.getElementById("maxZeit").value;
+    var klasse = document.getElementById("klasse").value;
+    
+    var stadtHotel = document.getElementById("stadtHotel").value;
+    var sterne = document.getElementById("sterne").value;
+    var hotelPreis = parseFloat(document.getElementById("hotelPreis").value);
+    
+    var budgetFlug = parseFloat(document.getElementById("budgetFlug").value);
+    var budgetHotel = parseFloat(document.getElementById("budgetHotel").value);
+    
+    var sepTransfer = document.getElementById("sepTransfer").checked && !document.getElementById("sepTransfer").disabled;
+    var preisS1 = parseFloat(document.getElementById("preisS1").value);
+    var preisS2 = parseFloat(document.getElementById("preisS2").value);
+    
+    // Logik Flugpreis
+    var flugGesamt = 0;
+    var flugInfo = "";
+    if (sepTransfer) {
+        flugGesamt = (preisS1 + preisS2) * personen;
+        flugInfo = "Eigener Transfer (" + stops + ", " + klasse + ")";
+    } else {
+        flugGesamt = preisS1 * personen;
+        flugInfo = "Anschlussflug (" + stops + ", " + klasse + ")";
+    }
+    
+    var gesamtkosten = flugGesamt + hotelPreis;
+    var gesamtBudget = budgetFlug + budgetHotel;
+    
+    // Tabellen-Updates
+    document.getElementById("resFlugInfo").innerText = flugInfo + " | max. " + maxZeit + "h";
+    document.getElementById("resFlugPreis").innerText = flugGesamt.toFixed(2) + " €";
+    document.getElementById("resFlugStatus").innerText = flugGesamt <= budgetFlug ? "✅ Innerhalb Limit" : "❌ Limit überschritten";
+    
+    document.getElementById("resHotelInfo").innerText = stadtHotel + " (" + st
