@@ -111,13 +111,13 @@
             </div>
         </div>
 
-        <button class="btn btn-main" type="button" onclick="generateLinks()">System-Links & Protokolle generieren</button>
+        <button class="btn btn-main" type="button" onclick="generateLinks()">System-Links &amp; Protokolle generieren</button>
 
         <!-- AUSGABE BEREICH -->
         <div id="result-box" class="res-box">
             <div style="font-weight: bold; margin-bottom: 10px;">🔗 Generierte System-Links:</div>
             <div id="links-container"></div>
-            <div style="font-weight: bold; margin-top: 15px; color: var(--upgrade);">📋 Generiertes Upgrade- & Datenproto:</div>
+            <div style="font-weight: bold; margin-top: 15px; color: var(--upgrade);">📋 Generiertes Upgrade- &amp; Datenproto:</div>
             <div id="upgrade-protocol-output" class="up-proto"></div>
         </div>
     </div>
@@ -161,14 +161,14 @@ function generateLinks() {
     var status = document.getElementById('status').value;
     var pnr = document.getElementById('pnr').value.trim().toUpperCase();
 
-    // In localStorage sichern
-    localStorage.setItem('mck_state', JSON.stringify({
+    localStorage.setItem('mck_state_v9', JSON.stringify({
         dep, dest, via, start, end, stops, cabin, baggage, maxPrice, maxTime, airline, status, pnr
     }));
 
-    // Links generieren
     var container = document.getElementById('links-container');
     container.innerHTML = '';
     
-    var gfUrl = `https://google.com{dest}%20from%20${dep}`;
-    container.innerHTML += `<a href="${gfUrl}" target="_blank" class="l-btn fl-btn">✈️ Google Flights öffnen</a>`;
+    var gfUrl = 'https://google.com' + dest + '%20from%20' + dep;
+    container.innerHTML += '<a href="' + gfUrl + '" target="_blank" class="l-btn fl-btn">✈️ Google Flights öffnen</a>';
+
+    if(document.getElementById('asia-mode').checked) {
