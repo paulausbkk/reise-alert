@@ -6,16 +6,8 @@
     <title>✈️ McKinney Reisekonfiguration PRO</title>
     <style>
         :root { 
-            --primary: #2563eb; 
-            --bg: #f0f4f8; 
-            --card-bg: #ffffff; 
-            --text: #1e293b; 
-            --border: #cbd5e1; 
-            --flight: #0284c7; 
-            --upgrade: #6d28d9; 
-            --warn: #dc2626;
-            --success: #16a34a;
-            --asia: #ea580c;
+            --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; 
+            --border: #cbd5e1; --flight: #0284c7; --upgrade: #6d28d9; --asia: #ea580c;
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -24,8 +16,7 @@
         .card.fl { border-color: var(--flight); background: #f0f9ff; }
         .card.up { border-color: var(--upgrade); background: #faf5ff; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
-        .fl .title { color: var(--flight); } 
-        .up .title { color: var(--upgrade); }
+        .fl .title { color: var(--flight); } .up .title { color: var(--upgrade); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
@@ -35,57 +26,41 @@
         .pass-box { position: relative; }
         .eye { position: absolute; right: 10px; top: 24px; cursor: pointer; font-size: 1.1rem; user-select: none; }
         .res-box { margin-top: 15px; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; display: none; }
-        .l-btn { display: block; text-align: center; padding: 10px; margin-bottom: 8px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; transition: opacity 0.2s; }
-        .l-btn:hover { opacity: 0.9; }
-        .l-btn.fl-btn { background: var(--flight); }
-        .l-btn.as-btn { background: var(--asia); }
-
+        .l-btn { display: block; text-align: center; padding: 10px; margin-bottom: 8px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; }
+        .l-btn.fl-btn { background: var(--flight); } .l-btn.as-btn { background: var(--asia); }
         .up-proto { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed var(--upgrade); border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: #334155; white-space: pre-wrap; }
         .check-box-container { display: flex; align-items: center; gap: 8px; margin-top: 5px; background: #fff7ed; padding: 8px; border: 1px dashed var(--asia); border-radius: 4px; display: none; }
-        .check-box-container input { width: auto; cursor: pointer; }
-        .check-box-container label { margin-bottom: 0; color: #c2410c; cursor: pointer; }
+        .check-box-container input { width: auto; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- 1. PASSWORT BEREICH -->
+    <!-- LOCK BEREICH -->
     <div id="auth-section">
         <h1>🔒 Passwort erforderlich</h1>
-        <div class="form-group pass-box">
+        <div class="pass-box">
             <label>Passwort:</label>
-            <input type="password" id="p-field" autocomplete="off" onkeydown="if(event.key==='Enter'){ event.preventDefault(); checkPassword(); }">
-            <span class="eye" onclick="togglePasswordVisibility()">👁️</span>
+            <input type="password" id="p-field" autocomplete="off">
+            <span class="eye" id="eye-btn">👁️</span>
         </div>
-        <button class="btn btn-main" onclick="checkPassword()" style="margin-top: 15px;">Einloggen</button>
+        <button class="btn btn-main" id="login-btn">Einloggen</button>
     </div>
 
-    <!-- MAIN APP CONTENT -->
+    <!-- MAIN APP BEREICH -->
     <div id="main-content" style="display: none;">
         <h1>✈️ McKinney Reisekonfiguration PRO</h1>
         
-        <!-- SEKTION 1: Flug-Parameter -->
+        <!-- Sektion 1 -->
         <div class="card fl">
             <div class="title">Sektion 1: Flug-Parameter</div>
             <div class="grid">
-                <div>
-                    <label>Abflughafen (Code):</label>
-                    <input type="text" id="fl-from" placeholder="z.B. FRA" maxlength="3">
-                </div>
-                <div>
-                    <label>Zielflughafen (Code):</label>
-                    <input type="text" id="fl-to" placeholder="z.B. MNL" maxlength="3" oninput="checkAsiaMode()">
-                </div>
-                <div>
-                    <label>Hinflug (DD.MM.YYYY):</label>
-                    <input type="text" id="fl-date1" placeholder="z.B. 15.11.2026">
-                </div>
-                <div>
-                    <label>Rückflug (DD.MM.YYYY):</label>
-                    <input type="text" id="fl-date2" placeholder="z.B. 25.11.2026">
-                </div>
+                <div><label>Abflug (Code):</label><input type="text" id="fl-from" placeholder="FRA" maxlength="3"></div>
+                <div><label>Ziel (Code):</label><input type="text" id="fl-to" placeholder="MNL" maxlength="3"></div>
+                <div><label>Hinflug:</label><input type="text" id="fl-date1" placeholder="15.11.2026"></div>
+                <div><label>Rückflug:</label><input type="text" id="fl-date2" placeholder="25.11.2026"></div>
                 <div class="full">
-                    <label>Gepäckauswahl:</label>
+                    <label>Gepäck:</label>
                     <select id="fl-baggage">
                         <option value="nur handgepäck">nur handgepäck</option>
                         <option value="aufgabegepäck bis 20 kg">aufgabegepäck bis 20 kg</option>
@@ -97,111 +72,109 @@
                 <div class="full">
                     <div class="check-box-container" id="asia-box-container">
                         <input type="checkbox" id="asia-mode">
-                        <label for="asia-mode">Asiatische Low-Cost-Carrier einbeziehen (Trip.com, Cebu, VietJet)</label>
+                        <label for="asia-mode">Asiatische Low-Cost-Carrier einbeziehen</label>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SEKTION 2: Upgrade- & Status-Manager -->
+        <!-- Sektion 2 -->
         <div class="card up">
             <div class="title">Sektion 2: Upgrade- & Status-Manager</div>
             <div class="grid">
-                <div>
-                    <label>Buchungsnummer (PNR):</label>
-                    <input type="text" id="up-pnr" placeholder="z.B. X7YZ3R">
-                </div>
-                <div>
-                    <label>Ticketnummer:</label>
-                    <input type="text" id="up-ticket" placeholder="z.B. 220-1234567890">
-                </div>
-                <div class="full">
-                    <label>Name (wie im Reisepass):</label>
-                    <input type="text" id="up-name" placeholder="MAXIMILIAN MUSTERMANN">
-                </div>
-                <div>
-                    <label>Reisepassnummer:</label>
-                    <input type="text" id="up-passport" placeholder="z.B. CXXXXXXX">
-                </div>
-                <div>
-                    <label>Max. Upgrade-Budget (€):</label>
-                    <input type="number" id="up-maxprice" placeholder="z.B. 450">
-                </div>
+                <div><label>Buchungsnummer (PNR):</label><input type="text" id="up-pnr" placeholder="X7YZ3R"></div>
+                <div><label>Ticketnummer:</label><input type="text" id="up-ticket" placeholder="220-1234567890"></div>
+                <div class="full"><label>Name im Reisepass:</label><input type="text" id="up-name" placeholder="MAX MUSTERMANN"></div>
+                <div><label>Passnummer:</label><input type="text" id="up-passport" placeholder="CXXXXXXX"></div>
+                <div><label>Max. Upgrade-Budget (€):</label><input type="number" id="up-maxprice" placeholder="450"></div>
             </div>
         </div>
 
-        <button class="btn btn-main" onclick="generateSystem()">System-Links & Protokolle generieren</button>
+        <button class="btn btn-main" id="generate-btn">System-Links & Protokolle generieren</button>
 
+        <!-- Ergebnisse -->
         <div id="result-box" class="res-box">
-            <div class="title" style="color: var(--text);">🔗 Generierte System-Links:</div>
+            <div class="title" style="color: #1e293b;">🔗 Generierte System-Links:</div>
             <div id="links-container"></div>
-
-            <div class="title" style="color: var(--upgrade); margin-top: 20px;">📋 Generiertes Upgrade- & Datenprotokoll:</div>
+            <div class="title" style="color: var(--upgrade); margin-top: 20px;">📋 Upgrade-Protokoll:</div>
             <div id="upgrade-protocol-output" class="up-proto"></div>
         </div>
     </div>
 </div>
 
 <script>
-// Passwort Logik
-function checkPassword() {
-    const pass = document.getElementById('p-field').value.trim();
-    if(pass === 'Reise2026') {
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-        loadFromLocalStorage();
-    } else {
-        alert('Falsches Passwort!');
-    }
-}
+    // Event-Zuweisungen nach Laden der Seite zur Vermeidung von Inline-Syntaxfehlern
+    document.addEventListener("DOMContentLoaded", function() {
+        const pf = document.getElementById('p-field');
+        const eye = document.getElementById('eye-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const flTo = document.getElementById('fl-to');
+        const generateBtn = document.getElementById('generate-btn');
 
-function togglePasswordVisibility() {
-    const pf = document.getElementById('p-field');
-    if(pf.type === 'password') {
-        pf.type = 'text';
-    } else {
-        pf.type = 'password';
-    }
-}
+        // Passwort-Auge Sichtbarkeit
+        eye.addEventListener('click', function() {
+            pf.type = (pf.type === 'password') ? 'text' : 'password';
+        });
 
-// Automatische Asien-Erkennung (Drehkreuze)
-function checkAsiaMode() {
-    const asiaHubs = ['MNL', 'BKK', 'SGN', 'SIN', 'CEB', 'HKG', 'KUL', 'CGK', 'HND', 'NRT'];
-    const destination = document.getElementById('fl-to').value.trim().toUpperCase();
-    const container = document.getElementById('asia-box-container');
+        // Enter-Key auf Passwortfeld
+        pf.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); triggerLogin(); }
+        });
 
-    if(asiaHubs.includes(destination)) {
-        container.style.display = 'flex';
-    } else {
-        container.style.display = 'none';
-        document.getElementById('asia-mode').checked = false;
-    }
-}
+        // Login Klick
+        loginBtn.addEventListener('click', triggerLogin);
 
-// Kernfunktion: Generierung, Verarbeitung & Speicherung
-function generateSystem() {
-    const from = document.getElementById('fl-from').value.trim().toUpperCase();
-    const to = document.getElementById('fl-to').value.trim().toUpperCase();
-    const d1 = document.getElementById('fl-date1').value.trim();
-    const d2 = document.getElementById('fl-date2').value.trim();
-    const baggage = document.getElementById('fl-baggage').value;
+        function triggerLogin() {
+            if (pf.value.trim() === 'Reise2026') {
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                loadLocal();
+            } else {
+                alert('Falsches Passwort!');
+            }
+        }
 
-    const pnr = document.getElementById('up-pnr').value.trim().toUpperCase();
-    const ticket = document.getElementById('up-ticket').value.trim();
-    const name = document.getElementById('up-name').value.trim().toUpperCase();
-    const passport = document.getElementById('up-passport').value.trim().toUpperCase();
-    const maxPrice = document.getElementById('up-maxprice').value.trim();
+        // Asien Modus Checker
+        flTo.addEventListener('input', function() {
+            const hubs = ['MNL', 'BKK', 'SGN', 'SIN', 'CEB', 'HKG', 'KUL', 'CGK', 'HND', 'NRT'];
+            const container = document.getElementById('asia-box-container');
+            if (hubs.includes(flTo.value.trim().toUpperCase())) {
+                container.style.display = 'flex';
+            } else {
+                container.style.display = 'none';
+                document.getElementById('asia-mode').checked = false;
+            }
+        });
 
-    // Speicherung im localStorage
-    const dataToSave = {
-        flFrom: from, flTo: to, flDate1: d1, flDate2: d2, flBaggage: baggage,
-        upPnr: pnr, upTicket: ticket, upName: name, upPassport: passport, upMaxPrice: maxPrice
-    };
-    localStorage.setItem('mckinney_config_data', JSON.stringify(dataToSave));
+        // Generierungs-Logik
+        generateBtn.addEventListener('click', function() {
+            const from = document.getElementById('fl-from').value.trim().toUpperCase();
+            const to = flTo.value.trim().toUpperCase();
+            const d1 = document.getElementById('fl-date1').value.trim();
+            const d2 = document.getElementById('fl-date2').value.trim();
+            const baggage = document.getElementById('fl-baggage').value;
+            const pnr = document.getElementById('up-pnr').value.trim().toUpperCase();
+            const ticket = document.getElementById('up-ticket').value.trim();
+            const name = document.getElementById('up-name').value.trim().toUpperCase();
+            const passport = document.getElementById('up-passport').value.trim().toUpperCase();
+            const maxPrice = document.getElementById('up-maxprice').value.trim();
 
-    // Links generieren
-    const linksContainer = document.getElementById('links-container');
-    linksContainer.innerHTML = '';
+            // Speichern
+            localStorage.setItem('mckinney_config_data', JSON.stringify({
+                from, to, d1, d2, baggage, pnr, ticket, name, passport, maxPrice
+            }));
 
-    // Google Flights Link
+            // Links rendern
+            const container = document.getElementById('links-container');
+            container.innerHTML = '';
+            
+            const gfUrl = `https://google.com{to}%20from%20${from}%20on%20${d1}%20through%20${d2}`;
+            container.innerHTML += `<a href="${gfUrl}" target="_blank" class="l-btn fl-btn">✈️ Google Flights Suche öffnen</a>`;
+
+            if (document.getElementById('asia-mode').checked) {
+                container.innerHTML += `<a href="https://trip.com{from}&to=${to}&date=${d1}" target="_blank" class="l-btn as-btn">🌏 Trip.com Regionalflug-Suche</a>`;
+
+Verwende Code mit Vorsicht.
+container.innerHTML += <a href="https://cebupacificair.com" target="_blank" class="l-btn as-btn">🛫 Cebu Pacific Direktportal</a>;
+container.innerHTML += <a href="https://vietjetair.com" target="_blank" class="l-btn as-btn">🛫 VietJet Air Direktportal</a>;
 
