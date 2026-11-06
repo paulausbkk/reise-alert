@@ -8,6 +8,7 @@
         :root { 
             --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; 
             --border: #cbd5e1; --flight: #0284c7; --hotel: #0f766e; --upgrade: #6d28d9; 
+            --warn: #dc2626; --success: #16a34a; --asia: #ea580c; 
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -31,146 +32,86 @@
         input:checked + .slider:before { transform: translateX(18px); }
         .range-box { display: flex; align-items: center; gap: 10px; }
         .range-box input { flex: 1; }
-        .btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); }
+        .range-box span { font-size: 0.85rem; font-weight: bold; color: var(--flight); min-width: 45px; }
+        .budget-box { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; border: 1px solid #cbd5e1; display: none; }
+        .budget-ok { background: #e6f4ea; color: var(--success); border-color: #a3cfbb; }
+        .budget-err { background: #fce8e6; color: var(--warn); border-color: #f1aeb5; }
+        .res-box { margin-top: 15px; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; display: none; }
+        .l-btn { display: block; text-align: center; padding: 10px; margin-bottom: 8px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; }
+        .l-btn.fl-btn { background: var(--flight); } .l-btn.ho-btn { background: var(--hotel); } .l-btn.as-btn { background: var(--asia); }
+        .up-proto { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed var(--upgrade); border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: #334155; white-space: pre-wrap; }
+        .check-box-container { display: flex; align-items: center; gap: 8px; margin-top: 5px; background: #fff7ed; padding: 8px; border: 1px dashed var(--asia); border-radius: 4px; display: none; }
+        .check-box-container input { width: auto; }
     </style>
-</head>
-<body>
-<div class="container">
-    <h1>✈️ Reisekonfiguration PRO</h1>
-    
-    <!-- SEKTION 1: Flug-Parameter -->
-    <div class="card fl">
-        <div class="title">✈️ Sektion 1: Flug-Parameter</div>
-        <div class="grid">
-            <div><label>Abflugort (Code):</label><input type="text" placeholder="FRA" maxlength="3"></div>
-            <div><label>Zielort (Code):</label><input type="text" placeholder="MNL" maxlength="3"></div>
-            <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026"></div>
-            <div><label>Rückflug:</label><input type="text" placeholder="25.11.2026"></div>
-            
-            <div class="switch-container">
-                <label>Nur Hinflug (One Way):</label>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div>
-                <label>Beförderungsklasse:</label>
-                <select>
-                    <option>Economy</option>
-                    <option>Premium Economy</option>
-                    <option>Business Class</option>
-                    <option>First Class</option>
-                </select>
-            </div>
-            
-            <div>
-                <label>Personenanzahl:</label>
-                <select>
-                    <option>1 Person</option>
-                    <option>2 Personen</option>
-                    <option value="3">3 Personen</option>
-                    <option value="4">4 Personen</option>
-                </select>
-            </div>
-            
-            <div>
-                <label>Gepäckauswahl:</label>
-                <select>
-                    <option>nur handgepäck</option>
-                    <option>aufgabegepäck bis 20 kg</option>
-                    <option>aufgabegepäck bis 32 kg</option>
-                    <option>Handgepäck plus 20 KG aufgabegepäck</option>
-                    <option>Handgepäck plus 32 Aufgabegepäck</option>
-                </select>
-            </div>
-            
-            <div>
-                <label>Zwischenstopps:</label>
-                <select>
-                    <option>Direktflug</option>
-                    <option>Max. 1 Stopp</option>
-                    <option>Max. 2 Stopps</option>
-                </select>
-            </div>
-            
-            <div>
-                <label>Ort des Stopps (Stadt/Code):</label>
-                <input type="text" placeholder="z.B. Dubai" list="airports">
-                <datalist id="airports">
-                    <option value="Dubai (DXB)"></option>
-                    <option value="Singapur (SIN)"></option>
-                    <option value="Bangkok (BKK)"></option>
-                    <option value="Doha (DOH)"></option>
-                    <option value="London (LHR)"></option>
-                </datalist>
-            </div>
-            
-            <div><label>Ticketpreis (€):</label><input type="number" placeholder="800"></div>
-            <div><label>Preis Weiterflug (€):</label><input type="number" placeholder="150"></div>
-            
-            <div class="full">
-                <label>Max. Reisezeit:</label>
-                <div class="range-box">
-                    <input type="range" min="5" max="40" value="24">
-                    <span>24h</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        window.onload = function() {
+            var pw = prompt("🔑 Passwort erforderlich:");
+            if (pw === "Reise2026") { 
+                document.getElementById("main-content").style.display = "block"; 
+                loadLocal(); 
+            } else { 
+                alert("Falsches Passwort!"); 
+                window.location.reload(); 
+            }
+        };
+        function toggleOneway(checked) {
+            var r = document.getElementById('fl-date2');
+            if (checked) { r.value = ""; r.disabled = true; r.style.background = "#e2e8f0"; } 
+            else { r.disabled = false; r.style.background = "#fff"; }
+        }
+        function updateDurationDisplay(val) { document.getElementById('duration-val').innerText = val + 'h'; }
+        function checkAsia() {
+            var hubs = ['MNL','BKK','SGN','SIN','CEB','HKG','KUL','CGK','HND','NRT'];
+            var to = document.getElementById('fl-to').value.trim().toUpperCase();
+            document.getElementById('asia-box-container').style.display = hubs.includes(to) ? 'flex' : 'none';
+        }
+        function calcBudget() {
+            var total = parseFloat(document.getElementById('ho-budget').value) || 0;
+            var est = parseFloat(document.getElementById('ho-est-price').value) || 0;
+            var div = document.getElementById('budget-status');
+            if (total === 0 || est === 0) { div.style.display = 'none'; return; }
+            div.style.display = 'block'; var diff = total - est;
+            if(diff >= 0) { div.className = "budget-box budget-ok"; div.innerHTML = `✓ Budget eingehalten! Rest: ${diff.toFixed(2)} €`; } 
+            else { div.className = "budget-box budget-err"; div.innerHTML = `⚠ Budget überschritten um: ${Math.abs(diff).toFixed(2)} €`; }
+        }
+        function generateSystem() {
+            var from = document.getElementById('fl-from').value.trim().toUpperCase();
+            var to = document.getElementById('fl-to').value.trim().toUpperCase();
+            var d1 = document.getElementById('fl-date1').value.trim();
+            var d2 = document.getElementById('fl-date2').value.trim();
+            var oneway = document.getElementById('fl-oneway').checked;
+            var cabin = document.getElementById('fl-cabin').value;
+            var passengers = document.getElementById('fl-passengers').value;
+            var baggage = document.getElementById('fl-baggage').value;
+            var stops = document.getElementById('fl-stops').value;
+            var stopLoc = document.getElementById('fl-stop-location').value.trim();
+            var price = document.getElementById('fl-price').value;
+            var nextPrice = document.getElementById('fl-next-price').value;
+            var duration = document.getElementById('fl-duration').value;
+            var pnr = document.getElementById('up-pnr').value.trim().toUpperCase();
+            var ticket = document.getElementById('up-ticket').value.trim();
+            var name = document.getElementById('up-name').value.trim().toUpperCase();
+            var passport = document.getElementById('up-passport').value.trim().toUpperCase();
+            var maxPrice = document.getElementById('up-maxprice').value.trim();
+            var hDest = document.getElementById('ho-dest').value.trim();
+            var hBudget = document.getElementById('ho-budget').value;
+            var hEst = document.getElementById('ho-est-price').value;
+            var hStars = document.getElementById('ho-stars').value;
+            var hType = document.getElementById('ho-type').value;
+            var hGuests = document.getElementById('ho-guests').value;
 
-    <!-- SEKTION 2: Upgrade- & Status-Manager -->
-    <div class="card up">
-        <div class="title">💎 Sektion 2: Upgrade- & Status-Manager</div>
-        <div class="grid">
-            <div><label>Buchungsnummer (PNR):</label><input type="text" placeholder="X7YZ3R"></div>
-            <div><label>Ticketnummer:</label><input type="text" placeholder="220-1234567890"></div>
-            <div class="full"><label>Name im Reisepass:</label><input type="text" placeholder="MAX MUSTERMANN"></div>
-            <div><label>Passnummer:</label><input type="text" placeholder="CXXXXXXX"></div>
-            <div><label>Max. Upgrade-Budget (€):</label><input type="number" placeholder="450"></div>
-        </div>
-    </div>
+            localStorage.setItem('mck_v18_data', JSON.stringify({from,to,d1,d2,oneway,cabin,passengers,baggage,stops,stopLoc,price,nextPrice,duration,pnr,ticket,name,passport,maxPrice,hDest,hBudget,hEst,hStars,hType,hGuests}));
 
-    <!-- SEKTION 3: Hotel- & Budgetplanung -->
-    <div class="card ho">
-        <div class="title">🏨 Sektion 3: Hotel- & Budgetplanung</div>
-        <div class="grid">
-            <div class="full"><label>Hotel-Reiseziel Stadt:</label><input type="text" placeholder="z.B. Manila"></div>
-            <div><label>Max. Hotelbudget total (€):</label><input type="number" placeholder="1200"></div>
-            <div><label>Geschätzter Hotelpreis (€):</label><input type="number" placeholder="950"></div>
-            <div>
-                <label>Hotel Sterne:</label>
-                <select>
-                    <option>Alle Sterne</option>
-                    <option>1 Stern</option>
-                    <option>2 Sterne</option>
-                    <option>3 Sterne</option>
-                    <option>4 Sterne</option>
-                    <option>5 Sterne</option>
-                </select>
-            </div>
-            <div>
-                <label>Unterkunftstyp:</label>
-                <select>
-                    <option>Hotel</option>
-                    <option>Resort</option>
-                    <option>Airbnb</option>
-                </select>
-            </div>
-            <div class="full">
-                <label>Personenanzahl (Hotel):</label>
-                <select>
-                    <option>1 Person</option>
-                    <option>2 Personen</option>
-                    <option>3 Personen</option>
-                    <option>4 Personen</option>
-                </select>
-            </div>
-        </div>
-    </div>
+            var container = document.getElementById('links-container'); container.innerHTML = '';
+            container.innerHTML += `<a href="https://google.com{to}%20from%20${from}" target="_blank" class="l-btn fl-btn">✈️ Google Flights Suche</a>`;
+            
+            let bUrl = `https://booking.com{encodeURIComponent(hDest)}&group_adults=${hGuests}`;
+            if(hStars !== 'all') bUrl += `&nflt=${hStars}`;
+            container.innerHTML += `<a href="${bUrl}" target="_blank" class="l-btn ho-btn">🏨 Booking.com (${hGuests} Pers. / ${hType})</a>`;
 
-    <button class="btn">System-Links & Protokolle generieren</button>
-</div>
-</body>
-</html>
+            var hubs = ['MNL','BKK','SGN','SIN','CEB','HKG','KUL','CGK','HND','NRT'];
+            if(hubs.includes(to)) {
+                container.innerHTML += `<a href="https://trip.com{from}&toairportcode=${to}" target="_blank" class="l-btn as-btn">🌏 Trip.com Asien-Suche</a>`;
+                container.innerHTML += `<a href="https://cebupacificair.com" target="_blank" class="l-btn as-btn">🛫 Cebu Pacific Portal</a>`;
+                container.innerHTML += `<a href="https://vietjetair.com" target="_blank" class="l-btn as-btn">🛫 VietJet Air Portal</a>`;
+            }
