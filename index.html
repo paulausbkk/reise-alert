@@ -198,8 +198,12 @@
                     <input type="text" id="departure" value="FRA">
                 </div>
                 <div class="form-group">
-                    <label for="destination">Zielflughafen (Code):</label>
+                    <label for="destination">Endziel (Flughafen-Code):</label>
                     <input type="text" id="destination" value="MIA" oninput="document.getElementById('hotel-destination').value=this.value;">
+                </div>
+                <div class="form-group full-width" style="background: rgba(2, 132, 199, 0.05); padding: 10px; border-radius: 8px; border: 1px dashed var(--flight-theme);">
+                    <label for="stopover-airport" style="color: var(--flight-theme);">📍 Geplanter Stopover / Zwischenaufenthalt (Optional):</label>
+                    <input type="text" id="stopover-airport" placeholder="z.B. NYC, LHR (Feld befüllen für Multistopp-Budget)" oninput="if(this.value.trim()!=''){document.getElementById('second-leg-box').classList.remove('hidden');}else{document.getElementById('second-leg-box').classList.add('hidden');}">
                 </div>
                 <div class="form-group">
                     <label for="start-date">Frühestes Hinreisedatum:</label>
@@ -210,7 +214,7 @@
                     <input type="date" id="end-date" value="2026-08-31">
                 </div>
                 <div class="form-group">
-                    <label for="stops">Zwischenstopps:</label>
+                    <label for="stops">Zwischenstopps (Suchfilter):</label>
                     <select id="stops">
                         <option value="any">Beliebig viele Stopps</option>
                         <option value="direct">Nur Direktflüge</option>
@@ -236,24 +240,9 @@
             </div>
         </div>
 
-        <!-- GRÜNE KARTE: HOTEL -->
+        <!-- GRÜNE KARTE: HOTEL & BUDGET -->
         <div class="search-card hotel">
-            <div class="card-title hotel">🏨 Sektion 2: Hotel & Budget</div>
+            <div class="card-title hotel">🏨 Sektion 2: Hotel & Budget-Planung</div>
             <div class="form-grid">
                 <div class="form-group full-width">
                     <label for="hotel-destination">Zielort für Hotelsuche:</label>
-                    <input type="text" id="hotel-destination" value="MIA">
-                </div>
-                <div class="form-group">
-                    <label for="hotel-stars">Mindest-Sterne (Hotel):</label>
-                    <select id="hotel-stars">
-                        <option value="3">3 Sterne</option>
-                        <option value="4" selected>4 Sterne</option>
-                        <option value="5">5 Sterne</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="max-budget">Maximales Gesamtbudget (€):</label>
-                    <input type="number" id="max-budget" value="2500">
-                </div>
-            </div>
