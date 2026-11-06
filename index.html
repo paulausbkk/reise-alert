@@ -83,7 +83,16 @@
             </div>
         </div>
 
-        <!-- HOTEL KARTE -->
+        <!-- UPGRADE KARTE (Hierhin verschoben, direkt unter Flug-Parameter) -->
+        <div class="card up">
+            <div class="title">💎 Sektion 3: Upgrade- & Status-Manager</div>
+            <div class="grid">
+                <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa, Condor):</label><input type="text" id="airline" value="Lufthansa" placeholder="z.B. Lufthansa, Condor, Delta"></div>
+            </div>
+            <button class="btn btn-up" id="submit-upgrade-btn" type="button">💎 Gezielte Upgrade-Direktsuche starten</button>
+        </div>
+
+        <!-- HOTEL KARTE (Jetzt an dritter Position) -->
         <div class="card ho">
             <div class="title">🏨 Sektion 2: Hotel & Budget</div>
             <div class="grid">
@@ -95,18 +104,8 @@
                         📊 Restbudget 1. Teilstrecke: <span id="main-budget-val">2000</span> €
                     </div>
                 </div>
-                <!-- Zielort nach ganz unten verschoben -->
                 <div class="full" style="margin-top: 10px;"><label>Zielort für Hotelsuche:</label><input type="text" id="h-dest" value="MIA"></div>
             </div>
-        </div>
-
-        <!-- UPGRADE KARTE -->
-        <div class="card up">
-            <div class="title">💎 Sektion 3: Upgrade- & Status-Manager</div>
-            <div class="grid">
-                <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa, Condor):</label><input type="text" id="airline" value="Lufthansa" placeholder="z.B. Lufthansa, Condor, Delta"></div>
-            </div>
-            <button class="btn btn-up" id="submit-upgrade-btn" type="button">💎 Gezielte Upgrade-Direktsuche starten</button>
         </div>
 
         <!-- GENERIEREN BUTTON -->
@@ -167,4 +166,3 @@
     var mTimeInput = document.getElementById("m-time");
     var tValSpan = document.getElementById("t-val");
     if (mTimeInput && tValSpan) {
-        mTimeInput.addEventListener("input", function() {
