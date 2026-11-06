@@ -5,14 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ Reisekonfiguration PRO</title>
     <style>
-        :root { 
-            --primary: #2563eb; 
-            --bg: #f0f4f8; 
-            --card-bg: #ffffff; 
-            --text: #1e293b; 
-            --border: #cbd5e1; 
-            --flight: #0284c7; 
-        }
+        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
@@ -20,16 +13,9 @@
         .card.fl { border-color: var(--flight); background: #f0f9ff; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--flight); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
         input, select { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
-        .range-box { display: flex; align-items: center; gap: 10px; }
-        .range-box input { flex: 1; }
-        .range-box span { font-size: 0.85rem; font-weight: bold; color: var(--flight); min-width: 45px; }
-        
-        /* Stylischer One-Way Schiebeschalter */
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; }
-        .switch-container label { margin-bottom: 0; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
@@ -39,30 +25,14 @@
     </style>
     <script>
         window.onload = function() {
-            localStorage.clear();
             var pw = prompt("🔑 Passwort erforderlich:");
-            if (pw === "Reise2026") {
-                document.getElementById("main-content").style.display = "block";
-            } else {
-                alert("Falsches Passwort!");
-                window.location.reload();
-            }
+            if (pw === "Reise2026") { document.getElementById("main-content").style.display = "block"; } 
+            else { alert("Falsches Passwort!"); window.location.reload(); }
         };
-        function updateDurationDisplay(val) {
-            document.getElementById('duration-val').innerText = val + 'h';
-        }
         function toggleOneway(checked) {
-            var retInput = document.getElementById('fl-date2');
-            if (checked) {
-                retInput.value = "";
-                retInput.disabled = true;
-                retInput.style.background = "#e2e8f0";
-                retInput.style.cursor = "not-allowed";
-            } else {
-                retInput.disabled = false;
-                retInput.style.background = "#fff";
-                retInput.style.cursor = "text";
-            }
+            var r = document.getElementById('fl-date2');
+            if (checked) { r.value = ""; r.disabled = true; r.style.background = "#e2e8f0"; } 
+            else { r.disabled = false; r.style.background = "#fff"; }
         }
     </script>
 </head>
@@ -70,41 +40,17 @@
 <div class="container">
     <div id="main-content" style="display:none;">
         <h1>✈️ Reisekonfiguration PRO</h1>
-        
-        <!-- Sektion 1: Flug-Parameter -->
         <div class="card fl">
             <div class="title">✈️ Sektion 1: Flug-Parameter</div>
             <div class="grid">
-                
-                <div>
-                    <label>Abflugort (Flughafencode):</label>
-                    <input type="text" id="dep" placeholder="z.B. FRA" maxlength="3">
-                </div>
-
-                <div>
-                    <label>Zielort (Flughafencode):</label>
-                    <input type="text" id="dest" placeholder="z.B. MNL" maxlength="3">
-                </div>
-
-                <div>
-                    <label>Hinflug (DD.MM.YYYY):</label>
-                    <input type="text" id="fl-date1" placeholder="z.B. 15.11.2026">
-                </div>
-                <div>
-                    <label>Rückflug (DD.MM.YYYY):</label>
-                    <input type="text" id="fl-date2" placeholder="z.B. 25.11.2026">
-                </div>
-
-                <!-- Schiebeschalter für One Way -->
+                <div><label>Abflugort (Code):</label><input type="text" id="dep" placeholder="FRA"></div>
+                <div><label>Zielort (Code):</label><input type="text" id="dest" placeholder="MNL"></div>
+                <div><label>Hinflug:</label><input type="text" id="fl-date1" placeholder="15.11.2026"></div>
+                <div><label>Rückflug:</label><input type="text" id="fl-date2" placeholder="25.11.2026"></div>
                 <div class="switch-container">
-                    <label style="font-weight: bold; font-size: 0.8rem; color: #475569;">Nur Hinflug (One Way):</label>
-                    <label class="switch">
-                        <input type="checkbox" id="fl-oneway" onchange="toggleOneway(this.checked)">
-                        <span class="slider"></span>
-                    </label>
+                    <label>Nur Hinflug (One Way):</label>
+                    <label class="switch"><input type="checkbox" id="fl-oneway" onchange="toggleOneway(this.checked)"><span class="slider"></span></label>
                 </div>
-
-                <!-- Dropdown für Beförderungsklasse -->
                 <div>
                     <label>Beförderungsklasse:</label>
                     <select id="fl-cabin">
@@ -114,59 +60,6 @@
                         <option value="first">First Class</option>
                     </select>
                 </div>
-
-                <div>
-                    <label>Personenanzahl:</label>
-                    <select id="fl-passengers">
-                        <option value="1">1 Person</option>
-                        <option value="2">2 Personen</option>
-                        <option value="3">3 Personen</option>
-                        <option value="4">4 Personen</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Gepäckauswahl:</label>
-                    <select id="fl-baggage">
-                        <option value="handgepäck">handgepäck</option>
-                        <option value="aufgabegepäck 20 kg">aufgabegepäck 20 kg</option>
-                        <option value="aufgabegepäck 32 KG">aufgabegepäck 32 KG</option>
-                        <option value="Handgepäck plus 20 KG aufgabegepäck">Handgepäck plus 20 KG aufgabegepäck</option>
-                        <option value="Handgepäck plus 32 Aufgabegepäck">Handgepäck plus 32 Aufgabegepäck</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Zwischenstopps:</label>
-                    <select id="fl-stops">
-                        <option value="0">Direktflug (0 Stops)</option>
-                        <option value="1">Max. 1 Zwischenstopp</option>
-                        <option value="2">Max. 2 Zwischenstopps</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label>Ort des Zwischenstopps (Stadt oder Code):</label>
-                    <input type="text" id="fl-stop-location" placeholder="z.B. Dubai, Bangkok oder DXB">
-                </div>
-
-                <div>
-                    <label>Ticketpreis (€):</label>
-                    <input type="number" id="fl-price" placeholder="z.B. 800">
-                </div>
-                <div>
-                    <label>Flugpreis Teilstrecke/Weiterflug (€):</label>
-                    <input type="number" id="fl-next-price" placeholder="z.B. 150">
-                </div>
-
-                <div class="full">
-                    <label>Max. Reisezeit:</label>
-                    <div class="range-box">
-                        <input type="range" id="fl-duration" min="5" max="40" value="24" oninput="updateDurationDisplay(this.value)">
-                        <span id="duration-val">24h</span>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
