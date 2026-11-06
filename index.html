@@ -48,6 +48,9 @@
         .budget-calc-box { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; border: 1px solid #cbd5e1; }
         .budget-ok { background: #e6f4ea; color: var(--success); border-color: #a3cfbb; }
         .budget-error { background: #fce8e6; color: var(--warn); border-color: #f1aeb5; }
+
+        /* Upgrade Protokoll Styling */
+        .up-proto { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed var(--upgrade); border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: #334155; }
     </style>
 </head>
 <body>
@@ -122,8 +125,11 @@
         <button class="btn btn-main" type="button" onclick="generateUrls()">Links generieren & Suchportale öffnen</button>
 
         <div class="res-box" id="result-box" style="display:none;">
-            <h3>🔗 Generierte Suchlinks:</h3>
+            <h3>🔗 Generierte Suchlinks & Daten:</h3>
             <div id="links-container"></div>
+            
+            <!-- Hier werden die neuen Daten aus Sektion 2 jetzt aktiv verarbeitet und angezeigt -->
+            <div id="upgrade-protocol-container"></div>
         </div>
     </div>
 </div>
@@ -144,12 +150,3 @@
 
         if (diff >= 0) {
             display.className = "budget-calc-box budget-ok";
-            display.innerHTML = `🟢 Budget OK! Ausgaben: ${spent}€ | Rest: +${diff}€ (Hotel gesamt: ${totalHotel}€)`;
-        } else {
-            display.className = "budget-calc-box budget-error";
-            display.innerHTML = `🔴 Budget überschritten! Ausgaben: ${spent}€ | Defizit: ${diff}€ (Hotel gesamt: ${totalHotel}€)`;
-        }
-    }
-
-    // URL Generator Logik
-    function generateUrls() {
