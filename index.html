@@ -49,11 +49,6 @@
             else { r.disabled = false; r.style.background = "#fff"; }
         }
         function updateDurationDisplay(val) { document.getElementById('duration-val').innerText = val + 'h'; }
-        function checkAsia() {
-            var hubs = ['MNL','BKK','SGN','SIN','CEB','HKG','KUL','CGK','HND','NRT'];
-            var to = document.getElementById('fl-to').value.trim().toUpperCase();
-            document.getElementById('asia-box-container').style.display = hubs.includes(to) ? 'flex' : 'none';
-        }
         function calcBudget() {
             var total = parseFloat(document.getElementById('ho-budget').value) || 0;
             var est = parseFloat(document.getElementById('ho-est-price').value) || 0;
@@ -89,7 +84,7 @@
             var hType = document.getElementById('ho-type').value;
             var hGuests = document.getElementById('ho-guests').value;
 
-            localStorage.setItem('mck_v16_data', JSON.stringify({from,to,d1,d2,oneway,cabin,passengers,baggage,stops,stopLoc,price,nextPrice,duration,pnr,ticket,name,passport,maxPrice,hDest,hBudget,hEst,hStars,hType,hGuests}));
+            localStorage.setItem('mck_v17_data', JSON.stringify({from,to,d1,d2,oneway,cabin,passengers,baggage,stops,stopLoc,price,nextPrice,duration,pnr,ticket,name,passport,maxPrice,hDest,hBudget,hEst,hStars,hType,hGuests}));
 
             var container = document.getElementById('links-container'); container.innerHTML = '';
             container.innerHTML += `<a href="https://google.com{to}%20from%20${from}" target="_blank" class="l-btn fl-btn">✈️ Google Flights Suche</a>`;
@@ -98,6 +93,7 @@
             if(hStars !== 'all') bUrl += `&nflt=${hStars}`;
             container.innerHTML += `<a href="${bUrl}" target="_blank" class="l-btn ho-btn">🏨 Booking.com (${hGuests} Pers. / ${hType})</a>`;
 
+            var hubs = ['MNL','BKK','SGN','SIN','CEB','HKG','KUL','CGK','HND','NRT'];
             if(hubs.includes(to)) {
                 container.innerHTML += `<a href="https://trip.com{from}&toairportcode=${to}" target="_blank" class="l-btn as-btn">🌏 Trip.com Asien-Suche</a>`;
                 container.innerHTML += `<a href="https://cebupacificair.com" target="_blank" class="l-btn as-btn">🛫 Cebu Pacific Portal</a>`;
@@ -108,5 +104,8 @@
             document.getElementById('upgrade-protocol-output').textContent = proto; document.getElementById('result-box').style.display = 'block';
         }
         function loadLocal() {
-            var stored = localStorage.getItem('mck_v16_data'); if(!stored) return; var d = JSON.parse(stored);
+            var stored = localStorage.getItem('mck_v17_data'); if(!stored) return; var d = JSON.parse(stored);
             if(d.from) document.getElementById('fl-from').value = d.from;
+            if(d.to) document.getElementById('fl-to').value = d.to;
+            if(d.d1) document.getElementById('fl-date1').value = d.d1;
+            if(d.d2) document.getElementById('fl-date2').value = d.d2;
