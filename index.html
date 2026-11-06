@@ -67,6 +67,7 @@
         <option value="Wien (VIE)"></option>
         <option value="Zürich (ZRH)"></option>
     </datalist>
+
     <!-- SEKTION 1: Flug-Parameter -->
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
@@ -186,118 +187,7 @@
                 </select>
             </div>
         </div>
-        <!-- INTERNET-KABEL: MULTI-FLUGSUCHE (GOOGLE, SKYSCANNER, KIWI) -->
-    <script>
-        document.getElementById("btn-search-flights").addEventListener("click", function() {
-            // 1. Werte aus den Feldern auslesen
-            const fromVal = document.getElementById("fl-from").value;
-            const toVal = document.getElementById("fl-to").value;
-            let date1 = document.getElementById("fl-date1").value; // Format: DD.MM.YYYY
-            let date2 = document.getElementById("fl-date2").value;
-            const oneWay = document.getElementById("fl-oneway").checked;
-
-            // 2. IATA-Codes extrahieren (z.B. "FRA" aus "Frankfurt (FRA)")
-            const fromMatch = fromVal.match(/\(([A-Z]{3})\)/);
-            const toMatch = toVal.match(/\(([A-Z]{3})\)/);
-
-            if (!fromMatch || !toMatch) {
-                alert("Bitte wähle sowohl einen Abflugort als auch einen Zielort mit gültigem Code aus der Liste aus!");
-                return;
-            }
-
-            const fromCode = fromMatch[1].toLowerCase();
-            const toCode = toMatch[1].toLowerCase();
-<!-- INTELIGENTES MULTI-SUCHSKRIPT MIT LOW-COST-LOGIK -->
-    <script>
-        document.getElementById("btn-search-flights").addEventListener("click", function() {
-            const fromVal = document.getElementById("fl-from").value;
-            const toVal = document.getElementById("fl-to").value;
-            let date1 = document.getElementById("fl-date1").value;
-            let date2 = document.getElementById("fl-date2").value;
-            const oneWay = document.getElementById("fl-oneway").checked;
-            const lowCostActive = document.getElementById("fl-lowcost").checked;
-
-            const fromMatch = fromVal.match(/\(([A-Z]{3})\)/);
-            const toMatch = toVal.match(/\(([A-Z]{3})\)/);
-
-            if (!fromMatch || !toMatch) {
-                alert("Bitte wähle sowohl einen Abflugort als auch einen Zielort mit gültigem Code aus der Liste aus!");
-                return;
-            }
-
-            const fromCode = fromMatch[1];
-            const toCode = toMatch[1];
-
-            function formatTargetDate(dStr) {
-                if (!dStr) return "";
-                const parts = dStr.split(".");
-                if (parts.length === 3) {
-                    return `${parts[2]}-${parts[1]}-${parts[0]}`;
-                }
-                return dStr;
-            }
-
-            const date1Iso = formatTargetDate(date1);
-            const date2Iso = formatTargetDate(date2);
-
-            // --- STANDARDFLÜGE: GOOGLE FLIGHTS ---
-            let googleUrl = `https://google.com{toCode}%20from%20${fromCode}%20on%20${date1Iso}`;
-            if (!oneWay && date2Iso) { googleUrl += `%20through%20${date2Iso}`; }
-            window.open(googleUrl, '_blank');
-
-            // --- REICHWEITE: KIWI.COM ---
-            let kiwiUrl = `https://kiwi.com{fromCode.toLowerCase()}/${toCode.toLowerCase()}/${date1Iso}`;
-            if (!oneWay && date2Iso) { kiwiUrl += `/${date2Iso}`; }
-            window.open(kiwiUrl, '_blank');
-
-            // --- ZUSATZ: LOW-COST LOGIK SCHARFSCHALTEN ---
-            if (lowCostActive) {
-                let lowCostUrl = `https://trip.com{fromCode.toLowerCase()}&acity=${toCode.toLowerCase()}&ddate=${date1Iso}`;
-                if (!oneWay && date2Iso) { lowCostUrl += `&rdate=${date2Iso}`; }
-                window.open(lowCostUrl, '_blank');
-            }
-        });
-    </script>
-            // 3. Datumsformate für die verschiedenen Portale vorbereiten
-            // Konvertiert DD.MM.YYYY in YYYY-MM-DD
-            function formatTargetDate(dStr) {
-                if (!dStr) return "";
-                const parts = dStr.split(".");
-                if (parts.length === 3) {
-                    return `${parts[2]}-${parts[1]}-${parts[0]}`;
-                }
-                return dStr;
-            }
-
-            const date1Iso = formatTargetDate(date1);
-            const date2Iso = formatTargetDate(date2);
-
-            // --- PORTAL 1: GOOGLE FLIGHTS ---
-            let googleUrl = `https://google.com{toCode}%20from%20${fromCode}%20on%20${date1Iso}`;
-            if (!oneWay && date2Iso) {
-                googleUrl += `%20through%20${date2Iso}`;
-            }
-            window.open(googleUrl, '_blank');
-
-            // --- PORTAL 2: SKYSCANNER ---
-            let skyscannerUrl = `https://skyscanner.de{fromCode}/${toCode}/${date1Iso.substring(2).replace(/-/g, '')}`;
-            if (!oneWay && date2Iso) {
-                skyscannerUrl += `/${date2Iso.substring(2).replace(/-/g, '')}`;
-            }
-            window.open(skyscannerUrl, '_blank');
-
-            // --- PORTAL 3: KIWI.COM ---
-            let kiwiUrl = `https://kiwi.com{fromCode}/${toCode}/${date1Iso}`;
-            if (!oneWay && date2Iso) {
-                kiwiUrl += `/${date2Iso}`;
-            } else if (oneWay) {
-                kiwiUrl += "/anytime";
-            }
-            window.open(kiwiUrl, '_blank');
-        });
-    </script>
     </div>
-    
 
     <!-- SEKTION 3: Hotel-Optionen -->
     <div class="card ho">
@@ -311,18 +201,3 @@
                 <label>Sterne-Kategorie:</label>
                 <select id="ho-stars">
                     <option>Beliebig</option>
-                    <option>3 Sterne</option>
-                    <option selected>4 Sterne</option>
-                    <option>5 Sterne</option>
-                </select>
-            </div>
-            <div>
-                <label>Max. Budget pro Nacht (€):</label>
-                <input type="number" placeholder="100" id="ho-budget">
-            </div>
-        </div>
-    </div>
-
-</div>
-</body>
-</html>
