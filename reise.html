@@ -41,11 +41,11 @@
         <div class="grid">
             <div>
                 <label>Abflugort (Stadt oder Code):</label>
-                <input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-all">
+                <input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete">
             </div>
             <div>
                 <label>Zielort (Stadt oder Code):</label>
-                <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-all">
+                <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-complete">
             </div>
             <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026" id="fl-date1"></div>
             <div><label>Rückflug:</label><input type="text" placeholder="25.11.2026" id="fl-date2"></div>
@@ -100,29 +100,29 @@
             
             <div>
                 <label>Ort des Stopps (Stadt oder Code):</label>
-                <input type="text" placeholder="z.B. Dubai" list="airports-all" id="fl-stop-location">
+                <input type="text" placeholder="z.B. Dubai" list="airports-complete" id="fl-stop-location">
             </div>
             
-            <!-- Gemeinsame Vorschlagsliste für alle Flughäfen -->
-            <datalist id="airports-all">
-                <option value="FRA - Frankfurt Flughafen">
-                <option value="MUC - München Flughafen">
-                <option value="DUS - Düsseldorf Flughafen">
-                <option value="MNL - Manila Ninoy Aquino Flughafen">
-                <option value="CEB - Cebu Mactan Flughafen">
-                <option value="BKK - Bangkok Suvarnabhumi Flughafen">
-                <option value="SIN - Singapur Changi Flughafen">
-                <option value="DXB - Dubai International Flughafen">
-                <option value="DOH - Doha Hamad Flughafen">
-                <option value="AUH - Abu Dhabi Flughafen">
-                <option value="SGN - Ho-Chi-Minh-Stadt Flughafen">
-                <option value="HKG - Hongkong Flughafen">
-                <option value="LHR - London Heathrow Flughafen">
-                <option value="JFK - New York JFK Flughafen">
+            <!-- Die geforderte Vorschlagsliste mit Erklärung HINTER dem Kürzel -->
+            <datalist id="airports-complete">
+                <option value="FRA (Frankfurt Flughafen)">
+                <option value="MUC (München Flughafen)">
+                <option value="DUS (Düsseldorf Flughafen)">
+                <option value="MNL (Manila Ninoy Aquino Flughafen)">
+                <option value="CEB (Cebu Mactan Flughafen)">
+                <option value="BKK (Bangkok Suvarnabhumi Flughafen)">
+                <option value="SIN (Singapur Changi Flughafen)">
+                <option value="DXB (Dubai International Flughafen)">
+                <option value="DOH (Doha Hamad Flughafen)">
+                <option value="AUH (Abu Dhabi Flughafen)">
+                <option value="SGN (Ho-Chi-Minh-Stadt Flughafen)">
+                <option value="HKG (Hongkong Flughafen)">
+                <option value="LHR (London Heathrow Flughafen)">
+                <option value="JFK (New York JFK Flughafen)">
             </datalist>
             
             <div><label>Ticketpreis (€):</label><input type="number" placeholder="800" id="fl-price"></div>
-            <div><label>Preis Weiterflug (€):</label><input type="number" placeholder="150" id="fl-next-price"></div>
+            <div><label>Flugpreis Teilstrecke/Weiterflug (€):</label><input type="number" placeholder="150" id="fl-next-price"></div>
             
             <div class="full">
                 <label>Max. Reisezeit:</label>
