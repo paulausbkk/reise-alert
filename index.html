@@ -50,111 +50,150 @@
         .budget-ok { background: #e6f4ea; color: var(--success); border-color: #a3cfbb; }
         .budget-error { background: #fce8e6; color: var(--warn); border-color: #f1aeb5; }
     </style>
-</head>
-<body>
 
-<div class="container">
-    <!-- 1. PASSWORT BEREICH (Direkt-Inline-Logik um Fehler zu verhindern) -->
-    <div id="auth-section">
-        <h1>🔒 Passwort erforderlich</h1>
-        <div class="form-group pass-box">
-            <label>Passwort:</label>
-            <input type="password" id="password-input" autocomplete="off" onkeydown="if(event.key === 'Enter') { event.preventDefault(); var v=document.getElementById('password-input').value.trim(); if(v==='Reise2026'){document.getElementById('auth-section').classList.add('hidden');document.getElementById('main-content').classList.remove('hidden');}else{alert('Falsches Passwort!');} }">
-            <span class="eye" onclick="var p=document.getElementById('password-input'); if(p.type==='password'){p.type='text';this.innerText='👁️‍🗨️';}else{p.type='password';this.innerText='👁';}">👁️</span>
-        </div>
-        <button class="btn btn-main" type="button" onclick="var v=document.getElementById('password-input').value.trim(); if(v==='Reise2026'){document.getElementById('auth-section').classList.add('hidden');document.getElementById('main-content').classList.remove('hidden');}else{alert('Falsches Passwort!');}">Freischalten</button>
-    </div>
-
-    <!-- 2. HAUPT-INHALT -->
-    <div id="main-content" class="hidden">
-        <h1>✈️ McKinney Reisekonfiguration PRO</h1>
-        
-        <!-- FLUG KARTE -->
-        <div class="card fl">
-            <div class="title">✈️ Sektion 1: Flug-Parameter</div>
-            <div class="grid">
-                <div><label>Abflug (Code):</label><input type="text" id="dep" value="FRA"></div>
-                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA" oninput="document.getElementById('h-dest').value=this.value;"></div>
-                <div class="full"><label>📍 Optionaler Stopover / Zwischenaufenthalt:</label><input type="text" id="via" placeholder="z.B. NYC"></div>
-                <div><label>Frühestes Datum:</label><input type="date" id="start" value="2026-06-01"></div>
-                <div><label>Spätestes Datum:</label><input type="date" id="end" value="2026-08-31"></div>
-                <div><label>Zwischenstopps Filter:</label><select id="stops"><option value="any">Alle</option><option value="direct">Nur Direkt</option><option value="max1">Max 1</option></select></div>
-                <div><label>Klasse:</label><select id="cabin"><option value="economy">Economy</option><option value="premium">Premium Eco</option><option value="business">Business</option><option value="first">First</option></select></div>
-                <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18" oninput="document.getElementById('t-val').innerText=this.value+' h';"></div>
-            </div>
-        </div>
-
-        <!-- HOTEL KARTE -->
-        <div class="card ho">
-            <div class="title">🏨 Sektion 2: Hotel & Budget</div>
-            <div class="grid">
-                <div class="full"><label>Zielort für Hotelsuche:</label><input type="text" id="h-dest" value="MIA"></div>
-                <div><label>Mindest-Sterne:</label><select id="stars"><option value="3">3★</option><option value="4" selected>4★</option><option value="5">5★</option></select></div>
-                <div><label>Max. Gesamtbudget (€):</label><input type="number" id="budget" value="2500" oninput="calculateTeilstreckenBudget()"></div>
-                <div><label>Budget 2. Teilstrecke (€):</label><input type="number" id="sub-budget" value="500" oninput="calculateTeilstreckenBudget()"></div>
-                <div class="full">
-                    <div id="budget-calc-display" class="budget-calc-box budget-ok">
-                        📊 Restbudget 1. Teilstrecke: <span id="main-budget-val">2000</span> €
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- UPGRADE KARTE -->
-        <div class="card up">
-            <div class="title">💎 Sektion 3: Upgrade- & Status-Manager</div>
-            <div class="grid">
-                <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa, Condor):</label><input type="text" id="airline" value="Lufthansa" placeholder="z.B. Lufthansa, Condor, Delta"></div>
-            </div>
-            <button class="btn btn-up" type="button" onclick="triggerUpgradeSearch()">💎 Gezielte Upgrade-Direktsuche starten</button>
-        </div>
-
-        <!-- GENERIEREN BUTTON -->
-        <button class="btn btn-main" type="button" onclick="generateTravelLinks()">🔍 Suchmaschinen-Verknüpfungen generieren</button>
-
-        <!-- ERGEBNIS BOX -->
-        <div id="result-section" class="res-box hidden">
-            <h3>🔗 Ihre personalisierten Such-Links:</h3>
+    <script>
+        // Haupt-Logik wird hier sicher geladen und überwacht alle Elemente
+        document.addEventListener("DOMContentLoaded", function() {
             
-            <h4>✈️ Flug-Suchen:</h4>
-            <a id="link-kiwi" class="l-btn fl-btn" target="_blank">Kiwi Suche öffnen</a>
-            <a id="link-google" class="l-btn fl-btn" target="_blank">Google Flights öffnen</a>
-            <a id="link-skyscanner" class="l-btn fl-btn" target="_blank">Skyscanner öffnen</a>
-            
-            <h4>🏨 Hotel-Suchen:</h4>
-            <a id="link-booking" class="l-btn ho-btn" target="_blank">Booking.com öffnen</a>
-            <a id="link-trivago" class="l-btn ho-btn" target="_blank">Trivago öffnen</a>
-            <a id="link-tripadvisor" class="l-btn ho-btn" target="_blank">TripAdvisor öffnen</a>
-        </div>
-    </div>
-</div>
+            // --- LOGIN & AUGE STEUERUNG ---
+            var passInput = document.getElementById("password-input");
+            var eyeIcon = document.getElementById("toggle-eye");
+            var authButton = document.getElementById("auth-btn");
+            var authSection = document.getElementById("auth-section");
+            var mainContent = document.getElementById("main-content");
 
-<script>
-    // Live-Rechner für Multistopp-Teilstrecken
-    function calculateTeilstreckenBudget() {
-        var total = parseFloat(document.getElementById('budget').value) || 0;
-        var sub = parseFloat(document.getElementById('sub-budget').value) || 0;
-        var displayBox = document.getElementById('budget-calc-display');
-        
-        var diff = total - sub;
-        
-        if (diff < 0) {
-            displayBox.className = "budget-calc-box budget-error";
-            displayBox.innerHTML = "⚠️ Achtung: Teilbudget der 2. Teilstrecke übersteigt das Gesamtbudget! (Differenz: " + diff + " €)";
-        } else {
-            displayBox.className = "budget-calc-box budget-ok";
-            displayBox.innerHTML = "📊 Restbudget 1. Teilstrecke: <span id='main-budget-val'>" + diff + "</span> €";
-        }
-    }
+            function verifyAndLogin() {
+                if (passInput.value.trim() === "Reise2026") {
+                    authSection.classList.add("hidden");
+                    mainContent.classList.remove("hidden");
+                } else {
+                    alert("Falsches Passwort!");
+                }
+            }
 
-    // Upgrade-Direktsuche für Sektion 3
-    function triggerUpgradeSearch() {
-        var airline = document.getElementById('airline').value.trim();
-        if(!airline) { alert('Bitte eine Airline eingeben!'); return; }
-        
-        var airlineLower = airline.toLowerCase();
-        var upgradeUrl = "https://google.com" + encodeURIComponent(airline + " upgrade optionen vorteile");
-        
-        if(airlineLower.includes('lufthansa')) {
-            upgradeUrl = "https://lufthansa.com";
+            // Klick auf das Auge-Symbol
+            if(eyeIcon) {
+                eyeIcon.addEventListener("click", function() {
+                    if (passInput.type === "password") {
+                        passInput.type = "text";
+                        eyeIcon.innerText = "👁️‍🗨️";
+                    } else {
+                        passInput.type = "password";
+                        eyeIcon.innerText = "👁️";
+                    }
+                });
+            }
+
+            // Klick auf Freischalten-Button
+            if(authButton) {
+                authButton.addEventListener("click", verifyAndLogin);
+            }
+
+            // Enter-Taste im Passwort-Feld
+            if(passInput) {
+                passInput.addEventListener("keydown", function(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        verifyAndLogin();
+                    }
+                });
+            }
+
+            // --- AUTO-SYNC FLUG ZU HOTEL ---
+            var destInput = document.getElementById("dest");
+            var hDestInput = document.getElementById("h-dest");
+            if(destInput && hDestInput) {
+                destInput.addEventListener("input", function() {
+                    hDestInput.value = destInput.value;
+                });
+            }
+
+            // --- MULTISTOPP BUDGETRECHNER ---
+            var budgetInput = document.getElementById("budget");
+            var subBudgetInput = document.getElementById("sub-budget");
+            var displayBox = document.getElementById("budget-calc-display");
+
+            function updateBudgets() {
+                var total = parseFloat(budgetInput.value) || 0;
+                var sub = parseFloat(subBudgetInput.value) || 0;
+                var diff = total - sub;
+                
+                if (diff < 0) {
+                    displayBox.className = "budget-calc-box budget-error";
+                    displayBox.innerHTML = "⚠️ Achtung: Teilbudget der 2. Teilstrecke übersteigt das Gesamtbudget! (Differenz: " + diff + " €)";
+                } else {
+                    displayBox.className = "budget-calc-box budget-ok";
+                    displayBox.innerHTML = "📊 Restbudget 1. Teilstrecke: <span>" + diff + "</span> €";
+                }
+            }
+
+            if(budgetInput && subBudgetInput) {
+                budgetInput.addEventListener("input", updateBudgets);
+                subBudgetInput.addEventListener("input", updateBudgets);
+            }
+
+            // --- TRAVEL TIME DISPLAY ---
+            var mTimeInput = document.getElementById("m-time");
+            var tValSpan = document.getElementById("t-val");
+            if(mTimeInput && tValSpan) {
+                mTimeInput.addEventListener("input", function() {
+                    tValSpan.innerText = mTimeInput.value + " h";
+                });
+            }
+
+            // --- SEKTION 3: UPGRADE LOGIK ---
+            var upgradeBtn = document.getElementById("submit-upgrade-btn");
+            var airlineInput = document.getElementById("airline");
+
+            if(upgradeBtn) {
+                upgradeBtn.addEventListener("click", function() {
+                    var airline = airlineInput.value.trim();
+                    if (!airline) { alert("Bitte eine Airline eingeben!"); return; }
+                    
+                    var airlineLower = airline.toLowerCase();
+                    var upgradeUrl = "https://google.com" + encodeURIComponent(airline + " upgrade optionen vorteile");
+                    
+                    if (airlineLower.includes("lufthansa")) {
+                        upgradeUrl = "https://lufthansa.com";
+                    } else if (airlineLower.includes("condor")) {
+                        upgradeUrl = "https://condor.com";
+                    }
+                    
+                    var expertFlyerUrl = "https://expertflyer.com";
+                    var seatGuruUrl = "https://google.com" + encodeURIComponent(airline + " seat map seatguru aerolopa");
+
+                    window.open(upgradeUrl, '_blank');
+                    window.open(expertFlyerUrl, '_blank');
+                    window.open(seatGuruUrl, '_blank');
+                });
+            }
+
+            // --- GENERATE LINKS LOGIK ---
+            var generateBtn = document.getElementById("submit-generate-btn");
+            if(generateBtn) {
+                generateBtn.addEventListener("click", function() {
+                    var dep = document.getElementById("dep").value.trim().toUpperCase();
+                    var dest = destInput.value.trim().toUpperCase();
+                    var via = document.getElementById("via").value.trim().toUpperCase();
+                    var hDest = hDestInput.value.trim();
+                    
+                    var start = document.getElementById("start").value;
+                    var end = document.getElementById("end").value;
+                    var stops = document.getElementById("stops").value;
+                    var cabin = document.getElementById("cabin").value;
+                    var stars = document.getElementById("stars").value;
+
+                    if (!dep || !dest || !start || !end) {
+                        alert("Bitte füllen Sie mindestens Abflug, Endziel, Start- und Enddatum aus.");
+                        return;
+                    }
+
+                    var gCabin = "economy";
+                    if (cabin === "premium") gCabin = "premium_economy";
+                    if (cabin === "business") gCabin = "business";
+                    if (cabin === "first") gCabin = "first";
+
+                    var gStops = "";
+                    if (stops === "direct") gStops = ";20";
+                    if (stops === "max1") gStops = ";11";
 
