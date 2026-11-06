@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
+UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈ McKinney Reisekonfiguration</title>
+    <title>✈️ McKinney Reisekonfiguration</title>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -66,8 +63,13 @@
         .checkbox-group input {
             width: auto;
         }
+        .btn-box {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
         button {
-            background-color: #2ecc71;
             color: white;
             border: none;
             padding: 14px 20px;
@@ -76,11 +78,17 @@
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
             transition: background 0.2s;
         }
-        button:hover { background-color: #27ae60; }
+        .btn-submit { background-color: #2ecc71; }
+        .btn-submit:hover { background-color: #27ae60; }
+        .btn-link { text-decoration: none; display: block; padding: 14px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; color: white; text-align: center; }
+        .btn-kiwi { background-color: #3498db; }
+        .btn-kiwi:hover { background-color: #2980b9; }
+        .btn-booking { background-color: #003580; }
+        .btn-booking:hover { background-color: #002252; }
         #secret-content { display: none; }
+        #result-box { display: none; margin-top: 20px; background: #fff; padding: 15px; border: 1px dashed #3498db; border-radius: 8px; }
         .error { color: #e74c3c; margin-top: 10px; font-weight: bold; }
     </style>
 </head>
@@ -101,7 +109,7 @@
     <!-- DAS ERWEITERTE FORMULAR -->
     <div id="secret-content">
         <h2>✈️ Erweiterte Reisedaten</h2>
-        <form onsubmit="generateAlert(event)">
+        <form onsubmit="generateLinks(event)">
             
             <h3>🗺️ FLUG-SUCHKRITERIEN</h3>
             <div class="form-row">
@@ -207,8 +215,17 @@
                 </div>
             </div>
 
-            <button type="submit">Reise-Alert Kriterien erfassen</button>
+            <button type="submit" class="btn-submit">Live-Suchlinks generieren</button>
         </form>
+
+        <!-- LIVE-BUTTONS NACH GENERIERUNG -->
+        <div id="result-box">
+            <h3>🚀 Deine personalisierten Live-Links:</h3>
+            <div class="btn-box">
+                <a id="kiwi-link" href="#" target="_blank" class="btn-link btn-kiwi">✈️ Flüge prüfen (Kiwi.com)</a>
+                <a id="booking-link" href="#" target="_blank" class="btn-link btn-booking">🏨 Hotels prüfen (Booking.com)</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -225,11 +242,12 @@
         }
     }
 
-    function generateAlert(event) {
+    function generateLinks(event) {
         event.preventDefault();
-        alert("Alle erweiterten Suchkriterien erfasst! Diese können nun mit deinem Google Colab Skript abgeglichen werden.");
-    }
-</script>
-
-</body>
-</html>
+        
+        // Daten auslesen
+        const von = document.getElementById("von").value.toLowerCase();
+        const nach = document.getElementById("nach").value.toLowerCase();
+        const hin = document.getElementById("hin").value;
+        const rueck = document.getElementById("rueck").value;
+        const stadt = encodeURIComponent(document.getElementById("stadt_hotel").value);
