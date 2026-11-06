@@ -89,7 +89,7 @@
             var hType = document.getElementById('ho-type').value;
             var hGuests = document.getElementById('ho-guests').value;
 
-            localStorage.setItem('mck_v14_data', JSON.stringify({from,to,d1,d2,oneway,cabin,passengers,baggage,stops,stopLoc,price,nextPrice,duration,pnr,ticket,name,passport,maxPrice,hDest,hBudget,hEst,hStars,hType,hGuests}));
+            localStorage.setItem('mck_v15_data', JSON.stringify({from,to,d1,d2,oneway,cabin,passengers,baggage,stops,stopLoc,price,nextPrice,duration,pnr,ticket,name,passport,maxPrice,hDest,hBudget,hEst,hStars,hType,hGuests}));
 
             var container = document.getElementById('links-container'); container.innerHTML = '';
             container.innerHTML += `<a href="https://google.com{to}%20from%20${from}" target="_blank" class="l-btn fl-btn">✈️ Google Flights Suche</a>`;
@@ -108,4 +108,4 @@
             document.getElementById('upgrade-protocol-output').textContent = proto; document.getElementById('result-box').style.display = 'block';
         }
         function loadLocal() {
-            var stored = localStorage.getItem('mck_v14_data'); if(!stored) return; var d = JSON.parse(stored);
+            var stored = localStorage.getItem('mck_v15_data'); if(!stored) return; var d = JSON.parse(stored);
