@@ -207,7 +207,57 @@
 
             const fromCode = fromMatch[1].toLowerCase();
             const toCode = toMatch[1].toLowerCase();
+<!-- INTELIGENTES MULTI-SUCHSKRIPT MIT LOW-COST-LOGIK -->
+    <script>
+        document.getElementById("btn-search-flights").addEventListener("click", function() {
+            const fromVal = document.getElementById("fl-from").value;
+            const toVal = document.getElementById("fl-to").value;
+            let date1 = document.getElementById("fl-date1").value;
+            let date2 = document.getElementById("fl-date2").value;
+            const oneWay = document.getElementById("fl-oneway").checked;
+            const lowCostActive = document.getElementById("fl-lowcost").checked;
 
+            const fromMatch = fromVal.match(/\(([A-Z]{3})\)/);
+            const toMatch = toVal.match(/\(([A-Z]{3})\)/);
+
+            if (!fromMatch || !toMatch) {
+                alert("Bitte wähle sowohl einen Abflugort als auch einen Zielort mit gültigem Code aus der Liste aus!");
+                return;
+            }
+
+            const fromCode = fromMatch[1];
+            const toCode = toMatch[1];
+
+            function formatTargetDate(dStr) {
+                if (!dStr) return "";
+                const parts = dStr.split(".");
+                if (parts.length === 3) {
+                    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+                }
+                return dStr;
+            }
+
+            const date1Iso = formatTargetDate(date1);
+            const date2Iso = formatTargetDate(date2);
+
+            // --- STANDARDFLÜGE: GOOGLE FLIGHTS ---
+            let googleUrl = `https://google.com{toCode}%20from%20${fromCode}%20on%20${date1Iso}`;
+            if (!oneWay && date2Iso) { googleUrl += `%20through%20${date2Iso}`; }
+            window.open(googleUrl, '_blank');
+
+            // --- REICHWEITE: KIWI.COM ---
+            let kiwiUrl = `https://kiwi.com{fromCode.toLowerCase()}/${toCode.toLowerCase()}/${date1Iso}`;
+            if (!oneWay && date2Iso) { kiwiUrl += `/${date2Iso}`; }
+            window.open(kiwiUrl, '_blank');
+
+            // --- ZUSATZ: LOW-COST LOGIK SCHARFSCHALTEN ---
+            if (lowCostActive) {
+                let lowCostUrl = `https://trip.com{fromCode.toLowerCase()}&acity=${toCode.toLowerCase()}&ddate=${date1Iso}`;
+                if (!oneWay && date2Iso) { lowCostUrl += `&rdate=${date2Iso}`; }
+                window.open(lowCostUrl, '_blank');
+            }
+        });
+    </script>
             // 3. Datumsformate für die verschiedenen Portale vorbereiten
             // Konvertiert DD.MM.YYYY in YYYY-MM-DD
             function formatTargetDate(dStr) {
