@@ -156,7 +156,7 @@
         <div class="form-group">
             <input type="password" id="password-input" placeholder="Passwort hier eingeben...">
         </div>
-        <button class="main-submit-btn" onclick="checkPassword()">Freischalten</button>
+        <button class="main-submit-btn" onclick="if(document.getElementById('password-input').value==='Reise2026'){document.getElementById('auth-section').classList.add('hidden');document.getElementById('main-content').classList.remove('hidden');}else{document.getElementById('error-msg').classList.remove('hidden');}">Freischalten</button>
         <p id="error-msg" style="color: #dc2626; text-align: center; font-size: 0.9rem; margin-top: 1rem;" class="hidden">Falsches Passwort.</p>
     </div>
 
@@ -174,7 +174,7 @@
                 </div>
                 <div class="form-group">
                     <label for="destination">Zielflughafen (Code):</label>
-                    <input type="text" id="destination" value="MIA" oninput="syncHotelDestination(this.value)">
+                    <input type="text" id="destination" value="MIA" oninput="document.getElementById('hotel-destination').value=this.value;">
                 </div>
                 <div class="form-group">
                     <label for="start-date">Frühestes Hinreisedatum:</label>
@@ -218,42 +218,8 @@
             </div>
         </div>
 
-        <button class="main-submit-btn" onclick="generateLinks()">Live-Suchlinks generieren ✨</button>
+        <button class="main-submit-btn" onclick="var dep=document.getElementById('departure').value.trim().toLowerCase(); var dest=document.getElementById('destination').value.trim().toLowerCase(); var hDest=document.getElementById('hotel-destination').value.trim(); var start=document.getElementById('start-date').value; var end=document.getElementById('end-date').value; var sP=start.split('-'); var eP=end.split('-'); var kS=sP[0]+'/'+sP[1]+'/'+sP[2]; var kE=eP[0]+'/'+eP[1]+'/'+eP[2]; document.getElementById('kiwi-link').href='https://kiwi.com; document.getElementById('google-flights-link').href='https://google.com; document.getElementById('skyscanner-link').href='https://skyscanner.de'; document.getElementById('booking-link').href='https://booking.com; document.getElementById('trivago-link').href='https://trivago.de; document.getElementById('tripadvisor-link').href='https://tripadvisor.de; var rb=document.getElementById('results'); rb.classList.remove('hidden'); rb.scrollIntoView({behavior:'smooth'});">Live-Suchlinks generieren ✨</button>
 
         <!-- 3. Ergebnis-Bereich -->
         <div id="results" class="result-box hidden">
             <h3 style="margin-top: 0; text-align: center; color: #0f172a;">🎉 Deine optimierten Suchlinks</h3>
-            
-            <div class="result-section-title" style="color: var(--flight-theme);">✈️ Flug-Portale:</div>
-            <a id="kiwi-link" href="#" target="_blank" class="link-btn kiwi-btn">🥝 Flexible Suche auf Kiwi.com</a>
-            <a id="google-flights-link" href="#" target="_blank" class="link-btn google-btn">🌐 Preistrends auf Google Flights</a>
-            <a id="skyscanner-link" href="#" target="_blank" class="link-btn skyscanner-btn">🚀 Kombi-Angebote auf Skyscanner</a>
-
-            <div class="result-section-title" style="color: var(--hotel-theme);">🏨 Hotel-Portale:</div>
-            <a id="booking-link" href="#" target="_blank" class="link-btn booking-btn">🏨 Bestpreis-Garantie auf Booking.com</a>
-            <a id="trivago-link" href="#" target="_blank" class="link-btn trivago-btn">🔍 Meta-Vergleich auf Trivago</a>
-            <a id="tripadvisor-link" href="#" target="_blank" class="link-btn tripadvisor-btn">🦉 Bewertungen & Deals auf TripAdvisor</a>
-        </div>
-    </div>
-</div>
-
-<script>
-    function checkPassword() {
-        var input = document.getElementById('password-input').value;
-        if (input === 'Reise2026') {
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('main-content').classList.remove('hidden');
-        } else {
-            document.getElementById('error-msg').classList.remove('hidden');
-        }
-    }
-
-    document.getElementById('password-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') { checkPassword(); }
-    });
-
-    function syncHotelDestination(val) {
-        document.getElementById('hotel-destination').value = val;
-    }
-
-    function generateLinks() {
