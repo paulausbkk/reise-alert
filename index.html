@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -5,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ McKinney Reisekonfiguration PRO</title>
     <style>
-        :root { 
-            --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; 
-            --border: #cbd5e1; --flight: #0284c7; --hotel: #0f766e; --upgrade: #6d28d9; 
-            --warn: #dc2626; --success: #16a34a; --asia: #ea580c;
-        }
+        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --upgrade: #6d28d9; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
@@ -22,118 +19,62 @@
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
         input, select { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-main { background: var(--primary); }
-        .pass-box { position: relative; }
-        .eye { position: absolute; right: 10px; top: 24px; cursor: pointer; font-size: 1.1rem; user-select: none; }
+        .btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); }
         .res-box { margin-top: 15px; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; display: none; }
-        .l-btn { display: block; text-align: center; padding: 10px; margin-bottom: 8px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; transition: opacity 0.2s; }
-        .l-btn.fl-btn { background: var(--flight); } .l-btn.as-btn { background: var(--asia); }
         .up-proto { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed var(--upgrade); border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: #334155; white-space: pre-wrap; }
-        .check-box-container { display: flex; align-items: center; gap: 8px; margin-top: 5px; background: #fff7ed; padding: 8px; border: 1px dashed var(--asia); border-radius: 4px; }
-        .check-box-container input { width: auto; cursor: pointer; }
-        .check-box-container label { margin-bottom: 0; color: #c2410c; cursor: pointer; }
     </style>
     <script>
-        // LOGIK HIER OBEN IST KATASTROPHENSICHER GEGEN KI-ABBRÜCHE GESCUTZT
-        function checkPassword() {
-            if(document.getElementById('p-field').value.trim() === 'Reise2026') {
-                document.getElementById('auth-section').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                loadFromStorage();
-            } else { alert('Falsches Passwort!'); }
-        }
-        function togglePasswordVisibility() {
-            var p = document.getElementById('p-field');
-            p.type = (p.type === 'password') ? 'text' : 'password';
-        }
-        function checkAsiaDestination() {
-            var hubs = ['MNL', 'BKK', 'SGN', 'SIN', 'CEB', 'HKG', 'KUL', 'CGK', 'HND', 'NRT'];
-            var dest = document.getElementById('dest').value.trim().toUpperCase();
-            document.getElementById('asia-mode').checked = hubs.includes(dest);
-        }
-        function generateLinks() {
-            var dep = document.getElementById('dep').value.trim().toUpperCase();
-            var dest = document.getElementById('dest').value.trim().toUpperCase();
-            var via = document.getElementById('via').value.trim().toUpperCase();
-            var start = document.getElementById('start').value;
-            var end = document.getElementById('end').value;
-            var stops = document.getElementById('stops').value;
-            var cabin = document.getElementById('cabin').value;
-            var baggage = document.getElementById('baggage').value;
-            var maxPrice = document.getElementById('max-flight-price').value;
-            var maxTime = document.getElementById('m-time').value;
-            var airline = document.getElementById('airline').value;
-            var status = document.getElementById('status').value;
-            var pnr = document.getElementById('pnr').value.trim().toUpperCase();
-
-            localStorage.setItem('mck_state_base_v10', JSON.stringify({dep, dest, via, start, end, stops, cabin, baggage, maxPrice, maxTime, airline, status, pnr}));
-
-            var container = document.getElementById('links-container');
-            container.innerHTML = '<a href="https://google.com+'" target="_blank" class="l-btn fl-btn">✈️ Google Flights öffnen</a>';
-            if(document.getElementById('asia-mode').checked) {
-                container.innerHTML += '<a href="https://trip.com+'" target="_blank" class="l-btn as-btn">🌏 Trip.com Express-Suche</a>';
+        window.onload = function() {
+            var pw = prompt("🔑 Passwort erforderlich:");
+            if (pw === "Reise2026") {
+                document.getElementById("main-content").style.display = "block";
+                var stored = localStorage.getItem("mck_rad");
+                if (stored) {
+                    var d = JSON.parse(stored);
+                    document.getElementById("dep").value = d.dep || "";
+                    document.getElementById("dest").value = d.dest || "";
+                    document.getElementById("pnr").value = d.pnr || "";
+                }
+            } else {
+                alert("Falsches Passwort!");
+                window.location.reload();
             }
+        };
 
-            var proto = `=========================================\nREISEPROTOKOLL & FLUGPARAMETER\n=========================================\n\n`;
-            proto += `Route:       ${dep} -> ${dest} ${via ? '[Stopover: ' + via + ']' : ''}\nGepäcktarif: ${baggage}\nPNR / Code:  ${pnr || 'N/A'}\n=========================================`;
-            document.getElementById('upgrade-protocol-output').textContent = proto;
-            document.getElementById('result-box').style.display = 'block';
-        }
-        function loadFromStorage() {
-            var stored = localStorage.getItem('mck_state_base_v10');
-            if(!stored) return;
-            var data = JSON.parse(stored);
-            if(data.dep) document.getElementById('dep').value = data.dep;
-            if(data.dest) { document.getElementById('dest').value = data.dest; checkAsiaDestination(); }
-            if(data.via) document.getElementById('via').value = data.via;
-            if(data.start) document.getElementById('start').value = data.start;
-            if(data.end) document.getElementById('end').value = data.end;
-            if(data.stops) document.getElementById('stops').value = data.stops;
-            if(data.cabin) document.getElementById('cabin').value = data.cabin;
-            if(data.baggage) document.getElementById('baggage').value = data.baggage;
-            if(data.maxPrice) document.getElementById('max-flight-price').value = data.maxPrice;
-            if(data.maxTime) { document.getElementById('m-time').value = data.maxTime; document.getElementById('t-val').innerText = data.maxTime + ' h'; }
-            if(data.airline) document.getElementById('airline').value = data.airline;
-            if(data.status) document.getElementById('status').value = data.status;
-            if(data.pnr) document.getElementById('pnr').value = data.pnr;
+        function generate() {
+            var dep = document.getElementById("dep").value.toUpperCase();
+            var dest = document.getElementById("dest").value.toUpperCase();
+            var pnr = document.getElementById("pnr").value.toUpperCase();
+            
+            localStorage.setItem("mck_rad", JSON.stringify({dep, dest, pnr}));
+            
+            var proto = `=========================================\nREISEPROTOKOLL\n=========================================\nRoute: ${dep} -> ${dest}\nPNR:   ${pnr || 'N/A'}\n=========================================`;
+            document.getElementById("output").textContent = proto;
+            document.getElementById("result-box").style.display = "block";
         }
     </script>
 </head>
 <body>
-
 <div class="container">
-    <!-- 1. PASSWORT BEREICH -->
-    <div id="auth-section">
-        <h1>🔒 Passwort erforderlich</h1>
-        <div class="form-group pass-box">
-            <label>Passwort:</label>
-            <input type="password" id="p-field" autocomplete="off" onkeydown="if(event.key==='Enter'){ event.preventDefault(); checkPassword(); }">
-            <span class="eye" onclick="togglePasswordVisibility()">👁️</span>
-        </div>
-        <button class="btn btn-main" type="button" onclick="checkPassword()">Freischalten</button>
-    </div>
-
-    <!-- 2. HAUPT-INHALT -->
-    <div id="main-content" style="display: none;">
-        <h1>✈️ McKinney Reisekonfiguration PRO</h1>
-        
-        <!-- SEKTION 1: FLUG KARTE -->
+    <div id="main-content" style="display:none;">
+        <h1>✈ McKinney Reisekonfiguration PRO</h1>
         <div class="card fl">
-            <div class="title">✈️ Sektion 1: Flug-Parameter</div>
+            <div class="title">✈ Sektion 1: Flug-Parameter</div>
             <div class="grid">
                 <div><label>Abflug (Code):</label><input type="text" id="dep" value="FRA"></div>
-                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA" oninput="checkAsiaDestination()"></div>
-                <div class="full"><label>📍 Optionaler Stopover / Zwischenaufenthalt:</label><input type="text" id="via" placeholder="z.B. NYC"></div>
-                <div><label>Frühestes Datum:</label><input type="date" id="start" value="2026-06-01"></div>
-                <div><label>Spätestes Datum:</label><input type="date" id="end" value="2026-08-31"></div>
-                <div><label>Zwischenstopps Filter:</label><select id="stops"><option value="any">Alle</option><option value="direct">Nur Direkt</option><option value="max1">Max 1</option><option value="max2">Max 2</option></select></div>
-                <div><label>Klasse:</label><select id="cabin"><option value="economy">Economy</option><option value="premium">Premium Eco</option><option value="business">Business</option><option value="first">First</option></select></div>
-                
-                <div class="full">
-                    <label>🧳 Reisegepäck:</label>
-                    <select id="baggage">
-                        <option value="nur handgepäck">nur handgepäck</option>
-                        <option value="aufgabegepäck bis 20 kg">aufgabegepäck bis 20 kg</option>
-                        <option value="aufgabegepäck bis 32 kg">aufgabegepäck bis 32 kg</option>
-                        <option value="aufgabegepäck 20 kg plus handgepäck">aufgabegepäck 20 kg plus handgepäck</option>
+                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA"></div>
+            </div>
+        </div>
+        <div class="card up">
+            <div class="title">💎 Sektion 2: Upgrade-Manager</div>
+            <div class="grid">
+                <div class="full"><label>Buchungsnummer (PNR):</label><input type="text" id="pnr" placeholder="X7YZ3R"></div>
+            </div>
+        </div>
+        <button class="btn" onclick="generate()">System-Links & Protokolle generieren</button>
+        <div id="result-box" class="res-box">
+            <div class="up-proto" id="output"></div>
+        </div>
+    </div>
+</div>
+</body>
