@@ -133,7 +133,32 @@
                     <option>Max. 2 Stopps</option>
                 </select>
             </div>
-
+<!-- KABEL-SKRIPT: ZWANGS-ÖFFNUNG FÜR DIE FLUGHAFENLISTE -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fields = [document.getElementById("fl-from"), document.getElementById("fl-to")];
+        
+        fields.forEach(input => {
+            if (!input) return;
+            
+            // Zwingt die Liste beim reinen Reinklicken zum Aufklappen
+            input.addEventListener("focus", function() {
+                this.setAttribute("autocomplete", "on");
+                // Simuliert einen Doppelklick für den Browser, um die Liste zu triggern
+                let event = new MouseEvent('dblclick', { 'view': window, 'bubbles': true, 'cancelable': true });
+                this.dispatchEvent(event);
+            });
+            
+            // Automatische Großschreibung beim Tippen
+            input.addEventListener("input", function() {
+                let val = this.value;
+                if (val.length > 0) {
+                    this.value = val.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+                }
+            });
+        });
+    });
+</script>
             <div>
                 <label>Ort des Stopps (Stadt oder Code):</label>
                 <input type="text" placeholder="z.B. Dubai" id="fl-stop-location" list="airports-complete" autocomplete="off">
