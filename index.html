@@ -35,9 +35,9 @@
         .btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .btn-main { background: var(--primary); }
         .btn-up { background: var(--upgrade); }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         .pass-box { position: relative; }
-        .eye { position: absolute; right: 10px; top: 24px; cursor: pointer; font-size: 1.1rem; }
+        .eye { position: absolute; right: 10px; top: 24px; cursor: pointer; font-size: 1.1rem; user-select: none; }
         .res-box { margin-top: 15px; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; }
         .l-btn { display: block; text-align: center; padding: 10px; margin-bottom: 8px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; transition: opacity 0.2s; }
         .l-btn:hover { opacity: 0.9; }
@@ -58,11 +58,11 @@
     <div id="auth-section">
         <h1>🔒 Passwort erforderlich</h1>
         <div class="form-group pass-box">
-            <label>Passwort:</label>
-            <input type="password" id="password-input" value="" onkeydown="if(event.key === 'Enter') checkPassword()">
+            <label for="password-input">Passwort:</label>
+            <input type="password" id="password-input" autocomplete="off" onkeydown="if(event.key === 'Enter') { event.preventDefault(); checkPassword(); }">
             <span class="eye" onclick="togglePassword()">👁️</span>
         </div>
-        <button class="btn btn-main" onclick="checkPassword()">Freischalten</button>
+        <button class="btn btn-main" type="button" onclick="checkPassword()">Freischalten</button>
     </div>
 
     <!-- 2. HAUPT-INHALT -->
@@ -106,11 +106,11 @@
             <div class="grid">
                 <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa, Condor):</label><input type="text" id="airline" value="Lufthansa" placeholder="z.B. Lufthansa, Condor, Delta"></div>
             </div>
-            <button class="btn btn-up" onclick="triggerUpgradeSearch()">💎 Gezielte Upgrade-Direktsuche starten</button>
+            <button class="btn btn-up" type="button" onclick="triggerUpgradeSearch()">💎 Gezielte Upgrade-Direktsuche starten</button>
         </div>
 
         <!-- GENERIEREN BUTTON -->
-        <button class="btn btn-main" onclick="generateTravelLinks()">🔍 Suchmaschinen-Verknüpfungen generieren</button>
+        <button class="btn btn-main" type="button" onclick="generateTravelLinks()">🔍 Suchmaschinen-Verknüpfungen generieren</button>
 
         <!-- ERGEBNIS BOX -->
         <div id="result-section" class="res-box hidden">
@@ -145,8 +145,8 @@
 
     // Passwort prüfen
     function checkPassword() {
-        var passwordInput = document.getElementById('password-input').value.trim();
-        if (passwordInput === 'Reise2026') {
+        var inputVal = document.getElementById('password-input').value.trim();
+        if (inputVal === 'Reise2026') {
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('main-content').classList.remove('hidden');
         } else {
@@ -180,6 +180,4 @@
     function triggerUpgradeSearch() {
         var airline = document.getElementById('airline').value.trim();
         if(!airline) { alert('Bitte eine Airline eingeben!'); return; }
-        
-        var airlineLower = airline.toLowerCase();
 
