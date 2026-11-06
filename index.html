@@ -12,12 +12,8 @@
             --card-bg: #ffffff;
             --text: #1e293b;
             --border: #cbd5e1;
-            
-            /* Sektions-Farben */
             --flight-theme: #0284c7;
             --hotel-theme: #0f766e;
-            
-            /* Marken-Farben */
             --kiwi: #00a699;
             --google: #4285f4;
             --skyscanner: #007054;
@@ -26,7 +22,7 @@
             --tripadvisor: #34e0a1;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.5;
@@ -39,7 +35,7 @@
             background: var(--card-bg);
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
         }
         h1 {
             font-size: 1.6rem;
@@ -47,14 +43,12 @@
             margin-top: 0;
             margin-bottom: 1.5rem;
             text-align: center;
-            color: #0f172a;
         }
         .search-card {
             border: 2px solid var(--border);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 1.5rem;
-            background-color: #ffffff;
         }
         .search-card.flight {
             border-color: var(--flight-theme);
@@ -69,13 +63,9 @@
             font-weight: 700;
             margin-top: 0;
             margin-bottom: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         .card-title.flight { color: var(--flight-theme); }
         .card-title.hotel { color: var(--hotel-theme); }
-        
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -101,7 +91,6 @@
             border-radius: 6px;
             box-sizing: border-box;
             font-size: 0.95rem;
-            background-color: #fff;
         }
         .main-submit-btn {
             width: 100%;
@@ -113,8 +102,6 @@
             font-size: 1.05rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 0.5rem;
         }
         .hidden {
             display: none;
@@ -148,14 +135,12 @@
             color: white;
             box-sizing: border-box;
         }
-        
         .kiwi-btn { background-color: var(--kiwi); }
         .google-btn { background-color: var(--google); }
         .skyscanner-btn { background-color: var(--skyscanner); }
         .booking-btn { background-color: var(--booking); }
         .trivago-btn { background-color: var(--trivago); }
         .tripadvisor-btn { background-color: var(--tripadvisor); color: #000000 !important; }
-
         @media (max-width: 600px) {
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full-width { grid-column: span 1; }
@@ -257,3 +242,18 @@
         var input = document.getElementById('password-input').value;
         if (input === 'Reise2026') {
             document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+        } else {
+            document.getElementById('error-msg').classList.remove('hidden');
+        }
+    }
+
+    document.getElementById('password-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') { checkPassword(); }
+    });
+
+    function syncHotelDestination(val) {
+        document.getElementById('hotel-destination').value = val;
+    }
+
+    function generateLinks() {
