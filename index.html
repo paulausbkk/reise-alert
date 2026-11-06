@@ -12,7 +12,6 @@
             --text: #1e293b; 
             --border: #cbd5e1; 
             --flight: #0284c7; 
-            --hotel: #0f766e; 
             --upgrade: #6d28d9; 
             --warn: #dc2626;
             --success: #16a34a;
@@ -23,11 +22,9 @@
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
         .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
         .card.fl { border-color: var(--flight); background: #f0f9ff; }
-        .card.ho { border-color: var(--hotel); background: #f0fdf4; }
         .card.up { border-color: var(--upgrade); background: #faf5ff; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
         .fl .title { color: var(--flight); } 
-        .ho .title { color: var(--hotel); } 
         .up .title { color: var(--upgrade); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .full { grid-column: span 2; }
@@ -35,23 +32,14 @@
         input, select { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
         .btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .btn-main { background: var(--primary); }
-        .btn-up { background: var(--upgrade); }
         .pass-box { position: relative; }
         .eye { position: absolute; right: 10px; top: 24px; cursor: pointer; font-size: 1.1rem; user-select: none; }
         .res-box { margin-top: 15px; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; display: none; }
         .l-btn { display: block; text-align: center; padding: 10px; margin-bottom: 8px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; transition: opacity 0.2s; }
         .l-btn:hover { opacity: 0.9; }
         .l-btn.fl-btn { background: var(--flight); }
-        .l-btn.ho-btn { background: var(--hotel); }
-        .l-btn.up-btn { background: var(--upgrade); }
         .l-btn.as-btn { background: var(--asia); }
-        
-        /* Budget Rechner Display */
-        .budget-calc-box { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; border: 1px solid #cbd5e1; display: none; }
-        .budget-ok { background: #e6f4ea; color: var(--success); border-color: #a3cfbb; }
-        .budget-error { background: #fce8e6; color: var(--warn); border-color: #f1aeb5; }
 
-        /* Upgrade Protokoll Styling */
         .up-proto { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed var(--upgrade); border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: #334155; white-space: pre-wrap; }
         .check-box-container { display: flex; align-items: center; gap: 8px; margin-top: 5px; background: #fff7ed; padding: 8px; border: 1px dashed var(--asia); border-radius: 4px; display: none; }
         .check-box-container input { width: auto; cursor: pointer; }
@@ -142,50 +130,78 @@
             </div>
         </div>
 
-        <!-- SEKTION 3: Hotel- & Budgetplanung -->
-        <div class="card ho">
-            <div class="title">Sektion 3: Hotel- & Budgetplanung</div>
-            <div class="grid">
-                <div class="full">
-                    <label>Hotel-Reiseziel Stadt:</label>
-                    <input type="text" id="ho-dest" placeholder="z.B. Manila">
-                </div>
-                <div>
-                    <label>Maximales Hotelbudget total (€):</label>
-                    <input type="number" id="ho-budget" placeholder="z.B. 1200" oninput="calculateBudget()">
-                </div>
-                <div>
-                    <label>Geschätzter Hotelpreis (€):</label>
-                    <input type="number" id="ho-est-price" placeholder="z.B. 950" oninput="calculateBudget()">
-                </div>
-                <div>
-                    <label>Hotel Sterne:</label>
-                    <select id="ho-stars">
-                        <option value="all">Alle Sterne</option>
-                        <option value="class=1">1 Stern</option>
-                        <option value="class=2">2 Sterne</option>
-                        <option value="class=3">3 Sterne</option>
-                        <option value="class=4">4 Sterne</option>
-                        <option value="class=5">5 Sterne</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Unterkunftstyp:</label>
-                    <select id="ho-type">
-                        <option value="hotel">Hotel</option>
-                        <option value="resort">Resort</option>
-                        <option value="airbnb">Airbnb</option>
-                    </select>
-                </div>
-                <div class="full">
-                    <label>Personenanzahl:</label>
-                    <select id="ho-guests">
-                        <option value="1">1 Person</option>
-                        <option value="2" selected>2 Personen (Standard)</option>
-                        <option value="3">3 Personen</option>
-                        <option value="4">4 Personen (Max)</option>
-                    </select>
-                </div>
-            </div>
-            <!-- Budget Status Anzeige -->
+        <button class="btn btn-main" onclick="generateSystem()">System-Links & Protokolle generieren</button>
+
+        <div id="result-box" class="res-box">
+            <div class="title" style="color: var(--text);">🔗 Generierte System-Links:</div>
+            <div id="links-container"></div>
+
+            <div class="title" style="color: var(--upgrade); margin-top: 20px;">📋 Generiertes Upgrade- & Datenprotokoll:</div>
+            <div id="upgrade-protocol-output" class="up-proto"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Passwort Logik
+function checkPassword() {
+    const pass = document.getElementById('p-field').value.trim();
+    if(pass === 'Reise2026') {
+        document.getElementById('auth-section').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        loadFromLocalStorage();
+    } else {
+        alert('Falsches Passwort!');
+    }
+}
+
+function togglePasswordVisibility() {
+    const pf = document.getElementById('p-field');
+    if(pf.type === 'password') {
+        pf.type = 'text';
+    } else {
+        pf.type = 'password';
+    }
+}
+
+// Automatische Asien-Erkennung (Drehkreuze)
+function checkAsiaMode() {
+    const asiaHubs = ['MNL', 'BKK', 'SGN', 'SIN', 'CEB', 'HKG', 'KUL', 'CGK', 'HND', 'NRT'];
+    const destination = document.getElementById('fl-to').value.trim().toUpperCase();
+    const container = document.getElementById('asia-box-container');
+
+    if(asiaHubs.includes(destination)) {
+        container.style.display = 'flex';
+    } else {
+        container.style.display = 'none';
+        document.getElementById('asia-mode').checked = false;
+    }
+}
+
+// Kernfunktion: Generierung, Verarbeitung & Speicherung
+function generateSystem() {
+    const from = document.getElementById('fl-from').value.trim().toUpperCase();
+    const to = document.getElementById('fl-to').value.trim().toUpperCase();
+    const d1 = document.getElementById('fl-date1').value.trim();
+    const d2 = document.getElementById('fl-date2').value.trim();
+    const baggage = document.getElementById('fl-baggage').value;
+
+    const pnr = document.getElementById('up-pnr').value.trim().toUpperCase();
+    const ticket = document.getElementById('up-ticket').value.trim();
+    const name = document.getElementById('up-name').value.trim().toUpperCase();
+    const passport = document.getElementById('up-passport').value.trim().toUpperCase();
+    const maxPrice = document.getElementById('up-maxprice').value.trim();
+
+    // 1. Speicherung im localStorage
+    const dataToSave = {
+        flFrom: from, flTo: to, flDate1: d1, flDate2: d2, flBaggage: baggage,
+        upPnr: pnr, upTicket: ticket, upName: name, upPassport: passport, upMaxPrice: maxPrice
+    };
+    localStorage.setItem('mckinney_config_data', JSON.stringify(dataToSave));
+
+    // Links generieren
+    const linksContainer = document.getElementById('links-container');
+    linksContainer.innerHTML = '';
+
+    // Google Flights Link
 
