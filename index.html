@@ -38,7 +38,7 @@
         .btn-up { background: var(--upgrade); }
         .pass-box { position: relative; }
         .eye { position: absolute; right: 10px; top: 24px; cursor: pointer; font-size: 1.1rem; user-select: none; }
-        .res-box { margin-top: 15px; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; }
+        .res-box { margin-top: 15px; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; display: none; }
         .l-btn { display: block; text-align: center; padding: 10px; margin-bottom: 8px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; transition: opacity 0.2s; }
         .l-btn:hover { opacity: 0.9; }
         .l-btn.fl-btn { background: var(--flight); }
@@ -47,13 +47,13 @@
         .l-btn.as-btn { background: var(--asia); }
         
         /* Budget Rechner Display */
-        .budget-calc-box { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; border: 1px solid #cbd5e1; }
+        .budget-calc-box { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; border: 1px solid #cbd5e1; display: none; }
         .budget-ok { background: #e6f4ea; color: var(--success); border-color: #a3cfbb; }
         .budget-error { background: #fce8e6; color: var(--warn); border-color: #f1aeb5; }
 
         /* Upgrade Protokoll Styling */
-        .up-proto { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed var(--upgrade); border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: #334155; }
-        .check-box-container { display: flex; align-items: center; gap: 8px; margin-top: 5px; background: #fff7ed; padding: 8px; border: 1px dashed var(--asia); border-radius: 4px; }
+        .up-proto { margin-top: 15px; padding: 10px; background: #fff; border: 1px dashed var(--upgrade); border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: #334155; white-space: pre-wrap; }
+        .check-box-container { display: flex; align-items: center; gap: 8px; margin-top: 5px; background: #fff7ed; padding: 8px; border: 1px dashed var(--asia); border-radius: 4px; display: none; }
         .check-box-container input { width: auto; cursor: pointer; }
         .check-box-container label { margin-bottom: 0; color: #c2410c; cursor: pointer; }
     </style>
@@ -66,31 +66,39 @@
         <h1>🔒 Passwort erforderlich</h1>
         <div class="form-group pass-box">
             <label>Passwort:</label>
-            <input type="password" id="p-field" autocomplete="off" onkeydown="if(event.key==='Enter'){ event.preventDefault(); if(document.getElementById('p-field').value.trim()==='Reise2026'){ document.getElementById('auth-section').style.display='none'; document.getElementById('main-content').style.display='block'; }else{ alert('Falsches Passwort!'); } }">
-            <span class="eye" onclick="if(document.getElementById('p-field').type==='password'){ document.getElementById('p-field').type='text'; this.innerText='👁️‍🗨️'; }else{ document.getElementById('p-field').type='password'; this.innerText='👁️'; }">👁️</span>
+            <input type="password" id="p-field" autocomplete="off" onkeydown="if(event.key==='Enter'){ event.preventDefault(); checkPassword(); }">
+            <span class="eye" onclick="togglePasswordVisibility()">👁️</span>
         </div>
-        <button class="btn btn-main" type="button" onclick="if(document.getElementById('p-field').value.trim()==='Reise2026'){ document.getElementById('auth-section').style.display='none'; document.getElementById('main-content').style.display='block'; }else{ alert('Falsches Passwort!'); }">Freischalten</button>
+        <button class="btn btn-main" onclick="checkPassword()" style="margin-top: 15px;">Einloggen</button>
     </div>
 
-    <!-- 2. HAUPT-INHALT -->
+    <!-- MAIN APP CONTENT -->
     <div id="main-content" style="display: none;">
         <h1>✈️ McKinney Reisekonfiguration PRO</h1>
         
-        <!-- SEKTION 1: FLUG KARTE -->
+        <!-- SEKTION 1: Flug-Parameter -->
         <div class="card fl">
-            <div class="title">✈️ Sektion 1: Flug-Parameter</div>
+            <div class="title">Sektion 1: Flug-Parameter</div>
             <div class="grid">
-                <div><label>Abflug (Code):</label><input type="text" id="dep" value="FRA"></div>
-                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA" oninput="checkAsiaDestination()"></div>
-                <div class="full"><label>📍 Optionaler Stopover / Zwischenaufenthalt:</label><input type="text" id="via" placeholder="z.B. NYC"></div>
-                <div><label>Frühestes Datum:</label><input type="date" id="start" value="2026-06-01"></div>
-                <div><label>Spätestes Datum:</label><input type="date" id="end" value="2026-08-31"></div>
-                <div><label>Zwischenstopps Filter:</label><select id="stops"><option value="any">Alle</option><option value="direct">Nur Direkt</option><option value="max1">Max 1</option><option value="max2">Max 2</option></select></div>
-                <div><label>Klasse:</label><select id="cabin"><option value="economy">Economy</option><option value="premium">Premium Eco</option><option value="business">Business</option><option value="first">First</option></select></div>
-                
+                <div>
+                    <label>Abflughafen (Code):</label>
+                    <input type="text" id="fl-from" placeholder="z.B. FRA" maxlength="3">
+                </div>
+                <div>
+                    <label>Zielflughafen (Code):</label>
+                    <input type="text" id="fl-to" placeholder="z.B. MNL" maxlength="3" oninput="checkAsiaMode()">
+                </div>
+                <div>
+                    <label>Hinflug (DD.MM.YYYY):</label>
+                    <input type="text" id="fl-date1" placeholder="z.B. 15.11.2026">
+                </div>
+                <div>
+                    <label>Rückflug (DD.MM.YYYY):</label>
+                    <input type="text" id="fl-date2" placeholder="z.B. 25.11.2026">
+                </div>
                 <div class="full">
-                    <label>🧳 Reisegepäck:</label>
-                    <select id="baggage">
+                    <label>Gepäckauswahl:</label>
+                    <select id="fl-baggage">
                         <option value="nur handgepäck">nur handgepäck</option>
                         <option value="aufgabegepäck bis 20 kg">aufgabegepäck bis 20 kg</option>
                         <option value="aufgabegepäck bis 32 kg">aufgabegepäck bis 32 kg</option>
@@ -98,44 +106,85 @@
                         <option value="aufgabegepäck plus handgepäck">aufgabegepäck plus handgepäck</option>
                     </select>
                 </div>
-
-                <div class="full check-box-container">
-                    <input type="checkbox" id="asia-mode">
-                    <label for="asia-mode">💥 Asiatische Billigflieger aktivieren (Cebu, VietJet, AirAsia etc.)</label>
+                <div class="full">
+                    <div class="check-box-container" id="asia-box-container">
+                        <input type="checkbox" id="asia-mode">
+                        <label for="asia-mode">Asiatische Low-Cost-Carrier einbeziehen (Trip.com, Cebu, VietJet)</label>
+                    </div>
                 </div>
-
-                <div class="full"><label>Maximaler Ticketpreis (€):</label><input type="number" id="max-flight-price" placeholder="z.B. 1200"></div>
-                <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18" oninput="document.getElementById('t-val').innerText = this.value + ' h'"></div>
             </div>
         </div>
 
-        <!-- SEKTION 2: UPGRADE KARTE -->
+        <!-- SEKTION 2: Upgrade- & Status-Manager -->
         <div class="card up">
-            <div class="title">💎 Sektion 2: Upgrade- & Status-Manager</div>
+            <div class="title">Sektion 2: Upgrade- & Status-Manager</div>
             <div class="grid">
-                <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa):</label><input type="text" id="airline" value="Lufthansa"></div>
-                <div><label>Aktueller Status:</label><input type="text" id="status" placeholder="z.B. Frequent Traveller"></div>
-                <div><label>Buchungsnummer (PNR):</label><input type="text" id="booking-code" placeholder="z.B. A1B2C3"></div>
-                <div class="full"><label>Name wie im Reisepass:</label><input type="text" id="passport-name" placeholder="z.B. MUSTERMANN / MAX DR"></div>
-                <div><label>Reisepassnummer:</label><input type="text" id="passport-num" placeholder="z.B. CXXXXXXXX"></div>
-                <div><label>Ticketnummer:</label><input type="text" id="ticket-num" placeholder="z.B. 220-1234567890"></div>
-                <div class="full"><label>Maximaler Preis für das Upgrade (€):</label><input type="number" id="max-upgrade-price" placeholder="z.B. 450"></div>
+                <div>
+                    <label>Buchungsnummer (PNR):</label>
+                    <input type="text" id="up-pnr" placeholder="z.B. X7YZ3R">
+                </div>
+                <div>
+                    <label>Ticketnummer:</label>
+                    <input type="text" id="up-ticket" placeholder="z.B. 220-1234567890">
+                </div>
+                <div class="full">
+                    <label>Name (wie im Reisepass):</label>
+                    <input type="text" id="up-name" placeholder="MAXIMILIAN MUSTERMANN">
+                </div>
+                <div>
+                    <label>Reisepassnummer:</label>
+                    <input type="text" id="up-passport" placeholder="z.B. CXXXXXXX">
+                </div>
+                <div>
+                    <label>Max. Upgrade-Budget (€):</label>
+                    <input type="number" id="up-maxprice" placeholder="z.B. 450">
+                </div>
             </div>
         </div>
 
-        <!-- SEKTION 3: HOTEL KARTE -->
+        <!-- SEKTION 3: Hotel- & Budgetplanung -->
         <div class="card ho">
-            <div class="title">🏨 Sektion 3: Hotel- & Budgetplanung</div>
+            <div class="title">Sektion 3: Hotel- & Budgetplanung</div>
             <div class="grid">
-                <div><label>Gesamtbudget (€):</label><input type="number" id="total-budget" value="3000" oninput="calcBudget()"></div>
-                <div><label>Max. Hotelpreis / Nacht (€):</label><input type="number" id="hotel-per-night" value="150" oninput="calcBudget()"></div>
-                <div><label>Anzahl Nächte:</label><input type="number" id="nights" value="10" oninput="calcBudget()"></div>
-                <div><label>Geschätzte Flugkosten (€):</label><input type="number" id="est-flight" value="800" oninput="calcBudget()"></div>
-                
+                <div class="full">
+                    <label>Hotel-Reiseziel Stadt:</label>
+                    <input type="text" id="ho-dest" placeholder="z.B. Manila">
+                </div>
                 <div>
-                    <label>⭐ Hotel Sterne:</label>
-                    <select id="hotel-stars">
-                        <option value="any">Alle Sterne</option>
-                        <option value="1">1 Stern</option>
-                        <option value="2">2 Sterne</option>
-                        <option value="3">3 Sterne</option>
+                    <label>Maximales Hotelbudget total (€):</label>
+                    <input type="number" id="ho-budget" placeholder="z.B. 1200" oninput="calculateBudget()">
+                </div>
+                <div>
+                    <label>Geschätzter Hotelpreis (€):</label>
+                    <input type="number" id="ho-est-price" placeholder="z.B. 950" oninput="calculateBudget()">
+                </div>
+                <div>
+                    <label>Hotel Sterne:</label>
+                    <select id="ho-stars">
+                        <option value="all">Alle Sterne</option>
+                        <option value="class=1">1 Stern</option>
+                        <option value="class=2">2 Sterne</option>
+                        <option value="class=3">3 Sterne</option>
+                        <option value="class=4">4 Sterne</option>
+                        <option value="class=5">5 Sterne</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Unterkunftstyp:</label>
+                    <select id="ho-type">
+                        <option value="hotel">Hotel</option>
+                        <option value="resort">Resort</option>
+                        <option value="airbnb">Airbnb</option>
+                    </select>
+                </div>
+                <div class="full">
+                    <label>Personenanzahl:</label>
+                    <select id="ho-guests">
+                        <option value="1">1 Person</option>
+                        <option value="2" selected>2 Personen (Standard)</option>
+                        <option value="3">3 Personen</option>
+                        <option value="4">4 Personen (Max)</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Budget Status Anzeige -->
