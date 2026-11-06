@@ -26,6 +26,9 @@
     </style>
     <script>
         window.onload = function() {
+            // Bereinigt alte Reste, um Anzeigefehler zu verhindern
+            localStorage.clear();
+            
             var pw = prompt("🔑 Passwort erforderlich:");
             if (pw === "Reise2026") {
                 document.getElementById("main-content").style.display = "block";
@@ -46,13 +49,19 @@
             <div class="title">✈️ Sektion 1: Flug-Parameter</div>
             <div class="grid">
                 
-                <!-- 1. Feld für Zielort -->
-                <div class="full">
+                <!-- Neu hinzugefügt: Abflugort -->
+                <div>
+                    <label>Abflugort (Flughafencode):</label>
+                    <input type="text" id="dep" placeholder="z.B. FRA" maxlength="3">
+                </div>
+
+                <!-- Feld für Zielort -->
+                <div>
                     <label>Zielort (Flughafencode):</label>
                     <input type="text" id="dest" placeholder="z.B. MNL" maxlength="3">
                 </div>
 
-                <!-- 2. Feld für Personenanzahl -->
+                <!-- Feld für Personenanzahl -->
                 <div>
                     <label>Personenanzahl:</label>
                     <select id="fl-passengers">
@@ -63,7 +72,7 @@
                     </select>
                 </div>
 
-                <!-- 3. Feld für Gepäckauswahl -->
+                <!-- Feld für Gepäckauswahl -->
                 <div>
                     <label>Gepäckauswahl:</label>
                     <select id="fl-baggage">
