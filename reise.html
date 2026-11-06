@@ -254,6 +254,71 @@ Nur Hinflug (One Way):
     <button class="btn">System-Links & Protokolle Generieren</button>
 </div>
 </body>
+<!-- INTELIGENTES INTERNET-KABEL: WELTWEITE FLUGHAFEN-SUCHE -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fromInput = document.getElementById("fl-from");
+        const toInput = document.getElementById("fl-to");
+        let globalAirports = [];
+
+        // Lädt die weltweite Flughafen-Datenbank live aus dem Internet
+        fetch('https://githubusercontent.com')
+            .then(res => res.json())
+            .then(data => {
+                globalAirports = Object.values(data)
+                    .filter(a => a.iata && a.iata.length === 3)
+                    .map(a => ({
+                        label: `${a.city} (${a.iata}) - ${a.name}`,
+                        city: a.city,
+                        iata: a.iata
+                    }));
+                initSearch();
+            }).catch(err => console.error("Datenbank-Fehler:", err));
+
+        function initSearch() {
+            [fromInput, toInput].forEach(input => {
+                if (!input) return;
+                input.removeAttribute('list');
+
+                input.addEventListener("input", function() {
+                    // Automatische Großschreibung beim Tippen
+                    let val = this.value;
+                    if (val.length > 0) {
+                        this.value = val.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+                    }
+
+                    const query = this.value.trim().toLowerCase();
+                    if (query.length < 2) return;
+
+                    // Durchsucht die Live-Datenbank nach Stadt oder Code
+                    const results = globalAirports.filter(a => 
+                        (a.city && a.city.toLowerCase().includes(query)) || 
+                        a.iata.toLowerCase().includes(query)
+                    ).slice(0, 8);
+
+                    let listId = "live-list-" + input.id;
+                    let list = document.getElementById(listId);
+                    if (!list) {
+                        list = document.createElement("datalist");
+                        list.id = listId;
+                        document.body.appendChild(list);
+                        input.setAttribute("list", listId);
+                    }
+                    list.innerHTML = results.map(r => `<option value="${r.label}">`).join("");
+                });
+
+                // Speichert den sauberen 3-stelligen Code bei der Auswahl
+                input.addEventListener("change", function() {
+                    const match = this.value.match(/\(([A-Z]{3})\)/);
+                    if (match) {
+                        this.dataset.iata = match[1];
+                        console.log("IATA-Code gespeichert:", this.dataset.iata);
+                    }
+                });
+            });
+        }
+    });
+</script>
 </html>
 <!-- INTELLIGENTE DATENLISTE FÜR FLUGHÄFEN -->
 <datalist id="airports-complete">
