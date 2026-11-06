@@ -45,6 +45,21 @@
             margin-bottom: 1.5rem;
             text-align: center;
         }
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-wrapper input {
+            padding-right: 45px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            user-select: none;
+        }
         .search-card {
             border: 2px solid var(--border);
             border-radius: 12px;
@@ -72,7 +87,6 @@
         .card-title.flight { color: var(--flight-theme); }
         .card-title.hotel { color: var(--hotel-theme); }
         .card-title.upgrade { color: var(--upgrade-theme); }
-        
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -179,7 +193,10 @@
     <div id="auth-section">
         <h1>🔒 Bitte Passwort eingeben</h1>
         <div class="form-group">
-            <input type="password" id="password-input" placeholder="Passwort hier eingeben...">
+            <div class="password-wrapper">
+                <input type="password" id="password-input" placeholder="Passwort hier eingeben...">
+                <span class="toggle-password" onclick="var p=document.getElementById('password-input'); if(p.type==='password'){p.type='text'; this.innerText='👁️‍🗨️';}else{p.type='password'; this.innerText='👁️';}">👁️</span>
+            </div>
         </div>
         <button class="main-submit-btn" onclick="if(document.getElementById('password-input').value==='Reise2026'){document.getElementById('auth-section').classList.add('hidden');document.getElementById('main-content').classList.remove('hidden');}else{document.getElementById('error-msg').classList.remove('hidden');}">Freischalten</button>
         <p id="error-msg" style="color: #dc2626; text-align: center; font-size: 0.9rem; margin-top: 1rem;" class="hidden">Falsches Passwort.</p>
@@ -187,7 +204,7 @@
 
     <!-- 2. Formular-Bereich -->
     <div id="main-content" class="hidden">
-        <h1>✈️ McKinney Reisekonfiguration PRO</h1>
+        <h1>✈️ McKinney Reisekonfiguration</h1>
         
         <!-- BLAUE KARTE: FLUG -->
         <div class="search-card flight">
@@ -203,7 +220,7 @@
                 </div>
                 <div class="form-group full-width" style="background: rgba(2, 132, 199, 0.05); padding: 10px; border-radius: 8px; border: 1px dashed var(--flight-theme);">
                     <label for="stopover-airport" style="color: var(--flight-theme);">📍 Geplanter Stopover / Zwischenaufenthalt (Optional):</label>
-                    <input type="text" id="stopover-airport" placeholder="z.B. NYC, LHR (Feld befüllen für Multistopp-Budget)" oninput="if(this.value.trim()!=''){document.getElementById('second-leg-box').classList.remove('hidden');}else{document.getElementById('second-leg-box').classList.add('hidden');}">
+                    <input type="text" id="stopover-airport" placeholder="z.B. NYC, LHR" oninput="if(this.value.trim()!=''){document.getElementById('second-leg-box').classList.remove('hidden');}else{document.getElementById('second-leg-box').classList.add('hidden');}">
                 </div>
                 <div class="form-group">
                     <label for="start-date">Frühestes Hinreisedatum:</label>
@@ -233,16 +250,3 @@
                 <div class="form-group full-width">
                     <label for="max-travel-time">Maximale Reisezeit (Std. pro Strecke):</label>
                     <div class="range-container">
-                        <input type="range" id="max-travel-time" min="5" max="40" value="18" oninput="document.getElementById('travel-time-val').innerText=this.value+' h';">
-                        <span class="range-value" id="travel-time-val">18 h</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- GRÜNE KARTE: HOTEL & BUDGET -->
-        <div class="search-card hotel">
-            <div class="card-title hotel">🏨 Sektion 2: Hotel & Budget-Planung</div>
-            <div class="form-grid">
-                <div class="form-group full-width">
-                    <label for="hotel-destination">Zielort für Hotelsuche:</label>
