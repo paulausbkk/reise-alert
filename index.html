@@ -5,251 +5,238 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ McKinney Reisekonfiguration</title>
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f6f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
             margin: 0;
             padding: 20px;
         }
         .container {
-            background: white;
+            max-width: 600px;
+            margin: 40px auto;
+            background: var(--card-bg);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            width: 100%;
-            max-width: 550px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
             text-align: center;
-        }
-        h2 { color: #2c3e50; margin-bottom: 10px; }
-        h3 { color: #34495e; border-bottom: 2px solid #ecf0f1; padding-bottom: 5px; margin-top: 25px; text-align: left; font-size: 16px; }
-        .form-group {
-            text-align: left;
-            margin-bottom: 15px;
-        }
-        .form-row {
             display: flex;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        .form-row .form-group {
-            flex: 1;
+        .form-group {
+            margin-bottom: 1.25rem;
         }
         label {
             display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
-            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
         input, select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
             border-radius: 6px;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 1rem;
+            background-color: #fff;
         }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-align: left;
-            margin-bottom: 15px;
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 6px;
-        }
-        .checkbox-group input {
-            width: auto;
-        }
-        .btn-box {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: bold;
             border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
         }
-        .btn-submit { background-color: #2ecc71; }
-        .btn-submit:hover { background-color: #27ae60; }
-        .btn-link { text-decoration: none; display: block; padding: 14px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; color: white; text-align: center; }
-        .btn-kiwi { background-color: #3498db; }
-        .btn-kiwi:hover { background-color: #2980b9; }
-        .btn-booking { background-color: #003580; }
-        .btn-booking:hover { background-color: #002252; }
-        #secret-content { display: none; }
-        #result-box { display: none; margin-top: 20px; background: #fff; padding: 15px; border: 1px dashed #3498db; border-radius: 8px; }
-        .error { color: #e74c3c; margin-top: 10px; font-weight: bold; }
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        .hidden {
+            display: none;
+        }
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f1f5f9;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            box-sizing: border-box;
+        }
+        .kiwi-btn { background-color: #00a699; }
+        .kiwi-btn:hover { background-color: #00847a; }
+        .booking-btn { background-color: #003580; }
+        .booking-btn:hover { background-color: #002254; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- VORSCHALT-PASSWORT-SCHUTZ -->
-    <div id="login-box">
-        <h2>🔒 Passwortschutz</h2>
-        <p>Bitte gib das Passwort ein, um zum Reise-Formular zu gelangen:</p>
+    <!-- 1. Passwort-Bereich -->
+    <div id="auth-section">
+        <h1>🔒 Bitte Passwort eingeben</h1>
         <div class="form-group">
-            <input type="password" id="password-input" placeholder="Passwort eingeben...">
+            <input type="password" id="password-input" placeholder="Passwort hier eingeben...">
         </div>
-        <button style="background-color: #3498db;" onclick="checkPassword()">Freischalten</button>
-        <p id="login-error" class="error"></p>
+        <button onclick="checkPassword()">Freischalten</button>
+        <p id="error-msg" style="color: #dc2626; text-align: center; font-size: 0.9rem; margin-top: 1rem;" class="hidden">Falsches Passwort. Bitte versuche es erneut.</p>
     </div>
 
-    <!-- DAS ERWEITERTE FORMULAR -->
-    <div id="secret-content">
-        <h2>✈️ Erweiterte Reisedaten</h2>
-        <form onsubmit="generateLinks(event)">
-            
-            <h3>🗺️ FLUG-SUCHKRITERIEN</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Von:</label>
-                    <input type="text" id="von" value="FRA" required maxlength="3" style="text-transform: uppercase;">
-                </div>
-                <div class="form-group">
-                    <label>Nach:</label>
-                    <input type="text" id="nach" value="JFK" required maxlength="3" style="text-transform: uppercase;">
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Hin-Datum:</label>
-                    <input type="date" id="hin" value="2026-12-15" required>
-                </div>
-                <div class="form-group">
-                    <label>Rück-Datum:</label>
-                    <input type="date" id="rueck" value="2026-12-22" required>
-                </div>
-            </div>
+    <!-- 2. Eigentlicher Formular-Bereich (wird erst nach Passwort sichtbar) -->
+    <div id="main-content" class="hidden">
+        <h1>✈️ McKinney Reisekonfiguration</h1>
+        
+        <div class="form-group">
+            <label for="departure">Abflughafen (Code):</label>
+            <input type="text" id="departure" value="FRA" placeholder="z.B. FRA, MUC, BER">
+        </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Klasse:</label>
-                    <select id="klasse">
-                        <option value="Economy">Economy</option>
-                        <option value="Premium Economy">Premium Economy</option>
-                        <option value="Business">Business</option>
-                        <option value="First Class">First Class</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Personen:</label>
-                    <input type="number" id="personen" value="1" min="1" required>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="destination">Zielflughafen (Code):</label>
+            <input type="text" id="destination" value="MIA" placeholder="z.B. MIA, JFK, LAX">
+        </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Zwischenstopps:</label>
-                    <select id="stops">
-                        <option value="max 1">max 1</option>
-                        <option value="direkt">direkt</option>
-                        <option value="beliebig">beliebig</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Max. Reisezeit (Std):</label>
-                    <input type="number" id="reisezeit" value="12" min="1" max="24" required>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="start-date">Frühestes Hinreisedatum:</label>
+            <input type="date" id="start-date" value="2026-06-01">
+        </div>
 
-            <h3>🏨 HOTEL-SUCHKRITERIEN</h3>
-            <div class="form-group">
-                <label>Stadt Hotel:</label>
-                <input type="text" id="stadt_hotel" value="New York" required>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Sterne:</label>
-                    <select id="stars">
-                        <option value="4">4 Sterne</option>
-                        <option value="1">1 Stern</option>
-                        <option value="2">2 Sterne</option>
-                        <option value="3">3 Sterne</option>
-                        <option value="5">5 Sterne</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Hotelpreis Gesamt (€):</label>
-                    <input type="number" id="hotel_preis" value="350.00" step="0.01" required>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="end-date">Spätestes Rückreisedatum:</label>
+            <input type="date" id="end-date" value="2026-08-31">
+        </div>
 
-            <h3>💸 BUDGET-VORGABEN</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Max. Budget Flug (€):</label>
-                    <input type="number" id="budget_flug" value="600.00" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label>Max. Budget Hotel (€):</label>
-                    <input type="number" id="budget_hotel" value="600.00" step="0.01" required>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="duration-min">Mindestaufenthalt (Nächte):</label>
+            <input type="number" id="duration-min" value="10" min="1">
+        </div>
 
-            <h3>🛑 EIGENSTÄNDIGER TRANSFER</h3>
-            <div class="checkbox-group">
-                <input type="checkbox" id="separater_transfer" checked>
-                <label for="separater_transfer" style="margin: 0; cursor: pointer;">Separater Transfer aktiv</label>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Preis Strecke 1 (€):</label>
-                    <input type="number" id="preis_s1" value="250.00" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label>Preis Strecke 2 (€):</label>
-                    <input type="number" id="preis_s2" value="180.00" step="0.01" required>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="duration-max">Maximalaufenthalt (Nächte):</label>
+            <input type="number" id="duration-max" value="14" min="1">
+        </div>
 
-            <button type="submit" class="btn-submit">Live-Suchlinks generieren</button>
-        </form>
+        <div class="form-group">
+            <label for="hotel-stars">Mindest-Sterne (Hotel):</label>
+            <select id="hotel-stars">
+                <option value="3">3 Sterne</option>
+                <option value="4" selected>4 Sterne</option>
+                <option value="5">5 Sterne</option>
+            </select>
+        </div>
 
-        <!-- LIVE-BUTTONS NACH GENERIERUNG -->
-        <div id="result-box">
-            <h3>🚀 Deine personalisierten Live-Links:</h3>
-            <div class="btn-box">
-                <a id="kiwi-link" href="#" target="_blank" class="btn-link btn-kiwi">✈️ Flüge prüfen (Kiwi.com)</a>
-                <a id="booking-link" href="#" target="_blank" class="btn-link btn-booking">🏨 Hotels prüfen (Booking.com)</a>
-            </div>
+        <div class="form-group">
+            <label for="max-budget">Maximales Gesamtbudget (€):</label>
+            <input type="number" id="max-budget" value="2500" min="100">
+        </div>
+
+        <button onclick="generateLinks()">Live-Suchlinks generieren</button>
+
+        <!-- 3. Ergebnis-Bereich für die Links -->
+        <div id="results" class="result-box hidden">
+            <h3 style="margin-top: 0;">Deine persönlichen Suchlinks:</h3>
+            <a id="kiwi-link" href="#" target="_blank" class="link-btn kiwi-btn">🥝 Flüge auf Kiwi.com suchen</a>
+            <a id="booking-link" href="#" target="_blank" class="link-btn booking-btn">🏨 Hotels auf Booking.com suchen</a>
         </div>
     </div>
 </div>
 
 <script>
+    // Passwort-Schutz prüfen
     function checkPassword() {
-        const input = document.getElementById("password-input").value;
-        const errorMsg = document.getElementById("login-error");
+        const input = document.getElementById('password-input').value;
+        const errorMsg = document.getElementById('error-msg');
         
-        if (input === "Reise2026") {
-            document.getElementById("login-box").style.display = "none";
-            document.getElementById("secret-content").style.display = "block";
+        if (input === 'Reise2026') {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
         } else {
-            errorMsg.textContent = "❌ Falsches Passwort! Bitte versuche es erneut.";
+            errorMsg.classList.remove('hidden');
         }
     }
 
-    function generateLinks(event) {
-        event.preventDefault();
+    // Eingabe per Enter-Taste im Passwortfeld erlauben
+    document.getElementById('password-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkPassword();
+        }
+    });
+
+    // Datumsformatierung für Kiwi (DD/MM/YYYY)
+    function formatDateKiwi(dateStr) {
+        if (!dateStr) return '';
+        const parts = dateStr.split('-');
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+
+    // Links dynamisch zusammenbauen
+    function generateLinks() {
+        const dep = document.getElementById('departure').value.trim().toLowerCase();
+        const dest = document.getElementById('destination').value.trim().toLowerCase();
+        const start = document.getElementById('start-date').value;
+        const end = document.getElementById('end-date').value;
+        const durMin = document.getElementById('duration-min').value;
+        const durMax = document.getElementById('duration-max').value;
+        const stars = document.getElementById('hotel-stars').value;
+
+        // 1. Unzerstörbarer Kiwi-Link (Flexibles Datumsfenster + Reisedauer)
+        const kiwiStart = formatDateKiwi(start);
+        const kiwiEnd = formatDateKiwi(end);
+        const kiwiUrl = `https://kiwi.com{dep}/${dest}/${kiwiStart}-${kiwiEnd}/${durMin}-${durMax}`;
         
-        const von = document.getElementById("von").value.toLowerCase();
-        const nach = document.getElementById("nach").value.toLowerCase();
-        const hin = document.getElementById("hin").value;
-        const rueck = document.getElementById("rueck").value;
-        const stadt = encodeURIComponent(document.getElementById("stadt_hotel").value);
+        // 2. Booking.com Link (Vorauswahl Ort und Filter-Anker für Sterne)
+        // nclass=3: 3 Sterne, nclass=4: 4 Sterne, nclass=5: 5 Sterne
+        const bookingUrl = `https://booking.com{encodeURIComponent(dest.toUpperCase())}&nclass=${stars}`;
+
+        // Links setzen und Resultat-Box anzeigen
+        document.getElementById('kiwi-link').href = kiwiUrl;
+        document.getElementById('booking-link').href = bookingUrl;
+        document.getElementById('results').classList.remove('hidden');
+        
+        // Sanftes Runterscrollen zu den Ergebnissen
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
