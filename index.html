@@ -74,7 +74,7 @@
             var passport = document.getElementById('up-passport').value.trim().toUpperCase();
             var maxPrice = document.getElementById('up-maxprice').value.trim();
 
-            localStorage.setItem('mckinney_v6_data', JSON.stringify({
+            localStorage.setItem('mckinney_v7_data', JSON.stringify({
                 from, to, d1, d2, passengers, stops, stopLocation, price, nextPrice, duration, baggage, pnr, ticket, name, passport, maxPrice
             }));
 
@@ -98,7 +98,7 @@
             document.getElementById('result-box').style.display = 'block';
         }
         function loadLocal() {
-            var stored = localStorage.getItem('mckinney_v6_data');
+            var stored = localStorage.getItem('mckinney_v7_data');
             if(!stored) return;
             var data = JSON.parse(stored);
             if(data.from) document.getElementById('fl-from').value = data.from;
