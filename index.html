@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ McKinney Reisekonfiguration PRO</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --upgrade: #6d28d9; --asia: #ea580c; }
+        :root { 
+            --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; 
+            --border: #cbd5e1; --flight: #0284c7; --upgrade: #6d28d9; --asia: #ea580c; 
+        }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
@@ -64,19 +67,20 @@
             var nextPrice = document.getElementById('fl-next-price').value;
             var duration = document.getElementById('fl-duration').value;
             var baggage = document.getElementById('fl-baggage').value;
+            
             var pnr = document.getElementById('up-pnr').value.trim().toUpperCase();
             var ticket = document.getElementById('up-ticket').value.trim();
             var name = document.getElementById('up-name').value.trim().toUpperCase();
             var passport = document.getElementById('up-passport').value.trim().toUpperCase();
             var maxPrice = document.getElementById('up-maxprice').value.trim();
 
-            localStorage.setItem('mckinney_final_data', JSON.stringify({
+            localStorage.setItem('mckinney_v6_data', JSON.stringify({
                 from, to, d1, d2, passengers, stops, stopLocation, price, nextPrice, duration, baggage, pnr, ticket, name, passport, maxPrice
             }));
 
             var container = document.getElementById('links-container');
             container.innerHTML = '';
-            var gfUrl = 'https://google.com' + to + '%20from%20' + from;
+            var gfUrl = 'https://google.com' + to + '%20from%20' + from + '%20on%20' + d1 + '%20through%20' + d2;
             container.innerHTML += '<a href="' + gfUrl + '" target="_blank" class="l-btn fl-btn">✈️ Google Flights Suche öffnen</a>';
 
             if(document.getElementById('asia-mode').checked) {
@@ -94,7 +98,7 @@
             document.getElementById('result-box').style.display = 'block';
         }
         function loadLocal() {
-            var stored = localStorage.getItem('mckinney_final_data');
+            var stored = localStorage.getItem('mckinney_v6_data');
             if(!stored) return;
             var data = JSON.parse(stored);
             if(data.from) document.getElementById('fl-from').value = data.from;
@@ -133,8 +137,4 @@
     <!-- MAIN APP CONTENT -->
     <div id="main-content" style="display: none;">
         <h1>✈️ McKinney Reisekonfiguration PRO</h1>
-        
-        <!-- SEKTION 1: Flug-Parameter -->
-        <div class="card fl">
-
 
