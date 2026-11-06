@@ -238,13 +238,13 @@
     function formatKiwiDate(dateStr) {
         if(!dateStr) return '';
         const p = dateStr.split('-');
-        return `${p[2]}/${p[1]}/${p[0]}`;
+        return p[2] + '/' + p[1] + '/' + p[0];
     }
 
     // FLUG-SUCHE LOGIK
     function searchFlight(engine) {
-        const dep = document.getElementById('departure').value.trim().toUpperCase();
-        const dest = document.getElementById('destination').value.trim().toUpperCase();
+        const dep = document.getElementById('departure').value.trim().toLowerCase();
+        const dest = document.getElementById('destination').value.trim().toLowerCase();
         const start = document.getElementById('start-date').value;
         const end = document.getElementById('end-date').value;
 
