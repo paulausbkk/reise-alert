@@ -82,6 +82,19 @@
                 <div><label>Spätestes Datum:</label><input type="date" id="end" value="2026-08-31"></div>
                 <div><label>Zwischenstopps Filter:</label><select id="stops"><option value="any">Alle</option><option value="direct">Nur Direkt</option><option value="max1">Max 1</option><option value="max2">Max 2</option></select></div>
                 <div><label>Klasse:</label><select id="cabin"><option value="economy">Economy</option><option value="premium">Premium Eco</option><option value="business">Business</option><option value="first">First</option></select></div>
+                
+                <!-- NEUES REISEGEPÄCK DROPDOWN-MENÜ -->
+                <div class="full">
+                    <label>🧳 Reisegepäck:</label>
+                    <select id="baggage">
+                        <option value="Nur Handgepäck">Nur Handgepäck</option>
+                        <option value="Aufgabegepäck bis 20 kg">Aufgabegepäck bis 20 kg</option>
+                        <option value="Aufgabegepäck bis 32 kg">Aufgabegepäck bis 32 kg</option>
+                        <option value="Aufgabegepäck 20 kg plus Handgepäck">Aufgabegepäck 20 kg plus Handgepäck</option>
+                        <option value="Aufgabegepäck plus Handgepäck">Aufgabegepäck plus Handgepäck</option>
+                    </select>
+                </div>
+
                 <div class="full"><label>Maximaler Ticketpreis (€):</label><input type="number" id="max-flight-price" placeholder="z.B. 1200"></div>
                 <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18" oninput="document.getElementById('t-val').innerText = this.value + ' h'"></div>
             </div>
@@ -135,10 +148,5 @@
 <script>
     // Funktion zum Laden der gespeicherten Daten aus dem localStorage
     function loadSavedData() {
-        if (localStorage.getItem('mck_airline')) document.getElementById('airline').value = localStorage.getItem('mck_airline');
-        if (localStorage.getItem('mck_status')) document.getElementById('status').value = localStorage.getItem('mck_status');
-        if (localStorage.getItem('mck_booking_code')) document.getElementById('booking-code').value = localStorage.getItem('mck_booking_code');
-        if (localStorage.getItem('mck_passport_name')) document.getElementById('passport-name').value = localStorage.getItem('mck_passport_name');
-        if (localStorage.getItem('mck_passport_num')) document.getElementById('passport-num').value = localStorage.getItem('mck_passport_num');
 
        
