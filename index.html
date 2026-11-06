@@ -9,10 +9,10 @@
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
-        .card.fl { border-color: var(--flight); background: #f0f9ff; }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--flight); background: #f0f9ff; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--flight); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
         input, select { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; }
@@ -26,8 +26,12 @@
     <script>
         window.onload = function() {
             var pw = prompt("🔑 Passwort erforderlich:");
-            if (pw === "Reise2026") { document.getElementById("main-content").style.display = "block"; } 
-            else { alert("Falsches Passwort!"); window.location.reload(); }
+            if (pw === "Reise2026") { 
+                document.getElementById("main-content").style.display = "block"; 
+            } else { 
+                alert("Falsches Passwort!"); 
+                window.location.reload(); 
+            }
         };
         function toggleOneway(checked) {
             var r = document.getElementById('fl-date2');
@@ -40,17 +44,20 @@
 <div class="container">
     <div id="main-content" style="display:none;">
         <h1>✈️ Reisekonfiguration PRO</h1>
-        <div class="card fl">
+        
+        <div class="card">
             <div class="title">✈️ Sektion 1: Flug-Parameter</div>
             <div class="grid">
                 <div><label>Abflugort (Code):</label><input type="text" id="dep" placeholder="FRA"></div>
                 <div><label>Zielort (Code):</label><input type="text" id="dest" placeholder="MNL"></div>
                 <div><label>Hinflug:</label><input type="text" id="fl-date1" placeholder="15.11.2026"></div>
                 <div><label>Rückflug:</label><input type="text" id="fl-date2" placeholder="25.11.2026"></div>
+                
                 <div class="switch-container">
                     <label>Nur Hinflug (One Way):</label>
                     <label class="switch"><input type="checkbox" id="fl-oneway" onchange="toggleOneway(this.checked)"><span class="slider"></span></label>
                 </div>
+                
                 <div>
                     <label>Beförderungsklasse:</label>
                     <select id="fl-cabin">
@@ -58,6 +65,27 @@
                         <option value="premium">Premium Economy</option>
                         <option value="business">Business Class</option>
                         <option value="first">First Class</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label>Personenanzahl:</label>
+                    <select id="fl-passengers">
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Personen</option>
+                        <option value="3">3 Personen</option>
+                        <option value="4">4 Personen</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label>Gepäckauswahl:</label>
+                    <select id="fl-baggage">
+                        <option value="handgepäck">handgepäck</option>
+                        <option value="aufgabegepäck 20 kg">aufgabegepäck 20 kg</option>
+                        <option value="aufgabegepäck 32 KG">aufgabegepäck 32 KG</option>
+                        <option value="Handgepäck plus 20 KG aufgabegepäck">Handgepäck plus 20 KG aufgabegepäck</option>
+                        <option value="Handgepäck plus 32 Aufgabegepäck">Handgepäck plus 32 Aufgabegepäck</option>
                     </select>
                 </div>
             </div>
