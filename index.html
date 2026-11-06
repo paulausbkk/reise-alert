@@ -86,7 +86,6 @@
             font-size: 0.95rem;
         }
         
-        /* Button-Grid für die Suchmaschinen */
         .btn-group {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -112,7 +111,6 @@
         .action-btn:hover { opacity: 0.9; }
         .action-btn:active { transform: scale(0.98); }
         
-        /* Marken-Farben zuweisen */
         .btn-kiwi { background-color: var(--kiwi); }
         .btn-google { background-color: var(--google); }
         .btn-skyscanner { background-color: var(--skyscanner); }
@@ -216,6 +214,7 @@
 </div>
 
 <script>
+    // Passwort-Schutz prüfen
     function checkPassword() {
         const input = document.getElementById('password-input').value;
         if (input === 'Reise2026') {
@@ -230,6 +229,7 @@
         if (e.key === 'Enter') { checkPassword(); }
     });
 
+    // Synchronisation der Reiseziele
     function syncDestination(val) {
         document.getElementById('hotel-destination').value = val;
     }
@@ -253,28 +253,3 @@
             const kEnd = formatKiwiDate(end);
             const dMin = document.getElementById('duration-min').value;
             const dMax = document.getElementById('duration-max').value;
-Verwende Code mit Vorsicht.
-window.open(https://kiwi.com{dep.toLowerCase()}/${dest.toLowerCase()}/${kStart}-${kEnd}/${dMin}-${dMax}, '_blank');
-}
-else if (engine === 'google') {
-// Google Flights nutzt YYYY-MM-DD
-window.open(https://google.com{dest}%20from%20${dep}%20on%20${start}, '_blank');
-}
-else if (engine === 'skyscanner') {
-window.open(https://skyscanner.de{dep}/${dest}/${start}/${end}/, '_blank');
-}
-}
-// HOTEL-SUCHE LOGIK
-function searchHotel(engine) {
-const dest = document.getElementById('hotel-destination').value.trim();
-const stars = document.getElementById('hotel-stars').value;
-if (engine === 'booking') {
-window.open(https://booking.com{encodeURIComponent(dest)}&nclass=${stars}, '_blank');
-}
-else if (engine === 'trivago') {
-window.open(https://trivago.de{encodeURIComponent(dest)}, '_blank');
-}
-else if (engine === 'tripadvisor') {
-window.open(https://tripadvisor.de{encodeURIComponent(dest)}, '_blank');
-}
-}
