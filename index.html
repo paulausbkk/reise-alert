@@ -1,160 +1,136 @@
-#@title ✈️ ERWEITERTE REISEKONFIGURATION (Reisedaten rechts anpassen!)
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✈️ Reise-Alert Konfiguration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h2 { color: #2c3e50; margin-bottom: 20px; }
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        button:hover { background-color: #2980b9; }
+        #secret-content { display: none; }
+        .error { color: #e74c3c; margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
 
-#@markdown ### 🗺️ FLUG-SUCHKRITERIEN & DETAILS
-VON              = "FRA"            #@param {type:"string"\}
-NACH             = "JFK"            #@param {type:"string"\}
-KLASSE           = "Economy"        #@param ["Economy", "Premium Economy", "Business", "First Class"]
-HIN_DATUM        = "2026-12-15"     #@param {type:"date"\}
-RUECK_DATUM      = "2026-12-22"     #@param {type:"date"\}
-PERSONEN         = 1                #@param {type:"integer"\}
-ZWISCHENSTOPS    = "max 1"          #@param ["direkt", "max 1", "beliebig"]
-MAX_REISEZEIT_H  = 12               #@param {type:"slider", min:1, max:24, step:1\}
+<div class="container">
+    <!-- VORSCHALT-PASSWORT-SCHUTZ -->
+    <div id="login-box">
+        <h2>🔒 Passwortschutz</h2>
+        <p>Bitte gib das Passwort ein, um zum Reise-Formular zu gelangen:</p>
+        <div class="form-group">
+            <input type="password" id="password-input" placeholder="Passwort eingeben...">
+        </div>
+        <button onclick="checkPassword()">Freischalten</button>
+        <p id="login-error" class="error"></p>
+    </div>
 
-#@markdown ---
-#@markdown ### 🏨 HOTEL-SUCHKRITERIEN
-STADT_HOTEL      = "New York"       #@param {type:"string"\}
-STARS            = "4"              #@param ["1", "2", "3", "4", "5"]
-HOTEL_PREIS_GESAMT = 350.00         #@param {type:"number"\}
+    <!-- DAS EIGENTLICHE FORMULAR (WIRD ERST NACH LOGIN SICHTBAR) -->
+    <div id="secret-content">
+        <h2>✈️ Reisedaten eingeben</h2>
+        <form onsubmit="generateAlert(event)">
+            <div class="form-group">
+                <label>Abflughafen (z.B. FRA):</label>
+                <input type="text" id="von" value="FRA" required maxlength="3" style="text-transform: uppercase;">
+            </div>
+            <div class="form-group">
+                <label>Zielflughafen (z.B. JFK):</label>
+                <input type="text" id="nach" value="JFK" required maxlength="3" style="text-transform: uppercase;">
+            </div>
+            <div class="form-group">
+                <label>Hin-Datum:</label>
+                <input type="date" id="hin" value="2026-12-15" required>
+            </div>
+            <div class="form-group">
+                <label>Rück-Datum:</label>
+                <input type="date" id="rueck" value="2026-12-22" required>
+            </div>
+            <div class="form-group">
+                <label>Reiseklasse:</label>
+                <select id="klasse">
+                    <option value="Economy">Economy</option>
+                    <option value="Premium Economy">Premium Economy</option>
+                    <option value="Business">Business</option>
+                    <option value="First Class">First Class</option>
+                </select>
+            </div>
+            <button type="submit">Reise-Alert aktualisieren</button>
+        </form>
+    </div>
+</div>
 
-#@markdown ---
-#@markdown ### 💸 GETRENNTE BUDGET-VORGABEN
-MAX_BUDGET_FLUG  = 600.00           #@param {type:"number"\}
-MAX_BUDGET_HOTEL = 600.00           #@param {type:"number"\}
+<script>
+    // Passwortprüfung
+    function checkPassword() {
+        const input = document.getElementById("password-input").value;
+        const errorMsg = document.getElementById("login-error");
+        
+        if (input === "Reise2026") {
+            document.getElementById("login-box").style.display = "none";
+            document.getElementById("secret-content").style.display = "block";
+        } else {
+            errorMsg.textContent = "❌ Falsches Passwort! Bitte versuche es erneut.";
+        }
+    }
 
-#@markdown ---
-#@markdown ### 🛑 MULTI-STOPP / PREIS ZWEITE STRECKE (Eigenständiger Transfer)
-SEPARATER_TRANSFER = True           #@param {type:"boolean"\}
-PREIS_STRECKE_1    = 250.00         #@param {type:"number"\}
-PREIS_STRECKE_2    = 180.00         #@param {type:"number"\}
+    // Formularverarbeitung
+    function generateAlert(event) {
+        event.preventDefault();
+        alert("Reisedaten erfolgreich erfasst! Du kannst diese Werte jetzt in dein Google Colab Skript übernehmen.");
+    }
+</script>
 
-# =============================================================================
-# AB HIER STARTET DIE AUTOMATISCHE LOGIK (KEINE ÄNDERUNGEN NÖTIG)
-# =============================================================================
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from google.colab import userdata
-
-# Sicherer Abruf deiner Zugangsdaten aus dem Colab-Schlüsselspeicher
-try:
-    ABSENDER_EMAIL = userdata.get('ABSENDER_EMAIL')
-    PASSWORT = userdata.get('PASSWORT')
-    EMPFAENGER_EMAIL = ABSENDER_EMAIL
-except Exception:
-    print("❌ FEHLER: Bitte speichere links unter dem Schlüssel-Symbol (Secrets) 'ABSENDER_EMAIL' und 'PASSWORT' ab!")
-
-print("Verarbeite erweiterte Suchkriterien für optimale Reichweite...")
-
-# Berechnung der Flugkosten basierend auf der Transfer-Auswahl
-if SEPARATER_TRANSFER and ZWISCHENSTOPS != "direkt":
-    flug_gesamt = (PREIS_STRECKE_1 + PREIS_STRECKE_2) * PERSONEN
-    flug_info = "Kombiniert (St. 1: %.2f EUR, St. 2: %.2f EUR)" % (PREIS_STRECKE_1, PREIS_STRECKE_2)
-else:
-    flug_gesamt = PREIS_STRECKE_1 * PERSONEN
-    flug_info = "Standard / Anschlussflug"
-
-# Gesamtkalkulation
-gesamtkosten = flug_gesamt + HOTEL_PREIS_GESAMT
-gesamt_budget = MAX_BUDGET_FLUG + MAX_BUDGET_HOTEL
-
-# Text-Formatierungen
-flug_text = "%.2f EUR" % flug_gesamt
-hotel_text = "%.2f EUR" % HOTEL_PREIS_GESAMT
-gesamtkosten_text = "%.2f EUR" % gesamtkosten
-budget_flug_text = "%.2f EUR" % MAX_BUDGET_FLUG
-budget_hotel_text = "%.2f EUR" % MAX_BUDGET_HOTEL
-gesamt_budget_text = "%.2f EUR" % gesamt_budget
-
-# Detail-Prüfungen für das E-Mail-Layout
-status_flug = "✅ OK" if flug_gesamt <= MAX_BUDGET_FLUG else "❌ Drüber"
-status_hotel = "✅ OK" if HOTEL_PREIS_GESAMT <= MAX_BUDGET_HOTEL else "❌ Drüber"
-
-if gesamtkosten <= gesamt_budget:
-    status_farbe = "#2ecc71"
-    status_titel = "Budget eingehalten!"
-    rest = gesamt_budget - gesamtkosten
-    status_text = "Hervorragend! Deine Reisekombination liegt im Limit. Gesamt-Restbudget: <strong>%.2f EUR</strong>." % rest
-else:
-    status_farbe = "#e74c3c"
-    status_titel = "Budget überschritten!"
-    ueber = gesamtkosten - gesamt_budget
-    status_text = "Achtung! Deine ausgewählten Tarife überschreiten das Gesamtbudget um <strong>%.2f EUR</strong>." % ueber
-
-# Korrigierte Link-Generierung für Kiwi (Jahr-Monat-Tag zu Tag/Monat/Jahr)
-parts = HIN_DATUM.split("-")
-datum_kiwi = parts[2] + "/" + parts[1] + "/" + parts[0]
-such_link = "https://kiwi.com" + VON.lower() + "/" + NACH.lower() + "/" + datum_kiwi
-
-# ==========================================
-# GENERIERUNG DES LAYOUTS FÜR WEB.DE
-# ==========================================
-html_zeilen = [
-    "<!DOCTYPE html><html><head><style>",
-    "body " + chr(123) + " font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333333; margin: 0; padding: 20px; " + chr(125),
-    ".card " + chr(123) + " background-color: #ffffff; max-width: 600px; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e1e8ed; overflow: hidden; " + chr(125),
-    ".header " + chr(123) + " padding: 20px; text-align: center; color: white; font-size: 22px; font-weight: bold; " + chr(125),
-    ".content " + chr(123) + " padding: 25px; line-height: 1.6; " + chr(125),
-    ".table " + chr(123) + " width: 100%; border-collapse: collapse; margin-top: 15px; " + chr(125),
-    ".table th, .table td " + chr(123) + " padding: 12px; text-align: left; border-bottom: 1px solid #eeeeee; " + chr(125),
-    ".table th " + chr(123) + " background-color: #f8f9fa; color: #555555; " + chr(125),
-    ".total-row " + chr(123) + " font-weight: bold; font-size: 16px; background-color: #f8f9fa; " + chr(125),
-    ".btn " + chr(123) + " display: inline-block; padding: 12px 24px; margin-top: 20px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; " + chr(125),
-    ".footer " + chr(123) + " padding: 15px; text-align: center; font-size: 12px; color: #888888; background-color: #fafafa; border-top: 1px solid #eeeeee; " + chr(125),
-    "</style></head><body><div class='card'>",
-    "<div class='header' style='background-color: __STATUS_FARBE__;'>__STATUS_TITEL__</div>",
-    "<div class='content'><p>Hallo,</p><p>__STATUS_TEXT__</p><h3>Übersicht der Suchkriterien & Kosten:</h3>",
-    "<table class='table'><tr><th>Posten / Kriterium</th><th>Deine Angabe</th><th>Status</th></tr>",
-    "<tr><td>Flugroute / Klasse</td><td>__VON__ nach __NACH__ (__KLASSE__)</td><td>-</td></tr>",
-    "<tr><td>Flug-Typ / Stops</td><td>__FLUGINFO__ / __STOPS__</td><td>-</td></tr>",
-    "<tr><td>Flugpreis Gesamt</td><td><strong>__FLUGPREIS__</strong> (Limit: __LIMITFLUG__)</td><td>__STFLUG__</td></tr>",
-    "<tr><td>Hotel in __STADTHOTEL__</td><td>__STARS__ Sterne gewünscht</td><td>-</td></tr>",
-    "<tr><td>Hotelpreis Gesamt</td><td><strong>__HOTELPREIS__</strong> (Limit: __LIMITHOTEL__)</td><td>__STHOTEL__</td></tr>",
-    "<tr class='total-row'><td>Gesamtkosten Reise</td><td style='color: __STATUS_FARBE__;'>__GESAMTKOSTEN__</td><td>Gesamt-Limit: __LIMITGESAMT__</td></tr></table>",
-    "<br><center><a href='__LINK__' class='btn' target='_blank'>Live-Preise mit maximaler Reichweite prüfen</a></center></div>",
-    "<div class='footer'>Automatisch generiert via dauerhaft gesichertem Python Reise-Alert.</div></div></body></html>"
-]
-
-html_inhalt = "\\n".join(html_zeilen)
-
-# Werte-Ersetzung im HTML
-html_inhalt = html_inhalt.replace("__STATUS_FARBE__", status_farbe)
-html_inhalt = html_inhalt.replace("__STATUS_TITEL__", status_titel)
-html_inhalt = html_inhalt.replace("__STATUS_TEXT__", status_text)
-html_inhalt = html_inhalt.replace("__VON__", VON)
-html_inhalt = html_inhalt.replace("__NACH__", NACH)
-html_inhalt = html_inhalt.replace("__KLASSE__", KLASSE)
-html_inhalt = html_inhalt.replace("__FLUGINFO__", flug_info)
-html_inhalt = html_inhalt.replace("__STOPS__", ZWISCHENSTOPS)
-html_inhalt = html_inhalt.replace("__FLUGPREIS__", flug_text)
-html_inhalt = html_inhalt.replace("__LIMITFLUG__", budget_flug_text)
-html_inhalt = html_inhalt.replace("__STFLUG__", status_flug)
-html_inhalt = html_inhalt.replace("__STADTHOTEL__", STADT_HOTEL)
-html_inhalt = html_inhalt.replace("__STARS__", STARS)
-html_inhalt = html_inhalt.replace("__HOTELPREIS__", hotel_text)
-html_inhalt = html_inhalt.replace("__LIMITHOTEL__", budget_hotel_text)
-html_inhalt = html_inhalt.replace("__STHOTEL__", status_hotel)
-html_inhalt = html_inhalt.replace("__GESAMTKOSTEN__", gesamtkosten_text)
-html_inhalt = html_inhalt.replace("__LIMITGESAMT__", gesamt_budget_text)
-html_inhalt = html_inhalt.replace("__LINK__", such_link)
-
-# ==========================================
-# VERSAND ÜBER SMTP
-# ==========================================
-betreff = "Reisesuche: " + VON + " nach " + NACH + " (" + gesamtkosten_text + ")"
-
-msg = MIMEMultipart('alternative')
-msg['Subject'] = betreff
-msg['From'] = ABSENDER_EMAIL
-msg['To'] = EMPFAENGER_EMAIL
-msg.attach(MIMEText(html_inhalt, 'html'))
-
-try:
-    server = smtplib.SMTP('smtp.web.de', 587)
-    server.starttls()
-    server.login(ABSENDER_EMAIL, PASSWORT)
-    server.sendmail(ABSENDER_EMAIL, EMPFAENGER_EMAIL, msg.as_string())
-    server.quit()
-    print("✅ E-Mail erfolgreich gesendet! Das Hotelfeld 'Stadt' wurde integriert.")
-except Exception as e:
-    print("Fehler beim Versenden: " + str(e))
+</body>
+</html>
     
