@@ -87,6 +87,7 @@
         .card-title.flight { color: var(--flight-theme); }
         .card-title.hotel { color: var(--hotel-theme); }
         .card-title.upgrade { color: var(--upgrade-theme); }
+        
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -195,7 +196,7 @@
         <div class="form-group">
             <div class="password-wrapper">
                 <input type="password" id="password-input" placeholder="Passwort hier eingeben...">
-                <span class="toggle-password" onclick="var p=document.getElementById('password-input'); if(p.type==='password'){p.type='text'; this.innerText='👁️‍🗨️';}else{p.type='password'; this.innerText='👁️';}">👁️</span>
+                <span class="toggle-password" onclick="var p=document.getElementById('password-input'); if(p.type=='password'){p.type='text'; this.innerText='👁️‍🗨️';}else{p.type='password'; this.innerText='👁️';}">👁️</span>
             </div>
         </div>
         <button class="main-submit-btn" onclick="if(document.getElementById('password-input').value==='Reise2026'){document.getElementById('auth-section').classList.add('hidden');document.getElementById('main-content').classList.remove('hidden');}else{document.getElementById('error-msg').classList.remove('hidden');}">Freischalten</button>
@@ -204,7 +205,7 @@
 
     <!-- 2. Formular-Bereich -->
     <div id="main-content" class="hidden">
-        <h1>✈️ McKinney Reisekonfiguration</h1>
+        <h1>✈️ McKinney Reisekonfiguration PRO</h1>
         
         <!-- BLAUE KARTE: FLUG -->
         <div class="search-card flight">
