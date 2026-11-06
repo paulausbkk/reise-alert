@@ -6,185 +6,36 @@
     <title>✈️ McKinney Reisekonfiguration PRO</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg: #f0f4f8;
-            --card-bg: #ffffff;
-            --text: #1e293b;
-            --border: #cbd5e1;
-            --flight-theme: #0284c7;
-            --hotel-theme: #0f766e;
-            --upgrade-theme: #6d28d9;
-            --kiwi: #00a699;
-            --google: #4285f4;
-            --skyscanner: #007054;
-            --booking: #003580;
-            --trivago: #ff5a5f;
-            --tripadvisor: #34e0a1;
+            --primary: #2563eb; --primary-hover: #1d4ed8; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1;
+            --flight-theme: #0284c7; --hotel-theme: #0f766e; --upgrade-theme: #6d28d9;
+            --kiwi: #00a699; --google: #4285f4; --skyscanner: #007054; --booking: #003580; --trivago: #ff5a5f; --tripadvisor: #34e0a1;
         }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.5;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 650px;
-            margin: 30px auto;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        }
-        h1 {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .password-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .password-wrapper input {
-            padding-right: 45px;
-        }
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            user-select: none;
-        }
-        .search-card {
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 1.5rem;
-        }
-        .search-card.flight {
-            border-color: var(--flight-theme);
-            background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
-        }
-        .search-card.hotel {
-            border-color: var(--hotel-theme);
-            background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
-        }
-        .search-card.upgrade {
-            border-color: var(--upgrade-theme);
-            background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%);
-        }
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 1.25rem;
-        }
-        .card-title.flight { color: var(--flight-theme); }
-        .card-title.hotel { color: var(--hotel-theme); }
-        .card-title.upgrade { color: var(--upgrade-theme); }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .form-group {
-            margin-bottom: 0.5rem;
-        }
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-            font-size: 0.85rem;
-            color: #475569;
-        }
-        input, select {
-            width: 100%;
-            padding: 0.7rem;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 0.95rem;
-        }
-        .range-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .range-container input {
-            flex: 1;
-        }
-        .range-value {
-            font-weight: bold;
-            font-size: 0.95rem;
-            min-width: 55px;
-            text-align: right;
-        }
-        .main-submit-btn {
-            width: 100%;
-            padding: 0.9rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.05rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 1rem;
-        }
-        .upgrade-btn {
-            background: linear-gradient(135deg, var(--upgrade-theme) 0%, #5b21b6 100%);
-        }
-        .hidden {
-            display: none;
-        }
-        .result-box {
-            margin-top: 2rem;
-            padding: 20px;
-            background: #f8fafc;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-        }
-        .result-section-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.25rem;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        .link-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 0.75rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            color: white;
-            box-sizing: border-box;
-        }
-        .kiwi-btn { background-color: var(--kiwi); }
-        .google-btn { background-color: var(--google); }
-        .skyscanner-btn { background-color: var(--skyscanner); }
-        .booking-btn { background-color: var(--booking); }
-        .trivago-btn { background-color: var(--trivago); }
-        .tripadvisor-btn { background-color: var(--tripadvisor); color: #000000 !important; }
-        @media (max-width: 600px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .form-group.full-width { grid-column: span 1; }
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.5; margin: 0; padding: 20px; }
+        .container { max-width: 650px; margin: 30px auto; background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+        h1 { font-size: 1.6rem; font-weight: 800; margin-top: 0; margin-bottom: 1.5rem; text-align: center; }
+        .password-wrapper { position: relative; display: flex; align-items: center; }
+        .password-wrapper input { padding-right: 45px; }
+        .toggle-password { position: absolute; right: 15px; cursor: pointer; font-size: 1.2rem; user-select: none; }
+        .search-card { border: 2px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 1.5rem; }
+        .search-card.flight { border-color: var(--flight-theme); background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%); }
+        .search-card.hotel { border-color: var(--hotel-theme); background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%); }
+        .search-card.upgrade { border-color: var(--upgrade-theme); background: linear-gradient(180deg, #faf5ff 0%, #ffffff 100%); }
+        .card-title { font-size: 1.2rem; font-weight: 700; margin-top: 0; margin-bottom: 1.25rem; }
+        .card-title.flight { color: var(--flight-theme); } Levi .card-title.hotel { color: var(--hotel-theme); } .card-title.upgrade { color: var(--upgrade-theme); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { margin-bottom: 0.5rem; } .form-group.full-width { grid-column: span 2; }
+        label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.85rem; color: #475569; }
+        input, select { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 0.95rem; }
+        .range-container { display: flex; align-items: center; gap: 10px; } .range-container input { flex: 1; } .range-value { font-weight: bold; font-size: 0.95rem; min-width: 55px; text-align: right; }
+        .main-submit-btn { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); color: white; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer; margin-bottom: 1rem; }
+        .upgrade-btn { background: linear-gradient(135deg, var(--upgrade-theme) 0%, #5b21b6 100%); }
+        .hidden { display: none; }
+        .result-box { margin-top: 2rem; padding: 20px; background: #f8fafc; border-radius: 12px; border: 2px solid #e2e8f0; }
+        .result-section-title { font-size: 1rem; font-weight: 700; margin-top: 1rem; margin-bottom: 0.75rem; padding-bottom: 0.25rem; border-bottom: 2px solid #e2e8f0; }
+        .link-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 0.75rem; margin-bottom: 0.75rem; border-radius: 6px; text-decoration: none; font-weight: bold; color: white; box-sizing: border-box; }
+        .kiwi-btn { background-color: var(--kiwi); } .google-btn { background-color: var(--google); } .skyscanner-btn { background-color: var(--skyscanner); }
+        .booking-btn { background-color: var(--booking); } .trivago-btn { background-color: var(--trivago); } .tripadvisor-btn { background-color: var(--tripadvisor); color: #000000 !important; }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .form-group.full-width { grid-column: span 1; } }
     </style>
 </head>
 <body>
@@ -221,7 +72,7 @@
                 </div>
                 <div class="form-group full-width" style="background: rgba(2, 132, 199, 0.05); padding: 10px; border-radius: 8px; border: 1px dashed var(--flight-theme);">
                     <label for="stopover-airport" style="color: var(--flight-theme);">📍 Geplanter Stopover / Zwischenaufenthalt (Optional):</label>
-                    <input type="text" id="stopover-airport" placeholder="z.B. NYC, LHR" oninput="if(this.value.trim()!=''){document.getElementById('second-leg-box').classList.remove('hidden');}else{document.getElementById('second-leg-box').classList.add('hidden');}">
+                    <input type="text" id="stopover-airport" placeholder="z.B. NYC, LHR">
                 </div>
                 <div class="form-group">
                     <label for="start-date">Frühestes Hinreisedatum:</label>
@@ -251,3 +102,37 @@
                 <div class="form-group full-width">
                     <label for="max-travel-time">Maximale Reisezeit (Std. pro Strecke):</label>
                     <div class="range-container">
+                        <input type="range" id="max-travel-time" min="5" max="40" value="18" oninput="document.getElementById('travel-time-val').innerText=this.value+' h';">
+                        <span class="range-value" id="travel-time-val">18 h</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRÜNE KARTE: HOTEL -->
+        <div class="search-card hotel">
+            <div class="card-title hotel">🏨 Sektion 2: Hotel & Budget-Planung</div>
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="hotel-destination">Zielort für Hotelsuche:</label>
+                    <input type="text" id="hotel-destination" value="MIA">
+                </div>
+                <div class="form-group">
+                    <label for="hotel-stars">Mindest-Sterne (Hotel):</label>
+                    <select id="hotel-stars">
+                        <option value="3">3 Sterne</option>
+                        <option value="4" selected>4 Sterne</option>
+                        <option value="5">5 Sterne</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="max-budget">Maximales Gesamtbudget (€):</label>
+                    <input type="number" id="max-budget" value="2500">
+                </div>
+                <div class="form-group full-width">
+                    <label for="second-leg-budget" style="color: var(--hotel-theme); font-weight: 700;">💰 Max. Budget für 2. Teilstrecke (Stopover zum Endziel) (€):</label>
+                    <input type="number" id="second-leg-budget" value="500">
+                </div>
+            </div>
+        </div>
+
