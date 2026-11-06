@@ -39,8 +39,14 @@
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
-            <div><label>Abflugort (Code):</label><input type="text" placeholder="FRA" id="fl-from" maxlength="3"></div>
-            <div><label>Zielort (Code):</label><input type="text" placeholder="MNL" id="fl-to" maxlength="3"></div>
+            <div>
+                <label>Abflugort (Stadt oder Code):</label>
+                <input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-all">
+            </div>
+            <div>
+                <label>Zielort (Stadt oder Code):</label>
+                <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-all">
+            </div>
             <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026" id="fl-date1"></div>
             <div><label>Rückflug:</label><input type="text" placeholder="25.11.2026" id="fl-date2"></div>
             
@@ -75,10 +81,10 @@
             <div>
                 <label>Gepäckauswahl:</label>
                 <select id="fl-baggage">
-                    <option>nur handgepäck</option>
-                    <option>aufgabegepäck 20 kg</option>
-                    <option>aufgabegepäck 32 KG</option>
-                    <option>Handgepäck plus 20 KG aufgabegepäck</option>
+                    <option>Nur Handgepäck</option>
+                    <option>Aufgabegepäck 20 kg</option>
+                    <option>Aufgabegepäck 32 KG</option>
+                    <option>Handgepäck plus 20 KG Aufgabegepäck</option>
                     <option>Handgepäck plus 32 Aufgabegepäck</option>
                 </select>
             </div>
@@ -93,16 +99,27 @@
             </div>
             
             <div>
-                <label>Ort des Stopps (Stadt/Code):</label>
-                <input type="text" placeholder="z.B. Dubai" list="airports" id="fl-stop-location">
-                <datalist id="airports">
-                    <option value="Dubai (DXB)"></option>
-                    <option value="Singapur (SIN)"></option>
-                    <option value="Bangkok (BKK)"></option>
-                    <option value="Doha (DOH)"></option>
-                    <option value="London (LHR)"></option>
-                </datalist>
+                <label>Ort des Stopps (Stadt oder Code):</label>
+                <input type="text" placeholder="z.B. Dubai" list="airports-all" id="fl-stop-location">
             </div>
+            
+            <!-- Gemeinsame Vorschlagsliste für alle Flughäfen -->
+            <datalist id="airports-all">
+                <option value="FRA - Frankfurt Flughafen">
+                <option value="MUC - München Flughafen">
+                <option value="DUS - Düsseldorf Flughafen">
+                <option value="MNL - Manila Ninoy Aquino Flughafen">
+                <option value="CEB - Cebu Mactan Flughafen">
+                <option value="BKK - Bangkok Suvarnabhumi Flughafen">
+                <option value="SIN - Singapur Changi Flughafen">
+                <option value="DXB - Dubai International Flughafen">
+                <option value="DOH - Doha Hamad Flughafen">
+                <option value="AUH - Abu Dhabi Flughafen">
+                <option value="SGN - Ho-Chi-Minh-Stadt Flughafen">
+                <option value="HKG - Hongkong Flughafen">
+                <option value="LHR - London Heathrow Flughafen">
+                <option value="JFK - New York JFK Flughafen">
+            </datalist>
             
             <div><label>Ticketpreis (€):</label><input type="number" placeholder="800" id="fl-price"></div>
             <div><label>Preis Weiterflug (€):</label><input type="number" placeholder="150" id="fl-next-price"></div>
@@ -134,7 +151,7 @@
         <div class="title">🏨 Sektion 3: Hotel- & Budgetplanung</div>
         <div class="grid">
             <div class="full"><label>Hotel-Reiseziel Stadt:</label><input type="text" placeholder="z.B. Manila" id="ho-dest"></div>
-            <div><label>Max. Hotelbudget total (€):</label><input type="number" placeholder="1200" id="ho-budget"></div>
+            <div><label>Max. Hotelbudget Total (€):</label><input type="number" placeholder="1200" id="ho-budget"></div>
             <div><label>Geschätzter Hotelpreis (€):</label><input type="number" placeholder="950" id="ho-est-price"></div>
             <div>
                 <label>Hotel Sterne:</label>
@@ -167,7 +184,7 @@
         </div>
     </div>
 
-    <button class="btn">System-Links & Protokolle generieren</button>
+    <button class="btn">System-Links & Protokolle Generieren</button>
 </div>
 </body>
 </html>
