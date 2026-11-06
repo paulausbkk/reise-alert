@@ -77,9 +77,10 @@
                 <div class="full"><label>📍 Optionaler Stopover / Zwischenaufenthalt:</label><input type="text" id="via" placeholder="z.B. NYC"></div>
                 <div><label>Frühestes Datum:</label><input type="date" id="start" value="2026-06-01"></div>
                 <div><label>Spätestes Datum:</label><input type="date" id="end" value="2026-08-31"></div>
-                <div><label>Zwischenstopps Filter:</label><select id="stops"><option value="any">Alle</option><option value="direct">Nur Direkt</option><option value="max1">Max 1</option></select></div>
+                <div><label>Zwischenstopps Filter:</label><select id="stops"><option value="any">Alle</option><option value="direct">Nur Direkt</option><option value="max1">Max 1</option><option value="max2">Max 2</option></select></div>
                 <div><label>Klasse:</label><select id="cabin"><option value="economy">Economy</option><option value="premium">Premium Eco</option><option value="business">Business</option><option value="first">First</option></select></div>
-                <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18"></div>
+                <div><label>Max. Ticketpreis (€):</label><input type="number" id="max-price" placeholder="z.B. 800"></div>
+                <div><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18"></div>
             </div>
         </div>
 
@@ -164,6 +165,3 @@
 
     // --- MAX TIME DISPLAY ---
     var mTimeInput = document.getElementById("m-time");
-    var tValSpan = document.getElementById("t-val");
-    if (mTimeInput && tValSpan) {
-        mTimeInput.addEventListener("input", function() {
