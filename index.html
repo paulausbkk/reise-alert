@@ -1,14 +1,11 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ McKinney Reisekonfiguration PRO</title>
     <style>
-        :root { 
-            --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; 
-            --border: #cbd5e1; --flight: #0284c7; --upgrade: #6d28d9; --asia: #ea580c; 
-        }
+        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --upgrade: #6d28d9; --asia: #ea580c; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
@@ -62,20 +59,17 @@
             var nextPrice = document.getElementById('fl-next-price').value;
             var duration = document.getElementById('fl-duration').value;
             var baggage = document.getElementById('fl-baggage').value;
-            
             var pnr = document.getElementById('up-pnr').value.trim().toUpperCase();
             var ticket = document.getElementById('up-ticket').value.trim();
             var name = document.getElementById('up-name').value.trim().toUpperCase();
             var passport = document.getElementById('up-passport').value.trim().toUpperCase();
             var maxPrice = document.getElementById('up-maxprice').value.trim();
 
-            localStorage.setItem('mck_v12_state', JSON.stringify({
-                from, to, d1, d2, passengers, stops, stopLocation, price, nextPrice, duration, baggage, pnr, ticket, name, passport, maxPrice
-            }));
+            localStorage.setItem('mck_v13_state', JSON.stringify({from, to, d1, d2, passengers, stops, stopLocation, price, nextPrice, duration, baggage, pnr, ticket, name, passport, maxPrice}));
 
             var container = document.getElementById('links-container');
             container.innerHTML = '';
-            var gfUrl = 'https://google.com' + to + '%20from%20' + from + '%20on%20' + d1 + '%20through%20' + d2;
+            var gfUrl = 'https://google.com' + to + '%20from%20' + from;
             container.innerHTML += '<a href="' + gfUrl + '" target="_blank" class="l-btn fl-btn">✈️ Google Flights Suche öffnen</a>';
 
             if(document.getElementById('asia-mode').checked) {
@@ -84,16 +78,12 @@
                 container.innerHTML += '<a href="https://vietjetair.com" target="_blank" class="l-btn as-btn">🛫 VietJet Air Direktportal</a>';
             }
 
-            var proto = `=========================================\nMCKINNEY UPGRADE & REISEPROTOKOLL\n=========================================\n\n`;
-            proto += `[FLUG & TARIFAUSWAHL]\nRoute:        ${from || 'N/A'} -> ${to || 'N/A'}\nTermine:      ${d1 || 'N/A'} bis ${d2 || 'N/A'}\nPassagiere:   ${passengers} Person(en)\nStops:        Max. ${stops} ${stopLocation ? '(' + stopLocation + ')' : ''}\nTicketpreis:  ${price ? price + ' €' : 'N/A'}\nWeiterflug:   ${nextPrice ? nextPrice + ' €' : 'N/A'}\nMax. Dauer:   ${duration}h\nGepäcktarif:  ${baggage}\n\n`;
-            proto += `[PASSAGIER- & SETTLEMENT-DATEN]\nName (Pass):  ${name || 'NICHT HINTERLEGT'}\nPassnummer:   ${passport || 'NICHT HINTERLEGT'}\nPNR / Code:   ${pnr || 'NICHT HINTERLEGT'}\nTicket-Nr.:   ${ticket || 'NICHT HINTERLEGT'}\n\n`;
-            proto += `[UPGRADE GEBOTE-LIMIT]\nMax. Budget:  ${maxPrice ? maxPrice + ' €' : 'KEIN LIMIT FESTGELEGT'}\n=========================================`;
-
+            var proto = `=========================================\nMCKINNEY UPGRADE & REISEPROTOKOLL\n=========================================\n\n[FLUG & TARIFAUSWAHL]\nRoute:        ${from || 'N/A'} -> ${to || 'N/A'}\nTermine:      ${d1 || 'N/A'} bis ${d2 || 'N/A'}\nPassagiere:   ${passengers} Person(en)\nStops:        Max. ${stops} ${stopLocation ? '(' + stopLocation + ')' : ''}\nTicketpreis:  ${price ? price + ' €' : 'N/A'}\nWeiterflug:   ${nextPrice ? nextPrice + ' €' : 'N/A'}\nMax. Dauer:   ${duration}h\nGepäcktarif:  ${baggage}\n\n[PASSAGIER- & SETTLEMENT-DATEN]\nName (Pass):  ${name || 'NICHT HINTERLEGT'}\nPassnummer:   ${passport || 'NICHT HINTERLEGT'}\nPNR / Code:   ${pnr || 'NICHT HINTERLEGT'}\nTicket-Nr.:   ${ticket || 'NICHT HINTERLEGT'}\n\n[UPGRADE GEBOTE-LIMIT]\nMax. Budget:  ${maxPrice ? maxPrice + ' €' : 'KEIN LIMIT FESTGELEGT'}\n=========================================`;
             document.getElementById('upgrade-protocol-output').textContent = proto;
             document.getElementById('result-box').style.display = 'block';
         }
         function loadLocal() {
-            var stored = localStorage.getItem('mck_v12_state');
+            var stored = localStorage.getItem('mck_v13_state');
             if(!stored) return;
             var data = JSON.parse(stored);
             if(data.from) document.getElementById('fl-from').value = data.from;
@@ -116,9 +106,7 @@
     </script>
 </head>
 <body>
-
 <div class="container">
-    <!-- AUTH-BEREICH -->
     <div id="auth-section">
         <h1>🔒 Passwort erforderlich</h1>
         <div class="pass-box">
@@ -127,13 +115,11 @@
         </div>
         <button class="btn btn-main" onclick="checkPassword()" style="margin-top: 15px;">Einloggen</button>
     </div>
-
-    <!-- MAIN APP CONTENT -->
     <div id="main-content" style="display: none;">
         <h1>✈️ McKinney Reisekonfiguration PRO</h1>
-        
-        <!-- SEKTION 1: Flug-Parameter -->
         <div class="card fl">
             <div class="title">✈️ Sektion 1: Flug-Parameter</div>
             <div class="grid">
                 <div><label>Abflug (Code):</label><input type="text" id="fl-from" placeholder="FRA" maxlength="3"></div>
+                <div><label>Ziel (Code):</label><input type="text" id="fl-to" placeholder="MNL" maxlength="3" oninput="checkAsia()"></div>
+                <div><label>Hinflug (DD.MM.YYYY):</label><input type="text" id="fl-date1" placeholder="15.11.2026"></div>
