@@ -80,7 +80,7 @@
                 <div><label>Zwischenstopps Filter:</label><select id="stops"><option value="any">Alle</option><option value="direct">Nur Direkt</option><option value="max1">Max 1</option><option value="max2">Max 2</option></select></div>
                 <div><label>Klasse:</label><select id="cabin"><option value="economy">Economy</option><option value="premium">Premium Eco</option><option value="business">Business</option><option value="first">First</option></select></div>
                 <div class="full"><label>Maximaler Ticketpreis (€):</label><input type="number" id="max-flight-price" placeholder="z.B. 1200"></div>
-                <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18"></div>
+                <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18" oninput="document.getElementById('t-val').innerText = this.value + ' h'"></div>
             </div>
         </div>
 
@@ -88,80 +88,68 @@
         <div class="card up">
             <div class="title">💎 Sektion 2: Upgrade- & Status-Manager</div>
             <div class="grid">
-                <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa, Condor):</label><input type="text" id="airline" value="Lufthansa" placeholder="z.B. Lufthansa, Condor, Delta"></div>
+                <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa):</label><input type="text" id="airline" value="Lufthansa"></div>
+                <div><label>Aktueller Status:</label><input type="text" id="status" placeholder="z.B. Frequent Traveller"></div>
+                <div><label>Buchungsnummer (PNR):</label><input type="text" id="booking-code" placeholder="z.B. A1B2C3"></div>
+                <div class="full"><label>Name wie im Reisepass:</label><input type="text" id="passport-name" placeholder="z.B. MUSTERMANN / MAX DR"></div>
+                <div><label>Reisepassnummer:</label><input type="text" id="passport-num" placeholder="z.B. CXXXXXXXX"></div>
+                <div><label>Ticketnummer:</label><input type="text" id="ticket-num" placeholder="z.B. 220-1234567890"></div>
+                <div class="full"><label>Maximaler Preis für das Upgrade (€):</label><input type="number" id="max-upgrade-price" placeholder="z.B. 450"></div>
             </div>
-            <button class="btn btn-up" id="submit-upgrade-btn" type="button">💎 Gezielte Upgrade-Direktsuche starten</button>
         </div>
 
         <!-- SEKTION 3: HOTEL KARTE -->
         <div class="card ho">
-            <div class="title">🏨 Sektion 3: Hotel & Budget</div>
+            <div class="title">🏨 Sektion 3: Hotel- & Budgetplanung</div>
             <div class="grid">
-                <div><label>Mindest-Sterne:</label><select id="stars"><option value="3">3★</option><option value="4" selected>4★</option><option value="5">5★</option></select></div>
-                <div><label>Max. Gesamtbudget (€):</label><input type="number" id="budget" value="2500"></div>
-                <div class="full"><label>Budget 2. Teilstrecke (€):</label><input type="number" id="sub-budget" value="500"></div>
+                <div><label>Gesamtbudget (€):</label><input type="number" id="total-budget" value="3000" oninput="calcBudget()"></div>
+                <div><label>Max. Hotelpreis / Nacht (€):</label><input type="number" id="hotel-per-night" value="150" oninput="calcBudget()"></div>
+                <div><label>Anzahl Nächte:</label><input type="number" id="nights" value="10" oninput="calcBudget()"></div>
+                <div><label>Geschätzte Flugkosten (€):</label><input type="number" id="est-flight" value="800" oninput="calcBudget()"></div>
+                
+                <!-- Live Budgetrechner -->
                 <div class="full">
-                    <div id="budget-calc-display" class="budget-calc-box budget-ok">
-                        📊 Restbudget 1. Teilstrecke: <span id="main-budget-val">2000</span> €
-                    </div>
+                    <label>Live-Budget-Status:</label>
+                    <div id="budget-display" class="budget-calc-box budget-ok">Berechnung läuft...</div>
                 </div>
-                <div class="full" style="margin-top: 10px;"><label>Zielort für Hotelsuche:</label><input type="text" id="h-dest" value="MIA"></div>
+
+                <!-- Hotel-Zielort ganz unten -->
+                <div class="full"><label>Hotel-Zielort (Stadt/Region):</label><input type="text" id="hotel-dest" value="Miami"></div>
             </div>
         </div>
 
-        <!-- GENERIEREN BUTTON -->
-        <button class="btn btn-main" id="submit-generate-btn" type="button">🔍 Suchmaschinen-Verknüpfungen generieren</button>
+        <!-- GENERIERUNGS-BUTTON & AUSGABE -->
+        <button class="btn btn-main" type="button" onclick="generateUrls()">Links generieren & Suchportale öffnen</button>
 
-        <!-- ERGEBNIS BOX -->
-        <div id="result-section" class="res-box" style="display: none;">
-            <h3>🔗 Ihre personalisierten Such-Links:</h3>
-            
-            <h4>✈️ Flug-Suchen:</h4>
-            <a id="link-kiwi" class="l-btn fl-btn" target="_blank">Kiwi Suche öffnen</a>
-            <a id="link-google" class="l-btn fl-btn" target="_blank">Google Flights öffnen</a>
-            <a id="link-skyscanner" class="l-btn fl-btn" target="_blank">Skyscanner öffnen</a>
-            
-            <h4>🏨 Hotel-Suchen:</h4>
-            <a id="link-booking" class="l-btn ho-btn" target="_blank">Booking.com öffnen</a>
-            <a id="link-trivago" class="l-btn ho-btn" target="_blank">Trivago öffnen</a>
-            <a id="link-tripadvisor" class="l-btn ho-btn" target="_blank">TripAdvisor öffnen</a>
+        <div class="res-box" id="result-box" style="display:none;">
+            <h3>🔗 Generierte Suchlinks:</h3>
+            <div id="links-container"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // --- DESTINATION AUTOMATISCH SYNCHRONISIEREN ---
-    var destInput = document.getElementById("dest");
-    var hDestInput = document.getElementById("h-dest");
-    if (destInput && hDestInput) {
-        destInput.addEventListener("input", function() {
-            hDestInput.value = destInput.value;
-        });
-    }
-
-    // --- BUDGET RECHNER ---
-    var budgetInput = document.getElementById("budget");
-    var subBudgetInput = document.getElementById("sub-budget");
-    var displayBox = document.getElementById("budget-calc-display");
-
+    // Live-Budgetrechner Funktion
     function calcBudget() {
-        var total = parseFloat(budgetInput.value) || 0;
-        var sub = parseFloat(subBudgetInput.value) || 0;
-        var diff = total - sub;
-        
-        if (diff < 0) {
-            displayBox.className = "budget-calc-box budget-error";
-            displayBox.innerHTML = "⚠️ Achtung: Teilbudget der 2. Teilstrecke übersteigt das Gesamtbudget! (Differenz: " + diff + " €)";
+        const total = parseFloat(document.getElementById('total-budget').value) || 0;
+        const hotelPerNight = parseFloat(document.getElementById('hotel-per-night').value) || 0;
+        const nights = parseFloat(document.getElementById('nights').value) || 0;
+        const flightEst = parseFloat(document.getElementById('est-flight').value) || 0;
+
+        const totalHotel = hotelPerNight * nights;
+        const spent = totalHotel + flightEst;
+        const diff = total - spent;
+
+        const display = document.getElementById('budget-display');
+
+        if (diff >= 0) {
+            display.className = "budget-calc-box budget-ok";
+            display.innerHTML = `🟢 Budget OK! Ausgaben: ${spent}€ | Rest: +${diff}€ (Hotel gesamt: ${totalHotel}€)`;
         } else {
-            displayBox.className = "budget-calc-box budget-ok";
-            displayBox.innerHTML = "📊 Restbudget 1. Teilstrecke: <span>" + diff + "</span> €";
+            display.className = "budget-calc-box budget-error";
+            display.innerHTML = `🔴 Budget überschritten! Ausgaben: ${spent}€ | Defizit: ${diff}€ (Hotel gesamt: ${totalHotel}€)`;
         }
     }
 
-    if (budgetInput && subBudgetInput) {
-        budgetInput.addEventListener("input", calcBudget);
-        subBudgetInput.addEventListener("input", calcBudget);
-    }
-
-    // --- MAX TIME DISPLAY ---
-    var mTimeInput = document.getElementById("m-time");
+    // URL Generator Logik
+    function generateUrls() {
