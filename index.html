@@ -55,7 +55,6 @@
             padding: 20px;
             margin-bottom: 1.5rem;
             background-color: #ffffff;
-            box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.02);
         }
         .search-card.flight {
             border-color: var(--flight-theme);
@@ -103,12 +102,6 @@
             box-sizing: border-box;
             font-size: 0.95rem;
             background-color: #fff;
-            transition: border-color 0.2s;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
         .main-submit-btn {
             width: 100%;
@@ -120,13 +113,8 @@
             font-size: 1.05rem;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
             transition: all 0.2s;
             margin-top: 0.5rem;
-        }
-        .main-submit-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
         }
         .hidden {
             display: none;
@@ -159,9 +147,7 @@
             font-weight: bold;
             color: white;
             box-sizing: border-box;
-            transition: opacity 0.2s;
         }
-        .link-btn:hover { opacity: 0.9; }
         
         .kiwi-btn { background-color: var(--kiwi); }
         .google-btn { background-color: var(--google); }
@@ -224,13 +210,13 @@
             </div>
         </div>
 
-        <!-- GRÜNE KARTE: HOTEL & BUDGET -->
+        <!-- GRÜNE KARTE: HOTEL -->
         <div class="search-card hotel">
             <div class="card-title hotel">🏨 Sektion 2: Hotel & Budget</div>
             <div class="form-grid">
                 <div class="form-group full-width">
                     <label for="hotel-destination">Zielort für Hotelsuche:</label>
-                    <input type="text" id="hotel-destination" value="MIA" placeholder="Wird automatisch synchronisiert">
+                    <input type="text" id="hotel-destination" value="MIA">
                 </div>
                 <div class="form-group">
                     <label for="hotel-stars">Mindest-Sterne (Hotel):</label>
@@ -258,4 +244,16 @@
             <a id="google-flights-link" href="#" target="_blank" class="link-btn google-btn">🌐 Preistrends auf Google Flights</a>
             <a id="skyscanner-link" href="#" target="_blank" class="link-btn skyscanner-btn">🚀 Kombi-Angebote auf Skyscanner</a>
 
-            <div class="result-section-title" style="color: var(--hotel-theme
+            <div class="result-section-title" style="color: var(--hotel-theme);">🏨 Hotel-Portale:</div>
+            <a id="booking-link" href="#" target="_blank" class="link-btn booking-btn">🏨 Bestpreis-Garantie auf Booking.com</a>
+            <a id="trivago-link" href="#" target="_blank" class="link-btn trivago-btn">🔍 Meta-Vergleich auf Trivago</a>
+            <a id="tripadvisor-link" href="#" target="_blank" class="link-btn tripadvisor-btn">🦉 Bewertungen & Deals auf TripAdvisor</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkPassword() {
+        var input = document.getElementById('password-input').value;
+        if (input === 'Reise2026') {
+            document.getElementById('auth-section').classList.add('hidden');
