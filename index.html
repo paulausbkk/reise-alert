@@ -34,6 +34,71 @@
         .check-box-container input { width: auto; cursor: pointer; }
         .check-box-container label { margin-bottom: 0; color: #c2410c; cursor: pointer; }
     </style>
+    <script>
+        // LOGIK HIER OBEN IST KATASTROPHENSICHER GEGEN KI-ABBRÜCHE GESCUTZT
+        function checkPassword() {
+            if(document.getElementById('p-field').value.trim() === 'Reise2026') {
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                loadFromStorage();
+            } else { alert('Falsches Passwort!'); }
+        }
+        function togglePasswordVisibility() {
+            var p = document.getElementById('p-field');
+            p.type = (p.type === 'password') ? 'text' : 'password';
+        }
+        function checkAsiaDestination() {
+            var hubs = ['MNL', 'BKK', 'SGN', 'SIN', 'CEB', 'HKG', 'KUL', 'CGK', 'HND', 'NRT'];
+            var dest = document.getElementById('dest').value.trim().toUpperCase();
+            document.getElementById('asia-mode').checked = hubs.includes(dest);
+        }
+        function generateLinks() {
+            var dep = document.getElementById('dep').value.trim().toUpperCase();
+            var dest = document.getElementById('dest').value.trim().toUpperCase();
+            var via = document.getElementById('via').value.trim().toUpperCase();
+            var start = document.getElementById('start').value;
+            var end = document.getElementById('end').value;
+            var stops = document.getElementById('stops').value;
+            var cabin = document.getElementById('cabin').value;
+            var baggage = document.getElementById('baggage').value;
+            var maxPrice = document.getElementById('max-flight-price').value;
+            var maxTime = document.getElementById('m-time').value;
+            var airline = document.getElementById('airline').value;
+            var status = document.getElementById('status').value;
+            var pnr = document.getElementById('pnr').value.trim().toUpperCase();
+
+            localStorage.setItem('mck_state_base_v10', JSON.stringify({dep, dest, via, start, end, stops, cabin, baggage, maxPrice, maxTime, airline, status, pnr}));
+
+            var container = document.getElementById('links-container');
+            container.innerHTML = '<a href="https://google.com+'" target="_blank" class="l-btn fl-btn">✈️ Google Flights öffnen</a>';
+            if(document.getElementById('asia-mode').checked) {
+                container.innerHTML += '<a href="https://trip.com+'" target="_blank" class="l-btn as-btn">🌏 Trip.com Express-Suche</a>';
+            }
+
+            var proto = `=========================================\nREISEPROTOKOLL & FLUGPARAMETER\n=========================================\n\n`;
+            proto += `Route:       ${dep} -> ${dest} ${via ? '[Stopover: ' + via + ']' : ''}\nGepäcktarif: ${baggage}\nPNR / Code:  ${pnr || 'N/A'}\n=========================================`;
+            document.getElementById('upgrade-protocol-output').textContent = proto;
+            document.getElementById('result-box').style.display = 'block';
+        }
+        function loadFromStorage() {
+            var stored = localStorage.getItem('mck_state_base_v10');
+            if(!stored) return;
+            var data = JSON.parse(stored);
+            if(data.dep) document.getElementById('dep').value = data.dep;
+            if(data.dest) { document.getElementById('dest').value = data.dest; checkAsiaDestination(); }
+            if(data.via) document.getElementById('via').value = data.via;
+            if(data.start) document.getElementById('start').value = data.start;
+            if(data.end) document.getElementById('end').value = data.end;
+            if(data.stops) document.getElementById('stops').value = data.stops;
+            if(data.cabin) document.getElementById('cabin').value = data.cabin;
+            if(data.baggage) document.getElementById('baggage').value = data.baggage;
+            if(data.maxPrice) document.getElementById('max-flight-price').value = data.maxPrice;
+            if(data.maxTime) { document.getElementById('m-time').value = data.maxTime; document.getElementById('t-val').innerText = data.maxTime + ' h'; }
+            if(data.airline) document.getElementById('airline').value = data.airline;
+            if(data.status) document.getElementById('status').value = data.status;
+            if(data.pnr) document.getElementById('pnr').value = data.pnr;
+        }
+    </script>
 </head>
 <body>
 
@@ -72,83 +137,3 @@
                         <option value="aufgabegepäck bis 20 kg">aufgabegepäck bis 20 kg</option>
                         <option value="aufgabegepäck bis 32 kg">aufgabegepäck bis 32 kg</option>
                         <option value="aufgabegepäck 20 kg plus handgepäck">aufgabegepäck 20 kg plus handgepäck</option>
-                        <option value="aufgabegepäck plus handgepäck">aufgabegepäck plus handgepäck</option>
-                    </select>
-                </div>
-
-                <div class="full check-box-container">
-                    <input type="checkbox" id="asia-mode">
-                    <label for="asia-mode">💥 Asiatische Billigflieger aktivieren (Cebu, VietJet, AirAsia etc.)</label>
-                </div>
-
-                <div class="full"><label>Maximaler Ticketpreis (€):</label><input type="number" id="max-flight-price" placeholder="z.B. 1200"></div>
-                <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18" oninput="document.getElementById('t-val').innerText = this.value + ' h'"></div>
-            </div>
-        </div>
-
-        <!-- SEKTION 2: UPGRADE KARTE -->
-        <div class="card up">
-            <div class="title">💎 Sektion 2: Upgrade- & Status-Manager</div>
-            <div class="grid">
-                <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa):</label><input type="text" id="airline" value="Lufthansa"></div>
-                <div><label>Aktueller Status:</label><input type="text" id="status" placeholder="z.B. Frequent Traveller"></div>
-                <div><label>Buchungsnummer (PNR):</label><input type="text" id="pnr" placeholder="z.B. X7YZ3R"></div>
-            </div>
-        </div>
-
-        <button class="btn btn-main" type="button" onclick="generateLinks()">System-Links &amp; Protokolle generieren</button>
-
-        <!-- AUSGABE BEREICH -->
-        <div id="result-box" class="res-box">
-            <div style="font-weight: bold; margin-bottom: 10px;">🔗 Generierte System-Links:</div>
-            <div id="links-container"></div>
-            <div style="font-weight: bold; margin-top: 15px; color: var(--upgrade);">📋 Generiertes Upgrade- &amp; Datenproto:</div>
-            <div id="upgrade-protocol-output" class="up-proto"></div>
-        </div>
-    </div>
-</div>
-
-<script>
-function checkPassword() {
-    if(document.getElementById('p-field').value.trim() === 'Reise2026') {
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-        loadFromStorage();
-    } else { alert('Falsches Passwort!'); }
-}
-function togglePasswordVisibility() {
-    var p = document.getElementById('p-field');
-    p.type = (p.type === 'password') ? 'text' : 'password';
-}
-function checkAsiaDestination() {
-    var hubs = ['MNL', 'BKK', 'SGN', 'SIN', 'CEB', 'HKG', 'KUL', 'CGK', 'HND', 'NRT'];
-    var dest = document.getElementById('dest').value.trim().toUpperCase();
-    document.getElementById('asia-mode').checked = hubs.includes(dest);
-}
-function generateLinks() {
-    var dep = document.getElementById('dep').value.trim().toUpperCase();
-    var dest = document.getElementById('dest').value.trim().toUpperCase();
-    var via = document.getElementById('via').value.trim().toUpperCase();
-    var start = document.getElementById('start').value;
-    var end = document.getElementById('end').value;
-    var stops = document.getElementById('stops').value;
-    var cabin = document.getElementById('cabin').value;
-    var baggage = document.getElementById('baggage').value;
-    var maxPrice = document.getElementById('max-flight-price').value;
-    var maxTime = document.getElementById('m-time').value;
-    var airline = document.getElementById('airline').value;
-    var status = document.getElementById('status').value;
-    var pnr = document.getElementById('pnr').value.trim().toUpperCase();
-
-    localStorage.setItem('mck_state_base', JSON.stringify({dep, dest, via, start, end, stops, cabin, baggage, maxPrice, maxTime, airline, status, pnr}));
-
-    var container = document.getElementById('links-container');
-    container.innerHTML = '';
-    var gfUrl = 'https://google.com' + dest + '%20from%20' + dep;
-    container.innerHTML += '<a href="' + gfUrl + '" target="_blank" class="l-btn fl-btn">✈️ Google Flights öffnen</a>';
-
-    if(document.getElementById('asia-mode').checked) {
-        container.innerHTML += '<a href="https://trip.com' + dep + '&toairportcode=' + dest + '" target="_blank" class="l-btn as-btn">🌏 Trip.com Express-Suche</a>';
-    }
-
-    var proto = `=========================================\nREISEPROTOKOLL & FLUGPARAMETER\n=========================================\n`;
