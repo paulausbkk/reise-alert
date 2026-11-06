@@ -258,7 +258,44 @@ Nur Hinflug (One Way):
                 this.value = words.join(" ");
             });
         }
+<!-- INTELLIGENTE DATENLISTE FÜR FLUGHÄFEN -->
+<datalist id="airports-complete">
+    <option value="Frankfurt (FRA)">
+    <option value="München (MUC)">
+    <option value="Berlin (BER)">
+    <option value="Düsseldorf (DUS)">
+    <option value="Hamburg (HAM)">
+    <option value="Wien (VIE)">
+    <option value="Zürich (ZRH)">
+    <option value="Manila (MNL)">
+    <option value="Bangkok (BKK)">
+    <option value="Singapore (SIN)">
+    <option value="London Heathrow (LHR)">
+    <option value="New York (JFK)">
+</datalist>
 
+<!-- KABEL-SKRIPT 1: GROSSSCHREIBUNG & DROPDOWN-LOGIK -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fromInput = document.getElementById("fl-from");
+        const toInput = document.getElementById("fl-to");
+
+        function capitalizeWords(inputElement) {
+            inputElement.addEventListener("input", function() {
+                let words = this.value.split(" ");
+                for (let i = 0; i < words.length; i++) {
+                    if (words[i].length > 0) {
+                        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+                    }
+                }
+                this.value = words.join(" ");
+            });
+        }
+
+        if (fromInput) capitalizeWords(fromInput);
+        if (toInput) capitalizeWords(toInput);
+    });
+</script>
         if (fromInput) capitalizeWords(fromInput);
         if (toInput) capitalizeWords(toInput);
     });
