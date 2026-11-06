@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ McKinney Reisekonfiguration PRO</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --hotel: #0f766e; --upgrade: #6d28d9; }
+        :root { 
+            --primary: #2563eb; 
+            --bg: #f0f4f8; 
+            --card-bg: #ffffff; 
+            --text: #1e293b; 
+            --border: #cbd5e1; 
+            --flight: #0284c7; 
+            --hotel: #0f766e; 
+            --upgrade: #6d28d9; 
+            --warn: #dc2626;
+            --success: #16a34a;
+        }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
@@ -14,7 +25,9 @@
         .card.ho { border-color: var(--hotel); background: #f0fdf4; }
         .card.up { border-color: var(--upgrade); background: #faf5ff; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
-        .fl .title { color: var(--flight); } .ho .title { color: var(--hotel); } .up .title { color: var(--upgrade); }
+        .fl .title { color: var(--flight); } 
+        .ho .title { color: var(--hotel); } 
+        .up .title { color: var(--upgrade); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
@@ -26,7 +39,16 @@
         .pass-box { position: relative; }
         .eye { position: absolute; right: 10px; top: 24px; cursor: pointer; font-size: 1.1rem; }
         .res-box { margin-top: 15px; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; }
-        .l-btn { display: block; text-align: center; padding: 8px; margin-bottom: 5px; border-radius: 4px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; }
+        .l-btn { display: block; text-align: center; padding: 10px; margin-bottom: 8px; border-radius: 6px; text-decoration: none; color: white; font-weight: bold; font-size: 0.9rem; transition: opacity 0.2s; }
+        .l-btn:hover { opacity: 0.9; }
+        .l-btn.fl-btn { background: var(--flight); }
+        .l-btn.ho-btn { background: var(--hotel); }
+        .l-btn.up-btn { background: var(--upgrade); }
+        
+        /* Budget Rechner Display */
+        .budget-calc-box { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; border: 1px solid #cbd5e1; }
+        .budget-ok { background: #e6f4ea; color: var(--success); border-color: #a3cfbb; }
+        .budget-error { background: #fce8e6; color: var(--warn); border-color: #f1aeb5; }
     </style>
 </head>
 <body>
@@ -38,9 +60,9 @@
         <div class="form-group pass-box">
             <label>Passwort:</label>
             <input type="password" id="password-input" value="">
-            <span class="eye" onclick="var p=document.getElementById('password-input'); if(p.type=='password'){p.type='text';this.innerText='👁️‍🗨️';}else{p.type='password';this.innerText='👁️';}">👁️</span>
+            <span class="eye" onclick="togglePassword()">👁️</span>
         </div>
-        <button class="btn btn-main" onclick="if(document.getElementById('password-input').value==='Reise2026'){document.getElementById('auth-section').classList.add('hidden');document.getElementById('main-content').classList.remove('hidden');}else{alert('Falsches Passwort!');}">Freischalten</button>
+        <button class="btn btn-main" onclick="checkPassword()">Freischalten</button>
     </div>
 
     <!-- 2. HAUPT-INHALT -->
@@ -52,7 +74,7 @@
             <div class="title">✈️ Sektion 1: Flug-Parameter</div>
             <div class="grid">
                 <div><label>Abflug (Code):</label><input type="text" id="dep" value="FRA"></div>
-                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA" oninput="document.getElementById('h-dest').value=this.value;"></div>
+                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA" oninput="syncDestination(this.value)"></div>
                 <div class="full"><label>📍 Optionaler Stopover / Zwischenaufenthalt:</label><input type="text" id="via" placeholder="z.B. NYC"></div>
                 <div><label>Frühestes Datum:</label><input type="date" id="start" value="2026-06-01"></div>
                 <div><label>Spätestes Datum:</label><input type="date" id="end" value="2026-08-31"></div>
@@ -68,41 +90,97 @@
             <div class="grid">
                 <div class="full"><label>Zielort für Hotelsuche:</label><input type="text" id="h-dest" value="MIA"></div>
                 <div><label>Mindest-Sterne:</label><select id="stars"><option value="3">3★</option><option value="4" selected>4★</option><option value="5">5★</option></select></div>
-                <div><label>Max. Gesamtbudget (€):</label><input type="number" id="budget" value="2500"></div>
-                <div class="full"><label> Davon Budget 2. Teilstrecke (Stopover -> Ziel) (€):</label><input type="number" id="sub-budget" value="500"></div>
+                <div><label>Max. Gesamtbudget (€):</label><input type="number" id="budget" value="2500" oninput="calculateTeilstreckenBudget()"></div>
+                <div><label>Budget 2. Teilstrecke (€):</label><input type="number" id="sub-budget" value="500" oninput="calculateTeilstreckenBudget()"></div>
+                <div class="full">
+                    <div id="budget-calc-display" class="budget-calc-box budget-ok">
+                        📊 Restbudget 1. Teilstrecke: <span id="main-budget-val">2000</span> €
+                    </div>
+                </div>
             </div>
         </div>
-
-        <button class="btn btn-main" onclick="var d=document.getElementById('dep').value.trim(); var st=document.getElementById('dest').value.trim(); var v=document.getElementById('via').value.trim(); var h=document.getElementById('h-dest').value.trim(); var s=document.getElementById('start').value; var c=document.getElementById('cabin').value; var star=document.getElementById('stars').value; var sP=s.split('-'); var kS=sP+'/'+sP+'/'+sP; document.getElementById('k-l').href='https://kiwi.com; document.getElementById('g-l').href='https://google.com; document.getElementById('s-l').href='https://skyscanner.de; document.getElementById('b-l').href='https://booking.com; document.getElementById('t-l').href='https://trivago.de; document.getElementById('tr-l').href='https://tripadvisor.de; document.getElementById('res').classList.remove('hidden');">Live-Suchlinks generieren ✨</button>
 
         <!-- UPGRADE KARTE -->
-        <div class="card up" style="margin-top: 20px;">
-            <div class="title">🔮 Sektion 3: Upgrade & Status Check (Bereits gebucht)</div>
+        <div class="card up">
+            <div class="title">💎 Sektion 3: Upgrade- & Status-Manager</div>
             <div class="grid">
-                <div><label>Airline:</label><input type="text" id="air" placeholder="Lufthansa"></div>
-                <div><label>Flugnummer:</label><input type="text" id="f-num" placeholder="LH430"></div>
-                <div><label>Buchungscode / Ticketnr:</label><input type="text" id="t-num" placeholder="ABCDEF"></div>
-                <div><label>Nachname Inhaber:</label><input type="text" id="p-name" placeholder="Müller"></div>
-                <div class="full"><label>Mitgliedsnummer / Vielflieger-ID:</label><input type="text" id="ff-num" placeholder="Miles & More Nr."></div>
+                <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa, Condor):</label><input type="text" id="airline" value="Lufthansa" placeholder="z.B. Lufthansa, Condor, Delta"></div>
             </div>
-            <button class="btn btn-up" onclick="var a=document.getElementById('air').value.trim(); var t=document.getElementById('t-num').value.trim(); var n=document.getElementById('p-name').value.trim(); if(!a){alert('Bitte Airline eingeben!');}else{window.open('https://google.com(a+' upgrade buchen ticket '+t+' '+n),'_blank');}">Upgrade-Optionen prüfen ↗</button>
+            <button class="btn btn-up" onclick="triggerUpgradeSearch()">💎 Gezielte Upgrade-Direktsuche starten</button>
         </div>
 
-        <!-- ERGEBNISSE -->
-        <div id="res" class="res-box hidden">
-            <h3 style="margin:0 0 10px 0; text-align:center;">🎉 Deine Live-Links</h3>
-            <div style="font-weight:bold; color:var(--flight); margin-bottom:5px;">✈️ Flüge:</div>
-            <a id="k-l" href="#" target="_blank" class="l-btn" style="background:#00a699;">🥝 Kiwi.com</a>
-            <a id="g-l" href="#" target="_blank" class="l-btn" style="background:#4285f4;">🌐 Google Flights</a>
-            <a id="s-l" href="#" target="_blank" class="l-btn" style="background:#007054;">🚀 Skyscanner</a>
-            <div style="font-weight:bold; color:var(--hotel); margin:10px 0 5px 0;">🏨 Hotels:</div>
-            <a id="b-l" href="#" target="_blank" class="l-btn" style="background:#003580;">🏨 Booking.com</a>
-            <a id="t-l" href="#" target="_blank" class="l-btn" style="background:#ff5a5f;">🔍 Trivago</a>
-            <a id="tr-l" href="#" target="_blank" class="l-btn" style="background:#34e0a1; color:black;">🦉 TripAdvisor</a>
+        <!-- GENERIEREN BUTTON -->
+        <button class="btn btn-main" onclick="generateTravelLinks()">🔍 Suchmaschinen-Verknüpfungen generieren</button>
+
+        <!-- ERGEBNIS BOX -->
+        <div id="result-section" class="res-box hidden">
+            <h3>🔗 Ihre personalisierten Such-Links:</h3>
+            
+            <h4>✈️ Flug-Suchen:</h4>
+            <a id="link-kiwi" class="l-btn fl-btn" target="_blank">Kiwi Suche öffnen</a>
+            <a id="link-google" class="l-btn fl-btn" target="_blank">Google Flights öffnen</a>
+            <a id="link-skyscanner" class="l-btn fl-btn" target="_blank">Skyscanner öffnen</a>
+            
+            <h4>🏨 Hotel-Suchen:</h4>
+            <a id="link-booking" class="l-btn ho-btn" target="_blank">Booking.com öffnen</a>
+            <a id="link-trivago" class="l-btn ho-btn" target="_blank">Trivago öffnen</a>
+            <a id="link-tripadvisor" class="l-btn ho-btn" target="_blank">TripAdvisor öffnen</a>
         </div>
     </div>
 </div>
 
-</body>
-</html>
+<script>
+    // Passwort-Sichtbarkeit umschalten
+    function togglePassword() {
+        var p = document.getElementById('password-input');
+        var eye = document.querySelector('.eye');
+        if (p.type === 'password') {
+            p.type = 'text';
+            eye.innerText = '👁️‍🗨️';
+        } else {
+            p.type = 'password';
+            eye.innerText = '👁️';
+        }
+    }
+
+    // Passwort prüfen
+    function checkPassword() {
+        if (document.getElementById('password-input').value === 'Reise2026') {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+        } else {
+            alert('Falsches Passwort!');
+        }
+    }
+
+    // Echtzeit-Synchronisation des Zielorts
+    function syncDestination(val) {
+        document.getElementById('h-dest').value = val;
+    }
+
+    // Live-Rechner für Multistopp-Teilstrecken
+    function calculateTeilstreckenBudget() {
+        var total = parseFloat(document.getElementById('budget').value) || 0;
+        var sub = parseFloat(document.getElementById('sub-budget').value) || 0;
+        var displayBox = document.getElementById('budget-calc-display');
+        var mainBudgetVal = document.getElementById('main-budget-val');
+        
+        var diff = total - sub;
+        mainBudgetVal.innerText = diff;
+        
+        if (diff < 0) {
+            displayBox.className = "budget-calc-box budget-error";
+            displayBox.innerHTML = "⚠️ Achtung: Teilbudget der 2. Teilstrecke übersteigt das Gesamtbudget! (Differenz: " + diff + " €)";
+        } else {
+            displayBox.className = "budget-calc-box budget-ok";
+            displayBox.innerHTML = "📊 Restbudget 1. Teilstrecke: <span id='main-budget-val'>" + diff + "</span> €";
+        }
+    }
+
+    // Upgrade-Direktsuche für Sektion 3
+    function triggerUpgradeSearch() {
+        var airline = document.getElementById('airline').value.trim();
+        if(!airline) { alert('Bitte eine Airline eingeben!'); return; }
+        
+        var airlineLower = airline.toLowerCase();
 
