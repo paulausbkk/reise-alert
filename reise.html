@@ -33,29 +33,30 @@
 </head>
 <body>
 <div class="container">
-    <h1>✈️ Reisekonfiguration PRO</h1>
-    <!-- FLUGHAFEN-DATENLISTE ZUR AUTOVERVOLLSTÄNDIGUNG -->
-<datalist id="airports-complete">
-    <option value="Frankfurt (FRA)">
-    <option value="München (MUC)">
-    <option value="Berlin (BER)">
-    <option value="Düsseldorf (DUS)">
-    <option value="Hamburg (HAM)">
-    <option value="Wien (VIE)">
-    <option value="Zürich (ZRH)">
-    <option value="Manila (MNL)">
-    <option value="Bangkok (BKK)">
-    <option value="Phuket (HKT)">
-    <option value="Singapore (SIN)">
-    <option value="London Heathrow (LHR)">
-    <option value="New York (JFK)">
-</datalist>
+    <<h1>✈️ Reisekonfiguration PRO</h1>
+    
+    <!-- FIXIERTE FLUGHAFEN-DATENLISTE -->
+    <datalist id="airports-complete">
+        <option value="Frankfurt (FRA)">
+        <option value="München (MUC)">
+        <option value="Berlin (BER)">
+        <option value="Düsseldorf (DUS)">
+        <option value="Hamburg (HAM)">
+        <option value="Wien (VIE)">
+        <option value="Zürich (ZRH)">
+        <option value="Manila (MNL)">
+        <option value="Bangkok (BKK)">
+        <option value="Phuket (HKT)">
+        <option value="Singapore (SIN)">
+        <option value="London Heathrow (LHR)">
+        <option value="New York (JFK)">
+    </datalist>
+
     <!-- SEKTION 1: Flug-Parameter -->
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
             <div>
-                <<div>
                 <label>Abflugort (Stadt oder Code):</label>
                 <input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete" autocomplete="off">
             </div>
@@ -63,6 +64,7 @@
                 <label>Zielort (Stadt oder Code):</label>
                 <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-complete" autocomplete="off">
             </div>
+            <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026" id="fl-date1"></div>
             <div><label>Rückflug:</label><input type="text" placeholder="25.11.2026" id="fl-date2"></div>
             
             <div class="switch-container">
@@ -97,17 +99,23 @@
                 <label>Gepäckauswahl:</label>
                 <select id="fl-baggage">
                     <option>Nur Handgepäck</option>
-                    <option>Aufgabegepäck 20 kg</option>
+                    <option>Aufgabegepäck 20 KG</option>
                     <option>Aufgabegepäck 32 KG</option>
                     <option>Handgepäck plus 20 KG Aufgabegepäck</option>
-                    <option>Handgepäck plus 32 Aufgabegepäck</option>
+                    <option>Handgepäck plus 32 KG Aufgabegepäck</option>
                 </select>
             </div>
-           <!-- FESTE FLUGHAFEN-LISTE DIREKT IN SEKTION 1 -->
-<datalist id="airports-complete">
-    <option value="Frankfurt (FRA)">
-    <option value="München (MUC)">
-    <option value="Berlin (BER)">
+            
+            <div>
+                <label>Zwischenstopps:</label>
+                <select id="fl-stops">
+                    <option>Direktflug</option>
+                    <option>Max. 1 Stopp</option>
+                    <option>Max. 2 Stopps</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <option value="Düsseldorf (DUS)">
     <option value="Hamburg (HAM)">
     <option value="Wien (VIE)">
