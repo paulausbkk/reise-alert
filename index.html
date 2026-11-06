@@ -147,16 +147,41 @@
         </div>
     </div>
 
-    <!-- SEKTION 2: Passagier-Daten -->
+    <!-- SEKTION 2: Upgrade-Suche (Bestehendes Ticket) -->
     <div class="card up">
-        <div class="title">👤 Sektion 2: Passagier-Daten</div>
+        <div class="title">🎫 Sektion 2: Upgrade-Suche & Ticket-Details</div>
         <div class="grid">
             <div class="full">
                 <label>Name wie im Reisepass:</label>
-                <input type="text" placeholder="z.B. MUELLER / MAXIMILIAN" id="pa-name">
+                <input type="text" placeholder="z.B. MUELLER / MAXIMILIAN" id="up-name">
+            </div>
+            <div>
+                <label>Buchungscode (6-stellig, z.B. PNR):</label>
+                <input type="text" placeholder="z.B. X1Y2Z3" id="up-pnr" maxlength="6" style="text-transform: uppercase !important;">
+            </div>
+            <div>
+                <label>Ticketnummer (13-stellig):</label>
+                <input type="text" placeholder="z.B. 2201234567890" id="up-ticketno" maxlength="13">
+            </div>
+            <div>
+                <label>Aktuelle Klasse:</label>
+                <select id="up-current-class">
+                    <option>Economy</option>
+                    <option>Premium Economy</option>
+                    <option>Business Class</option>
+                </select>
+            </div>
+            <div>
+                <label>Wunsch-Upgrade:</label>
+                <select id="up-target-class">
+                    <option>Premium Economy</option>
+                    <option selected>Business Class</option>
+                    <option>First Class</option>
+                </select>
             </div>
         </div>
     </div>
+    
 
     <!-- SEKTION 3: Hotel-Optionen -->
     <div class="card ho">
