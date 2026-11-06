@@ -59,7 +59,7 @@
         <h1>🔒 Passwort erforderlich</h1>
         <div class="form-group pass-box">
             <label>Passwort:</label>
-            <input type="password" id="password-input" value="">
+            <input type="password" id="password-input" value="" onkeydown="if(event.key === 'Enter') checkPassword()">
             <span class="eye" onclick="togglePassword()">👁️</span>
         </div>
         <button class="btn btn-main" onclick="checkPassword()">Freischalten</button>
@@ -112,7 +112,7 @@
         <!-- GENERIEREN BUTTON -->
         <button class="btn btn-main" onclick="generateTravelLinks()">🔍 Suchmaschinen-Verknüpfungen generieren</button>
 
-        <!-- ERGEBNIS BOX (Blöcke getauscht: Hotels stehen jetzt ganz unten) -->
+        <!-- ERGEBNIS BOX -->
         <div id="result-section" class="res-box hidden">
             <h3>🔗 Ihre personalisierten Such-Links:</h3>
             
@@ -145,7 +145,8 @@
 
     // Passwort prüfen
     function checkPassword() {
-        if (document.getElementById('password-input').value === 'Reise2026') {
+        var passwordInput = document.getElementById('password-input').value.trim();
+        if (passwordInput === 'Reise2026') {
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('main-content').classList.remove('hidden');
         } else {
@@ -163,10 +164,8 @@
         var total = parseFloat(document.getElementById('budget').value) || 0;
         var sub = parseFloat(document.getElementById('sub-budget').value) || 0;
         var displayBox = document.getElementById('budget-calc-display');
-        var mainBudgetVal = document.getElementById('main-budget-val');
         
         var diff = total - sub;
-        mainBudgetVal.innerText = diff;
         
         if (diff < 0) {
             displayBox.className = "budget-calc-box budget-error";
