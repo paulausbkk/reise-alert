@@ -214,9 +214,8 @@
 </div>
 
 <script>
-    // Passwort-Schutz prüfen
     function checkPassword() {
-        const input = document.getElementById('password-input').value;
+        var input = document.getElementById('password-input').value;
         if (input === 'Reise2026') {
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('main-content').classList.remove('hidden');
@@ -229,27 +228,44 @@
         if (e.key === 'Enter') { checkPassword(); }
     });
 
-    // Synchronisation der Reiseziele
     function syncDestination(val) {
         document.getElementById('hotel-destination').value = val;
     }
 
-    // Hilfsfunktion für Kiwi-Format (DD/MM/YYYY)
     function formatKiwiDate(dateStr) {
-        if(!dateStr) return '';
-        const p = dateStr.split('-');
+        if (!dateStr) return '';
+        var p = dateStr.split('-');
         return p[2] + '/' + p[1] + '/' + p[0];
     }
 
-    // FLUG-SUCHE LOGIK
     function searchFlight(engine) {
-        const dep = document.getElementById('departure').value.trim().toLowerCase();
-        const dest = document.getElementById('destination').value.trim().toLowerCase();
-        const start = document.getElementById('start-date').value;
-        const end = document.getElementById('end-date').value;
+        var dep = document.getElementById('departure').value.trim().toLowerCase();
+        var dest = document.getElementById('destination').value.trim().toLowerCase();
+        var start = document.getElementById('start-date').value;
+        var end = document.getElementById('end-date').value;
 
         if (engine === 'kiwi') {
-            const kStart = formatKiwiDate(start);
-            const kEnd = formatKiwiDate(end);
-            const dMin = document.getElementById('duration-min').value;
-            const dMax = document.getElementById('duration-max').value;
+            var kStart = formatKiwiDate(start);
+            var kEnd = formatKiwiDate(end);
+            var dMin = document.getElementById('duration-min').value;
+            var dMax = document.getElementById('duration-max').value;
+            window.open('https://kiwi.com' + dep + '/' + dest + '/' + kStart + '-' + kEnd + '/' + dMin + '-' + dMax, '_blank');
+        } else if (engine === 'google') {
+Verwende Code mit Vorsicht.
+window.open('google.com' + dest.toUpperCase() + '%20from%20' + dep.toUpperCase() + '%20on%20' + start, '_blank');
+} else if (engine === 'skyscanner') {
+window.open('skyscanner.de' + dep + '/' + dest + '/', '_blank');
+}
+}
+function searchHotel(engine) {
+var dest = document.getElementById('hotel-destination').value.trim();
+var stars = document.getElementById('hotel-stars').value;
+if (engine === 'booking') {
+window.open('booking.com' + encodeURIComponent(dest) + '&nclass=' + stars, '_blank');
+} else if (engine === 'trivago') {
+window.open('trivago.de' + encodeURIComponent(dest), '_blank');
+} else if (engine === 'tripadvisor') {
+window.open('tripadvisor.de' + encodeURIComponent(dest), '_blank');
+}
+}
+
