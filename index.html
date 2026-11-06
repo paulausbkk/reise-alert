@@ -98,7 +98,6 @@
             color: white;
             box-sizing: border-box;
         }
-        /* Portal-Farben */
         .kiwi-btn { background-color: #00a699; }
         .kiwi-btn:hover { background-color: #00847a; }
         .google-btn { background-color: #4285f4; }
@@ -177,7 +176,7 @@
 
         <button onclick="generateLinks()">Live-Suchlinks generieren</button>
 
-        <!-- 3. Ergebnis-Bereich mit allen neuen Suchportalen -->
+        <!-- 3. Ergebnis-Bereich -->
         <div id="results" class="result-box hidden">
             <h3 style="margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">✈️ Flug-Suchlinks:</h3>
             <a id="kiwi-link" href="#" target="_blank" class="link-btn kiwi-btn">🥝 Flüge auf Kiwi.com suchen</a>
@@ -216,31 +215,19 @@
         var durMax = document.getElementById('duration-max').value;
         var stars = document.getElementById('hotel-stars').value;
 
-        // Datums-Split für Portale
         var startParts = start.split('-');
-        var endParts = end.split('-');
-
-        // 1. KIWI LINK
         var kiwiStart = startParts[2] + '/' + startParts[1] + '/' + startParts[0];
+        var endParts = end.split('-');
         var kiwiEnd = endParts[2] + '/' + endParts[1] + '/' + endParts[0];
+
         var kiwiUrl = 'https://kiwi.com' + dep + '/' + dest + '/' + kiwiStart + '-' + kiwiEnd + '/' + durMin + '-' + durMax;
-
-        // 2. GOOGLE FLIGHTS LINK
         var googleUrl = 'https://google.com' + dest.toUpperCase() + '%20from%20' + dep.toUpperCase() + '%20on%20' + start;
-
-        // 3. SKYSCANNER LINK
         var skyscannerUrl = 'https://skyscanner.de' + dep + '/' + dest + '/';
 
-        // 4. BOOKING LINK
         var bookingUrl = 'https://booking.com' + encodeURIComponent(dest.toUpperCase()) + '&nclass=' + stars;
-
-        // 5. TRIVAGO LINK
         var trivagoUrl = 'https://trivago.de' + encodeURIComponent(dest.toUpperCase());
-
-        // 6. TRIPADVISOR LINK
         var tripadvisorUrl = 'https://tripadvisor.de' + encodeURIComponent(dest.toUpperCase());
 
-        // Zuweisung an die Elemente
         document.getElementById('kiwi-link').href = kiwiUrl;
         document.getElementById('google-flights-link').href = googleUrl;
         document.getElementById('skyscanner-link').href = skyscannerUrl;
@@ -248,3 +235,10 @@
         document.getElementById('booking-link').href = bookingUrl;
         document.getElementById('trivago-link').href = trivagoUrl;
         document.getElementById('tripadvisor-link').href = tripadvisorUrl;
+
+        document.getElementById('results').classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
