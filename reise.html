@@ -1,4 +1,4 @@
-><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -34,12 +34,13 @@
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
-<h1>✈️ Reisekonfiguration PRO</h1>
-
+    
     <!-- SEKTION 1: Flug-Parameter -->
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
+            
+            <!-- SICHERE DROPDOWN-AUSWAHL FÜR ABFLUG -->
             <div>
                 <label>Abflugort:</label>
                 <select id="fl-from">
@@ -53,6 +54,8 @@
                     <option value="ZRH">Zürich (ZRH)</option>
                 </select>
             </div>
+            
+            <!-- SICHERE DROPDOWN-AUSWAHL FÜR ZIEL -->
             <div>
                 <label>Zielort:</label>
                 <select id="fl-to">
@@ -66,50 +69,7 @@
                     <option value="DXB">Dubai (DXB)</option>
                 </select>
             </div>
-    <!-- SEKTION 1: Flug-Parameter -->
-    <div class="card fl">
-        <div class="title">✈️ Sektion 1: Flug-Parameter</div>
-        <div class="grid">
-            <div>
-                <label>Abflugort:</label>
-                <select id="fl-from">
-                    <option value="">Bitte wählen...</option>
-                    <option value="FRA">Frankfurt (FRA)</option>
-                    <option value="MUC">München (MUC)</option>
-                    <option value="BER">Berlin (BER)</option>
-                    <option value="DUS">Düsseldorf (DUS)</option>
-                    <option value="HAM">Hamburg (HAM)</option>
-                    <option value="VIE">Wien (VIE)</option>
-                    <option value="ZRH">Zürich (ZRH)</option>
-                </select>
-            </div>
-            <div>
-                <label>Zielort:</label>
-                <select id="fl-to">
-                    <option value="">Bitte wählen...</option>
-                    <option value="BKK">Bangkok (BKK)</option>
-                    <option value="MNL">Manila (MNL)</option>
-                    <option value="HKT">Phuket (HKT)</option>
-                    <option value="SIN">Singapore (SIN)</option>
-                    <option value="LHR">London (LHR)</option>
-                    <option value="JFK">New York (JFK)</option>
-                    <option value="DXB">Dubai (DXB)</option>
-                </select>
-            </div>
-    </datalist>
 
-    <!-- SEKTION 1: Flug-Parameter -->
-    <div class="card fl">
-        <div class="title">✈️ Sektion 1: Flug-Parameter</div>
-        <div class="grid">
-            <div>
-                <label>Abflugort (Stadt oder Code):</label>
-                <input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete" autocomplete="off">
-            </div>
-            <div>
-                <label>Zielort (Stadt oder Code):</label>
-                <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-complete" autocomplete="off">
-            </div>
             <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026" id="fl-date1"></div>
             <div><label>Rückflug:</label><input type="text" placeholder="25.11.2026" id="fl-date2"></div>
             
@@ -160,35 +120,10 @@
                     <option>Max. 2 Stopps</option>
                 </select>
             </div>
-<!-- KABEL-SKRIPT: ZWANGS-ÖFFNUNG FÜR DIE FLUGHAFENLISTE -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const fields = [document.getElementById("fl-from"), document.getElementById("fl-to")];
-        
-        fields.forEach(input => {
-            if (!input) return;
-            
-            // Zwingt die Liste beim reinen Reinklicken zum Aufklappen
-            input.addEventListener("focus", function() {
-                this.setAttribute("autocomplete", "on");
-                // Simuliert einen Doppelklick für den Browser, um die Liste zu triggern
-                let event = new MouseEvent('dblclick', { 'view': window, 'bubbles': true, 'cancelable': true });
-                this.dispatchEvent(event);
-            });
-            
-            // Automatische Großschreibung beim Tippen
-            input.addEventListener("input", function() {
-                let val = this.value;
-                if (val.length > 0) {
-                    this.value = val.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-                }
-            });
-        });
-    });
-</script>
+
             <div>
                 <label>Ort des Stopps (Stadt oder Code):</label>
-                <input type="text" placeholder="z.B. Dubai" id="fl-stop-location" list="airports-complete" autocomplete="off">
+                <input type="text" placeholder="z.B. Dubai" id="fl-stop-location">
             </div>
 
             <div>
