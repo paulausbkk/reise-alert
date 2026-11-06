@@ -15,20 +15,19 @@
         .card.ho { border-color: var(--hotel); background: #f0fdf4; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
         .fl .title { color: var(--flight); } .up .title { color: var(--upgrade); } .ho .title { color: var(--hotel); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
-        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; position: relative; z-index: 10; }
-        input, select, option { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; position: relative; z-index: 20; cursor: pointer; background-color: #ffffff; }
-        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; }
+        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; text-transform: none !important; }
+        input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; text-transform: none !important; font-variant: normal !important; background-color: #ffffff; font-size: 0.9rem; }
+        select { cursor: pointer; }
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--primary); }
         input:checked + .slider:before { transform: translateX(18px); }
-        .range-box { display: flex; align-items: center; gap: 10px; }
-        .range-box input { flex: 1; }
-        .btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); }
+        .btn { width: 100%; padding: 12px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); font-size: 1rem; }
     </style>
 </head>
 <body>
@@ -40,7 +39,6 @@
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
             
-            <!-- SICHERE DROPDOWN-AUSWAHL FÜR ABFLUG -->
             <div>
                 <label>Abflugort:</label>
                 <select id="fl-from">
@@ -55,7 +53,6 @@
                 </select>
             </div>
             
-            <!-- SICHERE DROPDOWN-AUSWAHL FÜR ZIEL -->
             <div>
                 <label>Zielort:</label>
                 <select id="fl-to">
@@ -129,6 +126,21 @@
             <div>
                 <label>Ticketpreis (€):</label>
                 <input type="number" placeholder="800" id="fl-price">
+            </div>
+
+            <div class="full">
+                <button type="button" class="btn" id="btn-search-flights" style="background: var(--flight); margin-top: 10px;">✈️ Flug-Suche starten</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKTION 2: Passagier-Daten -->
+    <div class="card up">
+        <div class="title">👤 Sektion 2: Passagier-Daten</div>
+        <div class="grid">
+            <div class="full">
+                <label>Name wie im Reisepass:</label>
+                <input type="text" placeholder="z.B. MUELLER / MAXIMILIAN" id="pa-name">
             </div>
         </div>
     </div>
