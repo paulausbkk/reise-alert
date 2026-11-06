@@ -127,26 +127,18 @@
         <div class="res-box" id="result-box" style="display:none;">
             <h3>🔗 Generierte Suchlinks & Daten:</h3>
             <div id="links-container"></div>
-            
-            <!-- Hier werden die neuen Daten aus Sektion 2 jetzt aktiv verarbeitet und angezeigt -->
             <div id="upgrade-protocol-container"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // Live-Budgetrechner Funktion
-    function calcBudget() {
-        const total = parseFloat(document.getElementById('total-budget').value) || 0;
-        const hotelPerNight = parseFloat(document.getElementById('hotel-per-night').value) || 0;
-        const nights = parseFloat(document.getElementById('nights').value) || 0;
-        const flightEst = parseFloat(document.getElementById('est-flight').value) || 0;
+    // Funktion zum Laden der gespeicherten Daten aus dem localStorage
+    function loadSavedData() {
+        if (localStorage.getItem('mck_airline')) document.getElementById('airline').value = localStorage.getItem('mck_airline');
+        if (localStorage.getItem('mck_status')) document.getElementById('status').value = localStorage.getItem('mck_status');
+        if (localStorage.getItem('mck_booking_code')) document.getElementById('booking-code').value = localStorage.getItem('mck_booking_code');
+        if (localStorage.getItem('mck_passport_name')) document.getElementById('passport-name').value = localStorage.getItem('mck_passport_name');
+        if (localStorage.getItem('mck_passport_num')) document.getElementById('passport-num').value = localStorage.getItem('mck_passport_num');
 
-        const totalHotel = hotelPerNight * nights;
-        const spent = totalHotel + flightEst;
-        const diff = total - spent;
-
-        const display = document.getElementById('budget-display');
-
-        if (diff >= 0) {
-            display.className = "budget-calc-box budget-ok";
+       
