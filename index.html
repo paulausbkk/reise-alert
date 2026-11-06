@@ -21,7 +21,6 @@
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; text-transform: none !important; font-variant: normal !important; background-color: #ffffff; font-size: 0.9rem; }
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         
-        /* Gelbes Highlight für den Low-Cost-Schalter */
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
         
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
@@ -29,10 +28,10 @@
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         
-        /* BEIDE SCHALTER WERDEN GRÜN WENN SIE AKTIVIERT SIND */
+        /* BEIDE SCHALTER WERDEN BEI AKTIVIERUNG GRÜN */
         input:checked + .slider { background-color: var(--active-green) !important; }
-        
         input:checked + .slider:before { transform: translateX(18px); }
+        
         .btn { width: 100%; padding: 12px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); font-size: 1rem; }
     </style>
 </head>
@@ -99,7 +98,6 @@
                 </label>
             </div>
             
-            <!-- GELBES HIGH-LIGHT MIT GRÜNEM REGLER -->
             <div class="switch-container yellow-highlight">
                 <label style="color: #854d0e;">Low-Cost Airlines einbeziehen (Cebu Pacific etc.):</label>
                 <label class="switch">
@@ -200,3 +198,6 @@
     </div>
 
     <!-- SEKTION 3: Hotel-Optionen -->
+    <div class="card ho">
+        <div class="title">🏨 Sektion 3: Hotel-Optionen</div>
+        <div class="grid">
