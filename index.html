@@ -19,7 +19,6 @@
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; text-transform: none !important; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; text-transform: none !important; font-variant: normal !important; background-color: #ffffff; font-size: 0.9rem; }
-        select { cursor: pointer; }
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -34,37 +33,36 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
+    <!-- FLUGHAFEN-DATENLISTE (GARANTIERT GELADEN) -->
+    <datalist id="airports-complete">
+        <option value="Frankfurt (FRA)"></option>
+        <option value="München (MUC)"></option>
+        <option value="Berlin (BER)"></option>
+        <option value="Düsseldorf (DUS)"></option>
+        <option value="Hamburg (HAM)"></option>
+        <option value="Wien (VIE)"></option>
+        <option value="Zürich (ZRH)"></option>
+        <option value="Manila (MNL)"></option>
+        <option value="Bangkok (BKK)"></option>
+        <option value="Phuket (HKT)"></option>
+        <option value="Singapore (SIN)"></option>
+        <option value="London Heathrow (LHR)"></option>
+        <option value="New York (JFK)"></option>
+        <option value="Dubai (DXB)"></option>
+        <option value="Doha (DOH)"></option>
+    </datalist>
+
     <!-- SEKTION 1: Flug-Parameter -->
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
-            
             <div>
-                <label>Abflugort:</label>
-                <select id="fl-from">
-                    <option value="">Bitte wählen...</option>
-                    <option value="FRA">Frankfurt (FRA)</option>
-                    <option value="MUC">München (MUC)</option>
-                    <option value="BER">Berlin (BER)</option>
-                    <option value="DUS">Düsseldorf (DUS)</option>
-                    <option value="HAM">Hamburg (HAM)</option>
-                    <option value="VIE">Wien (VIE)</option>
-                    <option value="ZRH">Zürich (ZRH)</option>
-                </select>
+                <label>Abflugort (Stadt oder Code):</label>
+                <input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete">
             </div>
-            
             <div>
-                <label>Zielort:</label>
-                <select id="fl-to">
-                    <option value="">Bitte wählen...</option>
-                    <option value="BKK">Bangkok (BKK)</option>
-                    <option value="MNL">Manila (MNL)</option>
-                    <option value="HKT">Phuket (HKT)</option>
-                    <option value="SIN">Singapore (SIN)</option>
-                    <option value="LHR">London (LHR)</option>
-                    <option value="JFK">New York (JFK)</option>
-                    <option value="DXB">Dubai (DXB)</option>
-                </select>
+                <label>Zielort (Stadt oder Code):</label>
+                <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-complete">
             </div>
 
             <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026" id="fl-date1"></div>
@@ -120,7 +118,7 @@
 
             <div>
                 <label>Ort des Stopps (Stadt oder Code):</label>
-                <input type="text" placeholder="z.B. Dubai" id="fl-stop-location">
+                <input type="text" placeholder="z.B. Dubai" id="fl-stop-location" list="airports-complete">
             </div>
 
             <div>
@@ -141,6 +139,30 @@
             <div class="full">
                 <label>Name wie im Reisepass:</label>
                 <input type="text" placeholder="z.B. MUELLER / MAXIMILIAN" id="pa-name">
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKTION 3: Hotel-Optionen -->
+    <div class="card ho">
+        <div class="title">🏨 Sektion 3: Hotel-Optionen</div>
+        <div class="grid">
+            <div class="full">
+                <label>Hotel-Wunsch / Destination:</label>
+                <input type="text" placeholder="z.B. Manila Bel-Air" id="ho-destination">
+            </div>
+            <div>
+                <label>Sterne-Kategorie:</label>
+                <select id="ho-stars">
+                    <option>Beliebig</option>
+                    <option>3 Sterne</option>
+                    <option selected>4 Sterne</option>
+                    <option>5 Sterne</option>
+                </select>
+            </div>
+            <div>
+                <label>Max. Budget pro Nacht (€):</label>
+                <input type="number" placeholder="100" id="ho-budget">
             </div>
         </div>
     </div>
