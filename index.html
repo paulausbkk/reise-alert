@@ -5,46 +5,172 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ Reisekonfiguration PRO</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; }
+        :root { 
+            --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; 
+            --border: #cbd5e1; --flight: #0284c7; --hotel: #0f766e; --upgrade: #6d28d9; 
+        }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--flight); background: #f0f9ff; }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--flight); }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .card.fl { border-color: var(--flight); background: #f0f9ff; }
+        .card.up { border-color: var(--upgrade); background: #faf5ff; }
+        .card.ho { border-color: var(--hotel); background: #f0fdf4; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
+        .fl .title { color: var(--flight); } .up .title { color: var(--upgrade); } .ho .title { color: var(--hotel); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
         input, select { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; }
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(18px); }
+        .range-box { display: flex; align-items: center; gap: 10px; }
+        .range-box input { flex: 1; }
+        .btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); }
     </style>
-    <script>
-        window.onload = function() {
-            var pw = prompt("🔑 Passwort erforderlich:");
-            if (pw === "Reise2026") { document.getElementById("main-content").style.display = "block"; } 
-            else { alert("Falsches Passwort!"); window.location.reload(); }
-        };
-    </script>
 </head>
 <body>
 <div class="container">
-    <div id="main-content" style="display:none;">
-        <h1>✈️ Reisekonfiguration PRO</h1>
-        <div class="card">
-            <div class="title">✈️ Sektion 1: Flug-Parameter</div>
-            <div class="grid">
-                <div><label>Abflugort (Code):</label><input type="text" placeholder="FRA" id="from"></div>
-                <div><label>Zielort (Code):</label><input type="text" placeholder="MNL" id="to"></div>
-                <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026"></div>
-                <div><label>Rückflug:</label><input type="text" placeholder="25.11.2026"></div>
-                <div>
-                    <label>Personenanzahl:</label>
-                    <select><option>1 Person</option><option selected>2 Personen</option><option>3 Personen</option><option>4 Personen</option></select>
-                </div>
-                <div>
-                    <label>Gepäckauswahl:</label>
-                    <select><option>handgepäck</option><option>aufgabegepäck 20 kg</option><option>aufgabegepäck 32 KG</option></select>
+    <h1>✈️ Reisekonfiguration PRO</h1>
+    
+    <!-- SEKTION 1: Flug-Parameter -->
+    <div class="card fl">
+        <div class="title">✈️ Sektion 1: Flug-Parameter</div>
+        <div class="grid">
+            <div><label>Abflugort (Code):</label><input type="text" placeholder="FRA" id="fl-from" maxlength="3"></div>
+            <div><label>Zielort (Code):</label><input type="text" placeholder="MNL" id="fl-to" maxlength="3"></div>
+            <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026" id="fl-date1"></div>
+            <div><label>Rückflug:</label><input type="text" placeholder="25.11.2026" id="fl-date2"></div>
+            
+            <div class="switch-container">
+                <label>Nur Hinflug (One Way):</label>
+                <label class="switch">
+                    <input type="checkbox" id="fl-oneway">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div>
+                <label>Beförderungsklasse:</label>
+                <select id="fl-cabin">
+                    <option>Economy</option>
+                    <option>Premium Economy</option>
+                    <option>Business Class</option>
+                    <option>First Class</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Personenanzahl:</label>
+                <select id="fl-passengers">
+                    <option>1 Person</option>
+                    <option selected>2 Personen</option>
+                    <option>3 Personen</option>
+                    <option>4 Personen</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Gepäckauswahl:</label>
+                <select id="fl-baggage">
+                    <option>nur handgepäck</option>
+                    <option>aufgabegepäck 20 kg</option>
+                    <option>aufgabegepäck 32 KG</option>
+                    <option>Handgepäck plus 20 KG aufgabegepäck</option>
+                    <option>Handgepäck plus 32 Aufgabegepäck</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Zwischenstopps:</label>
+                <select id="fl-stops">
+                    <option>Direktflug</option>
+                    <option>Max. 1 Stopp</option>
+                    <option>Max. 2 Stopps</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Ort des Stopps (Stadt/Code):</label>
+                <input type="text" placeholder="z.B. Dubai" list="airports" id="fl-stop-location">
+                <datalist id="airports">
+                    <option value="Dubai (DXB)"></option>
+                    <option value="Singapur (SIN)"></option>
+                    <option value="Bangkok (BKK)"></option>
+                    <option value="Doha (DOH)"></option>
+                    <option value="London (LHR)"></option>
+                </datalist>
+            </div>
+            
+            <div><label>Ticketpreis (€):</label><input type="number" placeholder="800" id="fl-price"></div>
+            <div><label>Preis Weiterflug (€):</label><input type="number" placeholder="150" id="fl-next-price"></div>
+            
+            <div class="full">
+                <label>Max. Reisezeit:</label>
+                <div class="range-box">
+                    <input type="range" min="5" max="40" value="24" id="fl-duration">
+                    <span>24h</span>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- SEKTION 2: Upgrade- & Status-Manager -->
+    <div class="card up">
+        <div class="title">💎 Sektion 2: Upgrade- & Status-Manager</div>
+        <div class="grid">
+            <div><label>Buchungsnummer (PNR):</label><input type="text" placeholder="X7YZ3R" id="up-pnr"></div>
+            <div><label>Ticketnummer:</label><input type="text" placeholder="220-1234567890" id="up-ticket"></div>
+            <div class="full"><label>Name im Reisepass:</label><input type="text" placeholder="MAX MUSTERMANN" id="up-name"></div>
+            <div><label>Passnummer:</label><input type="text" placeholder="CXXXXXXX" id="up-passport"></div>
+            <div><label>Max. Upgrade-Budget (€):</label><input type="number" placeholder="450" id="up-maxprice"></div>
+        </div>
+    </div>
+
+    <!-- SEKTION 3: Hotel- & Budgetplanung -->
+    <div class="card ho">
+        <div class="title">🏨 Sektion 3: Hotel- & Budgetplanung</div>
+        <div class="grid">
+            <div class="full"><label>Hotel-Reiseziel Stadt:</label><input type="text" placeholder="z.B. Manila" id="ho-dest"></div>
+            <div><label>Max. Hotelbudget total (€):</label><input type="number" placeholder="1200" id="ho-budget"></div>
+            <div><label>Geschätzter Hotelpreis (€):</label><input type="number" placeholder="950" id="ho-est-price"></div>
+            <div>
+                <label>Hotel Sterne:</label>
+                <select id="ho-stars">
+                    <option>Alle Sterne</option>
+                    <option>1 Stern</option>
+                    <option>2 Sterne</option>
+                    <option>3 Sterne</option>
+                    <option>4 Sterne</option>
+                    <option>5 Sterne</option>
+                </select>
+            </div>
+            <div>
+                <label>Unterkunftstyp:</label>
+                <select id="ho-type">
+                    <option>Hotel</option>
+                    <option>Resort</option>
+                    <option>Airbnb</option>
+                </select>
+            </div>
+            <div class="full">
+                <label>Personenanzahl (Hotel):</label>
+                <select id="ho-guests">
+                    <option>1 Person</option>
+                    <option selected>2 Personen</option>
+                    <option>3 Personen</option>
+                    <option>4 Personen</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn">System-Links & Protokolle generieren</button>
 </div>
 </body>
 </html>
