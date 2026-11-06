@@ -59,10 +59,10 @@
         <h1>🔒 Passwort erforderlich</h1>
         <div class="form-group pass-box">
             <label for="password-input">Passwort:</label>
-            <input type="password" id="password-input" autocomplete="off" onkeydown="if(event.key === 'Enter') { event.preventDefault(); checkPassword(); }">
-            <span class="eye" onclick="togglePassword()">👁️</span>
+            <input type="password" id="password-input" autocomplete="off">
+            <span class="eye" id="toggle-eye-btn">👁️</span>
         </div>
-        <button class="btn btn-main" type="button" onclick="checkPassword()">Freischalten</button>
+        <button class="btn btn-main" id="submit-auth-btn" type="button">Freischalten</button>
     </div>
 
     <!-- 2. HAUPT-INHALT -->
@@ -74,13 +74,13 @@
             <div class="title">✈️ Sektion 1: Flug-Parameter</div>
             <div class="grid">
                 <div><label>Abflug (Code):</label><input type="text" id="dep" value="FRA"></div>
-                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA" oninput="syncDestination(this.value)"></div>
+                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA"></div>
                 <div class="full"><label>📍 Optionaler Stopover / Zwischenaufenthalt:</label><input type="text" id="via" placeholder="z.B. NYC"></div>
                 <div><label>Frühestes Datum:</label><input type="date" id="start" value="2026-06-01"></div>
                 <div><label>Spätestes Datum:</label><input type="date" id="end" value="2026-08-31"></div>
                 <div><label>Zwischenstopps Filter:</label><select id="stops"><option value="any">Alle</option><option value="direct">Nur Direkt</option><option value="max1">Max 1</option></select></div>
                 <div><label>Klasse:</label><select id="cabin"><option value="economy">Economy</option><option value="premium">Premium Eco</option><option value="business">Business</option><option value="first">First</option></select></div>
-                <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18" oninput="document.getElementById('t-val').innerText=this.value+' h';"></div>
+                <div class="full"><label>Max. Reisezeit: <span id="t-val">18 h</span></label><input type="range" id="m-time" min="5" max="40" value="18"></div>
             </div>
         </div>
 
@@ -90,8 +90,8 @@
             <div class="grid">
                 <div class="full"><label>Zielort für Hotelsuche:</label><input type="text" id="h-dest" value="MIA"></div>
                 <div><label>Mindest-Sterne:</label><select id="stars"><option value="3">3★</option><option value="4" selected>4★</option><option value="5">5★</option></select></div>
-                <div><label>Max. Gesamtbudget (€):</label><input type="number" id="budget" value="2500" oninput="calculateTeilstreckenBudget()"></div>
-                <div><label>Budget 2. Teilstrecke (€):</label><input type="number" id="sub-budget" value="500" oninput="calculateTeilstreckenBudget()"></div>
+                <div><label>Max. Gesamtbudget (€):</label><input type="number" id="budget" value="2500"></div>
+                <div><label>Budget 2. Teilstrecke (€):</label><input type="number" id="sub-budget" value="500"></div>
                 <div class="full">
                     <div id="budget-calc-display" class="budget-calc-box budget-ok">
                         📊 Restbudget 1. Teilstrecke: <span id="main-budget-val">2000</span> €
@@ -106,11 +106,11 @@
             <div class="grid">
                 <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa, Condor):</label><input type="text" id="airline" value="Lufthansa" placeholder="z.B. Lufthansa, Condor, Delta"></div>
             </div>
-            <button class="btn btn-up" type="button" onclick="triggerUpgradeSearch()">💎 Gezielte Upgrade-Direktsuche starten</button>
+            <button class="btn btn-up" id="submit-upgrade-btn" type="button">💎 Gezielte Upgrade-Direktsuche starten</button>
         </div>
 
         <!-- GENERIEREN BUTTON -->
-        <button class="btn btn-main" type="button" onclick="generateTravelLinks()">🔍 Suchmaschinen-Verknüpfungen generieren</button>
+        <button class="btn btn-main" id="submit-generate-btn" type="button">🔍 Suchmaschinen-Verknüpfungen generieren</button>
 
         <!-- ERGEBNIS BOX -->
         <div id="result-section" class="res-box hidden">
@@ -130,54 +130,59 @@
 </div>
 
 <script>
-    // Passwort-Sichtbarkeit umschalten
-    function togglePassword() {
-        var p = document.getElementById('password-input');
-        var eye = document.querySelector('.eye');
-        if (p.type === 'password') {
-            p.type = 'text';
-            eye.innerText = '👁️‍🗨️';
-        } else {
-            p.type = 'password';
-            eye.innerText = '👁️';
-        }
-    }
-
-    // Passwort prüfen
-    function checkPassword() {
-        var inputVal = document.getElementById('password-input').value.trim();
-        if (inputVal === 'Reise2026') {
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('main-content').classList.remove('hidden');
-        } else {
-            alert('Falsches Passwort!');
-        }
-    }
-
-    // Echtzeit-Synchronisation des Zielorts
-    function syncDestination(val) {
-        document.getElementById('h-dest').value = val;
-    }
-
-    // Live-Rechner für Multistopp-Teilstrecken
-    function calculateTeilstreckenBudget() {
-        var total = parseFloat(document.getElementById('budget').value) || 0;
-        var sub = parseFloat(document.getElementById('sub-budget').value) || 0;
-        var displayBox = document.getElementById('budget-calc-display');
+    // Sobald das Dokument vollständig geladen ist, binden wir die Event-Listener sauber an
+    document.addEventListener("DOMContentLoaded", function() {
         
-        var diff = total - sub;
-        
-        if (diff < 0) {
-            displayBox.className = "budget-calc-box budget-error";
-            displayBox.innerHTML = "⚠️ Achtung: Teilbudget der 2. Teilstrecke übersteigt das Gesamtbudget! (Differenz: " + diff + " €)";
-        } else {
-            displayBox.className = "budget-calc-box budget-ok";
-            displayBox.innerHTML = "📊 Restbudget 1. Teilstrecke: <span id='main-budget-val'>" + diff + "</span> €";
-        }
-    }
+        // --- 1. PASSWORT-LOGIK ---
+        const passwordInput = document.getElementById('password-input');
+        const toggleEyeBtn = document.getElementById('toggle-eye-btn');
+        const submitAuthBtn = document.getElementById('submit-auth-btn');
 
-    // Upgrade-Direktsuche für Sektion 3
-    function triggerUpgradeSearch() {
-        var airline = document.getElementById('airline').value.trim();
-        if(!airline) { alert('Bitte eine Airline eingeben!'); return; }
+        function checkPassword() {
+            if (passwordInput.value.trim() === 'Reise2026') {
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('main-content').classList.remove('hidden');
+            } else {
+                alert('Falsches Passwort!');
+            }
+        }
+
+        toggleEyeBtn.addEventListener('click', function() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleEyeBtn.innerText = '👁️‍🗨️';
+            } else {
+                passwordInput.type = 'password';
+                toggleEyeBtn.innerText = '👁';
+            }
+        });
+
+        submitAuthBtn.addEventListener('click', checkPassword);
+        passwordInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkPassword();
+            }
+        });
+
+        // --- 2. INTERAKTIVE LIVE-SYNC-LOGIK ---
+        const destInput = document.getElementById('dest');
+        const hDestInput = document.getElementById('h-dest');
+
+        destInput.addEventListener('input', function() {
+            hDestInput.value = destInput.value;
+        });
+
+        // --- 3. MULTISTOPP BUDGETRECHNER ---
+        const budgetInput = document.getElementById('budget');
+        const subBudgetInput = document.getElementById('sub-budget');
+        const displayBox = document.getElementById('budget-calc-display');
+
+        function calculateTeilstreckenBudget() {
+            let total = parseFloat(budgetInput.value) || 0;
+            let sub = parseFloat(subBudgetInput.value) || 0;
+            let diff = total - sub;
+            
+            if (diff < 0) {
+                displayBox.className = "budget-calc-box budget-error";
 
