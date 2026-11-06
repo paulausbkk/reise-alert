@@ -183,7 +183,44 @@
             </div>
         </div>
     </div>
+Reisekonfiguration PRO
 
+:root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --hotel: #0f766e; --upgrade: #6d28d9; }
+body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
+.container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
+.card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+.card.fl { border-color: var(--flight); background: #f0f9ff; }
+.card.up { border-color: var(--upgrade); background: #faf5ff; }
+.card.ho { border-color: var(--hotel); background: #f0fdf4; }
+.title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
+.fl .title { color: var(--flight); } .up .title { color: var(--upgrade); } .ho .title { color: var(--hotel); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.full { grid-column: span 2; }
+label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
+input, select { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+.switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; }
+.switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
+.slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary); }
+input:checked + .slider:before { transform: translateX(18px); }
+.range-box { display: flex; align-items: center; gap: 10px; }
+.range-box input { flex: 1; }
+.btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); }
+
+
+
+
+Reisekonfiguration PRO
+Sektion 1: Flug-Parameter
+
+Abflugort (Stadt oder Code):
+Zielort (Stadt oder Code):
+Hinflug:
+Rückflug:
+Nur Hinflug (One Way):
     <button class="btn">System-Links & Protokolle Generieren</button>
 </div>
 </body>
