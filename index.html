@@ -53,7 +53,7 @@
 <body>
 
 <div class="container">
-    <!-- 1. PASSWORT BEREICH (Erzwungene native Browser-Direktlogik) -->
+    <!-- 1. PASSWORT BEREICH -->
     <div id="auth-section">
         <h1>🔒 Passwort erforderlich</h1>
         <div class="form-group pass-box">
@@ -87,15 +87,16 @@
         <div class="card ho">
             <div class="title">🏨 Sektion 2: Hotel & Budget</div>
             <div class="grid">
-                <div class="full"><label>Zielort für Hotelsuche:</label><input type="text" id="h-dest" value="MIA"></div>
                 <div><label>Mindest-Sterne:</label><select id="stars"><option value="3">3★</option><option value="4" selected>4★</option><option value="5">5★</option></select></div>
                 <div><label>Max. Gesamtbudget (€):</label><input type="number" id="budget" value="2500"></div>
-                <div><label>Budget 2. Teilstrecke (€):</label><input type="number" id="sub-budget" value="500"></div>
+                <div class="full"><label>Budget 2. Teilstrecke (€):</label><input type="number" id="sub-budget" value="500"></div>
                 <div class="full">
                     <div id="budget-calc-display" class="budget-calc-box budget-ok">
                         📊 Restbudget 1. Teilstrecke: <span id="main-budget-val">2000</span> €
                     </div>
                 </div>
+                <!-- Zielort nach ganz unten verschoben -->
+                <div class="full" style="margin-top: 10px;"><label>Zielort für Hotelsuche:</label><input type="text" id="h-dest" value="MIA"></div>
             </div>
         </div>
 
@@ -167,5 +168,3 @@
     var tValSpan = document.getElementById("t-val");
     if (mTimeInput && tValSpan) {
         mTimeInput.addEventListener("input", function() {
-            tValSpan.innerText = mTimeInput.value + " h";
-        });
