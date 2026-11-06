@@ -13,8 +13,9 @@
         .card.fl { border-color: var(--flight); background: #f0f9ff; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--flight); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
-        input { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+        input, select { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
     </style>
     <script>
         window.onload = function() {
@@ -32,15 +33,40 @@
 <div class="container">
     <div id="main-content" style="display:none;">
         <h1>✈ McKinney Reisekonfiguration PRO</h1>
+        
+        <!-- SEKTION 1: Flug-Parameter -->
         <div class="card fl">
-            <div class="title">✈ Sektion 1: Flug-Parameter</div>
+            <div class="title">✈ Sektion 1: Flug-Parameter (Teil 1)</div>
             <div class="grid">
-                <div><label>Abflug (Code):</label><input type="text" id="dep" value="FRA"></div>
-                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MIA"></div>
+                <div><label>Abflug (Code):</label><input type="text" id="dep" value="FRA" maxlength="3"></div>
+                <div><label>Endziel (Code):</label><input type="text" id="dest" value="MNL" maxlength="3"></div>
+                <div><label>Hinflug (DD.MM.YYYY):</label><input type="text" id="fl-date1" placeholder="z.B. 15.11.2026"></div>
+                <div><label>Rückflug (DD.MM.YYYY):</label><input type="text" id="fl-date2" placeholder="z.B. 25.11.2026"></div>
+                
+                <div>
+                    <label>Personenanzahl:</label>
+                    <select id="fl-passengers">
+                        <option value="1">1 Person</option>
+                        <option value="2" selected>2 Personen</option>
+                        <option value="3">3 Personen</option>
+                        <option value="4">4 Personen</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label>Gepäckauswahl:</label>
+                    <select id="fl-baggage">
+                        <option value="nur handgepäck">nur handgepäck</option>
+                        <option value="aufgabegepäck bis 20 kg">aufgabegepäck bis 20 kg</option>
+                        <option value="aufgabegepäck bis 32 kg">aufgabegepäck bis 32 kg</option>
+                        <option value="aufgabegepäck 20 kg plus handgepäck">aufgabegepäck 20 kg plus handgepäck</option>
+                        <option value="aufgabegepäck plus handgepäck">aufgabegepäck plus handgepäck</option>
+                    </select>
+                </div>
             </div>
         </div>
+        
     </div>
 </div>
 </body>
 </html>
-
