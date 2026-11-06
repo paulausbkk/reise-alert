@@ -315,3 +315,27 @@ Nur Hinflug (One Way):
         text-transform: unset !important;
     }
 </style>
+<!-- JAVASCRIPT-GEPÄCK-FIX -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const baggageSelect = document.getElementById("fl-baggage");
+        if (baggageSelect) {
+            // Definiert die korrekte Schreibweise knallhart im System
+            const correctOptions = [
+                "Nur Handgepäck",
+                "Aufgabegepäck 20 KG",
+                "Aufgabegepäck 32 KG",
+                "Handgepäck plus 20 KG Aufgabegepäck",
+                "Handgepäck plus 32 KG Aufgabegepäck"
+            ];
+            
+            // Überschreibt jeden einzelnen Eintrag mit der korrekten Großschreibung
+            Array.from(baggageSelect.options).forEach((option, index) => {
+                if (correctOptions[index]) {
+                    option.textContent = correctOptions[index];
+                    option.value = correctOptions[index];
+                }
+            });
+        }
+    });
+</script>
