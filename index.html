@@ -8,7 +8,6 @@
         :root { 
             --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; 
             --border: #cbd5e1; --flight: #0284c7; --hotel: #0f766e; --upgrade: #6d28d9; 
-            --warn: #dc2626; --success: #16a34a; 
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -32,7 +31,6 @@
         input:checked + .slider:before { transform: translateX(18px); }
         .range-box { display: flex; align-items: center; gap: 10px; }
         .range-box input { flex: 1; }
-        .range-box span { font-size: 0.85rem; font-weight: bold; color: var(--flight); min-width: 45px; }
         .btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); }
     </style>
 </head>
@@ -44,34 +42,34 @@
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
-            <div><label>Abflugort (Code):</label><input type="text" id="fl-from" placeholder="FRA" maxlength="3"></div>
-            <div><label>Zielort (Code):</label><input type="text" id="fl-to" placeholder="MNL" maxlength="3"></div>
-            <div><label>Hinflug:</label><input type="text" id="fl-date1" placeholder="15.11.2026"></div>
-            <div><label>Rückflug:</label><input type="text" id="fl-date2" placeholder="25.11.2026"></div>
+            <div><label>Abflugort (Code):</label><input type="text" placeholder="FRA" maxlength="3"></div>
+            <div><label>Zielort (Code):</label><input type="text" placeholder="MNL" maxlength="3"></div>
+            <div><label>Hinflug:</label><input type="text" placeholder="15.11.2026"></div>
+            <div><label>Rückflug:</label><input type="text" placeholder="25.11.2026"></div>
             
             <div class="switch-container">
                 <label>Nur Hinflug (One Way):</label>
                 <label class="switch">
-                    <input type="checkbox" id="fl-oneway">
+                    <input type="checkbox">
                     <span class="slider"></span>
                 </label>
             </div>
             
             <div>
                 <label>Beförderungsklasse:</label>
-                <select id="fl-cabin">
-                    <option value="economy">Economy</option>
-                    <option value="premium">Premium Economy</option>
-                    <option value="business">Business Class</option>
-                    <option value="first">First Class</option>
+                <select>
+                    <option>Economy</option>
+                    <option>Premium Economy</option>
+                    <option>Business Class</option>
+                    <option>First Class</option>
                 </select>
             </div>
             
             <div>
                 <label>Personenanzahl:</label>
-                <select id="fl-passengers">
-                    <option value="1">1 Person</option>
-                    <option value="2">2 Personen</option>
+                <select>
+                    <option>1 Person</option>
+                    <option>2 Personen</option>
                     <option value="3">3 Personen</option>
                     <option value="4">4 Personen</option>
                 </select>
@@ -79,44 +77,43 @@
             
             <div>
                 <label>Gepäckauswahl:</label>
-                <select id="fl-baggage">
-                    <option value="handgepäck">nur handgepäck</option>
-                    <option value="aufgabegepäck 20 kg">aufgabegepäck 20 kg</option>
-                    <option value="aufgabegepäck 32 KG">aufgabegepäck 32 KG</option>
-                    <option value="Handgepäck plus 20 KG">Handgepäck plus 20 KG aufgabegepäck</option>
-                    <option value="Handgepäck plus 32 KG">Handgepäck plus 32 KG aufgabegepäck</option>
+                <select>
+                    <option>nur handgepäck</option>
+                    <option>aufgabegepäck bis 20 kg</option>
+                    <option>aufgabegepäck bis 32 kg</option>
+                    <option>Handgepäck plus 20 KG aufgabegepäck</option>
+                    <option>Handgepäck plus 32 Aufgabegepäck</option>
                 </select>
             </div>
             
             <div>
                 <label>Zwischenstopps:</label>
-                <select id="fl-stops">
-                    <option value="0">Direktflug</option>
-                    <option value="1">Max. 1 Stopp</option>
-                    <option value="2">Max. 2 Stopps</option>
+                <select>
+                    <option>Direktflug</option>
+                    <option>Max. 1 Stopp</option>
+                    <option>Max. 2 Stopps</option>
                 </select>
             </div>
             
             <div>
                 <label>Ort des Stopps (Stadt/Code):</label>
-                <input type="text" id="fl-stop-location" placeholder="z.B. Dubai" list="airports">
+                <input type="text" placeholder="z.B. Dubai" list="airports">
                 <datalist id="airports">
                     <option value="Dubai (DXB)"></option>
                     <option value="Singapur (SIN)"></option>
                     <option value="Bangkok (BKK)"></option>
                     <option value="Doha (DOH)"></option>
                     <option value="London (LHR)"></option>
-                    <option value="New York (JFK)"></option>
                 </datalist>
             </div>
             
-            <div><label>Ticketpreis (€):</label><input type="number" id="fl-price" placeholder="800"></div>
-            <div><label>Preis Weiterflug (€):</label><input type="number" id="fl-next-price" placeholder="150"></div>
+            <div><label>Ticketpreis (€):</label><input type="number" placeholder="800"></div>
+            <div><label>Preis Weiterflug (€):</label><input type="number" placeholder="150"></div>
             
             <div class="full">
                 <label>Max. Reisezeit:</label>
                 <div class="range-box">
-                    <input type="range" id="fl-duration" min="5" max="40" value="24">
+                    <input type="range" min="5" max="40" value="24">
                     <span>24h</span>
                 </div>
             </div>
@@ -127,11 +124,11 @@
     <div class="card up">
         <div class="title">💎 Sektion 2: Upgrade- & Status-Manager</div>
         <div class="grid">
-            <div><label>Buchungsnummer (PNR):</label><input type="text" id="up-pnr" placeholder="X7YZ3R"></div>
-            <div><label>Ticketnummer:</label><input type="text" id="up-ticket" placeholder="220-1234567890"></div>
-            <div class="full"><label>Name im Reisepass:</label><input type="text" id="up-name" placeholder="MAX MUSTERMANN"></div>
-            <div><label>Passnummer:</label><input type="text" id="up-passport" placeholder="CXXXXXXX"></div>
-            <div><label>Max. Upgrade-Budget (€):</label><input type="number" id="up-maxprice" placeholder="450"></div>
+            <div><label>Buchungsnummer (PNR):</label><input type="text" placeholder="X7YZ3R"></div>
+            <div><label>Ticketnummer:</label><input type="text" placeholder="220-1234567890"></div>
+            <div class="full"><label>Name im Reisepass:</label><input type="text" placeholder="MAX MUSTERMANN"></div>
+            <div><label>Passnummer:</label><input type="text" placeholder="CXXXXXXX"></div>
+            <div><label>Max. Upgrade-Budget (€):</label><input type="number" placeholder="450"></div>
         </div>
     </div>
 
@@ -139,35 +136,35 @@
     <div class="card ho">
         <div class="title">🏨 Sektion 3: Hotel- & Budgetplanung</div>
         <div class="grid">
-            <div class="full"><label>Hotel-Reiseziel Stadt:</label><input type="text" id="ho-dest" placeholder="z.B. Manila"></div>
-            <div><label>Max. Hotelbudget total (€):</label><input type="number" id="ho-budget" placeholder="1200"></div>
-            <div><label>Geschätzter Hotelpreis (€):</label><input type="number" id="ho-est-price" placeholder="950"></div>
+            <div class="full"><label>Hotel-Reiseziel Stadt:</label><input type="text" placeholder="z.B. Manila"></div>
+            <div><label>Max. Hotelbudget total (€):</label><input type="number" placeholder="1200"></div>
+            <div><label>Geschätzter Hotelpreis (€):</label><input type="number" placeholder="950"></div>
             <div>
                 <label>Hotel Sterne:</label>
-                <select id="ho-stars">
-                    <option value="all">Alle Sterne</option>
-                    <option value="class=1">1 Stern</option>
-                    <option value="class=2">2 Sterne</option>
-                    <option value="class=3">3 Sterne</option>
-                    <option value="class=4">4 Sterne</option>
-                    <option value="class=5">5 Sterne</option>
+                <select>
+                    <option>Alle Sterne</option>
+                    <option>1 Stern</option>
+                    <option>2 Sterne</option>
+                    <option>3 Sterne</option>
+                    <option>4 Sterne</option>
+                    <option>5 Sterne</option>
                 </select>
             </div>
             <div>
                 <label>Unterkunftstyp:</label>
-                <select id="ho-type">
-                    <option value="hotel">Hotel</option>
-                    <option value="resort">Resort</option>
-                    <option value="airbnb">Airbnb</option>
+                <select>
+                    <option>Hotel</option>
+                    <option>Resort</option>
+                    <option>Airbnb</option>
                 </select>
             </div>
             <div class="full">
                 <label>Personenanzahl (Hotel):</label>
-                <select id="ho-guests">
-                    <option value="1">1 Person</option>
-                    <option value="2">2 Personen</option>
-                    <option value="3">3 Personen</option>
-                    <option value="4">4 Personen</option>
+                <select>
+                    <option>1 Person</option>
+                    <option>2 Personen</option>
+                    <option>3 Personen</option>
+                    <option>4 Personen</option>
                 </select>
             </div>
         </div>
