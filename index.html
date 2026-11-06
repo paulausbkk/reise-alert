@@ -68,7 +68,7 @@
     <div id="main-content" style="display: none;">
         <h1>✈️ McKinney Reisekonfiguration PRO</h1>
         
-        <!-- FLUG KARTE -->
+        <!-- SEKTION 1: FLUG KARTE -->
         <div class="card fl">
             <div class="title">✈️ Sektion 1: Flug-Parameter</div>
             <div class="grid">
@@ -83,18 +83,18 @@
             </div>
         </div>
 
-        <!-- UPGRADE KARTE (Hierhin verschoben, direkt unter Flug-Parameter) -->
+        <!-- SEKTION 2: UPGRADE KARTE -->
         <div class="card up">
-            <div class="title">💎 Sektion 3: Upgrade- & Status-Manager</div>
+            <div class="title">💎 Sektion 2: Upgrade- & Status-Manager</div>
             <div class="grid">
                 <div class="full"><label>Geplante Fluggesellschaft (z.B. Lufthansa, Condor):</label><input type="text" id="airline" value="Lufthansa" placeholder="z.B. Lufthansa, Condor, Delta"></div>
             </div>
             <button class="btn btn-up" id="submit-upgrade-btn" type="button">💎 Gezielte Upgrade-Direktsuche starten</button>
         </div>
 
-        <!-- HOTEL KARTE (Jetzt an dritter Position) -->
+        <!-- SEKTION 3: HOTEL KARTE -->
         <div class="card ho">
-            <div class="title">🏨 Sektion 2: Hotel & Budget</div>
+            <div class="title">🏨 Sektion 3: Hotel & Budget</div>
             <div class="grid">
                 <div><label>Mindest-Sterne:</label><select id="stars"><option value="3">3★</option><option value="4" selected>4★</option><option value="5">5★</option></select></div>
                 <div><label>Max. Gesamtbudget (€):</label><input type="number" id="budget" value="2500"></div>
@@ -166,3 +166,4 @@
     var mTimeInput = document.getElementById("m-time");
     var tValSpan = document.getElementById("t-val");
     if (mTimeInput && tValSpan) {
+        mTimeInput.addEventListener("input", function() {
