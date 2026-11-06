@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ McKinney Reisekonfiguration PRO</title>
     <style>
-        :root { 
-            --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; 
-            --border: #cbd5e1; --flight: #0284c7; --upgrade: #6d28d9; --asia: #ea580c;
-        }
+        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --upgrade: #6d28d9; --asia: #ea580c; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
@@ -32,6 +29,28 @@
         .check-box-container { display: flex; align-items: center; gap: 8px; margin-top: 5px; background: #fff7ed; padding: 8px; border: 1px dashed var(--asia); border-radius: 4px; display: none; }
         .check-box-container input { width: auto; }
     </style>
+    <script>
+        // BOMBENSICHERE INFRASTRUKTUR direkt im Head geladen
+        function checkPassword() {
+            var input = document.getElementById('p-field').value.trim();
+            if (input === 'Reise2026') {
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                loadLocal();
+            } else {
+                alert('Falsches Passwort!');
+            }
+        }
+        function togglePass() {
+            var f = document.getElementById('p-field');
+            if (f.type === 'password') { f.type = 'text'; } else { f.type = 'password'; }
+        }
+        function checkAsia() {
+            var hubs = ['MNL','BKK','SGN','SIN','CEB','HKG','KUL','CGK','HND','NRT'];
+            var to = document.getElementById('fl-to').value.trim().toUpperCase();
+            document.getElementById('asia-box-container').style.display = hubs.includes(to) ? 'flex' : 'none';
+        }
+    </script>
 </head>
 <body>
 
@@ -102,22 +121,6 @@
 </div>
 
 <script>
-function checkPassword() {
-    if(document.getElementById('p-field').value.trim() === 'Reise2026') {
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-        loadLocal();
-    } else { alert('Falsches Passwort!'); }
-}
-function togglePass() {
-    var f = document.getElementById('p-field');
-    f.type = (f.type === 'password') ? 'text' : 'password';
-}
-function checkAsia() {
-    var hubs = ['MNL','BKK','SGN','SIN','CEB','HKG','KUL','CGK','HND','NRT'];
-    var to = document.getElementById('fl-to').value.trim().toUpperCase();
-    document.getElementById('asia-box-container').style.display = hubs.includes(to) ? 'flex' : 'none';
-}
 function generateSystem() {
     var from = document.getElementById('fl-from').value.trim().toUpperCase();
     var to = document.getElementById('fl-to').value.trim().toUpperCase();
@@ -149,9 +152,4 @@ function generateSystem() {
     document.getElementById('upgrade-protocol-output').textContent = proto;
     document.getElementById('result-box').style.display = 'block';
 }
-function loadLocal() {
-    var stored = localStorage.getItem('mckinney_data');
-    if(!stored) return;
-    var data = JSON.parse(stored);
-    if(data.from) document.getElementById('fl-from').value = data.from;
 
