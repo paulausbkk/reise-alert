@@ -3,25 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ McKinney Reisekonfiguration PRO</title>
+    <title>✈️ McKinney Reisekonfiguration</title>
     <style>
         :root {
             --primary: #2563eb;
+            --primary-hover: #1d4ed8;
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text: #1e293b;
             --border: #e2e8f0;
-            
-            /* Suchmaschinen-Farben */
-            --kiwi: #00a699;
-            --google: #4285f4;
-            --skyscanner: #007054;
-            --booking: #003580;
-            --trivago: #007faf;
-            --tripadvisor: #34e0a1;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.5;
@@ -29,101 +22,86 @@
             padding: 20px;
         }
         .container {
-            max-width: 750px;
-            margin: 30px auto;
+            max-width: 600px;
+            margin: 40px auto;
             background: var(--card-bg);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
         h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
             margin-top: 0;
             margin-bottom: 1.5rem;
             text-align: center;
-        }
-        h2 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--border);
-        }
-        .section-block {
-            background: #fafafa;
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         .form-group {
-            margin-bottom: 0.5rem;
-        }
-        .form-group.full-width {
-            grid-column: span 2;
+            margin-bottom: 1.25rem;
         }
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 0.4rem;
-            font-size: 0.85rem;
-            color: #475569;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
         input, select {
             width: 100%;
-            padding: 0.65rem;
+            padding: 0.75rem;
             border: 1px solid var(--border);
             border-radius: 6px;
             box-sizing: border-box;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            background-color: #fff;
         }
-        
-        .btn-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
         }
-        .action-btn {
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        .hidden {
+            display: none;
+        }
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f1f5f9;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .link-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            width: 100%;
             padding: 0.75rem;
-            border: none;
+            margin-bottom: 0.75rem;
             border-radius: 6px;
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 700;
             text-decoration: none;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
+            font-weight: bold;
+            color: white;
             box-sizing: border-box;
-            text-align: center;
         }
-        .action-btn:hover { opacity: 0.9; }
-        .action-btn:active { transform: scale(0.98); }
-        
-        .btn-kiwi { background-color: var(--kiwi); }
-        .btn-google { background-color: var(--google); }
-        .btn-skyscanner { background-color: var(--skyscanner); }
-        .btn-booking { background-color: var(--booking); }
-        .btn-trivago { background-color: var(--trivago); color: white; }
-        .btn-tripadvisor { background-color: var(--tripadvisor); color: #000000; }
-        
-        .hidden { display: none; }
-        @media (max-width: 600px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .form-group.full-width { grid-column: span 1; }
-            .btn-group { grid-template-columns: 1fr; }
-        }
+        .kiwi-btn { background-color: #00a699; }
+        .kiwi-btn:hover { background-color: #00847a; }
+        .booking-btn { background-color: #003580; }
+        .booking-btn:hover { background-color: #002254; }
     </style>
 </head>
 <body>
@@ -131,84 +109,69 @@
 <div class="container">
     <!-- 1. Passwort-Bereich -->
     <div id="auth-section">
-        <h1>🔒 Passwort erforderlich</h1>
+        <h1>🔒 Bitte Passwort eingeben</h1>
         <div class="form-group">
-            <input type="password" id="password-input" placeholder="Passwort eingeben...">
+            <input type="password" id="password-input" placeholder="Passwort hier eingeben...">
         </div>
-        <button class="action-btn" style="background-color: var(--primary); width: 100%; margin-top: 10px;" onclick="checkPassword()">Freischalten</button>
+        <button onclick="checkPassword()">Freischalten</button>
         <p id="error-msg" style="color: #dc2626; text-align: center; font-size: 0.9rem; margin-top: 1rem;" class="hidden">Falsches Passwort.</p>
     </div>
 
-    <!-- 2. Haupt-Inhalt -->
+    <!-- 2. Formular-Bereich -->
     <div id="main-content" class="hidden">
-        <h1>✈️ McKinney Reisekonfiguration PRO</h1>
+        <h1>✈️ McKinney Reisekonfiguration</h1>
         
-        <!-- FLUG-SUCHE SEKTION -->
-        <div class="section-block" style="border-left: 4px solid var(--primary);">
-            <h2>🥝 1. Flugsuche (Flexibles Zeitfenster)</h2>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="departure">Abflughafen (Code):</label>
-                    <input type="text" id="departure" value="FRA">
-                </div>
-                <div class="form-group">
-                    <label for="destination">Zielflughafen (Code):</label>
-                    <input type="text" id="destination" value="MIA" oninput="syncDestination(this.value)">
-                </div>
-                <div class="form-group">
-                    <label for="start-date">Frühestes Hinreisedatum:</label>
-                    <input type="date" id="start-date" value="2026-06-01">
-                </div>
-                <div class="form-group">
-                    <label for="end-date">Spätestes Rückreisedatum:</label>
-                    <input type="date" id="end-date" value="2026-08-31">
-                </div>
-                <div class="form-group">
-                    <label for="duration-min">Mindestaufenthalt (Nächte):</label>
-                    <input type="number" id="duration-min" value="10">
-                </div>
-                <div class="form-group">
-                    <label for="duration-max">Maximalaufenthalt (Nächte):</label>
-                    <input type="number" id="duration-max" value="14">
-                </div>
-            </div>
-            
-            <label style="margin-bottom: 0.5rem;">Suche starten auf:</label>
-            <div class="btn-group">
-                <button onclick="searchFlight('kiwi')" class="action-btn btn-kiwi">🥝 Kiwi.com</button>
-                <button onclick="searchFlight('google')" class="action-btn btn-google">🌐 Google Flights</button>
-                <button onclick="searchFlight('skyscanner')" class="action-btn btn-skyscanner">🚀 Skyscanner</button>
-            </div>
+        <div class="form-group">
+            <label for="departure">Abflughafen (Code):</label>
+            <input type="text" id="departure" value="FRA">
         </div>
 
-        <!-- HOTEL-SUCHE SEKTION -->
-        <div class="section-block" style="border-left: 4px solid var(--booking);">
-            <h2>🏨 2. Hotelsuche & Vergleich</h2>
-            <div class="form-grid">
-                <div class="form-group full-width">
-                    <label for="hotel-destination">Zielort / Flughafen-Code:</label>
-                    <input type="text" id="hotel-destination" value="MIA">
-                </div>
-                <div class="form-group">
-                    <label for="hotel-stars">Mindest-Sterne:</label>
-                    <select id="hotel-stars">
-                        <option value="3">3 Sterne</option>
-                        <option value="4" selected>4 Sterne</option>
-                        <option value="5">5 Sterne</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="max-budget">Max. Gesamtbudget (€):</label>
-                    <input type="number" id="max-budget" value="2500">
-                </div>
-            </div>
-            
-            <label style="margin-bottom: 0.5rem;">Preise vergleichen auf:</label>
-            <div class="btn-group">
-                <button onclick="searchHotel('booking')" class="action-btn btn-booking">🏨 Booking.com</button>
-                <button onclick="searchHotel('trivago')" class="action-btn btn-trivago">🔍 Trivago</button>
-                <button onclick="searchHotel('tripadvisor')" class="action-btn btn-tripadvisor">🦉 TripAdvisor</button>
-            </div>
+        <div class="form-group">
+            <label for="destination">Zielflughafen (Code):</label>
+            <input type="text" id="destination" value="MIA">
+        </div>
+
+        <div class="form-group">
+            <label for="start-date">Frühestes Hinreisedatum:</label>
+            <input type="date" id="start-date" value="2026-06-01">
+        </div>
+
+        <div class="form-group">
+            <label for="end-date">Spätestes Rückreisedatum:</label>
+            <input type="date" id="end-date" value="2026-08-31">
+        </div>
+
+        <div class="form-group">
+            <label for="duration-min">Mindestaufenthalt (Nächte):</label>
+            <input type="number" id="duration-min" value="10">
+        </div>
+
+        <div class="form-group">
+            <label for="duration-max">Maximalaufenthalt (Nächte):</label>
+            <input type="number" id="duration-max" value="14">
+        </div>
+
+        <div class="form-group">
+            <label for="hotel-stars">Mindest-Sterne (Hotel):</label>
+            <select id="hotel-stars">
+                <option value="3">3 Sterne</option>
+                <option value="4" selected>4 Sterne</option>
+                <option value="5">5 Sterne</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="max-budget">Maximales Gesamtbudget (€):</label>
+            <input type="number" id="max-budget" value="2500">
+        </div>
+
+        <button onclick="generateLinks()">Live-Suchlinks generieren</button>
+
+        <!-- 3. Ergebnis-Bereich -->
+        <div id="results" class="result-box hidden">
+            <h3 style="margin-top: 0;">Deine persönlichen Suchlinks:</h3>
+            <a id="kiwi-link" href="#" target="_blank" class="link-btn kiwi-btn">🥝 Flüge auf Kiwi.com suchen</a>
+            <a id="booking-link" href="#" target="_blank" class="link-btn booking-btn">🏨 Hotels auf Booking.com suchen</a>
         </div>
     </div>
 </div>
@@ -228,44 +191,29 @@
         if (e.key === 'Enter') { checkPassword(); }
     });
 
-    function syncDestination(val) {
-        document.getElementById('hotel-destination').value = val;
-    }
-
-    function formatKiwiDate(dateStr) {
-        if (!dateStr) return '';
-        var p = dateStr.split('-');
-        return p[2] + '/' + p[1] + '/' + p[0];
-    }
-
-    function searchFlight(engine) {
+    function generateLinks() {
         var dep = document.getElementById('departure').value.trim().toLowerCase();
         var dest = document.getElementById('destination').value.trim().toLowerCase();
         var start = document.getElementById('start-date').value;
         var end = document.getElementById('end-date').value;
+        var durMin = document.getElementById('duration-min').value;
+        var durMax = document.getElementById('duration-max').value;
+        var stars = document.getElementById('hotel-stars').value;
 
-        if (engine === 'kiwi') {
-            var kStart = formatKiwiDate(start);
-            var kEnd = formatKiwiDate(end);
-            var dMin = document.getElementById('duration-min').value;
-            var dMax = document.getElementById('duration-max').value;
-            window.open('https://kiwi.com' + dep + '/' + dest + '/' + kStart + '-' + kEnd + '/' + dMin + '-' + dMax, '_blank');
-        } else if (engine === 'google') {
-Verwende Code mit Vorsicht.
-window.open('google.com' + dest.toUpperCase() + '%20from%20' + dep.toUpperCase() + '%20on%20' + start, '_blank');
-} else if (engine === 'skyscanner') {
-window.open('skyscanner.de' + dep + '/' + dest + '/', '_blank');
-}
-}
-function searchHotel(engine) {
-var dest = document.getElementById('hotel-destination').value.trim();
-var stars = document.getElementById('hotel-stars').value;
-if (engine === 'booking') {
-window.open('booking.com' + encodeURIComponent(dest) + '&nclass=' + stars, '_blank');
-} else if (engine === 'trivago') {
-window.open('trivago.de' + encodeURIComponent(dest), '_blank');
-} else if (engine === 'tripadvisor') {
-window.open('tripadvisor.de' + encodeURIComponent(dest), '_blank');
-}
-}
+        var startParts = start.split('-');
+        var kiwiStart = startParts[2] + '/' + startParts[1] + '/' + startParts[0];
+        var endParts = end.split('-');
+        var kiwiEnd = endParts[2] + '/' + endParts[1] + '/' + endParts[0];
+
+        var kiwiUrl = 'https://kiwi.com' + dep + '/' + dest + '/' + kiwiStart + '-' + kiwiEnd + '/' + durMin + '-' + durMax;
+        var bookingUrl = 'https://booking.com' + encodeURIComponent(dest.toUpperCase()) + '&nclass=' + stars;
+
+        document.getElementById('kiwi-link').href = kiwiUrl;
+        document.getElementById('booking-link').href = bookingUrl;
+        document.getElementById('results').classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
 
