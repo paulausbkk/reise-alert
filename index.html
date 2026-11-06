@@ -3,15 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ McKinney Reisekonfiguration</title>
+    <title>✈️ McKinney Reisekonfiguration PRO</title>
     <style>
         :root {
             --primary: #2563eb;
             --primary-hover: #1d4ed8;
-            --bg: #f8fafc;
+            --bg: #f0f4f8;
             --card-bg: #ffffff;
             --text: #1e293b;
-            --border: #e2e8f0;
+            --border: #cbd5e1;
+            
+            /* Sektions-Farben */
+            --flight-theme: #0284c7;
+            --hotel-theme: #0f766e;
+            
+            /* Marken-Farben */
+            --kiwi: #00a699;
+            --google: #4285f4;
+            --skyscanner: #007054;
+            --booking: #003580;
+            --trivago: #ff5a5f;
+            --tripadvisor: #34e0a1;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -22,67 +34,117 @@
             padding: 20px;
         }
         .container {
-            max-width: 600px;
-            margin: 40px auto;
+            max-width: 650px;
+            margin: 30px auto;
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
         h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.6rem;
+            font-weight: 800;
             margin-top: 0;
             margin-bottom: 1.5rem;
             text-align: center;
+            color: #0f172a;
+        }
+        .search-card {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 1.5rem;
+            background-color: #ffffff;
+            box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.02);
+        }
+        .search-card.flight {
+            border-color: var(--flight-theme);
+            background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+        }
+        .search-card.hotel {
+            border-color: var(--hotel-theme);
+            background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 8px;
+        }
+        .card-title.flight { color: var(--flight-theme); }
+        .card-title.hotel { color: var(--hotel-theme); }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .form-group.full-width {
+            grid-column: span 2;
         }
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #475569;
         }
         input, select {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.7rem;
             border: 1px solid var(--border);
             border-radius: 6px;
             box-sizing: border-box;
-            font-size: 1rem;
+            font-size: 0.95rem;
             background-color: #fff;
+            transition: border-color 0.2s;
         }
-        button {
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+        .main-submit-btn {
             width: 100%;
-            padding: 0.75rem;
-            background-color: var(--primary);
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+            transition: all 0.2s;
+            margin-top: 0.5rem;
         }
-        button:hover {
-            background-color: var(--primary-hover);
+        .main-submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
         }
         .hidden {
             display: none;
         }
         .result-box {
             margin-top: 2rem;
-            padding: 1.5rem;
-            background: #f1f5f9;
-            border-radius: 8px;
-            border: 1px solid var(--border);
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+        .result-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid #e2e8f0;
         }
         .link-btn {
             display: inline-flex;
@@ -97,20 +159,21 @@
             font-weight: bold;
             color: white;
             box-sizing: border-box;
+            transition: opacity 0.2s;
         }
-        .kiwi-btn { background-color: #00a699; }
-        .kiwi-btn:hover { background-color: #00847a; }
-        .google-btn { background-color: #4285f4; }
-        .google-btn:hover { background-color: #3574de; }
-        .skyscanner-btn { background-color: #007054; }
-        .skyscanner-btn:hover { background-color: #005c45; }
+        .link-btn:hover { opacity: 0.9; }
         
-        .booking-btn { background-color: #003580; }
-        .booking-btn:hover { background-color: #002254; }
-        .trivago-btn { background-color: #ff5a5f; }
-        .trivago-btn:hover { background-color: #e04e52; }
-        .tripadvisor-btn { background-color: #34e0a1; color: #000000 !important; }
-        .tripadvisor-btn:hover { background-color: #2cc98f; }
+        .kiwi-btn { background-color: var(--kiwi); }
+        .google-btn { background-color: var(--google); }
+        .skyscanner-btn { background-color: var(--skyscanner); }
+        .booking-btn { background-color: var(--booking); }
+        .trivago-btn { background-color: var(--trivago); }
+        .tripadvisor-btn { background-color: var(--tripadvisor); color: #000000 !important; }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: span 1; }
+        }
     </style>
 </head>
 <body>
@@ -122,7 +185,7 @@
         <div class="form-group">
             <input type="password" id="password-input" placeholder="Passwort hier eingeben...">
         </div>
-        <button onclick="checkPassword()">Freischalten</button>
+        <button class="main-submit-btn" onclick="checkPassword()">Freischalten</button>
         <p id="error-msg" style="color: #dc2626; text-align: center; font-size: 0.9rem; margin-top: 1rem;" class="hidden">Falsches Passwort.</p>
     </div>
 
@@ -130,115 +193,69 @@
     <div id="main-content" class="hidden">
         <h1>✈️ McKinney Reisekonfiguration</h1>
         
-        <div class="form-group">
-            <label for="departure">Abflughafen (Code):</label>
-            <input type="text" id="departure" value="FRA">
+        <!-- BLAUE KARTE: FLUG -->
+        <div class="search-card flight">
+            <div class="card-title flight">✈️ Sektion 1: Flug-Parameter</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="departure">Abflughafen (Code):</label>
+                    <input type="text" id="departure" value="FRA">
+                </div>
+                <div class="form-group">
+                    <label for="destination">Zielflughafen (Code):</label>
+                    <input type="text" id="destination" value="MIA" oninput="syncHotelDestination(this.value)">
+                </div>
+                <div class="form-group">
+                    <label for="start-date">Frühestes Hinreisedatum:</label>
+                    <input type="date" id="start-date" value="2026-06-01">
+                </div>
+                <div class="form-group">
+                    <label for="end-date">Spätestes Rückreisedatum:</label>
+                    <input type="date" id="end-date" value="2026-08-31">
+                </div>
+                <div class="form-group">
+                    <label for="duration-min">Mindestaufenthalt (Nächte):</label>
+                    <input type="number" id="duration-min" value="10">
+                </div>
+                <div class="form-group">
+                    <label for="duration-max">Maximalaufenthalt (Nächte):</label>
+                    <input type="number" id="duration-max" value="14">
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="destination">Zielflughafen (Code):</label>
-            <input type="text" id="destination" value="MIA">
+        <!-- GRÜNE KARTE: HOTEL & BUDGET -->
+        <div class="search-card hotel">
+            <div class="card-title hotel">🏨 Sektion 2: Hotel & Budget</div>
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="hotel-destination">Zielort für Hotelsuche:</label>
+                    <input type="text" id="hotel-destination" value="MIA" placeholder="Wird automatisch synchronisiert">
+                </div>
+                <div class="form-group">
+                    <label for="hotel-stars">Mindest-Sterne (Hotel):</label>
+                    <select id="hotel-stars">
+                        <option value="3">3 Sterne</option>
+                        <option value="4" selected>4 Sterne</option>
+                        <option value="5">5 Sterne</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="max-budget">Maximales Gesamtbudget (€):</label>
+                    <input type="number" id="max-budget" value="2500">
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="start-date">Frühestes Hinreisedatum:</label>
-            <input type="date" id="start-date" value="2026-06-01">
-        </div>
-
-        <div class="form-group">
-            <label for="end-date">Spätestes Rückreisedatum:</label>
-            <input type="date" id="end-date" value="2026-08-31">
-        </div>
-
-        <div class="form-group">
-            <label for="duration-min">Mindestaufenthalt (Nächte):</label>
-            <input type="number" id="duration-min" value="10">
-        </div>
-
-        <div class="form-group">
-            <label for="duration-max">Maximalaufenthalt (Nächte):</label>
-            <input type="number" id="duration-max" value="14">
-        </div>
-
-        <div class="form-group">
-            <label for="hotel-stars">Mindest-Sterne (Hotel):</label>
-            <select id="hotel-stars">
-                <option value="3">3 Sterne</option>
-                <option value="4" selected>4 Sterne</option>
-                <option value="5">5 Sterne</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="max-budget">Maximales Gesamtbudget (€):</label>
-            <input type="number" id="max-budget" value="2500">
-        </div>
-
-        <button onclick="generateLinks()">Live-Suchlinks generieren</button>
+        <button class="main-submit-btn" onclick="generateLinks()">Live-Suchlinks generieren ✨</button>
 
         <!-- 3. Ergebnis-Bereich -->
         <div id="results" class="result-box hidden">
-            <h3 style="margin-top: 0; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">✈️ Flug-Suchlinks:</h3>
-            <a id="kiwi-link" href="#" target="_blank" class="link-btn kiwi-btn">🥝 Flüge auf Kiwi.com suchen</a>
-            <a id="google-flights-link" href="#" target="_blank" class="link-btn google-btn">🌐 Flüge auf Google Flights suchen</a>
-            <a id="skyscanner-link" href="#" target="_blank" class="link-btn skyscanner-btn">🚀 Flüge auf Skyscanner suchen</a>
+            <h3 style="margin-top: 0; text-align: center; color: #0f172a;">🎉 Deine optimierten Suchlinks</h3>
+            
+            <div class="result-section-title" style="color: var(--flight-theme);">✈️ Flug-Portale:</div>
+            <a id="kiwi-link" href="#" target="_blank" class="link-btn kiwi-btn">🥝 Flexible Suche auf Kiwi.com</a>
+            <a id="google-flights-link" href="#" target="_blank" class="link-btn google-btn">🌐 Preistrends auf Google Flights</a>
+            <a id="skyscanner-link" href="#" target="_blank" class="link-btn skyscanner-btn">🚀 Kombi-Angebote auf Skyscanner</a>
 
-            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">🏨 Hotel-Suchlinks:</h3>
-            <a id="booking-link" href="#" target="_blank" class="link-btn booking-btn">🏨 Hotels auf Booking.com suchen</a>
-            <a id="trivago-link" href="#" target="_blank" class="link-btn trivago-btn">🔍 Hotels vergleichen auf Trivago</a>
-            <a id="tripadvisor-link" href="#" target="_blank" class="link-btn tripadvisor-btn">🦉 Bewertungen & Preise auf TripAdvisor</a>
-        </div>
-    </div>
-</div>
-
-<script>
-    function checkPassword() {
-        var input = document.getElementById('password-input').value;
-        if (input === 'Reise2026') {
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('main-content').classList.remove('hidden');
-        } else {
-            document.getElementById('error-msg').classList.remove('hidden');
-        }
-    }
-
-    document.getElementById('password-input').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') { checkPassword(); }
-    });
-
-    function generateLinks() {
-        var dep = document.getElementById('departure').value.trim().toLowerCase();
-        var dest = document.getElementById('destination').value.trim().toLowerCase();
-        var start = document.getElementById('start-date').value;
-        var end = document.getElementById('end-date').value;
-        var durMin = document.getElementById('duration-min').value;
-        var durMax = document.getElementById('duration-max').value;
-        var stars = document.getElementById('hotel-stars').value;
-
-        var startParts = start.split('-');
-        var kiwiStart = startParts[2] + '/' + startParts[1] + '/' + startParts[0];
-        var endParts = end.split('-');
-        var kiwiEnd = endParts[2] + '/' + endParts[1] + '/' + endParts[0];
-
-        var kiwiUrl = 'https://kiwi.com' + dep + '/' + dest + '/' + kiwiStart + '-' + kiwiEnd + '/' + durMin + '-' + durMax;
-        var googleUrl = 'https://google.com' + dest.toUpperCase() + '%20from%20' + dep.toUpperCase() + '%20on%20' + start;
-        var skyscannerUrl = 'https://skyscanner.de' + dep + '/' + dest + '/';
-
-        var bookingUrl = 'https://booking.com' + encodeURIComponent(dest.toUpperCase()) + '&nclass=' + stars;
-        var trivagoUrl = 'https://trivago.de' + encodeURIComponent(dest.toUpperCase());
-        var tripadvisorUrl = 'https://tripadvisor.de' + encodeURIComponent(dest.toUpperCase());
-
-        document.getElementById('kiwi-link').href = kiwiUrl;
-        document.getElementById('google-flights-link').href = googleUrl;
-        document.getElementById('skyscanner-link').href = skyscannerUrl;
-        
-        document.getElementById('booking-link').href = bookingUrl;
-        document.getElementById('trivago-link').href = trivagoUrl;
-        document.getElementById('tripadvisor-link').href = tripadvisorUrl;
-
-        document.getElementById('results').classList.remove('hidden');
-    }
-</script>
-
-</body>
-</html>
+            <div class="result-section-title" style="color: var(--hotel-theme
