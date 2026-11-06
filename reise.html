@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -33,9 +33,9 @@
 </head>
 <body>
 <div class="container">
-    <<h1>✈️ Reisekonfiguration PRO</h1>
+    <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- FIXIERTE FLUGHAFEN-DATENLISTE -->
+    <!-- SYSTEM-FLUGHAFENLISTE -->
     <datalist id="airports-complete">
         <option value="Frankfurt (FRA)">
         <option value="München (MUC)">
@@ -50,6 +50,8 @@
         <option value="Singapore (SIN)">
         <option value="London Heathrow (LHR)">
         <option value="New York (JFK)">
+        <option value="Dubai (DXB)">
+        <option value="Doha (DOH)">
     </datalist>
 
     <!-- SEKTION 1: Flug-Parameter -->
@@ -114,387 +116,19 @@
                     <option>Max. 2 Stopps</option>
                 </select>
             </div>
-        </div>
-    </div>
-    <option value="Düsseldorf (DUS)">
-    <option value="Hamburg (HAM)">
-    <option value="Wien (VIE)">
-    <option value="Zürich (ZRH)">
-    <option value="Manila (MNL)">
-    <option value="Bangkok (BKK)">
-    <option value="Phuket (HKT)">
-    <option value="Singapore (SIN)">
-    <option value="London Heathrow (LHR)">
-    <option value="New York (JFK)">
-</datalist> 
-            <div>
-                <label>Zwischenstopps:</label>
-                <select id="fl-stops">
-                    <option>Direktflug</option>
-                    <option>Max. 1 Stopp</option>
-                    <option>Max. 2 Stopps</option>
-                </select>
-            </div>
-            
+
             <div>
                 <label>Ort des Stopps (Stadt oder Code):</label>
-                <input type="text" placeholder="z.B. Dubai" list="airports-complete" id="fl-stop-location">
+                <input type="text" placeholder="z.B. Dubai" id="fl-stop-location" list="airports-complete" autocomplete="off">
             </div>
-            
-            <!-- Die geforderte Vorschlagsliste mit Erklärung HINTER dem Kürzel -->
-            <datalist id="airports-complete">
-                <option value="FRA (Frankfurt Flughafen)">
-                <option value="MUC (München Flughafen)">
-                <option value="DUS (Düsseldorf Flughafen)">
-                <option value="MNL (Manila Ninoy Aquino Flughafen)">
-                <option value="CEB (Cebu Mactan Flughafen)">
-                <option value="BKK (Bangkok Suvarnabhumi Flughafen)">
-                <option value="SIN (Singapur Changi Flughafen)">
-                <option value="DXB (Dubai International Flughafen)">
-                <option value="DOH (Doha Hamad Flughafen)">
-                <option value="AUH (Abu Dhabi Flughafen)">
-                <option value="SGN (Ho-Chi-Minh-Stadt Flughafen)">
-                <option value="HKG (Hongkong Flughafen)">
-                <option value="LHR (London Heathrow Flughafen)">
-                <option value="JFK (New York JFK Flughafen)">
-            </datalist>
-            
-            <div><label>Ticketpreis (€):</label><input type="number" placeholder="800" id="fl-price"></div>
-            <div><label>Flugpreis Teilstrecke/Weiterflug (€):</label><input type="number" placeholder="150" id="fl-next-price"></div>
-            
-            <div class="full">
-                <label>Max. Reisezeit:</label>
-                <div class="range-box">
-                    <input type="range" min="5" max="40" value="24" id="fl-duration">
-                    <span>24h</span>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- SEKTION 2: Upgrade- & Status-Manager -->
-    <div class="card up">
-        <div class="title">💎 Sektion 2: Upgrade- & Status-Manager</div>
-        <div class="grid">
-            <div><label>Buchungsnummer (PNR):</label><input type="text" placeholder="X7YZ3R" id="up-pnr"></div>
-            <div><label>Ticketnummer:</label><input type="text" placeholder="220-1234567890" id="up-ticket"></div>
-            <label>Name wie im Reisepass:</label>
-            <div><label>Passnummer:</label><input type="text" placeholder="CXXXXXXX" id="up-passport"></div>
-            <div><label>Max. Upgrade-Budget (€):</label><input type="number" placeholder="450" id="up-maxprice"></div>
-        </div>
-    </div>
-
-    <!-- SEKTION 3: Hotel- & Budgetplanung -->
-    <div class="card ho">
-        <div class="title">🏨 Sektion 3: Hotel- & Budgetplanung</div>
-        <div class="grid">
-            <div class="full"><label>Hotel-Reiseziel Stadt:</label><input type="text" placeholder="z.B. Manila" id="ho-dest"></div>
-            <div><label>Max. Hotelbudget Total (€):</label><input type="number" placeholder="1200" id="ho-budget"></div>
-            <div><label>Geschätzter Hotelpreis (€):</label><input type="number" placeholder="950" id="ho-est-price"></div>
             <div>
-                <label>Hotel Sterne:</label>
-                <select id="ho-stars">
-                    <option>Alle Sterne</option>
-                    <option>1 Stern</option>
-                    <option>2 Sterne</option>
-                    <option>3 Sterne</option>
-                    <option>4 Sterne</option>
-                    <option>5 Sterne</option>
-                </select>
-            </div>
-            <div>
-                <label>Unterkunftstyp:</label>
-                <select id="ho-type">
-                    <option>Hotel</option>
-                    <option>Resort</option>
-                    <option>Airbnb</option>
-                </select>
-            </div>
-            <div class="full">
-                <label>Personenanzahl (Hotel):</label>
-                <select id="ho-guests">
-                    <option>1 Person</option>
-                    <option selected>2 Personen</option>
-                    <option>3 Personen</option>
-                    <option>4 Personen</option>
-                </select>
+                <label>Ticketpreis (€):</label>
+                <input type="number" placeholder="800" id="fl-price">
             </div>
         </div>
     </div>
-Reisekonfiguration PRO
 
-:root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --hotel: #0f766e; --upgrade: #6d28d9; }
-body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
-.container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
-.card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
-.card.fl { border-color: var(--flight); background: #f0f9ff; }
-.card.up { border-color: var(--upgrade); background: #faf5ff; }
-.card.ho { border-color: var(--hotel); background: #f0fdf4; }
-.title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
-.fl .title { color: var(--flight); } .up .title { color: var(--upgrade); } .ho .title { color: var(--hotel); }
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.full { grid-column: span 2; }
-label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px; color: #475569; }
-input, select { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
-.switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; }
-.switch { position: relative; display: inline-block; width: 40px; height: 22px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
-.slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
-input:checked + .slider { background-color: var(--primary); }
-input:checked + .slider:before { transform: translateX(18px); }
-.range-box { display: flex; align-items: center; gap: 10px; }
-.range-box input { flex: 1; }
-.btn { width: 100%; padding: 10px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); }
-
-
-
-
-Reisekonfiguration PRO
-Sektion 1: Flug-Parameter
-
-Abflugort (Stadt oder Code):
-Zielort (Stadt oder Code):
-Hinflug:
-Rückflug:
-Nur Hinflug (One Way):
-    <button class="btn">System-Links & Protokolle Generieren</button>
 </div>
 </body>
-<!-- INTELIGENTES INTERNET-KABEL: WELTWEITE FLUGHAFEN-SUCHE -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const fromInput = document.getElementById("fl-from");
-        const toInput = document.getElementById("fl-to");
-        let globalAirports = [];
-
-        // Lädt die weltweite Flughafen-Datenbank live aus dem Internet
-        fetch('https://githubusercontent.com')
-            .then(res => res.json())
-            .then(data => {
-                globalAirports = Object.values(data)
-                    .filter(a => a.iata && a.iata.length === 3)
-                    .map(a => ({
-                        label: `${a.city} (${a.iata}) - ${a.name}`,
-                        city: a.city,
-                        iata: a.iata
-                    }));
-                initSearch();
-            }).catch(err => console.error("Datenbank-Fehler:", err));
-
-        function initSearch() {
-            [fromInput, toInput].forEach(input => {
-                if (!input) return;
-                input.removeAttribute('list');
-
-                input.addEventListener("input", function() {
-                    // Automatische Großschreibung beim Tippen
-                    let val = this.value;
-                    if (val.length > 0) {
-                        this.value = val.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-                    }
-
-                    const query = this.value.trim().toLowerCase();
-                    if (query.length < 2) return;
-
-                    // Durchsucht die Live-Datenbank nach Stadt oder Code
-                    const results = globalAirports.filter(a => 
-                        (a.city && a.city.toLowerCase().includes(query)) || 
-                        a.iata.toLowerCase().includes(query)
-                    ).slice(0, 8);
-
-                    let listId = "live-list-" + input.id;
-                    let list = document.getElementById(listId);
-                    if (!list) {
-                        list = document.createElement("datalist");
-                        list.id = listId;
-                        document.body.appendChild(list);
-                        input.setAttribute("list", listId);
-                    }
-                    list.innerHTML = results.map(r => `<option value="${r.label}">`).join("");
-                });
-
-                // Speichert den sauberen 3-stelligen Code bei der Auswahl
-                input.addEventListener("change", function() {
-                    const match = this.value.match(/\(([A-Z]{3})\)/);
-                    if (match) {
-                        this.dataset.iata = match[1];
-                        console.log("IATA-Code gespeichert:", this.dataset.iata);
-                    }
-                });
-            });
-        }
-    });
-</script>
 </html>
-<!-- INTELLIGENTE DATENLISTE FÜR FLUGHÄFEN -->
-<datalist id="airports-complete">
-    <option value="Frankfurt (FRA)">
-    <option value="München (MUC)">
-    <option value="Berlin (BER)">
-    <option value="Düsseldorf (DUS)">
-    <option value="Hamburg (HAM)">
-    <option value="Wien (VIE)">
-    <option value="Zürich (ZRH)">
-    <option value="Manila (MNL)">
-    <option value="Bangkok (BKK)">
-    <option value="Singapore (SIN)">
-    <option value="London Heathrow (LHR)">
-    <option value="New York (JFK)">
-</datalist>
-
-<!-- KABEL-SKRIPT 1: GROSSSCHREIBUNG & DROPDOWN-LOGIK -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const fromInput = document.getElementById("fl-from");
-        const toInput = document.getElementById("fl-to");
-
-        function capitalizeWords(inputElement) {
-            inputElement.addEventListener("input", function() {
-                let words = this.value.split(" ");
-                for (let i = 0; i < words.length; i++) {
-                    if (words[i].length > 0) {
-                        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-                    }
-                }
-                this.value = words.join(" ");
-            });
-        }
-<!-- INTELLIGENTE DATENLISTE FÜR FLUGHÄFEN -->
-<datalist id="airports-complete">
-    <option value="Frankfurt (FRA)">
-    <option value="München (MUC)">
-    <option value="Berlin (BER)">
-    <option value="Düsseldorf (DUS)">
-    <option value="Hamburg (HAM)">
-    <option value="Wien (VIE)">
-    <option value="Zürich (ZRH)">
-    <option value="Manila (MNL)">
-    <option value="Bangkok (BKK)">
-    <option value="Singapore (SIN)">
-    <option value="London Heathrow (LHR)">
-    <option value="New York (JFK)">
-</datalist>
-
-<!-- KABEL-SKRIPT 1: GROSSSCHREIBUNG & DROPDOWN-LOGIK -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const fromInput = document.getElementById("fl-from");
-        const toInput = document.getElementById("fl-to");
-
-        function capitalizeWords(inputElement) {
-            inputElement.addEventListener("input", function() {
-                let words = this.value.split(" ");
-                for (let i = 0; i < words.length; i++) {
-                    if (words[i].length > 0) {
-                        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-                    }
-                }
-                this.value = words.join(" ");
-            });
-        }
-
-        if (fromInput) capitalizeWords(fromInput);
-        if (toInput) capitalizeWords(toInput);
-    });
-</script>
-        if (fromInput) capitalizeWords(fromInput);
-        if (toInput) capitalizeWords(toInput);
-    });
-</script>
-<!-- KORREKTUR FÜR DIE GROSSSCHREIBUNG DER TEXTE -->
-<style>
-    #fl-baggage option, 
-    #fl-baggage,
-    select, 
-    input {
-        text-transform: none !important;
-    }
-</style>
-<!-- KONTROLL-STIL: ERZWINGT DIE ORIGINALE SCHREIBWEISE ÜBERALL -->
-<style>
-    input, select, option, textarea, button {
-        text-transform: unset !important;
-    }
-</style>
-<!-- JAVASCRIPT-GEPÄCK-FIX -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const baggageSelect = document.getElementById("fl-baggage");
-        if (baggageSelect) {
-            // Definiert die korrekte Schreibweise knallhart im System
-            const correctOptions = [
-                "Nur Handgepäck",
-                "Aufgabegepäck 20 KG",
-                "Aufgabegepäck 32 KG",
-                "Handgepäck plus 20 KG Aufgabegepäck",
-                "Handgepäck plus 32 KG Aufgabegepäck"
-            ];
-            
-            // Überschreibt jeden einzelnen Eintrag mit der korrekten Großschreibung
-            Array.from(baggageSelect.options).forEach((option, index) => {
-                if (correctOptions[index]) {
-                    option.textContent = correctOptions[index];
-                    option.value = correctOptions[index];
-                }
-            });
-        }
-    });
-</script>
-<!-- ERWEITERTE FLUGHAFEN-LISTE MIT KENNUNGEN -->
-<datalist id="airports-complete">
-    <option value="Frankfurt (FRA)">
-    <option value="München (MUC)">
-    <option value="Berlin (BER)">
-    <option value="Düsseldorf (DUS)">
-    <option value="Hamburg (HAM)">
-    <option value="Wien (VIE)">
-    <option value="Zürich (ZRH)">
-    <option value="Manila (MNL)">
-    <option value="Bangkok (BKK)">
-    <option value="Phuket (HKT)">
-    <option value="Singapore (SIN)">
-    <option value="London Heathrow (LHR)">
-    <option value="New York (JFK)">
-    <option value="Los Angeles (LAX)">
-    <option value="Tokyo Haneda (HND)">
-</datalist>
-
-<!-- KABEL-SKRIPT: IATA-KENNUNGS-EXTRAKTION -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const fromInput = document.getElementById("fl-from");
-        const toInput = document.getElementById("fl-to");
-
-        function setupAirportInput(inputElement) {
-            if (!inputElement) return;
-
-            // Automatische Großschreibung beim Tippen
-            inputElement.addEventListener("input", function() {
-                let words = this.value.split(" ");
-                for (let i = 0; i < words.length; i++) {
-                    if (words[i].length > 0) {
-                        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-                    }
-                }
-                this.value = words.join(" ");
-            });
-
-            // Extrahiert die reine Kennung (z.B. "FRA"), wenn ein Eintrag ausgewählt wird
-            inputElement.addEventListener("change", function() {
-                const val = this.value;
-                // Sucht nach den 3 Großbuchstaben in den Klammern
-                const match = val.match(/\(( [A-Z]{3} )\)/i);
-                if (match && match[1]) {
-                    // Speichert die saubere Kennung als versteckten Wert auf dem Feld
-                    this.dataset.iata = match[1].toUpperCase();
-                    console.log("Erkannte Kennung für " + inputElement.id + ":", this.dataset.iata);
-                }
-            });
-        }
-
-        setupAirportInput(fromInput);
-        setupAirportInput(toInput);
-    });
-</script>
