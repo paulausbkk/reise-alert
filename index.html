@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - MASTER SUCCESS</title>
+    <title>✈️ Reisekonfiguration PRO - TOTAL LOCK SUCCESS</title>
     <style>
         :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --border: #cbd5e1; --lowcost-yellow: #fef08a; --lowcost-border: #eab308; --active-green: #22c55e; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
@@ -15,7 +15,10 @@
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
-        input:disabled, select:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; border: 1px solid #94a3b8; opacity: 0.5; }
+        
+        /* UNZERSTÖRBARER CSS-LOCK: Wenn das Feld deaktiviert ist, erzwingen wir ein extrem starkes Ausgrauen */
+        input:disabled, select:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed !important; opacity: 0.35 !important; border: 1px solid #94a3b8 !important; pointer-events: none !important; }
+        
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
@@ -36,7 +39,7 @@
         <option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option>
     </datalist>
     <div class="card">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fee2e2; padding: 2px 6px; border-radius: 4px; color: var(--rubin);">[VERSION 2026 - MASTER SUCCESS]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fee2e2; padding: 2px 6px; border-radius: 4px; color: var(--rubin);">[VERSION 2026 - TOTAL LOCK SUCCESS]</span></div>
         <div class="grid">
             <div><label>Abflugort:</label><input type="text" placeholder="z.B. FRA" id="fl-from" list="airports-complete"></div>
             <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" id="fl-to" list="airports-complete"></div>
@@ -57,12 +60,12 @@
                 </select>
             </div>
             <div><label>Stopps:</label><select id="fl-stops"><option value="Direktflug">Direktflug</option><option value="max 1 Stopp">Max. 1 Stopp</option><option value="max 2 Stopps">Max. 2 Stopps</option></select></div>
-            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. DXB" id="fl-stop-location" list="airports-complete"></div>
-            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" id="fl-from2" list="airports-complete"></div>
+            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" id="fl-stop-location" list="airports-complete"></div>
+            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. Cebu (CEB)" id="fl-from2" list="airports-complete"></div>
             <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="80" id="fl-price2"></div>
             <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="800" id="fl-price"></div>
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
-                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" id="fl-max-time" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.'; buildLink();">
+                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" id="fl-max-time" min="5" max="50" value="30" style="height:20px;">
             </div>
             <div class="full" style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 15px;">
                 <label>Bevorzugtes Suchportal:</label>
@@ -80,18 +83,21 @@
 <script>
     var d1 = document.getElementById('fl-date1'), d2 = document.getElementById('fl-date2'), ow = document.getElementById('fl-oneway');
     var f1 = document.getElementById('fl-from'), t1 = document.getElementById('fl-to'), pSel = document.getElementById('portal-selector'), mBtn = document.getElementById('btn-search-flights');
+    var sTime = document.getElementById('fl-max-time');
+    
     d1.value = "2026-12-18"; d2.value = "2026-12-28";
+
     function checkEngine() {
         if (ow.checked) { d2.disabled = true; d2.value = ""; } 
         else { d2.disabled = false; if (d1.value) { d2.min = d1.value; if (!d2.value || d2.value < d1.value) d2.value = d1.value; } }
         buildLink();
     }
-    function getIATA(txt) { var m = txt.match(/\(([^)]+)\)/); return m ? m.toUpperCase().trim() : txt.toUpperCase().trim(); }
+    function getIATA(txt) { var m = txt.match(/\(([^)]+)\)/); return m ? m[1].toUpperCase() : txt.toUpperCase().trim(); }
     function buildLink() {
         var from = getIATA(f1.value), to = getIATA(t1.value), date1 = d1.value, date2 = d2.value;
         if (from.length === 3 && to.length === 3 && date1) {
             var mode = pSel.value, sl = "/", cabin = document.getElementById('fl-cabin').value, pax = document.getElementById('fl-passengers').value;
-            var bag = document.getElementById('fl-baggage').value, stops = document.getElementById('fl-stops').value, duration = document.getElementById('fl-max-time').value;
+            var bag = document.getElementById('fl-baggage').value, stops = document.getElementById('fl-stops').value, duration = sTime.value;
             if (mode === "google") {
                 var q = "flights from " + from + " to " + to + " on " + date1 + (ow.checked ? " one way" : " return " + date2) + " class:" + cabin + " passengers:" + pax + " baggage:" + bag + " stops:" + stops + " max duration:" + duration + " hours";
                 var sLoc = document.getElementById('fl-stop-location').value; if (sLoc) q += " via " + getIATA(sLoc);
@@ -100,4 +106,3 @@
             } else if (mode === "skyscanner") {
                 var url = "https:" + sl + sl + "www.skyscanner.de" + sl + "transport" + sl + "flights" + sl + from.toLowerCase() + sl + to.toLowerCase() + sl + date1.replace(/-/g, '').substring(2);
                 mBtn.href = url + (ow.checked ? sl + "?adults=" + pax + "&rtn=0" : sl + date2.replace(/-/g, '').substring(2) + sl + "?adults=" + pax + "&rtn=1") + "&language=de";
-            } else if (mode === "kiwi") {
