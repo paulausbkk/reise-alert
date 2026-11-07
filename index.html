@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - HTML PRO</title>
+    <title>✈️ Reisekonfiguration PRO - MASTER FINAL</title>
     <style>
-        :root { --primary-blue: #0284c7; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --lowcost-border: #eab308; --active-green: #22c55e; --gold-yellow: #f59e0b; }
+        :root { --primary-blue: #1e40af; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --lowcost-yellow: #fef08a; --lowcost-border: #eab308; --active-green: #22c55e; --gold-yellow: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--primary-blue); }
@@ -15,6 +15,7 @@
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
+        input:disabled, select:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; border: 1px solid #94a3b8; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
@@ -26,7 +27,7 @@
         input:checked + .slider:before { transform: translateX(18px); }
         .range-container { background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
         
-        /* Der unblockierbare Formular-Button */
+        /* Goldener Express-Knopf */
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold-yellow); font-size: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         .btn:hover { background: #d97706; }
     </style>
@@ -36,85 +37,93 @@
     <h1>✈️ Reisekonfiguration PRO</h1>
     
     <datalist id="airports-complete">
-        <option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="DXB"></option><option value="SIN"></option><option value="MUC"></option><option value="DUS"></option>
+        <option value="Abu Dhabi (AUH)"></option><option value="Antalya (AYT)"></option><option value="Bangkok (BKK)"></option><option value="Berlin (BER)"></option><option value="Cebu (CEB)"></option><option value="Christchurch (CHC)"></option><option value="Da Nang (DAD)"></option><option value="Doha (DOH)"></option><option value="Dresden (DRS)"></option><option value="Dumaguete (DGT)"></option><option value="Düsseldorf (DUS)"></option><option value="Frankfurt (FRA)"></option><option value="Hamburg (HAM)"></option><option value="Hanoi (HAN)"></option><option value="Hongkong (HKG)"></option><option value="Istanbul (IST)"></option><option value="Kuala Lumpur (KUL)"></option><option value="Leipzig (LEJ)"></option><option value="London Heathrow (LHR)"></option><option value="Los Angeles (LAX)"></option><option value="Manila (MNL)"></option><option value="München (MUC)"></option><option value="New York (JFK)"></option><option value="Pagadian (PAG)"></option><option value="Paphos (PFO)"></option><option value="Phuket (HKT)"></option><option value="Saigon / Ho-Chi-Minh-Stadt (SGN)"></option><option value="Singapore (SIN)"></option><option value="Tokyo Haneda (HND)"></option><option value="Wien (VIE)"></option><option value="Zürich (ZRH)"></option>
     </datalist>
 
-    <!-- Das Formular übergibt die Kriterien unblockierbar direkt an die Google-Suche -->
+    <!-- Das unblockierbare Formular -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: var(--primary-blue);">[VERSION 2026 - HTML PRO]</span>
+            <span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary-blue);">[VERSION 2026 - MASTER FINAL]</span>
         </div>
         <div class="grid">
             
-            <!-- Die Eingabefelder füttern direkt das Suchfeld im Hintergrund -->
-            <div><label>Abflugort (Code):</label><input type="text" placeholder="z.B. FRA" id="fl-from" value="FRA" maxlength="3" style="text-transform: uppercase;" required></div>
-            <div><label>Zielort (Code):</label><input type="text" placeholder="z.B. MNL" id="fl-to" value="MNL" maxlength="3" style="text-transform: uppercase;" required></div>
-            
-            <!-- Hinflug setzt live das "min"-Attribut für den Rückflug -->
+            <!-- DIESER PARAMETER ZWINGT GOOGLE SOFORT IN DIE INTERAKTIVE FLUGSUCHMASKE (FLIGHTS) -->
+            <input type="hidden" name="tbm" value="fl">
+
+            <div><label>Abflugort:</label><input type="text" placeholder="z.B. Frankfurt (FRA)" id="fl-from" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" placeholder="z.B. Manila (MNL)" id="fl-to" list="airports-complete" required></div>
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-11-15" required></div>
-            
-            <!-- Das Rückflugfeld blockiert über min="2026-11-15" nativ alle Tage davor im Kalender -->
-            <div><label>Rückflug:</label><input type="date" id="fl-date2" value="2026-11-25" min="2026-11-15"></div>
-            
+            <div><label>Rückflug:</label><input type="date" id="fl-date2" value="2026-11-25"></div>
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="fl-oneway"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="fl-lowcost"><span class="slider"></span></label></div>
-            
             <div>
                 <label>Beförderungsklasse:</label>
-                <select id="fl-cabin"><option value="Economy">Economy</option><option value="Business">Business Class</option></select>
+                <select id="fl-cabin"><option value="Economy">Economy</option><option value="Premium Economy">Premium Economy</option><option value="Business">Business Class</option><option value="First">First Class</option></select>
             </div>
             <div>
                 <label>Personen:</label>
-                <select id="fl-passengers"><option value="1">1 Person</option><option value="2" selected>2 Personen</option></select>
+                <select id="fl-passengers"><option value="1">1 Person</option><option value="2" selected>2 Personen</option><option value="3">3 Personen</option></select>
+            </div>
+            <div>
+                <label>Gepäck:</label>
+                <select id="fl-baggage">
+                    <option value="Handgepäck">Handgepäck</option>
+                    <option value="1x 20kg">1x 20 KG Aufgabegepäck</option>
+                    <option value="1x 23kg">1x 23 KG Aufgabegepäck</option>
+                    <option value="1x 32kg">1x 32 KG Aufgabegepäck</option>
+                    <option value="2 Gepäckstücke">2 Gepäckstücke</option>
+                </select>
+            </div>
+            <div>
+                <label>Stopps:</label>
+                <select id="fl-stops"><option value="Direktflug">Direktflug</option><option value="max 1 Stopp">Max. 1 Stopp</option><option value="max 2 Stopps">Max. 2 Stopps</option></select>
+            </div>
+            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" id="fl-stop-location" list="airports-complete"></div>
+            
+            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. Cebu (CEB)" id="fl-from2" list="airports-complete"></div>
+            <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="80" id="fl-price2"></div>
+            <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="800" id="fl-price"></div>
+            
+            <div class="full range-container">
+                <label id="range-label">Max. Reisezeit: 30 Std.</label>
+                <input type="range" id="fl-max-time" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.'">
             </div>
             
-            <!-- Das versteckte Feld, das die Suchanfrage unzerstörbar für Google verpackt -->
-            <input type="hidden" name="q" id="hidden-query" value="">
+            <!-- Hier drin verpackt das Skript unzerstörbar das gesamte Datenpaket für Google Flights -->
+            <input type="hidden" name="q" id="hidden-master-query" value="">
 
             <div class="full">
-                <button type="submit" class="btn" style="width:100%;">Gold - Flug-Suche starten</button>
+                <button type="submit" class="btn" style="width: 100%;">Gold - Flug-Suche starten ➔</button>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <script>
     var d1 = document.getElementById('fl-date1');
     var d2 = document.getElementById('fl-date2');
     var ow = document.getElementById('fl-oneway');
-    var from = document.getElementById('fl-from');
-    var to = document.getElementById('fl-to');
-    var hQuery = document.getElementById('hidden-query');
+    var fInput1 = document.getElementById('fl-from');
+    var tInput1 = document.getElementById('fl-to');
+    var hQuery = document.getElementById('hidden-master-query');
+
+    function getAirportCode(text) {
+        var match = text.match(/\(([^)]+)\)/);
+        return match ? match[1].toUpperCase().trim() : text.toUpperCase().trim();
+    }
 
     function updateFormEngine() {
-        // NATIVE KALENDER-SPERRE: Setzt das aktuelle Hinflugdatum als absolutes Minimum für den Rückflugkalender
-        if(d1.value) {
+        // KALENDER-SPERRE: Setzt das aktuelle Hinflugdatum als absolutes Minimum für den Rückflugkalender
+        if (d1.value) {
             d2.min = d1.value;
-            if(d2.value && d2.value < d1.value) {
+            if (d2.value && d2.value < d1.value) {
                 d2.value = d1.value;
             }
         }
 
-        if(ow.checked) {
-            d2.disabled = true;
-            d2.value = "";
-            hQuery.value = "google flights from " + from.value + " to " + to.value + " on " + d1.value + " one way";
-        } else {
-            d2.disabled = false;
-            hQuery.value = "google flights from " + from.value + " to " + to.value + " on " + d1.value + " return " + d2.value;
-        }
-    }
-
-    // Event-Listener aktivieren
-    d1.addEventListener('change', updateFormEngine);
-    d2.addEventListener('change', updateFormEngine);
-    ow.addEventListener('change', updateFormEngine);
-    from.addEventListener('input', updateFormEngine);
-    to.addEventListener('input', updateFormEngine);
-
-    // Initialer Start beim Laden der Seite
-    updateFormEngine();
-</script>
-</body>
-</html>
+        var from = getAirportCode(fInput1.value);
+        var to = getAirportCode(tInput1.value);
+        var stopLoc = document.getElementById('fl-stop-location').value;
+        var cabin = document.getElementById('fl-cabin').value;
+        var pax = document.getElementById('fl-passengers').value;
