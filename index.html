@@ -3,39 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Flugsuche PRO</title>
+    <title>✈️ Flugsuche PRO - PURPUR VERSION</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
-        .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #f0f9ff; border-color: var(--flight); }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--flight); }
+        /* NEUES VISUELLES SIGNAL: Purpur-Palette zur sofortigen Erkennung */
+        :root { --primary-purple: #7c3aed; --bg-light: #f8fafc; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --button-blue: #2563eb; }
+        body { font-family: sans-serif; background: var(--bg-light); color: var(--text); padding: 20px; margin: 0; }
+        .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: #0f172a; }
+        
+        /* Das neue, auffällige Purpur-Design */
+        .card { border: 3px solid var(--primary-purple); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #faf5ff; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--primary-purple); display: flex; justify-content: space-between; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
-        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--primary); font-size: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .btn:hover { opacity: 0.9; }
+        
+        /* Blauer Klick-Button */
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--button-blue); font-size: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-decoration: none; }
+        .btn:hover { background: #1d4ed8; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- DER 1000 % MANDATORISCHE INTERAKTIV-PFAD ZU GOOGLE FLIGHTS -->
-    <form action="https://google.com" method="get" target="_blank" class="card fl">
-        <div class="title">✈️ Sektion 1: Flug-Parameter</div>
+    <!-- Unblockierbares Formular direkt an die Websuche -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
+        <div class="title">
+            <span>✈️ Sektion 1: Flug-Parameter</span>
+            <!-- Neuer Versions-Stempel -->
+            <span style="font-size: 0.75rem; background: #f3e8ff; padding: 2px 6px; border-radius: 4px; color: var(--primary-purple);">[VERSION 2026 - UPDATE 5]</span>
+        </div>
         <div class="grid">
             
             <div class="full">
                 <label>Suchbegriff für weltweite Reichweite:</label>
-                <!-- Tippe hier exakt ein: flights from FRA to MNL on 2026-11-15 -->
-                <input type="text" name="q" placeholder="z.B. flights from FRA to MNL on 2026-11-15" required>
+                <!-- Der Trick für 2026: Wir zwingen Google über den Text "google flights", sofort die interaktive Maske oben anzuzeigen -->
+                <input type="text" name="q" value="google flights FRA MNL 2026-11-15" required>
             </div>
 
             <div class="full">
-                <button type="submit" class="btn">Blau - Flug-Suche starten</button>
+                <button type="submit" class="btn">Blau - Flug-Suche starten ➔</button>
             </div>
         </div>
     </form>
