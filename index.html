@@ -17,10 +17,13 @@
         .input-wrapper { position: relative; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         input:disabled, select:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; }
+        
+        /* Die unzerstörbare Vorschlagsbox */
         .dropdown-box { position: absolute; top: 42px; left: 0; right: 0; background: white; border: 1px solid var(--border); border-radius: 4px; max-height: 180px; overflow-y: auto; z-index: 999; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: none; }
         .dropdown-item { padding: 8px 12px; cursor: pointer; font-size: 0.9rem; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; color: #1e293b; }
         .dropdown-item:hover { background-color: #f1f5f9; }
-        .dropdown-item b { color: var(--airport-blue); font-weight: bold; font-size: 0.95rem; }
+        .dropdown-item span { color: var(--airport-blue); font-weight: bold; font-size: 0.95rem; }
+        
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -40,7 +43,7 @@
     <div class="card">
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.75rem; background: #f3e8ff; padding: 2px 6px; border-radius: 4px; color: var(--primary-purple);">[VERSION 2026 - REPAIR DROPDOWN]</span>
+            <span style="font-size: 0.75rem; background: #f3e8ff; padding: 2px 6px; border-radius: 4px; color: var(--primary-purple);">[VERSION 2026 - MINT FIX]</span>
         </div>
         <div class="grid">
             <div class="input-wrapper"><label>Abflugort:</label><input type="text" placeholder="z.B. Frankfurt" id="fl-from" autocomplete="off"><div class="dropdown-box" id="drop-from"></div></div>
@@ -117,5 +120,3 @@
             var matches = airports.filter(function(a) {
                 return a.city.toLowerCase().includes(val) || a.code.toLowerCase().includes(val);
             });
-            if(matches.length > 0) {
-                boxEl.style.display = "block";
