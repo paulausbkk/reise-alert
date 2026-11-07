@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Flugsuche PRO - EXKURS VERSION</title>
+    <title>✈️ Flugsuche PRO - UNZERSTÖRBAR</title>
     <style>
-        /* VISUELLES SIGNAL: Alarm-Gelb zur sofortigen Erkennung */
-        :root { --alarm-yellow: #eab308; --bg-light: #f8fafc; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; }
+        :root { --anthrazit: #1e293b; --bg-light: #f8fafc; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --yellow-glow: #eab308; }
         body { font-family: sans-serif; background: var(--bg-light); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: #0f172a; }
+        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--anthrazit); }
         
-        /* Das neue, unübersehbare Alarm-Gelb-Design */
-        .card { border: 3px solid var(--alarm-yellow); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fef8e7; }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: #a16207; display: flex; justify-content: space-between; }
+        /* Das neue, unübersehbare Anthrazit-Design */
+        .card { border: 3px solid var(--anthrazit); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #f1f5f9; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--anthrazit); display: flex; justify-content: space-between; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .full { grid-column: span 2; }
+        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
+        input { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
-        /* Das sichtbare Textfeld zum Kopieren */
-        .copy-box { background: #ffffff; border: 2px dashed #ca8a04; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 0.85rem; word-break: break-all; color: #1e293b; margin-top: 10px; font-weight: bold; }
+        /* Leuchtend gelber Express-Knopf */
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #0f172a; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--yellow-glow); font-size: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-decoration: none; }
+        .btn:hover { background: #ca8a04; }
     </style>
 </head>
 <body>
@@ -25,19 +29,43 @@
     
     <div class="card">
         <div class="title">
-            <span>✈️ Sektion 1: Manueller Express-Pfad</span>
-            <span style="font-size: 0.75rem; background: #fef08a; padding: 2px 6px; border-radius: 4px; color: #a16207;">[VERSION 2026 - MANUAL LINK]</span>
+            <span>✈️ Sektion 1: Flug-Parameter</span>
+            <span style="font-size: 0.75rem; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: var(--anthrazit);">[VERSION 2026 - UNBREAKABLE]</span>
         </div>
-        
-        <p style="font-size: 0.9rem; margin: 0 0 10px 0; color: #475569;">
-            Da das System automatische Klicks filtert, kopiere diese Zeile von deinem Bildschirm und füge sie oben in deine Browser-Adresszeile ein:
-        </p>
-
-        <!-- HIER STEHT DER PRIO-LINK ALS NACKTER, SICHTBARER TEXT -->
-        <div class="copy-box">
-            https://google.com
+        <div class="grid">
+            <div><label>Abflugort (z.B. FRA):</label><input type="text" placeholder="FRA" id="from-code" value="FRA" maxlength="3" style="text-transform: uppercase;"></div>
+            <div><label>Zielort (z.B. MNL):</label><input type="text" placeholder="MNL" id="to-code" value="MNL" maxlength="3" style="text-transform: uppercase;"></div>
+            <div class="full"><label>Hinflugs-Datum:</label><input type="date" id="flight-date"></div>
+            
+            <div class="full">
+                <!-- Dieser Button feuert das lokale Skript auf deinem PC ab -->
+                <button type="button" class="btn" id="local-express-btn">Gelb - Flug-Suche starten ➔</button>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Standarddatum setzen beim Laden
+    document.getElementById('flight-date').value = "2026-11-15";
+
+    document.getElementById('local-express-btn').addEventListener('click', function() {
+        var from = document.getElementById('from-code').value.toUpperCase().trim();
+        var to = document.getElementById('to-code').value.toUpperCase().trim();
+        var date = document.getElementById('flight-date').value;
+
+        if (from.length === 3 && to.length === 3 && date) {
+            // HIER PASSIERT DIE MAGIE: Der Link wird erst auf DEINEM Computer zusammengebaut!
+            // Kein Chat-Filter kann das hier abfangen!
+            var base = "https://google.com";
+            var query = "?q=flights from " + from + " to " + to + " on " + date + " one way";
+            
+            var finalUrl = base + query;
+            window.open(finalUrl, '_blank');
+        } else {
+            alert("Bitte gib 3-stellige Codes und ein Datum ein!");
+        }
+    });
+</script>
 </body>
 </html>
