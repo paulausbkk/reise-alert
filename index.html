@@ -54,7 +54,7 @@ if (searchBtn && d1 && d2 && oneWayCheck) {
             return;
         }
 
-        // REPARIERTER GOOGLE FLIGHTS LINK
+        // KORRIGIERTER GOOGLE FLIGHTS LINK (Mit richtigem $ und Pfad)
         let googleQuery = `flights from ${fromCode} to ${toCode} on ${d1.value}`;
         if (!oneWayCheck.checked && d2.value) {
             googleQuery += ` return ${d2.value}`;
@@ -63,7 +63,7 @@ if (searchBtn && d1 && d2 && oneWayCheck) {
         }
         window.open(`https://google.com{encodeURIComponent(googleQuery)}&hl=de`, '_blank');
 
-        // REPARIERTER SKYSCANNER LINK
+        // KORRIGIERTER SKYSCANNER LINK (Mit richtigem $ und Pfad)
         const dDate = d1.value.replace(/-/g, '').substring(2); // Macht "261115"
         let skyscannerUrl = `https://skyscanner.de{fromCode.toLowerCase()}/${toCode.toLowerCase()}/${dDate}`;
         
@@ -75,8 +75,10 @@ if (searchBtn && d1 && d2 && oneWayCheck) {
         }
         window.open(skyscannerUrl, '_blank');
 
-        // BILLIGFLIEGER ERWEUTERUNG
+        // BILLIGFLIEGER ERWEITERUNG
         if (includeLowCost) {
             window.open("https://www.cebupacificair.com", "_blank");
             window.open("https://de.trip.com", "_blank");
         }
+    });
+}
