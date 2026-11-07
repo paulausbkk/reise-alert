@@ -17,9 +17,9 @@
         .fl .title { color: var(--flight); } .up .title { color: var(--upgrade); } .ho .title { color: var(--hotel); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
-        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
-        input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; font-family: sans-serif; }
-        input:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; border: 1px solid #94a3b8; }
+        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; text-transform: none !important; }
+        input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; text-transform: none !important; font-variant: normal !important; background-color: #ffffff; font-size: 0.9rem; font-family: sans-serif; }
+        input:disabled, select:disabled { background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; border-color: #cbd5e1; }
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
@@ -36,6 +36,7 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
+    <!-- VOLLSTÄNDIGE FLUGHAFENLISTE -->
     <datalist id="airports-complete">
         <option value="Abu Dhabi (AUH)"></option>
         <option value="Antalya (AYT)"></option>
@@ -70,7 +71,7 @@
         <option value="Zürich (ZRH)"></option>
     </datalist>
 
-    <!-- SEKTION 1: Flug-Parameter -->
+    <!-- SEKTION 1: Flug-Parameter (Komplett wiederhergestellt) -->
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
@@ -82,14 +83,10 @@
                 <label>Zielort (Stadt oder Code):</label>
                 <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-complete">
             </div>
-            <div>
-                <label>Hinflug:</label>
-                <input type="date" id="fl-date1">
-            </div>
-            <div>
-                <label>Rückflug:</label>
-                <input type="date" id="fl-date2">
-            </div>
+
+            <div><label>Hinflug:</label><input type="date" id="fl-date1"></div>
+            <div><label>Rückflug:</label><input type="date" id="fl-date2"></div>
+            
             <div class="switch-container">
                 <label>Nur Hinflug (One Way):</label>
                 <label class="switch">
@@ -97,6 +94,7 @@
                     <span class="slider"></span>
                 </label>
             </div>
+            
             <div class="switch-container yellow-highlight">
                 <label style="color: #854d0e;">Low-Cost Airlines einbeziehen:</label>
                 <label class="switch">
@@ -104,102 +102,98 @@
                     <span class="slider"></span>
                 </label>
             </div>
+            
+            <div>
+                <label>Beförderungsklasse:</label>
+                <select id="fl-cabin">
+                    <option value="economy">Economy</option>
+                    <option value="premium">Premium Economy</option>
+                    <option value="business">Business Class</option>
+                    <option value="first">First Class</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Personenanzahl:</label>
+                <select id="fl-passengers">
+                    <option value="1">1 Person</option>
+                    <option value="2" selected>2 Personen</option>
+                    <option value="3">3 Personen</option>
+                    <option value="4">4 Personen</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Gepäckauswahl:</label>
+                <select id="fl-baggage">
+                    <option>Nur Handgepäck</option>
+                    <option>Aufgabegepäck 20 KG</option>
+                    <option>Aufgabegepäck 32 KG</option>
+                    <option>Handgepäck plus 20 KG Aufgabegepäck</option>
+                    <option>Handgepäck plus 32 KG Aufgabegepäck</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>Zwischenstopps:</label>
+                <select id="fl-stops">
+                    <option value="0">Direktflug</option>
+                    <option value="1">Max. 1 Stopp</option>
+                    <option value="2">Max. 2 Stopps</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Ort des Stopps (Stadt oder Code):</label>
+                <input type="text" placeholder="z.B. Dubai" id="fl-stop-location" list="airports-complete">
+            </div>
+
+            <div>
+                <label>Ticketpreis (€):</label>
+                <input type="number" placeholder="800" id="fl-price">
+            </div>
+
             <div class="full">
                 <button class="btn fl-btn" id="btn-search-flights">Blau - Flug-Suche starten</button>
             </div>
         </div>
     </div>
 
-    <!-- SEKTION 2: Upgrade -->
+    <!-- SEKTION 2: Ticket-Upgrade-Suche -->
     <div class="card up">
         <div class="title">🔄 Sektion 2: Ticket-Upgrade-Suche</div>
         <div class="grid">
             <div>
-                <label>Nachname:</label>
+                <label>Nachname des Passagiers:</label>
                 <input type="text" placeholder="Muster" id="up-lastname">
             </div>
             <div>
                 <label>Buchungscode (PNR):</label>
                 <input type="text" placeholder="X1Y2Z3" id="up-pnr">
             </div>
-        </div>
-    </div>
-
-    <!-- SEKTION 3: Hotels -->
-    <div class="card ho">
-        <div class="title">🏨 Sektion 3: Hotel-Optionen</div>
-        <div class="grid">
             <div class="full">
-                <label>Reiseziel / Hotelname:</label>
-                <input type="text" placeholder="z.B. Manila" id="ho-destination">
+                <label>Ticketnummer (13-stellig):</label>
+                <input type="text" placeholder="2201234567890" id="up-ticketnumber">
+            </div>
+            <div>
+                <label>Aktuelle Klasse:</label>
+                <select id="up-current-class">
+                    <option>Economy</option>
+                    <option>Premium Economy</option>
+                    <option>Business Class</option>
+                </select>
+            </div>
+            <div>
+                <label>Gewünschte Upgrade-Klasse:</label>
+                <select id="up-target-class">
+                    <option>Premium Economy</option>
+                    <option selected>Business Class</option>
+                    <option>First Class</option>
+                </select>
             </div>
         </div>
     </div>
 
-</div>
-
-<script>
-    // 1. Kalender-Standardwerte setzen
-    const d1 = document.getElementById('fl-date1');
-    const d2 = document.getElementById('fl-date2');
-    
-    d1.value = "2026-11-15";
-    d2.value = "2026-11-25";
-    d2.min = "2026-11-15"; // Verhindert standardmäßig die Auswahl davor
-
-    // Kalender-Sperre live aktualisieren, wenn sich der Hinflug ändert
-    d1.addEventListener('change', function() {
-        d2.min = this.value;
-        if(d2.value && d2.value < this.value) {
-            d2.value = this.value; // Setzt Rückflug automatisch hoch, falls er davor lag
-        }
-    });
-
-    // 2. Funktion für das Ausgrauen des Rückflugs
-    document.getElementById('fl-oneway').addEventListener('change', function() {
-        if (this.checked) {
-            d2.disabled = true;
-            d2.value = "";
-        } else {
-            d2.disabled = false;
-            d2.value = "2026-11-25";
-            d2.min = d1.value;
-        }
-    });
-
-    // 3. Funktion für die Flugsuche (STRUKTUR FÜR 2026 REPARIERT)
-    document.getElementById('btn-search-flights').addEventListener('click', function() {
-        let fromInput = document.getElementById('fl-from').value.trim();
-        let toInput = document.getElementById('fl-to').value.trim();
-        let date1 = d1.value;
-        let date2 = d2.value;
-        let isOneWay = document.getElementById('fl-oneway').checked;
-        let includeLowCost = document.getElementById('fl-lowcost').checked;
-
-        let extractAirportCode = function(text) {
-            let match = text.match(/\(([^)]+)\)/);
-            return match ? match[1] : text;
-        };
-
-        let fromCode = extractAirportCode(fromInput).toUpperCase().trim();
-        let toCode = extractAirportCode(toInput).toUpperCase().trim();
-
-        if (!fromCode || !toCode || fromCode.length !== 3 || toCode.length !== 3) {
-            alert("Bitte wähle sowohl für den Abflugort als auch für den Zielort einen Flughafen aus der Liste aus!");
-            return;
-        }
-
-        // --- GOOGLE FLIGHTS (PROFI-URL FORMAT FÜR 2026) ---
-        let googleQuery = "flights from " + fromCode + " to " + toCode + " on " + date1;
-        if (!isOneWay && date2) {
-            googleQuery += " return " + date2;
-        } else {
-            googleQuery += " one way";
-        }
-        let googleUrl = "https://www.google.com/travel/flights?q=" + encodeURIComponent(googleQuery) + "&hl=de";
-        window.open(googleUrl, '_blank');
-
-        // --- SKYSCANNER (EINGEBETTETER TRANSPORT-PFAD FÜR 2026) ---
-        let dDate = date1.replace(/-/g, '').substring(2); // z.B. "261115"
-
+    <!-- SEKTION 3: Hotel-Optionen -->
+    <div class="card ho">
 
