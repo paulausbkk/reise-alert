@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - GITHUB LIVE</title>
+    <title>✈️ Reisekonfiguration PRO - GITHUB FINAL</title>
     <style>
         :root { --purple: #6d28d9; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
@@ -16,7 +16,7 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
-        /* Zwingt den Browser, das Feld im One-Way-Modus steinhart grau einzufrieren */
+        /* Zwingt den Browser auf Systemebene, das Feld im One-Way-Modus komplett grau einzufrieren */
         input:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; opacity: 0.4 !important; border: 1px solid #94a3b8 !important; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
@@ -37,7 +37,7 @@
         <option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option>
     </datalist>
     <div class="card">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #f3e8ff; padding: 2px 6px; border-radius: 4px; color: var(--purple);">[VERSION 2026 - GITHUB LIVE]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #f3e8ff; padding: 2px 6px; border-radius: 4px; color: var(--purple);">[VERSION 2026 - GITHUB MASTER FINAL]</span></div>
         <div class="grid">
             <div><label>Abflugort:</label><input type="text" placeholder="z.B. FRA" id="fl-from" list="airports-complete"></div>
             <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" id="fl-to" list="airports-complete"></div>
@@ -73,8 +73,7 @@
     var d1 = document.getElementById('fl-date1'), d2 = document.getElementById('fl-date2'), ow = document.getElementById('fl-oneway');
     var f1 = document.getElementById('fl-from'), t1 = document.getElementById('fl-to'), pSel = document.getElementById('portal-selector'), mBtn = document.getElementById('btn-search-flights');
     
-    // Startdaten fest definiert
-    d1.value = "2026-12-11"; d2.value = "2026-12-21";
+    d1.value = "2026-12-18"; d2.value = "2026-12-28";
 
     function checkEngine() {
         if (ow.checked) { 
@@ -111,4 +110,8 @@
         } else { mBtn.href = "#"; mBtn.classList.add('disabled-btn'); }
     }
     
-    d1.addEventListener('change', checkEngine); d2.addEventListener('change', checkEngine); ow.addEventListener('change', checkEngine);
+    d1.addEventListener('change', checkEngine); 
+    d2.addEventListener('change', checkEngine); 
+    ow.addEventListener('change', checkEngine);
+    f1.addEventListener('input', buildLink); 
+    t1.addEventListener('input', buildLink); 
