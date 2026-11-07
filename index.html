@@ -18,7 +18,7 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
-        input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
+        input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; font-family: sans-serif; }
         input:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; border: 1px solid #94a3b8; }
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
@@ -36,7 +36,6 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- HIER IST DIE FLUGHAFENLISTE WIEDER DA -->
     <datalist id="airports-complete">
         <option value="Abu Dhabi (AUH)"></option>
         <option value="Antalya (AYT)"></option>
@@ -77,7 +76,6 @@
         <div class="grid">
             <div>
                 <label>Abflugort (Stadt oder Code):</label>
-                <!-- list="airports-complete" verknüpft das Feld wieder mit der Liste -->
                 <input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete">
             </div>
             <div>
@@ -86,11 +84,13 @@
             </div>
             <div>
                 <label>Hinflug:</label>
-                <input type="text" placeholder="15.11.2026" id="fl-date1">
+                <!-- type="date" macht hieraus jetzt einen echten Kalender -->
+                <input type="date" id="fl-date1">
             </div>
             <div>
                 <label>Rückflug:</label>
-                <input type="text" placeholder="25.11.2026" id="fl-date2">
+                <!-- type="date" macht hieraus jetzt einen echten Kalender -->
+                <input type="date" id="fl-date2">
             </div>
             <div class="switch-container">
                 <label>Nur Hinflug (One Way):</label>
@@ -141,7 +141,11 @@
 </div>
 
 <script>
-    // 1. Funktion für das Ausgrauen des Rückflugs
+    // 1. Kalender-Standardwerte setzen (z.B. 15.11.2026 und 25.11.2026)
+    document.getElementById('fl-date1').value = "2026-11-15";
+    document.getElementById('fl-date2').value = "2026-11-25";
+
+    // 2. Funktion für das Ausgrauen des Rückflugs
     document.getElementById('fl-oneway').addEventListener('change', function() {
         let r_field = document.getElementById('fl-date2');
         if (this.checked) {
@@ -149,18 +153,18 @@
             r_field.value = "";
         } else {
             r_field.disabled = false;
-            r_field.placeholder = "25.11.2026";
+            r_field.value = "2026-11-25";
         }
     });
 
-    // 2. Funktion für die Flugsuche mit reparierten Links
+    // 3. Funktion für die Flugsuche
     document.getElementById('btn-search-flights').addEventListener('click', function() {
         let fromInput = document.getElementById('fl-from').value.trim();
         let toInput = document.getElementById('fl-to').value.trim();
-        let date1 = document.getElementById('fl-date1').value.trim() || "15.11.2026";
+        let date1 = document.getElementById('fl-date1').value; // Gibt uns direkt YYYY-MM-DD
         let includeLowCost = document.getElementById('fl-lowcost').checked;
 
-        // Hilfsfunktion: Holt nur das Kürzel aus den Klammern (z.B. "FRA")
+        // Extrahiert den Code in Klammern (z.B. "FRA")
         let extractAirportCode = function(text) {
             let match = text.match(/\(([^)]+)\)/);
             return match ? match[1] : text;
@@ -169,33 +173,27 @@
         let fromCode = extractAirportCode(fromInput).toUpperCase();
         let toCode = extractAirportCode(toInput).toUpperCase();
 
-        if (!fromCode || !toCode) {
-            alert("Bitte gib einen Abflugort und einen Zielort ein!");
+        if (!fromCode || !toCode || fromCode === "" || toCode === "") {
+            alert("Bitte wähle einen Abflugort und einen Zielort aus der Vorschlagsliste aus!");
             return;
         }
 
-        // Datum übersetzen: von "15.11.2026" zu "2026-11-15"
-        let formatToWebDate = function(germanDate) {
-            let parts = germanDate.split('.');
-            if (parts.length === 3) {
-                return parts[2] + "-" + parts[1] + "-" + parts[0];
-            }
-            return germanDate;
-        };
+        if (!date1) {
+            alert("Bitte wähle ein Hinflugsdatum aus!");
+            return;
+        }
 
-        let webDate = formatToWebDate(date1);
-        let skyscannerDate = webDate.replace(/-/g, '').substring(2); // Macht "261115"
-
-        // REPARIERTE LINKS: Jetzt mit vollem Pfad, damit der Browser sie öffnen kann
-        let googleUrl = "https://google.com" + toCode + "%20from%20" + fromCode + "%20on%20" + webDate;
+        // URLs absolut fehlerfrei zusammenbauen
+        let googleUrl = "https://google.com" + toCode + "%20from%20" + fromCode + "%20on%20" + date1;
         window.open(googleUrl, '_blank');
 
+        let skyscannerDate = date1.replace(/-/g, '').substring(2); // Macht aus "2026-11-15" -> "261115"
         let skyscannerUrl = "https://skyscanner.de" + fromCode.toLowerCase() + "/" + toCode.toLowerCase() + "/" + skyscannerDate + "/";
         window.open(skyscannerUrl, '_blank');
 
         if (includeLowCost) {
             window.open("https://cebupacificair.com", "_blank");
-            window.open("https://trip.com", "_blank");
+            window.open("https://trip.com", '_blank');
         }
     });
 </script>
