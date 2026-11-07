@@ -1,26 +1,25 @@
-
 // --- 1. KALENDER-REGELN & AUTOMATISCHE SPERREN ---
 const d1 = document.getElementById('fl-date1');
 const d2 = document.getElementById('fl-date2');
 
-// Standarddaten für das Jahr 2026/2027 setzen
 if (d1 && d2) {
+    // Standarddaten setzen
     d1.value = "2026-11-15";
     d2.value = "2026-11-25";
-    d2.min = "2026-11-15"; // Verhindert Tage vor dem Hinflug
+    d2.min = "2026-11-15"; // Sperrt sofort alle vergangenen Tage vor dem Hinflug
 
-    // Kalender-Sperre live aktualisieren, wenn sich der Hinflug ändert
+    // Live-Sperre: Wenn der Hinflug geändert wird, wandert die Mindestgrenze des Rückflugs mit
     d1.addEventListener('change', function() {
         d2.min = this.value;
         if (d2.value && d2.value < this.value) {
-            d2.value = this.value; // Zieht den Rückflug hoch
+            d2.value = this.value; // Zieht den Rückflug automatisch hoch
         }
     });
 }
 
 // --- 2. NUR HINFLUG (ONE WAY) AUTOMATIK ---
 const oneWayCheck = document.getElementById('fl-oneway');
-if (oneWayCheck) {
+if (oneWayCheck && d2 && d1) {
     oneWayCheck.addEventListener('change', function() {
         if (this.checked) {
             d2.disabled = true;
@@ -35,13 +34,13 @@ if (oneWayCheck) {
 
 // --- 3. DIE FLUGSUCHMASCHINE (START BEI KLICK) ---
 const searchBtn = document.getElementById('btn-search-flights');
-if (searchBtn) {
+if (searchBtn && d1 && d2 && oneWayCheck) {
     searchBtn.addEventListener('click', function() {
         const fromInput = document.getElementById('fl-from').value;
         const toInput = document.getElementById('fl-to').value;
         const includeLowCost = document.getElementById('fl-lowcost').checked;
 
-        // Hilfsfunktion: Filtert das Kürzel aus den Klammern heraus (z.B. "Frankfurt (FRA)" -> "FRA")
+        // Hilfsfunktion: Filtert den Code aus den Klammern (z.B. "Frankfurt (FRA)" -> "FRA")
         const extractAirportCode = function(text) {
             const match = text.match(/\(([^)]+)\)/);
             return match ? match[1] : text;
@@ -55,7 +54,7 @@ if (searchBtn) {
             return;
         }
 
-        // GOOGLE FLIGHTS (Format für 2026)
+        // REPARIERTER GOOGLE FLIGHTS LINK
         let googleQuery = `flights from ${fromCode} to ${toCode} on ${d1.value}`;
         if (!oneWayCheck.checked && d2.value) {
             googleQuery += ` return ${d2.value}`;
@@ -64,22 +63,20 @@ if (searchBtn) {
         }
         window.open(`https://google.com{encodeURIComponent(googleQuery)}&hl=de`, '_blank');
 
-        // SKYSCANNER (Format für 2026)
+        // REPARIERTER SKYSCANNER LINK
         const dDate = d1.value.replace(/-/g, '').substring(2); // Macht "261115"
         let skyscannerUrl = `https://skyscanner.de{fromCode.toLowerCase()}/${toCode.toLowerCase()}/${dDate}`;
         
         if (!oneWayCheck.checked && d2.value) {
-            const rDate = d2.value.replace(/-/g, '').substring(2);
+            const rDate = d2.value.replace(/-/g, '').substring(2); // Macht "261125"
             skyscannerUrl += `/${rDate}/?adults=1&rtn=1&language=de`;
         } else {
             skyscannerUrl += `/?adults=1&rtn=0&language=de`;
         }
         window.open(skyscannerUrl, '_blank');
 
-        // BILLIGFLIEGER ERWEITERUNG
+        // BILLIGFLIEGER ERWEUTERUNG
         if (includeLowCost) {
-            window.open("https://cebupacificair.com", "_blank");
-            window.open("https://trip.com", "_blank");
+            window.open("https://www.cebupacificair.com", "_blank");
+            window.open("https://de.trip.com", "_blank");
         }
-    });
-}
