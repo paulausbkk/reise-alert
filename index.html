@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -23,15 +23,18 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- REPARIERTER PFAD: Schickt die Daten jetzt direkt an Google Flights -->
+    <!-- Schickt die Anfrage direkt an die globale Google-Such-Schnittstelle -->
     <form action="https://google.com" method="get" target="_blank" class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
             
+            <!-- DIESER PARAMETER ZWINGT GOOGLE IN DIE ECHTE FLUGMASKE (FLIGHTS) -->
+            <input type="hidden" name="tbm" value="fl">
+
             <div class="full">
                 <label>Suchbegriff für weltweite Reichweite:</label>
-                <!-- Der Parameter "q" füttert die Eingabe direkt in die Flugmaske -->
-                <input type="text" name="q" placeholder="z.B. FRA MNL 15.11.2026" required>
+                <!-- Tippe hier ein: flights from FRA to MNL on 2026-11-15 -->
+                <input type="text" name="q" placeholder="z.B. flights from FRA to MNL on 2026-11-15" required>
             </div>
 
             <div class="full">
