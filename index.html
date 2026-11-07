@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - FINAL VALIDATED FIX</title>
+    <title>✈️ Reisekonfiguration PRO - 80% MASTER SUCCESS</title>
     <style>
-        :root { --primary: #1e40af; --bg: #f0f4f8; --card-bg: #ffffff; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
-        body { font-family: sans-serif; background: var(--bg); color: #1e293b; padding: 20px; margin: 0; }
+        :root { --primary: #1e40af; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--primary); }
         .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--primary); background: #f0f9ff; }
@@ -34,36 +34,36 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     <div class="card">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary);">[VERSION 2026 - MASTER VALIDATED FIX]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary);">[VERSION 2026 - 80% MASTER]</span></div>
         <div class="grid">
-            <div><label>Abflugort:</label><input type="text" placeholder="z.B. BER" id="fl-from" list="airports-complete"></div>
-            <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" id="fl-to" list="airports-complete"></div>
-            <div><label>Hinflug:</label><input type="date" id="fl-date1"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box"></div>
-            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
-            <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="fl-lowcost"><span class="slider"></span></label></div>
-            <div><label>Beförderungsklasse:</label><select id="fl-cabin"><option value="Economy">Economy</option><option value="Premium Economy">Premium Economy</option><option value="Business">Business Class</option><option value="First">First Class</option></select></div>
-            <div><label>Personen:</label><select id="fl-passengers"><option value="1">1 Person</option><option value="2" selected>2 Personen</option><option value="3">3 Personen</option></select></div>
+            <div><label>Abflugort:</label><input type="text" placeholder="z.B. BER" id="fl-from" list="airports-complete" oninput="checkEngine()"></div>
+            <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" id="fl-to" list="airports-complete" oninput="checkEngine()"></div>
+            <div><label>Hinflug:</label><input type="date" id="fl-date1" onchange="checkEngine()"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" onchange="checkEngine()" oninput="checkEngine()"></div>
+            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox" onchange="checkEngine()"><span class="slider"></span></label></div>
+            <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="fl-lowcost" onchange="checkEngine()"><span class="slider"></span></label></div>
+            <div><label>Beförderungsklasse:</label><select id="fl-cabin" onchange="checkEngine()"><option value="Economy">Economy</option><option value="Premium Economy">Premium Economy</option><option value="Business">Business Class</option><option value="First">First Class</option></select></div>
+            <div><label>Personen:</label><select id="fl-passengers" onchange="checkEngine()"><option value="1">1 Person</option><option value="2" selected>2 Personen</option><option value="3">3 Personen</option></select></div>
             <div>
                 <label>Gepäck:</label>
-                <select id="fl-baggage">
+                <select id="fl-baggage" onchange="checkEngine()">
                     <option value="Handgepäck">Handgepäck</option><option value="1x 20kg">1x 20 KG Gepäck</option><option value="1x 32kg">1x 32 KG Gepäck</option><option value="Handgepäck + 20 KG">Handgepäck + 20 KG</option><option value="Handgepäck + 32 KG">Handgepäck + 32 KG</option>
                 </select>
             </div>
             <div>
                 <label>Stopps:</label>
-                <select id="fl-stops"><option value="" selected></option><option value="Direktflug">Direktflug</option><option value="max 1 Stopp">Max. 1 Stopp</option><option value="max 2 Stopps">Max. 2 Stopps</option></select>
+                <select id="fl-stops" onchange="checkEngine()"><option value="" selected></option><option value="Direktflug">Direktflug</option><option value="max 1 Stopp">Max. 1 Stopp</option><option value="max 2 Stopps">Max. 2 Stopps</option></select>
             </div>
-            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" id="fl-stop-location" list="airports-complete"></div>
+            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" id="fl-stop-location" list="airports-complete" oninput="checkEngine()"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" id="fl-from2" list="airports-complete"></div>
-            <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" id="fl-price2" value="0"></div>
-            <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" id="fl-price" value="0"></div>
+            <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" id="fl-price2" value="0" oninput="checkEngine()"></div>
+            <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" id="fl-price" value="0" oninput="checkEngine()"></div>
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
-                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" id="fl-max-time" min="5" max="50" value="30" style="height:20px;">
+                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" id="fl-max-time" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.'; checkEngine();">
             </div>
             <div class="full" style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 15px;">
                 <label>Bevorzugtes Suchportal:</label>
-                <select id="portal-selector">
+                <select id="portal-selector" onchange="checkEngine()">
                     <option value="google">Google Flights</option><option value="skyscanner">Skyscanner</option><option value="kiwi">Kiwi.com</option><option value="trip">Trip.com (Asien-Spezialist)</option>
                 </select>
             </div>
@@ -72,21 +72,18 @@
     </div>
 </div>
 <script>
-    var d1 = document.getElementById('fl-date1'), d2 = document.getElementById('return-box'), ow = document.getElementById('ow-checkbox');
-    var f1 = document.getElementById('fl-from'), t1 = document.getElementById('fl-to'), pSel = document.getElementById('portal-selector'), mBtn = document.getElementById('btn-search-flights'), sTime = document.getElementById('fl-max-time');
-    d1.value = "2026-12-18"; d2.value = "2026-12-28";
-    function getIATA(t) { var m = t.match(/\(([^)]+)\)/); return m ? m.toUpperCase().trim() : t.toUpperCase().trim(); }
-    function buildLink() {
-        var date1 = d1.value, date2 = d2.value, from = getIATA(f1.value), to = getIATA(t1.value);
+    function checkEngine() {
+        var d1 = document.getElementById('fl-date1'), d2 = document.getElementById('return-box'), ow = document.getElementById('ow-checkbox');
+        var f1 = document.getElementById('fl-from'), t1 = document.getElementById('fl-to'), pSel = document.getElementById('portal-selector'), mBtn = document.getElementById('btn-search-flights'), sTime = document.getElementById('fl-max-time');
+        var date1 = d1.value, date2 = d2.value;
         if (ow.checked) { d2.disabled = true; d2.value = ""; } 
         else { d2.disabled = false; if (date1) { d2.min = date1; if (!date2 || date2 < date1) { d2.value = date1; date2 = date1; } } }
+        var getIATA = function(t) { var m = t.match(/\(([^)]+)\)/); return m ? m.toUpperCase().trim() : t.toUpperCase().trim(); };
+        var from = getIATA(f1.value), to = getIATA(t1.value);
         if (from.length === 3 && to.length === 3 && date1) {
             var mode = pSel.value, sl = "/", cabin = document.getElementById('fl-cabin').value, pax = document.getElementById('fl-passengers').value, bag = document.getElementById('fl-baggage').value, stops = document.getElementById('fl-stops').value, duration = sTime.value;
             var q = "flights from " + from + " to " + to + " on " + date1 + (ow.checked ? " one way" : " return " + date2);
-            if (mode === "google") mBtn.href = "https:" + sl + sl + "google.com" + sl + "travel" + sl + "flights?q=" + encodeURIComponent(q) + "&hl=de";
-            if (mode === "skyscanner") mBtn.href = "https:" + sl + sl + "www.skyscanner.de" + sl + "transport" + sl + "flights" + sl + from.toLowerCase() + sl + to.toLowerCase() + sl + date1.replace(/-/g, '').substring(2) + (ow.checked ? sl + "?adults=" + pax + "&rtn=0" : sl + date2.replace(/-/g, '').substring(2) + sl + "?adults=" + pax + "&rtn=1") + "&language=de";
-            if (mode === "kiwi") mBtn.href = "https:" + sl + sl + "kiwi.com" + sl + "de" + sl + "search" + sl + "tiles" + sl + from.toLowerCase() + sl + to.toLowerCase() + sl + date1 + (ow.checked ? "" : sl + date2);
-            if (mode === "trip") mBtn.href = "https:" + sl + sl + "trip.com" + sl + "flights" + sl + "show" + sl + from.toLowerCase() + "-" + to.toLowerCase() + "-" + date1 + (ow.checked ? "?flighttype=ow" : sl + from.toLowerCase() + "-" + to.toLowerCase() + "-" + date1 + "and" + to.toLowerCase() + "-" + from.toLowerCase() + "-" + date2 + "?flighttype=rt") + "&class=" + (cabin==="Business"?"business":"y") + "&quantity=" + pax;
-            mBtn.style.backgroundColor = "var(--gold)"; mBtn.style.pointerEvents = "auto"; mBtn.style.opacity = "1";
-        } else { mBtn.href = "#"; mBtn.style.backgroundColor = "#cbd5e1"; mBtn.style.pointerEvents = "none"; mBtn.style.opacity = "0.6"; }
-    }
+            if (mode === "google") mBtn.href = "https:" + sl + sl + "google.com" + sl + "travel" + sl + "flights?q=" + encodeURIComponent(q + " class:" + cabin + " passengers:" + pax + " baggage:" + bag + " stops:" + stops + " max duration:" + duration + " hours") + "&hl=de";
+            else if (mode === "skyscanner") mBtn.href = "https:" + sl + sl + "www.skyscanner.de" + sl + "transport" + sl + "flights" + sl + from.toLowerCase() + sl + to.toLowerCase() + sl + date1.replace(/-/g, '').substring(2) + (ow.checked ? sl + "?adults=" + pax + "&rtn=0" : sl + date2.replace(/-/g, '').substring(2) + sl + "?adults=" + pax + "&rtn=1") + "&language=de";
+            else if (mode === "kiwi") mBtn.href = "https:" + sl + sl + "kiwi.com" + sl + "de" + sl + "search" + sl + "tiles" + sl + from.toLowerCase() + sl + to.toLowerCase() + sl + date1 + (ow.checked ? "" : sl + date2);
+
