@@ -182,23 +182,27 @@
 </div>
 
 <script>
-    // 1. Variablen für die Kalenderfelder holen
     var d1 = document.getElementById('fl-date1');
     var d2 = document.getElementById('fl-date2');
+    var oneWayCheck = document.getElementById('fl-oneway');
 
     if (d1 && d2) {
-        // Standard-Reisedaten setzen (z.B. November 2026)
         d1.value = "2026-11-15";
         d2.value = "2026-11-25";
-        d2.min = "2026-11-15"; // Verhindert standardmäßig die Auswahl davor
+        d2.min = "2026-11-15";
 
-        // Kalender-Sperre live aktualisieren, wenn sich der Hinflug ändert
         d1.addEventListener('change', function() {
             d2.min = this.value;
             if (d2.value && d2.value < this.value) {
-                d2.value = this.value; // Zieht den Rückflug automatisch hoch
+                d2.value = this.value;
             }
         });
     }
 
-    // 2. Funktion für das Ausgrauen des Rückflugs bei "One Way"
+    if (oneWayCheck && d2 && d1) {
+        oneWayCheck.addEventListener('change', function() {
+            if (this.checked) {
+                d2.disabled = true;
+                d2.value = "";
+            } else {
+                d2.disabled = false;
