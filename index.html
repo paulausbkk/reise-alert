@@ -140,31 +140,42 @@
 
 <script>
     // 1. Kalender-Standardwerte setzen
-    document.getElementById('fl-date1').value = "2026-11-15";
-    document.getElementById('fl-date2').value = "2026-11-25";
+    const d1 = document.getElementById('fl-date1');
+    const d2 = document.getElementById('fl-date2');
+    
+    d1.value = "2026-11-15";
+    d2.value = "2026-11-25";
+    d2.min = "2026-11-15"; // Verhindert standardmäßig die Auswahl davor
 
-    // 2. Funktion für das Ausgrauen des Rückflugs
-    document.getElementById('fl-oneway').addEventListener('change', function() {
-        let r_field = document.getElementById('fl-date2');
-        if (this.checked) {
-            r_field.disabled = true;
-            r_field.value = "";
-        } else {
-            r_field.disabled = false;
-            r_field.value = "2026-11-25";
+    // Kalender-Sperre live aktualisieren, wenn sich der Hinflug ändert
+    d1.addEventListener('change', function() {
+        d2.min = this.value;
+        if(d2.value && d2.value < this.value) {
+            d2.value = this.value; // Setzt Rückflug automatisch hoch, falls er davor lag
         }
     });
 
-    // 3. Funktion für die Flugsuche (KOMPLETT KORRIGIERTE LINKS)
+    // 2. Funktion für das Ausgrauen des Rückflugs
+    document.getElementById('fl-oneway').addEventListener('change', function() {
+        if (this.checked) {
+            d2.disabled = true;
+            d2.value = "";
+        } else {
+            d2.disabled = false;
+            d2.value = "2026-11-25";
+            d2.min = d1.value;
+        }
+    });
+
+    // 3. Funktion für die Flugsuche (STRUKTUR FÜR 2026 REPARIERT)
     document.getElementById('btn-search-flights').addEventListener('click', function() {
         let fromInput = document.getElementById('fl-from').value.trim();
         let toInput = document.getElementById('fl-to').value.trim();
-        let date1 = document.getElementById('fl-date1').value;
-        let date2 = document.getElementById('fl-date2').value;
+        let date1 = d1.value;
+        let date2 = d2.value;
         let isOneWay = document.getElementById('fl-oneway').checked;
         let includeLowCost = document.getElementById('fl-lowcost').checked;
 
-        // Hilfsfunktion: Filtert den 3-stelligen Code heraus (z.B. "FRA")
         let extractAirportCode = function(text) {
             let match = text.match(/\(([^)]+)\)/);
             return match ? match[1] : text;
@@ -178,19 +189,16 @@
             return;
         }
 
-        // --- GOOGLE FLIGHTS LINK (ECHTER PFAD) ---
-        let googleUrl = "https://google.com" + toCode + "%20from%20" + fromCode + "%20on%20" + date1;
-        if (isOneWay) { googleUrl += "%20one%20way"; }
+        // --- GOOGLE FLIGHTS (PROFI-URL FORMAT FÜR 2026) ---
+        let googleQuery = "flights from " + fromCode + " to " + toCode + " on " + date1;
+        if (!isOneWay && date2) {
+            googleQuery += " return " + date2;
+        } else {
+            googleQuery += " one way";
+        }
+        let googleUrl = "https://www.google.com/travel/flights?q=" + encodeURIComponent(googleQuery) + "&hl=de";
         window.open(googleUrl, '_blank');
 
-        // --- SKYSCANNER LINK (ECHTER PFAD) ---
-        let dDate = date1.replace(/-/g, '').substring(2); // Macht "261115"
-        let skyscannerUrl = "";
-        
-        if (isOneWay) {
-            skyscannerUrl = "https://skyscanner.de" + fromCode.toLowerCase() + "/" + toCode.toLowerCase() + "/" + dDate + "/?adults=1&rtn=0";
-        } else {
-            let rDate = date2.replace(/-/g, '').substring(2); // Macht "261125"
-            skyscannerUrl = "https://skyscanner.de" + fromCode.toLowerCase() + "/" + toCode.toLowerCase() + "/" + dDate + "/" + rDate + "/?adults=1&rtn=1";
-        }
+        // --- SKYSCANNER (EINGEBETTETER TRANSPORT-PFAD FÜR 2026) ---
+        let dDate = date1.replace(/-/g, '').substring(2); // z.B. "261115"
 
