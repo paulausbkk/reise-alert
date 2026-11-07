@@ -36,17 +36,53 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
+    <!-- HIER IST DIE FLUGHAFENLISTE WIEDER DA -->
+    <datalist id="airports-complete">
+        <option value="Abu Dhabi (AUH)"></option>
+        <option value="Antalya (AYT)"></option>
+        <option value="Bangkok (BKK)"></option>
+        <option value="Berlin (BER)"></option>
+        <option value="Cebu (CEB)"></option>
+        <option value="Christchurch (CHC)"></option>
+        <option value="Da Nang (DAD)"></option>
+        <option value="Doha (DOH)"></option>
+        <option value="Dresden (DRS)"></option>
+        <option value="Dumaguete (DGT)"></option>
+        <option value="Düsseldorf (DUS)"></option>
+        <option value="Frankfurt (FRA)"></option>
+        <option value="Hamburg (HAM)"></option>
+        <option value="Hanoi (HAN)"></option>
+        <option value="Hongkong (HKG)"></option>
+        <option value="Istanbul (IST)"></option>
+        <option value="Kuala Lumpur (KUL)"></option>
+        <option value="Leipzig (LEJ)"></option>
+        <option value="London Heathrow (LHR)"></option>
+        <option value="Los Angeles (LAX)"></option>
+        <option value="Manila (MNL)"></option>
+        <option value="München (MUC)"></option>
+        <option value="New York (JFK)"></option>
+        <option value="Pagadian (PAG)"></option>
+        <option value="Paphos (PFO)"></option>
+        <option value="Phuket (HKT)"></option>
+        <option value="Saigon / Ho-Chi-Minh-Stadt (SGN)"></option>
+        <option value="Singapore (SIN)"></option>
+        <option value="Tokyo Haneda (HND)"></option>
+        <option value="Wien (VIE)"></option>
+        <option value="Zürich (ZRH)"></option>
+    </datalist>
+
     <!-- SEKTION 1: Flug-Parameter -->
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
             <div>
-                <label>Abflugort:</label>
-                <input type="text" placeholder="z.B. FRA" id="fl-from">
+                <label>Abflugort (Stadt oder Code):</label>
+                <!-- list="airports-complete" verknüpft das Feld wieder mit der Liste -->
+                <input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete">
             </div>
             <div>
-                <label>Zielort:</label>
-                <input type="text" placeholder="z.B. MNL" id="fl-to">
+                <label>Zielort (Stadt oder Code):</label>
+                <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-complete">
             </div>
             <div>
                 <label>Hinflug:</label>
@@ -117,22 +153,28 @@
         }
     });
 
-    // 2. Funktion für die Flugsuche beim Klick auf den Button
+    // 2. Funktion für die Flugsuche mit reparierten Links
     document.getElementById('btn-search-flights').addEventListener('click', function() {
-        let fromAir = document.getElementById('fl-from').value.trim();
-        let toAir = document.getElementById('fl-to').value.trim();
-        let date1 = document.getElementById('fl-date1').value.trim();
+        let fromInput = document.getElementById('fl-from').value.trim();
+        let toInput = document.getElementById('fl-to').value.trim();
+        let date1 = document.getElementById('fl-date1').value.trim() || "15.11.2026";
         let includeLowCost = document.getElementById('fl-lowcost').checked;
 
-        if (!fromAir || !toAir) {
+        // Hilfsfunktion: Holt nur das Kürzel aus den Klammern (z.B. "FRA")
+        let extractAirportCode = function(text) {
+            let match = text.match(/\(([^)]+)\)/);
+            return match ? match[1] : text;
+        };
+
+        let fromCode = extractAirportCode(fromInput).toUpperCase();
+        let toCode = extractAirportCode(toInput).toUpperCase();
+
+        if (!fromCode || !toCode) {
             alert("Bitte gib einen Abflugort und einen Zielort ein!");
             return;
         }
 
-        // Standarddatum setzen, falls das Feld leer ist
-        if (!date1) { date1 = "15.11.2026"; }
-
-        // Hilfsfunktion: Wandelt 15.11.2026 um in 2026-11-15 (wichtig für Google und Skyscanner)
+        // Datum übersetzen: von "15.11.2026" zu "2026-11-15"
         let formatToWebDate = function(germanDate) {
             let parts = germanDate.split('.');
             if (parts.length === 3) {
@@ -142,17 +184,15 @@
         };
 
         let webDate = formatToWebDate(date1);
-        let skyscannerDate = webDate.replace(/-/g, '').substring(2); // Macht "261115" daraus
+        let skyscannerDate = webDate.replace(/-/g, '').substring(2); // Macht "261115"
 
-        // Google Flights URL bauen und im neuen Tab öffnen
-        let googleUrl = "https://google.com" + toAir + "%20from%20" + fromAir + "%20on%20" + webDate;
+        // REPARIERTE LINKS: Jetzt mit vollem Pfad, damit der Browser sie öffnen kann
+        let googleUrl = "https://google.com" + toCode + "%20from%20" + fromCode + "%20on%20" + webDate;
         window.open(googleUrl, '_blank');
 
-        // Skyscanner URL bauen und im neuen Tab öffnen
-        let skyscannerUrl = "https://skyscanner.de" + fromAir.toLowerCase() + "/" + toAir.toLowerCase() + "/" + skyscannerDate + "/";
+        let skyscannerUrl = "https://skyscanner.de" + fromCode.toLowerCase() + "/" + toCode.toLowerCase() + "/" + skyscannerDate + "/";
         window.open(skyscannerUrl, '_blank');
 
-        // Wenn Low-Cost aktiv ist, auch die Billigflieger öffnen
         if (includeLowCost) {
             window.open("https://cebupacificair.com", "_blank");
             window.open("https://trip.com", "_blank");
@@ -162,3 +202,4 @@
 
 </body>
 </html>
+
