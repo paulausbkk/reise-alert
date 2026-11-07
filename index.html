@@ -19,10 +19,7 @@
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
-        
-        /* WICHTIG: Das Aussehen für das deaktivierte Feld */
         input:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; border: 1px solid #94a3b8; }
-        
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
@@ -45,11 +42,11 @@
         <div class="grid">
             <div>
                 <label>Abflugort:</label>
-                <input type="text" placeholder="z.B. Frankfurt" id="fl-from">
+                <input type="text" placeholder="z.B. FRA" id="fl-from">
             </div>
             <div>
                 <label>Zielort:</label>
-                <input type="text" placeholder="z.B. Manila" id="fl-to">
+                <input type="text" placeholder="z.B. MNL" id="fl-to">
             </div>
             <div>
                 <label>Hinflug:</label>
@@ -94,7 +91,7 @@
         </div>
     </div>
 
-    <!-- SEKTION 3: Hotels (Schlanke Variante für den Test) -->
+    <!-- SEKTION 3: Hotels -->
     <div class="card ho">
         <div class="title">🏨 Sektion 3: Hotel-Optionen</div>
         <div class="grid">
@@ -108,7 +105,7 @@
 </div>
 
 <script>
-    // Funktion für das Ausgrauen des Rückflugs
+    // 1. Funktion für das Ausgrauen des Rückflugs
     document.getElementById('fl-oneway').addEventListener('change', function() {
         let r_field = document.getElementById('fl-date2');
         if (this.checked) {
@@ -119,10 +116,49 @@
             r_field.placeholder = "25.11.2026";
         }
     });
+
+    // 2. Funktion für die Flugsuche beim Klick auf den Button
+    document.getElementById('btn-search-flights').addEventListener('click', function() {
+        let fromAir = document.getElementById('fl-from').value.trim();
+        let toAir = document.getElementById('fl-to').value.trim();
+        let date1 = document.getElementById('fl-date1').value.trim();
+        let includeLowCost = document.getElementById('fl-lowcost').checked;
+
+        if (!fromAir || !toAir) {
+            alert("Bitte gib einen Abflugort und einen Zielort ein!");
+            return;
+        }
+
+        // Standarddatum setzen, falls das Feld leer ist
+        if (!date1) { date1 = "15.11.2026"; }
+
+        // Hilfsfunktion: Wandelt 15.11.2026 um in 2026-11-15 (wichtig für Google und Skyscanner)
+        let formatToWebDate = function(germanDate) {
+            let parts = germanDate.split('.');
+            if (parts.length === 3) {
+                return parts[2] + "-" + parts[1] + "-" + parts[0];
+            }
+            return germanDate;
+        };
+
+        let webDate = formatToWebDate(date1);
+        let skyscannerDate = webDate.replace(/-/g, '').substring(2); // Macht "261115" daraus
+
+        // Google Flights URL bauen und im neuen Tab öffnen
+        let googleUrl = "https://google.com" + toAir + "%20from%20" + fromAir + "%20on%20" + webDate;
+        window.open(googleUrl, '_blank');
+
+        // Skyscanner URL bauen und im neuen Tab öffnen
+        let skyscannerUrl = "https://skyscanner.de" + fromAir.toLowerCase() + "/" + toAir.toLowerCase() + "/" + skyscannerDate + "/";
+        window.open(skyscannerUrl, '_blank');
+
+        // Wenn Low-Cost aktiv ist, auch die Billigflieger öffnen
+        if (includeLowCost) {
+            window.open("https://cebupacificair.com", "_blank");
+            window.open("https://trip.com", "_blank");
+        }
+    });
 </script>
 
 </body>
 </html>
-
-
-  
