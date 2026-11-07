@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - STABLE RETURN</title>
+    <title>✈️ Reisekonfiguration PRO - DATE LOCK</title>
     <style>
-        :root { --primary-blue: #1e40af; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --lowcost-yellow: #fef08a; --lowcost-border: #eab308; --active-green: #22c55e; --gold-yellow: #f59e0b; }
+        :root { --primary-blue: #0284c7; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --lowcost-yellow: #fef08a; --lowcost-border: #eab308; --active-green: #22c55e; --gold-yellow: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--primary-blue); }
@@ -16,7 +16,10 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         input:disabled, select:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; border: 1px solid #94a3b8; }
-        input.date-error { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
+        
+        /* Das rote Warnsignal bei falschem Datum */
+        input.date-error { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; font-weight: bold; }
+        
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
@@ -35,7 +38,6 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- Die unzerstörbare, feste HTML-Datenbank -->
     <datalist id="airports-complete">
         <option value="Abu Dhabi (AUH)"></option><option value="Antalya (AYT)"></option><option value="Bangkok (BKK)"></option><option value="Berlin (BER)"></option><option value="Cebu (CEB)"></option><option value="Christchurch (CHC)"></option><option value="Da Nang (DAD)"></option><option value="Doha (DOH)"></option><option value="Dresden (DRS)"></option><option value="Dumaguete (DGT)"></option><option value="Düsseldorf (DUS)"></option><option value="Frankfurt (FRA)"></option><option value="Hamburg (HAM)"></option><option value="Hanoi (HAN)"></option><option value="Hongkong (HKG)"></option><option value="Istanbul (IST)"></option><option value="Kuala Lumpur (KUL)"></option><option value="Leipzig (LEJ)"></option><option value="London Heathrow (LHR)"></option><option value="Los Angeles (LAX)"></option><option value="Manila (MNL)"></option><option value="München (MUC)"></option><option value="New York (JFK)"></option><option value="Pagadian (PAG)"></option><option value="Paphos (PFO)"></option><option value="Phuket (HKT)"></option><option value="Saigon / Ho-Chi-Minh-Stadt (SGN)"></option><option value="Singapore (SIN)"></option><option value="Tokyo Haneda (HND)"></option><option value="Wien (VIE)"></option><option value="Zürich (ZRH)"></option>
     </datalist>
@@ -43,7 +45,7 @@
     <div class="card">
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary-blue);">[VERSION 2026 - STABLE RETURN]</span>
+            <span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: var(--primary-blue);">[VERSION 2026 - DATE LOCK]</span>
         </div>
         <div class="grid">
             <div><label>Abflugort:</label><input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete"></div>
@@ -113,17 +115,18 @@
     d1.value = "2026-11-15"; 
     d2.value = "2026-11-25";
 
+    // Globale Variable zur Prüfung von Datumsfehlern
+    var hasDateError = false;
+
     var checkDates = function() {
-        if (ow && ow.checked) return;
+        if (ow && ow.checked) {
+            d2.classList.remove('date-error');
+            hasDateError = false;
+            updateMasterEngine();
+            return;
+        }
+        
         if (d1.value && d2.value && d2.value < d1.value) {
             d2.classList.add('date-error'); 
-            d2.value = "";
-            alert("Der Rückflug kann nicht vor dem Hinflug liegen!");
+            hasDateError = true;
         } else { 
-            d2.classList.remove('date-error'); 
-        }
-    };
-    d1.addEventListener('change', checkDates); 
-    d2.addEventListener('change', checkDates);
-
-    if (ow && d2) {
