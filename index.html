@@ -84,12 +84,10 @@
             </div>
             <div>
                 <label>Hinflug:</label>
-                <!-- type="date" macht hieraus jetzt einen echten Kalender -->
                 <input type="date" id="fl-date1">
             </div>
             <div>
                 <label>Rückflug:</label>
-                <!-- type="date" macht hieraus jetzt einen echten Kalender -->
                 <input type="date" id="fl-date2">
             </div>
             <div class="switch-container">
@@ -100,7 +98,7 @@
                 </label>
             </div>
             <div class="switch-container yellow-highlight">
-                <label>Low-Cost Airlines einbeziehen:</label>
+                <label style="color: #854d0e;">Low-Cost Airlines einbeziehen:</label>
                 <label class="switch">
                     <input type="checkbox" id="fl-lowcost">
                     <span class="slider"></span>
@@ -141,7 +139,7 @@
 </div>
 
 <script>
-    // 1. Kalender-Standardwerte setzen (z.B. 15.11.2026 und 25.11.2026)
+    // 1. Kalender-Standardwerte setzen
     document.getElementById('fl-date1').value = "2026-11-15";
     document.getElementById('fl-date2').value = "2026-11-25";
 
@@ -157,47 +155,42 @@
         }
     });
 
-    // 3. Funktion für die Flugsuche
+    // 3. Funktion für die Flugsuche (KOMPLETT KORRIGIERTE LINKS)
     document.getElementById('btn-search-flights').addEventListener('click', function() {
         let fromInput = document.getElementById('fl-from').value.trim();
         let toInput = document.getElementById('fl-to').value.trim();
-        let date1 = document.getElementById('fl-date1').value; // Gibt uns direkt YYYY-MM-DD
+        let date1 = document.getElementById('fl-date1').value;
+        let date2 = document.getElementById('fl-date2').value;
+        let isOneWay = document.getElementById('fl-oneway').checked;
         let includeLowCost = document.getElementById('fl-lowcost').checked;
 
-        // Extrahiert den Code in Klammern (z.B. "FRA")
+        // Hilfsfunktion: Filtert den 3-stelligen Code heraus (z.B. "FRA")
         let extractAirportCode = function(text) {
             let match = text.match(/\(([^)]+)\)/);
             return match ? match[1] : text;
         };
 
-        let fromCode = extractAirportCode(fromInput).toUpperCase();
-        let toCode = extractAirportCode(toInput).toUpperCase();
+        let fromCode = extractAirportCode(fromInput).toUpperCase().trim();
+        let toCode = extractAirportCode(toInput).toUpperCase().trim();
 
-        if (!fromCode || !toCode || fromCode === "" || toCode === "") {
-            alert("Bitte wähle einen Abflugort und einen Zielort aus der Vorschlagsliste aus!");
+        if (!fromCode || !toCode || fromCode.length !== 3 || toCode.length !== 3) {
+            alert("Bitte wähle sowohl für den Abflugort als auch für den Zielort einen Flughafen aus der Liste aus!");
             return;
         }
 
-        if (!date1) {
-            alert("Bitte wähle ein Hinflugsdatum aus!");
-            return;
-        }
-
-        // URLs absolut fehlerfrei zusammenbauen
+        // --- GOOGLE FLIGHTS LINK (ECHTER PFAD) ---
         let googleUrl = "https://google.com" + toCode + "%20from%20" + fromCode + "%20on%20" + date1;
+        if (isOneWay) { googleUrl += "%20one%20way"; }
         window.open(googleUrl, '_blank');
 
-        let skyscannerDate = date1.replace(/-/g, '').substring(2); // Macht aus "2026-11-15" -> "261115"
-        let skyscannerUrl = "https://skyscanner.de" + fromCode.toLowerCase() + "/" + toCode.toLowerCase() + "/" + skyscannerDate + "/";
-        window.open(skyscannerUrl, '_blank');
-
-        if (includeLowCost) {
-            window.open("https://cebupacificair.com", "_blank");
-            window.open("https://trip.com", '_blank');
+        // --- SKYSCANNER LINK (ECHTER PFAD) ---
+        let dDate = date1.replace(/-/g, '').substring(2); // Macht "261115"
+        let skyscannerUrl = "";
+        
+        if (isOneWay) {
+            skyscannerUrl = "https://skyscanner.de" + fromCode.toLowerCase() + "/" + toCode.toLowerCase() + "/" + dDate + "/?adults=1&rtn=0";
+        } else {
+            let rDate = date2.replace(/-/g, '').substring(2); // Macht "261125"
+            skyscannerUrl = "https://skyscanner.de" + fromCode.toLowerCase() + "/" + toCode.toLowerCase() + "/" + dDate + "/" + rDate + "/?adults=1&rtn=1";
         }
-    });
-</script>
-
-</body>
-</html>
 
