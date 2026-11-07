@@ -16,12 +16,12 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
-        /* Die neuen, sicheren Portal-Knöpfe */
         .portal-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .portal-btn { display: flex; align-items: center; justify-content: center; height: 45px; color: white; text-decoration: none; font-weight: bold; border-radius: 6px; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .google-btn { background-color: #ea4335; }
         .skyscanner-btn { background-color: #007054; }
         .portal-btn:hover { opacity: 0.9; }
+        .disabled-btn { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed; pointer-events: none; box-shadow: none; }
     </style>
 </head>
 <body>
@@ -36,10 +36,10 @@
             <div class="full"><label>Hinflugs-Datum:</label><input type="date" id="flight-date"></div>
             
             <div class="full" style="margin-top: 5px;">
-                <label>Wähle dein Portal – Öffnet garantiert ohne Blockade:</label>
+                <label>Wähle dein Reiseportal:</label>
                 <div class="portal-buttons">
-                    <a href="#" target="_blank" class="portal-btn google-btn" id="go-google">Google Flights ➔</a>
-                    <a href="#" target="_blank" class="portal-btn skyscanner-btn" id="go-sky">Skyscanner ➔</a>
+                    <a href="#" target="_blank" class="portal-btn google-btn disabled-btn" id="go-google">Google Flights</a>
+                    <a href="#" target="_blank" class="portal-btn skyscanner-btn disabled-btn" id="go-sky">Skyscanner</a>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
     var gLink = document.getElementById('go-google');
     var sLink = document.getElementById('go-sky');
 
-    // Standarddatum setzen (15.11.2026)
+    // Standarddatum auf den 15.11.2026 setzen
     fDate.value = "2026-11-15";
 
     function updateLinks() {
@@ -62,23 +62,32 @@
         var to = tCode.value.toUpperCase().trim();
         var date = fDate.value;
 
-        if(from.length === 3 && to.length === 3 && date) {
-            // Google Flights Link aktualisieren
-            var query = "flights from " + from + " to " + to + " on " + date + " one way";
-            gLink.href = "https://google.com" + encodeURIComponent(googleQuery) + "&hl=de";
+        // Erst wenn beide Flughafen-Codes exakt 3 Zeichen lang sind und ein Datum steht, schalten wir die Knöpfe scharf
+        if (from.length === 3 && to.length === 3 && date) {
+            // 1. Google Flights Link generieren
+            var googleText = "flights from " + from + " to " + to + " on " + date + " one way";
+            gLink.href = "https://google.com" + encodeURIComponent(googleText) + "&hl=de";
+            gLink.classList.remove('disabled-btn');
             
-            // Skyscanner Link aktualisieren
-            var shortDate = date.replace(/-/g, '').substring(2); // Macht "261115"
+            // 2. Skyscanner Link generieren
+            var shortDate = date.replace(/-/g, '').substring(2); // Wandelt 2026-11-15 um in 261115
             sLink.href = "https://skyscanner.de" + from.toLowerCase() + "/" + to.toLowerCase() + "/" + shortDate + "/?adults=1&rtn=0&language=de";
+            sLink.classList.remove('disabled-btn');
         } else {
+            // Wenn die Eingabe unvollständig ist, werden die Knöpfe grau gesperrt
             gLink.href = "#";
+            gLink.classList.add('disabled-btn');
             sLink.href = "#";
+            sLink.classList.add('disabled-btn');
         }
     }
 
+    // Höre live auf jede Tastatur-Eingabe des Nutzers
     fCode.addEventListener('input', updateLinks);
     tCode.addEventListener('input', updateLinks);
     fDate.addEventListener('change', updateLinks);
+    
+    // Einmal beim Laden ausführen, um den Startzustand herzustellen
     updateLinks();
 </script>
 </body>
