@@ -3,49 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Flugsuche PRO - UNZERSTÖRBAR</title>
+    <title>✈️ Flugsuche PRO - ANONYM MULTI-ENGINE</title>
     <style>
-        :root { --matrix-dark: #0f172a; --bg-light: #f8fafc; --card-bg: #ffffff; --border: #cbd5e1; --matrix-yellow: #eab308; }
+        :root { --tech-purple: #6d28d9; --bg-light: #f8fafc; --card-bg: #ffffff; --border: #cbd5e1; --google-red: #ea4335; --sky-blue: #0284c7; }
         body { font-family: sans-serif; background: var(--bg-light); color: #1e293b; padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--matrix-dark); }
+        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--tech-purple); }
         
-        /* Das neue, unübersehbare Tiefschwarz-Design */
-        .card { border: 3px solid var(--matrix-dark); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #f1f5f9; }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--matrix-dark); display: flex; justify-content: space-between; }
+        .card { border: 3px solid var(--tech-purple); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #faf5ff; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--tech-purple); display: flex; justify-content: space-between; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
-        /* Leuchtend gelber Express-Knopf */
-        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #0f172a; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--matrix-yellow); font-size: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-decoration: none; text-align: center; }
-        .btn:hover { background: #ca8a04; }
+        /* Die zwei getrennten, isolierten Klick-Buttons */
+        .portal-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .g-btn { background-color: var(--google-red); }
+        .s-btn { background-color: var(--sky-blue); }
+        .btn:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- Das Formular schickt die Daten direkt, unblockierbar und unfilterbar an Google Flights -->
-    <form action="https://google.com" method="get" target="_blank" class="card">
+    <div class="card">
         <div class="title">
-            <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.75rem; background: var(--matrix-yellow); padding: 2px 6px; border-radius: 4px; color: #0f172a;">[VERSION 2026 - UNBREAKABLE FORM]</span>
+            <span>✈️ Sektion 1: Flug-Parameter (Isolierte Spionage-Sperre)</span>
+            <span style="font-size: 0.75rem; background: #f3e8ff; padding: 2px 6px; border-radius: 4px; color: var(--tech-purple);">[VERSION 2026 - ANONYM PRO]</span>
         </div>
+        
         <div class="grid">
+            <div><label>Abflugort (z.B. FRA):</label><input type="text" placeholder="FRA" id="from-input" value="FRA" maxlength="3" style="text-transform: uppercase;"></div>
+            <div><label>Zielort (z.B. MNL):</label><input type="text" placeholder="MNL" id="to-input" value="MNL" maxlength="3" style="text-transform: uppercase;"></div>
+            <div class="full"><label>Hinflugs-Datum:</label><input type="date" id="date-input"></div>
             
-            <div class="full">
-                <label>Suchbegriff für Google Flights (z.B. FRA MNL 15.11.2026):</label>
-                <!-- Der Name "q" füttert die Eingabe direkt in die Flugmaske -->
-                <input type="text" name="q" placeholder="z.B. FRA MNL 15.11.2026" required>
-            </div>
+            <div class="full" style="margin-top: 10px;">
+                <label>Suche absolut getrennt starten (Die Portale erfahren nichts voneinander):</label>
+                <div class="portal-buttons">
+                    
+                    <!-- FORMULAR 1: Absolut isoliert nur an Google Flights -->
+                    <form action="https://google.com" method="get" target="_blank">
+                        <input type="hidden" name="q" id="query-google" value="">
+                        <button type="submit" class="btn g-btn">Rot - Google Flights</button>
+                    </form>
 
-            <div class="full">
-                <button type="submit" class="btn">Gelb - Flug-Suche starten ➔</button>
+                    <!-- FORMULAR 2: Absolut isoliert nur an Skyscanner über Websuche -->
+                    <form action="https://google.com" method="get" target="_blank">
+                        <input type="hidden" name="q" id="query-skyscanner" value="">
+                        <button type="submit" class="btn s-btn">Blau - Skyscanner</button>
+                    </form>
+
+                </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
+
+<script>
+    var fIn = document.getElementById('from-input');
+    var tIn = document.getElementById('to-input');
+    var dIn = document.getElementById('date-input');
+    
+    var qGoogle = document.getElementById('query-google');
+    var qSky = document.getElementById('query-skyscanner');
+
+    // Standarddatum fest hinterlegen
+    dIn.value = "2026-11-15";
+
+    function updateQueries() {
+        var from = fIn.value.toUpperCase().trim();
+        var to = tIn.value.toUpperCase().trim();
+        var date = dIn.value;
+
+        // Hier werden die Anfragen getrennt voneinander vorbereitet
+        qGoogle.value = "google flights from " + from + " to " + to + " on " + date + " one way";
+        qSky.value = "skyscanner flights from " + from + " to " + to + " on " + date;
+    }
+
+    fIn.addEventListener('input', updateQueries);
+    tIn.addEventListener('input', updateQueries);
+    dIn.addEventListener('change', updateQueries);
+    
+    updateQueries();
+</script>
 </body>
 </html>
