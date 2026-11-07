@@ -19,6 +19,7 @@
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; text-transform: none !important; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; text-transform: none !important; font-variant: normal !important; background-color: #ffffff; font-size: 0.9rem; }
+        input:disabled, select:disabled { background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
@@ -28,7 +29,6 @@
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         
-        /* BEIDE SCHALTER WERDEN BEI AKTIVIERUNG GRÜN */
         input:checked + .slider { background-color: var(--active-green) !important; }
         input:checked + .slider:before { transform: translateX(18px); }
         
@@ -41,7 +41,6 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- ERWEITERTE FLUGHAFEN-DATENLISTE -->
     <datalist id="airports-complete">
         <option value="Abu Dhabi (AUH)"></option>
         <option value="Antalya (AYT)"></option>
@@ -111,10 +110,10 @@
             <div>
                 <label>Beförderungsklasse:</label>
                 <select id="fl-cabin">
-                    <option value="E">Economy</option>
-                    <option value="W">Premium Economy</option>
-                    <option value="C">Business Class</option>
-                    <option value="F">First Class</option>
+                    <option value="economy">Economy</option>
+                    <option value="premium">Premium Economy</option>
+                    <option value="business">Business Class</option>
+                    <option value="first">First Class</option>
                 </select>
             </div>
             
@@ -201,5 +200,5 @@
 
     <!-- SEKTION 3: Hotel-Optionen -->
     <div class="card ho">
-
+    
   
