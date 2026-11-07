@@ -141,7 +141,7 @@
                 </select>
             </div>
             <div class="full">
-                <label>Ort des Stopps:</label>
+                <label>Ort des Stopps (Stadt oder Code):</label>
                 <input type="text" placeholder="z.B. Dubai" id="fl-stop-location" list="airports-complete">
             </div>
             <div class="full">
@@ -154,37 +154,17 @@
         </div>
     </div>
 
-    <!-- SEKTION 2: Upgrade -->
+    <!-- SEKTION 2: Ticket-Upgrade-Suche -->
     <div class="card up">
         <div class="title">🔄 Sektion 2: Ticket-Upgrade-Suche</div>
         <div class="grid">
             <div>
-                <label>Nachname:</label>
+                <label>Nachname des Passagiers:</label>
                 <input type="text" placeholder="Muster" id="up-lastname">
             </div>
             <div>
                 <label>Buchungscode (PNR):</label>
                 <input type="text" placeholder="X1Y2Z3" id="up-pnr">
-            </div>
-            <div class="full">
-                <label>Ticketnummer:</label>
-                <input type="text" placeholder="2201234567890" id="up-ticketnumber">
-            </div>
-            <div>
-                <label>Aktuelle Klasse:</label>
-                <select id="up-current-class">
-                    <option>Economy</option>
-                    <option>Premium Economy</option>
-                    <option>Business Class</option>
-                </select>
-            </div>
-            <div>
-                <label>Wunsch-Klasse:</label>
-                <select id="up-target-class">
-                    <option>Premium Economy</option>
-                    <option selected>Business Class</option>
-                    <option>First Class</option>
-                </select>
             </div>
         </div>
     </div>
@@ -197,4 +177,28 @@
                 <label>Reiseziel / Hotelname:</label>
                 <input type="text" placeholder="z.B. Manila" id="ho-destination">
             </div>
-            <div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Variablen für die Kalenderfelder holen
+    var d1 = document.getElementById('fl-date1');
+    var d2 = document.getElementById('fl-date2');
+
+    if (d1 && d2) {
+        // Standard-Reisedaten setzen (z.B. November 2026)
+        d1.value = "2026-11-15";
+        d2.value = "2026-11-25";
+        d2.min = "2026-11-15"; // Verhindert standardmäßig die Auswahl davor
+
+        // Kalender-Sperre live aktualisieren, wenn sich der Hinflug ändert
+        d1.addEventListener('change', function() {
+            d2.min = this.value;
+            if (d2.value && d2.value < this.value) {
+                d2.value = this.value; // Zieht den Rückflug automatisch hoch
+            }
+        });
+    }
+
+    // 2. Funktion für das Ausgrauen des Rückflugs bei "One Way"
