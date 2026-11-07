@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - PURE FORM LIVE</title>
+    <title>✈️ Reisekonfiguration PRO - PURE INLINE CORE</title>
     <style>
-        :root { --ocean: #0284c7; --bg: #f0f4f8; --card-bg: #ffffff; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
-        body { font-family: sans-serif; background: var(--bg); color: #1e293b; padding: 20px; margin: 0; }
+        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--ocean); }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--ocean); background: #f0f9ff; }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--ocean); display: flex; justify-content: space-between; }
+        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--rubin); }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--rubin); background: #fef2f2; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--rubin); display: flex; justify-content: space-between; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
-        /* UNZERSTÖRBARER CSS-LOCK: Wenn die Checkbox aktiv ist, friert das Feld sofort tiefgrau ein */
+        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
         body:has(#ow-checkbox:checked) #return-box { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed !important; opacity: 0.35 !important; pointer-events: none !important; border-color: #94a3b8 !important; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
@@ -37,21 +37,24 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- Die native, unzerstörbare Formular-Schnittstelle direkt an die Google-Suchintelligenz -->
+    <!-- Formular sendet die Suchdaten nativ direkt weiter -->
     <form action="https://google.com" method="get" target="_blank" class="card">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter (Pure HTML5)</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: var(--ocean);">[VERSION 2026 - PURE FORM LIVE]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fee2e2; padding: 2px 6px; border-radius: 4px; color: var(--rubin);">[VERSION 2026 - PURE INLINE CORE]</span></div>
         <div class="grid">
             <input type="hidden" name="tbm" value="fl">
             
-            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Frankfurt (FRA)" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" placeholder="z.B. Manila (MNL)" list="airports-complete"></div>
-            <div><label>Hinflug-Datum:</label><input type="date" value="2026-12-18" required></div>
-            <div><label>Rückflug-Datum:</label><input type="date" id="return-box" value="2026-12-28"></div>
+            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. FRA" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" list="airports-complete"></div>
             
-            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
+            <!-- INLINE-EINGABE: Korrigiert und sperrt das Rückflugdatum live im selben Feld -->
+            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" required onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
+            
+            <!-- CSS-Gesteuerter One-Way Schalter -->
+            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox" onchange="if(this.checked){document.getElementById('return-box').value='';}else{document.getElementById('return-box').value=document.getElementById('fl-date1').value;}"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             
-            <div><label>Beförderungsklasse:</label><select><option>Economy</option><option>Premium Economy</option><option>Business Class</option></select></div>
+            <div><label>Beförderungsklasse:</label><select><option>Economy</option><option>Premium Economy</option><option value="Business">Business Class</option></select></div>
             <div><label>Personen:</label><select><option>1 Person</option><option selected>2 Personen</option></select></div>
             
             <div>
@@ -65,7 +68,7 @@
                 <select><option value="" selected></option><option>Direktflug</option><option>Max. 1 Stopp</option><option>Max. 2 Stopps</option></select>
             </div>
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" list="airports-complete"></div>
-            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. Cebu (CEB)" list="airports-complete"></div>
+            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" list="airports-complete"></div>
             <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
@@ -73,11 +76,10 @@
             </div>
             
             <div class="full">
-                <button type="submit" class="btn">Gold - Flug-Suche starten ➔</button>
+                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
 </div>
 </body>
 </html>
-
