@@ -33,6 +33,8 @@
         input:checked + .slider:before { transform: translateX(18px); }
         
         .btn { width: 100%; padding: 12px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); font-size: 1rem; }
+        .btn.fl-btn { background: var(--flight); }
+        .btn.ho-btn { background: var(--hotel); }
     </style>
 </head>
 <body>
@@ -109,20 +111,20 @@
             <div>
                 <label>Beförderungsklasse:</label>
                 <select id="fl-cabin">
-                    <option>Economy</option>
-                    <option>Premium Economy</option>
-                    <option>Business Class</option>
-                    <option>First Class</option>
+                    <option value="E">Economy</option>
+                    <option value="W">Premium Economy</option>
+                    <option value="C">Business Class</option>
+                    <option value="F">First Class</option>
                 </select>
             </div>
             
             <div>
                 <label>Personenanzahl:</label>
                 <select id="fl-passengers">
-                    <option>1 Person</option>
-                    <option selected>2 Personen</option>
-                    <option>3 Personen</option>
-                    <option>4 Personen</option>
+                    <option value="1">1 Person</option>
+                    <option value="2" selected>2 Personen</option>
+                    <option value="3">3 Personen</option>
+                    <option value="4">4 Personen</option>
                 </select>
             </div>
             
@@ -140,9 +142,9 @@
             <div>
                 <label>Zwischenstopps:</label>
                 <select id="fl-stops">
-                    <option>Direktflug</option>
-                    <option>Max. 1 Stopp</option>
-                    <option>Max. 2 Stopps</option>
+                    <option value="0">Direktflug</option>
+                    <option value="1">Max. 1 Stopp</option>
+                    <option value="2">Max. 2 Stopps</option>
                 </select>
             </div>
 
@@ -157,26 +159,26 @@
             </div>
 
             <div class="full">
-                <button type="button" class="btn" id="btn-search-flights" style="background: var(--flight); margin-top: 10px;">✈️ Flug-Suche starten</button>
+                <button class="btn fl-btn" id="btn-search-flights">Blau - Flug-Suche starten</button>
             </div>
         </div>
     </div>
 
-    <!-- SEKTION 2: Upgrade-Suche -->
+    <!-- SEKTION 2: Ticket-Upgrade-Suche -->
     <div class="card up">
-        <div class="title">🎫 Sektion 2: Upgrade-Suche & Ticket-Details</div>
+        <div class="title">🔄 Sektion 2: Ticket-Upgrade-Suche</div>
         <div class="grid">
+            <div>
+                <label>Nachname des Passagiers:</label>
+                <input type="text" placeholder="Muster" id="up-lastname">
+            </div>
+            <div>
+                <label>Buchungscode (PNR):</label>
+                <input type="text" placeholder="X1Y2Z3" id="up-pnr">
+            </div>
             <div class="full">
-                <label>Name wie im Reisepass:</label>
-                <input type="text" placeholder="z.B. MUELLER / MAXIMILIAN" id="up-name">
-            </div>
-            <div>
-                <label>Buchungscode (6-stellig, z.B. PNR):</label>
-                <input type="text" placeholder="z.B. X1Y2Z3" id="up-pnr" maxlength="6" style="text-transform: uppercase !important;">
-            </div>
-            <div>
                 <label>Ticketnummer (13-stellig):</label>
-                <input type="text" placeholder="z.B. 2201234567890" id="up-ticketno" maxlength="13">
+                <input type="text" placeholder="2201234567890" id="up-ticketnumber">
             </div>
             <div>
                 <label>Aktuelle Klasse:</label>
@@ -187,7 +189,7 @@
                 </select>
             </div>
             <div>
-                <label>Wunsch-Upgrade:</label>
+                <label>Gewünschte Upgrade-Klasse:</label>
                 <select id="up-target-class">
                     <option>Premium Economy</option>
                     <option selected>Business Class</option>
@@ -199,5 +201,5 @@
 
     <!-- SEKTION 3: Hotel-Optionen -->
     <div class="card ho">
-        <div class="title">🏨 Sektion 3: Hotel-Optionen</div>
-        <div class="grid">
+
+  
