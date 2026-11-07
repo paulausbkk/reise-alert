@@ -1,6 +1,6 @@
 // --- 1. KALENDER-REGELN & AUTOMATISCHE SPERREN ---
-const d1 = document.getElementById('fl-date1');
-const d2 = document.getElementById('fl-date2');
+var d1 = document.getElementById('fl-date1');
+var d2 = document.getElementById('fl-date2');
 
 if (d1 && d2) {
     // Standarddaten setzen
@@ -8,7 +8,7 @@ if (d1 && d2) {
     d2.value = "2026-11-25";
     d2.min = "2026-11-15"; // Sperrt sofort alle vergangenen Tage vor dem Hinflug
 
-    // Live-Sperre: Wenn der Hinflug geändert wird, wandert die Mindestgrenze des Rückflugs mit
+    // Live-Sperre: Hinflug-Änderung sperrt Rückflug-Tage davor
     d1.addEventListener('change', function() {
         d2.min = this.value;
         if (d2.value && d2.value < this.value) {
@@ -18,7 +18,7 @@ if (d1 && d2) {
 }
 
 // --- 2. NUR HINFLUG (ONE WAY) AUTOMATIK ---
-const oneWayCheck = document.getElementById('fl-oneway');
+var oneWayCheck = document.getElementById('fl-oneway');
 if (oneWayCheck && d2 && d1) {
     oneWayCheck.addEventListener('change', function() {
         if (this.checked) {
@@ -33,52 +33,53 @@ if (oneWayCheck && d2 && d1) {
 }
 
 // --- 3. DIE FLUGSUCHMASCHINE (START BEI KLICK) ---
-const searchBtn = document.getElementById('btn-search-flights');
+var searchBtn = document.getElementById('btn-search-flights');
 if (searchBtn && d1 && d2 && oneWayCheck) {
     searchBtn.addEventListener('click', function() {
-        const fromInput = document.getElementById('fl-from').value;
-        const toInput = document.getElementById('fl-to').value;
-        const includeLowCost = document.getElementById('fl-lowcost').checked;
+        var fromInput = document.getElementById('fl-from').value;
+        var toInput = document.getElementById('fl-to').value;
+        var includeLowCost = document.getElementById('fl-lowcost').checked;
 
         // Hilfsfunktion: Filtert den Code aus den Klammern (z.B. "Frankfurt (FRA)" -> "FRA")
-        const extractAirportCode = function(text) {
-            const match = text.match(/\(([^)]+)\)/);
+        var extractAirportCode = function(text) {
+            var match = text.match(/\(([^)]+)\)/);
             return match ? match[1] : text;
         };
 
-        const fromCode = extractAirportCode(fromInput).toUpperCase().trim();
-        const toCode = extractAirportCode(toInput).toUpperCase().trim();
+        var fromCode = extractAirportCode(fromInput).toUpperCase().trim();
+        var toCode = extractAirportCode(toInput).toUpperCase().trim();
 
         if (!fromCode || !toCode || fromCode.length !== 3 || toCode.length !== 3) {
             alert("Bitte wähle Flughäfen aus der Vorschlagsliste aus (z.B. Frankfurt (FRA))!");
             return;
         }
 
-        // KORRIGIERTER GOOGLE FLIGHTS LINK (Mit richtigem $ und Pfad)
-        let googleQuery = `flights from ${fromCode} to ${toCode} on ${d1.value}`;
+        // KORRIGIERTER GOOGLE FLIGHTS LINK MIT ECHTEM PFAD
+        var googleQuery = "flights from " + fromCode + " to " + toCode + " on " + d1.value;
         if (!oneWayCheck.checked && d2.value) {
-            googleQuery += ` return ${d2.value}`;
+            googleQuery += " return " + d2.value;
         } else {
-            googleQuery += ` one way`;
+            googleQuery += " one way";
         }
-        window.open(`https://google.com{encodeURIComponent(googleQuery)}&hl=de`, '_blank');
+        var googleUrl = "https://google.com" + encodeURIComponent(googleQuery) + "&hl=de";
+        window.open(googleUrl, '_blank');
 
-        // KORRIGIERTER SKYSCANNER LINK (Mit richtigem $ und Pfad)
-        const dDate = d1.value.replace(/-/g, '').substring(2); // Macht "261115"
-        let skyscannerUrl = `https://skyscanner.de{fromCode.toLowerCase()}/${toCode.toLowerCase()}/${dDate}`;
+        // KORRIGIERTER SKYSCANNER LINK MIT ECHTEM PFAD
+        var dDate = d1.value.replace(/-/g, '').substring(2); // Macht "261115"
+        var skyscannerUrl = "https://skyscanner.de" + fromCode.toLowerCase() + "/" + toCode.toLowerCase() + "/" + dDate;
         
         if (!oneWayCheck.checked && d2.value) {
-            const rDate = d2.value.replace(/-/g, '').substring(2); // Macht "261125"
-            skyscannerUrl += `/${rDate}/?adults=1&rtn=1&language=de`;
+            var rDate = d2.value.replace(/-/g, '').substring(2); // Macht "261125"
+            skyscannerUrl += "/" + rDate + "/?adults=1&rtn=1&language=de";
         } else {
-            skyscannerUrl += `/?adults=1&rtn=0&language=de`;
+            skyscannerUrl += "/?adults=1&rtn=0&language=de";
         }
         window.open(skyscannerUrl, '_blank');
 
         // BILLIGFLIEGER ERWEITERUNG
         if (includeLowCost) {
-            window.open("https://www.cebupacificair.com", "_blank");
-            window.open("https://de.trip.com", "_blank");
+            window.open("https://cebupacificair.com", "_blank");
+            window.open("https://trip.com", "_blank");
         }
     });
 }
