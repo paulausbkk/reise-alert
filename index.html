@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - MASTER PORTS FIXED</title>
+    <title>✈️ Reisekonfiguration PRO - MASTER FINAL VALUE</title>
     <style>
         :root { --primary: #1e40af; --bg: #f0f4f8; --card-bg: #ffffff; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: #1e293b; padding: 20px; margin: 0; }
@@ -34,7 +34,6 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- Die native, unzerstörbare Vorschlagsdatenbank -->
     <datalist id="airports-complete">
         <option value="Frankfurt (FRA)"></option>
         <option value="Manila (MNL)"></option>
@@ -45,11 +44,10 @@
     </datalist>
     
     <form action="https://google.com" method="get" target="_blank" class="card" id="flightForm">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary);">[VERSION 2026 - MASTER PORTS FIXED]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary);">[VERSION 2026 - MASTER FINAL VALUE]</span></div>
         <div class="grid">
             <input type="hidden" name="tbm" id="hidden-tbm" value="">
             
-            <!-- HIER IST DIE LISTE JETZT WIEDER FEST VERANKERT -->
             <div><label>Abflugort:</label><input type="text" placeholder="z.B. FRA" id="fl-from" list="airports-complete" required oninput="syncQuery()"></div>
             <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" id="fl-to" list="airports-complete" required oninput="syncQuery()"></div>
             <div><label>Hinflug:</label><input type="date" id="fl-date1" onchange="syncQuery()"></div>
@@ -75,8 +73,10 @@
             
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" id="fl-stop-location" list="airports-complete" oninput="syncQuery()"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" id="fl-from2" list="airports-complete"></div>
-            <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="80" id="fl-price2"></div>
-            <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="800" id="fl-price"></div>
+            
+            <!-- Preisfelder wurden hier sauber auf 0 initialisiert -->
+            <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" id="fl-price2" value="0"></div>
+            <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" id="fl-price" value="0"></div>
             
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
                 <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" id="fl-max-time" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.'; syncQuery();">
@@ -99,21 +99,23 @@
 </div>
 <script>
     var d1 = document.getElementById('fl-date1'), d2 = document.getElementById('return-box'), ow = document.getElementById('ow-checkbox');
+    var f1 = document.getElementById('fl-from'), t1 = document.getElementById('fl-to'), pSel = document.getElementById('portal-selector'), form = document.getElementById('flightForm');
+    
+    // Gültige Standarddaten für 2026 fest hinterlegt
     d1.value = "2026-12-18"; d2.value = "2026-12-28";
+    
     function getIATA(txt) { var m = txt.match(/\(([^)]+)\)/); return m ? m.toUpperCase().trim() : txt.toUpperCase().trim(); }
     function syncQuery() {
         if (ow.checked) { d2.disabled = true; d2.value = ""; } 
         else { d2.disabled = false; if (d1.value) { d2.min = d1.value; if (!d2.value || d2.value < d1.value) d2.value = d1.value; } }
-        var f = getIATA(document.getElementById('fl-from').value), t = getIATA(document.getElementById('fl-to').value), p = document.getElementById('portal-selector').value;
+        var f = getIATA(f1.value), t = getIATA(t1.value), p = pSel.value;
         var q = p + " flights from " + f + " to " + t + " on " + d1.value;
         if (!ow.checked && d2.value) q += " return " + d2.value;
         q += " class:" + document.getElementById('fl-cabin').value + " passengers:" + document.getElementById('fl-passengers').value + " baggage:" + document.getElementById('fl-baggage').value + " stops:" + document.getElementById('fl-stops').value + " duration:" + document.getElementById('fl-max-time').value + "h";
         var sLoc = document.getElementById('fl-stop-location').value; if (sLoc) q += " via " + getIATA(sLoc);
         if (document.getElementById('fl-lowcost').checked) q += " with low cost airlines";
         document.getElementById('hidden-master-query').value = q;
-        document.getElementById('hidden-tbm').value = (p === "Google Flights") ? "fl" : "";
     }
     syncQuery();
 </script>
 </body>
-</html>
