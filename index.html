@@ -3,145 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Flugkonfiguration PRO</title>
+    <title>✈️ Flugsuche PRO</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; --lowcost-yellow: #fef08a; --lowcost-border: #eab308; --active-green: #22c55e; }
+        :root { --primary: #2563eb; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --flight: #0284c7; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
-        .card.fl { border-color: var(--flight); background: #f0f9ff; }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #f0f9ff; border-color: var(--flight); }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--flight); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
-        input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
-        input:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; border: 1px solid #94a3b8; }
-        input.date-error { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
-        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
-        .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
-        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 22px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--active-green) !important; }
-        input:checked + .slider:before { transform: translateX(18px); }
-        .btn { width: 100%; padding: 12px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--flight); font-size: 1rem; }
+        input { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
+        
+        /* Die neuen, sicheren Portal-Knöpfe */
+        .portal-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .portal-btn { display: flex; align-items: center; justify-content: center; height: 45px; color: white; text-decoration: none; font-weight: bold; border-radius: 6px; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .google-btn { background-color: #ea4335; }
+        .skyscanner-btn { background-color: #007054; }
+        .portal-btn:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <datalist id="airports-complete">
-        <option value="Abu Dhabi (AUH)"></option><option value="Antalya (AYT)"></option><option value="Bangkok (BKK)"></option><option value="Berlin (BER)"></option><option value="Cebu (CEB)"></option><option value="Christchurch (CHC)"></option><option value="Da Nang (DAD)"></option><option value="Doha (DOH)"></option><option value="Dresden (DRS)"></option><option value="Dumaguete (DGT)"></option><option value="Düsseldorf (DUS)"></option><option value="Frankfurt (FRA)"></option><option value="Hamburg (HAM)"></option><option value="Hanoi (HAN)"></option><option value="Hongkong (HKG)"></option><option value="Istanbul (IST)"></option><option value="Kuala Lumpur (KUL)"></option><option value="Leipzig (LEJ)"></option><option value="London Heathrow (LHR)"></option><option value="Los Angeles (LAX)"></option><option value="Manila (MNL)"></option><option value="München (MUC)"></option><option value="New York (JFK)"></option><option value="Pagadian (PAG)"></option><option value="Paphos (PFO)"></option><option value="Phuket (HKT)"></option><option value="Saigon / Ho-Chi-Minh-Stadt (SGN)"></option><option value="Singapore (SIN)"></option><option value="Tokyo Haneda (HND)"></option><option value="Wien (VIE)"></option><option value="Zürich (ZRH)"></option>
-    </datalist>
-
     <div class="card fl">
-        <div class="title">✈️ Sektion 1: Flug-Parameter</div>
+        <div class="title">✈️ Sektion 1: Direkte Flug-Suche</div>
         <div class="grid">
-            <div><label>Abflugort:</label><input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete"></div>
-            <div><label>Zielort:</label><input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-complete"></div>
-            <div><label>Hinflug:</label><input type="date" id="fl-date1"></div>
-            <div><label>Rückflug:</label><input type="date" id="fl-date2"></div>
-            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="fl-oneway"><span class="slider"></span></label></div>
-            <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="fl-lowcost"><span class="slider"></span></label></div>
-            <div>
-                <label>Beförderungsklasse:</label>
-                <select id="fl-cabin"><option value="economy">Economy</option><option value="premium">Premium Economy</option><option value="business">Business Class</option><option value="first">First Class</option></select>
+            <div><label>Abflug-Code (z.B. FRA):</label><input type="text" placeholder="FRA" id="from-code" maxlength="3" style="text-transform: uppercase;"></div>
+            <div><label>Ziel-Code (z.B. MNL):</label><input type="text" placeholder="MNL" id="to-code" maxlength="3" style="text-transform: uppercase;"></div>
+            <div class="full"><label>Hinflugs-Datum:</label><input type="date" id="flight-date"></div>
+            
+            <div class="full" style="margin-top: 5px;">
+                <label>Wähle dein Portal – Öffnet garantiert ohne Blockade:</label>
+                <div class="portal-buttons">
+                    <a href="#" target="_blank" class="portal-btn google-btn" id="go-google">Google Flights ➔</a>
+                    <a href="#" target="_blank" class="portal-btn skyscanner-btn" id="go-sky">Skyscanner ➔</a>
+                </div>
             </div>
-            <div>
-                <label>Personen:</label>
-                <select id="fl-passengers"><option value="1">1 Person</option><option value="2" selected>2 Personen</option><option value="3">3 Personen</option></select>
-            </div>
-            <div>
-                <label>Gepäck:</label>
-                <select id="fl-baggage"><option>Handgepäck</option><option>20 KG Aufgabegepäck</option></select>
-            </div>
-            <div>
-                <label>Stopps:</label>
-                <select id="fl-stops"><option value="0">Direct</option><option value="1">Max. 1 Stopp</option></select>
-            </div>
-            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai" id="fl-stop-location" list="airports-complete"></div>
-            <div class="full"><label>Ticketpreis (€):</label><input type="number" placeholder="800" id="fl-price"></div>
-            <div class="full"><button class="btn fl-btn" id="btn-search-flights">Blau - Flug-Suche starten</button></div>
         </div>
     </div>
 </div>
 
 <script>
-    var d1 = document.getElementById('fl-date1');
-    var d2 = document.getElementById('fl-date2');
-    var ow = document.getElementById('fl-oneway');
+    var fCode = document.getElementById('from-code');
+    var tCode = document.getElementById('to-code');
+    var fDate = document.getElementById('flight-date');
+    
+    var gLink = document.getElementById('go-google');
+    var sLink = document.getElementById('go-sky');
 
-    if (d1 && d2) {
-        d1.value = "2026-11-15"; 
-        d2.value = "2026-11-25";
-        
-        var checkDates = function() {
-            if (ow && ow.checked) return;
-            if (d1.value && d2.value && d2.value < d1.value) {
-                d2.classList.add('date-error'); 
-                d2.value = "";
-                alert("Der Rückflug kann nicht vor dem Hinflug liegen!");
-            } else { 
-                d2.classList.remove('date-error'); 
-            }
-        };
-        d1.addEventListener('change', checkDates); 
-        d2.addEventListener('change', checkDates);
-    }
+    // Standarddatum setzen (15.11.2026)
+    fDate.value = "2026-11-15";
 
-    if (ow && d2) {
-        ow.addEventListener('change', function() {
-            if (this.checked) { 
-                d2.disabled = true; 
-                d2.value = ""; 
-                d2.classList.remove('date-error'); 
-            } else { 
-                d2.disabled = false; 
-                d2.value = "2026-11-25"; 
-            }
-        });
-    }
+    function updateLinks() {
+        var from = fCode.value.toUpperCase().trim();
+        var to = tCode.value.toUpperCase().trim();
+        var date = fDate.value;
 
-    document.getElementById('btn-search-flights').addEventListener('click', function() {
-        var fromInput = document.getElementById('fl-from').value;
-        var toInput = document.getElementById('fl-to').value;
-        var lc = document.getElementById('fl-lowcost').checked;
-
-        var extractCode = function(text) {
-            var match = text.match(/\(([^)]+)\)/);
-            return match ? match[1] : text;
-        };
-
-        var fC = extractCode(fromInput).toUpperCase().trim();
-        var tC = extractCode(toInput).toUpperCase().trim();
-
-        if (fC.length !== 3 || tC.length !== 3) {
-            alert("Bitte wähle Flughäfen aus der Vorschlagsliste aus (z.B. Frankfurt (FRA))!");
-            return;
-        }
-
-        var gQ = "flights from " + fC + " to " + tC + " on " + d1.value;
-        if (!ow.checked && d2.value) { gQ += " return " + d2.value; } else { gQ += " one way"; }
-        window.open("https://google.com" + encodeURIComponent(gQ) + "&hl=de", "_blank");
-
-        var dDate = d1.value.replace(/-/g, '').substring(2);
-        var skyscannerUrl = "https://skyscanner.de" + fC.toLowerCase() + "/" + tC.toLowerCase() + "/" + dDate;
-        if (!ow.checked && d2.value) {
-            var rDate = d2.value.replace(/-/g, '').substring(2);
-            skyscannerUrl += "/" + rDate + "/?adults=1&rtn=1&language=de";
+        if(from.length === 3 && to.length === 3 && date) {
+            // Google Flights Link aktualisieren
+            var query = "flights from " + from + " to " + to + " on " + date + " one way";
+            gLink.href = "https://google.com" + encodeURIComponent(googleQuery) + "&hl=de";
+            
+            // Skyscanner Link aktualisieren
+            var shortDate = date.replace(/-/g, '').substring(2); // Macht "261115"
+            sLink.href = "https://skyscanner.de" + from.toLowerCase() + "/" + to.toLowerCase() + "/" + shortDate + "/?adults=1&rtn=0&language=de";
         } else {
-            skyscannerUrl += "/?adults=1&rtn=0&language=de";
+            gLink.href = "#";
+            sLink.href = "#";
         }
-        window.open(skyscannerUrl, '_blank');
+    }
 
-        if (lc) {
-            window.open("https://cebupacificair.com", "_blank");
-            window.open("https://trip.com", "_blank");
-        }
-    });
+    fCode.addEventListener('input', updateLinks);
+    tCode.addEventListener('input', updateLinks);
+    fDate.addEventListener('change', updateLinks);
+    updateLinks();
 </script>
 </body>
 </html>
