@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - MASTER FINAL VALUE</title>
+    <title>✈️ Reisekonfiguration PRO - BERLIN RETURN</title>
     <style>
         :root { --primary: #1e40af; --bg: #f0f4f8; --card-bg: #ffffff; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: #1e293b; padding: 20px; margin: 0; }
@@ -35,6 +35,7 @@
     <h1>✈️ Reisekonfiguration PRO</h1>
     
     <datalist id="airports-complete">
+        <option value="Berlin (BER)"></option>
         <option value="Frankfurt (FRA)"></option>
         <option value="Manila (MNL)"></option>
         <option value="Cebu (CEB)"></option>
@@ -44,11 +45,11 @@
     </datalist>
     
     <form action="https://google.com" method="get" target="_blank" class="card" id="flightForm">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary);">[VERSION 2026 - MASTER FINAL VALUE]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary);">[VERSION 2026 - BERLIN RETURN]</span></div>
         <div class="grid">
             <input type="hidden" name="tbm" id="hidden-tbm" value="">
             
-            <div><label>Abflugort:</label><input type="text" placeholder="z.B. FRA" id="fl-from" list="airports-complete" required oninput="syncQuery()"></div>
+            <div><label>Abflugort:</label><input type="text" placeholder="z.B. BER" id="fl-from" list="airports-complete" required oninput="syncQuery()"></div>
             <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" id="fl-to" list="airports-complete" required oninput="syncQuery()"></div>
             <div><label>Hinflug:</label><input type="date" id="fl-date1" onchange="syncQuery()"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" onchange="syncQuery()"></div>
@@ -74,7 +75,6 @@
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" id="fl-stop-location" list="airports-complete" oninput="syncQuery()"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" id="fl-from2" list="airports-complete"></div>
             
-            <!-- Preisfelder wurden hier sauber auf 0 initialisiert -->
             <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" id="fl-price2" value="0"></div>
             <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" id="fl-price" value="0"></div>
             
@@ -101,7 +101,6 @@
     var d1 = document.getElementById('fl-date1'), d2 = document.getElementById('return-box'), ow = document.getElementById('ow-checkbox');
     var f1 = document.getElementById('fl-from'), t1 = document.getElementById('fl-to'), pSel = document.getElementById('portal-selector'), form = document.getElementById('flightForm');
     
-    // Gültige Standarddaten für 2026 fest hinterlegt
     d1.value = "2026-12-18"; d2.value = "2026-12-28";
     
     function getIATA(txt) { var m = txt.match(/\(([^)]+)\)/); return m ? m.toUpperCase().trim() : txt.toUpperCase().trim(); }
@@ -119,3 +118,4 @@
     syncQuery();
 </script>
 </body>
+</html>
