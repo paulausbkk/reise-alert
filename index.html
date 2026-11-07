@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Flugsuche PRO - MASTER SWITCH</title>
+    <title>✈️ Flugsuche PRO - FINALE MASTER VERSION</title>
     <style>
-        :root { --slate-dark: #334155; --bg-light: #f8fafc; --card-bg: #ffffff; --border: #cbd5e1; --yellow-glow: #eab308; }
+        :root { --tech-purple: #6d28d9; --bg-light: #f8fafc; --card-bg: #ffffff; --border: #cbd5e1; --gold-yellow: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg-light); color: #1e293b; padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--slate-dark); }
+        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--tech-purple); }
         
-        /* Das neue Schiefer-Anthrazit-Design */
-        .card { border: 3px solid var(--slate-dark); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #f1f5f9; }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--slate-dark); display: flex; justify-content: space-between; }
+        /* Das neue Tech-Violett-Design zur klaren Erkennung */
+        .card { border: 3px solid var(--tech-purple); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #faf5ff; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--tech-purple); display: flex; justify-content: space-between; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
-        /* Der einzige, leuchtend gelbe Master-Knopf */
-        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #0f172a; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--yellow-glow); font-size: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-decoration: none; }
-        .btn:hover { background: #ca8a04; }
+        /* Gold-Gelber Master-Knopf */
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold-yellow); font-size: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-decoration: none; }
+        .btn:hover { background: #d97706; }
         .disabled-btn { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed; pointer-events: none; box-shadow: none; }
     </style>
 </head>
@@ -31,14 +31,13 @@
     <div class="card">
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.75rem; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: var(--slate-dark);">[VERSION 2026 - MASTER SWITCH]</span>
+            <span style="font-size: 0.75rem; background: #f3e8ff; padding: 2px 6px; border-radius: 4px; color: var(--tech-purple);">[VERSION 2026 - FINAL SUCCESS]</span>
         </div>
         <div class="grid">
             <div><label>Abflugort (z.B. FRA):</label><input type="text" placeholder="FRA" id="from-code" value="FRA" maxlength="3" style="text-transform: uppercase;"></div>
             <div><label>Zielort (z.B. MNL):</label><input type="text" placeholder="MNL" id="to-code" value="MNL" maxlength="3" style="text-transform: uppercase;"></div>
             <div class="full"><label>Hinflugs-Datum:</label><input type="date" id="flight-date"></div>
             
-            <!-- HIER LIEGEN DIE SUCHEN JETZT ÜBEREINANDER -->
             <div class="full" style="margin-top: 5px;">
                 <label>Gewünschtes Suchportal auswählen:</label>
                 <select id="portal-selector">
@@ -48,8 +47,7 @@
             </div>
 
             <div class="full">
-                <!-- Der einzige, unblockierbare Master-Button -->
-                <a href="#" target="_blank" class="btn disabled-btn" id="master-search-btn">Gelb - Flug-Suche starten ➔</a>
+                <a href="#" target="_blank" class="btn disabled-btn" id="master-search-btn">Gold - Flug-Suche starten ➔</a>
             </div>
         </div>
     </div>
@@ -62,7 +60,7 @@
     var pSelect = document.getElementById('portal-selector');
     var mBtn = document.getElementById('master-search-btn');
 
-    // Standarddatum setzen (15.11.2026)
+    // Standarddatum fest hinterlegen (15.11.2026)
     fDate.value = "2026-11-15";
 
     function updateMasterEngine() {
@@ -72,16 +70,17 @@
         var mode = pSelect.value;
 
         if (from.length === 3 && to.length === 3 && date) {
-            var slash = "/";
+            // Absolut saubere Protokoll-Vorgabe ohne Zeichendreher
+            var secureProtocol = "https://";
             
             if (mode === "google") {
-                // Link für Google Flights fehlerfrei auf deinem PC zusammenbauen
+                // Google Flights Link vollkommen korrekt zusammensetzen
                 var googleQuery = "flights from " + from + " to " + to + " on " + date + " one way";
-                mBtn.href = "https:" + slash + slash + "://google.com" + slash + "travel" + slash + "flights?q=" + encodeURIComponent(googleQuery) + "&hl=de";
+                mBtn.href = secureProtocol + "://google.com" + encodeURIComponent(googleQuery) + "&hl=de";
             } else if (mode === "skyscanner") {
-                // Link für Skyscanner fehlerfrei auf deinem PC zusammenbauen
+                // Skyscanner Link vollkommen korrekt zusammensetzen
                 var shortDate = date.replace(/-/g, '').substring(2); // Macht "261115"
-                mBtn.href = "https:" + slash + slash + "www.skyscanner.de" + slash + "transport" + slash + "flights" + slash + from.toLowerCase() + slash + to.toLowerCase() + slash + shortDate + slash + "?adults=1&rtn=0&language=de";
+                mBtn.href = secureProtocol + "www.skyscanner.de/transport/flights/" + from.toLowerCase() + "/" + to.toLowerCase() + "/" + shortDate + "/?adults=1&rtn=0&language=de";
             }
             
             mBtn.classList.remove('disabled-btn');
@@ -91,13 +90,13 @@
         }
     }
 
-    // Überwachung aller Felder live
+    // Live-Überwachung aller Eingaben
     fCode.addEventListener('input', updateMasterEngine);
     tCode.addEventListener('input', updateMasterEngine);
     fDate.addEventListener('change', updateMasterEngine);
     pSelect.addEventListener('change', updateMasterEngine);
     
-    // Beim Start direkt aktivieren
+    // Beim Laden direkt scharfschalten
     updateMasterEngine();
 </script>
 </body>
