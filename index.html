@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - HARD LOCK</title>
+    <title>✈️ Reisekonfiguration PRO - FINAL BLOCK</title>
     <style>
-        :root { --primary-green: #059669; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --lowcost-border: #eab308; --active-green: #22c55e; --gold-yellow: #f59e0b; }
+        :root { --rubin-red: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --lowcost-border: #eab308; --active-green: #22c55e; --gold-yellow: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--primary-green); }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--primary-green); background: #ecfdf5; }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--primary-green); display: flex; justify-content: space-between; }
+        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--rubin-red); }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--rubin-red); background: #fef2f2; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--rubin-red); display: flex; justify-content: space-between; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         input:disabled, select:disabled { background-color: #cbd5e1 !important; color: #64748b !important; cursor: not-allowed; border: 1px solid #94a3b8; }
+        
+        /* Absolutes Warnsignal bei falschem Rückflugdatum */
+        input.date-error { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; font-weight: bold; border: 2px solid #ef4444 !important; }
+        
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
@@ -41,7 +45,7 @@
     <div class="card">
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46;">[VERSION 2026 - HARD LOCK]</span>
+            <span style="font-size: 0.75rem; background: #fee2e2; padding: 2px 6px; border-radius: 4px; color: var(--rubin-red);">[VERSION 2026 - FINAL BLOCK]</span>
         </div>
         <div class="grid">
             <div><label>Abflugort:</label><input type="text" placeholder="z.B. Frankfurt" id="fl-from" list="airports-complete"></div>
@@ -111,24 +115,15 @@
     d1.value = "2026-11-15"; 
     d2.value = "2026-11-25";
 
-    // --- ENTSCHEIDENDE NATIVER KALENDER-LOCK ---
-    function applyHardDateLock() {
+    // Absolut wasserdichte Datums-Validierung
+    function validateFlightDates() {
         if (ow.checked) {
             d2.disabled = true;
             d2.value = "";
-            return;
+            d2.classList.remove('date-error');
+            return true; // Im One-Way-Modus gibt es keinen Datumsfehler
         }
         
         d2.disabled = false;
+        
         if (d1.value) {
-            // Zwingt das Rückflug-Feld, das Hinflug-Datum als absolutes Minimum zu nehmen!
-            d2.min = d1.value;
-            
-            // Wenn das Rückflug-Datum durch das Verschieben des Hinflugs ungültig wird, korrigieren wir es automatisch!
-            if (d2.value && d2.value < d1.value) {
-                d2.value = d1.value;
-            }
-        }
-    }
-
-    d1.addEventListener('change', function() {
