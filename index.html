@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO</title>
+    <title>✈️ Reisekonfiguration PRO - KIWI EXPANSION</title>
     <style>
-        :root { --primary: #1e40af; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --gold: #f59e0b; }
+        :root { --primary-kiwi: #00a680; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--primary); }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--primary); background: #f0f9ff; }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--primary); display: flex; justify-content: space-between; }
+        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--primary-kiwi); }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--primary-kiwi); background: #f0fdfa; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--primary-kiwi); display: flex; justify-content: space-between; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
@@ -34,7 +34,7 @@
         <option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option>
     </datalist>
     <div class="card">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--primary);">[VERSION 2026 - REPAIR CORE]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #ccfbf1; padding: 2px 6px; border-radius: 4px; color: var(--primary-kiwi);">[VERSION 2026 - KIWI EXPANSION]</span></div>
         <div class="grid">
             <div><label>Abflugort:</label><input type="text" placeholder="z.B. FRA" id="fl-from" list="airports-complete"></div>
             <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" id="fl-to" list="airports-complete"></div>
@@ -54,7 +54,13 @@
                 <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" id="fl-max-time" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.'">
             </div>
             <div class="full" style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 15px;">
-                <label>Bevorzugtes Suchportal:</label><select id="portal-selector"><option value="google">Google Flights</option><option value="skyscanner">Skyscanner</option></select>
+                <label>Bevorzugtes Suchportal:</label>
+                <!-- HIER IST KIWI JETZT ALS DRITTE OPTION INTEGRIERT -->
+                <select id="portal-selector">
+                    <option value="google">Google Flights</option>
+                    <option value="skyscanner">Skyscanner</option>
+                    <option value="kiwi">Kiwi.com (Virtual Interlining)</option>
+                </select>
             </div>
             <div class="full"><a href="#" target="_blank" class="btn disabled-btn" id="btn-search-flights">Gold - Flug-Suche starten</a></div>
         </div>
@@ -69,7 +75,7 @@
         else { d2.disabled = false; if (d1.value) { d2.min = d1.value; if (!d2.value || d2.value < d1.value) d2.value = d1.value; } }
         buildLink();
     }
-    function getIATA(txt) { var m = txt.match(/\(([^)]+)\)/); return m ? m[1].toUpperCase() : txt.toUpperCase().trim(); }
+    function getIATA(txt) { var m = txt.match(/\(([^)]+)\)/); return m ? m.toUpperCase() : txt.toUpperCase().trim(); }
     function buildLink() {
         var from = getIATA(f1.value), to = getIATA(t1.value);
         if (from.length === 3 && to.length === 3 && d1.value) {
@@ -79,12 +85,17 @@
                 if (!ow.checked && d2.value) q += " return " + d2.value; else q += " one way";
                 q += " class:" + document.getElementById('fl-cabin').value + " passengers:" + document.getElementById('fl-passengers').value;
                 mBtn.href = "https:" + sl + sl + "://google.com" + sl + "travel" + sl + "flights?q=" + encodeURIComponent(q) + "&hl=de";
-            } else {
+            } else if (mode === "skyscanner") {
                 var sD1 = d1.value.replace(/-/g, '').substring(2);
                 var url = "https:" + sl + sl + "www.skyscanner.de" + sl + "transport" + sl + "flights" + sl + from.toLowerCase() + sl + to.toLowerCase() + sl + sD1;
                 if (!ow.checked && d2.value) { url += sl + d2.value.replace(/-/g, '').substring(2) + sl + "?adults=" + document.getElementById('fl-passengers').value + "&rtn=1&language=de"; }
                 else { url += sl + "?adults=" + document.getElementById('fl-passengers').value + "&rtn=0&language=de"; }
                 mBtn.href = url;
+            } else if (mode === "kiwi") {
+                // DER COU-SCHRITT FÜR KIWI: Übergibt Abflug, Ziel, Hinflug und optionalen Rückflug fehlerfrei
+                var kiwiUrl = "https:" + sl + sl + "://kiwi.com" + sl + "de" + sl + "search" + sl + "tiles" + sl + from.toLowerCase() + sl + to.toLowerCase() + sl + d1.value;
+                if (!ow.checked && d2.value) { kiwiUrl += sl + d2.value; }
+                mBtn.href = kiwiUrl + "?passengers=" + document.getElementById('fl-passengers').value;
             }
             mBtn.classList.remove('disabled-btn');
         } else { mBtn.href = "#"; mBtn.classList.add('disabled-btn'); }
