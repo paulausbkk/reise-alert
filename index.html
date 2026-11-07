@@ -16,7 +16,6 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
-        /* Der neue, unblockierbare Master-Button */
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--primary); font-size: 1rem; text-decoration: none; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn:hover { opacity: 0.9; }
         .disabled-btn { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed; pointer-events: none; box-shadow: none; }
@@ -34,7 +33,6 @@
             <div class="full"><label>Hinflugs-Datum:</label><input type="date" id="flight-date"></div>
             
             <div class="full">
-                <!-- Ein einziger, stabiler Master-Link, der als Button getarnt ist -->
                 <a href="#" target="_blank" class="btn disabled-btn" id="master-search-btn">Blau - Flug-Suche starten</a>
             </div>
         </div>
@@ -56,10 +54,9 @@
         var date = fDate.value;
 
         if (from.length === 3 && to.length === 3 && date) {
-            // Wir bauen eine Google-Suchanfrage, die Google Flights sofort versteht und ausführt
             var searchQuery = "google flights from " + from + " to " + to + " on " + date;
             
-            // Der Link leitet dich direkt in die fertige Suche weiter, ohne Pop-up-Sperre
+            // HIER WAR DER FEHLER: Jetzt mit "?q=" damit Google die Suche auch ausführt!
             mBtn.href = "https://google.com" + encodeURIComponent(searchQuery);
             mBtn.classList.remove('disabled-btn');
         } else {
@@ -72,7 +69,6 @@
     tCode.addEventListener('input', updateMasterLink);
     fDate.addEventListener('change', updateMasterLink);
     
-    // Initialisierung beim Laden
     updateMasterLink();
 </script>
 </body>
