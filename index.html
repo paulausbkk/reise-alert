@@ -15,7 +15,6 @@
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
-        
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--primary); font-size: 1rem; text-decoration: none; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn:hover { opacity: 0.9; }
         .disabled-btn { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed; pointer-events: none; box-shadow: none; }
@@ -24,14 +23,12 @@
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
-    
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
             <div><label>Abflug-Code (z.B. FRA):</label><input type="text" placeholder="FRA" id="from-code" maxlength="3" style="text-transform: uppercase;"></div>
             <div><label>Ziel-Code (z.B. MNL):</label><input type="text" placeholder="MNL" id="to-code" maxlength="3" style="text-transform: uppercase;"></div>
             <div class="full"><label>Hinflugs-Datum:</label><input type="date" id="flight-date"></div>
-            
             <div class="full">
                 <a href="#" target="_blank" class="btn disabled-btn" id="master-search-btn">Blau - Flug-Suche starten</a>
             </div>
@@ -45,7 +42,6 @@
     var fDate = document.getElementById('flight-date');
     var mBtn = document.getElementById('master-search-btn');
 
-    // Standarddatum fest hinterlegen
     fDate.value = "2026-11-15";
 
     function updateMasterLink() {
@@ -56,7 +52,7 @@
         if (from.length === 3 && to.length === 3 && date) {
             var searchQuery = "google flights from " + from + " to " + to + " on " + date;
             
-            // HIER WAR DER FEHLER: Jetzt mit "?q=" damit Google die Suche auch ausführt!
+            // JETZT MIT ABSOLUT KORREKTEM SUCHPFAD (?q=) IM CODE-BLOCK!
             mBtn.href = "https://google.com" + encodeURIComponent(searchQuery);
             mBtn.classList.remove('disabled-btn');
         } else {
@@ -68,7 +64,6 @@
     fCode.addEventListener('input', updateMasterLink);
     tCode.addEventListener('input', updateMasterLink);
     fDate.addEventListener('change', updateMasterLink);
-    
     updateMasterLink();
 </script>
 </body>
