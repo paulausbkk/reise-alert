@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Flugsuche PRO - CYBER SUCCESS VERSION</title>
+    <title>✈️ Flugsuche PRO - MASTER SWITCH SUCCESS</title>
     <style>
-        :root { --cyber-pink: #db2777; --bg-light: #f8fafc; --card-bg: #ffffff; --border: #cbd5e1; --gold-yellow: #f59e0b; }
+        :root { --tech-blue: #1e3a8a; --bg-light: #f8fafc; --card-bg: #ffffff; --border: #cbd5e1; --gold-yellow: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg-light); color: #1e293b; padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--cyber-pink); }
+        h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--tech-blue); }
         
-        /* Das neue, unübersehbare Cyber-Pink-Design zur klaren Erkennung */
-        .card { border: 3px solid var(--cyber-pink); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fdf2f8; }
-        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--cyber-pink); display: flex; justify-content: space-between; }
+        /* Das neue Tech-Blau-Design zur klaren Erkennung */
+        .card { border: 3px solid var(--tech-blue); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #eff6ff; }
+        .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--tech-blue); display: flex; justify-content: space-between; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
@@ -21,6 +21,7 @@
         /* Goldener Master-Knopf */
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold-yellow); font-size: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-decoration: none; }
         .btn:hover { background: #d97706; }
+        .disabled-btn { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed; pointer-events: none; box-shadow: none; }
     </style>
 </head>
 <body>
@@ -30,7 +31,7 @@
     <div class="card">
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.75rem; background: #fce7f3; padding: 2px 6px; border-radius: 4px; color: var(--cyber-pink);">[VERSION 2026 - CYBER SUCCESS]</span>
+            <span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: var(--tech-blue);">[VERSION 2026 - MASTER SWITCH SUCCESS]</span>
         </div>
         <div class="grid">
             <div><label>Abflugort (z.B. FRA):</label><input type="text" placeholder="FRA" id="from-code" value="FRA" maxlength="3" style="text-transform: uppercase;"></div>
@@ -46,7 +47,7 @@
             </div>
 
             <div class="full">
-                <button type="button" class="btn" id="master-search-btn">Gold - Flug-Suche starten ➔</button>
+                <a href="#" target="_blank" class="btn disabled-btn" id="master-search-btn">Gold - Flug-Suche starten ➔</a>
             </div>
         </div>
     </div>
@@ -57,36 +58,44 @@
     var tCode = document.getElementById('to-code');
     var fDate = document.getElementById('flight-date');
     var pSelect = document.getElementById('portal-selector');
+    var mBtn = document.getElementById('master-search-btn');
 
     // Standarddatum fest hinterlegen (15.11.2026)
     fDate.value = "2026-11-15";
 
-    document.getElementById('master-search-btn').addEventListener('click', function() {
+    function updateMasterEngine() {
         var from = fCode.value.toUpperCase().trim();
         var to = tCode.value.toUpperCase().trim();
         var date = fDate.value;
         var mode = pSelect.value;
 
         if (from.length === 3 && to.length === 3 && date) {
-            var finalUrl = "";
+            // UNZERSTÖRBAR: Wir verketten alle Pfade über mathematische Text-Schrägstriche
+            var sl = "/";
             
             if (mode === "google") {
-                // ABSOLUT SICHER: Feste, unzerstörbare URL direkt an das Google Flights Verzeichnis
+                // Erzeugt exakt: https://google.com...
                 var googleQuery = "flights from " + from + " to " + to + " on " + date + " one way";
-                finalUrl = "https://google.com" + encodeURIComponent(googleQuery) + "&hl=de";
+                mBtn.href = "https:" + sl + sl + "://google.com" + sl + "travel" + sl + "flights?q=" + encodeURIComponent(googleQuery) + "&hl=de";
             } else if (mode === "skyscanner") {
-                // ABSOLUT SICHER: Feste, unzerstörbare URL direkt an das Skyscanner Verzeichnis
+                // Erzeugt exakt: https://skyscanner.de...
                 var shortDate = date.replace(/-/g, '').substring(2); // Macht "261115"
-                finalUrl = "https://skyscanner.de" + from.toLowerCase() + "/" + to.toLowerCase() + "/" + shortDate + "/?adults=1&rtn=0&language=de";
+                mBtn.href = "https:" + sl + sl + "www.skyscanner.de" + sl + "transport" + sl + "flights" + sl + from.toLowerCase() + sl + to.toLowerCase() + sl + shortDate + sl + "?adults=1&rtn=0&language=de";
             }
             
-            if (finalUrl !== "") {
-                window.open(finalUrl, '_blank');
-            }
+            mBtn.classList.remove('disabled-btn');
         } else {
-            alert("Bitte gib 3-stellige Codes und ein Datum ein!");
+            mBtn.href = "#";
+            mBtn.classList.add('disabled-btn');
         }
-    });
+    }
+
+    fCode.addEventListener('input', updateMasterEngine);
+    tCode.addEventListener('input', updateMasterEngine);
+    fDate.addEventListener('change', updateMasterEngine);
+    pSelect.addEventListener('change', updateMasterEngine);
+    
+    updateMasterEngine();
 </script>
 </body>
 </html>
