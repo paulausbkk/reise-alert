@@ -17,8 +17,8 @@
         .fl .title { color: var(--flight); } .up .title { color: var(--upgrade); } .ho .title { color: var(--hotel); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
-        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; text-transform: none !important; }
-        input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; text-transform: none !important; font-variant: normal !important; background-color: #ffffff; font-size: 0.9rem; font-family: sans-serif; }
+        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
+        input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; font-family: sans-serif; }
         input:disabled, select:disabled { background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; border-color: #cbd5e1; }
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid var(--lowcost-border); }
@@ -30,13 +30,13 @@
         input:checked + .slider:before { transform: translateX(18px); }
         .btn { width: 100%; padding: 12px; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; background: var(--primary); font-size: 1rem; }
         .btn.fl-btn { background: var(--flight); }
+        .btn.ho-btn { background: var(--hotel); }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- VOLLSTÄNDIGE FLUGHAFENLISTE -->
     <datalist id="airports-complete">
         <option value="Abu Dhabi (AUH)"></option>
         <option value="Antalya (AYT)"></option>
@@ -71,7 +71,7 @@
         <option value="Zürich (ZRH)"></option>
     </datalist>
 
-    <!-- SEKTION 1: Flug-Parameter (Komplett wiederhergestellt) -->
+    <!-- SEKTION 1: Flug-Parameter -->
     <div class="card fl">
         <div class="title">✈️ Sektion 1: Flug-Parameter</div>
         <div class="grid">
@@ -83,7 +83,6 @@
                 <label>Zielort (Stadt oder Code):</label>
                 <input type="text" placeholder="z.B. Manila" id="fl-to" list="airports-complete">
             </div>
-
             <div><label>Hinflug:</label><input type="date" id="fl-date1"></div>
             <div><label>Rückflug:</label><input type="date" id="fl-date2"></div>
             
@@ -142,17 +141,14 @@
                     <option value="2">Max. 2 Stopps</option>
                 </select>
             </div>
-
-            <div>
+            <div class="full">
                 <label>Ort des Stopps (Stadt oder Code):</label>
                 <input type="text" placeholder="z.B. Dubai" id="fl-stop-location" list="airports-complete">
             </div>
-
-            <div>
+            <div class="full">
                 <label>Ticketpreis (€):</label>
                 <input type="number" placeholder="800" id="fl-price">
             </div>
-
             <div class="full">
                 <button class="btn fl-btn" id="btn-search-flights">Blau - Flug-Suche starten</button>
             </div>
@@ -196,4 +192,6 @@
 
     <!-- SEKTION 3: Hotel-Optionen -->
     <div class="card ho">
-
+        <div class="title">🏨 Sektion 3: Hotel-Optionen</div>
+        <div class="grid">
+            <div class="full">
