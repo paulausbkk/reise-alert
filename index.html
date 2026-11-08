@@ -13,7 +13,7 @@
             --border: #cbd5e1; 
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
-            --purple-box: #6d28d9; /* Neue Kastenfarbe für diese Version */
+            --orange-box: #ea580c; /* Neue Kastenfarbe für diese Version */
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 650px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -66,30 +66,36 @@
     
     <form action="https://google.com" method="get" target="_blank" class="card">
 
-        <!-- 🔒 BLOCK 1: DER SPERRBARE KERN (DEINE SEKTION 1) -->
+        <!-- 🔒 BLOCK 1: DER SPERRBARE KERN -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.75rem; background: var(--purple-box); padding: 3px 8px; border-radius: 4px; color: #ffffff; border: 1px solid #5b21b6; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 14:33 UHR]
+            <span style="font-size: 0.75rem; background: var(--orange-box); padding: 3px 8px; border-radius: 4px; color: #ffffff; border: 1px solid #c2410c; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                [🔒 LOCKED CORE - 08.11.2026 - 14:45 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <!-- FLUGHÄFEN NACH GANZ OBEN GEZOGEN -->
             <div><label>Abflugort (IATA):</label><input type="text" name="q" placeholder="z.B. FRA" list="airports" required></div>
             <div><label>Zielort (IATA):</label><input type="text" name="q" placeholder="z.B. BKK" list="airports" required></div>
 
-            <div class="section-divider">📅 Reisedaten & Modus</div>
-            <div class="full" style="margin-bottom: 3px;">
-                <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
-            </div>
-            
-            <!-- KALENDERFELD MIT STRATEGISCHER MIN-SAGE GEGEN RÜCKWIRKUNGEN -->
+            <div class="section-divider">📅 Reisedaten & Personen</div>
             <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="q" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
             <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" name="q" value="2026-12-28" min="2026-12-18"></div>
             
+            <div>
+                <label>Anzahl Passagiere:</label>
+                <select name="q">
+                    <option value="1 Person" selected>1 Person</option>
+                    <option value="2 Personen">2 Personen</option>
+                    <option value="3 Personen">3 Personen</option>
+                    <option value="4 Personen">4 Personen</option>
+                </select>
+            </div>
+            <!-- COMPACT ONE-WAY SCHALTER HIER IM CORES-GRID NEBEN DEN PERSONEN -->
+            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
+
             <div class="section-divider">🧳 Gepäck & Logistik</div>
             <div class="full">
                 <label>Gepäck-Optionen:</label>
@@ -112,7 +118,7 @@
                 </select>
             </div>
             <div class="range-container">
-                <label style="margin: 0;">Max. Zeit:</label>
+                <label style="margin: 0;">Max. Reisezeit:</label>
                 <input type="range" name="q" min="2" max="48" value="24">
             </div>
 
@@ -125,16 +131,6 @@
                     <option value="Premium Economy">Premium Economy</option>
                     <option value="Business Class">Business Class</option>
                     <option value="First Class">First Class</option>
-                </select>
-            </div>
-            
-            <div class="full">
-                <label>Anzahl Passagiere:</label>
-                <select name="q">
-                    <option value="1 Person" selected>1 Person</option>
-                    <option value="2 Personen">2 Personen</option>
-                    <option value="3 Personen">3 Personen</option>
-                    <option value="4 Personen">4 Personen</option>
                 </select>
             </div>
         </div>
