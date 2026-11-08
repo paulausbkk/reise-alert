@@ -34,21 +34,29 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- WICHTIG: Nutze IATA-Codes (wie FRA, BER, BKK), damit Google Flights die Parameter direkt liest -->
+    <!-- Die Datalist schlägt dem Nutzer nun direkt die korrekte, kombinierte Suchphrase vor -->
     <datalist id="airports-complete">
-        <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
+        <option value="Flug von BER nach BKK"></option>
+        <option value="Flug von FRA nach MNL"></option>
+        <option value="Flug von BER nach CEB"></option>
+        <option value="Flug von FRA nach SIN"></option>
     </datalist>
     
-    <!-- PURE HTML DIRECT: Sendet die Daten rein mechanisch an die Google Flights Verarbeitung -->
+    <!-- UNZERSTÖRBARER INTERFACE-PFAD: Sendet rein nativ ohne Skripte an Google Search -->
     <form action="https://google.com" method="get" target="_blank" class="card">
+        
+        <!-- Dieser offizielle Parameter zwingt Google, die deutsche Benutzeroberfläche zu laden -->
+        <input type="hidden" name="hl" value="de">
 
-        <!-- PRÄZISER KONTROLL-ZEITSTEMPEL -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #1e293b; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #0f172a;">[08.11.2026 - 09:28 UHR - PURE HTML CORE]</span></div>
+        <!-- VISUELLE PRÄZISE ZEIT-KONTROLLE -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:31 UHR - FLIGHTS INTERFACE]</span></div>
         <div class="grid">
             
-            <!-- Die name-Attribute übergeben Abflug (f) und Ziel (t) fehlerfrei direkt an Google Flights -->
-            <div><label>Abflugort (IATA):</label><input type="text" name="f" placeholder="z.B. FRA" list="airports-complete" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" name="t" placeholder="z.B. BKK" list="airports-complete"></div>
+            <!-- Das 'name="q"' Feld übergibt die gesamte Kombination unzerstörbar als eine Suchzeile -->
+            <div class="full">
+                <label>Gewünschte Flugstrecke (Auswahl oder freie Eingabe):</label>
+                <input type="text" name="q" value="Flug von BER nach BKK" list="airports-complete" required>
+            </div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
@@ -72,7 +80,7 @@
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB"></div>
             
-            <!-- Budget-Felder ohne name-Attribut übertragen keine störenden Daten -->
+            <!-- Budget-Felder ohne name-Attribut stören die Übergabe nicht -->
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
@@ -81,7 +89,6 @@
             </div>
             
             <div class="full">
-                <!-- Absolut unzerstörbarer nativer HTML-Submit Button – reagiert IMMER -->
                 <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
