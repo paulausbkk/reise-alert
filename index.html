@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ Reisekonfiguration PRO - PURE HTML CORE</title>
     <style>
-        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; --sky-blue: #0077b6; }
+        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; --sky-blue: #0077b6; --kiwi-green: #00a699; --trip-orange: #ff7f00; --kayak-orange: #ff6600; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--rubin); }
@@ -29,17 +29,21 @@
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
         /* SKRIPTFREIE BUTTONS-STRUKTUR */
-        .btn-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-        .btn-search { display: flex; align-items: center; justify-content: center; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .btn-google { background: var(--gold); }
-        .btn-skyscanner { background: var(--sky-blue); }
+        .action-box { display: flex; align-items: flex-end; height: 38px; }
+        .btn-search { display: none; align-items: center; justify-content: center; width: 100%; height: 38px; color: #ffffff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1); box-sizing: border-box; }
+        
+        /* UNZERSTÖRBARE CSS-WEICHE: Blendet den exakt passenden Button je nach Dropdown-Auswahl ein */
+        body:has(#engine-selector option[value="google"]:checked) #btn-google { display: flex; background: var(--gold); }
+        body:has(#engine-selector option[value="skyscanner"]:checked) #btn-skyscanner { display: flex; background: var(--sky-blue); }
+        body:has(#engine-selector option[value="kayak"]:checked) #btn-kayak { display: flex; background: var(--kayak-orange); }
+        body:has(#engine-selector option[value="kiwi"]:checked) #btn-kiwi { display: flex; background: var(--kiwi-green); }
+        body:has(#engine-selector option[value="trip"]:checked) #btn-trip { display: flex; background: var(--trip-orange); }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- Die korrekten IATA-Kombinationen für die unblockierbare Volltextsuche -->
     <datalist id="airports-complete">
         <option value="Flug von FRA nach BKK">Frankfurt nach Bangkok</option>
         <option value="Flug von BER nach MNL">Berlin nach Manila</option>
@@ -47,14 +51,13 @@
     </datalist>
     
     <div class="card">
-        <!-- COUPLING CHECK: 100% PURES HTML OHNE JAVASCRIPT -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #1e293b; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #0f172a;">[08.11.2026 - 11:12 UHR - PURE HTML CORE]</span></div>
+        <!-- PRÄZISER ZEITSTEMPEL & ABSOLUTER LOCK -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[08.11.2026 - 11:14 UHR - LOCKED MASTER]</span></div>
         <div class="grid">
             
-            <!-- Die Eingabe nutzt die unblockierbare kombinierte Suchzeile -->
             <div class="full">
-                <label>Flugstrecke (Auswahl oder freie Eingabe):</label>
-                <input type="text" id="main-route-input" value="Flug von FRA nach BKK" list="airports-complete" required>
+                <label>Gewünschte Flugstrecke (z.B. Flug von FRA nach BKK):</label>
+                <input type="text" id="route-display" value="Flug von FRA nach BKK" list="airports-complete" required>
             </div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
@@ -86,25 +89,45 @@
                 <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
             </div>
             
-            <!-- 100 % REINE HTML-WEICHE: Getrennte Formulare unterbinden jeden Scripting-Fehler komplett -->
-            <div class="full btn-container">
-                
-                <!-- Knallhart verdrahteter Google-Button -->
-                <form action="https://google.com" method="get" target="_blank" style="display:contents;">
-                    <button type="submit" class="btn-search btn-google">Google Flights Suche starten</button>
-                    <!-- Trick: Nimmt den Textwert dynamisch über das HTML-Übertragungsfeld mit -->
-                    <input type="hidden" name="q" value="Flug von FRA nach BKK">
-                </form>
-                
-                <!-- Knallhart verdrahteter Skyscanner-Button -->
-                <form action="https://skyscanner.de" method="get" target="_blank" style="display:contents;">
-                    <button type="submit" class="btn-search btn-skyscanner">Skyscanner Suche starten</button>
-                    <input type="hidden" name="q" value="Flug von FRA nach BKK">
-                </form>
-                
+            <!-- REPARIERT: Linke Seite enthält das unzerstörbare Dropdown-Menü -->
+            <div>
+                <label>1. Suchseite wählen:</label>
+                <select id="engine-selector">
+                    <option value="google" selected>Google Flights</option>
+                    <option value="skyscanner">Skyscanner</option>
+                    <option value="kayak">Kayak</option>
+                    <option value="kiwi">Kiwi.com</option>
+                    <option value="trip">Trip.com</option>
+                </select>
             </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>
+            
+            <!-- REPARIERT: Rechte Seite blendet rein über HTML/CSS den passenden, fest beschrifteten Button ein -->
+            <div class="action-box">
+                
+                <!-- Google Formular-Verknüpfung -->
+                <form action="https://google.com" method="get" target="_blank" style="width:100%;">
+                    <input type="hidden" name="tbm" value="fl">
+                    <button type="submit" id="btn-google" class="btn-search" onclick="this.form.q.value = document.getElementById('route-display').value;">Google Flights Suche starten</button>
+                    <input type="hidden" name="q">
+                </form>
+                
+                <!-- Skyscanner Formular-Verknüpfung -->
+                <form action="https://skyscanner.de" method="get" target="_blank" style="width:100%;">
+                    <button type="submit" id="btn-skyscanner" class="btn-search" onclick="this.form.q.value = document.getElementById('route-display').value;">Skyscanner Suche starten</button>
+                    <input type="hidden" name="q">
+                </form>
+                
+                <!-- Kayak Formular-Verknüpfung -->
+                <form action="https://kayak.de" method="get" target="_blank" style="width:100%;">
+                    <button type="submit" id="btn-kayak" class="btn-search">Kayak Suche starten</button>
+                </form>
+                
+                <!-- Kiwi Formular-Verknüpfung -->
+                <form action="https://kiwi.com" method="get" target="_blank" style="width:100%;">
+                    <button type="submit" id="btn-kiwi" class="btn-search">Kiwi.com Suche starten</button>
+                </form>
+                
+                <!-- Trip Formular-Verknüpfung -->
+                <form action="https://trip.com" method="get" target="_blank" style="width:100%;">
+                    <button type="submit" id="btn-trip" class="btn-search">Trip.com Suche starten</button>
+                </form>
