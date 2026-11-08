@@ -14,6 +14,8 @@
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
+            /* AUFFÄLLIGES NEON-ORANGE FÜR UNSEREN NEUSTART */
+            --lock-box-color: #ff4500; 
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
         .container { max-width: 620px; margin: 10px auto; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -49,9 +51,44 @@
         .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); }
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
+        .live-value { color: var(--rubin); font-weight: bold; margin-left: 3px; }
+
+        /* RESPONSIVE BUTTON-REIHE AM ENDE DER ROTEN KARTE */
+        .action-flex-container { display: flex; flex-wrap: wrap; gap: 6px; grid-column: span 2; margin-top: 8px; width: 100%; box-sizing: border-box; }
         
-        /* TRANSIT-BUTTON STYLING */
-        .dual-btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 32px; color: #ffffff; border: 1px solid #d97706; border-radius: 4px; font-weight: bold; cursor: pointer; background: var(--gold); box-sizing: border-box; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .touch-btn { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex: 1; 
+            min-width: 80px; 
+            height: 28px; 
+            color: #ffffff; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            box-sizing: border-box;
+            font-size: 0.72rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.2px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 0 4px;
+            border: 1px solid #d97706;
+            background: var(--gold);
+        }
+        .touch-btn:hover { background: #d97706; }
+        .btn-google { background: #4285f4; border-color: #3367d6; }
+        .btn-google:hover { background: #3367d6; }
+        .btn-skyscanner { background: #007054; border-color: #00523f; }
+        .btn-skyscanner:hover { background: #00523f; }
+        .btn-kayak { background: #ff690f; border-color: #d45205; }
+        .btn-kayak:hover { background: #d45205; }
+        .btn-momondo { background: #84329b; border-color: #641f80; }
+        .btn-momondo:hover { background: #641f80; }
+        .btn-kiwi { background: #00a699; border-color: #008075; }
+        .btn-kiwi:hover { background: #008075; }
+        .btn-trip { background: #2f55d4; border-color: #2444b5; }
+        .btn-trip:hover { background: #2444b5; }
     </style>
 </head>
 <body>
@@ -72,16 +109,16 @@
         <!-- 🔒 BLOCK 1: DER SPERRBARE KERN -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 16:40 UHR]
+            <span style="font-size: 0.72rem; background: var(--lock-box-color); padding: 2px 6px; border-radius: 4px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+                [🔒 LOCKED CORE - 08.11.2026 - 19:54 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" list="airports" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" list="airports" required></div>
+            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" required placeholder="z.B. FRA" style="text-transform: uppercase;"></div>
+            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" required placeholder="z.B. BKK" style="text-transform: uppercase;"></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
             <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
@@ -89,7 +126,7 @@
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select>
+                <select id="fl-pax">
                     <option value="1">1 Person</option>
                     <option value="2">2 Personen</option>
                     <option value="3">3 Personen</option>
@@ -100,7 +137,7 @@
 
             <div>
                 <label>Reiseklasse:</label>
-                <select>
+                <select id="fl-class">
                     <option value="Economy">Economy</option>
                     <option value="Premium">Premium Economy</option>
                     <option value="Business">Business Class</option>
@@ -121,9 +158,9 @@
                 </select>
             </div>
             <div>
-                <label>Max. Reisezeit:</label>
+                <label>Max. Reisezeit:<span id="time-val" class="live-value">24 Std.</span></label>
                 <div class="range-container">
-                    <input type="range" min="2" max="48" value="24">
+                    <input type="range" id="time-slider" min="2" max="48" value="24" oninput="aktualisiereReisezeit(this.value)">
                 </div>
             </div>
 
@@ -138,34 +175,7 @@
             </div>
 
             <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full"><label>Zwischenstop / Airport:</label><input type="text"></div>
-
-            <div class="section-divider">🔍 Such-Schnittstelle</div>
-            <div>
-                <label>Suchmaschine wählen:</label>
-                <select id="engine-select">
-                    <option value="google">Google Flights</option>
-                    <option value="skyscanner">Skyscanner</option>
-                    <option value="kayak">Kayak</option>
-                    <option value="kiwi">Kiwi.com</option>
-                    <option value="trip">Trip.com</option>
-                </select>
+            <div class="full">
+                <label>Zwischenstop / Airport:</label>
+                <input type="text">
             </div>
-            <div>
-                <label>&nbsp;</label>
-                <button type="button" class="dual-btn" onclick="
-                    const s = document.getElementById('engine-select').value;
-                    let url = 'https://google.com';
-                    if(s==='skyscanner') url='https://skyscanner.de';
-                    if(s==='kayak') url='https://kayak.de';
-                    if(s==='kiwi') url='https://kiwi.com';
-                    if(s==='trip') url='https://trip.com';
-                    window.open(url, '_blank');
-                ">Suche starten</button>
-            </div>
-
-        </div>
-
-    </form>
-</div>
-</body>
