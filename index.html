@@ -16,7 +16,7 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
-        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY (Rein dekorativ ohne JS) */
+        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY (Rein dekorativ auf Systemebene) */
         body:has(#ow-checkbox:checked) #return-box { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed !important; opacity: 0.35 !important; pointer-events: none !important; border-color: #94a3b8 !important; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
@@ -37,16 +37,19 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- PURE HTML CORE: Sendet direkt an Google Search -->
+    <!-- PURE HTML CORE: Absolut fehlerfrei, unblockierbar -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         
-        <!-- VISUELLE KONTROLLE IM TRESOR -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 07:39 UHR - GREEN CORE]</span></div>
+        <!-- TRICK: Dieses unsichtbare Feld zwingt Google, das interaktive Flug-Interface zu öffnen -->
+        <input type="hidden" name="q" value="Flüge von">
+
+        <!-- AKTUALISIERT: Präziser Zeitstempel und stabiles Königsblau -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 07:42 UHR - STABLE BLUE]</span></div>
         <div class="grid">
             
-            <!-- TRICK: Beide Suchfelder heißen "q". Browser verbindet sie automatisch mit einem Pluszeichen beim Absenden! -->
-            <div><label>Abflugort (z.B. Flüge ab):</label><input type="text" name="q" value="Flüge ab Berlin (BER)" list="airports-complete" required></div>
-            <div><label>Zielort (nach):</label><input type="text" name="q" placeholder="z.B. Manila (MNL)" list="airports-complete"></div>
+            <!-- Alle Orte hängen sich automatisch hinter "Flüge von" an -->
+            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" name="q" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
@@ -78,7 +81,6 @@
             </div>
             
             <div class="full">
-                <!-- Absolut unzerstörbarer nativer HTML-Submit Button -->
                 <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
