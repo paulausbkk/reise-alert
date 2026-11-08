@@ -7,7 +7,7 @@
     <style>
         :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
-        .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .container { max-width: 650px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--rubin); }
         .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--rubin); background: #fef2f2; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--rubin); display: flex; justify-content: space-between; }
@@ -18,7 +18,9 @@
         
         /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY & MULTI-CITY */
         body:has(#ow-checkbox:checked) #return-box { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed !important; opacity: 0.35 !important; pointer-events: none !important; border-color: #94a3b8 !important; }
-        body:not(:has(#mc-checkbox:checked)) .multi-city-row { display: none !important; }
+        
+        /* DYNAMISCHE TEILSTRECKEN-STEUERUNG REIN ÜBER CSS-HAS */
+        body:not(:has(#mc-checkbox:checked)) .multi-city-block { display: none !important; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
@@ -32,6 +34,7 @@
         
         .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; font-weight: bold; padding: 15px; border-radius: 8px; margin-top: 15px; }
         .range-container { background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+        .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.85rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -53,85 +56,79 @@
         <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[🔒 LOCKED CORE - 08.11.2026 - 11:51 UHR]</span></div>
         <div class="grid">
             
-            <!-- STRECKEN-WEICHEN -->
-            <div class="switch-container"><label>Gabelflug / Teilstrecke:</label><label class="switch"><input type="checkbox" id="mc-checkbox"><span class="slider"></span></label></div>
+            <!-- ROUTING WEICHEN -->
+            <div class="switch-container"><label>Gabelflug / Multistopp:</label><label class="switch"><input type="checkbox" id="mc-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
 
-            <!-- HAUPTSTRECKE -->
+            <div class="section-divider">🛫 Hauptstrecke (Teilstrecke 1)</div>
             <div><label>Abflugort 1 (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports" required></div>
             <div><label>Zielort 1 (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports" required></div>
             
-            <!-- REINE CSS-WEICHE FÜR ZWEITE TEILSTRECKE -->
-            <div class="multi-city-row"><label>Abflugort 2 (IATA):</label><input type="text" id="fl-from2" placeholder="z.B. BKK" list="airports"></div>
-            <div class="multi-city-row"><label>Zielort 2 (IATA):</label><input type="text" id="fl-to2" placeholder="z.B. MNL" list="airports"></div>
-            
-            <!-- KALENDER-SCHUTZSCHILD -->
+            <!-- SKRIPTFREIER KALENDER-SCHUTZSCHILD -->
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value){document.getElementById('return-box').value=this.value;}"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="if(this.value &lt; document.getElementById('fl-date1').value){this.value=document.getElementById('fl-date1').value;}"></div>
             
-            <!-- GEPAECK & REISEZEIT-SCHIEBEREGLER -->
+            <!-- OPTIONALE MULTI-CITY MATRIX REIN ÜBER CSS -->
+            <div class="section-divider multi-city-block">🛬 Erweiterte Teilstrecken (Gabelflug)</div>
+            <div class="multi-city-block"><label>Abflugort 2 (IATA):</label><input type="text" id="fl-from2" placeholder="z.B. BKK" list="airports"></div>
+            <div class="multi-city-block"><label>Zielort 2 (IATA):</label><input type="text" id="fl-to2" placeholder="z.B. MNL" list="airports"></div>
+            <div class="multi-city-block"><label>Abflugort 3 (IATA):</label><input type="text" id="fl-from3" placeholder="z.B. MNL" list="airports"></div>
+            <div class="multi-city-block"><label>Zielort 3 (IATA):</label><input type="text" id="fl-to3" placeholder="z.B. FRA" list="airports"></div>
+
+            <div class="section-divider">🧳 Passagiere & Gepäck-Spezifikation</div>
             <div>
-                <label>Gepäckstücke:</label>
-                <select id="fl-luggage">
+                <label>Erwachsene (12+ J.):</label>
+                <select id="fl-pax-adult">
+                    <option value="1" selected>1 Erwachsener</option>
+                    <option value="2">2 Erwachsene</option>
+                    <option value="3">3 Erwachsene</option>
+                    <option value="4">4 Erwachsene</option>
+                </select>
+            </div>
+            <div>
+                <label>Kinder / Kleinkinder:</label>
+                <select id="fl-pax-child">
+                    <option value="0" selected>Keine Kinder</option>
+                    <option value="1">1 Kind</option>
+                    <option value="2">2 Kinder</option>
+                </select>
+            </div>
+            <div>
+                <label>Handgepäck (Cabin Bag):</label>
+                <select id="fl-cabin-luggage">
+                    <option value="0">Kein Handgepäck</option>
+                    <option value="1" selected>1x Handgepäck inklusive</option>
+                    <option value="2">2x Handgepäck</option>
+                </select>
+            </div>
+            <div>
+                <label>Aufgabegepäck (Checked Bag):</label>
+                <select id="fl-checked-luggage">
                     <option value="0">Nur Handgepäck (0 kg)</option>
                     <option value="1" selected>1x Aufgabegepäck (ca. 23 kg)</option>
                     <option value="2">2x Aufgabegepäck (2x 23 kg)</option>
+                    <option value="3">Übergepäck / Sportgepäck</option>
+                </select>
+            </div>
+
+            <div class="section-divider">⏱️ Flugzeiten & Stopover-Filter</div>
+            <div>
+                <label>Zwischenstopps (Stops):</label>
+                <select id="fl-stops">
+                    <option value="any" selected>Beliebig viele Stopps</option>
+                    <option value="direct">Nur Nonstop-Flüge</option>
+                    <option value="max1">Maximal 1 Zwischenstopp</option>
                 </select>
             </div>
             <div class="range-container">
-                <label>Max. Reisezeit: <output id="time-val">24</output> Std.</label>
+                <label>Max. Reisedauer: <output id="time-val">24</output> Std.</label>
                 <input type="range" id="fl-max-time" min="4" max="48" value="24" style="height:20px;" oninput="document.getElementById('time-val').value=this.value">
             </div>
+            <div class="range-container full">
+                <label>Max. Transit-Aufenthalt: <output id="layover-val">6</output> Std.</label>
+                <input type="range" id="fl-max-layover" min="1" max="12" value="6" style="height:20px;" oninput="document.getElementById('layover-val').value=this.value">
+            </div>
 
-            <!-- AIRLINE-PREFERENZ & REISEKLASSE -->
-            <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="lowcost-checkbox"><span class="slider"></span></label></div>
+            <div class="section-divider">🛡️ Airline-Präferenzen & Klassen</div>
+            <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines zulassen:</label><label class="switch"><input type="checkbox" id="lowcost-checkbox" checked><span class="slider"></span></label></div>
             <div>
-                <label>Klasse:</label>
-                <select id="fl-class">
-                    <option value="economy">Economy</option>
-                    <option value="premium">Premium Economy</option>
-                    <option value="business">Business Class</option>
-                    <option value="first">First Class</option>
-                </select>
-            </div>
-            
-            <div class="full">
-                <label>Personen:</label>
-                <select id="fl-pax">
-                    <option value="1" selected>1 Person</option>
-                    <option value="2">2 Personen</option>
-                    <option value="3">3 Personen</option>
-                    <option value="4">4 Personen</option>
-                </select>
-            </div>
-
-            <!-- INTERFACE-WEICHE -->
-            <div class="full" style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 15px;">
-                <label>Suchmaschine auswählen:</label>
-                <select id="engine-select" onchange="document.getElementById('search-btn').innerText = this.options[this.selectedIndex].text + ' STARTEN';">
-                    <option value="google">Google Flights</option>
-                    <option value="skyscanner">Skyscanner</option>
-                    <option value="kayak">Kayak</option>
-                    <option value="kiwi">Kiwi.com</option>
-                    <option value="trip">Trip.com</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- LIVE-BUTTON -->
-        <button id="search-btn" class="btn" onclick="
-            const from = document.getElementById('fl-from').value.toUpperCase() || 'FRA';
-            const to = document.getElementById('fl-to').value.toUpperCase() || 'BKK';
-            const d1 = document.getElementById('fl-date1').value;
-            const d2 = document.getElementById('ow-checkbox').checked ? '' : document.getElementById('return-box').value;
-            const engine = document.getElementById('engine-select').value;
-            
-            let url = '';
-            if(engine === 'google') {
-                url = `https://google.com{from}+nach+${to}+am+${d1}` + (d2 ? `+bis+${d2}` : '');
-            } else if(engine === 'skyscanner') {
-                url = `https://skyscanner.de{from.toLowerCase()}/${to.toLowerCase()}/${d1.replace(/-/g,'').substring(2,8)}` + (d2 ? `/${d2.replace(/-/g,'').substring(2,8)}` : '') + '/';
-            } else if(engine === 'kayak') {
-                url = `https://kayak.de{from}-${to}/${d1}` + (d2 ? `/${d2}` : '');
-            } else if(engine === 'kiwi') {
-                url = `https://kiwi.com{from.toLowerCase()}/${to.toLowerCase(
