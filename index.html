@@ -50,30 +50,35 @@
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
         
-        /* 🛠️ KOMPAKTES VIER-SPALTIGES SCHNITTTSTELLEN-RASTER */
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; grid-column: span 2; margin-top: 5px; }
+        /* 🛠️ ULTRAKOMPAKTES SECHS-SPALTIGES SCHNITTTSTELLEN-RASTER */
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 4px; grid-column: span 2; margin-top: 5px; }
         
         .touch-btn { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            height: 28px; /* Kleiner und kompakter */
+            height: 26px; /* Ultra flach */
             color: #ffffff; 
-            border: 1px solid #d97706; 
             border-radius: 4px; 
             font-weight: bold; 
             cursor: pointer; 
-            background: var(--gold); 
             box-sizing: border-box;
-            font-size: 0.72rem; /* Kleinere, saubere Schrift */
+            font-size: 0.65rem; /* Sehr kleine, saubere Schrift */
             text-transform: uppercase; 
-            letter-spacing: 0.3px; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-            padding: 0 4px;
+            letter-spacing: 0.2px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 0 2px;
+            border: 1px solid #d97706;
+            background: var(--gold);
         }
-        .touch-btn:hover { background: #d97706; }
         .btn-google { background: #4285f4; border-color: #3367d6; }
         .btn-google:hover { background: #3367d6; }
+        .btn-skyscanner { background: #007054; border-color: #00523f; }
+        .btn-skyscanner:hover { background: #00523f; }
+        .btn-kayak { background: #ff690f; border-color: #d45205; }
+        .btn-kayak:hover { background: #d45205; }
+        .btn-momondo { background: #84329b; border-color: #641f80; }
+        .btn-momondo:hover { background: #641f80; }
         .btn-kiwi { background: #00a699; border-color: #008075; }
         .btn-kiwi:hover { background: #008075; }
         .btn-trip { background: #2f55d4; border-color: #2444b5; }
@@ -95,11 +100,11 @@
     
     <form method="get" target="_blank" class="card">
 
-        <!-- 🔒 BLOCK 1: DER CORE -->
+        <!-- 🔒 BLOCK 1: DER KERN -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 18:59 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 19:01 UHR]
             </span>
         </div>
         
@@ -115,7 +120,7 @@
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select name="px">
+                <select>
                     <option value="1" selected>1 Person</option>
                     <option value="2">2 Personen</option>
                     <option value="3">3 Personen</option>
@@ -174,8 +179,5 @@
 
             <div class="section-divider">🔍 Direkte Such-Schnittstellen (Skriptfrei)</div>
             
-            <!-- 🛠️ DIE REIHE MIT DEN VIER SCHLANKEN TOUCH-DOWN BUTTONS -->
+            <!-- 🛠️ DIE NEUE REIHE MIT DEN SECHS CODELOSEN BUTTONS NEBENEINANDER -->
             <div class="action-grid">
-                <button type="submit" formaction="https://google.com" class="touch-btn btn-google">Google</button>
-                <button type="submit" formaction="https://kayak.de" class="touch-btn">Kayak</button>
-                <button type="submit" formaction="https://kiwi.com" class="touch-btn btn-kiwi">Kiwi</button>
