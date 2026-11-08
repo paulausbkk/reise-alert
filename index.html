@@ -16,8 +16,9 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
-        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
+        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY & MULTI-CITY */
         body:has(#ow-checkbox:checked) #return-box { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed !important; opacity: 0.35 !important; pointer-events: none !important; border-color: #94a3b8 !important; }
+        body:not(:has(#mc-checkbox:checked)) .multi-city-row { display: none !important; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
@@ -30,6 +31,7 @@
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
         
         .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; font-weight: bold; padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .range-container { background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -50,16 +52,39 @@
         <!-- 🔒 BLOCK 1: DER SPERRBARE KERN (DEINE SEKTION 1) -->
         <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[🔒 LOCKED CORE - 08.11.2026 - 11:51 UHR]</span></div>
         <div class="grid">
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports" required></div>
             
-            <!-- SKRIPTFREIER KALENDER-SCHUTZSCHILD -->
+            <!-- STRECKEN-WEICHEN -->
+            <div class="switch-container"><label>Gabelflug / Teilstrecke:</label><label class="switch"><input type="checkbox" id="mc-checkbox"><span class="slider"></span></label></div>
+            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
+
+            <!-- HAUPTSTRECKE -->
+            <div><label>Abflugort 1 (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports" required></div>
+            <div><label>Zielort 1 (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports" required></div>
+            
+            <!-- REINE CSS-WEICHE FÜR ZWEITE TEILSTRECKE -->
+            <div class="multi-city-row"><label>Abflugort 2 (IATA):</label><input type="text" id="fl-from2" placeholder="z.B. BKK" list="airports"></div>
+            <div class="multi-city-row"><label>Zielort 2 (IATA):</label><input type="text" id="fl-to2" placeholder="z.B. MNL" list="airports"></div>
+            
+            <!-- KALENDER-SCHUTZSCHILD -->
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value){document.getElementById('return-box').value=this.value;}"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="if(this.value &lt; document.getElementById('fl-date1').value){this.value=document.getElementById('fl-date1').value;}"></div>
             
-            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
+            <!-- GEPAECK & REISEZEIT-SCHIEBEREGLER -->
+            <div>
+                <label>Gepäckstücke:</label>
+                <select id="fl-luggage">
+                    <option value="0">Nur Handgepäck (0 kg)</option>
+                    <option value="1" selected>1x Aufgabegepäck (ca. 23 kg)</option>
+                    <option value="2">2x Aufgabegepäck (2x 23 kg)</option>
+                </select>
+            </div>
+            <div class="range-container">
+                <label>Max. Reisezeit: <output id="time-val">24</output> Std.</label>
+                <input type="range" id="fl-max-time" min="4" max="48" value="24" style="height:20px;" oninput="document.getElementById('time-val').value=this.value">
+            </div>
+
+            <!-- AIRLINE-PREFERENZ & REISEKLASSE -->
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="lowcost-checkbox"><span class="slider"></span></label></div>
-            
             <div>
                 <label>Klasse:</label>
                 <select id="fl-class">
@@ -69,7 +94,8 @@
                     <option value="first">First Class</option>
                 </select>
             </div>
-            <div>
+            
+            <div class="full">
                 <label>Personen:</label>
                 <select id="fl-pax">
                     <option value="1" selected>1 Person</option>
@@ -79,7 +105,7 @@
                 </select>
             </div>
 
-            <!-- INTERFACE-WEICHE & SCHNITTSTELLE -->
+            <!-- INTERFACE-WEICHE -->
             <div class="full" style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 15px;">
                 <label>Suchmaschine auswählen:</label>
                 <select id="engine-select" onchange="document.getElementById('search-btn').innerText = this.options[this.selectedIndex].text + ' STARTEN';">
@@ -92,7 +118,7 @@
             </div>
         </div>
 
-        <!-- DER LIVE-AKTIONS-BUTTON -->
+        <!-- LIVE-BUTTON -->
         <button id="search-btn" class="btn" onclick="
             const from = document.getElementById('fl-from').value.toUpperCase() || 'FRA';
             const to = document.getElementById('fl-to').value.toUpperCase() || 'BKK';
@@ -108,20 +134,4 @@
             } else if(engine === 'kayak') {
                 url = `https://kayak.de{from}-${to}/${d1}` + (d2 ? `/${d2}` : '');
             } else if(engine === 'kiwi') {
-                url = `https://kiwi.com{from.toLowerCase()}/${to.toLowerCase()}/${d1}` + (d2 ? `/${d2}` : '');
-            } else if(engine === 'trip') {
-                url = `https://trip.com{from}&to=${to}&flighttype=` + (d2 ? 'RT' : 'OW') + `&dldate=${d1}` + (d2 ? `&rdate=${d2}` : '');
-            }
-            if(url) window.open(url, '_blank');
-        ">Google Flights STARTEN</button>
-
-        <!-- 🔒 SICHERHEITS-LOCK / PASSWORD-TRESOR -->
-        <div class="password-box">
-            <label style="color: var(--rubin); font-weight: bold; margin-bottom: 8px; display: block;">🔒 [LOCKED CORE] PASSWORT-TRESOR</label>
-            <input type="password" id="core-vault" placeholder="Änderungsschutz aktiv. Passwort eingeben..." disabled style="border-color: var(--rubin); background: #fff5f5;">
-        </div>
-
-    </form>
-</div>
-</body>
-</html>
+                url = `https://kiwi.com{from.toLowerCase()}/${to.toLowerCase(
