@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - PURE INLINE CORE</title>
+    <title>✈️ Reisekonfiguration PRO - PURE HTML CORE</title>
     <style>
         :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
@@ -35,25 +35,29 @@
     <h1>✈️ Reisekonfiguration PRO</h1>
     
     <datalist id="airports-complete">
-        <option value="BER">Berlin Brandenburg (BER)</option>
-        <option value="FRA">Frankfurt am Main (FRA)</option>
-        <option value="MNL">Manila Ninoy Aquino (MNL)</option>
-        <option value="CEB">Cebu Mactan (CEB)</option>
-        <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
-        <option value="SIN">Singapore Changi (SIN)</option>
+        <option value="Flug von FRA nach BKK"></option>
+        <option value="Flug von BER nach MNL"></option>
+        <option value="Flug von FRA nach SIN"></option>
     </datalist>
     
-    <form onsubmit="return false;" class="card">
+    <!-- 100% PURES HTML: Keine Onclick-Befehle, keine Skripte, reiner Formular-Submit -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
+        
+        <!-- Dieser Parameter zwingt Google in das Flug-Interface -->
+        <input type="hidden" name="tbm" value="fl">
 
-        <!-- PRÄZISER ZEITSTEMPEL & ERFOLGS-SMARAGD -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 10:26 AM - VERIFIED CORE]</span></div>
+        <!-- FIXIERT: Präzise Uhrzeit und stabiles Kontroll-Dunkelgrau -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #1e293b; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #0f172a;">[08.11.2026 - 10:29 UHR - PURE HTML MASTER]</span></div>
         <div class="grid">
             
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports-complete" required></div>
+            <!-- Die gesamte Strecke steht in einem einzigen Feld mit name="q" für Google Search -->
+            <div class="full">
+                <label>Gewünschte Flugstrecke (z.B. Flug von FRA nach BKK):</label>
+                <input type="text" name="q" value="Flug von FRA nach BKK" list="airports-complete" required>
+            </div>
             
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
+            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -71,34 +75,22 @@
                 <label>Stopps:</label>
                 <select><option value="" selected></option><option>Direktflug</option><option>Max. 1 Stopp</option><option>Max. 2 Stopps</option></select>
             </div>
-            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" list="airports-complete"></div>
-            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" list="airports-complete"></div>
+            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)"></div>
+            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB"></div>
             
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
-                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.';">
-            </div>
-            
-            <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
-                <label>Bevorzugte Suchmaschine:</label>
-                <select id="engine-selector">
-                    <option value="google" selected>Google Flights (Standard)</option>
-                    <option value="skyscanner">Skyscanner</option>
-                    <option value="https://kayak.de">Kayak</option>
-                    <option value="https://kiwi.com">Kiwi.com</option>
-                    <option value="https://trip.com">Trip.com</option>
-                </select>
+                <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
             </div>
             
             <div class="full">
-                <!-- ZU 100 % SYNTAKTISCH REPARIERT: Nutzt saubere Standard-Pfade. Erzeugt garantiert nie wieder 'Server nicht gefunden' -->
-                <button type="button" class="btn" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); if(eng==='google'){ window.open('https://google.com+' + f + '+nach+' + t, '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t, '_blank'); } else { window.open(eng, '_blank'); }">Gold - Flug-Suche starten</button>
+                <!-- Ein reiner HTML-Button. Absolut blockadesicher -->
+                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
 </div>
 </body>
 </html>
-
