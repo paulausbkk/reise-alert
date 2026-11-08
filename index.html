@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - DASHBOARD CORE</title>
+    <title>✈️ Reisekonfiguration PRO - COMPACT DASHBOARD</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -14,67 +14,82 @@
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
-            /* CYAN-BLAU ALS SIGNAL FÜR DAS NEUE BREITE SIDE-BY-SIDE DESIGN */
-            --lock-box-color: #06b6d4; 
+            /* NEON-GELB ALS ERKENNUNGS-SIGNAL FÜR DAS ULTRA-KOMPAKTE LAYOUT */
+            --lock-box-color: #eab308; 
         }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 12px; margin: 0; }
         
-        /* DIE GANZE BREITE AUSNUTZEN */
-        .container { max-width: 1100px; margin: 10px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.5rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* KOMPAKTES GESAMT-CONTAINER DESIGN */
+        .container { max-width: 1150px; margin: 5px auto; background: var(--card-bg); padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { font-size: 1.3rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* DYNAMISCHES ZWEI-SPALTEN-DASHBOARD (NEBENIEINANDER) */
-        .dashboard-layout { display: flex; gap: 20px; align-items: flex-start; }
+        /* DASHBOARD-LAYOUT */
+        .dashboard-layout { display: flex; gap: 15px; align-items: flex-start; }
         
-        /* LINKE SPALTE: DIE REISE-PARAMETER */
-        .left-main-column { flex: 2; }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; border-color: var(--rubin); background: #fef2f2; margin: 0; }
-        .title { font-weight: bold; margin-bottom: 12px; font-size: 1.05rem; color: var(--rubin); display: flex; justify-content: space-between; align-items: center; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
-        .full { grid-column: span 2; }
-        label { display: block; font-weight: bold; font-size: 0.78rem; margin-bottom: 4px; color: #475569; }
-        input, select { width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.85rem; }
+        /* PARAMETER-HAUPTBLOCK NIMMT ZWEI DRITTEL EIN */
+        .left-main-column { flex: 2.5; }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 10px; border-color: var(--rubin); background: #fef2f2; margin: 0; }
+        .title { font-weight: bold; margin-bottom: 8px; font-size: 0.95rem; color: var(--rubin); display: flex; justify-content: space-between; align-items: center; }
         
-        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; height: 32px; box-sizing: border-box; }
+        /* 🛠️ RADIKALE PLATZ-GEWINNUNG DURCH DREI SCHMALE PARAMETER-SPALTEN */
+        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; align-items: end; }
+        .full { grid-column: span 3; }
+        .span-2 { grid-column: span 2; }
+        
+        label { display: block; font-weight: bold; font-size: 0.72rem; margin-bottom: 2px; color: #475569; }
+        
+        /* SCHMALE HÖHEN FÜR MINIMALEN VERTIKALEN PLATZVERBRAUCH */
+        input, select { width: 100%; height: 26px; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.8rem; }
+        
+        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
+        body:has(#ow-checkbox:checked) #return-box { 
+            background-color: #cbd5e1 !important; 
+            color: #94a3b8 !important; 
+            cursor: not-allowed; 
+            opacity: 0.35 !important; 
+            pointer-events: none !important; 
+            border-color: #94a3b8 !important; 
+        }
+        
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; height: 26px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
-        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+        .switch { position: relative; display: inline-block; width: 32px; height: 16px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 2px; bottom: 2px; background-color: white; border-radius: 50%; transition: .3s; }
         .switch input:checked + .slider { background-color: #22c55e !important; }
-        .switch input:checked + .slider:before { transform: translateX(16px); }
+        .switch input:checked + .slider:before { transform: translateX(14px); }
 
-        .range-container { background: var(--time-magenta) !important; padding: 0 8px; border: 1px solid #c084fc; border-radius: 4px; box-sizing: border-box; height: 32px; display: flex; align-items: center; justify-content: center; }
+        .range-container { background: var(--time-magenta) !important; padding: 0 6px; border: 1px solid #c084fc; border-radius: 4px; box-sizing: border-box; height: 26px; display: flex; align-items: center; justify-content: center; }
         .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); }
         
-        .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.82rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 5px; }
+        .section-divider { grid-column: span 3; font-weight: bold; font-size: 0.76rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 1px; margin-top: 4px; }
 
-        /* RECHTE SPALTE: DAS FESTE SUCH-COCKPIT */
-        .right-sidebar-column { flex: 1; min-width: 250px; background: #ffffff; border: 2px solid var(--border); border-radius: 8px; padding: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-        .sidebar-title { font-weight: bold; font-size: 0.9rem; color: #1e293b; margin-bottom: 12px; border-bottom: 2px solid var(--border); padding-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+        /* SIDEBAR-SIDEBOARD RECHTS */
+        .right-sidebar-column { flex: 1; min-width: 200px; background: #ffffff; border: 2px solid var(--border); border-radius: 8px; padding: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .sidebar-title { font-weight: bold; font-size: 0.82rem; color: #1e293b; margin-bottom: 8px; border-bottom: 2px solid var(--border); padding-bottom: 3px; }
         
-        /* ZWEI SPALTEN FÜR DIE BUTTONS IN DER SEITENLEISTE */
-        .sidebar-button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .sidebar-button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
         
         .touch-btn { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            height: 36px; 
+            height: 32px; 
             color: #ffffff !important; 
             border: 1px solid #d97706; 
             border-radius: 4px; 
             font-weight: bold; 
             cursor: pointer; 
             box-sizing: border-box;
-            font-size: 0.8rem; 
+            font-size: 0.75rem; 
             text-transform: uppercase; 
-            letter-spacing: 0.3px; 
+            letter-spacing: 0.2px; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             background: var(--gold);
             text-decoration: none;
         }
-        .touch-btn:hover { background: #d97706; transform: translateY(-1px); box-shadow: 0 2px 5px rgba(0,0,0,0.15); transition: 0.1s; }
+        .touch-btn:hover { background: #d97706; }
         .btn-google { background: #4285f4; border-color: #3367d6; }
         .btn-google:hover { background: #3367d6; }
         .btn-skyscanner { background: #007054; border-color: #00523f; }
@@ -104,13 +119,13 @@
     
     <div class="dashboard-layout">
         
-        <!-- LINKS: FORMULAR INNERHALB DER SEPARATEN HAUPTSPALTE -->
+        <!-- LINKS: DIE HOCHKOMPRIMIERTEN FLUG-PARAMETER -->
         <div class="left-main-column">
             <form onsubmit="return false;" class="card">
                 <div class="title">
                     <span>✈️ Sektion 1: Flug-Parameter</span>
-                    <span style="font-size: 0.72rem; background: var(--lock-box-color); padding: 2px 6px; border-radius: 4px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
-                        [🔒 LOCKED CORE - 08.11.2026 - 20:16 UHR]
+                    <span style="font-size: 0.72rem; background: var(--lock-box-color); padding: 2px 6px; border-radius: 4px; color: #1e293b; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+                        [🔒 LOCKED CORE - 08.11.2026 - 20:25 UHR]
                     </span>
                 </div>
                 
@@ -118,13 +133,12 @@
                     <div class="section-divider">🛫 Flugziele & Route</div>
                     <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" placeholder="z.B. FRA" style="text-transform: uppercase;"></div>
                     <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" placeholder="z.B. BKK" style="text-transform: uppercase;"></div>
+                    <div>&nbsp;</div> <!-- Platzhalter fuer Dreier-Symmetrie -->
 
                     <div class="section-divider">📅 Reisedaten & Personen</div>
                     <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18"></div>
                     <div><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28"></div>
-                    
-                    <div>
-                        <label>Anzahl Passagiere:</label>
+                    <div><label>Anzahl Passagiere:</label>
                         <select id="fl-pax">
                             <option value="1">1 Person</option>
                             <option value="2">2 Personen</option>
@@ -132,10 +146,16 @@
                             <option value="4">4 Personen</option>
                         </select>
                     </div>
-                    <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
-
+                    
+                    <div class="span-2">
+                        <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
+                    </div>
                     <div>
-                        <label>Reiseklasse:</label>
+                        <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.7rem;">Low-Cost:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                    </div>
+
+                    <div class="section-divider">🧳 Gepäck & Reisezeit</div>
+                    <div><label>Reiseklasse:</label>
                         <select id="fl-class">
                             <option value="Economy">Economy</option>
                             <option value="Premium">Premium Economy</option>
@@ -143,23 +163,9 @@
                             <option value="First">First Class</option>
                         </select>
                     </div>
-                    <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-
-                    <div class="section-divider">🧳 Gepäck & Reisezeit</div>
-                    <div>
-                        <label>Gepäck-Optionen:</label>
+                    <div><label>Gepäck-Optionen:</label>
                         <select>
                             <option value="1">1. Handgepäck</option>
                             <option value="2">2. Aufgabegepäck 20 KG</option>
                             <option value="3">3. Aufgabegepäck 32 KG</option>
                         </select>
-                    </div>
-                    <div>
-                        <label>Max. Reisezeit:</label>
-                        <div class="range-container">
-                            <input type="range" id="time-slider" min="2" max="48" value="24">
-                        </div>
-                    </div>
-
-                    <div class="section-divider">💰 Budgetvorgaben Flüge</div>
-                    <div><label>max. Flugpreis pro person:</label><input type="text"></div>
