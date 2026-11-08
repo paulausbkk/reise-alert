@@ -14,20 +14,20 @@
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
-            /* DYNAMISCHE FARBE FÜR DEN UHRZEIT-KASTEN (JETZT AUFFÄLLIGES MAGENTA) */
-            --lock-box-color: #e11d48; 
+            /* NEUE, SEHR AUFFÄLLIGE NEUTRALE FARBE FÜR DEN KASTEN */
+            --lock-box-color: #000000; 
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
         .container { max-width: 620px; margin: 10px auto; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.3rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 15px; }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; border-color: var(--rubin); background: #fef2f2; }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 15px; border-color: var(--rubin); background: #fef2f2; }
         .title { font-weight: bold; margin-bottom: 8px; font-size: 1rem; color: var(--rubin); display: flex; justify-content: space-between; align-items: center; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.78rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.85rem; }
         
-        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
+        /* LOCK FÜR ONE WAY */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
@@ -46,35 +46,38 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(16px); }
 
-        /* MAGENTA-KONTAINER FÜR DEN REISEZEIT-SCHIEBEREGLER */
+        /* REISEZEIT-SCHIEBEREGLER */
         .range-container { background: var(--time-magenta) !important; padding: 0 8px; border: 1px solid #c084fc; border-radius: 4px; box-sizing: border-box; height: 32px; display: flex; align-items: center; justify-content: center; }
         .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); }
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
+        .live-value { color: var(--rubin); font-weight: bold; margin-left: 5px; font-size: 0.8rem; }
 
-        /* 🛠️ REINES, PLATZSPARENDES HTML5-LINK-RASTER */
-        .action-flex-container { display: flex; flex-wrap: wrap; gap: 6px; grid-column: span 2; margin-top: 8px; width: 100%; box-sizing: border-box; }
+        /* 🛠️ DIE ALTERNATIVE: EIN VÖLLIG EIGENSTÄNDIGER, ISOLIERTER PLATTFORM-BLOCK IM HINTERGRUND */
+        .standalone-search-box { background: #ffffff; border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-top: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .search-title { font-weight: bold; font-size: 0.85rem; color: #1e293b; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+        .action-flex-container { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
         
         .touch-btn { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             flex: 1; 
-            min-width: 80px; 
-            height: 28px; 
+            min-width: 85px; 
+            height: 30px; 
             color: #ffffff !important; 
             border-radius: 4px; 
             font-weight: bold; 
             cursor: pointer; 
             box-sizing: border-box;
-            font-size: 0.72rem; 
+            font-size: 0.75rem; 
             text-transform: uppercase; 
-            letter-spacing: 0.2px; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            padding: 0 4px;
+            letter-spacing: 0.3px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 0 6px;
             border: 1px solid #d97706;
             background: var(--gold);
-            text-decoration: none; /* Entfernt den Unterstrich des Links */
+            text-decoration: none;
         }
         .touch-btn:hover { background: #d97706; }
         .btn-google { background: #4285f4; border-color: #3367d6; }
@@ -104,12 +107,11 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <div class="card">
+    <form onsubmit="return false;" class="card">
 
         <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <!-- NEUER FRAUEN-PINKER KASTEN ALS LADENCHEF-KONTROLLE -->
             <span style="font-size: 0.72rem; background: var(--lock-box-color); padding: 2px 6px; border-radius: 4px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
                 [🔒 LOCKED CORE - 08.11.2026 - 19:35 UHR]
             </span>
@@ -122,8 +124,8 @@
             <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" placeholder="z.B. BKK" style="text-transform: uppercase;"></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
-            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18"></div>
-            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28"></div>
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
+            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18"></div>
             
             <div>
                 <label>Anzahl Passagiere:</label>
@@ -159,9 +161,9 @@
                 </select>
             </div>
             <div>
-                <label>Max. Reisezeit:</label>
+                <label>Max. Reisezeit:<span id="time-val" class="live-value">24 Std.</span></label>
                 <div class="range-container">
-                    <input type="range" id="time-slider" min="2" max="48" value="24">
+                    <input type="range" id="time-slider" min="2" max="48" value="24" oninput="aktualisiereReisezeit(this.value)">
                 </div>
             </div>
 
@@ -173,15 +175,3 @@
             <div>
                 <label>Währung:</label>
                 <select>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="USD">USD ($)</option>
-                </select>
-            </div>
-
-            <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full">
-                <label>Zwischenstop / Airport:</label>
-                <input type="text">
-            </div>
-
-            <div class="section-divider">🔍 Direkte Such-Schnittstellen (Statisches HTML)</div>
