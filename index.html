@@ -37,19 +37,15 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- PURE HTML SEARCH -->
+    <!-- DIRECT INTERFACE PATH: Steuert ohne Umwege Google Flights an -->
     <form action="https://google.com" method="get" target="_blank" class="card">
-        
-        <!-- TRICK: Schickt das zwingend erforderliche Stichwort "Flüge von" stumm mit ab -->
-        <input type="hidden" name="q" value="Flüge von">
 
-        <!-- PRÄZISER ZEITSTEMPEL & BLAUES STRUKTUR-LABEL -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 08:32 UHR - STABLE BLUE]</span></div>
+        <!-- PRÄZISER ZEITSTEMPEL & ABSICHERUNG -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 08:34 UHR - FLIGHTS INTERFACE]</span></div>
         <div class="grid">
             
-            <!-- Die Eingabefelder füllen die Suchkette nativ mit den echten Orten auf -->
-            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" name="q" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
+            <!-- TRICK: Nur noch ein einziges Suchfeld mit name="q" übergibt die gesamte Route unzerstörbar an Google Flights -->
+            <div class="full"><label>Gewünschte Flugstrecke (z.B. BER nach BKK):</label><input type="text" name="q" placeholder="z.B. Berlin (BER) nach Bangkok (BKK)" list="airports-complete" required></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
