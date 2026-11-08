@@ -25,7 +25,7 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
-        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
+        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY (Ausgrauen des Rückflugs) */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
@@ -44,11 +44,7 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        /* 🛠️ NEUE STABILE FLEXBOX-ZEILE GANZ UNTEN INNERHALB DER CARD */
-        .action-container { display: flex; gap: 12px; margin-top: 20px; align-items: flex-end; width: 100%; }
-        .action-field { flex: 1; display: flex; flex-direction: column; }
-        
-        /* RECHTES SCHALTER-FELD AS TEXT-BUTTON */
+        /* RECHTES SCHALTER-FELD OPTISCH INTEGRAL ALS FORMULAR-ELEMENT */
         .dual-btn { 
             display: flex; 
             flex-direction: column; 
@@ -103,7 +99,7 @@
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.75rem; background: #0f172a; padding: 3px 8px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 15:51 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 15:56 UHR]
             </span>
         </div>
         
@@ -158,18 +154,26 @@
             </div>
 
             <div class="section-divider">💰 Budgetvorgaben Flüge</div>
-            <!-- MAX FLUGPREIS PRO PERSON IST JETZT EIN KLEINES SCHLANKES FELD LINKS -->
+            <!-- KOMPAKTES BUDGETFELD -->
             <div>
                 <label>max. Flugpreis pro person:</label>
                 <input type="text" name="q">
             </div>
-            <div>&nbsp;</div> <!-- Leerer Grid-Platzhalter für die rechte Seite symmetrisch -->
+            <div>
+                <label>Währung:</label>
+                <select name="q">
+                    <option value="EUR" selected>EUR (€)</option>
+                    <option value="USD">USD ($)</option>
+                </select>
+            </div>
 
             <div class="section-divider">✈️ Transit-Optionen</div>
             <div class="full">
                 <label>Zwischenstop / Airport:</label>
                 <input type="text" name="q">
             </div>
-        </div>
 
-        <!-- 🛠️ DIE SEPARATE FLEXBOX-REIHE GANZ UNTEN -->
+            <div class="section-divider">🔍 Such-Schnittstelle</div>
+            <!-- DROPDOWN LINKS -->
+            <div>
+                <label>Suchmaschine wählen:</label>
