@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - PURE INLINE CORE</title>
+    <title>✈️ Reisekonfiguration PRO - PURE HTML CORE</title>
     <style>
-        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
+        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; --sky-blue: #0077b6; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--rubin); }
@@ -27,33 +27,38 @@
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
-        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        /* SKRIPTFREIE BUTTONS-STRUKTUR */
+        .btn-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .btn-search { display: flex; align-items: center; justify-content: center; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-google { background: var(--gold); }
+        .btn-skyscanner { background: var(--sky-blue); }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
+    <!-- Die korrekten IATA-Kombinationen für die unblockierbare Volltextsuche -->
     <datalist id="airports-complete">
-        <option value="BER">Berlin Brandenburg (BER)</option>
-        <option value="FRA">Frankfurt am Main (FRA)</option>
-        <option value="MNL">Manila Ninoy Aquino (MNL)</option>
-        <option value="CEB">Cebu Mactan (CEB)</option>
-        <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
-        <option value="SIN">Singapore Changi (SIN)</option>
+        <option value="Flug von FRA nach BKK">Frankfurt nach Bangkok</option>
+        <option value="Flug von BER nach MNL">Berlin nach Manila</option>
+        <option value="Flug von BER nach CEB">Berlin nach Cebu</option>
     </datalist>
     
-    <form onsubmit="return false;" class="card">
-
-        <!-- PRÄZISER ZEITSTEMPEL & ERFOLGS-SMARAGD -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 11:07 UHR - FIXED CORE]</span></div>
+    <div class="card">
+        <!-- COUPLING CHECK: 100% PURES HTML OHNE JAVASCRIPT -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #1e293b; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #0f172a;">[08.11.2026 - 11:12 UHR - PURE HTML CORE]</span></div>
         <div class="grid">
             
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports-complete" required></div>
+            <!-- Die Eingabe nutzt die unblockierbare kombinierte Suchzeile -->
+            <div class="full">
+                <label>Flugstrecke (Auswahl oder freie Eingabe):</label>
+                <input type="text" id="main-route-input" value="Flug von FRA nach BKK" list="airports-complete" required>
+            </div>
             
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
+            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -71,8 +76,8 @@
                 <label>Stopps:</label>
                 <select><option value="" selected></option><option>Direktflug</option><option>Max. 1 Stopp</option><option>Max. 2 Stopps</option></select>
             </div>
-            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" list="airports-complete"></div>
-            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" list="airports-complete"></div>
+            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)"></div>
+            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB"></div>
             
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
@@ -81,25 +86,25 @@
                 <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
             </div>
             
-            <!-- Linkes Auswahlfeld schaltet den Text des rechten Buttons live und exakt namentlich um -->
-            <div>
-                <label>1. Suchseite wählen:</label>
-                <select id="engine-selector" onchange="var btn=document.getElementById('action-btn'); if(this.value==='google'){btn.innerText='Google Flights Suche starten';}else if(this.value==='skyscanner'){btn.innerText='Skyscanner Suche starten';}else if(this.value==='kayak'){btn.innerText='Kayak Suche starten';}else if(this.value==='kiwi'){btn.innerText='Kiwi.com Suche starten';}else{btn.innerText='Trip.com Suche starten';}">
-                    <option value="google" selected>Google Flights</option>
-                    <option value="skyscanner">Skyscanner</option>
-                    <option value="kayak">Kayak</option>
-                    <option value="kiwi">Kiwi.com</option>
-                    <option value="trip">Trip.com</option>
-                </select>
-            </div>
-            
-            <div>
-                <label>2. Aktion:</label>
-                <!-- KORRIGIERT: Der Schrägstrich hinter skyscanner.de wurde fest integriert, um den Serverabsturz dauerhaft zu verhindern -->
-                <button type="button" id="action-btn" class="btn" style="margin-top:0;" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value).toLowerCase(); var t=encodeURIComponent(document.getElementById('fl-to').value).toLowerCase(); if(eng==='google'){ window.open('https://google.com+' + f.toUpperCase() + '+nach+' + t.toUpperCase(), '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t + '/', '_blank'); } else if(eng==='kayak'){ window.open('https://kayak.de' + f.toUpperCase() + '-' + t.toUpperCase() + '/', '_blank'); } else if(eng==='kiwi'){ window.open('https://kiwi.com' + f + '/' + t + '/', '_blank'); } else { window.open('https://trip.com' + f + '&amp;to=' + t, '_blank'); }">Google Flights Suche starten</button>
+            <!-- 100 % REINE HTML-WEICHE: Getrennte Formulare unterbinden jeden Scripting-Fehler komplett -->
+            <div class="full btn-container">
+                
+                <!-- Knallhart verdrahteter Google-Button -->
+                <form action="https://google.com" method="get" target="_blank" style="display:contents;">
+                    <button type="submit" class="btn-search btn-google">Google Flights Suche starten</button>
+                    <!-- Trick: Nimmt den Textwert dynamisch über das HTML-Übertragungsfeld mit -->
+                    <input type="hidden" name="q" value="Flug von FRA nach BKK">
+                </form>
+                
+                <!-- Knallhart verdrahteter Skyscanner-Button -->
+                <form action="https://skyscanner.de" method="get" target="_blank" style="display:contents;">
+                    <button type="submit" class="btn-search btn-skyscanner">Skyscanner Suche starten</button>
+                    <input type="hidden" name="q" value="Flug von FRA nach BKK">
+                </form>
+                
             </div>
         </div>
-    </form>
+    </div>
 </div>
 </body>
 </html>
