@@ -34,26 +34,24 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- Die IATA-Flughafencodes sind jetzt als saubere Schnellauswahl hinterlegt -->
     <datalist id="airports-complete">
         <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
     </datalist>
     
     <form action="https://google.com" method="get" target="_blank" class="card">
         
-        <!-- Aktiviert das Flug-Such-Interface auf Google-Ebene -->
         <input type="hidden" name="tbm" value="fl">
 
-        <!-- PRÄZISER ZEITSTEMPEL & STABILES KÖNIGSBLAU -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 09:57 UHR - SEPARATE CORE]</span></div>
+        <!-- FIXIERT: Präzise Uhrzeit und lila Kontrollbox für den reaktivierten Schutzschild -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #faf5ff; padding: 2px 6px; border-radius: 4px; color: #6b21a8; border: 1px solid #e9d5ff;">[08.11.2026 - 09:59 UHR - PROTECTED CORE]</span></div>
         <div class="grid">
             
-            <!-- REPARIERT: Start und Ziel sind wieder vollständig getrennte Eingabefelder -->
             <div><label>Abflugort (IATA):</label><input type="text" name="q" placeholder="z.B. FRA" list="airports-complete" required></div>
             <div><label>Zielort (IATA):</label><input type="text" name="q" placeholder="z.B. BKK" list="airports-complete" required></div>
             
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
+            <!-- COUPLING FIX: Eiserner Datums-Schutzschild brennt fehlerfrei live im Element -->
+            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
