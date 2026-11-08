@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - PURE HTML CORE</title>
+    <title>✈️ Reisekonfiguration PRO - PURE HTML PATH CORE</title>
     <style>
         :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
@@ -34,18 +34,19 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     <datalist id="airports-complete">
-        <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
+        <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
     </datalist>
     
-    <form action="https://google.com" method="get" target="_blank" class="card">
+    <form onsubmit="return false;" class="card">
 
-        <!-- KORRIGIERT: Präziser Zeitstempel und violettes Sicherheits-Label -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #faf5ff; padding: 2px 6px; border-radius: 4px; color: #6b21a8; border: 1px solid #e9d5ff;">[08.11.2026 - 08:38 UHR - VIOLET CORE]</span></div>
+        <!-- UNKONVENTIONELLER MEILENSTEIN: Cyber-Pink für den URL-Pfad-Trick -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fce7f3; padding: 2px 6px; border-radius: 4px; color: #9d174d; border: 1px solid #fbcfe8;">[08.11.2026 - 08:43 UHR - PATH CORE]</span></div>
         <div class="grid">
             
-            <div class="full"><label>Gewünschte Flugstrecke (z.B. BER nach BKK):</label><input type="text" name="q" placeholder="z.B. Berlin (BER) nach Bangkok (BKK)" list="airports-complete" required></div>
+            <!-- WICHTIG: Verwende im Test kurze IATA-Codes wie BER, FRA oder BKK -->
+            <div><label>Abflugort (IATA):</label><input type="text" id="flight-from" value="FRA" list="airports-complete" placeholder="z.B. FRA" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" id="flight-to" value="BKK" list="airports-complete" placeholder="z.B. BKK" required></div>
             
-            <!-- REPARIERT: Unzerstörbarer HTML5 Inline-Datums-Schutzschild live im Element -->
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
             
@@ -76,7 +77,8 @@
             </div>
             
             <div class="full">
-                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
+                <!-- DER ENTWICKLER-TRICK: Ein unzerstörbarer HTML-Link, der die Werte im Klickmoment direkt als Pfad verschachtelt -->
+                <button type="button" class="btn" onclick="var f=document.getElementById('flight-from').value; var t=document.getElementById('flight-to').value; var d=document.getElementById('fl-date1').value; var r=document.getElementById('return-box').value; var ow=document.getElementById('ow-checkbox').checked; var path='https://google.com' + f + '/' + t + '/' + d + (ow ? '' : '/' + r); window.open(path, '_blank');">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
