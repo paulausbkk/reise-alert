@@ -33,29 +33,33 @@
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
+    
+    <!-- Die IATA-Flughafencodes sind jetzt als saubere Schnellauswahl hinterlegt -->
     <datalist id="airports-complete">
-        <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
+        <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
     </datalist>
     
-    <!-- Formular sendet standardmäßig an das Google Flights Verzeichnis -->
-    <form action="https://www.google.com/travel/flights" method="get" target="_blank" class="card">
+    <form action="https://google.com" method="get" target="_blank" class="card">
+        
+        <!-- Aktiviert das Flug-Such-Interface auf Google-Ebene -->
+        <input type="hidden" name="tbm" value="fl">
 
-        <!-- PRÄZISER ZEITSTEMPEL & ABSICHERUNG -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:52 UHR - MASTER CORE]</span></div>
+        <!-- PRÄZISER ZEITSTEMPEL & STABILES KÖNIGSBLAU -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 09:57 UHR - SEPARATE CORE]</span></div>
         <div class="grid">
             
-            <!-- name="q" ist die Variable für das Hauptsuchfeld -->
-            <div class="full"><label>Flugstrecke eingeben (z.B. BER nach MNL):</label><input type="text" name="q" placeholder="z.B. Berlin (BER) nach Manila (MNL)" list="airports-complete" required></div>
+            <!-- REPARIERT: Start und Ziel sind wieder vollständig getrennte Eingabefelder -->
+            <div><label>Abflugort (IATA):</label><input type="text" name="q" placeholder="z.B. FRA" list="airports-complete" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="q" placeholder="z.B. BKK" list="airports-complete" required></div>
             
-            <!-- COUPLING REAKTIVIERT: Inline-Schutzschild steuert die Datumsgrenzen live im Element -->
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
+            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             
-            <div><label>Beförderungsklasse:</label><select><option>Economy</option><option>Premium Economy</option><option value="Business">Business Class</option><option value="First">First Class</option></select></div>
-            <div><label>Personen:</label><select><option selected>1 Person</option><option>2 Personen</option><option>3 Personen</option><option>4 Personen</option></select></div>
+            <div><label>Beförderungsklasse:</label><select><option>Economy</option><option>Premium Economy</option><option value="Business">Business Class</option></select></div>
+            <div><label>Personen:</label><select><option>1 Person</option><option selected>2 Personen</option></select></div>
             
             <div>
                 <label>Gepäck:</label>
@@ -74,19 +78,7 @@
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
-                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.';">
-            </div>
-            
-            <!-- REAKTIVIERT: Suchmaschinen-Wahl überschreibt skriptfrei das Sendeziel -->
-            <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
-                <label>Bevorzugte Suchmaschine:</label>
-                <select id="engine-selector" onchange="this.form.action = this.value;">
-                    <option value="https://www.google.com/travel/flights" selected>Google Flights (Standard)</option>
-                    <option value="https://skyscanner.de">Skyscanner</option>
-                    <option value="https://kayak.de">Kayak</option>
-                    <option value="https://kiwi.com">Kiwi.com</option>
-                    <option value="https://trip.com">Trip.com</option>
-                </select>
+                <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
             </div>
             
             <div class="full">
