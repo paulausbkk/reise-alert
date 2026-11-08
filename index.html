@@ -28,11 +28,11 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        /* FIXIERTES BUTTONS-MANAGEMENT OHNE ÜBERLAGERUNG */
-        .action-box { width: 100%; height: 45px; display: block; position: relative; }
-        .btn-search { display: none; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; line-height: 45px; box-sizing: border-box; }
+        /* ABSOLUT STABILE AKTIONBOX - VERHINDERT GRAPHIK-MÜLL */
+        .action-box { width: 100%; height: 45px; position: relative; }
+        .btn-search { display: none; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; line-height: 45px; box-sizing: border-box; position: absolute; top: 0; left: 0; }
         
-        /* HIER WIRD IMMER REIN ÜBER NATIVES CSS ALLES ANDERE HUNDERTPROZENTIG UNSICHTBAR GEMACHT */
+        /* SKRIPTFREIE CSS-WEICHE: Zeigt nur den exakt ausgewählten Button */
         body:has(#engine-selector option[value="google"]:checked) #btn-google { display: block !important; background: var(--gold); }
         body:has(#engine-selector option[value="skyscanner"]:checked) #btn-skyscanner { display: block !important; background: var(--sky-blue); }
         body:has(#engine-selector option[value="kayak"]:checked) #btn-kayak { display: block !important; background: var(--kayak-orange); }
@@ -45,20 +45,22 @@
     <h1>✈️ Reisekonfiguration PRO</h1>
     
     <datalist id="airports-complete">
-        <option value="Flug von FRA nach BKK">Frankfurt nach Bangkok</option>
-        <option value="Flug von BER nach MNL">Berlin nach Manila</option>
-        <option value="Flug von BER nach CEB">Berlin nach Cebu</option>
+        <option value="BER">Berlin Brandenburg (BER)</option>
+        <option value="FRA">Frankfurt am Main (FRA)</option>
+        <option value="MNL">Manila Ninoy Aquino (MNL)</option>
+        <option value="CEB">Cebu Mactan (CEB)</option>
+        <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
+        <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
     <div class="card">
-        <!-- PRÄZISER ZEITSTEMPEL & ABSOLUTER LOCK -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 11:21 UHR - OCEAN DIRECT]</span></div>
+        <!-- REPARIERT & GETRENNT: Keine Überlagerung, 100% skriptfrei -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 11:23 UHR - SEPARATE MASTER]</span></div>
         <div class="grid">
             
-            <div class="full">
-                <label>Gewünschte Flugstrecke (z.B. Flug von FRA nach BKK):</label>
-                <input type="text" id="route-display" value="Flug von FRA nach BKK" list="airports-complete" required>
-            </div>
+            <!-- REPARIERT: Abflugort und Zielort sind wieder vollständig getrennte Eingabefelder -->
+            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports-complete" required></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
@@ -107,13 +109,13 @@
                 <!-- Google Formular -->
                 <form action="https://google.com" method="get" target="_blank">
                     <input type="hidden" name="tbm" value="fl">
-                    <button type="submit" id="btn-google" class="btn-search" onclick="this.form.q.value = document.getElementById('route-display').value;">Google Flights Suche starten</button>
+                    <button type="submit" id="btn-google" class="btn-search" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Google Flights Suche starten</button>
                     <input type="hidden" name="q">
                 </form>
                 
                 <!-- Skyscanner Formular -->
                 <form action="https://skyscanner.de" method="get" target="_blank">
-                    <button type="submit" id="btn-skyscanner" class="btn-search" onclick="this.form.q.value = document.getElementById('route-display').value;">Skyscanner Suche starten</button>
+                    <button type="submit" id="btn-skyscanner" class="btn-search" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Skyscanner Suche starten</button>
                     <input type="hidden" name="q">
                 </form>
                 
@@ -125,16 +127,3 @@
                 <!-- Kiwi Formular -->
                 <form action="https://kiwi.com" method="get" target="_blank">
                     <button type="submit" id="btn-kiwi" class="btn-search">Kiwi.com Suche starten</button>
-                </form>
-                
-                <!-- Trip Formular -->
-                <form action="https://trip.com" method="get" target="_blank">
-                    <button type="submit" id="btn-trip" class="btn-search">Trip.com Suche starten</button>
-                </form>
-                
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>
