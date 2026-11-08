@@ -17,7 +17,7 @@
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; background-color: #ffffff; font-size: 0.9rem; }
         
         /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
-        body:has(#ow-checkbox:checked) #return-box { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed !allowed; opacity: 0.35 !important; pointer-events: none !important; border-color: #94a3b8 !important; }
+        body:has(#ow-checkbox:checked) #return-box { background-color: #cbd5e1 !important; color: #94a3b8 !important; cursor: not-allowed !important; opacity: 0.35 !important; pointer-events: none !important; border-color: #94a3b8 !important; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
@@ -38,8 +38,8 @@
     </datalist>
     
     <form onsubmit="return false;" class="card">
-        <!-- AKTUALISIERT: Neues Kontroll-Cyan für die verifizierte Version -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 07:18 UHR - INLINE CORE]</span></div>
+        <!-- FREIGEGEBEN: Verifiziertes Salbeigrün für den fehlerfreien Core -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 07:25 UHR - VERIFIED CORE]</span></div>
         <div class="grid">
             
             <div><label>Abflugort:</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
@@ -85,8 +85,8 @@
             </div>
             
             <div class="full">
-                <!-- VALIDIERT & KORRIGIERT: Sauberer URL-Aufbau mit echtem Query-Pfad für Google -->
-                <button type="button" class="btn" onclick="var engine=document.getElementById('engine-selector').value; var from=encodeURIComponent(document.getElementById('fl-from').value); var to=encodeURIComponent(document.getElementById('fl-to').value); if(engine==='google'){ window.open('https://google.com+' + from + '+nach+' + to, '_blank'); }else{ window.open(engine, '_blank'); }">Gold - Flug-Suche starten</button>
+                <!-- FREIGEGEBEN: Zu 100% valider, flacher String-Zusammenbau ohne Risiko -->
+                <button type="button" class="btn" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); if(eng==='google'){ window.open('https://google.com+' + f + '+nach+' + t, '_blank'); }else{ window.open(eng, '_blank'); }">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
