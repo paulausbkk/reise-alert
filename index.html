@@ -45,8 +45,6 @@
         .switch input:checked + .slider:before { transform: translateX(18px); }
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
         
-        .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; font-weight: bold; padding: 15px; border-radius: 8px; margin-top: 15px; }
-        
         /* MAGENTA-KONTAINER FÜR DEN REISEZEIT-SCHIEBEREGLER */
         .range-container { background: var(--time-magenta) !important; padding: 0 10px; border: 1px solid #c084fc; border-radius: 4px; box-sizing: border-box; height: 38px; display: flex; align-items: center; justify-content: center; }
         .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); }
@@ -69,11 +67,11 @@
     
     <form action="https://google.com" method="get" target="_blank" class="card">
 
-        <!-- 🔒 BLOCK 1: DER SPERRBARE KERN -->
+        <!-- 🔒 BLOCK 1: DER REINE KERN -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.75rem; background: #0f172a; padding: 3px 8px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 15:06 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 15:12 UHR]
             </span>
         </div>
         
@@ -107,7 +105,6 @@
                     <option value="First Class">First Class</option>
                 </select>
             </div>
-            <!-- LOW-COST SCHALTER AB JETZT STANDARDMÄSSIG DEAKTIVIERT (AUS) -->
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" name="q" value="inklusive Billigflieger"><span class="slider"></span></label></div>
 
             <div class="section-divider">🧳 Gepäck & Reisezeit</div>
@@ -130,12 +127,6 @@
         </div>
 
         <button type="submit" class="btn">FLUGSUCHE STARTEN</button>
-
-        <!-- 🔒 UNANTASTBARER PASSWORT-TRESOR RAHMEN -->
-        <div class="password-box">
-            <label style="color: var(--rubin); font-weight: bold; margin-bottom: 8px; display: block;">🔒 [LOCKED CORE] PASSWORT-TRESOR</label>
-            <input type="password" id="core-vault" placeholder="Systemschutz active..." disabled style="border-color: var(--rubin); background: #fff5f5;">
-        </div>
 
     </form>
 </div>
