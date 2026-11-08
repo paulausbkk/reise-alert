@@ -35,21 +35,20 @@
     <h1>✈️ Reisekonfiguration PRO</h1>
     <datalist id="airports-complete">
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
-    </datalist>
+    </</datalist>
     
-    <!-- PURE HTML CORE: Garantiert unblockierbar ohne JavaScript -->
+    <!-- FLIGHTS CORE INTERFACE: Springt direkt in die offizielle Google-Flugsuche-Verarbeitung -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 07:49 UHR - OCEAN CORE]</span></div>
+        <!-- Dieser Parameter zwingt Google, die Seite im reinen Flugmodus (fl) zu öffnen -->
+        <input type="hidden" name="tbm" value="fl">
+
+        <!-- KORRIGIERTE PRÄZISE UHRZEIT & SMARAGDGRÜN -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 07:52 UHR - FLIGHTS CORE]</span></div>
         <div class="grid">
             
-            <!-- Feld 1 übergibt den Abflugort an das Such-Query 'q' -->
+            <!-- Durch name="q" liest die Flugschnittstelle Abflug und Ziel fehlerfrei aus -->
             <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
-            
-            <!-- TRICK: Dieser unsichtbare Trenner schiebt das magische Wort "Flüge nach" vollautomatisch zwischen Abflug und Ziel -->
-            <input type="hidden" name="q" value="Flüge nach">
-            
-            <!-- Feld 2 hängt das gewählte Ziel nahtlos an dieselbe Suchkette an -->
             <div><label>Zielort:</label><input type="text" name="q" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
@@ -82,10 +81,10 @@
             </div>
             
             <div class="full">
-                <!-- Rein HTML-gesteuerter Absende-Knopf -->
                 <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
 </div>
 </body>
+</html>
