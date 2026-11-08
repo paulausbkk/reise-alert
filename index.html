@@ -28,16 +28,16 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        /* SKRIPTFREIE BUTTONS-STRUKTUR */
-        .action-box { display: flex; align-items: flex-end; height: 38px; }
-        .btn-search { display: none; align-items: center; justify-content: center; width: 100%; height: 38px; color: #ffffff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1); box-sizing: border-box; }
+        /* FIXIERTES BUTTONS-MANAGEMENT OHNE ÜBERLAGERUNG */
+        .action-box { width: 100%; height: 45px; display: block; position: relative; }
+        .btn-search { display: none; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; line-height: 45px; box-sizing: border-box; }
         
-        /* UNZERSTÖRBARE CSS-WEICHE: Blendet den exakt passenden Button je nach Dropdown-Auswahl ein */
-        body:has(#engine-selector option[value="google"]:checked) #btn-google { display: flex; background: var(--gold); }
-        body:has(#engine-selector option[value="skyscanner"]:checked) #btn-skyscanner { display: flex; background: var(--sky-blue); }
-        body:has(#engine-selector option[value="kayak"]:checked) #btn-kayak { display: flex; background: var(--kayak-orange); }
-        body:has(#engine-selector option[value="kiwi"]:checked) #btn-kiwi { display: flex; background: var(--kiwi-green); }
-        body:has(#engine-selector option[value="trip"]:checked) #btn-trip { display: flex; background: var(--trip-orange); }
+        /* HIER WIRD IMMER REIN ÜBER NATIVES CSS ALLES ANDERE HUNDERTPROZENTIG UNSICHTBAR GEMACHT */
+        body:has(#engine-selector option[value="google"]:checked) #btn-google { display: block !important; background: var(--gold); }
+        body:has(#engine-selector option[value="skyscanner"]:checked) #btn-skyscanner { display: block !important; background: var(--sky-blue); }
+        body:has(#engine-selector option[value="kayak"]:checked) #btn-kayak { display: block !important; background: var(--kayak-orange); }
+        body:has(#engine-selector option[value="kiwi"]:checked) #btn-kiwi { display: block !important; background: var(--kiwi-green); }
+        body:has(#engine-selector option[value="trip"]:checked) #btn-trip { display: block !important; background: var(--trip-orange); }
     </style>
 </head>
 <body>
@@ -52,7 +52,7 @@
     
     <div class="card">
         <!-- PRÄZISER ZEITSTEMPEL & ABSOLUTER LOCK -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[08.11.2026 - 11:14 UHR - LOCKED MASTER]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 11:21 UHR - OCEAN DIRECT]</span></div>
         <div class="grid">
             
             <div class="full">
@@ -89,7 +89,7 @@
                 <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
             </div>
             
-            <!-- REPARIERT: Linke Seite enthält das unzerstörbare Dropdown-Menü -->
+            <!-- Linkes Auswahlfeld steuert die CSS-Weiche für die Buttons -->
             <div>
                 <label>1. Suchseite wählen:</label>
                 <select id="engine-selector">
@@ -101,33 +101,40 @@
                 </select>
             </div>
             
-            <!-- REPARIERT: Rechte Seite blendet rein über HTML/CSS den passenden, fest beschrifteten Button ein -->
+            <!-- Rechte Seite blendet rein über HTML/CSS den passenden, fest beschrifteten Button ein -->
             <div class="action-box">
                 
-                <!-- Google Formular-Verknüpfung -->
-                <form action="https://google.com" method="get" target="_blank" style="width:100%;">
+                <!-- Google Formular -->
+                <form action="https://google.com" method="get" target="_blank">
                     <input type="hidden" name="tbm" value="fl">
                     <button type="submit" id="btn-google" class="btn-search" onclick="this.form.q.value = document.getElementById('route-display').value;">Google Flights Suche starten</button>
                     <input type="hidden" name="q">
                 </form>
                 
-                <!-- Skyscanner Formular-Verknüpfung -->
-                <form action="https://skyscanner.de" method="get" target="_blank" style="width:100%;">
+                <!-- Skyscanner Formular -->
+                <form action="https://skyscanner.de" method="get" target="_blank">
                     <button type="submit" id="btn-skyscanner" class="btn-search" onclick="this.form.q.value = document.getElementById('route-display').value;">Skyscanner Suche starten</button>
                     <input type="hidden" name="q">
                 </form>
                 
-                <!-- Kayak Formular-Verknüpfung -->
-                <form action="https://kayak.de" method="get" target="_blank" style="width:100%;">
+                <!-- Kayak Formular -->
+                <form action="https://kayak.de" method="get" target="_blank">
                     <button type="submit" id="btn-kayak" class="btn-search">Kayak Suche starten</button>
                 </form>
                 
-                <!-- Kiwi Formular-Verknüpfung -->
-                <form action="https://kiwi.com" method="get" target="_blank" style="width:100%;">
+                <!-- Kiwi Formular -->
+                <form action="https://kiwi.com" method="get" target="_blank">
                     <button type="submit" id="btn-kiwi" class="btn-search">Kiwi.com Suche starten</button>
                 </form>
                 
-                <!-- Trip Formular-Verknüpfung -->
-                <form action="https://trip.com" method="get" target="_blank" style="width:100%;">
+                <!-- Trip Formular -->
+                <form action="https://trip.com" method="get" target="_blank">
                     <button type="submit" id="btn-trip" class="btn-search">Trip.com Suche starten</button>
                 </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
