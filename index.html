@@ -37,24 +37,20 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- ORIGINAL-TRESOR-VERSION: Öffnet das Suchinterface mit dem Flights-Parameter -->
-    <form action="https://google.com" method="get" target="_blank" class="card">
-        
-        <!-- Zwingt Google serverseitig in das interaktive Flugsuche-Erscheinungsbild -->
-        <input type="hidden" name="tbm" value="fl">
+    <!-- DER TRICK: Sendet direkt an das offizielle Google Flights Verzeichnis -->
+    <form action="https://www.google.com/travel/flights" method="get" target="_blank" class="card">
 
-        <!-- VISUELLE PRÄZISE UHRZEIT-KONTROLLE -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 08:20 UHR - STABLE BLUE]</span></div>
+        <!-- PRÄZISER ZEITSTEMPEL & ABSICHERUNG -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 08:03 UHR - FLIGHTS INTERFACE]</span></div>
         <div class="grid">
             
-            <!-- q und oq bündeln Abflug und Ziel nativ für Google Flights -->
-            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" name="oq" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
+            <!-- name="q" ist die magische Variable, die Google Flights nativ ausliest -->
+            <div class="full"><label>Flugstrecke eingeben (z.B. BER nach MNL):</label><input type="text" name="q" placeholder="z.B. Berlin (BER) nach Manila (MNL)" list="airports-complete" required></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
             
-            <div class="switch-container"><label>Nur Hinflug (One One):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
+            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             
             <div><label>Beförderungsklasse:</label><select><option>Economy</option><option>Premium Economy</option><option value="Business">Business Class</option><option value="First">First Class</option></select></div>
