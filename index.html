@@ -35,26 +35,23 @@
     <h1>✈️ Reisekonfiguration PRO</h1>
     
     <datalist id="airports-complete">
-        <option value="Berlin (BER) nach Bangkok (BKK)"></option>
-        <option value="Frankfurt (FRA) nach Manila (MNL)"></option>
-        <option value="Berlin (BER) nach Cebu (CEB)"></option>
-        <option value="Frankfurt (FRA) nach Singapore (SIN)"></option>
+        <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- UNZERSTÖRBARER INTERFACE-PFAD: Nutzt die Google-Suche, erzwingt aber das Flug-Interface -->
+    <!-- Wir senden an die normale Google-Suche, zwingen sie aber in den Flug-Modus -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         
-        <!-- Dieser Parameter zwingt Google, die Seite im interaktiven Flugmodus (tbm=fl) zu öffnen -->
+        <!-- Dieser unsichtbare Schalter zwingt Google, die Flugsuche (fl) anzuzeigen -->
         <input type="hidden" name="tbm" value="fl">
 
-        <!-- VISUELLE PRÄZISE ZEIT-KONTROLLE -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:01 UHR - FLIGHTS INTERFACE]</span></div>
+        <!-- PRÄZISER ZEITSTEMPEL & NEUES HIMMELBLAU -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 09:04 UHR - BLUE COUPLING]</span></div>
         <div class="grid">
             
-            <!-- Nur noch ein einziges Suchfeld mit name="q" übergibt die gesamte Route unzerstörbar an Google Flights -->
+            <!-- q ist das Haupt-Suchfeld für Google -->
             <div class="full">
-                <label>Gewünschte Flugstrecke (Auswahl oder freie Eingabe):</label>
-                <input type="text" name="q" value="Berlin (BER) nach Bangkok (BKK)" list="airports-complete" required>
+                <label>Abflugort & Zielort direkt eingeben (z.B. Berlin nach Bangkok):</label>
+                <input type="text" name="q" placeholder="z.B. Berlin nach Bangkok" list="airports-complete" required>
             </div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
@@ -94,4 +91,3 @@
 </div>
 </body>
 </html>
-
