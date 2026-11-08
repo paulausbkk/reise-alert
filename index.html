@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - PURE HTML CORE</title>
+    <title>✈️ Reisekonfiguration PRO - PURE INLINE CORE</title>
     <style>
         :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
@@ -43,17 +43,14 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <form action="https://google.com" method="get" target="_blank" class="card">
-        
-        <!-- Das Google-Hiddenfield hat eine ID erhalten, um es bei Skyscanner stummzuschalten -->
-        <input type="hidden" name="tbm" id="tbm-field" value="fl">
+    <form onsubmit="return false;" class="card">
 
         <!-- PRÄZISER TIME-LOCK IM TRESOR -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 10:20 UHR - SAFE SKYLINE]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 10:22 UHR - DIAMOND CORE]</span></div>
         <div class="grid">
             
-            <div><label>Abflugort (IATA):</label><input type="text" name="q" id="from-field" placeholder="z.B. FRA" list="airports-complete" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" name="q" id="to-field" placeholder="z.B. BKK" list="airports-complete" required></div>
+            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports-complete" required></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
@@ -86,10 +83,9 @@
             
             <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
                 <label>Bevorzugte Suchmaschine:</label>
-                <!-- TRICK: Schaltet bei Skyscanner alle störenden Felder komplett ab (disabled=true), damit kein Fehler 400 erzeugt wird -->
-                <select id="engine-selector" onchange="this.form.action = this.value; if(this.value.includes('skyscanner.de')){ document.getElementById('from-field').name='from'; document.getElementById('to-field').name='to'; document.getElementById('tbm-field').disabled=true; }else{ document.getElementById('from-field').name='q'; document.getElementById('to-field').name='q'; document.getElementById('tbm-field').disabled=false; }">
-                    <option value="https://google.com" selected>Google Flights (Standard)</option>
-                    <option value="https://skyscanner.de">Skyscanner</option>
+                <select id="engine-selector">
+                    <option value="google" selected>Google Flights (Standard)</option>
+                    <option value="skyscanner">Skyscanner</option>
                     <option value="https://kayak.de">Kayak</option>
                     <option value="https://kiwi.com">Kiwi.com</option>
                     <option value="https://trip.com">Trip.com</option>
@@ -97,12 +93,12 @@
             </div>
             
             <div class="full">
-                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
+                <!-- INLINE-CORE: Absolut unzerstörbarer Direktumschalter per Klick-Event. Öffnet die Ziele blitzschnell und narrensicher -->
+                <button type="button" class="btn" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); if(eng==='google'){ window.open('https://google.com+' + f + '+nach+' + t, '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t, '_blank'); } else { window.open(eng, '_blank'); }">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
 </div>
 </body>
 </html>
-
 
