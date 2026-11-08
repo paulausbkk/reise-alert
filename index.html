@@ -89,7 +89,7 @@
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 17:40 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 17:42 UHR]
             </span>
         </div>
         
@@ -174,11 +174,12 @@
                 </select>
             </div>
             <div>
-                <!-- DIE INLINE-DATENÜBERGABE IM BUTTON ERSTRECKT SICH JETZT LIVE AUF DIE RECHTE SEITE -->
+                <label>&nbsp;</label>
                 <button type="button" class="submit-btn" onclick="
                     var eng = document.getElementById('engine-select').value;
                     var von = (document.getElementById('fl-from').value || 'fra').toLowerCase().trim();
                     var nach = (document.getElementById('fl-to').value || 'bkk').toLowerCase().trim();
                     
-                    var d1Raw = document.getElementById('date-start').value.split('-');
-                    var d1 = d1Raw.length === 3 ? d1Raw[0].substring(2,4) + d1Raw[1] + d1Raw[2] : '261218';
+                    var d1 = document.getElementById('date-start').value.replace(/-/g, '');
+                    
+                    var isOW = document.getElementById('ow-checkbox').checked;
