@@ -37,15 +37,18 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <form onsubmit="return false;" class="card">
-        <!-- FREIGEGEBEN: Gold-Gelb für den fehlerfreien, reparierten Klick-Core -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fef3c7; padding: 2px 6px; border-radius: 4px; color: #92400e; border: 1px solid #fde68a;">[08.11.2026 - 07:31 UHR - GOLD CORE]</span></div>
+    <!-- NATIVES ABSENDEN: Nutzt die offizielle Google-Suche ohne blockierende Skripte -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
+        
+        <!-- KORRIGIERTE UHRZEIT & FARBE -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fee2e2; padding: 2px 6px; border-radius: 4px; color: #991b1b; border: 1px solid #fecaca;">[08.11.2026 - 07:34 UHR - STABLE CORE]</span></div>
         <div class="grid">
             
-            <div><label>Abflugort:</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" id="fl-to" placeholder="z.B. MNL" list="airports-complete"></div>
+            <!-- Google verlangt zwingend name="q" für das Suchfeld -->
+            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Flüge ab FRA" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" list="airports-complete"></div>
             
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" required onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
+            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox" onchange="if(this.checked){document.getElementById('return-box').value='';}else{document.getElementById('return-box').value=document.getElementById('fl-date1').value;}"><span class="slider"></span></label></div>
@@ -66,6 +69,8 @@
             </div>
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" list="airports-complete"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" list="airports-complete"></div>
+            
+            <!-- AUSGEHEBELT FÜR GOOGLE: Reine Datenboxen ohne name-Attribut (Verhindert Fehler 400) -->
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
@@ -75,8 +80,9 @@
             
             <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
                 <label>Bevorzugte Suchmaschine:</label>
-                <select id="engine-selector">
-                    <option value="google" selected>Google Flights (Standard)</option>
+                <!-- Schaltet die Formular-Zieladresse rein nativ über HTML um -->
+                <select id="engine-selector" onchange="this.form.action = this.value;">
+                    <option value="https://google.com" selected>Google (Standard)</option>
                     <option value="https://skyscanner.de">Skyscanner</option>
                     <option value="https://kayak.de">Kayak</option>
                     <option value="https://kiwi.com">Kiwi.com</option>
@@ -85,8 +91,8 @@
             </div>
             
             <div class="full">
-                <!-- KORREKTUR: Absolut saubere und regelkonforme URL-Generierung ohne syntaktische Fehler -->
-                <button type="button" class="btn" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); if(eng==='google'){ window.open('https://google.com+' + f + '+nach+' + t, '_blank'); }else{ window.open(eng, '_blank'); }">Gold - Flug-Suche starten</button>
+                <!-- UNZERSTÖRBAR: Ein rein nativer HTML-Absende-Button ohne eine einzige Zeile JavaScript -->
+                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
