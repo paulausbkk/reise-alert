@@ -44,13 +44,31 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        /* 🛠️ ACTION-GRID FÜR DIE NEBENEINANDER LIEGENDEN FELDER */
+        /* 🛠️ EXAKTE UMSETZUNG DER NEBENEINANDER LIEGENDEN SUCH-FELDER */
         .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; align-items: end; }
-        .dual-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; background: var(--gold); box-shadow: 0 4px 6px rgba(0,0,0,0.1); line-height: 1.2; }
-        .btn-main-text { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-sub-text { font-size: 0.75rem; font-weight: normal; opacity: 0.85; margin-top: 1px; }
         
-        /* REINE CSS-WEICHE FÜR DEN UNTERTEXT DES BUTTONS */
+        /* RECHTES SCHALTER-FELD: GEBAUT WIE EIN ABGERUNDETES EINGABEFELD, ABER ALS AKTION */
+        .dual-btn { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
+            height: 38px; /* Exakt die Höhe der umliegenden Felder */
+            color: #ffffff; 
+            border: 1px solid #d97706; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            background: var(--gold); 
+            box-sizing: border-box;
+            padding: 2px 10px;
+            line-height: 1.1;
+        }
+        .btn-main-text { font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+        .btn-sub-text { font-size: 0.68rem; font-weight: normal; opacity: 0.9; margin-top: 1px; }
+        
+        /* JAVASCRIPT-FREIES UMSCHALTEN DES RECHTEN UNTERTEXTES */
         .sub-lbl { display: none; }
         body:has(#engine-select option[value="google"]:checked) .lbl-google { display: inline-block; }
         body:has(#engine-select option[value="skyscanner"]:checked) .lbl-skyscanner { display: inline-block; }
@@ -80,11 +98,11 @@
     
     <form action="https://google.com" method="get" target="_blank" class="card">
 
-        <!-- 🔒 BLOCK 1: DER CORE -->
+        <!-- 🔒 BLOCK 1: DER KERN -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.75rem; background: #0f172a; padding: 3px 8px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 15:38 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 15:42 UHR]
             </span>
         </div>
         
@@ -151,12 +169,6 @@
             </div>
         </div>
 
-        <!-- 🛠️ DIE ZWEI NEBENEINANDER LIEGENDEN FELDER AM ENDE -->
+        <!-- 🛠️ INTERFACE-SCHNITTSTELLE (DROPDOWN + OPTISCH INTEGRALER BUTTON) -->
         <div class="action-grid">
             <div>
-                <label>Suchmaschine wählen:</label>
-                <select id="engine-select" name="q">
-                    <option value="google" selected>Google Flights</option>
-                    <option value="skyscanner">Skyscanner</option>
-                    <option value="kayak">Kayak</option>
-                    <option value="kiwi">Kiwi.com</option>
