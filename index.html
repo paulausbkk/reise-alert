@@ -50,15 +50,15 @@
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
         
-        /* 🛠️ FLEXIBLE, RESPONSIVE BUTTON-REIHE (KANN NIEMALS MEHR AUSBLENDEN) */
-        .action-flex-container { display: flex; flex-wrap: wrap; gap: 6px; grid-column: span 2; margin-top: 8px; width: 100%; }
+        /* 🛠️ BRUCHSICHERE FLEXBOX-ZEILE IM GRID-SYSTEM INTEGRIERT */
+        .action-flex-container { display: flex; flex-wrap: wrap; gap: 6px; grid-column: span 2; margin-top: 8px; width: 100%; box-sizing: border-box; }
         
         .touch-btn { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            flex: 1; /* Teilt den Platz gleichmaeßig auf */
-            min-width: 80px; /* Mindestbreite pro Button vor dem Umbruch */
+            flex: 1; 
+            min-width: 80px; 
             height: 28px; 
             color: #ffffff; 
             border-radius: 4px; 
@@ -73,6 +73,7 @@
             border: 1px solid #d97706;
             background: var(--gold);
         }
+        .touch-btn:hover { background: #d97706; }
         .btn-google { background: #4285f4; border-color: #3367d6; }
         .btn-google:hover { background: #3367d6; }
         .btn-skyscanner { background: #007054; border-color: #00523f; }
@@ -106,7 +107,7 @@
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 19:04 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 19:08 UHR]
             </span>
         </div>
         
@@ -181,5 +182,5 @@
 
             <div class="section-divider">🔍 Direkte Such-Schnittstellen (Skriptfrei)</div>
             
-            <!-- UNZERSTÖRBARE FLEXBOX-REIHE FLIESST AUTOMATISCH BEI PLATZMANGEL -->
+            <!-- HIER SITZEN DIE BUTTONS JETZT KORREKT INNERHALB DES FORMULAR-GRIDS -->
             <div class="action-flex-container">
