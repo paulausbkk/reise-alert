@@ -38,13 +38,12 @@
         <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
     </datalist>
     
-    <!-- Formular startet mit Google Search als Standard-Action -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         
         <input type="hidden" name="tbm" value="fl">
 
-        <!-- FIXIERT: Präzise Uhrzeit und stabile königsblaue Kontrollbox -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 10:04 UHR - ENGINE CORE]</span></div>
+        <!-- FIXIERT: Aktualisierte Echtzeit und neue smaragdgrüne Kontrollbox -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 10:06 UHR - FINAL PASSENGER CORE]</span></div>
         <div class="grid">
             
             <div><label>Abflugort (IATA):</label><input type="text" name="q" placeholder="z.B. FRA" list="airports-complete" required></div>
@@ -57,7 +56,8 @@
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             
             <div><label>Beförderungsklasse:</label><select><option>Economy</option><option>Premium Economy</option><option value="Business">Business Class</option><option value="First">First Class</option></select></div>
-            <div><label>Personen:</label><select><option>1 Person</option><option selected>2 Personen</option></select></div>
+            <!-- REPARIERT: Personenzahl bis 4 Personen wieder vollständig hergestellt -->
+            <div><label>Personen:</label><select><option>1 Person</option><option selected>2 Personen</option><option>3 Personen</option><option>4 Personen</option></select></div>
             
             <div>
                 <label>Gepäck:</label>
@@ -79,7 +79,6 @@
                 <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
             </div>
             
-            <!-- KORRIGIERT: Suchmaschinen-Auswahlmenü wieder stabil und unzerstörbar integriert -->
             <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
                 <label>Bevorzugte Suchmaschine:</label>
                 <select id="engine-selector" onchange="this.form.action = this.value;">
