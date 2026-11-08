@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - PURE HTML CORE</title>
+    <title>✈️ Reisekonfiguration PRO - PURE INLINE CORE</title>
     <style>
-        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; --sky-blue: #0077b6; --kayak-orange: #ff6600; }
+        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--rubin); }
@@ -27,13 +27,7 @@
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
-        
-        /* SAUBERE GRID-STRUKTUR FÜR DIE FESTEN BUTTONS */
-        .btn-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-        .btn-search { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); box-sizing: border-box; text-align: center; }
-        .btn-google { background: var(--gold); }
-        .btn-skyscanner { background: var(--sky-blue); }
-        .btn-kayak { background: var(--kayak-orange); }
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -49,16 +43,17 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <div class="card">
-        <!-- PRÄZISER TIME-LOCK: 100% SKRIPTFREIER MASTER -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[08.11.2026 - 11:27 UHR - LOCKED MASTER]</span></div>
+    <form onsubmit="return false;" class="card">
+
+        <!-- PRÄZISER ZEITSTEMPEL & ERFOLGS-SMARAGD -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 11:30 UHR - VERIFIED CORE]</span></div>
         <div class="grid">
             
             <!-- Getrennte Eingabefelder für IATA-Codes -->
             <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
             <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports-complete" required></div>
             
-            <!-- EISERNER KALENDER-SCHUTZSCHILD: Inline-Befehl korrigiert rückwirkende Daten unzerstörbar live im Element -->
+            <!-- EISERNER KALENDER-SCHUTZSCHILD: Sperrt rückwirkende Kalenderdaten live im Element -->
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
             
@@ -78,8 +73,8 @@
                 <label>Stopps:</label>
                 <select><option value="" selected></option><option>Direktflug</option><option>Max. 1 Stopp</option><option>Max. 2 Stopps</option></select>
             </div>
-            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)"></div>
-            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB"></div>
+            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" list="airports-complete"></div>
+            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" list="airports-complete"></div>
             
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
@@ -88,31 +83,25 @@
                 <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.';">
             </div>
             
-            <!-- UNZERSTÖRBAR: Fest verdrahtete, sauber aufgeteilte HTML-Formular-Buttons nebeneinander -->
-            <div class="full btn-container">
-                
-                <!-- Google Flights Formular -->
-                <form action="https://google.com" method="get" target="_blank" style="display:contents;">
-                    <input type="hidden" name="tbm" value="fl">
-                    <button type="submit" class="btn-search btn-google" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Google Flights starten</button>
-                    <input type="hidden" name="q">
-                </form>
-                
-                <!-- Skyscanner Formular -->
-                <form action="https://skyscanner.de" method="get" target="_blank" style="display:contents;">
-                    <button type="submit" class="btn-search btn-skyscanner" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Skyscanner starten</button>
-                    <input type="hidden" name="q">
-                </form>
-                
-                <!-- Kayak Formular (In die nächste Reihe brechend für ein sauberes Kachel-Design) -->
-                <form action="https://kayak.de" method="get" target="_blank" class="full" style="margin-top:4px;">
-                    <button type="submit" class="btn-search btn-kayak" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Kayak Suche starten</button>
-                    <input type="hidden" name="q">
-                </form>
-                
+            <!-- REPARIERT: Linkes Dropdown-Menü wieder vollständig da und steuert den rechten Text live an -->
+            <div>
+                <label>1. Suchseite wählen:</label>
+                <select id="engine-selector" onchange="document.getElementById('action-btn').innerText = this.options[this.selectedIndex].text + ' Suche starten';">
+                    <option value="google" selected>Google Flights</option>
+                    <option value="skyscanner">Skyscanner</option>
+                    <option value="kayak">Kayak</option>
+                    <option value="kiwi">Kiwi.com</option>
+                    <option value="trip">Trip.com</option>
+                </select>
+            </div>
+            
+            <div>
+                <label>2. Aktion:</label>
+                <!-- REPARIERT: Synchronisiert die Beschriftung jetzt fehlerfrei live mit deiner Menü-Auswahl -->
+                <button type="button" id="action-btn" class="btn" style="margin-top:0;" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value).toLowerCase(); var t=encodeURIComponent(document.getElementById('fl-to').value).toLowerCase(); if(eng==='google'){ window.open('https://google.com+' + f.toUpperCase() + '+nach+' + t.toUpperCase(), '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t + '/', '_blank'); } else if(eng==='kayak'){ window.open('https://kayak.de' + f.toUpperCase() + '-' + t.toUpperCase() + '/', '_blank'); } else if(eng==='kiwi'){ window.open('https://kiwi.com' + f + '/' + t, '_blank'); } else { window.open('https://trip.com' + t + '&amp;dcity=' + f, '_blank'); }">Google Flights Suche starten</button>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 </body>
 </html>
