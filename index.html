@@ -50,7 +50,7 @@
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
         
-        /* SAUBERER TRANSIT-BUTTON STYLING */
+        /* TRANSIT-BUTTON STYLING */
         .dual-btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 32px; color: #ffffff; border: 1px solid #d97706; border-radius: 4px; font-weight: bold; cursor: pointer; background: var(--gold); box-sizing: border-box; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .dual-btn:hover { background: #d97706; }
     </style>
@@ -59,6 +59,7 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
+    <!-- HIER DIE IDs ERGÄNZT DAMIT DAS INLINE-JS DIE WERTE FINDET -->
     <datalist id="airports">
         <option value="BER">Berlin Brandenburg (BER)</option>
         <option value="FRA">Frankfurt am Main (FRA)</option>
@@ -74,15 +75,15 @@
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 16:40 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 17:15 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" list="airports" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" list="airports" required></div>
+            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" placeholder="z.B. FRA" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" placeholder="z.B. BKK" required></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
             <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
@@ -90,7 +91,7 @@
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select>
+                <select id="fl-pax">
                     <option value="1">1 Person</option>
                     <option value="2">2 Personen</option>
                     <option value="3">3 Personen</option>
@@ -101,19 +102,19 @@
 
             <div>
                 <label>Reiseklasse:</label>
-                <select>
+                <select id="fl-class">
                     <option value="Economy">Economy</option>
                     <option value="Premium">Premium Economy</option>
                     <option value="Business">Business Class</option>
                     <option value="First">First Class</option>
                 </select>
             </div>
-            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="lowcost-checkbox"><span class="slider"></span></label></div>
 
             <div class="section-divider">🧳 Gepäck & Reisezeit</div>
             <div>
                 <label>Gepäck-Optionen:</label>
-                <select>
+                <select id="fl-luggage">
                     <option value="1">1. Handgepäck</option>
                     <option value="2">2. Aufgabegepäck 20 KG</option>
                     <option value="3">3. Aufgabegepäck 32 KG</option>
@@ -124,30 +125,29 @@
             <div>
                 <label>Max. Reisezeit:</label>
                 <div class="range-container">
-                    <input type="range" min="2" max="48" value="24">
+                    <input type="range" id="fl-max-time" min="2" max="48" value="24">
                 </div>
             </div>
 
             <div class="section-divider">💰 Budgetvorgaben Flüge</div>
-            <div><label>max. Flugpreis pro person:</label><input type="text"></div>
+            <div><label>max. Flugpreis pro person:</label><input type="text" id="fl-max-price"></div>
             <div>
                 <label>Währung:</label>
-                <select>
+                <select id="fl-currency">
                     <option value="EUR">EUR (€)</option>
                     <option value="USD">USD ($)</option>
                 </select>
             </div>
 
             <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full"><label>Zwischenstop / Airport:</label><input type="text"></div>
+            <div class="full"><label>Zwischenstop / Airport:</label><input type="text" id="fl-transit"></div>
 
             <div class="section-divider">🔍 Such-Schnittstelle</div>
-            <!-- DIE ABSOLUT STABILE, DOPPELSPALTIGE GRID-LÖSUNG (100% BLOCKSICHER) -->
             <div>
                 <label>Suchmaschine wählen:</label>
                 <select id="engine-select">
                     <option value="google">Google Flights</option>
-                    <option value="skyscanner">Skyscanner</option>
+                    <option value="skyscanner" selected>Skyscanner</option>
                     <option value="kayak">Kayak</option>
                     <option value="kiwi">Kiwi.com</option>
                     <option value="trip">Trip.com</option>
@@ -155,20 +155,15 @@
             </div>
             <div>
                 <label>&nbsp;</label>
+                <!-- DIESER BUTTON VERARBEITET DIE DATEN JETZT LIVE FÜR SKYSCANNER -->
                 <button type="button" class="dual-btn" onclick="
                     const s = document.getElementById('engine-select').value;
-                    let url = 'https://google.com';
-                    if(s==='skyscanner') url='https://skyscanner.de';
-                    if(s==='kayak') url='https://kayak.de';
-                    if(s==='kiwi') url='https://kiwi.com';
-                    if(s==='trip') url='https://trip.com';
-                    window.open(url, '_blank');
-                ">Suche starten</button>
-            </div>
+                    const from = (document.getElementById('fl-from').value || 'fra').toLowerCase().trim();
+                    const to = (document.getElementById('fl-to').value || 'bkk').toLowerCase().trim();
+                    
+                    const d1Raw = document.getElementById('date-start').value;
+                    const d1 = dRaw => dRaw.replace(/-/g, '').substring(2, 8);
+                    const formattedD1 = d1(d1Raw);
+                    
+                    const isOneWay = document.getElementById('ow-checkbox').checked;
 
-        </div>
-
-    </form>
-</div>
-</body>
-</html>
