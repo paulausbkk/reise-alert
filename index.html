@@ -50,12 +50,25 @@
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
         
-        /* DESIGN FÜR DIE DIREKT-BUTTONS */
-        .engine-btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 32px; color: #ffffff !important; border-radius: 4px; font-weight: bold; cursor: pointer; box-sizing: border-box; font-size: 0.82rem; text-transform: uppercase; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
-        .btn-google { background: #4285f4; border: 1px solid #3367d6; }
-        .btn-skyscanner { background: #007054; border: 1px solid #00523f; }
-        .btn-kayak { background: #ff690f; border: 1px solid #d45205; }
-        .btn-kiwi { background: #00a699; border: 1px solid #008075; }
+        .submit-btn { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
+            height: 32px; 
+            color: #ffffff; 
+            border: 1px solid #d97706; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            background: var(--gold); 
+            box-sizing: border-box;
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .submit-btn:hover { background: #d97706; }
     </style>
 </head>
 <body>
@@ -71,29 +84,30 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <div class="card">
+    <!-- 100% PROGRAMMIERFREIE FORMULARÜBERGABE DIREKT AN GOOGLE FLIGHTS -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
 
         <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 18:25 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 18:24 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" required placeholder="z.B. FRA"></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" required placeholder="z.B. BKK"></div>
+            <div><label>Abflugort (IATA):</label><input type="text" name="f" list="airports" required placeholder="z.B. FRA"></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="t" list="airports" required placeholder="z.B. BKK"></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
-            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="d" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
             <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18"></div>
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select id="fl-pax">
+                <select>
                     <option value="1">1 Person</option>
                     <option value="2">2 Personen</option>
                     <option value="3">3 Personen</option>
@@ -104,19 +118,19 @@
 
             <div>
                 <label>Reiseklasse:</label>
-                <select id="fl-class">
-                    <option value="economy">Economy</option>
-                    <option value="premium">Premium Economy</option>
-                    <option value="business">Business Class</option>
-                    <option value="first">First Class</option>
+                <select name="sc">
+                    <option value="0" selected>Economy</option>
+                    <option value="1">Premium Economy</option>
+                    <option value="2">Business Class</option>
+                    <option value="3">First Class</option>
                 </select>
             </div>
-            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="lowcost-checkbox"><span class="slider"></span></label></div>
+            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
 
             <div class="section-divider">🧳 Gepäck & Reisezeit</div>
             <div>
                 <label>Gepäck-Optionen:</label>
-                <select id="fl-luggage">
+                <select>
                     <option value="1">1. Handgepäck</option>
                     <option value="2">2. Aufgabegepäck 20 KG</option>
                     <option value="3">3. Aufgabegepäck 32 KG</option>
@@ -127,39 +141,42 @@
             <div>
                 <label>Max. Reisezeit:</label>
                 <div class="range-container">
-                    <input type="range" id="fl-max-time" min="2" max="48" value="24">
+                    <input type="range" min="2" max="48" value="24">
                 </div>
             </div>
 
             <div class="section-divider">💰 Budgetvorgaben Flüge</div>
-            <div><label>max. Flugpreis pro person:</label><input type="text" id="fl-max-price"></div>
+            <div><label>max. Flugpreis pro person:</label><input type="text"></div>
             <div>
                 <label>Währung:</label>
-                <select id="fl-currency">
+                <select>
                     <option value="EUR">EUR (€)</option>
                     <option value="USD">USD ($)</option>
                 </select>
             </div>
 
             <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full"><label>Zwischenstop / Airport:</label><input type="text" id="fl-transit"></div>
+            <div class="full"><label>Zwischenstop / Airport:</label><input type="text"></div>
 
-            <div class="section-divider">🔍 Direkte Such-Schnittstellen</div>
-            
-            <!-- BUTTON 1: GOOGLE FLIGHTS DIREKTPRUNG -->
+            <div class="section-divider">🔍 Such-Schnittstelle</div>
+            <!-- HIER SIND DROPDOWN UND BUTTON WIEDER PERFEKT GEORDNET PARALLEL NEBENEINANDER -->
             <div>
-                <a href="#" class="engine-btn btn-google" onclick="
-                    var v = (document.getElementById('fl-from').value || 'FRA').toUpperCase();
-                    var n = (document.getElementById('fl-to').value || 'BKK').toUpperCase();
-                    var d1 = document.getElementById('date-start').value;
-                    var d2 = document.getElementById('ow-checkbox').checked ? '' : document.getElementById('return-box').value;
-                    window.open('https://google.com' + v + '%20nach%20' + n + '%20am%20' + d1 + (d2 ? '%20bis%20' + d2 : ''), '_blank');
-                    return false;
-                ">Google Flights</a>
+                <label>Suchmaschine wählen:</label>
+                <select>
+                    <option value="google" selected>Google Flights (Direkt)</option>
+                    <option value="skyscanner">Skyscanner via Google</option>
+                    <option value="kayak">Kayak via Google</option>
+                    <option value="kiwi">Kiwi.com via Google</option>
+                    <option value="trip">Trip.com via Google</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="submit-btn">Suche starten</button>
             </div>
 
-            <!-- BUTTON 2: SKYSCANNER DIREKTSPRUNG (EXAKTER FILTPAD) -->
-            <div>
-                <a href="#" class="engine-btn btn-skyscanner" onclick="
-                    var v = (document.getElementById('fl-from').value || 'fra').toLowerCase().trim();
-                    var n = (document.getElementById('fl-to').value || 'bkk').toLowerCase().trim();
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
