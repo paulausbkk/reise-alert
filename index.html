@@ -27,10 +27,10 @@
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
-        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
         
-        /*aenderung*/
-        .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; font-weight: bold; padding: 15px; border-radius: 8px; margin-top: 15px; }
+        /* PASSWORT-TRESOR */
+        .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; padding: 15px; border-radius: 8px; margin-top: 15px; box-shadow: 0 0 10px rgba(153,27,27,0.2); }
     </style>
 </head>
 <body>
@@ -59,7 +59,7 @@
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="if(this.value &lt; document.getElementById('fl-date1').value){this.value=document.getElementById('fl-date1').value;}"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
-            <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="low-cost-checkbox"><span class="slider"></span></label></div>
             
             <div>
                 <label>Klasse:</label>
@@ -79,14 +79,46 @@
                     <option value="4">4 Personen</option>
                 </select>
             </div>
+
+            <!-- INTERFACE-WEICHE & SCHNITTSTELLE -->
+            <div class="full" style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 15px;">
+                <label>Suchmaschine auswählen:</label>
+                <select id="engine-select" onchange="document.getElementById('search-btn').innerText = this.options[this.selectedIndex].text + ' STARTEN';">
+                    <option value="google">Google Flights</option>
+                    <option value="skyscanner">Skyscanner</option>
+                    <option value="kayak">Kayak</option>
+                    <option value="kiwi">Kiwi.com</option>
+                    <option value="trip">Trip.com</option>
+                </select>
+            </div>
         </div>
 
-        <!-- REINER HTML5 BUTTON OHNE WEITERE AKTIONEN BIS ZUM PASSWORT-ENTSPERREN -->
-        <button id="search-btn" class="btn">SUCHE STARTEN</button>
+        <!-- DER LIVE-AKTIONS-BUTTON (Reine Inline-Logik) -->
+        <button id="search-btn" class="btn" onclick="
+            const from = document.getElementById('fl-from').value.toUpperCase() || 'FRA';
+            const to = document.getElementById('fl-to').value.toUpperCase() || 'BKK';
+            const d1 = document.getElementById('fl-date1').value;
+            const d2 = document.getElementById('ow-checkbox').checked ? '' : document.getElementById('return-box').value;
+            const engine = document.getElementById('engine-select').value;
+            
+            let url = '';
+            if(engine === 'google') {
+                url = `https://google.com{from}+nach+${to}+am+${d1}` + (d2 ? `+bis+${d2}` : '');
+            } else if(engine === 'skyscanner') {
+                url = `https://skyscanner.de{from.toLowerCase()}/${to.toLowerCase()}/${d1.replace(/-/g,'').substring(2,8)}` + (d2 ? `/${d2.replace(/-/g,'').substring(2,8)}` : '') + '/';
+            } else if(engine === 'kayak') {
+                url = `https://kayak.de{from}-${to}/${d1}` + (d2 ? `/${d2}` : '');
+            } else if(engine === 'kiwi') {
+                url = `https://kiwi.com{from.toLowerCase()}/${to.toLowerCase()}/${d1}` + (d2 ? `/${d2}` : '');
+            } else if(engine === 'trip') {
+                url = `https://trip.com{from}&to=${to}&flighttype=` + (d2 ? 'RT' : 'OW') + `&dldate=${d1}` + (d2 ? `&rdate=${d2}` : '');
+            }
+            if(url) window.open(url, '_blank');
+        ">Google Flights STARTEN</button>
 
         <!-- 🔒 SICHERHEITS-LOCK / PASSWORD-TRESOR -->
         <div class="password-box">
-            <label style="color: var(--rubin); font-weight: bold; margin-bottom: 8px; display: block;">🔒 [LOCKED CORE] PASSWORT-TRESOR</label>
+            <label style="color: var(--rubin); font-weight: bold; margin-bottom: 8px;">🔒 [LOCKED CORE] PASSWORT-TRESOR</label>
             <input type="password" id="core-vault" placeholder="Änderungsschutz aktiv. Passwort eingeben..." disabled style="border-color: var(--rubin); background: #fff5f5;">
         </div>
 
