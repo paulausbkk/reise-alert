@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✈️ Reisekonfiguration PRO - PURE HTML CORE</title>
     <style>
-        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; --sky-blue: #0077b6; --kiwi-green: #00a699; --trip-orange: #ff7f00; --kayak-orange: #ff6600; }
+        :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; --sky-blue: #0077b6; --kayak-orange: #ff6600; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--rubin); }
@@ -28,16 +28,12 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        /* STABILE BUTTONS-STRUKTUR OHNE GRAPHIK-MÜLL */
-        .action-box { width: 100%; height: 45px; position: relative; }
-        .btn-search { display: none; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; line-height: 45px; box-sizing: border-box; position: absolute; top: 0; left: 0; }
-        
-        /* SKRIPTFREIE CSS-WEICHE: Zeigt exakt nur den einen ausgewählten Button an */
-        body:has(#engine-selector option[value="google"]:checked) #btn-google { display: block !important; background: var(--gold); }
-        body:has(#engine-selector option[value="skyscanner"]:checked) #btn-skyscanner { display: block !important; background: var(--sky-blue); }
-        body:has(#engine-selector option[value="kayak"]:checked) #btn-kayak { display: block !important; background: var(--kayak-orange); }
-        body:has(#engine-selector option[value="kiwi"]:checked) #btn-kiwi { display: block !important; background: var(--kiwi-green); }
-        body:has(#engine-selector option[value="trip"]:checked) #btn-trip { display: block !important; background: var(--trip-orange); }
+        /* SAUBERE GRID-STRUKTUR FÜR DIE FESTEN BUTTONS */
+        .btn-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .btn-search { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); box-sizing: border-box; text-align: center; }
+        .btn-google { background: var(--gold); }
+        .btn-skyscanner { background: var(--sky-blue); }
+        .btn-kayak { background: var(--kayak-orange); }
     </style>
 </head>
 <body>
@@ -54,15 +50,15 @@
     </datalist>
     
     <div class="card">
-        <!-- 100% KORRIGIERTES SYNC-GERÜST -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[08.11.2026 - 11:24 UHR - LOCKED MASTER]</span></div>
+        <!-- PRÄZISER TIME-LOCK: 100% SKRIPTFREIER MASTER -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[08.11.2026 - 11:27 UHR - LOCKED MASTER]</span></div>
         <div class="grid">
             
-            <!-- Getrennte IATA-Eingabefelder -->
+            <!-- Getrennte Eingabefelder für IATA-Codes -->
             <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
             <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports-complete" required></div>
             
-            <!-- REPARIERT: Inline-Schutzschild live in den Elementen gegen rückwirkende Buchungen -->
+            <!-- EISERNER KALENDER-SCHUTZSCHILD: Inline-Befehl korrigiert rückwirkende Daten unzerstörbar live im Element -->
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
             
@@ -92,32 +88,31 @@
                 <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.';">
             </div>
             
-            <!-- Linkes Auswahlfeld steuert die saubere CSS-Einblendung -->
-            <div>
-                <label>1. Suchseite wählen:</label>
-                <select id="engine-selector">
-                    <option value="google" selected>Google Flights</option>
-                    <option value="skyscanner">Skyscanner</option>
-                    <option value="kayak">Kayak</option>
-                    <option value="kiwi">Kiwi.com</option>
-                    <option value="trip">Trip.com</option>
-                </select>
-            </div>
-            
-            <!-- Rechte Seite blendet rein über HTML/CSS den passenden, fest beschrifteten Button ein -->
-            <div class="action-box">
+            <!-- UNZERSTÖRBAR: Fest verdrahtete, sauber aufgeteilte HTML-Formular-Buttons nebeneinander -->
+            <div class="full btn-container">
                 
-                <!-- Google Formular -->
-                <form action="https://google.com" method="get" target="_blank">
+                <!-- Google Flights Formular -->
+                <form action="https://google.com" method="get" target="_blank" style="display:contents;">
                     <input type="hidden" name="tbm" value="fl">
-                    <button type="submit" id="btn-google" class="btn-search" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Google Flights Suche starten</button>
+                    <button type="submit" class="btn-search btn-google" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Google Flights starten</button>
                     <input type="hidden" name="q">
                 </form>
                 
                 <!-- Skyscanner Formular -->
-                <form action="https://skyscanner.de" method="get" target="_blank">
-                    <button type="submit" id="btn-skyscanner" class="btn-search" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Skyscanner Suche starten</button>
+                <form action="https://skyscanner.de" method="get" target="_blank" style="display:contents;">
+                    <button type="submit" class="btn-search btn-skyscanner" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Skyscanner starten</button>
                     <input type="hidden" name="q">
                 </form>
                 
-                <!-- Kayak Formular -->
+                <!-- Kayak Formular (In die nächste Reihe brechend für ein sauberes Kachel-Design) -->
+                <form action="https://kayak.de" method="get" target="_blank" class="full" style="margin-top:4px;">
+                    <button type="submit" class="btn-search btn-kayak" onclick="this.form.q.value = document.getElementById('fl-from').value + ' nach ' + document.getElementById('fl-to').value;">Kayak Suche starten</button>
+                    <input type="hidden" name="q">
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
