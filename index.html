@@ -34,7 +34,6 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- UNKONVENTIONELL: Die Datalist schlägt direkt fertig kombinierte Flugstrecken vor -->
     <datalist id="airports-complete">
         <option value="Berlin (BER) nach Bangkok (BKK)"></option>
         <option value="Frankfurt (FRA) nach Manila (MNL)"></option>
@@ -42,19 +41,19 @@
         <option value="Frankfurt (FRA) nach Singapore (SIN)"></option>
     </datalist>
     
-    <!-- STABILER PFAD: Nutzt die funktionierende Google-Verbindung -->
+    <!-- UNZERSTÖRBARER INTERFACE-PFAD: Nutzt die Google-Suche, erzwingt aber das Flug-Interface -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         
-        <!-- Aktiviert den offiziellen Flug-Suchmodus bei Google -->
+        <!-- Dieser Parameter zwingt Google, die Seite im interaktiven Flugmodus (tbm=fl) zu öffnen -->
         <input type="hidden" name="tbm" value="fl">
 
-        <!-- PRÄZISER ZEITSTEMPEL & STABILES OZEANBLAU -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 08:48 UHR - COMBINED CORE]</span></div>
+        <!-- VISUELLE PRÄZISE ZEIT-KONTROLLE -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:01 UHR - FLIGHTS INTERFACE]</span></div>
         <div class="grid">
             
-            <!-- Das 'name="q"' Feld ist vorausgewählt mit einer kompletten Strecke -->
+            <!-- Nur noch ein einziges Suchfeld mit name="q" übergibt die gesamte Route unzerstörbar an Google Flights -->
             <div class="full">
-                <label>Flugstrecke (Auswahl oder freie Eingabe):</label>
+                <label>Gewünschte Flugstrecke (Auswahl oder freie Eingabe):</label>
                 <input type="text" name="q" value="Berlin (BER) nach Bangkok (BKK)" list="airports-complete" required>
             </div>
             
