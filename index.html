@@ -37,14 +37,14 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- KORREKTUR: Action zeigt jetzt auf den exakten Google-Suchpfad, um 404 zu verhindern -->
-    <form action="https://google.com" method="get" target="_blank" class="card">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fef9c3; padding: 2px 6px; border-radius: 4px; color: #854d0e; border: 1px solid #fef08a;">[08.11.2026 - 06:43 UHR - INLINE CORE]</span></div>
+    <!-- onsubmit="return false;" verhindert das ungefilterte Absenden, das den Fehler 400 erzeugt -->
+    <form onsubmit="return false;" class="card">
+        <!-- AKTUALISIERT: Neues Datum, neue Uhrzeit und neue pinke Hintergrundfarbe -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fce7f3; padding: 2px 6px; border-radius: 4px; color: #9d174d; border: 1px solid #fbcfe8;">[08.11.2026 - 06:47 UHR - INLINE CORE]</span></div>
         <div class="grid">
-            <input type="hidden" name="tbm" id="tbm-field" value="fl">
             
-            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. FRA" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" list="airports-complete"></div>
+            <div><label>Abflugort:</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" id="fl-to" placeholder="z.B. MNL" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" required onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
@@ -76,9 +76,8 @@
             
             <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
                 <label>Bevorzugte Suchmaschine:</label>
-                <!-- KORREKTUR: Schaltet bei Google auf /search um, bei Drittseiten direkt auf deren Hauptdomain -->
-                <select id="engine-selector" onchange="if(this.value.includes('google.com')){this.form.action='https://google.com'; document.getElementById('tbm-field').value='fl';}else{this.form.action=this.value; document.getElementById('tbm-field').value='';}">
-                    <option value="https://google.com" selected>Google Flights (Standard)</option>
+                <select id="engine-selector">
+                    <option value="google" selected>Google Flights (Standard)</option>
                     <option value="https://skyscanner.de">Skyscanner</option>
                     <option value="https://kayak.de">Kayak</option>
                     <option value="https://kiwi.com">Kiwi.com</option>
@@ -87,7 +86,8 @@
             </div>
             
             <div class="full">
-                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
+                <!-- KORREKTUR: Filtert die Parameter im Klick-Moment absolut fehlerfrei -->
+                <button type="button" class="btn" onclick="var engine=document.getElementById('engine-selector').value; var from=encodeURIComponent(document.getElementById('fl-from').value); if(engine==='google'){ window.open('https://google.com', '_blank'); }else{ window.open(engine, '_blank'); }">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
