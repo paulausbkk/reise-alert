@@ -84,30 +84,32 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <form action="https://google.com" method="get" target="_blank" class="card">
+    <!-- DIESER SPEZIELLE PFAD ZWINGT SKYSCANNER, DIE REINEN TEXTFELDER DIREKT EINZULESEN -->
+    <form action="https://skyscanner.de" method="get" target="_blank" class="card">
 
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 18:05 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 18:11 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <!-- name-Attribute entfernt damit sie das Dropdown unten nicht stoeren -->
-            <div><label>Abflugort (IATA):</label><input type="text" list="airports" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" list="airports" required></div>
+            <!-- Durch diese exakten Feldnamen erkennt Skyscanner den Start- und Zielort -->
+            <div><label>Abflugort (IATA):</label><input type="text" name="from" list="airports" required style="text-transform: uppercase;"></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="to" list="airports" required style="text-transform: uppercase;"></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
-            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
-            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18"></div>
+            <!-- Dieser Parameter füttert das Hinflugdatum im passenden Format -->
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="vdate" value="2026-12-18"></div>
+            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28"></div>
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select>
-                    <option value="1">1 Person</option>
+                <select name="adults">
+                    <option value="1" selected>1 Person</option>
                     <option value="2">2 Personen</option>
                     <option value="3">3 Personen</option>
                     <option value="4">4 Personen</option>
@@ -119,9 +121,9 @@
                 <label>Reiseklasse:</label>
                 <select>
                     <option value="Economy">Economy</option>
-                    <option value="Premium">Premium Economy</option>
-                    <option value="Business">Business Class</option>
-                    <option value="First">First Class</option>
+                    <option value="Premium Economy">Premium Economy</option>
+                    <option value="Business Class">Business Class</option>
+                    <option value="First Class">First Class</option>
                 </select>
             </div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -130,11 +132,11 @@
             <div>
                 <label>Gepäck-Optionen:</label>
                 <select>
-                    <option value="1">1. Handgepäck</option>
-                    <option value="2">2. Aufgabegepäck 20 KG</option>
-                    <option value="3">3. Aufgabegepäck 32 KG</option>
-                    <option value="4">4. Handgepäck plus 20 KG</option>
-                    <option value="5">5. Handgepäck plus 32 KG</option>
+                    <option value="mit Handgepäck" selected>1. Handgepäck</option>
+                    <option value="mit Aufgabegepäck 20 KG">2. Aufgabegepäck 20 KG</option>
+                    <option value="mit Aufgabegepäck 32 KG">3. Aufgabegepäck 32 KG</option>
+                    <option value="mit Handgepäck plus 20 KG Aufgabegepäck">4. Handgepäck plus 20 KG Aufgabegepäck</option>
+                    <option value="mit Handgepäck plus 32 KG Aufgabegepäck">5. Handgepäck plus 32 KG Aufgabegepäck</option>
                 </select>
             </div>
             <div>
@@ -152,7 +154,7 @@
             <div>
                 <label>Währung:</label>
                 <select>
-                    <option value="EUR">EUR (€)</option>
+                    <option value="EUR" selected>EUR (€)</option>
                     <option value="USD">USD ($)</option>
                 </select>
             </div>
@@ -164,19 +166,8 @@
             </div>
 
             <div class="section-divider">🔍 Such-Schnittstelle</div>
-            <div>
-                <label>Suchmaschine wählen:</label>
-                <!-- EINZIGES AKTIVES NAME-ATTRIBUT STEUERT JETZT EXAKT DIE ZIEL-MASCHINE BEI GOOGLE -->
-                <select name="q" id="engine-select">
-                    <option value="Flüge auf Google Flights" selected>Google Flights</option>
-                    <option value="Flüge auf Skyscanner">Skyscanner</option>
-                    <option value="Flüge auf Kayak">Kayak</option>
-                    <option value="Flüge auf Kiwi.com">Kiwi.com</option>
-                    <option value="Flüge auf Trip.com">Trip.com</option>
-                </select>
-            </div>
-            <div>
-                <button type="submit" class="submit-btn">Suche starten</button>
+            <div class="full">
+                <button type="submit" class="submit-btn">SKYSCANNER SUCHE STARTEN</button>
             </div>
 
         </div>
