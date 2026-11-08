@@ -25,7 +25,7 @@
         label { display: block; font-weight: bold; font-size: 0.78rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.85rem; }
         
-        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY (Ausgrauen des Rückflugs) */
+        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
@@ -53,13 +53,15 @@
         /* TRANSIT-BUTTON STYLING */
         .dual-btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 32px; color: #ffffff; border: 1px solid #d97706; border-radius: 4px; font-weight: bold; cursor: pointer; background: var(--gold); box-sizing: border-box; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .dual-btn:hover { background: #d97706; }
+
+        /* STABILES RASTER FÜR DIE SUCH-ELEMENTE UNTEN */
+        .search-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; grid-column: span 2; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- HIER DIE IDs ERGÄNZT DAMIT DAS INLINE-JS DIE WERTE FINDET -->
     <datalist id="airports">
         <option value="BER">Berlin Brandenburg (BER)</option>
         <option value="FRA">Frankfurt am Main (FRA)</option>
@@ -71,7 +73,7 @@
     
     <form onsubmit="return false;" class="card">
 
-        <!-- 🔒 BLOCK 1: DER SPERRBARE KERN -->
+        <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
@@ -82,8 +84,8 @@
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" placeholder="z.B. FRA" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" placeholder="z.B. BKK" required></div>
+            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" required></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
             <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
@@ -143,27 +145,23 @@
             <div class="full"><label>Zwischenstop / Airport:</label><input type="text" id="fl-transit"></div>
 
             <div class="section-divider">🔍 Such-Schnittstelle</div>
-            <div>
-                <label>Suchmaschine wählen:</label>
-                <select id="engine-select">
-                    <option value="google">Google Flights</option>
-                    <option value="skyscanner" selected>Skyscanner</option>
-                    <option value="kayak">Kayak</option>
-                    <option value="kiwi">Kiwi.com</option>
-                    <option value="trip">Trip.com</option>
-                </select>
-            </div>
-            <div>
-                <label>&nbsp;</label>
-                <!-- DIESER BUTTON VERARBEITET DIE DATEN JETZT LIVE FÜR SKYSCANNER -->
-                <button type="button" class="dual-btn" onclick="
-                    const s = document.getElementById('engine-select').value;
-                    const from = (document.getElementById('fl-from').value || 'fra').toLowerCase().trim();
-                    const to = (document.getElementById('fl-to').value || 'bkk').toLowerCase().trim();
-                    
-                    const d1Raw = document.getElementById('date-start').value;
-                    const d1 = dRaw => dRaw.replace(/-/g, '').substring(2, 8);
-                    const formattedD1 = d1(d1Raw);
-                    
-                    const isOneWay = document.getElementById('ow-checkbox').checked;
-
+            <!-- BOMBENFEST IM HAUPTGRID REINTEGRIERT -->
+            <div class="search-grid">
+                <div>
+                    <label>Suchmaschine wählen:</label>
+                    <select id="engine-select">
+                        <option value="google">Google Flights</option>
+                        <option value="skyscanner" selected>Skyscanner</option>
+                        <option value="kayak">Kayak</option>
+                        <option value="kiwi">Kiwi.com</option>
+                        <option value="trip">Trip.com</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="dual-btn" onclick="
+                        const engine = document.getElementById('engine-select').value;
+                        const vVon = (document.getElementById('fl-from').value || 'fra').toLowerCase().trim();
+                        const vNach = (document.getElementById('fl-to').value || 'bkk').toLowerCase().trim();
+                        
+                        const d1Raw = document.getElementById('date-start').value.replace(/-/g, '');
+                        const d1 = d1Raw.substring(2, 8);
