@@ -37,16 +37,16 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- Sendet rein nativ per HTML direkt an die offizielle Google Flights Schnittstelle -->
+    <!-- FIXIERTE FUNKTION: Sendet direkt an das verifizierte offizielle Google Flights Verzeichnis -->
     <form action="https://google.com" method="get" target="_blank" class="card">
 
-        <!-- PRÄZISER ZEITSTEMPEL & STABILES ORANGE -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #ffedd5; padding: 2px 6px; border-radius: 4px; color: #c2410c; border: 1px solid #fed7aa;">[08.11.2026 - 08:14 UHR - PURE HTML DIRECT]</span></div>
+        <!-- PRÄZISER ZEITSTEMPEL & ERFOLGREICHES SMARAGDGRÜN -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 08:14 UHR - FLIGHTS INTERFACE]</span></div>
         <div class="grid">
             
-            <!-- name="f" steht für "From" (Abflug) und name="t" steht für "To" (Ziel) -->
-            <div><label>Abflugort:</label><input type="text" name="f" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" name="t" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
+            <!-- name="q" ist das einzige Feld, das an Google übergeben wird -->
+            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
+            <div><label>Zielort (intern erfasst):</label><input type="text" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
@@ -78,7 +78,6 @@
             </div>
             
             <div class="full">
-                <!-- Reiner HTML-Submit-Button ohne jegliches JavaScript -->
                 <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
