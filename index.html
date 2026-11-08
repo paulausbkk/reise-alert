@@ -84,14 +84,16 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <!-- 100% PROGRAMMIERFREIE FORMULAR-ÜBERGABE ÜBER DIE UNIVERSAL-SUCHE -->
     <form action="https://google.com" method="get" target="_blank" class="card">
+
+        <!-- 🔒 STEUER-PARAMETER ZWINGT GOOGLE ZUR SOFORTIGEN AUFLÖSUNG DER ERGEBNISSE -->
+        <input type="hidden" name="btnG" value="Google+Suche">
 
         <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 18:27 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 18:33 UHR]
             </span>
         </div>
         
@@ -165,7 +167,6 @@
             </div>
 
             <div class="section-divider">🔍 Such-Schnittstelle</div>
-            <!-- DAS SPEZIFISCH BENANNTE SELEKTIONSTAG ÜBERMITTELT NUN DEN ZIEL-BEFEHL AN DIE BRÜCKE -->
             <div>
                 <label>Suchmaschine wählen:</label>
                 <select name="q">
@@ -185,3 +186,4 @@
     </form>
 </div>
 </body>
+</html>
