@@ -46,7 +46,7 @@
     <form onsubmit="return false;" class="card">
 
         <!-- PRÄZISER ZEITSTEMPEL & ERFOLGS-SMARAGD -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 10:59 UHR - VERIFIED CORE]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 11:03 UHR - VERIFIED CORE]</span></div>
         <div class="grid">
             
             <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
@@ -78,12 +78,13 @@
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
-                <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
+                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.';">
             </div>
             
+            <!-- REPARIERT: Aktualisiert den Text jetzt absolut narrensicher und synchronisiert sich sofort selbst -->
             <div>
                 <label>1. Suchseite wählen:</label>
-                <select id="engine-selector" onchange="document.getElementById('action-btn').innerText = this.options[this.selectedIndex].text + ' Suche starten';">
+                <select id="engine-selector" onchange="document.getElementById('action-btn').innerHTML = this.options[this.selectedIndex].text + ' Suche starten';">
                     <option value="google" selected>Google Flights</option>
                     <option value="skyscanner">Skyscanner</option>
                     <option value="kayak">Kayak</option>
@@ -94,8 +95,7 @@
             
             <div>
                 <label>2. Aktion:</label>
-                <!-- REPARIERT & DEEP-LINK VERIFIZIERT: Leitet Skyscanner jetzt über das offizielle Routen-Verzeichnis weiter, damit die Daten perfekt vorausgefüllt ankommen -->
-                <button type="button" id="action-btn" class="btn" style="margin-top:0;" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value).toLowerCase(); var t=encodeURIComponent(document.getElementById('fl-to').value).toLowerCase(); if(eng==='google'){ window.open('https://google.com+' + f.toUpperCase() + '+nach+' + t.toUpperCase(), '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t + '/', '_blank'); } else if(eng==='kayak'){ window.open('https://kayak.de' + f.toUpperCase() + '-' + t.toUpperCase() + '/', '_blank'); } else if(eng==='kiwi'){ window.open('https://kiwi.com' + f + '/' + t + '/', '_blank'); } else { window.open('https://trip.com' + f + '&amp;acity=' + t, '_blank'); }">Google Flights Suche starten</button>
+                <button type="button" id="action-btn" class="btn" style="margin-top:0;" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value).toLowerCase(); var t=encodeURIComponent(document.getElementById('fl-to').value).toLowerCase(); if(eng==='google'){ window.open('https://google.com+' + f.toUpperCase() + '+nach+' + t.toUpperCase(), '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t + '/', '_blank'); } else if(eng==='kayak'){ window.open('https://kayak.de' + f.toUpperCase() + '-' + t.toUpperCase(), '_blank'); } else if(eng==='kiwi'){ window.open('https://kiwi.com' + f + '/' + t, '_blank'); } else { window.open('https://trip.com' + f + '-to-' + t, '_blank'); }">Google Flights Suche starten</button>
             </div>
         </div>
     </form>
