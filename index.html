@@ -29,7 +29,6 @@
         .switch input:checked + .slider:before { transform: translateX(18px); }
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
         
-        /* PASSWORT-TRESOR MALERISCH GEZEICHNET */
         .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; font-weight: bold; padding: 15px; border-radius: 8px; margin-top: 15px; }
     </style>
 </head>
@@ -93,7 +92,7 @@
             </div>
         </div>
 
-        <!-- DER LIVE-AKTIONS-BUTTON (Ultrakurze, unzerstöbare Inline-Logik) -->
+        <!-- DER LIVE-AKTIONS-BUTTON -->
         <button id="search-btn" class="btn" onclick="
             const from = document.getElementById('fl-from').value.toUpperCase() || 'FRA';
             const to = document.getElementById('fl-to').value.toUpperCase() || 'BKK';
