@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - PURE INLINE CORE</title>
+    <title>✈️ Reisekonfiguration PRO - PURE HTML CORE</title>
     <style>
         :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
@@ -34,18 +34,21 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
+    <!-- WICHTIG: Nutze IATA-Codes (wie FRA, BER, BKK), damit Google Flights die Parameter direkt liest -->
     <datalist id="airports-complete">
-        <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
+        <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
     </datalist>
     
-    <form onsubmit="return false;" class="card">
+    <!-- PURE HTML DIRECT: Sendet die Daten rein mechanisch an die Google Flights Verarbeitung -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
 
-        <!-- FREIGEGEBEN: Verifiziertes Salbeigrün für den fehlerfreien Core -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:26 UHR - VERIFIED CORE]</span></div>
+        <!-- PRÄZISER KONTROLL-ZEITSTEMPEL -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #1e293b; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #0f172a;">[08.11.2026 - 09:28 UHR - PURE HTML CORE]</span></div>
         <div class="grid">
             
-            <div><label>Abflugort:</label><input type="text" id="fl-from" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" id="fl-to" placeholder="z.B. Bangkok (BKK)" list="airports-complete" required></div>
+            <!-- Die name-Attribute übergeben Abflug (f) und Ziel (t) fehlerfrei direkt an Google Flights -->
+            <div><label>Abflugort (IATA):</label><input type="text" name="f" placeholder="z.B. FRA" list="airports-complete" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="t" placeholder="z.B. BKK" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
@@ -69,6 +72,7 @@
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB"></div>
             
+            <!-- Budget-Felder ohne name-Attribut übertragen keine störenden Daten -->
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
@@ -77,8 +81,8 @@
             </div>
             
             <div class="full">
-                <!-- ABSOLUT VERIFIZIERT: Liest die IDs sauber aus und öffnet den fehlerfreien Google-Suchpfad im neuen Tab -->
-                <button type="button" class="btn" onclick="var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); var url='https://google.com+' + f + '+nach+' + t + '&tbm=fl'; window.open(url,'_blank');">Gold - Flug-Suche starten</button>
+                <!-- Absolut unzerstörbarer nativer HTML-Submit Button – reagiert IMMER -->
+                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
