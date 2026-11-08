@@ -37,18 +37,19 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- DER TRICK: Sendet direkt an das offizielle Google Flights Verzeichnis -->
+    <!-- Formular sendet standardmäßig an das Google Flights Verzeichnis -->
     <form action="https://www.google.com/travel/flights" method="get" target="_blank" class="card">
 
         <!-- PRÄZISER ZEITSTEMPEL & ABSICHERUNG -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 08:03 UHR - FLIGHTS INTERFACE]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:52 UHR - MASTER CORE]</span></div>
         <div class="grid">
             
-            <!-- name="q" ist die magische Variable, die Google Flights nativ ausliest -->
+            <!-- name="q" ist die Variable für das Hauptsuchfeld -->
             <div class="full"><label>Flugstrecke eingeben (z.B. BER nach MNL):</label><input type="text" name="q" placeholder="z.B. Berlin (BER) nach Manila (MNL)" list="airports-complete" required></div>
             
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
+            <!-- COUPLING REAKTIVIERT: Inline-Schutzschild steuert die Datumsgrenzen live im Element -->
+            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -73,7 +74,19 @@
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
-                <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
+                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.';">
+            </div>
+            
+            <!-- REAKTIVIERT: Suchmaschinen-Wahl überschreibt skriptfrei das Sendeziel -->
+            <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
+                <label>Bevorzugte Suchmaschine:</label>
+                <select id="engine-selector" onchange="this.form.action = this.value;">
+                    <option value="https://www.google.com/travel/flights" selected>Google Flights (Standard)</option>
+                    <option value="https://skyscanner.de">Skyscanner</option>
+                    <option value="https://kayak.de">Kayak</option>
+                    <option value="https://kiwi.com">Kiwi.com</option>
+                    <option value="https://trip.com">Trip.com</option>
+                </select>
             </div>
             
             <div class="full">
