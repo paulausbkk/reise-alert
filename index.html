@@ -35,19 +35,19 @@
     <h1>✈️ Reisekonfiguration PRO</h1>
     <datalist id="airports-complete">
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
-    </</datalist>
+    </datalist>
     
-    <!-- FIXIERTE STRUKTUR: Ruft die Google-Suche auf, erringt aber über tbm=fl den direkten Flugmodus -->
+    <!-- ORIGINAL-TRESOR-FUNKTION: Führt direkt in die Google Flights Daten-Ebene -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         
-        <!-- ELEMENTAR: Dieser Parameter zwingt die Google-Suche in das dedizierte Google Flights-Interface (tbm=fl) -->
+        <!-- Dieser Parameter zwingt Google Flights in den Flugmodus -->
         <input type="hidden" name="tbm" value="fl">
 
-        <!-- PRÄZISER ZEITSTEMPEL & SCHWARZES APPARAT-LABEL -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[08.11.2026 - 08:15 UHR - FOCUSED CORE]</span></div>
+        <!-- KORRIGIERTE UHRZEIT & SMARAGDGRÜN DES ERFOLGS -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 08:18 UHR - FLIGHTS CORE]</span></div>
         <div class="grid">
             
-            <!-- q ist das offizielle Feld, welches Google Flights beim Laden liest -->
+            <!-- Das 'name="q"' Feld ist das einzige, was Google als Suchbegriff verarbeitet -->
             <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
             <div><label>Zielort (intern erfasst):</label><input type="text" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
             
