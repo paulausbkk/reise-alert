@@ -14,8 +14,8 @@
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
-            /* DYNAMISCHE FARBE FÜR DEN UHRZEIT-KASTEN (JETZT NEON-GRÜN) */
-            --lock-box-color: #22c55e; 
+            /* DYNAMISCHE FARBE FÜR DEN UHRZEIT-KASTEN (JETZT AUFFÄLLIGES MAGENTA) */
+            --lock-box-color: #e11d48; 
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
         .container { max-width: 620px; margin: 10px auto; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -51,10 +51,8 @@
         .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); }
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
-        
-        .live-value { color: var(--rubin); font-weight: bold; margin-left: 3px; }
 
-        /* FLEXIBLE, RESPONSIVE BUTTON-REIHE DIREKT IM FORMULAR-GRID */
+        /* 🛠️ REINES, PLATZSPARENDES HTML5-LINK-RASTER */
         .action-flex-container { display: flex; flex-wrap: wrap; gap: 6px; grid-column: span 2; margin-top: 8px; width: 100%; box-sizing: border-box; }
         
         .touch-btn { 
@@ -64,7 +62,7 @@
             flex: 1; 
             min-width: 80px; 
             height: 28px; 
-            color: #ffffff; 
+            color: #ffffff !important; 
             border-radius: 4px; 
             font-weight: bold; 
             cursor: pointer; 
@@ -76,6 +74,7 @@
             padding: 0 4px;
             border: 1px solid #d97706;
             background: var(--gold);
+            text-decoration: none; /* Entfernt den Unterstrich des Links */
         }
         .touch-btn:hover { background: #d97706; }
         .btn-google { background: #4285f4; border-color: #3367d6; }
@@ -105,25 +104,26 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <form onsubmit="return false;" class="card">
+    <div class="card">
 
         <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
+            <!-- NEUER FRAUEN-PINKER KASTEN ALS LADENCHEF-KONTROLLE -->
             <span style="font-size: 0.72rem; background: var(--lock-box-color); padding: 2px 6px; border-radius: 4px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
-                [🔒 LOCKED CORE - 08.11.2026 - 19:26 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 19:35 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" required placeholder="z.B. FRA" style="text-transform: uppercase;"></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" required placeholder="z.B. BKK" style="text-transform: uppercase;"></div>
+            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" placeholder="z.B. FRA" style="text-transform: uppercase;"></div>
+            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" placeholder="z.B. BKK" style="text-transform: uppercase;"></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
-            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
-            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18"></div>
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18"></div>
+            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28"></div>
             
             <div>
                 <label>Anzahl Passagiere:</label>
@@ -159,9 +159,9 @@
                 </select>
             </div>
             <div>
-                <label>Max. Reisezeit:<span id="time-val" class="live-value">24 Std.</span></label>
+                <label>Max. Reisezeit:</label>
                 <div class="range-container">
-                    <input type="range" id="time-slider" min="2" max="48" value="24" oninput="aktualisiereReisezeit(this.value)">
+                    <input type="range" id="time-slider" min="2" max="48" value="24">
                 </div>
             </div>
 
@@ -181,3 +181,7 @@
             <div class="section-divider">✈️ Transit-Optionen</div>
             <div class="full">
                 <label>Zwischenstop / Airport:</label>
+                <input type="text">
+            </div>
+
+            <div class="section-divider">🔍 Direkte Such-Schnittstellen (Statisches HTML)</div>
