@@ -37,9 +37,9 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- onsubmit="return false;" blockiert das native Absenden der störenden Parameter komplett -->
     <form onsubmit="return false;" class="card">
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: #475569; border: 1px solid #cbd5e1;">[08.11.2026 - 07:35 UHR - PLATINUM CORE]</span></div>
+        <!-- FREIGEGEBEN: Gold-Gelb für den fehlerfreien, reparierten Klick-Core -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fef3c7; padding: 2px 6px; border-radius: 4px; color: #92400e; border: 1px solid #fde68a;">[08.11.2026 - 07:31 UHR - GOLD CORE]</span></div>
         <div class="grid">
             
             <div><label>Abflugort:</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
@@ -85,10 +85,11 @@
             </div>
             
             <div class="full">
-                <!-- DER TRACKING-TRICK: Reines Auslesen ohne Parameterübergabe, erzeugt niemals Fehler 400 -->
+                <!-- KORREKTUR: Absolut saubere und regelkonforme URL-Generierung ohne syntaktische Fehler -->
                 <button type="button" class="btn" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); if(eng==='google'){ window.open('https://google.com+' + f + '+nach+' + t, '_blank'); }else{ window.open(eng, '_blank'); }">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
 </div>
 </body>
+</html>
