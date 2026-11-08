@@ -34,19 +34,24 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
+    <!-- REPARIERT: Datalist enthält jetzt Stadtnamen und Codes für die intelligente Browsersuche -->
     <datalist id="airports-complete">
-        <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
+        <option value="BER">Berlin Brandenburg (BER)</option>
+        <option value="FRA">Frankfurt am Main (FRA)</option>
+        <option value="MNL">Manila Ninoy Aquino (MNL)</option>
+        <option value="CEB">Cebu Mactan (CEB)</option>
+        <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
+        <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
     <form action="https://google.com" method="get" target="_blank" class="card">
         
         <input type="hidden" name="tbm" id="tbm-field" value="fl">
 
-        <!-- MEILENSTEIN: Cyan für die erfolgreiche Skyscanner-Integration -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #ecfeff; padding: 2px 6px; border-radius: 4px; color: #0891b2; border: 1px solid #c5f6fa;">[08.11.2026 - 10:14 UHR - SKY CONNECT CORE]</span></div>
+        <!-- KORRIGIERT: Präzise Echtzeit und neue ozeanblaue Kontrollbox -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 10:16 UHR - INTELLIGENT DATALIST]</span></div>
         <div class="grid">
             
-            <!-- Die Felder besitzen nun IDs für den reibungslosen HTML-Umschalter -->
             <div><label>Abflugort (IATA):</label><input type="text" name="q" id="from-field" placeholder="z.B. FRA" list="airports-complete" required></div>
             <div><label>Zielort (IATA):</label><input type="text" name="q" id="to-field" placeholder="z.B. BKK" list="airports-complete" required></div>
             
@@ -81,7 +86,6 @@
             
             <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
                 <label>Bevorzugte Suchmaschine:</label>
-                <!-- KORREKTUR: Schaltet im Klickmoment die Feldnamen für Skyscanner perfekt um -->
                 <select id="engine-selector" onchange="this.form.action = this.value; if(this.value.includes('skyscanner.de')){ document.getElementById('from-field').name='from'; document.getElementById('to-field').name='to'; document.getElementById('tbm-field').name=''; }else{ document.getElementById('from-field').name='q'; document.getElementById('to-field').name='q'; document.getElementById('tbm-field').name='tbm'; }">
                     <option value="https://google.com" selected>Google Flights (Standard)</option>
                     <option value="https://skyscanner.de">Skyscanner</option>
