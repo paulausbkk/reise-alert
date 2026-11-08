@@ -13,7 +13,7 @@
             --border: #cbd5e1; 
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
-            --cyber-blue: #2563eb; /* Neue Signalfarbe für den aktualisierten Kasten */
+            --purple-box: #6d28d9; /* Neue Kastenfarbe für diese Version */
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
         .container { max-width: 650px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -25,7 +25,7 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 38px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
-        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
+        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY (Ausgrauen des Rückflugs) */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
@@ -34,11 +34,6 @@
             pointer-events: none !important; 
             border-color: #94a3b8 !important; 
         }
-        
-        /* MULTI-CITY GABELFLUG-WEICHE REIN ÜBER CSS */
-        .multi-city-block { display: none; }
-        body:has(#mc-checkbox:checked) .multi-city-block { display: block !important; }
-        body:has(#mc-checkbox:checked) .return-flight-box { display: none !important; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
@@ -51,7 +46,8 @@
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
         
         .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; font-weight: bold; padding: 15px; border-radius: 8px; margin-top: 15px; }
-        .range-container { background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
+        .range-container { background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; height: 38px; display: flex; align-items: center; justify-content: space-between; }
+        .range-container input { width: 65%; height: auto; }
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.85rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-top: 5px; }
     </style>
 </head>
@@ -73,31 +69,28 @@
         <!-- 🔒 BLOCK 1: DER SPERRBARE KERN (DEINE SEKTION 1) -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <!-- DYNAMISCH ANMUTENDER FARB-KASTEN MIT AKTUELLER SPEICHER-UHRZEIT -->
-            <span style="font-size: 0.75rem; background: var(--cyber-blue); padding: 3px 8px; border-radius: 4px; color: #ffffff; border: 1px solid #1d4ed8; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 14:29 UHR]
+            <span style="font-size: 0.75rem; background: var(--purple-box); padding: 3px 8px; border-radius: 4px; color: #ffffff; border: 1px solid #5b21b6; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                [🔒 LOCKED CORE - 08.11.2026 - 14:33 UHR]
             </span>
         </div>
         
         <div class="grid">
             
-            <!-- ROUTING WEICHEN -->
-            <div class="switch-container"><label>Gabelflug aktivieren:</label><label class="switch"><input type="checkbox" id="mc-checkbox"><span class="slider"></span></label></div>
-            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
-
-            <div class="section-divider">🛫 Hauptstrecke</div>
+            <div class="section-divider">🛫 Flugziele & Route</div>
+            <!-- FLUGHÄFEN NACH GANZ OBEN GEZOGEN -->
             <div><label>Abflugort (IATA):</label><input type="text" name="q" placeholder="z.B. FRA" list="airports" required></div>
             <div><label>Zielort (IATA):</label><input type="text" name="q" placeholder="z.B. BKK" list="airports" required></div>
-            
-            <div><label>Hinflugdatum:</label><input type="date" name="q" value="2026-12-18"></div>
-            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" name="q" value="2026-12-28"></div>
-            
-            <!-- OPTIONALE GABELFLUG-ZEILEN -->
-            <div class="section-divider multi-city-block">🛬 Zusätzliche Teilstrecke (Gabelflug)</div>
-            <div class="multi-city-block"><label>Abflugort Teilstrecke 2:</label><input type="text" name="q" placeholder="z.B. BKK" list="airports"></div>
-            <div class="multi-city-block"><label>Zielort Teilstrecke 2:</label><input type="text" name="q" placeholder="z.B. MNL" list="airports"></div>
 
-            <div class="section-divider">🧳 Gepäckkonfiguration</div>
+            <div class="section-divider">📅 Reisedaten & Modus</div>
+            <div class="full" style="margin-bottom: 3px;">
+                <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
+            </div>
+            
+            <!-- KALENDERFELD MIT STRATEGISCHER MIN-SAGE GEGEN RÜCKWIRKUNGEN -->
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="q" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
+            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" name="q" value="2026-12-28" min="2026-12-18"></div>
+            
+            <div class="section-divider">🧳 Gepäck & Logistik</div>
             <div class="full">
                 <label>Gepäck-Optionen:</label>
                 <select name="q">
@@ -115,12 +108,12 @@
                 <select name="q">
                     <option value="Direktflug">Nur Nonstop</option>
                     <option value="maximal 1 Stopp">Maximal 1 Stopp</option>
-                    <option value="beliebige Stopps" selected>Beliebig</option>
+                    <option value="maximal 2 Stopps" selected>Maximal 2 Stopps</option>
                 </select>
             </div>
             <div class="range-container">
-                <label>Max. Reisedauer (Std.):</label>
-                <input type="number" name="q" min="2" max="48" value="24">
+                <label style="margin: 0;">Max. Zeit:</label>
+                <input type="range" name="q" min="2" max="48" value="24">
             </div>
 
             <div class="section-divider">🛡️ Airline & Tarife</div>
@@ -138,7 +131,7 @@
             <div class="full">
                 <label>Anzahl Passagiere:</label>
                 <select name="q">
-                    <option value="1 Person">1 Person</option>
+                    <option value="1 Person" selected>1 Person</option>
                     <option value="2 Personen">2 Personen</option>
                     <option value="3 Personen">3 Personen</option>
                     <option value="4 Personen">4 Personen</option>
@@ -157,3 +150,4 @@
     </form>
 </div>
 </body>
+</html>
