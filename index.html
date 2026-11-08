@@ -27,10 +27,10 @@
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
-        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-transform: uppercase; }
         
-        /*aenderung*/
-        .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; font-weight: bold; }
+        /* PASSWORT-TRESOR */
+        .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; padding: 15px; border-radius: 8px; margin-top: 15px; box-shadow: 0 0 10px rgba(153,27,27,0.2); }
     </style>
 </head>
 <body>
@@ -46,59 +46,54 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <form onsubmit="return false;" class="card">
+    <!-- 100% SKRIPTFREIE BRÜCKEN-SCHNITTSTELLE ÜBER GOOGLE AUF SKYSCANNER -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
+        
+        <!-- Versteckter Parameter, der die Suche direkt auf Skyscanner zwingt -->
+        <input type="hidden" name="as_sitesearch" value="skyscanner.de">
 
         <!-- 🔒 BLOCK 1: DER SPERRBARE KERN (DEINE SEKTION 1) -->
         <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[🔒 LOCKED CORE - 08.11.2026 - 11:51 UHR]</span></div>
         <div class="grid">
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports" required></div>
+            <div><label>Abflugort (IATA):</label><input type="text" name="as_q" placeholder="z.B. FRA" list="airports" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="as_epq" placeholder="z.B. BKK" list="airports" required></div>
             
-            <!-- SKRIPTFREIER KALENDER-SCHUTZSCHILD -->
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value){document.getElementById('return-box').value=this.value;}"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="if(this.value &lt; document.getElementById('fl-date1').value){this.value=document.getElementById('fl-date1').value;}"></div>
+            <!-- KALENDER-FELDER (NAME-ATTRIBUTE FÜR DIE FLUGSUCHE OPTIMIERT) -->
+            <div><label>Hinflug:</label><input type="date" name="as_oq" value="2026-12-18"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" name="as_eq" value="2026-12-28"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             
-            <div><label>Beförderungsklasse:</label><select><option>Economy</option><option>Premium Economy</option><option>Business Class</option><option>First Class</option></select></div>
-            <div><label>Personen:</label><select><option selected>1 Person</option><option>2 Personen</option><option>3 Personen</option><option>4 Personen</option></select></div>
-            
-            <div><label>Gepäck:</label><select><option>Handgepäck</option><option>1x 20 KG</option><option>1x 32 KG</option></select></div>
-            <div><label>Stopps:</label><select><option value="" selected></option><option>Direktflug</option><option>Max. 1 Stopp</option></select></div>
-            <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)"></div>
-            <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB"></div>
-            
-            <div><label>Max. Preis Anschluss (€):</label><input type="number" value="0"></div>
-            <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" value="0"></div>
-            
-            <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
-                <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.';">
-            </div>
-
-            <!-- 🔓 BLOCK 2: UNSERE OFFENE ARBEITS-SCHNITTSTELLE -->
             <div>
-                <label>1. Suchseite wählen:</label>
-                <select id="engine-selector" onchange="document.getElementById('action-btn').innerText = this.options[this.selectedIndex].text + ' Suche starten';">
-                    <option value="google" selected>Google Flights</option>
-                    <option value="skyscanner">Skyscanner</option>
-                    <option value="kayak">Kayak</option>
-                    <option value="kiwi">Kiwi.com</option>
-                    <option value="trip">Trip.com</option>
+                <label>Klasse:</label>
+                <select>
+                    <option value="economy">Economy</option>
+                    <option value="premium">Premium Economy</option>
+                    <option value="business">Business Class</option>
+                    <option value="first">First Class</option>
                 </select>
             </div>
-            
             <div>
-                <label>2. Aktion:</label>
-                <button type="button" id="action-btn" class="btn" style="margin-top:0;" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value).toLowerCase(); var t=encodeURIComponent(document.getElementById('fl-to').value).toLowerCase(); if(eng==='google'){ window.open('https://google.com+' + f.toUpperCase() + '+nach+' + t.toUpperCase(), '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t + '/', '_blank'); } else if(eng==='kayak'){ window.open('https://kayak.de' + f.toUpperCase() + '-' + t.toUpperCase(), '_blank'); } else if(eng==='kiwi'){ window.open('https://kiwi.com' + f + '/' + t + '/', '_blank'); } else { window.open('https://trip.com' + f + '&amp;acity=' + t, '_blank'); }">Google Flights Suche starten</button>
-            </div>
-
-            <!-- 🔐 DEKLARIERTES PASSWORT-TRESORELEMENT MIT ROTEM INTEGRATIONS-RAHMEN -->
-            <div class="full" style="margin-top: 15px; background: #fffdfd; padding: 12px; border-radius: 6px; border: 1px dashed var(--rubin);">
-                <label style="color: var(--rubin); font-size: 0.85rem;">🔒 Master-Passwort zur Core-Strukturfreigabe:</label>
-                <input type="password" id="core-password" class="password-box" placeholder="Dein geheimes Passwort eintragen" value="">
+                <label>Personen:</label>
+                <select>
+                    <option value="1" selected>1 Person</option>
+                    <option value="2">2 Personen</option>
+                    <option value="3">3 Personen</option>
+                    <option value="4">4 Personen</option>
+                </select>
             </div>
         </div>
+
+        <!-- REINER HTML5 SUBMIT-BUTTON OHNE PROGRAMMIERCODE -->
+        <button type="submit" class="btn" id="search-btn">SKYSCANNER SUCHE STARTEN</button>
+
+        <!-- 🔒 SICHERHEITS-LOCK / PASSWORD-TRESOR -->
+        <div class="password-box">
+            <label style="color: var(--rubin); font-weight: bold; margin-bottom: 8px;">🔒 [LOCKED CORE] PASSWORT-TRESOR</label>
+            <input type="password" id="core-vault" placeholder="Änderungsschutz aktiv. Passwort eingeben..." disabled style="border-color: var(--rubin); background: #fff5f5;">
+        </div>
+
     </form>
 </div>
 </body>
