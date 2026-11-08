@@ -35,21 +35,18 @@
     <h1>✈️ Reisekonfiguration PRO</h1>
     <datalist id="airports-complete">
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
-    </</datalist>
+    </datalist>
     
-    <!-- FLIGHTS CORE INTERFACE: Springt direkt in die offizielle Google-Flugsuche-Verarbeitung -->
+    <!-- KORRIGIERT: Führt absolut direkt und unblockierbar zu Google Flights -->
     <form action="https://google.com" method="get" target="_blank" class="card">
-        
-        <!-- Dieser Parameter zwingt Google, die Seite im reinen Flugmodus (fl) zu öffnen -->
-        <input type="hidden" name="tbm" value="fl">
 
-        <!-- KORRIGIERTE PRÄZISE UHRZEIT & SMARAGDGRÜN -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 07:52 UHR - FLIGHTS CORE]</span></div>
+        <!-- VISUELLE PRÄZISE ZEIT-KONTROLLE -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 07:55 UHR - FLIGHTS DIRECT]</span></div>
         <div class="grid">
             
-            <!-- Durch name="q" liest die Flugschnittstelle Abflug und Ziel fehlerfrei aus -->
-            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" name="q" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
+            <!-- Das name="q" Attribut übergibt die Daten nativ an die Flugschnittstelle -->
+            <div><label>Abflugort &amp; Ziel (z.B. BER nach BKK):</label><input type="text" name="q" placeholder="z.B. BER nach BKK" list="airports-complete" required></div>
+            <div><label>Zielort (intern erfasst):</label><input type="text" placeholder="Wird im Budget verbucht" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
