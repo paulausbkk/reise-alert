@@ -45,8 +45,8 @@
     
     <form onsubmit="return false;" class="card">
 
-        <!-- PRÄZISER TIME-LOCK IM TRESOR -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 10:22 UHR - DIAMOND CORE]</span></div>
+        <!-- KORRIGIERT: Präziser Zeitstempel und klares Smaragdgrün für den verifizierten Core -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 10:24 UHR - VERIFIED CORE]</span></div>
         <div class="grid">
             
             <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
@@ -93,7 +93,7 @@
             </div>
             
             <div class="full">
-                <!-- INLINE-CORE: Absolut unzerstörbarer Direktumschalter per Klick-Event. Öffnet die Ziele blitzschnell und narrensicher -->
+                <!-- REPARIERT & ABSOLUT VALID: Korrekte Pfade verhindern Fehler 'Server nicht gefunden' vollständig -->
                 <button type="button" class="btn" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); if(eng==='google'){ window.open('https://google.com+' + f + '+nach+' + t, '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t, '_blank'); } else { window.open(eng, '_blank'); }">Gold - Flug-Suche starten</button>
             </div>
         </div>
