@@ -84,31 +84,30 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <!-- 100% PROGRAMMIERFREIER DIREKT-MOTOR AN DIE OFFIZIELLE ERGEBNISSEITE VON GOOGLE FLIGHTS -->
-    <form action="https://google.com" method="get" target="_blank" class="card">
+    <form onsubmit="fuehreSucheAus(event);" class="card">
 
+        <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 18:37 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 18:44 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <!-- Durch diese exakten Namen übermittelt HTML die Daten live an die Ergebnisseite -->
-            <div><label>Abflugort (IATA):</label><input type="text" name="f" list="airports" required placeholder="z.B. FRA"></div>
-            <div><label>Zielort (IATA):</label><input type="text" name="t" list="airports" required placeholder="z.B. BKK"></div>
+            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" required placeholder="z.B. FRA"></div>
+            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" required placeholder="z.B. BKK"></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
-            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="d" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
             <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18"></div>
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select name="px">
-                    <option value="1" selected>1 Person</option>
+                <select id="fl-pax">
+                    <option value="1">1 Person</option>
                     <option value="2">2 Personen</option>
                     <option value="3">3 Personen</option>
                     <option value="4">4 Personen</option>
@@ -118,19 +117,19 @@
 
             <div>
                 <label>Reiseklasse:</label>
-                <select name="sc">
-                    <option value="0" selected>Economy</option>
-                    <option value="1">Premium Economy</option>
-                    <option value="2">Business Class</option>
-                    <option value="3">First Class</option>
+                <select id="fl-class">
+                    <option value="economy">Economy</option>
+                    <option value="premium">Premium Economy</option>
+                    <option value="business">Business Class</option>
+                    <option value="first">First Class</option>
                 </select>
             </div>
-            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" id="lowcost-checkbox"><span class="slider"></span></label></div>
 
             <div class="section-divider">🧳 Gepäck & Reisezeit</div>
             <div>
                 <label>Gepäck-Optionen:</label>
-                <select>
+                <select id="fl-luggage">
                     <option value="1">1. Handgepäck</option>
                     <option value="2">2. Aufgabegepäck 20 KG</option>
                     <option value="3">3. Aufgabegepäck 32 KG</option>
@@ -141,38 +140,51 @@
             <div>
                 <label>Max. Reisezeit:</label>
                 <div class="range-container">
-                    <input type="range" min="2" max="48" value="24">
+                    <input type="range" id="fl-max-time" min="2" max="48" value="24">
                 </div>
             </div>
 
             <div class="section-divider">💰 Budgetvorgaben Flüge</div>
-            <div>
-                <label>max. Flugpreis pro person:</label>
-                <input type="text">
-            </div>
+            <div><label>max. Flugpreis pro person:</label><input type="text" id="fl-max-price"></div>
             <div>
                 <label>Währung:</label>
-                <select>
+                <select id="fl-currency">
                     <option value="EUR">EUR (€)</option>
                     <option value="USD">USD ($)</option>
                 </select>
             </div>
 
             <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full">
-                <label>Zwischenstop / Airport:</label>
-                <input type="text">
-            </div>
+            <div class="full"><label>Zwischenstop / Airport:</label><input type="text" id="fl-transit"></div>
 
             <div class="section-divider">🔍 Such-Schnittstelle</div>
-            <!-- EIN BREITER, REINER SUBMIT-BUTTON SCHLIESST DAS PRODUKT AB -->
-            <div class="full">
-                <button type="submit" class="submit-btn">FLUGSUCHE STARTEN</button>
+            <!-- DEIN PERFEKTES PARALLELES GRIDS-LAYOUT IST ENGLÜLTIG ZURÜCK -->
+            <div>
+                <label>Suchmaschine wählen:</label>
+                <select id="engine-select">
+                    <option value="google">Google Flights</option>
+                    <option value="skyscanner" selected>Skyscanner</option>
+                    <option value="kayak">Kayak</option>
+                    <option value="kiwi">Kiwi.com</option>
+                    <option value="trip">Trip.com</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="submit-btn">Suche starten</button>
             </div>
 
         </div>
 
     </form>
 </div>
-</body>
-</html>
+
+<!-- DIE ABSOLUT GESCHÜTZTE SCRIPT-KAPSEL (ISOLIERT AM DATEIENDE) -->
+<script>
+function fuehreSucheAus(event) {
+    event.preventDefault();
+    
+    var eng = document.getElementById('engine-select').value;
+    var von = (document.getElementById('fl-from').value || 'fra').toLowerCase().trim();
+    var nach = (document.getElementById('fl-to').value || 'bkk').toLowerCase().trim();
+    
+    var d1Raw = document.getElementById('date-start').value.split('-');
