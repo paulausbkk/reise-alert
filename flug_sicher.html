@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✈️ Reisekonfiguration PRO - NEW CORE</title>
+    <style>
+        :root { 
+            --rubin: #991b1b; 
+            --bg: #f0f4f8; 
+            --card-bg: #ffffff; 
+            --text: #1e293b; 
+            --border: #cbd5e1; 
+            --lowcost-yellow: #fef08a; 
+            --gold: #f59e0b; 
+            --time-magenta: #d946ef; 
+        }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
+        .container { max-width: 620px; margin: 10px auto; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { font-size: 1.3rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 15px; }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; border-color: var(--rubin); background: #fef2f2; }
+        .title { font-weight: bold; margin-bottom: 8px; font-size: 1rem; color: var(--rubin); display: flex; justify-content: space-between; align-items: center; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; }
+        .full { grid-column: span 2; }
+        label { display: block; font-weight: bold; font-size: 0.78rem; margin-bottom: 4px; color: #475569; }
+        input, select { width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.85rem; }
+        
+        /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
+        body:has(#ow-checkbox:checked) #return-box { 
+            background-color: #cbd5e1 !important; 
+            color: #94a3b8 !important; 
+            cursor: not-allowed; 
+            opacity: 0.35 !important; 
+            pointer-events: none !important; 
+            border-color: #94a3b8 !important; 
+        }
+        
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; height: 32px; box-sizing: border-box; }
+        .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
+        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
+        .switch input:checked + .slider { background-color: #22c55e !important; }
+        .switch input:checked + .slider:before { transform: translateX(16px); }
+
+        /* MAGENTA-KONTAINER FÜR DEN REISEZEIT-SCHIEBEREGLER */
+        .range-container { background: var(--time-magenta) !important; padding: 0 8px; border: 1px solid #c084fc; border-radius: 4px; box-sizing: border-box; height: 32px; display: flex; align-items: center; justify-content: center; }
+        .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); }
+        
+        .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
+        
+        /* TRANSIT-BUTTON STYLING */
+        .dual-btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 32px; color: #ffffff; border: 1px solid #d97706; border-radius: 4px; font-weight: bold; cursor: pointer; background: var(--gold); box-sizing: border-box; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>✈️ Reisekonfiguration PRO</h1>
+    
+    <datalist id="airports">
+        <option value="BER">Berlin Brandenburg (BER)</option>
+        <option value="FRA">Frankfurt am Main (FRA)</option>
+        <option value="MNL">Manila Ninoy Aquino (MNL)</option>
+        <option value="CEB">Cebu Mactan (CEB)</option>
+        <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
+        <option value="SIN">Singapore Changi (SIN)</option>
+    </datalist>
+    
+    <form onsubmit="return false;" class="card">
+
+        <!-- 🔒 BLOCK 1: DER SPERRBARE KERN -->
+        <div class="title">
+            <span>✈️ Sektion 1: Flug-Parameter</span>
+            <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                [🔒 LOCKED CORE - 08.11.2026 - 16:40 UHR]
+            </span>
+        </div>
+        
+        <div class="grid">
+            
+            <div class="section-divider">🛫 Flugziele & Route</div>
+            <div><label>Abflugort (IATA):</label><input type="text" list="airports" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" list="airports" required></div>
+
+            <div class="section-divider">📅 Reisedaten & Personen</div>
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
+            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18"></div>
+            
+            <div>
+                <label>Anzahl Passagiere:</label>
+                <select>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 Personen</option>
+                    <option value="3">3 Personen</option>
+                    <option value="4">4 Personen</option>
+                </select>
+            </div>
+            <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
+
+            <div>
+                <label>Reiseklasse:</label>
+                <select>
+                    <option value="Economy">Economy</option>
+                    <option value="Premium">Premium Economy</option>
+                    <option value="Business">Business Class</option>
+                    <option value="First">First Class</option>
+                </select>
+            </div>
+            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+
+            <div class="section-divider">🧳 Gepäck & Reisezeit</div>
+            <div>
+                <label>Gepäck-Optionen:</label>
+                <select>
+                    <option value="1">1. Handgepäck</option>
+                    <option value="2">2. Aufgabegepäck 20 KG</option>
+                    <option value="3">3. Aufgabegepäck 32 KG</option>
+                    <option value="4">4. Handgepäck plus 20 KG</option>
+                    <option value="5">5. Handgepäck plus 32 KG</option>
+                </select>
+            </div>
+            <div>
+                <label>Max. Reisezeit:</label>
+                <div class="range-container">
+                    <input type="range" min="2" max="48" value="24">
+                </div>
+            </div>
+
+            <div class="section-divider">💰 Budgetvorgaben Flüge</div>
+            <div><label>max. Flugpreis pro person:</label><input type="text"></div>
+            <div>
+                <label>Währung:</label>
+                <select>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="USD">USD ($)</option>
+                </select>
+            </div>
+
+            <div class="section-divider">✈️ Transit-Optionen</div>
+            <div class="full"><label>Zwischenstop / Airport:</label><input type="text"></div>
+
+            <div class="section-divider">🔍 Such-Schnittstelle</div>
+            <div>
+                <label>Suchmaschine wählen:</label>
+                <select id="engine-select">
+                    <option value="google">Google Flights</option>
+                    <option value="skyscanner">Skyscanner</option>
+                    <option value="kayak">Kayak</option>
+                    <option value="kiwi">Kiwi.com</option>
+                    <option value="trip">Trip.com</option>
+                </select>
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <button type="button" class="dual-btn" onclick="
+                    const s = document.getElementById('engine-select').value;
+                    let url = 'https://google.com';
+                    if(s==='skyscanner') url='https://skyscanner.de';
+                    if(s==='kayak') url='https://kayak.de';
+                    if(s==='kiwi') url='https://kiwi.com';
+                    if(s==='trip') url='https://trip.com';
+                    window.open(url, '_blank');
+                ">Suche starten</button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
