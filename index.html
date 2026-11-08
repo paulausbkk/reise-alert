@@ -7,7 +7,7 @@
     <style>
         :root { --rubin: #991b1b; --bg: #f0f4f8; --card-bg: #ffffff; --text: #1e293b; --border: #cbd5e1; --lowcost-yellow: #fef08a; --gold: #f59e0b; }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; margin: 0; }
-        .container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        container { max-width: 600px; margin: 20px auto; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.4rem; text-align: center; margin-top: 0; color: var(--rubin); }
         .card { border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; border-color: var(--rubin); background: #fef2f2; }
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; color: var(--rubin); display: flex; justify-content: space-between; }
@@ -37,11 +37,12 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- Formular sendet die Suchdaten nativ direkt weiter -->
+    <!-- Formular startet mit Google als Standard-Action -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #fee2e2; padding: 2px 6px; border-radius: 4px; color: var(--rubin);">[VERSION 2026 - PURE INLINE CORE]</span></div>
         <div class="grid">
-            <input type="hidden" name="tbm" value="fl">
+            <!-- Das versteckte Feld steuert, dass Google im Flug-Modus (fl) öffnet -->
+            <input type="hidden" name="tbm" id="tbm-field" value="fl">
             
             <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. FRA" list="airports-complete" required></div>
             <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" list="airports-complete"></div>
@@ -71,8 +72,19 @@
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" list="airports-complete"></div>
             <div><label>Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
+            
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
                 <label id="range-label">Max. Reisezeit: 30 Std.</label><input type="range" min="5" max="50" value="30" style="height:20px;" oninput="document.getElementById('range-label').innerText = 'Max. Reisezeit: ' + this.value + ' Std.';">
+            </div>
+            
+            <!-- NEU: DYNAMISCHER SUCHMASCHINEN-UMSCHALTER (Vollständig inline) -->
+            <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
+                <label>Bevorzugte Suchmaschine:</label>
+                <select id="engine-selector" onchange="this.form.action = this.value; if(this.value.includes('google.com')){document.getElementById('tbm-field').value='fl';}else{document.getElementById('tbm-field').value='';}">
+                    <option value="https://google.com" selected>Google Flights (Standard)</option>
+                    <option value="https://skyscanner.de">Skyscanner</option>
+                    <option value="https://kayak.de">Kayak</option>
+                </select>
             </div>
             
             <div class="full">
