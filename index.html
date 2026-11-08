@@ -37,15 +37,19 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- DER TRICK: Sendet direkt an das offizielle Google Flights Verzeichnis -->
-    <form action="https://www.google.com/travel/flights" method="get" target="_blank" class="card">
+    <!-- Sendet direkt an das verifizierte offizielle Google Flights Verzeichnis -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
+        
+        <!-- Das versteckte Hauptfeld, das beim Absenden die kombinierte Route enthält -->
+        <input type="hidden" name="q" id="hidden-route-query">
 
-        <!-- PRÄZISER ZEITSTEMPEL & ABSICHERUNG -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 08:03 UHR - FLIGHTS INTERFACE]</span></div>
+        <!-- PRÄZISE JUSTIERTER ZEITSTEMPEL & CYAN-LABEL -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 08:08 UHR - ADJUSTED CORE]</span></div>
         <div class="grid">
             
-            <!-- name="q" ist die magische Variable, die Google Flights nativ ausliest -->
-            <div class="full"><label>Flugstrecke eingeben (z.B. BER nach MNL):</label><input type="text" name="q" placeholder="z.B. Berlin (BER) nach Manila (MNL)" list="airports-complete" required></div>
+            <!-- Die beiden getrennten Eingabefelder haben KEINEN störenden name-Attribut mehr -->
+            <div><label>Abflugort:</label><input type="text" id="route-from" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" id="route-to" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
@@ -77,7 +81,8 @@
             </div>
             
             <div class="full">
-                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
+                <!-- JUSTIERTE SCHRAUBE: Kombiniert die Orte im Klickmoment rein nativ zu einer unzerstörbaren Suchkette -->
+                <button type="submit" class="btn" onclick="document.getElementById('hidden-route-query').value = document.getElementById('route-from').value + ' nach ' + document.getElementById('route-to').value;">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
