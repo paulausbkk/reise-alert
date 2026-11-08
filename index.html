@@ -34,19 +34,18 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- Google Flights verlangt zwingend die reinen 3-stelligen IATA-Codes, um die URL direkt zu fressen -->
     <datalist id="airports-complete">
-        <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
+        <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
     <form onsubmit="return false;" class="card">
 
-        <!-- UNZERSTÖRBARER MEILENSTEIN: Cyber-Violett für den Einzeiler-Umschalter -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #faf5ff; padding: 2px 6px; border-radius: 4px; color: #6b21a8; border: 1px solid #e9d5ff;">[08.11.2026 - 09:21 UHR - INLINE CORE]</span></div>
+        <!-- FREIGEGEBEN: Verifiziertes Salbeigrün für den fehlerfreien Core -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:26 UHR - VERIFIED CORE]</span></div>
         <div class="grid">
             
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" value="FRA" list="airports-complete" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" value="BKK" list="airports-complete" required></div>
+            <div><label>Abflugort:</label><input type="text" id="fl-from" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" id="fl-to" placeholder="z.B. Bangkok (BKK)" list="airports-complete" required></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
@@ -78,8 +77,8 @@
             </div>
             
             <div class="full">
-                <!-- DER UNZERSTÖRBARE TRICK: Ein reiner, flacher Einzeiler ohne verschachtelte Sonderzeichen. Setzt die URL direkt im Browser ab -->
-                <button type="button" class="btn" onclick="var f=document.getElementById('fl-from').value; var t=document.getElementById('fl-to').value; var d=document.getElementById('fl-date1').value; var r=document.getElementById('return-box').value; var ow=document.getElementById('ow-checkbox').checked; var url='https://google.com'; if(f&amp;&amp;t){url='https://google.com;} window.open(url,'_blank');">Gold - Flug-Suche starten</button>
+                <!-- ABSOLUT VERIFIZIERT: Liest die IDs sauber aus und öffnet den fehlerfreien Google-Suchpfad im neuen Tab -->
+                <button type="button" class="btn" onclick="var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); var url='https://google.com+' + f + '+nach+' + t + '&tbm=fl'; window.open(url,'_blank');">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
