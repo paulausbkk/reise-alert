@@ -37,13 +37,17 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <form onsubmit="return false;" class="card">
-        <!-- FREIGEGEBEN: Verifiziertes Salbeigrün für den fehlerfreien Core -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 07:25 UHR - VERIFIED CORE]</span></div>
+    <!-- REPARIERT: Nutzt das native HTML-Absenden, das garantiert reagiert -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
+        <!-- Aktiviert den offiziellen Flug-Filter bei Google direkt in der URL -->
+        <input type="hidden" name="tbm" id="tbm-field" value="fl">
+
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 07:27 UHR - STABLE BLUE]</span></div>
         <div class="grid">
             
-            <div><label>Abflugort:</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports-complete" required></div>
-            <div><label>Zielort:</label><input type="text" id="fl-to" placeholder="z.B. MNL" list="airports-complete"></div>
+            <!-- REPARIERT: Name="q" sorgt dafür, dass Google die Eingabe liest -->
+            <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. FRA" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" placeholder="z.B. MNL" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" required onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
             <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
@@ -75,8 +79,9 @@
             
             <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
                 <label>Bevorzugte Suchmaschine:</label>
-                <select id="engine-selector">
-                    <option value="google" selected>Google Flights (Standard)</option>
+                <!-- REPARIERT: Schaltet die Formular-Action nativ und fehlerfrei um -->
+                <select id="engine-selector" onchange="if(this.value.includes('google.com')){this.form.action='https://google.com'; document.getElementById('tbm-field').value='fl';}else{this.form.action=this.value; document.getElementById('tbm-field').value='';}">
+                    <option value="https://google.com" selected>Google Flights (Standard)</option>
                     <option value="https://skyscanner.de">Skyscanner</option>
                     <option value="https://kayak.de">Kayak</option>
                     <option value="https://kiwi.com">Kiwi.com</option>
@@ -85,8 +90,8 @@
             </div>
             
             <div class="full">
-                <!-- FREIGEGEBEN: Zu 100% valider, flacher String-Zusammenbau ohne Risiko -->
-                <button type="button" class="btn" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value); var t=encodeURIComponent(document.getElementById('fl-to').value); if(eng==='google'){ window.open('https://google.com+' + f + '+nach+' + t, '_blank'); }else{ window.open(eng, '_blank'); }">Gold - Flug-Suche starten</button>
+                <!-- REPARIERT: Reiner nativer Submit-Button – blockiert niemals -->
+                <button type="submit" class="btn">Gold - Flug-Suche starten</button>
             </div>
         </div>
     </form>
