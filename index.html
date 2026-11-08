@@ -84,90 +84,96 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <!-- 100% PROGRAMMIERFREIE FORMULARÜBERGABE DIREKT AN GOOGLE FLIGHTS -->
+    <!-- 100% PROGRAMMIERFREIE FORMULAR-ÜBERGABE ÜBER DIE UNIVERSAL-SUCHE -->
     <form action="https://google.com" method="get" target="_blank" class="card">
 
         <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 18:24 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 18:27 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" name="f" list="airports" required placeholder="z.B. FRA"></div>
-            <div><label>Zielort (IATA):</label><input type="text" name="t" list="airports" required placeholder="z.B. BKK"></div>
+            <div><label>Abflugort (IATA):</label><input type="text" name="q" list="airports" required placeholder="z.B. FRA"></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="q" list="airports" required placeholder="z.B. BKK"></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
-            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="d" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
-            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18"></div>
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="q" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
+            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" name="q" value="2026-12-28" min="2026-12-18"></div>
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select>
-                    <option value="1">1 Person</option>
-                    <option value="2">2 Personen</option>
-                    <option value="3">3 Personen</option>
-                    <option value="4">4 Personen</option>
+                <select name="q">
+                    <option value="1 Person" selected>1 Person</option>
+                    <option value="2 Personen">2 Personen</option>
+                    <option value="3 Personen">3 Personen</option>
+                    <option value="4 Personen">4 Personen</option>
                 </select>
             </div>
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
 
             <div>
                 <label>Reiseklasse:</label>
-                <select name="sc">
-                    <option value="0" selected>Economy</option>
-                    <option value="1">Premium Economy</option>
-                    <option value="2">Business Class</option>
-                    <option value="3">First Class</option>
+                <select name="q">
+                    <option value="Economy" selected>Economy</option>
+                    <option value="Premium Economy">Premium Economy</option>
+                    <option value="Business Class">Business Class</option>
+                    <option value="First Class">First Class</option>
                 </select>
             </div>
-            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox" name="q" value="inklusive Billigflieger"><span class="slider"></span></label></div>
 
             <div class="section-divider">🧳 Gepäck & Reisezeit</div>
             <div>
                 <label>Gepäck-Optionen:</label>
-                <select>
-                    <option value="1">1. Handgepäck</option>
-                    <option value="2">2. Aufgabegepäck 20 KG</option>
-                    <option value="3">3. Aufgabegepäck 32 KG</option>
-                    <option value="4">4. Handgepäck plus 20 KG</option>
-                    <option value="5">5. Handgepäck plus 32 KG</option>
+                <select name="q">
+                    <option value="mit Handgepäck" selected>1. Handgepäck</option>
+                    <option value="mit Aufgabegepäck 20 KG">2. Aufgabegepäck 20 KG</option>
+                    <option value="mit Aufgabegepäck 32 KG">3. Aufgabegepäck 32 KG</option>
+                    <option value="mit Handgepäck plus 20 KG Aufgabegepäck">4. Handgepäck plus 20 KG Aufgabegepäck</option>
+                    <option value="mit Handgepäck plus 32 KG Aufgabegepäck">5. Handgepäck plus 32 KG Aufgabegepäck</option>
                 </select>
             </div>
             <div>
                 <label>Max. Reisezeit:</label>
                 <div class="range-container">
-                    <input type="range" min="2" max="48" value="24">
+                    <input type="range" name="q" min="2" max="48" value="24">
                 </div>
             </div>
 
             <div class="section-divider">💰 Budgetvorgaben Flüge</div>
-            <div><label>max. Flugpreis pro person:</label><input type="text"></div>
+            <div>
+                <label>max. Flugpreis pro person:</label>
+                <input type="text" name="q">
+            </div>
             <div>
                 <label>Währung:</label>
-                <select>
-                    <option value="EUR">EUR (€)</option>
+                <select name="q">
+                    <option value="EUR" selected>EUR (€)</option>
                     <option value="USD">USD ($)</option>
                 </select>
             </div>
 
             <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full"><label>Zwischenstop / Airport:</label><input type="text"></div>
+            <div class="full">
+                <label>Zwischenstop / Airport:</label>
+                <input type="text" name="q">
+            </div>
 
             <div class="section-divider">🔍 Such-Schnittstelle</div>
-            <!-- HIER SIND DROPDOWN UND BUTTON WIEDER PERFEKT GEORDNET PARALLEL NEBENEINANDER -->
+            <!-- DAS SPEZIFISCH BENANNTE SELEKTIONSTAG ÜBERMITTELT NUN DEN ZIEL-BEFEHL AN DIE BRÜCKE -->
             <div>
                 <label>Suchmaschine wählen:</label>
-                <select>
-                    <option value="google" selected>Google Flights (Direkt)</option>
-                    <option value="skyscanner">Skyscanner via Google</option>
-                    <option value="kayak">Kayak via Google</option>
-                    <option value="kiwi">Kiwi.com via Google</option>
-                    <option value="trip">Trip.com via Google</option>
+                <select name="q">
+                    <option value="Flug auf Google Flights">Google Flights</option>
+                    <option value="Flug auf Skyscanner" selected>Skyscanner</option>
+                    <option value="Flug auf Kayak">Kayak</option>
+                    <option value="Flug auf Kiwi.com">Kiwi.com</option>
+                    <option value="Flug auf Trip.com">Trip.com</option>
                 </select>
             </div>
             <div>
@@ -179,4 +185,3 @@
     </form>
 </div>
 </body>
-</html>
