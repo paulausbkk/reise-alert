@@ -14,8 +14,8 @@
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
-            /* AUFFÄLLIGES NEON-ORANGE FÜR UNSEREN NEUSTART */
-            --lock-box-color: #ff4500; 
+            /* NEUES ERKENNUNGS-SIGNAL: AUFFÄLLIGES NEON-GRÜN */
+            --lock-box-color: #22c55e; 
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
         .container { max-width: 620px; margin: 10px auto; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -104,29 +104,31 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <form onsubmit="return false;" class="card">
+    <!-- DER DIREKT-MOTOR ÖFFNET DIE RESULTE DIREKT AUF GOOGLE FLIGHTS -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
 
         <!-- 🔒 BLOCK 1: DER SPERRBARE KERN -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: var(--lock-box-color); padding: 2px 6px; border-radius: 4px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
-                [🔒 LOCKED CORE - 08.11.2026 - 19:54 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 20:00 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" list="airports" required placeholder="z.B. FRA" style="text-transform: uppercase;"></div>
-            <div><label>Zielort (IATA):</label><input type="text" id="fl-to" list="airports" required placeholder="z.B. BKK" style="text-transform: uppercase;"></div>
+            <!-- Die name-Attribute verraten Google Flights beim Klick exakt die Flughäfen -->
+            <div><label>Abflugort (IATA):</label><input type="text" name="f" id="fl-from" list="airports" required placeholder="z.B. FRA" style="text-transform: uppercase;"></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="t" id="fl-to" list="airports" required placeholder="z.B. BKK" style="text-transform: uppercase;"></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
-            <div><label>Hinflugdatum:</label><input type="date" id="date-start" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="d" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
             <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18"></div>
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select id="fl-pax">
+                <select>
                     <option value="1">1 Person</option>
                     <option value="2">2 Personen</option>
                     <option value="3">3 Personen</option>
@@ -137,11 +139,11 @@
 
             <div>
                 <label>Reiseklasse:</label>
-                <select id="fl-class">
-                    <option value="Economy">Economy</option>
-                    <option value="Premium">Premium Economy</option>
-                    <option value="Business">Business Class</option>
-                    <option value="First">First Class</option>
+                <select name="sc">
+                    <option value="0" selected>Economy</option>
+                    <option value="1">Premium Economy</option>
+                    <option value="2">Business Class</option>
+                    <option value="3">First Class</option>
                 </select>
             </div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -172,10 +174,4 @@
                     <option value="EUR">EUR (€)</option>
                     <option value="USD">USD ($)</option>
                 </select>
-            </div>
-
-            <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full">
-                <label>Zwischenstop / Airport:</label>
-                <input type="text">
             </div>
