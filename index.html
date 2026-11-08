@@ -14,8 +14,8 @@
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
-            /* DYNAMISCHE FARBE FÜR DEN UHRZEIT-KASTEN (JETZT AUFFÄLLIGES ORANGE) */
-            --lock-box-color: #ff6b00; 
+            /* DYNAMISCHE FARBE FÜR DEN UHRZEIT-KASTEN (JETZT AUFFÄLLIGES CYAN-BLAU) */
+            --lock-box-color: #06b6d4; 
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
         .container { max-width: 620px; margin: 10px auto; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -25,7 +25,7 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; }
         .full { grid-column: span 2; }
         label { display: block; font-weight: bold; font-size: 0.78rem; margin-bottom: 4px; color: #475569; }
-        input, select { width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.85rem; }
+        input, select { width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
         /* UNZERSTÖRBARER CSS-LOCK FÜR ONE WAY */
         body:has(#ow-checkbox:checked) #return-box { 
@@ -52,8 +52,44 @@
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
         
-        /* ANZEIGE FÜR DIE LIVE-STUNDEN NEBEN DEM LABEL */
         .live-value { color: var(--rubin); font-weight: bold; margin-left: 3px; }
+
+        /* 🛠️ FLEXIBLE, RESPONSIVE BUTTON-REIHE DIREKT IM FORMULAR-GRID */
+        .action-flex-container { display: flex; flex-wrap: wrap; gap: 6px; grid-column: span 2; margin-top: 8px; width: 100%; box-sizing: border-box; }
+        
+        .touch-btn { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex: 1; 
+            min-width: 80px; 
+            height: 28px; 
+            color: #ffffff; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            box-sizing: border-box;
+            font-size: 0.72rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.2px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 0 4px;
+            border: 1px solid #d97706;
+            background: var(--gold);
+        }
+        .touch-btn:hover { background: #d97706; }
+        .btn-google { background: #4285f4; border-color: #3367d6; }
+        .btn-google:hover { background: #3367d6; }
+        .btn-skyscanner { background: #007054; border-color: #00523f; }
+        .btn-skyscanner:hover { background: #00523f; }
+        .btn-kayak { background: #ff690f; border-color: #d45205; }
+        .btn-kayak:hover { background: #d45205; }
+        .btn-momondo { background: #84329b; border-color: #641f80; }
+        .btn-momondo:hover { background: #641f80; }
+        .btn-kiwi { background: #00a699; border-color: #008075; }
+        .btn-kiwi:hover { background: #008075; }
+        .btn-trip { background: #2f55d4; border-color: #2444b5; }
+        .btn-trip:hover { background: #2444b5; }
     </style>
 </head>
 <body>
@@ -74,9 +110,9 @@
         <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
-            <!-- DAS KÄSTCHEN REAGIERT JETZT MIT EINEM PROVOKANTEN ORANGE BEI JEDER ÄNDERUNG -->
+            <!-- CYAN-BLAUES KÄSTCHEN ZEIGT DEN NEUESTEN STAND AN -->
             <span style="font-size: 0.72rem; background: var(--lock-box-color); padding: 2px 6px; border-radius: 4px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
-                [🔒 LOCKED CORE - 08.11.2026 - 19:17 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 19:21 UHR]
             </span>
         </div>
         
@@ -124,7 +160,6 @@
                 </select>
             </div>
             <div>
-                <!-- LIVE-ANZEIGE DER STUNDEN ERGÄNZT -->
                 <label>Max. Reisezeit:<span id="time-val" class="live-value">24 Std.</span></label>
                 <div class="range-container">
                     <input type="range" id="time-slider" min="2" max="48" value="24" oninput="aktualisiereReisezeit(this.value)">
@@ -145,21 +180,3 @@
             </div>
 
             <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full">
-                <label>Zwischenstop / Airport:</label>
-                <input type="text">
-            </div>
-
-        </div>
-
-    </form>
-</div>
-
-<!-- DIE ISOLIERTE LIVE-STEUERUNG AM ENDE DER DATEI -->
-<script>
-function aktualisiereReisezeit(wert) {
-    document.getElementById('time-val').innerText = wert + ' Std.';
-}
-</script>
-</body>
-</html>
