@@ -46,47 +46,56 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <!-- 100% SKRIPTFREIE BRÜCKEN-SCHNITTSTELLE ÜBER GOOGLE AUF SKYSCANNER -->
+    <!-- 100% SKRIPTFREIE MULTI-SUCHSCHNITTSTELLE VIA GOOGLE-SUCHPFAD -->
     <form action="https://google.com" method="get" target="_blank" class="card">
-        
-        <!-- Versteckter Parameter, der die Suche direkt auf Skyscanner zwingt -->
-        <input type="hidden" name="as_sitesearch" value="skyscanner.de">
 
         <!-- 🔒 BLOCK 1: DER SPERRBARE KERN (DEINE SEKTION 1) -->
         <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[🔒 LOCKED CORE - 08.11.2026 - 11:51 UHR]</span></div>
         <div class="grid">
-            <div><label>Abflugort (IATA):</label><input type="text" name="as_q" placeholder="z.B. FRA" list="airports" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" name="as_epq" placeholder="z.B. BKK" list="airports" required></div>
+            <div><label>Abflugort (IATA):</label><input type="text" name="q" placeholder="z.B. FRA" list="airports" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="q" placeholder="z.B. BKK" list="airports" required></div>
             
-            <!-- KALENDER-FELDER (NAME-ATTRIBUTE FÜR DIE FLUGSUCHE OPTIMIERT) -->
-            <div><label>Hinflug:</label><input type="date" name="as_oq" value="2026-12-18"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" name="as_eq" value="2026-12-28"></div>
+            <!-- KALENDER-FELDER (REINES HTML5 OHNE ONCHANGE) -->
+            <div><label>Hinflug:</label><input type="date" name="q" value="2026-12-18"></div>
+            <div><label>Rückflug:</label><input type="date" id="return-box" name="q" value="2026-12-28"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
             
             <div>
                 <label>Klasse:</label>
-                <select>
-                    <option value="economy">Economy</option>
-                    <option value="premium">Premium Economy</option>
-                    <option value="business">Business Class</option>
-                    <option value="first">First Class</option>
+                <select name="q">
+                    <option value="Economy">Economy</option>
+                    <option value="Premium Economy">Premium Economy</option>
+                    <option value="Business Class">Business Class</option>
+                    <option value="First Class">First Class</option>
                 </select>
             </div>
             <div>
                 <label>Personen:</label>
-                <select>
-                    <option value="1" selected>1 Person</option>
-                    <option value="2">2 Personen</option>
-                    <option value="3">3 Personen</option>
-                    <option value="4">4 Personen</option>
+                <select name="q">
+                    <option value="1 Person" selected>1 Person</option>
+                    <option value="2 Personen">2 Personen</option>
+                    <option value="3 Personen">3 Personen</option>
+                    <option value="4 Personen">4 Personen</option>
+                </select>
+            </div>
+
+            <!-- INTERFACE-WEICHE ALS SKRIPTFREIER FILTER -->
+            <div class="full" style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 15px;">
+                <label>Bevorzugte Suchmaschine (wird als Filter übergeben):</label>
+                <select name="q">
+                    <option value="Flüge auf Google Flights">Google Flights</option>
+                    <option value="Flüge auf Skyscanner">Skyscanner</option>
+                    <option value="Flüge auf Kayak">Kayak</option>
+                    <option value="Flüge auf Kiwi.com">Kiwi.com</option>
+                    <option value="Flüge auf Trip.com">Trip.com</option>
                 </select>
             </div>
         </div>
 
-        <!-- REINER HTML5 SUBMIT-BUTTON OHNE PROGRAMMIERCODE -->
-        <button type="submit" class="btn" id="search-btn">SKYSCANNER SUCHE STARTEN</button>
+        <!-- REINER HTML5 SUBMIT-BUTTON OHNE RECHNERISCHEN CODE -->
+        <button type="submit" class="btn" id="search-btn">SUCHE STARTEN</button>
 
         <!-- 🔒 SICHERHEITS-LOCK / PASSWORD-TRESOR -->
         <div class="password-box">
