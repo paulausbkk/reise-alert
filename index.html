@@ -28,6 +28,9 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         .btn { display: flex; align-items: center; justify-content: center; width: 100%; height: 45px; color: #ffffff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; background: var(--gold); font-size: 1rem; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        /* ROTER SICHERHEITSRAHMEN FÜR DAS PASSWORTFELD */
+        .password-box { border: 3px solid var(--rubin) !important; background-color: #ffffff; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -46,7 +49,7 @@
     <form onsubmit="return false;" class="card">
 
         <!-- 🔒 BLOCK 1: DER SPERRBARE KERN (DEINE SEKTION 1) -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[🔒 LOCKED CORE - 08.11.2026 - 11:46 UHR]</span></div>
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155;">[🔒 LOCKED CORE - 08.11.2026 - 11:51 UHR]</span></div>
         <div class="grid">
             <div><label>Abflugort (IATA):</label><input type="text" id="fl-from" placeholder="z.B. FRA" list="airports" required></div>
             <div><label>Zielort (IATA):</label><input type="text" id="fl-to" placeholder="z.B. BKK" list="airports" required></div>
@@ -90,10 +93,10 @@
                 <button type="button" id="action-btn" class="btn" style="margin-top:0;" onclick="var eng=document.getElementById('engine-selector').value; var f=encodeURIComponent(document.getElementById('fl-from').value).toLowerCase(); var t=encodeURIComponent(document.getElementById('fl-to').value).toLowerCase(); if(eng==='google'){ window.open('https://google.com+' + f.toUpperCase() + '+nach+' + t.toUpperCase(), '_blank'); } else if(eng==='skyscanner'){ window.open('https://skyscanner.de' + f + '/' + t + '/', '_blank'); } else if(eng==='kayak'){ window.open('https://kayak.de' + f.toUpperCase() + '-' + t.toUpperCase(), '_blank'); } else if(eng==='kiwi'){ window.open('https://kiwi.com' + f + '/' + t + '/', '_blank'); } else { window.open('https://trip.com' + f + '&amp;acity=' + t, '_blank'); }">Google Flights Suche starten</button>
             </div>
 
-            <!-- 🔐 DAS DEKLARIERTE PASSWORT-TRESORELEMENT -->
-            <div class="full" style="margin-top: 10px;">
-                <label style="color: var(--rubin);">Passwort zur Core-Freigabe:</label>
-                <input type="password" id="core-password" placeholder="Passwort" value="">
+            <!-- 🔐 DEKLARIERTES PASSWORT-TRESORELEMENT MIT ROTEM INTEGRATIONS-RAHMEN -->
+            <div class="full" style="margin-top: 15px; background: #fffdfd; padding: 12px; border-radius: 6px; border: 1px dashed var(--rubin);">
+                <label style="color: var(--rubin); font-size: 0.85rem;">🔒 Master-Passwort zur Core-Strukturfreigabe:</label>
+                <input type="password" id="core-password" class="password-box" placeholder="Dein geheimes Passwort eintragen" value="">
             </div>
         </div>
     </form>
