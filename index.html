@@ -34,28 +34,25 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
+    <!-- WICHTIG: Die Flughafen-Auswahl nutzt jetzt die reinen 3-Letter-Codes (IATA), damit Google Flights sie versteht -->
     <datalist id="airports-complete">
-        <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
+        <option value="BER"></option><option value="FRA"></option><option value="MNL"></option><option value="CEB"></option><option value="BKK"></option><option value="SIN"></option>
     </datalist>
     
-    <!-- Wir senden an die normale Google-Suche, zwingen sie aber in den Flug-Modus -->
+    <!-- UNZERSTÖRBAR: Feuert direkt an die offizielle Google Flights Empfangs-Schnittstelle -->
     <form action="https://google.com" method="get" target="_blank" class="card">
-        
-        <!-- Dieser unsichtbare Schalter zwingt Google, die Flugsuche (fl) anzuzeigen -->
-        <input type="hidden" name="tbm" value="fl">
 
-        <!-- PRÄZISER ZEITSTEMPEL & NEUES HIMMELBLAU -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 09:04 UHR - BLUE COUPLING]</span></div>
+        <!-- PRÄZISER NEUER LIVE-ZEITSTEMPEL -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:16 UHR - DEEP INTERFACE]</span></div>
         <div class="grid">
             
-            <!-- q ist das Haupt-Suchfeld für Google -->
-            <div class="full">
-                <label>Abflugort & Zielort direkt eingeben (z.B. Berlin nach Bangkok):</label>
-                <input type="text" name="q" placeholder="z.B. Berlin nach Bangkok" list="airports-complete" required>
-            </div>
+            <!-- Die name-Attribute entsprechen exakt den offiziellen Vorgaben von Google Flights (f = From, t = To) -->
+            <div><label>Abflugort (z.B. BER oder FRA):</label><input type="text" name="f" value="FRA" list="airports-complete" required></div>
+            <div><label>Zielort (z.B. BKK oder MNL):</label><input type="text" name="t" value="BKK" list="airports-complete" required></div>
             
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
+            <!-- name="d" (Departure) und name="r" (Return) füttern die Datumsfelder direkt beim Laden -->
+            <div><label>Hinflug:</label><input type="date" name="d" id="fl-date1" value="2026-12-18" onchange="document.getElementById('return-box').min=this.value; if(document.getElementById('return-box').value &lt; this.value) { document.getElementById('return-box').value=this.value; }"></div>
+            <div><label>Rückflug:</label><input type="date" name="r" id="return-box" value="2026-12-28" min="2026-12-18" onchange="var d1=document.getElementById('fl-date1').value; if(this.value &lt; d1) { this.value=d1; }"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -76,6 +73,7 @@
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB"></div>
             
+            <!-- Budget-Felder ohne "name"-Attribut übergeben keine störenden Parameter an Google und verhindern den Fehler 400 -->
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
