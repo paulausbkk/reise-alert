@@ -34,7 +34,6 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- REPARIERT: Datalist enthält jetzt Stadtnamen und Codes für die intelligente Browsersuche -->
     <datalist id="airports-complete">
         <option value="BER">Berlin Brandenburg (BER)</option>
         <option value="FRA">Frankfurt am Main (FRA)</option>
@@ -46,10 +45,11 @@
     
     <form action="https://google.com" method="get" target="_blank" class="card">
         
+        <!-- Das Google-Hiddenfield hat eine ID erhalten, um es bei Skyscanner stummzuschalten -->
         <input type="hidden" name="tbm" id="tbm-field" value="fl">
 
-        <!-- KORRIGIERT: Präzise Echtzeit und neue ozeanblaue Kontrollbox -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #e0f2fe; padding: 2px 6px; border-radius: 4px; color: #0369a1; border: 1px solid #bae6fd;">[08.11.2026 - 10:16 UHR - INTELLIGENT DATALIST]</span></div>
+        <!-- PRÄZISER TIME-LOCK IM TRESOR -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 10:20 UHR - SAFE SKYLINE]</span></div>
         <div class="grid">
             
             <div><label>Abflugort (IATA):</label><input type="text" name="q" id="from-field" placeholder="z.B. FRA" list="airports-complete" required></div>
@@ -86,7 +86,8 @@
             
             <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
                 <label>Bevorzugte Suchmaschine:</label>
-                <select id="engine-selector" onchange="this.form.action = this.value; if(this.value.includes('skyscanner.de')){ document.getElementById('from-field').name='from'; document.getElementById('to-field').name='to'; document.getElementById('tbm-field').name=''; }else{ document.getElementById('from-field').name='q'; document.getElementById('to-field').name='q'; document.getElementById('tbm-field').name='tbm'; }">
+                <!-- TRICK: Schaltet bei Skyscanner alle störenden Felder komplett ab (disabled=true), damit kein Fehler 400 erzeugt wird -->
+                <select id="engine-selector" onchange="this.form.action = this.value; if(this.value.includes('skyscanner.de')){ document.getElementById('from-field').name='from'; document.getElementById('to-field').name='to'; document.getElementById('tbm-field').disabled=true; }else{ document.getElementById('from-field').name='q'; document.getElementById('to-field').name='q'; document.getElementById('tbm-field').disabled=false; }">
                     <option value="https://google.com" selected>Google Flights (Standard)</option>
                     <option value="https://skyscanner.de">Skyscanner</option>
                     <option value="https://kayak.de">Kayak</option>
@@ -103,4 +104,5 @@
 </div>
 </body>
 </html>
+
 
