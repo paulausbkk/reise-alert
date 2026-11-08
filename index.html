@@ -14,13 +14,13 @@
             --lowcost-yellow: #fef08a; 
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
-            /* REINES MAGENTA ALS KONTROLL-SIGNAL */
-            --lock-box-color: #d946ef; 
+            /* TIEFSCHWARZ ALS UNMISSVERSTÄNDLICHES KONTROLL-SIGNAL */
+            --lock-box-color: #000000; 
         }
         body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
         .container { max-width: 620px; margin: 10px auto; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         h1 { font-size: 1.3rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 15px; }
-        .card { border: 2px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; border-color: var(--rubin); background: #fef2f2; }
+        .card { border: 2px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 15px; border-color: var(--rubin); background: #fef2f2; }
         .title { font-weight: bold; margin-bottom: 8px; font-size: 1rem; color: var(--rubin); display: flex; justify-content: space-between; align-items: center; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; }
         .full { grid-column: span 2; }
@@ -53,14 +53,16 @@
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
         .live-value { color: var(--rubin); font-weight: bold; margin-left: 3px; }
 
-        /* UNZERSTÖRBARE DREIER-ZEILEN FÜR DIE BUTTONS */
-        .button-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; grid-column: span 2; margin-top: 6px; }
+        /* 🛠️ DAS COCKPIT: FREI SCHWEBENDER BEREICH AUSSERHALB DER ROTEN BOX */
+        .standalone-search-box { background: #ffffff; border: 2px solid var(--border); border-radius: 8px; padding: 15px; margin-top: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .search-title { font-weight: bold; font-size: 0.85rem; color: #1e293b; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+        .button-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
         
         .touch-btn { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            height: 28px; 
+            height: 30px; 
             color: #ffffff; 
             border: 1px solid #d97706; 
             border-radius: 4px; 
@@ -101,13 +103,14 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
+    <!-- DER FORMULAR-MOTOR NUTZT DIE SKRIPTFREIE FORMULARÜBERGABE FÜR DIE INTEGRATION -->
     <form method="get" target="_blank" class="card">
 
         <!-- 🔒 BLOCK 1: DER CORE -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: var(--lock-box-color); padding: 2px 6px; border-radius: 4px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
-                [🔒 LOCKED CORE - 08.11.2026 - 20:01 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 20:04 UHR]
             </span>
         </div>
         
@@ -166,17 +169,3 @@
             <div>
                 <label>Währung:</label>
                 <select>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="USD">USD ($)</option>
-                </select>
-            </div>
-
-            <div class="section-divider">✈️ Transit-Optionen</div>
-            <div class="full">
-                <label>Zwischenstop / Airport:</label>
-                <input type="text">
-            </div>
-
-            <div class="section-divider">🔍 Direkte Such-Schnittstellen</div>
-            
-            <!-- REIHE 1 -->
