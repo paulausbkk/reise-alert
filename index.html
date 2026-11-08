@@ -37,18 +37,19 @@
         <option value="Berlin (BER)"></option><option value="Frankfurt (FRA)"></option><option value="Manila (MNL)"></option><option value="Cebu (CEB)"></option><option value="Bangkok (BKK)"></option><option value="Singapore (SIN)"></option>
     </datalist>
     
-    <!-- DER TRICK: Sendet direkt an das offizielle Google Flights Verzeichnis -->
-    <form action="https://www.google.com/travel/flights" method="get" target="_blank" class="card">
+    <!-- API TRICK: Sendet über die standardisierten Parameter direkt an Google Flights -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
 
-        <!-- PRÄZISER ZEITSTEMPEL & ABSICHERUNG -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 08:03 UHR - FLIGHTS INTERFACE]</span></div>
+        <!-- PRÄZISER NEUER API-ZEITSTEMPEL -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #ffffff; padding: 2px 6px; border-radius: 4px; color: #1e293b; border: 1px solid #cbd5e1;">[08.11.2026 - 08:29 UHR - API CORE]</span></div>
         <div class="grid">
             
-            <!-- name="q" ist die magische Variable, die Google Flights nativ ausliest -->
-            <div class="full"><label>Flugstrecke eingeben (z.B. BER nach MNL):</label><input type="text" name="q" placeholder="z.B. Berlin (BER) nach Manila (MNL)" list="airports-complete" required></div>
+            <!-- Die name-Attribute entsprechen jetzt exakt der offiziellen Google Flights Link-Schnittstelle -->
+            <div><label>Abflugort:</label><input type="text" name="f" placeholder="z.B. BER" list="airports-complete" required></div>
+            <div><label>Zielort:</label><input type="text" name="t" placeholder="z.B. BKK" list="airports-complete" required></div>
             
-            <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
-            <div><label>Rückflug:</label><input type="date" id="return-box" value="2026-12-28"></div>
+            <div><label>Hinflug:</label><input type="date" name="d" id="fl-date1" value="2026-12-18" required></div>
+            <div><label>Rückflug:</label><input type="date" name="r" id="return-box" value="2026-12-28"></div>
             
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -69,6 +70,7 @@
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" list="airports-complete"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" list="airports-complete"></div>
             
+            <!-- Reine Budget-Felder ohne name-Attribut (Werden von Google ignoriert und stören die API nicht) -->
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
