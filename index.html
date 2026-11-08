@@ -50,24 +50,26 @@
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 3px; }
         
-        /* 🛠️ ULTRAKOMPAKTES SECHS-SPALTIGES SCHNITTTSTELLEN-RASTER */
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; gap: 4px; grid-column: span 2; margin-top: 5px; }
+        /* 🛠️ FLEXIBLE, RESPONSIVE BUTTON-REIHE (KANN NIEMALS MEHR AUSBLENDEN) */
+        .action-flex-container { display: flex; flex-wrap: wrap; gap: 6px; grid-column: span 2; margin-top: 8px; width: 100%; }
         
         .touch-btn { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            height: 26px; /* Ultra flach */
+            flex: 1; /* Teilt den Platz gleichmaeßig auf */
+            min-width: 80px; /* Mindestbreite pro Button vor dem Umbruch */
+            height: 28px; 
             color: #ffffff; 
             border-radius: 4px; 
             font-weight: bold; 
             cursor: pointer; 
             box-sizing: border-box;
-            font-size: 0.65rem; /* Sehr kleine, saubere Schrift */
+            font-size: 0.72rem; 
             text-transform: uppercase; 
             letter-spacing: 0.2px; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            padding: 0 2px;
+            padding: 0 4px;
             border: 1px solid #d97706;
             background: var(--gold);
         }
@@ -104,7 +106,7 @@
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 19:01 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 19:04 UHR]
             </span>
         </div>
         
@@ -179,5 +181,5 @@
 
             <div class="section-divider">🔍 Direkte Such-Schnittstellen (Skriptfrei)</div>
             
-            <!-- 🛠️ DIE NEUE REIHE MIT DEN SECHS CODELOSEN BUTTONS NEBENEINANDER -->
-            <div class="action-grid">
+            <!-- UNZERSTÖRBARE FLEXBOX-REIHE FLIESST AUTOMATISCH BEI PLATZMANGEL -->
+            <div class="action-flex-container">
