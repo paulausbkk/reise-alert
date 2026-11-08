@@ -29,7 +29,7 @@
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
-            cursor: not-allowed !important; 
+            cursor: not-allowed; 
             opacity: 0.35 !important; 
             pointer-events: none !important; 
             border-color: #94a3b8 !important; 
@@ -44,17 +44,17 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        /* 🛠️ EXAKTE UMSETZUNG DER NEBENEINANDER LIEGENDEN SUCH-FELDER */
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; align-items: end; }
+        /* ACTION-GRID FÜR DIE NEBENEINANDER LIEGENDEN SUCH-FELDER GANZ UNTEN */
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; align-items: end; grid-column: span 2; }
         
-        /* RECHTES SCHALTER-FELD: GEBAUT WIE EIN ABGERUNDETES EINGABEFELD, ABER ALS AKTION */
+        /* RECHTES SCHALTER-FELD */
         .dual-btn { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
             width: 100%; 
-            height: 38px; /* Exakt die Höhe der umliegenden Felder */
+            height: 38px; 
             color: #ffffff; 
             border: 1px solid #d97706; 
             border-radius: 4px; 
@@ -102,15 +102,15 @@
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.75rem; background: #0f172a; padding: 3px 8px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 15:42 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 15:47 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" name="q" placeholder="z.B. FRA" list="airports" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" name="q" placeholder="z.B. BKK" list="airports" required></div>
+            <div><label>Abflugort (IATA):</label><input type="text" name="q" list="airports" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="q" list="airports" required></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
             <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="q" value="2026-12-18" oninput="document.getElementById('return-box').min=this.value;"></div>
@@ -167,8 +167,9 @@
                 <label>Zwischenstop / Airport:</label>
                 <input type="text" name="q">
             </div>
-        </div>
 
-        <!-- 🛠️ INTERFACE-SCHNITTSTELLE (DROPDOWN + OPTISCH INTEGRALER BUTTON) -->
-        <div class="action-grid">
-            <div>
+            <!-- 🛠️ INTERFACE-SCHNITTSTELLE ALS INTEGRALER BESTANDTEIL DES GRIDS GANZ UNTEN -->
+            <div class="action-grid">
+                <div>
+                    <label>Suchmaschine wählen:</label>
+                    <select id="engine-select" name="q">
