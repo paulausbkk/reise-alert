@@ -40,15 +40,19 @@
     <!-- PURE HTML CORE: Absolut fehlerfrei, unblockierbar -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         
-        <!-- TRICK: Dieses unsichtbare Feld zwingt Google, das interaktive Flug-Interface zu öffnen -->
+        <!-- TRICK: Erstes Textelement für die Suchkette -->
         <input type="hidden" name="q" value="Flüge von">
 
-        <!-- AKTUALISIERT: Präziser Zeitstempel und stabiles Königsblau -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 07:42 UHR - STABLE BLUE]</span></div>
+        <!-- AKTUALISIERT: Präziser Zeitstempel und stabiles Violett -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #f3e8ff; padding: 2px 6px; border-radius: 4px; color: #6b21a8; border: 1px solid #e9d5ff;">[08.11.2026 - 07:44 UHR - VIOLET CORE]</span></div>
         <div class="grid">
             
-            <!-- Alle Orte hängen sich automatisch hinter "Flüge von" an -->
+            <!-- Die Eingaben und die unsichtbaren Trenner bauen die Kette: "Flüge von [Abflug] nach [Ziel]" -->
             <div><label>Abflugort:</label><input type="text" name="q" placeholder="z.B. Berlin (BER)" list="airports-complete" required></div>
+            
+            <!-- TRICK: Unsichtbarer Trenner zwischen Abflug und Ziel -->
+            <input type="hidden" name="q" value="nach">
+            
             <div><label>Zielort:</label><input type="text" name="q" placeholder="z.B. Bangkok (BKK)" list="airports-complete"></div>
             
             <div><label>Hinflug:</label><input type="date" id="fl-date1" value="2026-12-18"></div>
@@ -68,7 +72,7 @@
             </div>
             <div>
                 <label>Stopps:</label>
-                <select><option value="" selected></option><option>Direktflug</option><option>Max. 1 Stopp</option><option>Max. 2 Stopps</option></select>
+                <select><option value="" selected></option><option>Directflug</option><option>Max. 1 Stopp</option><option>Max. 2 Stopps</option></select>
             </div>
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)" list="airports-complete"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB" list="airports-complete"></div>
@@ -88,4 +92,3 @@
 </div>
 </body>
 </html>
-
