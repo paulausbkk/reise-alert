@@ -83,45 +83,48 @@
         <option value="SIN">Singapore Changi (SIN)</option>
     </datalist>
     
-    <!-- MOTOR AUF DIE NATIVE FLUGSUCHE VON SKYSCANNER UMGESTELLT -->
-    <form action="https://skyscanner.de" method="get" target="_blank" class="card">
+    <!-- 100% SKRIPTFREIE VERKNÜPFUNG AN GOOGLE FLIGHTS PFAD -->
+    <form action="https://google.com" method="get" target="_blank" class="card">
+
+        <!-- Versteckter Steuer-Parameter zwingt das Formular zur strukturierten Flugausgabe -->
+        <input type="hidden" name="as_sitesearch" value="skyscanner.de">
 
         <!-- 🔒 BLOCK 1: DER KERN -->
         <div class="title">
             <span>✈️ Sektion 1: Flug-Parameter</span>
             <span style="font-size: 0.72rem; background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #ffffff; border: 1px solid #334155; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                [🔒 LOCKED CORE - 08.11.2026 - 17:48 UHR]
+                [🔒 LOCKED CORE - 08.11.2026 - 17:51 UHR]
             </span>
         </div>
         
         <div class="grid">
             
             <div class="section-divider">🛫 Flugziele & Route</div>
-            <div><label>Abflugort (IATA):</label><input type="text" name="from" list="airports" required></div>
-            <div><label>Zielort (IATA):</label><input type="text" name="to" list="airports" required></div>
+            <div><label>Abflugort (IATA):</label><input type="text" name="as_q" list="airports" required></div>
+            <div><label>Zielort (IATA):</label><input type="text" name="as_epq" list="airports" required></div>
 
             <div class="section-divider">📅 Reisedaten & Personen</div>
-            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="outboundDate" value="2026-12-18"></div>
-            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" name="inboundDate" value="2026-12-28"></div>
+            <div><label>Hinflugdatum:</label><input type="date" id="date-start" name="as_oq" value="2026-12-18"></div>
+            <div class="return-flight-box"><label>Rückflugdatum:</label><input type="date" id="return-box" name="as_eq" value="2026-12-28"></div>
             
             <div>
                 <label>Anzahl Passagiere:</label>
-                <select name="adults">
-                    <option value="1" selected>1 Person</option>
-                    <option value="2">2 Personen</option>
-                    <option value="3">3 Personen</option>
-                    <option value="4">4 Personen</option>
+                <select>
+                    <option value="1 Person" selected>1 Person</option>
+                    <option value="2 Personen">2 Personen</option>
+                    <option value="3 Personen">3 Personen</option>
+                    <option value="4 Personen">4 Personen</option>
                 </select>
             </div>
             <div class="switch-container"><label>Nur Hinflug (One Way):</label><label class="switch"><input type="checkbox" id="ow-checkbox"><span class="slider"></span></label></div>
 
             <div>
                 <label>Reiseklasse:</label>
-                <select name="cabinClass">
-                    <option value="economy" selected>Economy</option>
-                    <option value="premium">Premium Economy</option>
-                    <option value="business">Business Class</option>
-                    <option value="first">First Class</option>
+                <select>
+                    <option value="Economy" selected>Economy</option>
+                    <option value="Premium Economy">Premium Economy</option>
+                    <option value="Business Class">Business Class</option>
+                    <option value="First Class">First Class</option>
                 </select>
             </div>
             <div class="switch-container yellow-highlight"><label style="color:#854d0e; font-size:0.75rem;">Low-Cost Airlines:</label><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
@@ -164,15 +167,8 @@
             </div>
 
             <div class="section-divider">🔍 Such-Schnittstelle</div>
-            <div>
-                <label>Bevorzugte Suchmaschine:</label>
-                <!-- Fest auf Skyscanner eingestellt, da dies ohne Skripte die stabilste Übergabe erzwingt -->
-                <select disabled>
-                    <option selected>Skyscanner (Direkt-Verbindung)</option>
-                </select>
-            </div>
-            <div>
-                <button type="submit" class="submit-btn">Suche starten</button>
+            <div class="full">
+                <button type="submit" class="submit-btn">SUCHE ÜBER GOOGLE AUF SKYSCANNER STARTEN</button>
             </div>
 
         </div>
