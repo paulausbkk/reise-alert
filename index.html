@@ -34,7 +34,6 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- Die Datalist schlägt dem Nutzer nun direkt die korrekte, kombinierte Suchphrase vor -->
     <datalist id="airports-complete">
         <option value="Flug von BER nach BKK"></option>
         <option value="Flug von FRA nach MNL"></option>
@@ -42,17 +41,16 @@
         <option value="Flug von FRA nach SIN"></option>
     </datalist>
     
-    <!-- UNZERSTÖRBARER INTERFACE-PFAD: Sendet rein nativ ohne Skripte an Google Search -->
+    <!-- STABILER PFAD: Startet mit Google Search -->
     <form action="https://google.com" method="get" target="_blank" class="card">
         
-        <!-- Dieser offizielle Parameter zwingt Google, die deutsche Benutzeroberfläche zu laden -->
+        <!-- Standardmäßig aktiv für das Google-Fluginterface -->
         <input type="hidden" name="hl" value="de">
 
-        <!-- VISUELLE PRÄZISE ZEIT-KONTROLLE -->
-        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #d1fae5; padding: 2px 6px; border-radius: 4px; color: #065f46; border: 1px solid #a7f3d0;">[08.11.2026 - 09:31 UHR - FLIGHTS INTERFACE]</span></div>
+        <!-- VISUELLE PRÄZISE ZEIT-KONTROLLE (STAND JETZT) -->
+        <div class="title"><span>✈️ Sektion 1: Flug-Parameter</span><span style="font-size: 0.75rem; background: #dbeafe; padding: 2px 6px; border-radius: 4px; color: #1e40af; border: 1px solid #bfdbfe;">[08.11.2026 - 09:35 UHR - STABLE BLUE]</span></div>
         <div class="grid">
             
-            <!-- Das 'name="q"' Feld übergibt die gesamte Kombination unzerstörbar als eine Suchzeile -->
             <div class="full">
                 <label>Gewünschte Flugstrecke (Auswahl oder freie Eingabe):</label>
                 <input type="text" name="q" value="Flug von BER nach BKK" list="airports-complete" required>
@@ -80,12 +78,23 @@
             <div class="full"><label>Ort des Stopps:</label><input type="text" placeholder="z.B. Dubai (DXB)"></div>
             <div><label>2. Abflugort (Anschluss):</label><input type="text" placeholder="z.B. CEB"></div>
             
-            <!-- Budget-Felder ohne name-Attribut stören die Übergabe nicht -->
             <div><label>Max. Preis Anschlussflug (€):</label><input type="number" placeholder="z.B. 80" value="0"></div>
             <div class="full"><label>Max. Haupt-Ticketpreis (€):</label><input type="number" placeholder="z.B. 800" value="0"></div>
             
             <div class="full" style="background:#fff; padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
                 <label>Max. Reisezeit (Schieberegler optisch):</label><input type="range" min="5" max="50" value="30" style="height:20px;">
+            </div>
+            
+            <!-- REAKTIVIERT: Suchmaschinen-Wahl vollkommen inline und unzerstörbar -->
+            <div class="full" style="background: #fff; padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;">
+                <label>Bevorzugte Suchmaschine:</label>
+                <select id="engine-selector" onchange="this.form.action = this.value;">
+                    <option value="https://google.com" selected>Google Flights (Standard)</option>
+                    <option value="https://skyscanner.de">Skyscanner</option>
+                    <option value="https://kayak.de">Kayak</option>
+                    <option value="https://kiwi.com">Kiwi.com</option>
+                    <option value="https://trip.com">Trip.com</option>
+                </select>
             </div>
             
             <div class="full">
