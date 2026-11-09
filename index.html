@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - FULL SYSTEM DASHBOARD</title>
+    <title>✈️ Reisekonfiguration PRO - DASHBOARD CLEANED</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -15,24 +15,14 @@
             --time-magenta: #d946ef; 
             --lock-green: #22c55e; 
             --error-red: #ef4444;
+            --lowcost-yellow: #fef08a;
         }
         
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
-        .dashboard-container {
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
+        .dashboard-container { width: 100%; max-width: 100%; box-sizing: border-box; }
         
-        .main-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 2px solid var(--border); 
-            padding-bottom: 10px; 
-            margin-bottom: 20px; 
-        }
+        .main-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
         .main-title { font-weight: bold; color: var(--rubin); font-size: 1.3rem; margin: 0; }
         
         .cockpit-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
@@ -41,62 +31,39 @@
         .seg-time { background: var(--time-magenta); }
         .seg-state { background: var(--lock-green); }
         
-        .window-flex-row { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 20px; 
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-        }
+        .window-flex-row { display: flex; flex-wrap: wrap; gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 20px; }
         
-        .fortress-card { 
-            flex: 1 1 450px; 
-            border: 2px solid var(--rubin); 
-            border-radius: 8px; 
-            padding: 20px; 
-            background: #fef2f2;
-            box-sizing: border-box;
-        }
-        
+        .fortress-card { flex: 1 1 450px; border: 2px solid var(--rubin); border-radius: 8px; padding: 20px; background: #fef2f2; box-sizing: border-box; }
         .card-title { font-weight: bold; font-size: 1.1rem; color: var(--rubin); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 15px; }
         
         .field { margin-bottom: 16px; display: flex; flex-direction: column; }
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
         input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
         
-        .budget-row { display: flex; gap: 8px; }
-        .budget-row input { flex: 2; }
-        .budget-row select { flex: 1; }
-        
-        .field-info-red { display: block; color: var(--error-red); font-size: 0.75rem; font-weight: bold; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.2px; }
-        
         /* UNZERSTÖRBARER CODELOSER LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; border-color: #94a3b8 !important; }
         body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
         
-        /* NATIVE CHROMATISCHE FEHLERMELDUNG */
+        /* CHROMATISCHE FEHLER-VALIDIERUNG */
         input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5; }
         form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; color: #ffffff; }
         
+        /* CONTAINER FÜR DIE SCHIEBESCHALTER (SLIDER) */
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; height: 40px; box-sizing: border-box; }
-        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+        .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
         .switch input:checked + .slider { background-color: var(--lock-green) !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        .button-bar { 
-            width: 100%; 
-            border: 2px solid var(--border); 
-            background: #ffffff; 
-            border-radius: 8px; 
-            padding: 15px; 
-            box-sizing: border-box;
-        }
-        
+        /* SPEZIELLER MAGENTA-RANGE-CONTAINER FÜR DIE REISEZEIT */
+        .range-container { background: var(--time-magenta) !important; padding: 0 10px; border: 1px solid #c084fc; border-radius: 4px; box-sizing: border-box; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); background: transparent; }
+
+        .button-bar { width: 100%; border: 2px solid var(--border); background: #ffffff; border-radius: 8px; padding: 15px; box-sizing: border-box; }
         .btn-flow { display: flex; flex-wrap: wrap; gap: 10px; }
         .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
@@ -118,8 +85,8 @@
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">18:05</div>
-                <div class="cockpit-seg seg-state">SYSTEM FULL</div>
+                <div class="cockpit-seg seg-time">18:30</div>
+                <div class="cockpit-seg seg-state">CLEANED</div>
             </div>
         </div>
         
@@ -150,13 +117,8 @@
                 </div>
                 
                 <div class="field">
-                    <label for="passengers">Reisende</label>
-                    <select id="passengers">
-                        <option value="1">1 Erwachsener</option>
-                        <option value="2">2 Erwachsene</option>
-                        <option value="3">3 Erwachsene</option>
-                    </select>
-                    <span class="field-info-red">⚠️ Suchschlitz-Übergabe startet Portale standardmäßig bei 1 Person</span>
+                    <label>Reisende</label>
+                    <input type="text" value="1 Erwachsener" style="background-color: #e2e8f0; color: #64748b; cursor: not-allowed;" readonly>
                 </div>
                 
                 <div class="field">
@@ -170,21 +132,14 @@
                 </div>
             </div>
             
-            <!-- FENSTER 2: OPTIONALE PRÄFERENZEN & TRANSIT -->
+            <!-- FENSTER 2: OPTIONALE PRÄFERENZEN & SCHALTER -->
             <div class="fortress-card">
-                <div class="card-title">⚙ nighttime_filter_pro_v1 ⚙️</div>
+                <div class="card-title">⚙️ Optionale Präferenzen & Schalter</div>
                 
                 <div class="field">
-                    <label>Max. Budget</label>
-                    <div class="budget-row">
-                        <input type="number" placeholder="Kein Limit" min="0">
-                        <select>
-                            <option value="EUR">EUR (€)</option>
-                            <option value="USD">USD ($)</option>
-                            <option value="CHF">CHF</option>
-                        </select>
-                    </div>
-                    <span class="field-info-red">⚠️ Ohne JavaScript findet keine automatische Währungsumrechnung statt</span>
+                    <!-- Bereinigt: Währung weg, Feld nutzt jetzt die volle Breite -->
+                    <label for="max-budget">Max. Budget</label>
+                    <input type="number" id="max-budget" placeholder="Kein Limit (z.B. 500)" min="0">
                 </div>
                 
                 <div class="field">
@@ -200,6 +155,19 @@
                 <div class="field">
                     <label for="transit-airport">Zwischenstop / Airport:</label>
                     <input type="text" id="transit-airport" placeholder="Optionaler Flughafen...">
-                    <span class="field-info-red">⚠️ Google ignoriert diesen Filter im Direkt-Absprung</span>
                 </div>
-            </div>
+
+                <div class="field">
+                    <label>Max. Reisezeit (Stunden)</label>
+                    <div class="range-container">
+                        <input type="range" min="2" max="48" value="24">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="switch-container yellow-highlight">
+                        <label for="lc-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Low-Cost Airlines erlauben</label>
+                        <label class="switch">
+                            <input type="checkbox" id="lc-checkbox">
+                            <span class="slider"></span>
+                        </label>
