@@ -16,10 +16,26 @@
             --time-magenta: #d946ef; 
             --lock-box-color: #22c55e; 
         }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 15px; margin: 0; }
-        .container { max-width: 620px; margin: 10px auto; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        /* BEFREIUNG: HTML & Body dürfen niemals Inhalte verschlucken */
+        html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
+        
+        /* CONTAINER-KORSETT GEBRINGT */
+        .container { 
+            max-width: 620px; 
+            margin: 10px auto; 
+            background: var(--card-bg); 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            height: auto !important; /* Erzwingt dynamische Höhe */
+            max-height: none !important; 
+            overflow: visible !important; /* Lässt Elemente unter keinen Umständen unsichtbar werden */
+        }
+        
         h1 { font-size: 1.3rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 15px; }
         
+        /* DIE ROTE FESTUNG: Völlig flexibel nach unten */
         .card { 
             border: 2px solid var(--border); 
             border-radius: 8px; 
@@ -27,8 +43,11 @@
             margin-bottom: 15px; 
             border-color: var(--rubin); 
             background: #fef2f2;
-            height: auto; 
+            height: auto !important; 
+            max-height: none !important;
+            overflow: visible !important;
         }
+        
         .title { font-weight: bold; margin-bottom: 10px; font-size: 1rem; color: var(--rubin); display: flex; justify-content: space-between; align-items: center; }
         
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
@@ -48,20 +67,23 @@
         }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; height: 32px; box-sizing: border-box; }
-        .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
         .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
         .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(16px); }
-
-        .range-container { background: var(--time-magenta) !important; padding: 0 8px; border: 1px solid #c084fc; border-radius: 4px; box-sizing: border-box; height: 32px; display: flex; align-items: center; justify-content: center; }
-        .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); }
         
-        .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 2px; margin-top: 5px; }
+        .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-top: 15px; margin-bottom: 5px; }
 
-        .button-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; grid-column: span 2; margin-top: 12px; }
+        /* NEUE BUTTON-STRUKTUR: Wechselt automatisch in die nächste Zeile, falls nötig */
+        .button-row { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+            gap: 8px; 
+            grid-column: span 2; 
+            margin-top: 12px; 
+        }
         
         .touch-btn { 
             display: flex; 
@@ -69,7 +91,7 @@
             justify-content: center; 
             height: 36px; 
             color: #ffffff; 
-            border: 1px solid #d97706; 
+            border: 1px solid #cbd5e1; 
             border-radius: 4px; 
             font-weight: bold; 
             cursor: pointer; 
@@ -78,7 +100,6 @@
             text-transform: uppercase; 
             letter-spacing: 0.2px; 
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            background: var(--gold);
         }
         .touch-btn:hover { opacity: 0.9; }
         .btn-google { background: #4285f4; border-color: #3367d6; }
@@ -93,7 +114,6 @@
 <div class="container">
     <h1>✈️ Reisekonfiguration PRO</h1>
     
-    <!-- Hauptformular zielt stabil auf Google Search -->
     <form action="https://google.com" method="get" target="_blank">
         <div class="card">
             <div class="title">Flugparameter & Such-Absprung</div>
@@ -102,7 +122,6 @@
                 <!-- Abflug & Ziel -->
                 <div>
                     <label for="from-air">Abflug (IATA)</label>
-                    <!-- name="as_q" sorgt dafür, dass Google diesen Begriff als Pflichtbegriff in die Suche einbaut -->
                     <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA">
                 </div>
                 <div>
@@ -131,28 +150,19 @@
                     </div>
                 </div>
 
-                <!-- Trenner für Budget & Transit -->
-                <div class="section-divider">Optionale Filter (Präferenzen)</div>
-
-                <div>
-                    <label>Max. Budget (€)</label>
-                    <input type="number" placeholder="Kein Limit" min="0">
-                </div>
-                <div>
-                    <label>Max. Zwischenstopps</label>
-                    <select>
-                        <option value="any">Beliebig</option>
-                        <option value="0">Direktflug</option>
-                        <option value="1">Max. 1 Stopp</option>
-                    </select>
+                <!-- ✈️ Transit-Optionen laut deinem Screenshot -->
+                <div class="section-divider">✈️ Transit-Optionen</div>
+                <div class="full">
+                    <label for="transit-airport">Zwischenstop / Airport:</label>
+                    <input type="text" id="transit-airport" placeholder="Optionaler Flughafen...">
                 </div>
 
-                <!-- Trenner für die Suchtasten -->
-                <div class="section-divider">Suchmaschine via Google-Brücke ansteuern</div>
+                <!-- 🔍 Direkte Such-Schnittstellen laut deinem Screenshot -->
+                <div class="section-divider">🔍 Direkte Such-Schnittstellen</div>
 
-                <!-- Die Tasten übergeben über das 'name="q"' Attribut den jeweiligen Ziel-Suchbegriff an Google -->
+                <!-- Alle 6 Knöpfe im dynamischen Raster -->
                 <div class="button-row">
-                    <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google Flights</button>
+                    <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
                     <button type="submit" name="q" value="Skyscanner Flüge" class="touch-btn btn-skyscanner">Skyscan</button>
                     <button type="submit" name="q" value="Kayak Flüge" class="touch-btn btn-kayak">Kayak</button>
                     <button type="submit" name="q" value="Momondo Flüge" class="touch-btn btn-momondo">Momondo</button>
