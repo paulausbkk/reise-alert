@@ -3,80 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ REBOOT</title>
+    <title>✈️ Reisekonfiguration PRO - WIDE SUCCESS BASE</title>
     <style>
-        body { font-family: sans-serif; background: #f0f4f8; padding: 20px; margin: 0; }
-        .fullscreen-box { width: 100%; background: #ffffff; border: 3px solid #991b1b; padding: 20px; border-radius: 8px; box-sizing: border-box; }
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; margin-bottom: 20px; }
-        .title { font-weight: bold; color: #991b1b; font-size: 1.2rem; }
-        .cockpit { display: flex; gap: 5px; background: #1e293b; padding: 4px; border-radius: 4px; }
-        .seg { font-size: 0.75rem; padding: 4px 8px; border-radius: 2px; font-weight: bold; color: #ffffff; }
+        :root { 
+            --rubin: #991b1b; 
+            --bg: #f0f4f8; 
+            --card-bg: #ffffff; 
+            --text: #1e293b; 
+            --border: #cbd5e1; 
+            --lowcost-yellow: #fef08a; 
+            --gold: #f59e0b; 
+            --time-magenta: #d946ef; 
+            --lock-box-color: #22c55e; 
+        }
         
-        .field { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px; color: #475569; }
-        input { width: 100%; height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
+        html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
-        body:has(#ow:checked) #return-field { opacity: 0.25; pointer-events: none; }
-        body:has(#ow:checked) .status-ok { background: #f59e0b !important; color: #000000; }
-        input:invalid { border: 2px solid #ef4444 !important; background: #fff5f5; }
-        form:has(input:invalid) .status-ok { background: #ef4444 !important; color: #ffffff; }
+        /* BREITBILD-CONTAINER */
+        .container { 
+            max-width: 98%; 
+            margin: 10px auto; 
+            background: var(--card-bg); 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            height: auto !important; 
+            max-height: none !important; 
+            overflow: visible !important; 
+        }
+        
+        h1 { font-size: 1.5rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 20px; }
+        
+        /* ROTE FESTUNG IM FULLSCREEN */
+        .card { 
+            border: 2px solid var(--border); 
+            border-radius: 8px; 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            border-color: var(--rubin); 
+            background: #fef2f2;
+            height: auto !important; 
+            max-height: none !important;
+            overflow: visible !important;
+        }
+        
+        .title { 
+            font-weight: bold; 
+            margin-bottom: 20px; 
+            font-size: 1.1rem; 
+            color: var(--rubin); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        /* DAS GESTOCHEN SCHARFE STATUS-PANEL */
+        .status-window {
+            display: flex;
+            gap: 4px;
+            background: #1e293b;
+            padding: 4px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .status-segment {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+        
+        .seg-date { background: #475569; }
+        .seg-time { background: var(--time-magenta); }
+        .seg-state { background: var(--lock-box-color); }
+        
+        /* 4-SPALTIGES STABILES LAYOUT */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 16px; 
+            align-items: end; 
+        }
+        
+        .half { grid-column: span 2; }
+        
+        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 6px; color: #475569; }
+        input, select { width: 100%; height: 36px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
+        
+        /* UNZERSTÖRBARER CODELOSER SCHLOSS-EFFEKT */
+        body:has(#ow-checkbox:checked) #return-box { 
+            background-color: #cbd5e1 !important; 
+            color: #94a3b8 !important; 
+            cursor: not-allowed; 
+            opacity: 0.35 !important; 
+            pointer-events: none !important; 
+            border-color: #94a3b8 !important; 
+        }
+        body:has(#ow-checkbox:checked) #return-box input {
+            border-color: #94a3b8 !important;
+        }
+        body:has(#ow-checkbox:checked) .seg-state {
+            background-color: var(--gold) !important;
+            color: #000000;
+        }
+        
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; height: 36px; box-sizing: border-box; }
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
+        .switch input:checked + .slider { background-color: #22c55e !important; }
+        .switch input:checked + .slider:before { transform: translateX(18px); }
+        
+        .section-divider { 
+            grid-column: span 4; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+            color: #1e293b; 
+            border-bottom: 2px solid var(--border); 
+            padding-bottom: 4px; 
+            margin-top: 20px; 
+            margin-bottom: 5px; 
+        }
 
-        .btn-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-        .btn { flex: 1 1 140px; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; }
-        .b-g { background: #4285f4; } .b-s { background: #007054; } .b-k { background: #ff690f; }
-        .b-m { background: #84329b; } .b-ki { background: #00a699; } .b-t { background: #2f55d4; }
+        /* DIE BUTTONS PERFEKT AUFGEREIHT */
+        .button-row { 
+            display: grid; 
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 10px; 
+            grid-column: span 4; 
+            margin-top: 15px; 
+        }
+        
+        .touch-btn { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 40px; 
+            color: #ffffff; 
+            border: 1px solid #cbd5e1; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            box-sizing: border-box;
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.3px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
+        .btn-google { background: #4285f4; border-color: #3367d6; }
+        .btn-skyscanner { background: #007054; border-color: #00523f; }
+        .btn-kayak { background: #ff690f; border-color: #d45205; }
+        .btn-momondo { background: #84329b; border-color: #641f80; }
+        .btn-kiwi { background: #00a699; border-color: #008075; }
+        .btn-trip { background: #2f55d4; border-color: #2444b5; }
     </style>
 </head>
 <body>
-
-<div class="fullscreen-box">
+<div class="container">
+    <h1>✈️ Reisekonfiguration PRO - WIDE STABLE</h1>
+    
     <form action="https://google.com" method="get" target="_blank">
-        
-        <div class="header">
-            <div class="title">Flug-Absprung (REBOOT BASE)</div>
-            <div class="cockpit">
-                <div class="seg" style="background: #475569;">09.11.2026</div>
-                <div class="seg" style="background: #d946ef;">17:15</div>
-                <div class="seg status-ok" style="background: #22c55e;">BASE OK</div>
+        <div class="card">
+            <div class="title">
+                <span>Flugparameter & Such-Absprung</span>
+                <!-- DAS MULTI-SEGMENT-DISPLAY -->
+                <div class="status-window">
+                    <div class="status-segment seg-date">09.11.2026</div>
+                    <div class="status-segment seg-time">17:22</div>
+                    <div class="status-segment seg-state">BASE OK</div>
+                </div>
+            </div>
+            
+            <div class="grid">
+                <!-- ZEILE 1: FLUGORTE & REISEDATEN NEBENEINANDER -->
+                <div>
+                    <label for="from-air">Abflug (IATA)</label>
+                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA">
+                </div>
+                <div>
+                    <label for="to-air">Ziel (IATA)</label>
+                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" value="BKK">
+                </div>
+                <div>
+                    <label for="outbound-date">Hinflug</label>
+                    <input type="date" id="outbound-date">
+                </div>
+                <div id="return-box">
+                    <label for="return-date">Rückflug</label>
+                    <input type="date" id="return-date">
+                </div>
+
+                <!-- ZEILE 2: PASSAGIERE & ONE WAY NEBENEINANDER -->
+                <div class="half">
+                    <label for="passengers">Reisende</label>
+                    <select id="passengers">
+                        <option value="1">1 Erwachsener</option>
+                        <option value="2">2 Erwachsene</option>
+                        <option value="3">3 Erwachsene</option>
+                    </select>
+                </div>
+                <div class="half">
+                    <label style="visibility: hidden;">Spacer</label>
+                    <div class="switch-container">
+                        <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Nur Hinflug (One-Way)</label>
+                        <label class="switch">
+                            <input type="checkbox" id="ow-checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- SEKTION: DIE ABSPRUNG-BUTTONS -->
+                <div class="section-divider">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
+
+                <div class="button-row">
+                    <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
+                    <button type="submit" name="q" value="Skyscanner Flüge" class="touch-btn btn-skyscanner">Skyscan</button>
+                    <button type="submit" name="q" value="Kayak Flüge" class="touch-btn btn-kayak">Kayak</button>
+                    <button type="submit" name="q" value="Momondo Flüge" class="touch-btn btn-momondo">Momondo</button>
+                    <button type="submit" name="q" value="Kiwi.com Flüge" class="touch-btn btn-kiwi">Kiwi</button>
+                    <button type="submit" name="q" value="Trip.com Flüge" class="touch-btn btn-trip">Trip</button>
+                </div>
             </div>
         </div>
-
-        <div class="field">
-            <label>Abflug (IATA)</label>
-            <input type="text" name="as_q" value="FRA" required>
-        </div>
-
-        <div class="field">
-            <label>Ziel (IATA)</label>
-            <input type="text" name="as_epq" value="BKK" required>
-        </div>
-
-        <div class="field">
-            <label>Hinflug</label>
-            <input type="date" min="2026-11-09" value="2026-11-19" required>
-        </div>
-
-        <div class="field" id="return-field">
-            <label>Rückflug</label>
-            <input type="date" min="2026-11-09">
-        </div>
-
-        <div class="field" style="display: flex; gap: 10px; align-items: center; background: #fff; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
-            <input type="checkbox" id="ow" style="width: 20px; height: 20px; margin: 0;">
-            <label for="ow" style="margin: 0; cursor: pointer;">Nur Hinflug (One-Way Riegel)</label>
-        </div>
-
-        <div class="btn-container">
-            <button type="submit" name="q" value="Flüge" class="btn b-g">Google</button>
-            <button type="submit" name="q" value="Skyscanner Flüge" class="btn b-s">Skyscan</button>
-            <button type="submit" name="q" value="Kayak Flüge" class="btn b-k">Kayak</button>
-            <button type="submit" name="q" value="Momondo Flüge" class="btn b-m">Momondo</button>
-            <button type="submit" name="q" value="Kiwi.com Flüge" class="btn b-ki">Kiwi</button>
-            <button type="submit" name="q" value="Trip.com Flüge" class="btn b-t">Trip</button>
-        </div>
-
     </form>
 </div>
 
-</body>
-</html>
+<datalist id="airports">
