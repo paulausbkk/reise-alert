@@ -3,209 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - CUT & REBOOT</title>
+    <title>✈️ REBOOT</title>
     <style>
-        :root { 
-            --rubin: #991b1b; 
-            --bg: #f0f4f8; 
-            --card-bg: #ffffff; 
-            --text: #1e293b; 
-            --border: #cbd5e1; 
-            --gold: #f59e0b; 
-            --time-magenta: #d946ef; 
-            --lock-green: #22c55e; 
-            --error-red: #ef4444;
-        }
+        body { font-family: sans-serif; background: #f0f4f8; padding: 20px; margin: 0; }
+        .fullscreen-box { width: 100%; background: #ffffff; border: 3px solid #991b1b; padding: 20px; border-radius: 8px; box-sizing: border-box; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; margin-bottom: 20px; }
+        .title { font-weight: bold; color: #991b1b; font-size: 1.2rem; }
+        .cockpit { display: flex; gap: 5px; background: #1e293b; padding: 4px; border-radius: 4px; }
+        .seg { font-size: 0.75rem; padding: 4px 8px; border-radius: 2px; font-weight: bold; color: #ffffff; }
         
-        html, body { margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
+        .field { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px; color: #475569; }
+        input { width: 100%; height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; }
         
-        /* 100% BREITBILD: Maske nutzt kompromisslos die volle Bildschirmbreite */
-        .workspace-fullscreen {
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        /* DIE ROTE FESTUNG: Völlig flexibel nach unten, kein Höhenlimit */
-        .base-card { 
-            width: 100%;
-            border: 2px solid var(--rubin); 
-            border-radius: 8px; 
-            padding: 20px; 
-            background: #fef2f2;
-            box-sizing: border-box;
-        }
-        
-        .header-flex { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 10px;
-        }
-        
-        .header-title { font-weight: bold; font-size: 1.2rem; color: var(--rubin); }
-        
-        /* DAS GESTOCHEN SCHARFE INFOPANEL */
-        .cockpit-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
-        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; }
-        .seg-date { background: #475569; }
-        .seg-time { background: var(--time-magenta); }
-        .seg-state { background: var(--lock-green); }
-        
-        /* DIE UNZERSTÖRBARE FLUSSKETTE: Elemente fließen frei nebeneinander her */
-        .input-row-flow { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 15px; 
-            align-items: flex-end;
-            margin-bottom: 15px;
-        }
-        
-        .field-box { 
-            flex: 1 1 220px; 
-            min-width: 200px;
-            display: flex; 
-            flex-direction: column; 
-        }
-        
-        .field-box-full {
-            flex: 1 1 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .budget-combo { display: flex; gap: 8px; }
-        .budget-combo input { flex: 2; }
-        .budget-combo select { flex: 1; }
-        
-        label { font-weight: bold; font-size: 0.8rem; margin-bottom: 6px; color: #475569; }
-        input, select { height: 38px; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; background: #ffffff; width: 100%; }
-        
-        /* NATIVE CSS-SPERRE BEI NUR-HINFLUG */
-        body:has(#ow-checkbox:checked) #return-box { 
-            background-color: #cbd5e1 !important; 
-            opacity: 0.25 !important; 
-            pointer-events: none !important; 
-        }
-        body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; }
-        body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
-        
-        /* TRANSFORMATOR BEI FEHLERN */
-        input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5 !important; }
-        form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; }
-        
-        .toggle-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
-        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
-        .switch input:checked + .slider { background-color: var(--lock-green) !important; }
-        .switch input:checked + .slider:before { transform: translateX(18px); }
-        
-        .row-divider { width: 100%; font-weight: bold; font-size: 0.9rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-top: 15px; }
+        body:has(#ow:checked) #return-field { opacity: 0.25; pointer-events: none; }
+        body:has(#ow:checked) .status-ok { background: #f59e0b !important; color: #000000; }
+        input:invalid { border: 2px solid #ef4444 !important; background: #fff5f5; }
+        form:has(input:invalid) .status-ok { background: #ef4444 !important; color: #ffffff; }
 
-        /* BUTTONS IM FREIEN BREITBILD-FLUSS */
-        .btn-row-flow { width: 100%; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 42px; color: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
-        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        
-        .btn-google { background: #4285f4; border-color: #3367d6; }
-        .btn-skyscanner { background: #007054; border-color: #00523f; }
-        .btn-kayak { background: #ff690f; border-color: #d45205; }
-        .btn-momondo { background: #84329b; border-color: #641f80; }
-        .btn-kiwi { background: #00a699; border-color: #008075; }
-        .btn-trip { background: #2f55d4; border-color: #2444b5; }
+        .btn-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .btn { flex: 1 1 140px; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; }
+        .b-g { background: #4285f4; } .b-s { background: #007054; } .b-k { background: #ff690f; }
+        .b-m { background: #84329b; } .b-ki { background: #00a699; } .b-t { background: #2f55d4; }
     </style>
 </head>
 <body>
-<div class="workspace-fullscreen">
-    
+
+<div class="fullscreen-box">
     <form action="https://google.com" method="get" target="_blank">
-        <div class="base-card">
-            
-            <!-- COCKPIT ZEILE -->
-            <div class="header-flex">
-                <div class="header-title">Flugparameter & Such-Absprung</div>
-                <div class="cockpit-display">
-                    <div class="cockpit-seg seg-date">09.11.2026</div>
-                    <div class="cockpit-seg seg-time">17:30</div>
-                    <div class="cockpit-seg seg-state">BASE OK</div>
-                </div>
+        
+        <div class="header">
+            <div class="title">Flug-Absprung (REBOOT BASE)</div>
+            <div class="cockpit">
+                <div class="seg" style="background: #475569;">09.11.2026</div>
+                <div class="seg" style="background: #d946ef;">17:15</div>
+                <div class="seg status-ok" style="background: #22c55e;">BASE OK</div>
             </div>
-            
-            <!-- ABSCHNITT 1: FLUGORTE & TERMINE -->
-            <div class="input-row-flow">
-                <div class="field-box">
-                    <label for="from-air">Abflug (IATA)</label>
-                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA" required>
-                </div>
-                
-                <div class="field-box">
-                    <label for="to-air">Ziel (IATA)</label>
-                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" value="BKK" required>
-                </div>
-                
-                <div class="field-box">
-                    <label for="outbound-date">Hinflug</label>
-                    <input type="date" id="outbound-date" min="2026-11-09" value="2026-11-19" required>
-                </div>
-                
-                <div class="field-box" id="return-box">
-                    <label for="return-date">Rückflug</label>
-                    <input type="date" id="return-date" min="2026-11-09">
-                </div>
-            </div>
+        </div>
 
-            <!-- ABSCHNITT 2: REISENDE & SCHALTER -->
-            <div class="input-row-flow">
-                <div class="field-box">
-                    <label for="passengers">Reisende</label>
-                    <select id="passengers">
-                        <option value="1">1 Erwachsener</option>
-                        <option value="2">2 Erwachsene</option>
-                        <option value="3">3 Erwachsene</option>
-                    </select>
-                </div>
-                
-                <div class="field-box">
-                    <label style="visibility: hidden;">Spacer</label>
-                    <div class="toggle-container">
-                        <label for="ow-checkbox" style="margin:0; cursor:pointer; font-size:0.85rem; font-weight:bold; color:#475569;">Nur Hinflug (One-Way)</label>
-                        <label class="switch">
-                            <input type="checkbox" id="ow-checkbox">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
+        <div class="field">
+            <label>Abflug (IATA)</label>
+            <input type="text" name="as_q" value="FRA" required>
+        </div>
 
-            <!-- ABSCHNITT 3: PREIS & STOPPS -->
-            <div class="row-divider">Optionale Filter (Präferenzen)</div>
-            <div class="input-row-flow">
-                <div class="field-box">
-                    <label>Max. Budget</label>
-                    <div class="budget-combo">
-                        <input type="number" placeholder="Kein Limit" min="0">
-                        <select>
-                            <option value="EUR">EUR (€)</option>
-                            <option value="USD">USD ($)</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="field-box">
-                    <label>Max. Zwischenstopps</label>
-                    <select>
-                        <option value="any">Beliebig</option>
-                        <option value="0">Direktflug</option>
-                        <option value="1">Max. 1 Stopp</option>
-                    </select>
-                </div>
-            </div>
+        <div class="field">
+            <label>Ziel (IATA)</label>
+            <input type="text" name="as_epq" value="BKK" required>
+        </div>
 
-            <!-- ABSCHNITT 4: TRANSIT -->
-            <div class="row-divider">✈️ Transit-Optionen</div>
-            <div class="input-row-flow">
-                <div class="field-box-full">
-                    <label for="transit-airport">Zwischenstop / Airport:</label>
+        <div class="field">
+            <label>Hinflug</label>
+            <input type="date" min="2026-11-09" value="2026-11-19" required>
+        </div>
+
+        <div class="field" id="return-field">
+            <label>Rückflug</label>
+            <input type="date" min="2026-11-09">
+        </div>
+
+        <div class="field" style="display: flex; gap: 10px; align-items: center; background: #fff; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
+            <input type="checkbox" id="ow" style="width: 20px; height: 20px; margin: 0;">
+            <label for="ow" style="margin: 0; cursor: pointer;">Nur Hinflug (One-Way Riegel)</label>
+        </div>
+
+        <div class="btn-container">
+            <button type="submit" name="q" value="Flüge" class="btn b-g">Google</button>
+            <button type="submit" name="q" value="Skyscanner Flüge" class="btn b-s">Skyscan</button>
+            <button type="submit" name="q" value="Kayak Flüge" class="btn b-k">Kayak</button>
+            <button type="submit" name="q" value="Momondo Flüge" class="btn b-m">Momondo</button>
+            <button type="submit" name="q" value="Kiwi.com Flüge" class="btn b-ki">Kiwi</button>
+            <button type="submit" name="q" value="Trip.com Flüge" class="btn b-t">Trip</button>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
