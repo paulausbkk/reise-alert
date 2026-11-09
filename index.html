@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - DASHBOARD CORE</title>
+    <title>✈️ Reisekonfiguration PRO - DASHBOARD LIVE</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -14,7 +14,6 @@
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
             --lock-green: #22c55e; 
-            --error-red: #ef4444;
             --lowcost-yellow: #fef08a;
         }
         
@@ -38,19 +37,12 @@
         
         .field { margin-bottom: 16px; display: flex; flex-direction: column; }
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
-        input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
+        input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; color: var(--text); }
         
-        /* INTEGRIERTE FLUGHAFEN-SCHNELLWAHL */
-        .airport-tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
-        .air-tag { background: #e2e8f0; color: #334155; font-size: 0.72rem; font-weight: bold; padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; cursor: pointer; text-transform: uppercase; }
-        .air-tag:hover { background: #cbd5e1; color: #000; }
-        
+        /* UNZERSTÖRBARER CODELOSER LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; border-color: #94a3b8 !important; }
         body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
-        
-        input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5; }
-        form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; color: #ffffff; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; height: 40px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
@@ -83,8 +75,8 @@
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">21:20</div>
-                <div class="cockpit-seg seg-state">CORE TOTAL</div>
+                <div class="cockpit-seg seg-time">21:40</div>
+                <div class="cockpit-seg seg-state">DATALIST UNLOCKED</div>
             </div>
         </div>
         
@@ -95,27 +87,14 @@
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
-                    <label>Abflug (IATA)</label>
-                    <input type="text" id="from-field" name="from" placeholder="FRA" required value="FRA">
-                    <div class="airport-tag-row">
-                        <span class="air-tag" onclick="document.getElementById('from-field').value='FRA'">FRA</span>
-                        <span class="air-tag" onclick="document.getElementById('from-field').value='BER'">BER</span>
-                        <span class="air-tag" onclick="document.getElementById('from-field').value='MUC'">MUC</span>
-                        <span class="air-tag" onclick="document.getElementById('from-field').value='HAM'">HAM</span>
-                        <span class="air-tag" onclick="document.getElementById('from-field').value='DUS'">DUS</span>
-                    </div>
+                    <label>Abflug (IATA oder Stadt)</label>
+                    <!-- EXAKT AUS SKRIPT 1: Reine, unblockierte Freitextfelder -->
+                    <input type="text" name="from" list="airports" placeholder="z.B. FRA" required>
                 </div>
                 
                 <div class="field">
-                    <label>Ziel (IATA)</label>
-                    <input type="text" id="to-field" name="to" placeholder="BKK" required value="BKK">
-                    <div class="airport-tag-row">
-                        <span class="air-tag" onclick="document.getElementById('to-field').value='BKK'">BKK</span>
-                        <span class="air-tag" onclick="document.getElementById('to-field').value='DXB'">DXB</span>
-                        <span class="air-tag" onclick="document.getElementById('to-field').value='SIN'">SIN</span>
-                        <span class="air-tag" onclick="document.getElementById('to-field').value='HKG'">HKG</span>
-                        <span class="air-tag" onclick="document.getElementById('to-field').value='JFK'">JFK</span>
-                    </div>
+                    <label>Ziel (IATA oder Stadt)</label>
+                    <input type="text" name="to" list="airports" placeholder="z.B. BKK" required>
                 </div>
                 
                 <div class="field">
@@ -160,4 +139,36 @@
                 
                 <div class="field">
                     <label>Zwischenstop / Airport:</label>
-                    <input type="text" id="transit-field" name="transit" placeholder="z.B. DXB">
+                    <input type="text" name="transit" list="airports" placeholder="z.B. DXB">
+                </div>
+
+                <div class="field">
+                    <label for="max-time">Max. Reisezeit</label>
+                    <select id="max-time" name="max_time">
+                        <option value="any">Beliebig (Kein Limit)</option>
+                        <option value="12">Max. 12 Stunden</option>
+                        <option value="16">Max. 16 Stunden</option>
+                        <option value="20">Max. 20 Stunden</option>
+                        <option value="24" selected>Max. 24 Stunden</option>
+                        <option value="32">Max. 32 Stunden</option>
+                        <option value="48">Max. 48 Stunden</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <div class="switch-container yellow-highlight">
+                        <label for="lc-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Low-Cost Airlines erlauben</label>
+                        <label class="switch">
+                            <input type="checkbox" id="lc-checkbox" name="low_cost">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <div class="button-bar">
+            <div class="card-title" style="font-size: 0.95rem; margin-bottom: 12px; border:none;">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
+            <div class="btn-flow">
+                <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
+                <button type="submit" class="touch-btn btn-skyscanner" formacti
