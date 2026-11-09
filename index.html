@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - 100% SCRIPT-FREE</title>
+    <title>✈️ Reisekonfiguration PRO - VOLLSTÄNDIG</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -17,10 +17,8 @@
             --lock-box-color: #22c55e; 
         }
         
-        /* BEFREIUNG: HTML & Body dürfen niemals Inhalte verschlucken */
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
-        /* CONTAINER-KORSETT GEBRINGT */
         .container { 
             max-width: 620px; 
             margin: 10px auto; 
@@ -28,14 +26,13 @@
             padding: 20px; 
             border-radius: 12px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            height: auto !important; /* Erzwingt dynamische Höhe */
+            height: auto !important; 
             max-height: none !important; 
-            overflow: visible !important; /* Lässt Elemente unter keinen Umständen unsichtbar werden */
+            overflow: visible !important; 
         }
         
         h1 { font-size: 1.3rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 15px; }
         
-        /* DIE ROTE FESTUNG: Völlig flexibel nach unten */
         .card { 
             border: 2px solid var(--border); 
             border-radius: 8px; 
@@ -53,10 +50,13 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
         .full { grid-column: span 2; }
         
+        /* Hilfsklassen für ungleiche Spalten (z.B. Budget + Währung) */
+        .budget-group { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
+        
         label { display: block; font-weight: bold; font-size: 0.78rem; margin-bottom: 4px; color: #475569; }
         input, select { width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.85rem; }
         
-        /* UNZERSTÖRBARER LOCK FÜR RETURNDATE VIA CSS */
+        /* LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
@@ -76,7 +76,6 @@
         
         .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-top: 15px; margin-bottom: 5px; }
 
-        /* NEUE BUTTON-STRUKTUR: Wechselt automatisch in die nächste Zeile, falls nötig */
         .button-row { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
@@ -119,7 +118,7 @@
             <div class="title">Flugparameter & Such-Absprung</div>
             
             <div class="grid">
-                <!-- Abflug & Ziel -->
+                <!-- Spalte 1: Abflug & Ziel -->
                 <div>
                     <label for="from-air">Abflug (IATA)</label>
                     <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA">
@@ -129,7 +128,7 @@
                     <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" value="BKK">
                 </div>
 
-                <!-- Daten & One-Way -->
+                <!-- Spalte 2: Reisedaten -->
                 <div>
                     <label for="outbound-date">Hinflug</label>
                     <input type="date" id="outbound-date">
@@ -139,10 +138,20 @@
                     <input type="date" id="return-date">
                 </div>
 
-                <!-- One-Way Switch -->
-                <div class="full">
+                <!-- Spalte 3: Reisende & One-Way-Riegel -->
+                <div>
+                    <label for="passengers">Reisende</label>
+                    <select id="passengers">
+                        <option value="1">1 Erwachsener</option>
+                        <option value="2">2 Erwachsene</option>
+                        <option value="3">3 Erwachsene</option>
+                        <option value="4">4 Erwachsene</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="visibility: hidden;">Spacer</label>
                     <div class="switch-container">
-                        <label for="ow-checkbox" style="margin: 0; cursor: pointer;">Nur Hinflug (One-Way)</label>
+                        <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.78rem;">Nur Hinflug</label>
                         <label class="switch">
                             <input type="checkbox" id="ow-checkbox">
                             <span class="slider"></span>
@@ -150,19 +159,43 @@
                     </div>
                 </div>
 
-                <!-- ✈️ Transit-Optionen laut deinem Screenshot -->
+                <!-- 🛠️ SEKTION: OPTIONALE FILTER -->
+                <div class="section-divider">Optionale Filter (Präferenzen)</div>
+
+                <!-- Budget gekoppelt mit Währungsauswahl -->
+                <div>
+                    <label>Max. Budget</label>
+                    <div class="budget-group">
+                        <input type="number" placeholder="Kein Limit" min="0">
+                        <select>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="CHF">CHF</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label>Max. Zwischenstopps</label>
+                    <select>
+                        <option value="any">Beliebig</option>
+                        <option value="0">Direktflug</option>
+                        <option value="1">Max. 1 Stopp</option>
+                        <option value="2">Max. 2 Stopps</option>
+                    </select>
+                </div>
+
+                <!-- ✈️ SEKTION: TRANSIT-OPTIONEN -->
                 <div class="section-divider">✈️ Transit-Optionen</div>
                 <div class="full">
                     <label for="transit-airport">Zwischenstop / Airport:</label>
-                    <input type="text" id="transit-airport" placeholder="Optionaler Flughafen...">
+                    <input type="text" id="transit-airport" placeholder="Bevorzugter oder auszuschließender Flughafen...">
                 </div>
 
-                <!-- 🔍 Direkte Such-Schnittstellen laut deinem Screenshot -->
-                <div class="section-divider">🔍 Direkte Such-Schnittstellen</div>
+                <!-- 🔍 SEKTION: DIE ABSPRUNG-BUTTONS -->
+                <div class="section-divider">Suchmaschine via Google-Brücke ansteuern</div>
 
-                <!-- Alle 6 Knöpfe im dynamischen Raster -->
                 <div class="button-row">
-                    <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
+                    <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google Flights</button>
                     <button type="submit" name="q" value="Skyscanner Flüge" class="touch-btn btn-skyscanner">Skyscan</button>
                     <button type="submit" name="q" value="Kayak Flüge" class="touch-btn btn-kayak">Kayak</button>
                     <button type="submit" name="q" value="Momondo Flüge" class="touch-btn btn-momondo">Momondo</button>
@@ -180,6 +213,3 @@
     <option value="MUC">München (MUC)</option>
     <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
 </datalist>
-
-</body>
-</html>
