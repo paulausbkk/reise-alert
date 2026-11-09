@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - DATALIST RESTORED</title>
+    <title>✈️ Reisekonfiguration PRO - TRUE STABLE</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -14,7 +14,8 @@
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
             --lock-green: #22c55e; 
-            --error-red: #ef4444; 
+            --error-red: #ef4444;
+            --lowcost-yellow: #fef08a;
         }
         
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
@@ -39,14 +40,17 @@
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
         input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
         
+        /* UNZERSTÖRBARER LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; border-color: #94a3b8 !important; }
         body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
         
+        /* NATIVE FEHLER-VALIDIERUNG */
         input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5; }
         form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; color: #ffffff; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; height: 40px; box-sizing: border-box; }
+        .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
@@ -57,7 +61,7 @@
         .button-bar { width: 100%; border: 2px solid var(--border); background: #ffffff; border-radius: 8px; padding: 15px; box-sizing: border-box; }
         .btn-flow { display: flex; flex-wrap: wrap; gap: 10px; }
         .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
         
         .btn-google { background: #4285f4; }
         .btn-skyscanner { background: #007054; }
@@ -76,36 +80,53 @@
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">19:35</div>
-                <div class="cockpit-seg seg-state">ORIGINAL DATALIST</div>
+                <div class="cockpit-seg seg-time">19:20</div>
+                <div class="cockpit-seg seg-state">TRUE STABLE</div>
             </div>
         </div>
         
         <div class="window-flex-row">
             
             <!-- FENSTER 1: KERN-REISEDATEN -->
-            <div class="fortress-card" style="flex: 1 1 100%;">
+            <div class="fortress-card">
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
-                    <label>Abflug (IATA)</label>
-                    <!-- REINE STRUKTUR AUS SKRIPT 1: Keine ID, Verknüpfung rein über name und list -->
-                    <input type="text" name="from" list="airports" placeholder="z.B. FRA" required>
+                    <label for="from-air">Abflug (Flughafen)</label>
+                    <select id="from-air" name="from" required>
+                        <option value="FRA" selected>Frankfurt am Main (FRA)</option>
+                        <option value="BER">Berlin Brandenburg (BER)</option>
+                        <option value="MUC">München (MUC)</option>
+                        <option value="HAM">Hamburg (HAM)</option>
+                        <option value="DUS">Düsseldorf (DUS)</option>
+                        <option value="STR">Stuttgart (STR)</option>
+                        <option value="VIE">Wien (VIE)</option>
+                        <option value="ZRH">Zürich (ZRH)</option>
+                    </select>
                 </div>
                 
                 <div class="field">
-                    <label>Ziel (IATA)</label>
-                    <input type="text" name="to" list="airports" placeholder="z.B. BKK" required>
+                    <label for="to-air">Ziel (Flughafen)</label>
+                    <select id="to-air" name="to" required>
+                        <option value="BKK" selected>Bangkok Suvarnabhumi (BKK)</option>
+                        <option value="DXB">Dubai International (DXB)</option>
+                        <option value="SIN">Singapur Changi (SIN)</option>
+                        <option value="HKG">Hongkong International (HKG)</option>
+                        <option value="JFK">New York John F. Kennedy (JFK)</option>
+                        <option value="LHR">London Heathrow (LHR)</option>
+                        <option value="NRT">Tokio Narita (NRT)</option>
+                        <option value="MCO">Orlando (MCO)</option>
+                    </select>
                 </div>
                 
                 <div class="field">
-                    <label>Hinflug</label>
-                    <input type="date" name="outbound-date" min="2026-11-09" value="2026-11-19" required>
+                    <label for="outbound-date">Hinflug</label>
+                    <input type="date" id="outbound-date" min="2026-11-09" value="2026-11-19" required>
                 </div>
                 
                 <div class="field" id="return-box">
-                    <label>Rückflug</label>
-                    <input type="date" name="return-date" min="2026-11-09">
+                    <label for="return-date">Rückflug</label>
+                    <input type="date" id="return-date" min="2026-11-09">
                 </div>
                 
                 <div class="field">
@@ -124,30 +145,27 @@
                 </div>
             </div>
             
-        </div>
-            
-        <div class="button-bar">
-            <div class="card-title" style="font-size: 0.95rem; margin-bottom: 12px; border:none;">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
-            <div class="btn-flow">
-                <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
-                <button type="submit" class="touch-btn btn-skyscanner" formaction="https://skyscanner.de">Skyscan</button>
-                <button type="submit" class="touch-btn btn-kayak" formaction="https://kayak.de">Kayak</button>
-                <button type="submit" class="touch-btn btn-momondo" formaction="https://momondo.de">Momondo</button>
-                <button type="submit" class="touch-btn btn-kiwi" formaction="https://kiwi.com">Kiwi</button>
-                <button type="submit" class="touch-btn btn-trip" formaction="https://trip.com">Trip</button>
-            </div>
-        </div>
-        
-    </form>
-</div>
-
-<!-- EXAKTE DATALIST AUS DEINEM ERSTEN SKRIPT -->
-<datalist id="airports">
-    <option value="BER">Berlin Brandenburg (BER)</option>
-    <option value="FRA">Frankfurt am Main (FRA)</option>
-    <option value="MUC">München (MUC)</option>
-    <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
-</datalist>
-
-</body>
-</html>
+            <!-- FENSTER 2: OPTIONALE PRÄFERENZEN & SCHALTER -->
+            <div class="fortress-card">
+                <div class="card-title">⚙️ Optionale Präferenzen & Schalter</div>
+                
+                <div class="field">
+                    <label for="stops">Max. Zwischenstopps</label>
+                    <select id="stops" name="stops">
+                        <option value="any">Beliebig</option>
+                        <option value="0">Direktflug</option>
+                        <option value="1">Max. 1 Stopp</option>
+                        <option value="2">Max. 2 Stopps</option>
+                    </select>
+                </div>
+                
+                <div class="field">
+                    <label for="transit-airport">Zwischenstop / Airport:</label>
+                    <select id="transit-airport" name="transit">
+                        <option value="any" selected>Beliebig / Kein Wunsch-Transit</option>
+                        <option value="DXB">Dubai International (DXB)</option>
+                        <option value="SIN">Singapur Changi (SIN)</option>
+                        <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
+                        <option value="LHR">London Heathrow (LHR)</option>
+                    </select>
+                </div>
