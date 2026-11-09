@@ -38,14 +38,14 @@
         
         .field { margin-bottom: 16px; display: flex; flex-direction: column; }
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
-        input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
+        input, select { width: 100%; height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
         
-        /* CODELOSER LOCK FÜR RETURNDATE VIA CSS */
+        /* UNZERSTÖRBARER LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; border-color: #94a3b8 !important; }
         body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
         
-        /* FEHLER-VALIDIERUNG */
+        /* CHROMATISCHE FEHLER-VALIDIERUNG */
         input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5; }
         form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; color: #ffffff; }
         
@@ -80,8 +80,8 @@
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">19:05</div>
-                <div class="cockpit-seg seg-state">BASE OK</div>
+                <div class="cockpit-seg seg-time">19:15</div>
+                <div class="cockpit-seg seg-state">REAL DATALIST</div>
             </div>
         </div>
         
@@ -92,13 +92,14 @@
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
-                    <label for="from-air">Abflug (IATA oder Stadt)</label>
-                    <input type="text" id="from-air" name="from" list="airports" placeholder="z.B. FRA oder Frankfurt" required>
+                    <label>Abflug (IATA oder Stadt)</label>
+                    <!-- EXAKT AUS SKRIPT 1: Freies Textfeld gekoppelt an die unzerstörbare Liste -->
+                    <input type="text" name="from" list="airports" placeholder="z.B. FRA" required>
                 </div>
                 
                 <div class="field">
-                    <label for="to-air">Ziel (IATA oder Stadt)</label>
-                    <input type="text" id="to-air" name="to" list="airports" placeholder="z.B. BKK oder Bangkok" required>
+                    <label>Ziel (IATA oder Stadt)</label>
+                    <input type="text" name="to" list="airports" placeholder="z.B. BKK" required>
                 </div>
                 
                 <div class="field">
@@ -142,8 +143,8 @@
                 </div>
                 
                 <div class="field">
-                    <label for="transit-airport">Zwischenstop / Airport:</label>
-                    <input type="text" id="transit-airport" name="transit" list="airports" placeholder="z.B. DXB oder Dubai">
+                    <label>Zwischenstop / Airport:</label>
+                    <input type="text" name="transit" list="airports" placeholder="z.B. DXB">
                 </div>
 
                 <div class="field">
@@ -172,4 +173,4 @@
         </div>
             
         <div class="button-bar">
-            <div class="card-title" style="font-size: 0.95rem; margin-bottom:
+            <div class="card-title" style="font-size: 0.95rem; margin-bottom: 12px; border:none;">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
