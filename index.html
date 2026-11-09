@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - CORRECT BASE</title>
+    <title>✈️ Reisekonfiguration PRO - FULLSCREEN WIDE</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -19,8 +19,9 @@
         
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
+        /* FULLSCREEN: max-width auf 98% erhöht für maximale Breitbild-Nutzung */
         .container { 
-            max-width: 620px; 
+            max-width: 98%; 
             margin: 10px auto; 
             background: var(--card-bg); 
             padding: 20px; 
@@ -31,12 +32,12 @@
             overflow: visible !important; 
         }
         
-        h1 { font-size: 1.3rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 15px; }
+        h1 { font-size: 1.5rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 20px; }
         
         .card { 
             border: 2px solid var(--border); 
             border-radius: 8px; 
-            padding: 15px; 
+            padding: 20px; 
             margin-bottom: 15px; 
             border-color: var(--rubin); 
             background: #fef2f2;
@@ -47,20 +48,19 @@
         
         .title { 
             font-weight: bold; 
-            margin-bottom: 15px; 
-            font-size: 1rem; 
+            margin-bottom: 20px; 
+            font-size: 1.1rem; 
             color: var(--rubin); 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
         }
         
-        /* DAS VERMISSTE STATUSTÄSCHCHEN RECHTS OBEN */
         .status-window {
             background-color: var(--lock-box-color);
             color: #ffffff;
-            font-size: 0.75rem;
-            padding: 4px 10px;
+            font-size: 0.8rem;
+            padding: 5px 12px;
             border-radius: 4px;
             font-weight: bold;
             text-transform: uppercase;
@@ -68,15 +68,23 @@
             letter-spacing: 0.5px;
         }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
-        .full { grid-column: span 2; }
+        /* GROSSES MEHRSPALTIGES RASTER (4 Spalten im Breitbild) */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 16px; 
+            align-items: end; 
+        }
+        
+        .full { grid-column: span 4; }
+        .half { grid-column: span 2; }
         
         .budget-group { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
         
-        label { display: block; font-weight: bold; font-size: 0.78rem; margin-bottom: 4px; color: #475569; }
-        input, select { width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.85rem; }
+        label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 6px; color: #475569; }
+        input, select { width: 100%; height: 36px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
-        /* UNZERSTÖRBARER CODELOSER SCHLOSS-EFFEKT */
+        /* CODELOSER SCHLOSS-EFFEKT */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
@@ -85,45 +93,58 @@
             pointer-events: none !important; 
             border-color: #94a3b8 !important; 
         }
+        body:has(#ow-checkbox:checked) #return-box input {
+            border-color: #94a3b8 !important;
+        }
         body:has(#ow-checkbox:checked) .status-window {
             background-color: var(--gold) !important;
         }
         
-        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; height: 32px; box-sizing: border-box; }
-        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; height: 36px; box-sizing: border-box; }
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
         .switch input:checked + .slider { background-color: #22c55e !important; }
-        .switch input:checked + .slider:before { transform: translateX(16px); }
+        .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        .section-divider { grid-column: span 2; font-weight: bold; font-size: 0.8rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-top: 15px; margin-bottom: 5px; }
+        .section-divider { 
+            grid-column: span 4; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+            color: #1e293b; 
+            border-bottom: 2px solid var(--border); 
+            padding-bottom: 4px; 
+            margin-top: 20px; 
+            margin-bottom: 5px; 
+        }
 
+        /* BUTTONS NEBENEINANDER IM BREITBILD */
         .button-row { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
-            gap: 8px; 
-            grid-column: span 2; 
-            margin-top: 12px; 
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 10px; 
+            grid-column: span 4; 
+            margin-top: 15px; 
         }
         
         .touch-btn { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            height: 36px; 
+            height: 40px; 
             color: #ffffff; 
             border: 1px solid #cbd5e1; 
-            border-radius: 4px; 
+            border-radius: 6px; 
             font-weight: bold; 
             cursor: pointer; 
             box-sizing: border-box;
-            font-size: 0.75rem; 
+            font-size: 0.8rem; 
             text-transform: uppercase; 
-            letter-spacing: 0.2px; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            letter-spacing: 0.3px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
-        .touch-btn:hover { opacity: 0.9; }
+        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
         .btn-google { background: #4285f4; border-color: #3367d6; }
         .btn-skyscanner { background: #007054; border-color: #00523f; }
         .btn-kayak { background: #ff690f; border-color: #d45205; }
@@ -134,17 +155,17 @@
 </head>
 <body>
 <div class="container">
-    <h1>✈️ Reisekonfiguration PRO</h1>
+    <h1>✈️ Reisekonfiguration PRO - WIDE STABLE</h1>
     
     <form action="https://google.com" method="get" target="_blank">
         <div class="card">
             <div class="title">
                 <span>Flugparameter & Such-Absprung</span>
-                <div class="status-window">Reset Aktiv</div>
+                <div class="status-window">RESET AKTIV</div>
             </div>
             
             <div class="grid">
-                <!-- Abflug & Ziel -->
+                <!-- ZEILE 1: FLUGORTE & REISEDATEN NEBENEINANDER (4-spaltig) -->
                 <div>
                     <label for="from-air">Abflug (IATA)</label>
                     <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA">
@@ -153,8 +174,6 @@
                     <label for="to-air">Ziel (IATA)</label>
                     <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" value="BKK">
                 </div>
-
-                <!-- Reisedaten -->
                 <div>
                     <label for="outbound-date">Hinflug</label>
                     <input type="date" id="outbound-date">
@@ -164,8 +183,8 @@
                     <input type="date" id="return-date">
                 </div>
 
-                <!-- Reisende & One-Way -->
-                <div>
+                <!-- ZEILE 2: PASSAGIERE & ONE WAY NEBENEINANDER -->
+                <div class="half">
                     <label for="passengers">Reisende</label>
                     <select id="passengers">
                         <option value="1">1 Erwachsener</option>
@@ -173,10 +192,10 @@
                         <option value="3">3 Erwachsene</option>
                     </select>
                 </div>
-                <div>
+                <div class="half">
                     <label style="visibility: hidden;">Spacer</label>
                     <div class="switch-container">
-                        <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.78rem;">Nur Hinflug</label>
+                        <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Nur Hinflug (One-Way)</label>
                         <label class="switch">
                             <input type="checkbox" id="ow-checkbox">
                             <span class="slider"></span>
@@ -184,10 +203,10 @@
                     </div>
                 </div>
 
-                <!-- OPTIONALE FILTER -->
+                <!-- SEKTION: OPTIONALE FILTER -->
                 <div class="section-divider">Optionale Filter (Präferenzen)</div>
 
-                <div>
+                <div class="half">
                     <label>Max. Budget</label>
                     <div class="budget-group">
                         <input type="number" placeholder="Kein Limit" min="0">
@@ -197,7 +216,7 @@
                         </select>
                     </div>
                 </div>
-                <div>
+                <div class="half">
                     <label>Max. Zwischenstopps</label>
                     <select>
                         <option value="any">Beliebig</option>
@@ -206,21 +225,12 @@
                     </select>
                 </div>
 
-                <!-- TRANSIT -->
+                <!-- SEKTION: TRANSIT -->
                 <div class="section-divider">✈️ Transit-Optionen</div>
                 <div class="full">
                     <label for="transit-airport">Zwischenstop / Airport:</label>
                     <input type="text" id="transit-airport" placeholder="Optionaler Flughafen...">
                 </div>
 
-                <!-- SCHNITTSTELLEN -->
-                <div class="section-divider">🔍 Direkte Such-Schnittstellen</div>
-
-                <div class="button-row">
-                    <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
-                    <button type="submit" name="q" value="Skyscanner Flüge" class="touch-btn btn-skyscanner">Skyscan</button>
-                    <button type="submit" name="q" value="Kayak Flüge" class="touch-btn btn-kayak">Kayak</button>
-                    <button type="submit" name="q" value="Momondo Flüge" class="touch-btn btn-momondo">Momondo</button>
-                    <button type="submit" name="q" value="Kiwi.com Flüge" class="touch-btn btn-kiwi">Kiwi</button>
-                    <button type="submit" name="q" value="Trip.com Flüge" class="touch-btn btn-trip">Trip</button>
-                </div>
+                <!-- SEKTION: DIE ABSPRUNG-BUTTONS -->
+                <div class="section-divider">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
