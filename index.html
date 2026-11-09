@@ -56,7 +56,7 @@
             align-items: center; 
         }
         
-        /* HOCHWERTIGES, DREIGETEILTES CODELOSES INFO-FENSTER RECHTS OBEN */
+        /* HOCHWERTIGES, DREIGETEILTES INFO-FENSTER RECHTS OBEN */
         .premium-status-panel {
             display: flex;
             gap: 4px;
@@ -95,6 +95,20 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 6px; color: #475569; }
         input, select { width: 100%; height: 36px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
+        /* SYNTAX-FEHLER BEHOBEN: Visuelles Blockieren und Ausgrauen bei falscher Eingabe */
+        input:invalid {
+            border: 2px solid var(--error-red) !important;
+            background-color: #fef2f2 !important;
+            color: var(--error-red) !important;
+            box-shadow: 0 0 5px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* Wenn das Formular invalide Daten enthält, färbt sich der Status oben rot */
+        form:has(input:invalid) .seg-state {
+            background-color: var(--error-red) !important;
+            content: "FEHLER";
+        }
+        
         /* CODELOSER SPERR-EFFEKT BEI NUR-HINFLUG */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
@@ -106,18 +120,11 @@
         }
         body:has(#ow-checkbox:checked) #return-box input {
             border-color: #94a3b8 !important;
+            background-color: #cbd5e1 !important;
         }
-        /* Wenn One-Way aktiv ist, schaltet das rechte Anzeigesegment auf Warn-Orange um */
         body:has(#ow-checkbox:checked) .seg-state {
             background-color: var(--gold) !important;
             color: #000000;
-        }
-        
-        /* SKRIPTFREIES VISUELLES FEEDBACK BEI FORMATFEHLERN */
-        input:invalid {
-            border: 2px solid var(--error-red) !important;
-            background-color: #fef2f2 !important;
-            color: var(--error-red) !important;
         }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; height: 36px; box-sizing: border-box; }
@@ -180,16 +187,15 @@
         <div class="card">
             <div class="title">
                 <span>Flugparameter & Such-Absprung</span>
-                <!-- NEUES, STRUKTURIERTES HOCHWERTIGES INFOPANEL -->
                 <div class="premium-status-panel">
                     <div class="status-segment seg-date">09.11.2026</div>
-                    <div class="status-segment seg-time">16:27</div>
-                    <div class="status-segment seg-state">BASE OK</div>
+                    <div class="status-segment seg-time">16:31</div>
+                    <div class="status-segment seg-state">RESET OK</div>
                 </div>
             </div>
             
             <div class="grid">
-                <!-- FLUGORTE & REISEDATEN -->
+                <!-- ZEILE 1: FLUGORTE & REISEDATEN -->
                 <div>
                     <label for="from-air">Abflug (IATA)</label>
                     <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA" required>
@@ -200,14 +206,14 @@
                 </div>
                 <div>
                     <label for="outbound-date">Hinflug</label>
-                    <input type="date" id="outbound-date" min="2026-11-09" required>
+                    <input type="date" id="outbound-date" min="2026-11-09" value="2026-11-19" required>
                 </div>
                 <div id="return-box">
                     <label for="return-date">Rückflug</label>
                     <input type="date" id="return-date" min="2026-11-09">
                 </div>
 
-                <!-- PASSAGIERE & ONE WAY -->
+                <!-- ZEILE 2: PASSAGIERE & ONE WAY -->
                 <div class="half">
                     <label for="passengers">Reisende</label>
                     <select id="passengers">
@@ -234,9 +240,4 @@
                     <label>Max. Budget</label>
                     <div class="budget-group">
                         <input type="number" placeholder="Kein Limit" min="0">
-                        <select>
-                            <option value="EUR">EUR (€)</option>
-                            <option value="USD">USD ($)</option>
-                        </select>
-                    </div>
-                </div>
+             
