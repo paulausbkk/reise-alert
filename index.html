@@ -74,15 +74,14 @@
 <body>
 <div class="dashboard-container">
     
-    <!-- BEFREIT: Das Haupt-Action-Ziel ist neutralisiert, damit die Liste entsperrt wird -->
-    <form method="get" target="_blank">
+    <form action="https://google.com" method="get" target="_blank">
         
         <div class="main-header">
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">21:00</div>
-                <div class="cockpit-seg seg-state">UNLOCKED</div>
+                <div class="cockpit-seg seg-time">21:10</div>
+                <div class="cockpit-seg seg-state">JS FORCE</div>
             </div>
         </div>
         
@@ -94,12 +93,12 @@
                 
                 <div class="field">
                     <label>Abflug (IATA oder Stadt)</label>
-                    <input type="text" name="from" list="airports" placeholder="z.B. FRA" required>
+                    <input type="text" name="from" list="airports" placeholder="z.B. FRA" required autocomplete="off">
                 </div>
                 
                 <div class="field">
                     <label>Ziel (IATA oder Stadt)</label>
-                    <input type="text" name="to" list="airports" placeholder="z.B. BKK" required>
+                    <input type="text" name="to" list="airports" placeholder="z.B. BKK" required autocomplete="off">
                 </div>
                 
                 <div class="field">
@@ -144,7 +143,7 @@
                 
                 <div class="field">
                     <label>Zwischenstop / Airport:</label>
-                    <input type="text" name="transit" list="airports" placeholder="z.B. DXB">
+                    <input type="text" name="transit" list="airports" placeholder="z.B. DXB" autocomplete="off">
                 </div>
 
                 <div class="field">
