@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - RADICAL NEW</title>
+    <title>✈️ Reisekonfiguration PRO - CUT & REBOOT</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -17,18 +17,16 @@
             --error-red: #ef4444;
         }
         
-        html, body { margin: 0; padding: 10px; background: var(--bg); font-family: sans-serif; color: var(--text); }
+        html, body { margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
-        /* DER NEUE FREIE VOLLBILD-CONTAINER */
-        .fullscreen-workspace { 
+        /* 100% BREITBILD: Maske nutzt kompromisslos die volle Bildschirmbreite */
+        .workspace-fullscreen {
             width: 100%;
-            max-width: 100%;
             box-sizing: border-box;
-            padding: 10px;
         }
         
-        /* DIE ROTE FESTUNG - JETZT ALS REINER, FLEXIBLER HINTERGRUND */
-        .fortress-card-new { 
+        /* DIE ROTE FESTUNG: Völlig flexibel nach unten, kein Höhenlimit */
+        .base-card { 
             width: 100%;
             border: 2px solid var(--rubin); 
             border-radius: 8px; 
@@ -37,67 +35,67 @@
             box-sizing: border-box;
         }
         
-        .header-line { 
+        .header-flex { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border-bottom: 2px solid var(--border);
             padding-bottom: 10px;
         }
         
         .header-title { font-weight: bold; font-size: 1.2rem; color: var(--rubin); }
         
-        /* DAS MODERNISIERTE COCKPIT */
-        .dashboard-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
-        .dash-segment { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; }
-        .seg-d { background: #475569; }
-        .seg-t { background: var(--time-magenta); }
-        .seg-s { background: var(--lock-green); }
+        /* DAS GESTOCHEN SCHARFE INFOPANEL */
+        .cockpit-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
+        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; }
+        .seg-date { background: #475569; }
+        .seg-time { background: var(--time-magenta); }
+        .seg-state { background: var(--lock-green); }
         
-        /* DER UNZERSTÖRBARE FLUSS: Boxen reihen sich nebeneinander auf und brechen automatisch um */
-        .flow-layout { 
+        /* DIE UNZERSTÖRBARE FLUSSKETTE: Elemente fließen frei nebeneinander her */
+        .input-row-flow { 
             display: flex; 
             flex-wrap: wrap; 
             gap: 15px; 
             align-items: flex-end;
+            margin-bottom: 15px;
         }
         
-        /* JEDES ELEMENT BEKOMMT SEINEN EIGENEN FREIEN KASTEN */
-        .input-box { 
+        .field-box { 
             flex: 1 1 220px; 
             min-width: 200px;
             display: flex; 
             flex-direction: column; 
         }
         
-        .input-box-wide {
+        .field-box-full {
             flex: 1 1 100%;
             display: flex;
             flex-direction: column;
         }
         
-        .budget-row { display: flex; gap: 8px; }
-        .budget-row input { flex: 2; }
-        .budget-row select { flex: 1; }
+        .budget-combo { display: flex; gap: 8px; }
+        .budget-combo input { flex: 2; }
+        .budget-combo select { flex: 1; }
         
         label { font-weight: bold; font-size: 0.8rem; margin-bottom: 6px; color: #475569; }
         input, select { height: 38px; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; background: #ffffff; width: 100%; }
         
-        /* CODELOSER SPERR-EFFEKT */
+        /* NATIVE CSS-SPERRE BEI NUR-HINFLUG */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             opacity: 0.25 !important; 
             pointer-events: none !important; 
         }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; }
-        body:has(#ow-checkbox:checked) .seg-s { background-color: var(--gold) !important; color: #000000; }
+        body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
         
-        /* ROT-ALARM BEI FEHLERN */
+        /* TRANSFORMATOR BEI FEHLERN */
         input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5 !important; }
-        form:has(input:invalid) .seg-s { background-color: var(--error-red) !important; }
+        form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; }
         
-        .switch-box { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
+        .toggle-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
@@ -105,10 +103,10 @@
         .switch input:checked + .slider { background-color: var(--lock-green) !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        .section-headline { width: 100%; font-weight: bold; font-size: 0.9rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-top: 20px; }
+        .row-divider { width: 100%; font-weight: bold; font-size: 0.9rem; color: #1e293b; border-bottom: 1px solid var(--border); padding-bottom: 4px; margin-top: 15px; }
 
-        /* UNZERSTÖRBARE BUTTON-ZEILE */
-        .button-flow { width: 100%; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        /* BUTTONS IM FREIEN BREITBILD-FLUSS */
+        .btn-row-flow { width: 100%; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
         .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 42px; color: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
         .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
         
@@ -121,44 +119,47 @@
     </style>
 </head>
 <body>
-<div class="fullscreen-workspace">
+<div class="workspace-fullscreen">
     
     <form action="https://google.com" method="get" target="_blank">
-        <div class="fortress-card-new">
+        <div class="base-card">
             
-            <div class="header-line">
+            <!-- COCKPIT ZEILE -->
+            <div class="header-flex">
                 <div class="header-title">Flugparameter & Such-Absprung</div>
-                <div class="dashboard-display">
-                    <div class="dash-segment seg-d">09.11.2026</div>
-                    <div class="dash-segment seg-t">17:15</div>
-                    <div class="dash-segment seg-s">BASE OK</div>
+                <div class="cockpit-display">
+                    <div class="cockpit-seg seg-date">09.11.2026</div>
+                    <div class="cockpit-seg seg-time">17:30</div>
+                    <div class="cockpit-seg seg-state">BASE OK</div>
                 </div>
             </div>
             
-            <div class="flow-layout">
-                <!-- BLOCK: FLUGORTE & REISEDATEN -->
-                <div class="input-box">
+            <!-- ABSCHNITT 1: FLUGORTE & TERMINE -->
+            <div class="input-row-flow">
+                <div class="field-box">
                     <label for="from-air">Abflug (IATA)</label>
                     <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA" required>
                 </div>
                 
-                <div class="input-box">
+                <div class="field-box">
                     <label for="to-air">Ziel (IATA)</label>
                     <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" value="BKK" required>
                 </div>
                 
-                <div class="input-box">
+                <div class="field-box">
                     <label for="outbound-date">Hinflug</label>
                     <input type="date" id="outbound-date" min="2026-11-09" value="2026-11-19" required>
                 </div>
                 
-                <div class="input-box" id="return-box">
+                <div class="field-box" id="return-box">
                     <label for="return-date">Rückflug</label>
                     <input type="date" id="return-date" min="2026-11-09">
                 </div>
+            </div>
 
-                <!-- BLOCK: PASSAGIERE & RIEGEL -->
-                <div class="input-box">
+            <!-- ABSCHNITT 2: REISENDE & SCHALTER -->
+            <div class="input-row-flow">
+                <div class="field-box">
                     <label for="passengers">Reisende</label>
                     <select id="passengers">
                         <option value="1">1 Erwachsener</option>
@@ -167,9 +168,9 @@
                     </select>
                 </div>
                 
-                <div class="input-box">
+                <div class="field-box">
                     <label style="visibility: hidden;">Spacer</label>
-                    <div class="switch-box">
+                    <div class="toggle-container">
                         <label for="ow-checkbox" style="margin:0; cursor:pointer; font-size:0.85rem; font-weight:bold; color:#475569;">Nur Hinflug (One-Way)</label>
                         <label class="switch">
                             <input type="checkbox" id="ow-checkbox">
@@ -177,13 +178,14 @@
                         </label>
                     </div>
                 </div>
+            </div>
 
-                <!-- TRENNER: FILTER -->
-                <div class="section-headline">Optionale Filter (Präferenzen)</div>
-
-                <div class="input-box">
+            <!-- ABSCHNITT 3: PREIS & STOPPS -->
+            <div class="row-divider">Optionale Filter (Präferenzen)</div>
+            <div class="input-row-flow">
+                <div class="field-box">
                     <label>Max. Budget</label>
-                    <div class="budget-row">
+                    <div class="budget-combo">
                         <input type="number" placeholder="Kein Limit" min="0">
                         <select>
                             <option value="EUR">EUR (€)</option>
@@ -192,7 +194,7 @@
                     </div>
                 </div>
                 
-                <div class="input-box">
+                <div class="field-box">
                     <label>Max. Zwischenstopps</label>
                     <select>
                         <option value="any">Beliebig</option>
@@ -200,14 +202,10 @@
                         <option value="1">Max. 1 Stopp</option>
                     </select>
                 </div>
+            </div>
 
-                <!-- TRENNER: TRANSIT -->
-                <div class="section-headline">✈️ Transit-Optionen</div>
-                
-                <div class="input-box-wide">
+            <!-- ABSCHNITT 4: TRANSIT -->
+            <div class="row-divider">✈️ Transit-Optionen</div>
+            <div class="input-row-flow">
+                <div class="field-box-full">
                     <label for="transit-airport">Zwischenstop / Airport:</label>
-                    <input type="text" id="transit-airport" placeholder="Optionaler Flughafen...">
-                </div>
-
-                <!-- TRENNER: BUTTONS -->
-                <div class="section-headline">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
