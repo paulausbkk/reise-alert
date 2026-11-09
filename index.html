@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - FULLSCREEN VALIDATED</title>
+    <title>✈️ Reisekonfiguration PRO - PREMIUM WIDE</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -56,17 +56,29 @@
             align-items: center; 
         }
         
-        .status-window {
-            background-color: var(--lock-box-color);
-            color: #ffffff;
-            font-size: 0.8rem;
-            padding: 5px 12px;
+        /* HOCHWERTIGES, DREIGETEILTES CODELOSES INFO-FENSTER RECHTS OBEN */
+        .premium-status-panel {
+            display: flex;
+            gap: 4px;
+            background: #1e293b;
+            padding: 4px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .status-segment {
+            font-size: 0.72rem;
+            padding: 4px 8px;
             border-radius: 4px;
             font-weight: bold;
             text-transform: uppercase;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            color: #ffffff;
             letter-spacing: 0.5px;
         }
+        
+        .seg-date { background: #334155; }
+        .seg-time { background: var(--time-magenta); }
+        .seg-state { background: var(--lock-box-color); }
         
         .grid { 
             display: grid; 
@@ -83,27 +95,29 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 6px; color: #475569; }
         input, select { width: 100%; height: 36px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
-        /* SKRIPTFREIE VALIDIERUNG: Visuelles Feedback bei falschen Eingaben */
-        input:invalid {
-            border-2px solid var(--error-red) !important;
-            background-color: #fef2f2 !important;
-            color: var(--error-red) !important;
-        }
-        
-        /* CODELOSER SCHLOSS-EFFEKT FÜR ONE-WAY */
+        /* CODELOSER SPERR-EFFEKT BEI NUR-HINFLUG */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
             cursor: not-allowed; 
-            opacity: 0.35 !important; 
+            opacity: 0.25 !important; 
             pointer-events: none !important; 
             border-color: #94a3b8 !important; 
         }
         body:has(#ow-checkbox:checked) #return-box input {
             border-color: #94a3b8 !important;
         }
-        body:has(#ow-checkbox:checked) .status-window {
+        /* Wenn One-Way aktiv ist, schaltet das rechte Anzeigesegment auf Warn-Orange um */
+        body:has(#ow-checkbox:checked) .seg-state {
             background-color: var(--gold) !important;
+            color: #000000;
+        }
+        
+        /* SKRIPTFREIES VISUELLES FEEDBACK BEI FORMATFEHLERN */
+        input:invalid {
+            border: 2px solid var(--error-red) !important;
+            background-color: #fef2f2 !important;
+            color: var(--error-red) !important;
         }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; height: 36px; box-sizing: border-box; }
@@ -166,7 +180,12 @@
         <div class="card">
             <div class="title">
                 <span>Flugparameter & Such-Absprung</span>
-                <div class="status-window">RESET AKTIV</div>
+                <!-- NEUES, STRUKTURIERTES HOCHWERTIGES INFOPANEL -->
+                <div class="premium-status-panel">
+                    <div class="status-segment seg-date">09.11.2026</div>
+                    <div class="status-segment seg-time">16:27</div>
+                    <div class="status-segment seg-state">BASE OK</div>
+                </div>
             </div>
             
             <div class="grid">
@@ -181,12 +200,10 @@
                 </div>
                 <div>
                     <label for="outbound-date">Hinflug</label>
-                    <!-- Wir setzen das heutige Mindestdatum (2026-11-09) als feste HTML-Untergrenze -->
                     <input type="date" id="outbound-date" min="2026-11-09" required>
                 </div>
                 <div id="return-box">
                     <label for="return-date">Rückflug</label>
-                    <!-- Das Rückflugdatum darf nativ nicht vor dem heutigen Tag liegen -->
                     <input type="date" id="return-date" min="2026-11-09">
                 </div>
 
@@ -223,16 +240,3 @@
                         </select>
                     </div>
                 </div>
-                <div class="half">
-                    <label>Max. Zwischenstopps</label>
-                    <select>
-                        <option value="any">Beliebig</option>
-                        <option value="0">Direktflug</option>
-                        <option value="1">Max. 1 Stopp</option>
-                    </select>
-                </div>
-
-                <!-- SEKTION: TRANSIT -->
-                <div class="section-divider">✈️ Transit-Optionen</div>
-                <div class="full">
-                    <label for="transit-airport">Zwischenstop / Airport:</label>
