@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - TRUE SUCCESS</title>
+    <title>✈️ Reisekonfiguration PRO - DATALIST RESTORED</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -14,8 +14,7 @@
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
             --lock-green: #22c55e; 
-            --error-red: #ef4444;
-            --lowcost-yellow: #fef08a;
+            --error-red: #ef4444; 
         }
         
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
@@ -38,19 +37,16 @@
         
         .field { margin-bottom: 16px; display: flex; flex-direction: column; }
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
-        input, select { width: 100%; height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
+        input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
         
-        /* CODELOSER LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; border-color: #94a3b8 !important; }
         body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
         
-        /* CHROMATISCHE FEHLER-VALIDIERUNG */
         input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5; }
         form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; color: #ffffff; }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; height: 40px; box-sizing: border-box; }
-        .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
@@ -61,7 +57,7 @@
         .button-bar { width: 100%; border: 2px solid var(--border); background: #ffffff; border-radius: 8px; padding: 15px; box-sizing: border-box; }
         .btn-flow { display: flex; flex-wrap: wrap; gap: 10px; }
         .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
+        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
         
         .btn-google { background: #4285f4; }
         .btn-skyscanner { background: #007054; }
@@ -74,42 +70,42 @@
 <body>
 <div class="dashboard-container">
     
-    <!-- MASTER-BEFREIUNG: Das Formular zielt primär auf Skyscanner, was die Liste sofort freischaltet -->
-    <form action="https://skyscanner.de" method="get" target="_blank">
+    <form action="https://google.com" method="get" target="_blank">
         
         <div class="main-header">
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">19:20</div>
-                <div class="cockpit-seg seg-state">BASE OK</div>
+                <div class="cockpit-seg seg-time">19:35</div>
+                <div class="cockpit-seg seg-state">ORIGINAL DATALIST</div>
             </div>
         </div>
         
         <div class="window-flex-row">
             
             <!-- FENSTER 1: KERN-REISEDATEN -->
-            <div class="fortress-card">
+            <div class="fortress-card" style="flex: 1 1 100%;">
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
-                    <label>Abflug (IATA oder Stadt)</label>
+                    <label>Abflug (IATA)</label>
+                    <!-- REINE STRUKTUR AUS SKRIPT 1: Keine ID, Verknüpfung rein über name und list -->
                     <input type="text" name="from" list="airports" placeholder="z.B. FRA" required>
                 </div>
                 
                 <div class="field">
-                    <label>Ziel (IATA oder Stadt)</label>
+                    <label>Ziel (IATA)</label>
                     <input type="text" name="to" list="airports" placeholder="z.B. BKK" required>
                 </div>
                 
                 <div class="field">
-                    <label for="outbound-date">Hinflug</label>
-                    <input type="date" id="outbound-date" min="2026-11-09" value="2026-11-19" required>
+                    <label>Hinflug</label>
+                    <input type="date" name="outbound-date" min="2026-11-09" value="2026-11-19" required>
                 </div>
                 
                 <div class="field" id="return-box">
-                    <label for="return-date">Rückflug</label>
-                    <input type="date" id="return-date" min="2026-11-09">
+                    <label>Rückflug</label>
+                    <input type="date" name="return-date" min="2026-11-09">
                 </div>
                 
                 <div class="field">
@@ -128,49 +124,30 @@
                 </div>
             </div>
             
-            <!-- FENSTER 2: OPTIONALE PRÄFERENZEN & SCHALTER -->
-            <div class="fortress-card">
-                <div class="card-title">⚙️ Optionale Präferenzen & Schalter</div>
-                
-                <div class="field">
-                    <label for="stops">Max. Zwischenstopps</label>
-                    <select id="stops" name="stops">
-                        <option value="any">Beliebig</option>
-                        <option value="0">Direktflug</option>
-                        <option value="1">Max. 1 Stopp</option>
-                        <option value="2">Max. 2 Stopps</option>
-                    </select>
-                </div>
-                
-                <div class="field">
-                    <label>Zwischenstop / Airport:</label>
-                    <input type="text" name="transit" list="airports" placeholder="z.B. DXB">
-                </div>
-
-                <div class="field">
-                    <label for="max-time">Max. Reisezeit</label>
-                    <select id="max-time" name="max_time">
-                        <option value="any">Beliebig (Kein Limit)</option>
-                        <option value="12">Max. 12 Stunden</option>
-                        <option value="16">Max. 16 Stunden</option>
-                        <option value="20">Max. 20 Stunden</option>
-                        <option value="24" selected>Max. 24 Stunden</option>
-                        <option value="32">Max. 32 Stunden</option>
-                        <option value="48">Max. 48 Stunden</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <div class="switch-container yellow-highlight">
-                        <label for="lc-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Low-Cost Airlines erlauben</label>
-                        <label class="switch">
-                            <input type="checkbox" id="lc-checkbox" name="low_cost">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
         </div>
             
         <div class="button-bar">
-            <div class="card-title" style="font-size: 0.95rem; margin-bottom: 12px; 
+            <div class="card-title" style="font-size: 0.95rem; margin-bottom: 12px; border:none;">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
+            <div class="btn-flow">
+                <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
+                <button type="submit" class="touch-btn btn-skyscanner" formaction="https://skyscanner.de">Skyscan</button>
+                <button type="submit" class="touch-btn btn-kayak" formaction="https://kayak.de">Kayak</button>
+                <button type="submit" class="touch-btn btn-momondo" formaction="https://momondo.de">Momondo</button>
+                <button type="submit" class="touch-btn btn-kiwi" formaction="https://kiwi.com">Kiwi</button>
+                <button type="submit" class="touch-btn btn-trip" formaction="https://trip.com">Trip</button>
+            </div>
+        </div>
+        
+    </form>
+</div>
+
+<!-- EXAKTE DATALIST AUS DEINEM ERSTEN SKRIPT -->
+<datalist id="airports">
+    <option value="BER">Berlin Brandenburg (BER)</option>
+    <option value="FRA">Frankfurt am Main (FRA)</option>
+    <option value="MUC">München (MUC)</option>
+    <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
+</datalist>
+
+</body>
+</html>
