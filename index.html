@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - TWO WINDOW LOOK</title>
+    <title>✈️ Reisekonfiguration PRO - THE REAL REBOOT</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -17,16 +17,16 @@
             --error-red: #ef4444;
         }
         
-        html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
+        html, body { margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
-        /* FULLSCREEN WORKSPACE */
-        .workspace-fullscreen { 
-            width: 100%; 
-            max-width: 99%; 
-            margin: 0 auto; 
-            box-sizing: border-box; 
+        /* FULLSCREEN CONTAINER: Nutzt die volle Breite kompromisslos aus */
+        .dashboard-container {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         
+        /* KOPFZEILE MIT INTEGRATION DER STATUSBOX */
         .main-header { 
             display: flex; 
             justify-content: space-between; 
@@ -37,14 +37,14 @@
         }
         .main-title { font-weight: bold; color: var(--rubin); font-size: 1.3rem; margin: 0; }
         
-        .dashboard-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
-        .dash-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; }
-        .seg-d { background: #475569; }
-        .seg-t { background: var(--time-magenta); }
-        .seg-s { background: var(--lock-green); }
+        .cockpit-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
+        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; }
+        .seg-date { background: #475569; }
+        .seg-time { background: var(--time-magenta); }
+        .seg-state { background: var(--lock-green); }
         
-        /* ZWEI-FENSTER-LAYOUT: Nebeneinander im Breitbild, fließend */
-        .window-row { 
+        /* ZWEI SEPARATE FENSTER NEBENEINANDER (FLEX-FLOW) */
+        .window-flex-row { 
             display: flex; 
             flex-wrap: wrap; 
             gap: 20px; 
@@ -53,8 +53,8 @@
             margin-bottom: 20px;
         }
         
-        /* JEDES FENSTER RECHNET SICH SELBST Symmetrisch AUS */
-        .fortress-window { 
+        /* UNZERSTÖRBARE FREIE KARTEN-BOXEN */
+        .fortress-card { 
             flex: 1 1 450px; 
             border: 2px solid var(--rubin); 
             border-radius: 8px; 
@@ -63,28 +63,29 @@
             box-sizing: border-box;
         }
         
-        .window-title { font-weight: bold; font-size: 1.05rem; color: var(--rubin); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 15px; }
+        .card-title { font-weight: bold; font-size: 1.1rem; color: var(--rubin); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 15px; }
         
-        .field { margin-bottom: 15px; display: flex; flex-direction: column; }
-        label { font-weight: bold; font-size: 0.82rem; margin-bottom: 5px; color: #475569; }
-        input, select { height: 38px; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.95rem; background: #ffffff; width: 100%; }
+        .field { margin-bottom: 16px; display: flex; flex-direction: column; }
+        label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
+        input, select { height: 40px; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
         
-        .budget-combo { display: flex; gap: 8px; }
-        .budget-combo input { flex: 2; }
-        .budget-combo select { flex: 1; }
+        .budget-row { display: flex; gap: 8px; }
+        .budget-row input { flex: 2; }
+        .budget-row select { flex: 1; }
         
-        .tech-warning { display: block; color: #ef4444; font-size: 0.75rem; font-weight: bold; margin-top: 4px; text-transform: uppercase; }
+        /* HINWEISE IN ROTER SCHRIFT DIREKT AM FELD */
+        .field-info-red { display: block; color: var(--error-red); font-size: 0.75rem; font-weight: bold; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.2px; }
         
-        /* CSS SCHLOSS FÜR RETURNDATE */
+        /* NATIVE CODELOSE RETURNDATE-SPERRE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; }
-        body:has(#ow-checkbox:checked) .seg-s { background-color: var(--gold) !important; color: #000000; }
+        body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
         
-        /* CHROMATISCHER ALARM BEI FEHLERN */
+        /* ROT-ALARM BEI MANDATORY-FEHLERN (Z.B. FEHLENDES DATUM) */
         input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5; }
-        form:has(input:invalid) .seg-s { background-color: var(--error-red) !important; }
+        form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; }
         
-        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; height: 40px; box-sizing: border-box; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
@@ -92,7 +93,7 @@
         .switch input:checked + .slider { background-color: var(--lock-green) !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        /* BUTTON REIHE GANZ UNTEN ÜBER DIE VOLLE BREITE */
+        /* UNTERE STABILE BUTTON-LEISTE OVER THE FULL WIDTH */
         .button-bar { 
             width: 100%; 
             border: 2px solid var(--border); 
@@ -103,37 +104,37 @@
         }
         
         .btn-flow { display: flex; flex-wrap: wrap; gap: 10px; }
-        .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 42px; color: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
         
-        .btn-google { background: #4285f4; border-color: #3367d6; }
-        .btn-skyscanner { background: #007054; border-color: #00523f; }
-        .btn-kayak { background: #ff690f; border-color: #d45205; }
-        .btn-momondo { background: #84329b; border-color: #641f80; }
-        .btn-kiwi { background: #00a699; border-color: #008075; }
-        .btn-trip { background: #2f55d4; border-color: #2444b5; }
+        .btn-google { background: #4285f4; }
+        .btn-skyscanner { background: #007054; }
+        .btn-kayak { background: #ff690f; }
+        .btn-momondo { background: #84329b; }
+        .btn-kiwi { background: #00a699; }
+        .btn-trip { background: #2f55d4; }
     </style>
 </head>
 <body>
-<div class="workspace-fullscreen">
+<div class="dashboard-container">
     
-    <!-- EIN EINZIGES FORMULAR KLAMMERT BEIDE FENSTER EIN -->
+    <!-- EINE EINZIGE FORMULAR-KLAMMER SPERRT BEIDE FENSTER EIN -->
     <form action="https://google.com" method="get" target="_blank">
         
         <div class="main-header">
-            <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-            <div class="dashboard-display">
-                <div class="dash-seg seg-d">09.11.2026</div>
-                <div class="dash-seg seg-t">18:10</div>
-                <div class="dash-seg seg-s">DASHBOARD</div>
+            <h1 class="main-title">✈️ Reisekonfiguration PRO - REBOOT MASTER</h1>
+            <div class="cockpit-display">
+                <div class="cockpit-seg seg-date">09.11.2026</div>
+                <div class="cockpit-seg seg-time">18:01</div>
+                <div class="cockpit-seg seg-state">BASE OK</div>
             </div>
         </div>
         
-        <div class="window-row">
+        <div class="window-flex-row">
             
-            <!-- FENSTER 1 (LINKS): BASIS-PARAMETER -->
-            <div class="fortress-window">
-                <div class="window-title">📋 Kern-Parameter</div>
+            <!-- FENSTER 1 (LINKS): FLUG-DIREKTABSPRUNG -->
+            <div class="fortress-card">
+                <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
                     <label for="from-air">Abflug (IATA)</label>
@@ -162,7 +163,7 @@
                         <option value="2">2 Erwachsene</option>
                         <option value="3">3 Erwachsene</option>
                     </select>
-                    <span class="tech-warning">⚠️ Suchschlitz startet Portale standardmäßig bei 1 Person</span>
+                    <span class="field-info-red">⚠️ Suchschlitz-Übergabe startet Portale standardmäßig bei 1 Person</span>
                 </div>
                 
                 <div class="field">
@@ -176,20 +177,20 @@
                 </div>
             </div>
             
-            <!-- FENSTER 2 (RECHTS): OPTIONALE PRÄFERENZEN & TRANSIT -->
-            <div class="fortress-window">
-                <div class="window-title">⚙️ Optionale Präferenzen & Transit</div>
+            <!-- FENSTER 2 (RECHTS): EXPERTEN-FILTER FÜR GOOGLE -->
+            <div class="fortress-card">
+                <div class="card-title">⚙️ Experten-Suchhilfe (Google-Verfeinerung)</div>
                 
                 <div class="field">
                     <label>Max. Budget</label>
-                    <div class="budget-combo">
+                    <div class="budget-row">
                         <input type="number" placeholder="Kein Limit" min="0">
                         <select>
                             <option value="EUR">EUR (€)</option>
                             <option value="USD">USD ($)</option>
                         </select>
                     </div>
-                    <span class="tech-warning">⚠️ Ohne JavaScript findet keine automatische Umrechnung statt</span>
+                    <span class="field-info-red">⚠️ Ohne JavaScript findet keine automatische Währungsumrechnung statt</span>
                 </div>
                 
                 <div class="field">
