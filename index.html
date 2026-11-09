@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - DASHBOARD CORE</title>
+    <title>✈️ Reisekonfiguration PRO - COCKPIT SMART</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -81,8 +81,8 @@
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">18:42</div>
-                <div class="cockpit-seg seg-state">CORE OK</div>
+                <div class="cockpit-seg seg-time">18:55</div>
+                <div class="cockpit-seg seg-state">SMART DATA</div>
             </div>
         </div>
         
@@ -93,13 +93,13 @@
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
-                    <label for="from-air">Abflug (IATA)</label>
-                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" required>
+                    <label for="from-air">Abflug (IATA oder Stadt)</label>
+                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA oder Frankfurt" required>
                 </div>
                 
                 <div class="field">
-                    <label for="to-air">Ziel (IATA)</label>
-                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" required>
+                    <label for="to-air">Ziel (IATA oder Stadt)</label>
+                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK oder Bangkok" required>
                 </div>
                 
                 <div class="field">
@@ -144,8 +144,7 @@
                 
                 <div class="field">
                     <label for="transit-airport">Zwischenstop / Airport:</label>
-                    <!-- UNZERSTÖRBAR VERKNÜPFT: Nutzt jetzt ebenfalls die Flughafen-Liste -->
-                    <input type="text" id="transit-airport" list="airports" placeholder="z.B. DXB">
+                    <input type="text" id="transit-airport" list="airports" placeholder="z.B. DXB oder Dubai">
                 </div>
 
                 <div class="field">
