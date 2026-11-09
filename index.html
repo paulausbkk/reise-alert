@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - PREMIUM WIDE</title>
+    <title>✈️ Reisekonfiguration PRO - PREMIUM WIDE STABLE</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -20,7 +20,7 @@
         
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
-        .container { 
+        .main-fullscreen-container { 
             max-width: 98%; 
             margin: 10px auto; 
             background: var(--card-bg); 
@@ -34,7 +34,7 @@
         
         h1 { font-size: 1.5rem; text-align: center; margin-top: 0; color: var(--rubin); margin-bottom: 20px; }
         
-        .card { 
+        .fortress-card { 
             border: 2px solid var(--border); 
             border-radius: 8px; 
             padding: 20px; 
@@ -46,7 +46,7 @@
             overflow: visible !important;
         }
         
-        .title { 
+        .card-header-title { 
             font-weight: bold; 
             margin-bottom: 20px; 
             font-size: 1.1rem; 
@@ -56,19 +56,19 @@
             align-items: center; 
         }
         
-        /* HOCHWERTIGES, DREIGETEILTES INFO-FENSTER RECHTS OBEN */
-        .premium-status-panel {
+        /* DAS NEUE DREIGETEILTE PREMIUM-PANEL UNTER NEUEM NAMEN */
+        .ultra-status-panel {
             display: flex;
-            gap: 4px;
+            gap: 6px;
             background: #1e293b;
-            padding: 4px;
+            padding: 5px;
             border-radius: 6px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
-        .status-segment {
-            font-size: 0.72rem;
-            padding: 4px 8px;
+        .panel-segment {
+            font-size: 0.75rem;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: bold;
             text-transform: uppercase;
@@ -80,51 +80,44 @@
         .seg-time { background: var(--time-magenta); }
         .seg-state { background: var(--lock-box-color); }
         
-        .grid { 
+        .wide-responsive-grid { 
             display: grid; 
             grid-template-columns: repeat(4, 1fr); 
             gap: 16px; 
             align-items: end; 
         }
         
-        .full { grid-column: span 4; }
-        .half { grid-column: span 2; }
+        .span-all-four { grid-column: span 4; }
+        .span-just-two { grid-column: span 2; }
         
-        .budget-group { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
+        .budget-currency-row { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
         
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 6px; color: #475569; }
         input, select { width: 100%; height: 36px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
-        /* SYNTAX-FEHLER BEHOBEN: Visuelles Blockieren und Ausgrauen bei falscher Eingabe */
-        input:invalid {
-            border: 2px solid var(--error-red) !important;
-            background-color: #fef2f2 !important;
-            color: var(--error-red) !important;
-            box-shadow: 0 0 5px rgba(239, 68, 68, 0.4);
-        }
-        
-        /* Wenn das Formular invalide Daten enthält, färbt sich der Status oben rot */
-        form:has(input:invalid) .seg-state {
-            background-color: var(--error-red) !important;
-            content: "FEHLER";
-        }
-        
-        /* CODELOSER SPERR-EFFEKT BEI NUR-HINFLUG */
+        /* HÄRTERE CODELOSE ABSPERRUNG FÜR ONE-WAY VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
             cursor: not-allowed; 
-            opacity: 0.25 !important; 
+            opacity: 0.20 !important; 
             pointer-events: none !important; 
             border-color: #94a3b8 !important; 
         }
         body:has(#ow-checkbox:checked) #return-box input {
+            background-color: #cbd5e1 !important; 
             border-color: #94a3b8 !important;
-            background-color: #cbd5e1 !important;
         }
         body:has(#ow-checkbox:checked) .seg-state {
             background-color: var(--gold) !important;
             color: #000000;
+        }
+        
+        /* AUTOMATISCHER ROT-ALARM BEI HTML5-VALIDIERUNGSFEHLERN */
+        input:invalid {
+            border: 2px solid var(--error-red) !important;
+            background-color: #fef2f2 !important;
+            color: var(--error-red) !important;
         }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; height: 36px; box-sizing: border-box; }
@@ -135,7 +128,7 @@
         .switch input:checked + .slider { background-color: #22c55e !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
         
-        .section-divider { 
+        .grid-section-divider { 
             grid-column: span 4; 
             font-weight: bold; 
             font-size: 0.9rem; 
@@ -146,7 +139,7 @@
             margin-bottom: 5px; 
         }
 
-        .button-row { 
+        .action-button-row { 
             display: grid; 
             grid-template-columns: repeat(6, 1fr); 
             gap: 10px; 
@@ -180,22 +173,23 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>✈️ Reisekonfiguration PRO - WIDE STABLE</h1>
+<div class="main-fullscreen-container">
+    <h1>✈️ Reisekonfiguration PRO - TOTAL RESET</h1>
     
     <form action="https://google.com" method="get" target="_blank">
-        <div class="card">
-            <div class="title">
+        <div class="fortress-card">
+            <div class="card-header-title">
                 <span>Flugparameter & Such-Absprung</span>
-                <div class="premium-status-panel">
-                    <div class="status-segment seg-date">09.11.2026</div>
-                    <div class="status-segment seg-time">16:31</div>
-                    <div class="status-segment seg-state">RESET OK</div>
+                <!-- NEUE CODELOSE SYSTEMANZEIGE -->
+                <div class="ultra-status-panel">
+                    <div class="panel-segment seg-date">09.11.2026</div>
+                    <div class="panel-segment seg-time">16:34</div>
+                    <div class="panel-segment seg-state">BASE OK</div>
                 </div>
             </div>
             
-            <div class="grid">
-                <!-- ZEILE 1: FLUGORTE & REISEDATEN -->
+            <div class="wide-responsive-grid">
+                <!-- ORTE & ZEITEN -->
                 <div>
                     <label for="from-air">Abflug (IATA)</label>
                     <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA" required>
@@ -213,8 +207,8 @@
                     <input type="date" id="return-date" min="2026-11-09">
                 </div>
 
-                <!-- ZEILE 2: PASSAGIERE & ONE WAY -->
-                <div class="half">
+                <!-- PASSAGIERE & SCHALTER -->
+                <div class="span-just-two">
                     <label for="passengers">Reisende</label>
                     <select id="passengers">
                         <option value="1">1 Erwachsener</option>
@@ -222,7 +216,7 @@
                         <option value="3">3 Erwachsene</option>
                     </select>
                 </div>
-                <div class="half">
+                <div class="span-just-two">
                     <label style="visibility: hidden;">Spacer</label>
                     <div class="switch-container">
                         <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Nur Hinflug (One-Way)</label>
@@ -233,11 +227,13 @@
                     </div>
                 </div>
 
-                <!-- SEKTION: OPTIONALE FILTER -->
-                <div class="section-divider">Optionale Filter (Präferenzen)</div>
+                <!-- FILTER -->
+                <div class="grid-section-divider">Optionale Filter (Präferenzen)</div>
 
-                <div class="half">
+                <div class="span-just-two">
                     <label>Max. Budget</label>
-                    <div class="budget-group">
+                    <div class="budget-currency-row">
                         <input type="number" placeholder="Kein Limit" min="0">
+                        <select>
+                            <option value="EUR">EUR (€)</option>
              
