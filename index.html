@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - FULL SYSTEM ACTIVE</title>
+    <title>✈️ Reisekonfiguration PRO - COMPACT STABLE</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -58,15 +58,11 @@
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
         .switch input:checked + .slider { background-color: var(--lock-green) !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
-        
-        /* SPEZIELLER MAGENTA-RANGE-CONTAINER FÜR DIE REISEZEIT */
-        .range-container { background: var(--time-magenta) !important; padding: 0 10px; border: 1px solid #c084fc; border-radius: 4px; box-sizing: border-box; height: 40px; display: flex; align-items: center; justify-content: center; }
-        .range-container input[type="range"] { padding: 0; height: auto; cursor: pointer; margin: 0; width: 100%; accent-color: var(--rubin); background: transparent; }
 
         .button-bar { width: 100%; border: 2px solid var(--border); background: #ffffff; border-radius: 8px; padding: 15px; box-sizing: border-box; }
         .btn-flow { display: flex; flex-wrap: wrap; gap: 10px; }
         .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
         
         .btn-google { background: #4285f4; }
         .btn-skyscanner { background: #007054; }
@@ -79,15 +75,14 @@
 <body>
 <div class="dashboard-container">
     
-    <!-- Standard-Ziel ist stabil die Google-Suche -->
     <form action="https://google.com" method="get" target="_blank">
         
         <div class="main-header">
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-            <div class="dashboard-display">
-                <div class="dash-seg seg-date">09.11.2026</div>
-                <div class="dash-seg seg-time">18:40</div>
-                <div class="dash-seg seg-state">HOOKS ACTIVE</div>
+            <div class="cockpit-display">
+                <div class="cockpit-seg seg-date">09.11.2026</div>
+                <div class="cockpit-seg seg-time">18:45</div>
+                <div class="cockpit-seg seg-state">REBOOT COMPACT</div>
             </div>
         </div>
         
@@ -99,12 +94,13 @@
                 
                 <div class="field">
                     <label for="from-air">Abflug (IATA)</label>
-                    <input type="text" id="from-air" name="as_q" list="airports" value="FRA" required>
+                    <!-- FEHLER BEHOBEN: list-Attribut korrekt verknüpft -->
+                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" required>
                 </div>
                 
                 <div class="field">
                     <label for="to-air">Ziel (IATA)</label>
-                    <input type="text" id="to-air" name="as_epq" list="airports" value="BKK" required>
+                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" required>
                 </div>
                 
                 <div class="field">
@@ -138,11 +134,6 @@
                 <div class="card-title">⚙️ Optionale Präferenzen & Schalter</div>
                 
                 <div class="field">
-                    <label for="max-budget">Max. Budget in Euro (€)</label>
-                    <input type="number" id="max-budget" placeholder="Kein Limit (z.B. 500)" min="0">
-                </div>
-                
-                <div class="field">
                     <label for="stops">Max. Zwischenstopps</label>
                     <select id="stops">
                         <option value="any">Beliebig</option>
@@ -157,11 +148,18 @@
                     <input type="text" id="transit-airport" placeholder="Optionaler Flughafen...">
                 </div>
 
+                <!-- REFORM-FELD: REISEZEIT ALS KLASSIFIZIERTES AUSWAHLFELD WEGEN ZEITANZEIGE -->
                 <div class="field">
-                    <label>Max. Reisezeit (Stunden)</label>
-                    <div class="range-container">
-                        <input type="range" min="2" max="48" value="24">
-                    </div>
+                    <label for="max-time">Max. Reisezeit</label>
+                    <select id="max-time">
+                        <option value="any">Beliebig (Kein Limit)</option>
+                        <option value="12">Max. 12 Stunden</option>
+                        <option value="16">Max. 16 Stunden</option>
+                        <option value="20">Max. 20 Stunden</option>
+                        <option value="24" selected>Max. 24 Stunden</option>
+                        <option value="32">Max. 32 Stunden</option>
+                        <option value="48">Max. 48 Stunden</option>
+                    </select>
                 </div>
 
                 <div class="field">
@@ -171,3 +169,9 @@
                             <input type="checkbox" id="lc-checkbox">
                             <span class="slider"></span>
                         </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <div class="button-bar">
