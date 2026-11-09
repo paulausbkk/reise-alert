@@ -40,7 +40,7 @@
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
         input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
         
-        /* UNZERSTÖRBARER CODELOSER LOCK FÜR RETURNDATE VIA CSS */
+        /* CODELOSER LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; border-color: #94a3b8 !important; }
         body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
@@ -74,14 +74,15 @@
 <body>
 <div class="dashboard-container">
     
-    <form action="https://google.com" method="get" target="_blank">
+    <!-- BEFREIT: Das Haupt-Action-Ziel ist neutralisiert, damit die Liste entsperrt wird -->
+    <form method="get" target="_blank">
         
         <div class="main-header">
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">20:40</div>
-                <div class="cockpit-seg seg-state">DATALIST BACK</div>
+                <div class="cockpit-seg seg-time">21:00</div>
+                <div class="cockpit-seg seg-state">UNLOCKED</div>
             </div>
         </div>
         
@@ -93,7 +94,6 @@
                 
                 <div class="field">
                     <label>Abflug (IATA oder Stadt)</label>
-                    <!-- EXAKTE STRUKTUR AUS GESTERN: Keine IDs, freies Tippfeld gekoppelt mit list -->
                     <input type="text" name="from" list="airports" placeholder="z.B. FRA" required>
                 </div>
                 
@@ -174,3 +174,4 @@
             
         <div class="button-bar">
             <div class="card-title" style="font-size: 0.95rem; margin-bottom: 12px; border:none;">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
+            <div class="btn-flow">
