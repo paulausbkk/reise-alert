@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - COCKPIT SMART</title>
+    <title>✈️ Reisekonfiguration PRO - DATALIST RESTORED</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -38,9 +38,9 @@
         
         .field { margin-bottom: 16px; display: flex; flex-direction: column; }
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
-        input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
+        input, select { width: 100%; height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; }
         
-        /* UNZERSTÖRBARER CODELOSER LOCK FÜR RETURNDATE VIA CSS */
+        /* UNZERSTÖRBARER LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; border-color: #94a3b8 !important; }
         body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
@@ -81,8 +81,8 @@
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">18:55</div>
-                <div class="cockpit-seg seg-state">SMART DATA</div>
+                <div class="cockpit-seg seg-time">19:05</div>
+                <div class="cockpit-seg seg-state">BASE OK</div>
             </div>
         </div>
         
@@ -93,13 +93,14 @@
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
-                    <label for="from-air">Abflug (IATA oder Stadt)</label>
-                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA oder Frankfurt" required>
+                    <label for="from-air">Abflug (IATA)</label>
+                    <!-- EXAKTER ABSPRUNG AUS SKRIPT 1: list-Attribut verknüpft mit der Datalist -->
+                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" required>
                 </div>
                 
                 <div class="field">
-                    <label for="to-air">Ziel (IATA oder Stadt)</label>
-                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK oder Bangkok" required>
+                    <label for="to-air">Ziel (IATA)</label>
+                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" required>
                 </div>
                 
                 <div class="field">
@@ -144,7 +145,7 @@
                 
                 <div class="field">
                     <label for="transit-airport">Zwischenstop / Airport:</label>
-                    <input type="text" id="transit-airport" list="airports" placeholder="z.B. DXB oder Dubai">
+                    <input type="text" id="transit-airport" list="airports" placeholder="z.B. DXB">
                 </div>
 
                 <div class="field">
