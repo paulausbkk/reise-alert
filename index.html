@@ -49,7 +49,6 @@
         input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5; }
         form:has(input:invalid) .seg-state { background-color: var(--error-red) !important; color: #ffffff; }
         
-        /* CONTAINER FÜR DIE SCHIEBESCHALTER (SLIDER) */
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; height: 40px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
@@ -81,7 +80,7 @@
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">19:05</div>
+                <div class="cockpit-seg seg-time">19:20</div>
                 <div class="cockpit-seg seg-state">BASE OK</div>
             </div>
         </div>
@@ -93,14 +92,14 @@
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
-                    <label for="from-air">Abflug (IATA)</label>
-                    <!-- EXAKTER ABSPRUNG AUS SKRIPT 1: list-Attribut verknüpft mit der Datalist -->
-                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" required>
+                    <label for="from-air">Abflug (IATA oder Stadt)</label>
+                    <!-- ZURÜCK ZUM ERFOLGS-NAMEN VON GESTERN: name="from" befreit die Datalist aus der Sperre -->
+                    <input type="text" id="from-air" name="from" list="airports" placeholder="z.B. FRA oder Frankfurt" required>
                 </div>
                 
                 <div class="field">
-                    <label for="to-air">Ziel (IATA)</label>
-                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" required>
+                    <label for="to-air">Ziel (IATA oder Stadt)</label>
+                    <input type="text" id="to-air" name="to" list="airports" placeholder="z.B. BKK oder Bangkok" required>
                 </div>
                 
                 <div class="field">
@@ -135,7 +134,7 @@
                 
                 <div class="field">
                     <label for="stops">Max. Zwischenstopps</label>
-                    <select id="stops">
+                    <select id="stops" name="stops">
                         <option value="any">Beliebig</option>
                         <option value="0">Direktflug</option>
                         <option value="1">Max. 1 Stopp</option>
@@ -145,12 +144,12 @@
                 
                 <div class="field">
                     <label for="transit-airport">Zwischenstop / Airport:</label>
-                    <input type="text" id="transit-airport" list="airports" placeholder="z.B. DXB">
+                    <input type="text" id="transit-airport" name="transit" list="airports" placeholder="z.B. DXB oder Dubai">
                 </div>
 
                 <div class="field">
                     <label for="max-time">Max. Reisezeit</label>
-                    <select id="max-time">
+                    <select id="max-time" name="max_time">
                         <option value="any">Beliebig (Kein Limit)</option>
                         <option value="12">Max. 12 Stunden</option>
                         <option value="16">Max. 16 Stunden</option>
@@ -165,7 +164,7 @@
                     <div class="switch-container yellow-highlight">
                         <label for="lc-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Low-Cost Airlines erlauben</label>
                         <label class="switch">
-                            <input type="checkbox" id="lc-checkbox">
+                            <input type="checkbox" id="lc-checkbox" name="low_cost">
                             <span class="slider"></span>
                         </label>
                     </div>
