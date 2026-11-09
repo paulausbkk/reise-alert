@@ -56,29 +56,30 @@
             align-items: center; 
         }
         
-        /* DAS NEUE DREIGETEILTE PREMIUM-PANEL UNTER NEUEM NAMEN */
-        .ultra-status-panel {
+        /* RADIKALER NEUBAU: DAS CODELOSE KONTROLLRAUM-PANEL */
+        .dashboard-info-display {
             display: flex;
             gap: 6px;
-            background: #1e293b;
-            padding: 5px;
+            background: #1e293b !important; /* Erzwingt dunklen Kontrast-Hintergrund */
+            padding: 5px 8px;
             border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
         }
         
-        .panel-segment {
+        .display-segment {
             font-size: 0.75rem;
             padding: 4px 10px;
             border-radius: 4px;
             font-weight: bold;
             text-transform: uppercase;
-            color: #ffffff;
+            color: #ffffff !important;
             letter-spacing: 0.5px;
         }
         
-        .seg-date { background: #334155; }
-        .seg-time { background: var(--time-magenta); }
-        .seg-state { background: var(--lock-box-color); }
+        .seg-date { background: #475569; border: 1px solid #64748b; }
+        .seg-time { background: var(--time-magenta); border: 1px solid #c084fc; }
+        .seg-state { background: var(--lock-box-color); border: 1px solid #4ade80; color: #ffffff; }
         
         .wide-responsive-grid { 
             display: grid; 
@@ -108,9 +109,12 @@
             background-color: #cbd5e1 !important; 
             border-color: #94a3b8 !important;
         }
+        
+        /* Wenn One-Way aktiv ist, wechselt der Status im Kontrollfeld auf Warn-Gold */
         body:has(#ow-checkbox:checked) .seg-state {
             background-color: var(--gold) !important;
-            color: #000000;
+            border-color: #fbbf24 !important;
+            color: #000000 !important;
         }
         
         /* AUTOMATISCHER ROT-ALARM BEI HTML5-VALIDIERUNGSFEHLERN */
@@ -118,6 +122,13 @@
             border: 2px solid var(--error-red) !important;
             background-color: #fef2f2 !important;
             color: var(--error-red) !important;
+        }
+        
+        /* Wenn das Formular einen Fehler enthält, schaltet das Statustäschchen auf Rot-Alarm */
+        form:has(input:invalid) .seg-state {
+            background-color: var(--error-red) !important;
+            border-color: #f87171 !important;
+            color: #ffffff !important;
         }
         
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; height: 36px; box-sizing: border-box; }
@@ -180,11 +191,12 @@
         <div class="fortress-card">
             <div class="card-header-title">
                 <span>Flugparameter & Such-Absprung</span>
-                <!-- NEUE CODELOSE SYSTEMANZEIGE -->
-                <div class="ultra-status-panel">
-                    <div class="panel-segment seg-date">09.11.2026</div>
-                    <div class="panel-segment seg-time">16:34</div>
-                    <div class="panel-segment seg-state">BASE OK</div>
+                
+                <!-- DAS HOCHWERTIGE MULTI-SEGMENT-DISPLAY IM KONTROLLRAUM-STIL -->
+                <div class="dashboard-info-display">
+                    <div class="display-segment seg-date">09.11.2026</div>
+                    <div class="display-segment seg-time">16:37</div>
+                    <div class="display-segment seg-state">SYSTEM OK</div>
                 </div>
             </div>
             
@@ -220,20 +232,4 @@
                     <label style="visibility: hidden;">Spacer</label>
                     <div class="switch-container">
                         <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Nur Hinflug (One-Way)</label>
-                        <label class="switch">
-                            <input type="checkbox" id="ow-checkbox">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- FILTER -->
-                <div class="grid-section-divider">Optionale Filter (Präferenzen)</div>
-
-                <div class="span-just-two">
-                    <label>Max. Budget</label>
-                    <div class="budget-currency-row">
-                        <input type="number" placeholder="Kein Limit" min="0">
-                        <select>
-                            <option value="EUR">EUR (€)</option>
              
