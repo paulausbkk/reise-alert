@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - FULLSCREEN WIDE</title>
+    <title>✈️ Reisekonfiguration PRO - FULLSCREEN VALIDATED</title>
     <style>
         :root { 
             --rubin: #991b1b; 
@@ -15,11 +15,11 @@
             --gold: #f59e0b; 
             --time-magenta: #d946ef; 
             --lock-box-color: #22c55e; 
+            --error-red: #ef4444;
         }
         
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
-        /* FULLSCREEN: max-width auf 98% erhöht für maximale Breitbild-Nutzung */
         .container { 
             max-width: 98%; 
             margin: 10px auto; 
@@ -68,7 +68,6 @@
             letter-spacing: 0.5px;
         }
         
-        /* GROSSES MEHRSPALTIGES RASTER (4 Spalten im Breitbild) */
         .grid { 
             display: grid; 
             grid-template-columns: repeat(4, 1fr); 
@@ -84,7 +83,14 @@
         label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 6px; color: #475569; }
         input, select { width: 100%; height: 36px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.9rem; }
         
-        /* CODELOSER SCHLOSS-EFFEKT */
+        /* SKRIPTFREIE VALIDIERUNG: Visuelles Feedback bei falschen Eingaben */
+        input:invalid {
+            border-2px solid var(--error-red) !important;
+            background-color: #fef2f2 !important;
+            color: var(--error-red) !important;
+        }
+        
+        /* CODELOSER SCHLOSS-EFFEKT FÜR ONE-WAY */
         body:has(#ow-checkbox:checked) #return-box { 
             background-color: #cbd5e1 !important; 
             color: #94a3b8 !important; 
@@ -119,7 +125,6 @@
             margin-bottom: 5px; 
         }
 
-        /* BUTTONS NEBENEINANDER IM BREITBILD */
         .button-row { 
             display: grid; 
             grid-template-columns: repeat(6, 1fr); 
@@ -165,25 +170,27 @@
             </div>
             
             <div class="grid">
-                <!-- ZEILE 1: FLUGORTE & REISEDATEN NEBENEINANDER (4-spaltig) -->
+                <!-- FLUGORTE & REISEDATEN -->
                 <div>
                     <label for="from-air">Abflug (IATA)</label>
-                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA">
+                    <input type="text" id="from-air" name="as_q" list="airports" placeholder="z.B. FRA" value="FRA" required>
                 </div>
                 <div>
                     <label for="to-air">Ziel (IATA)</label>
-                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" value="BKK">
+                    <input type="text" id="to-air" name="as_epq" list="airports" placeholder="z.B. BKK" value="BKK" required>
                 </div>
                 <div>
                     <label for="outbound-date">Hinflug</label>
-                    <input type="date" id="outbound-date">
+                    <!-- Wir setzen das heutige Mindestdatum (2026-11-09) als feste HTML-Untergrenze -->
+                    <input type="date" id="outbound-date" min="2026-11-09" required>
                 </div>
                 <div id="return-box">
                     <label for="return-date">Rückflug</label>
-                    <input type="date" id="return-date">
+                    <!-- Das Rückflugdatum darf nativ nicht vor dem heutigen Tag liegen -->
+                    <input type="date" id="return-date" min="2026-11-09">
                 </div>
 
-                <!-- ZEILE 2: PASSAGIERE & ONE WAY NEBENEINANDER -->
+                <!-- PASSAGIERE & ONE WAY -->
                 <div class="half">
                     <label for="passengers">Reisende</label>
                     <select id="passengers">
@@ -229,8 +236,3 @@
                 <div class="section-divider">✈️ Transit-Optionen</div>
                 <div class="full">
                     <label for="transit-airport">Zwischenstop / Airport:</label>
-                    <input type="text" id="transit-airport" placeholder="Optionaler Flughafen...">
-                </div>
-
-                <!-- SEKTION: DIE ABSPRUNG-BUTTONS -->
-                <div class="section-divider">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
