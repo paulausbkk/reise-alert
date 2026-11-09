@@ -3,149 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ Reisekonfiguration PRO - NEW TRACK</title>
+    <title>✈️ Reisekonfiguration PRO - TWO WINDOW LOOK</title>
     <style>
-        body { font-family: sans-serif; background: #f0f4f8; padding: 20px; margin: 0; }
-        .fullscreen-box { width: 100%; background: #ffffff; border: 3px solid #991b1b; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); box-sizing: border-box; }
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; margin-bottom: 20px; }
-        .title { font-weight: bold; color: #991b1b; font-size: 1.2rem; }
-        .cockpit { display: flex; gap: 5px; background: #1e293b; padding: 4px; border-radius: 4px; }
-        .seg { font-size: 0.75rem; padding: 4px 8px; border-radius: 2px; font-weight: bold; color: #ffffff; }
+        :root { 
+            --rubin: #991b1b; 
+            --bg: #f0f4f8; 
+            --card-bg: #ffffff; 
+            --text: #1e293b; 
+            --border: #cbd5e1; 
+            --gold: #f59e0b; 
+            --time-magenta: #d946ef; 
+            --lock-green: #22c55e; 
+            --error-red: #ef4444;
+        }
         
-        .field { margin-bottom: 18px; }
-        .section-divider { font-weight: bold; font-size: 0.95rem; color: #1e293b; border-bottom: 2px solid #cbd5e1; padding-bottom: 4px; margin-top: 25px; margin-bottom: 15px; }
+        html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         
-        label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px; color: #475569; }
-        input, select { width: 100%; height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; }
+        /* FULLSCREEN WORKSPACE */
+        .workspace-fullscreen { 
+            width: 100%; 
+            max-width: 99%; 
+            margin: 0 auto; 
+            box-sizing: border-box; 
+        }
+        
+        .main-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid var(--border); 
+            padding-bottom: 10px; 
+            margin-bottom: 20px; 
+        }
+        .main-title { font-weight: bold; color: var(--rubin); font-size: 1.3rem; margin: 0; }
+        
+        .dashboard-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
+        .dash-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; }
+        .seg-d { background: #475569; }
+        .seg-t { background: var(--time-magenta); }
+        .seg-s { background: var(--lock-green); }
+        
+        /* ZWEI-FENSTER-LAYOUT: Nebeneinander im Breitbild, fließend */
+        .window-row { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 20px; 
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        
+        /* JEDES FENSTER RECHNET SICH SELBST Symmetrisch AUS */
+        .fortress-window { 
+            flex: 1 1 450px; 
+            border: 2px solid var(--rubin); 
+            border-radius: 8px; 
+            padding: 20px; 
+            background: #fef2f2;
+            box-sizing: border-box;
+        }
+        
+        .window-title { font-weight: bold; font-size: 1.05rem; color: var(--rubin); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 15px; }
+        
+        .field { margin-bottom: 15px; display: flex; flex-direction: column; }
+        label { font-weight: bold; font-size: 0.82rem; margin-bottom: 5px; color: #475569; }
+        input, select { height: 38px; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 0.95rem; background: #ffffff; width: 100%; }
         
         .budget-combo { display: flex; gap: 8px; }
         .budget-combo input { flex: 2; }
         .budget-combo select { flex: 1; }
         
-        /* DIE ROTEN HINWEISE FÜR DIE DESIGN-ENTSCHEIDUNG */
-        .tech-warning { display: block; color: #ef4444; font-size: 0.75rem; font-weight: bold; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.2px; }
+        .tech-warning { display: block; color: #ef4444; font-size: 0.75rem; font-weight: bold; margin-top: 4px; text-transform: uppercase; }
         
-        /* UNZERSTÖRBARER CODELOSER SCHLOSS-EFFEKT */
-        body:has(#ow:checked) #return-field { opacity: 0.25; pointer-events: none; }
-        body:has(#ow:checked) #return-field input { background-color: #cbd5e1 !important; }
-        body:has(#ow:checked) .status-ok { background: #f59e0b !important; color: #000000; }
+        /* CSS SCHLOSS FÜR RETURNDATE */
+        body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
+        body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; }
+        body:has(#ow-checkbox:checked) .seg-s { background-color: var(--gold) !important; color: #000000; }
         
-        /* ALARM BEI MANDATORY-FEHLERN */
-        input:invalid { border: 2px solid #ef4444 !important; background: #fff5f5; }
-        form:has(input:invalid) .status-ok { background: #ef4444 !important; color: #ffffff; }
-
-        .btn-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
-        .btn { flex: 1 1 140px; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .btn:hover { opacity: 0.9; }
-        .b-g { background: #4285f4; } .b-s { background: #007054; } .b-k { background: #ff690f; }
-        .b-m { background: #84329b; } .b-ki { background: #00a699; } .b-t { background: #2f55d4; }
+        /* CHROMATISCHER ALARM BEI FEHLERN */
+        input:invalid { border: 2px solid var(--error-red) !important; background-color: #fff5f5; }
+        form:has(input:invalid) .seg-s { background-color: var(--error-red) !important; }
+        
+        .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid var(--border); border-radius: 4px; height: 38px; box-sizing: border-box; }
+        .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 20px; transition: .3s; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
+        .switch input:checked + .slider { background-color: var(--lock-green) !important; }
+        .switch input:checked + .slider:before { transform: translateX(18px); }
+        
+        /* BUTTON REIHE GANZ UNTEN ÜBER DIE VOLLE BREITE */
+        .button-bar { 
+            width: 100%; 
+            border: 2px solid var(--border); 
+            background: #ffffff; 
+            border-radius: 8px; 
+            padding: 15px; 
+            box-sizing: border-box;
+        }
+        
+        .btn-flow { display: flex; flex-wrap: wrap; gap: 10px; }
+        .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 42px; color: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        
+        .btn-google { background: #4285f4; border-color: #3367d6; }
+        .btn-skyscanner { background: #007054; border-color: #00523f; }
+        .btn-kayak { background: #ff690f; border-color: #d45205; }
+        .btn-momondo { background: #84329b; border-color: #641f80; }
+        .btn-kiwi { background: #00a699; border-color: #008075; }
+        .btn-trip { background: #2f55d4; border-color: #2444b5; }
     </style>
 </head>
 <body>
-
-<div class="fullscreen-box">
+<div class="workspace-fullscreen">
+    
+    <!-- EIN EINZIGES FORMULAR KLAMMERT BEIDE FENSTER EIN -->
     <form action="https://google.com" method="get" target="_blank">
         
-        <!-- NEUES COCKPIT-PANEL ZUR UNTERSCHIEDS-KONTROLLE -->
-        <div class="header">
-            <div class="title">Flugparameter & Such-Absprung</div>
-            <div class="cockpit">
-                <div class="seg" style="background: #475569;">09.11.2026</div>
-                <div class="seg" style="background: #d946ef;">18:00</div>
-                <div class="seg status-ok" style="background: #22c55e;">VOLLSTÄNDIG</div>
+        <div class="main-header">
+            <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
+            <div class="dashboard-display">
+                <div class="dash-seg seg-d">09.11.2026</div>
+                <div class="dash-seg seg-t">18:10</div>
+                <div class="dash-seg seg-s">DASHBOARD</div>
             </div>
         </div>
-
-        <!-- SEKTION 1: BASIS-PARAMETER -->
-        <div class="field">
-            <label for="from-air">Abflug (IATA)</label>
-            <input type="text" id="from-air" name="as_q" list="airports" value="FRA" required>
-        </div>
-
-        <div class="field">
-            <label for="to-air">Ziel (IATA)</label>
-            <input type="text" id="to-air" name="as_epq" list="airports" value="BKK" required>
-        </div>
-
-        <div class="field">
-            <label for="outbound-date">Hinflug</label>
-            <input type="date" id="outbound-date" min="2026-11-09" value="2026-11-19" required>
-        </div>
-
-        <div class="field" id="return-field">
-            <label for="return-date">Rückflug</label>
-            <input type="date" id="return-date" min="2026-11-09">
-        </div>
-
-        <div class="field">
-            <label for="passengers">Reisende</label>
-            <select id="passengers">
-                <option value="1">1 Erwachsener</option>
-                <option value="2">2 Erwachsene</option>
-                <option value="3">3 Erwachsene</option>
-            </select>
-            <span class="tech-warning">⚠️ Hinweis: Suchschlitz-Übergabe startet Portale standardmäßig bei 1 Person</span>
-        </div>
-
-        <div class="field" style="display: flex; gap: 10px; align-items: center; background: #fff; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px;">
-            <input type="checkbox" id="ow" style="width: 20px; height: 20px; margin: 0;">
-            <label for="ow" style="margin: 0; cursor: pointer; font-weight: bold;">Nur Hinflug (One-Way Riegel)</label>
-        </div>
-
-        <!-- SEKTION 2: FILTER -->
-        <div class="section-divider">Optionale Filter (Präferenzen)</div>
-
-        <div class="field">
-            <label>Max. Budget</label>
-            <div class="budget-combo">
-                <input type="number" placeholder="Kein Limit" min="0">
-                <select>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="USD">USD ($)</option>
-                </select>
+        
+        <div class="window-row">
+            
+            <!-- FENSTER 1 (LINKS): BASIS-PARAMETER -->
+            <div class="fortress-window">
+                <div class="window-title">📋 Kern-Parameter</div>
+                
+                <div class="field">
+                    <label for="from-air">Abflug (IATA)</label>
+                    <input type="text" id="from-air" name="as_q" list="airports" value="FRA" required>
+                </div>
+                
+                <div class="field">
+                    <label for="to-air">Ziel (IATA)</label>
+                    <input type="text" id="to-air" name="as_epq" list="airports" value="BKK" required>
+                </div>
+                
+                <div class="field">
+                    <label for="outbound-date">Hinflug</label>
+                    <input type="date" id="outbound-date" min="2026-11-09" value="2026-11-19" required>
+                </div>
+                
+                <div class="field" id="return-box">
+                    <label for="return-date">Rückflug</label>
+                    <input type="date" id="return-date" min="2026-11-09">
+                </div>
+                
+                <div class="field">
+                    <label for="passengers">Reisende</label>
+                    <select id="passengers">
+                        <option value="1">1 Erwachsener</option>
+                        <option value="2">2 Erwachsene</option>
+                        <option value="3">3 Erwachsene</option>
+                    </select>
+                    <span class="tech-warning">⚠️ Suchschlitz startet Portale standardmäßig bei 1 Person</span>
+                </div>
+                
+                <div class="field">
+                    <div class="switch-container">
+                        <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Nur Hinflug (One-Way Riegel)</label>
+                        <label class="switch">
+                            <input type="checkbox" id="ow-checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <span class="tech-warning">⚠️ Hinweis: Ohne JavaScript findet keine automatische Währungsumrechnung statt</span>
-        </div>
-
-        <div class="field">
-            <label for="stops">Max. Zwischenstopps</label>
-            <select id="stops">
-                <option value="any">Beliebig</option>
-                <option value="0">Direktflug</option>
-                <option value="1">Max. 1 Stopp</option>
-            </select>
-        </div>
-
-        <!-- SEKTION 3: TRANSIT -->
-        <div class="section-divider">✈️ Transit-Optionen</div>
-
-        <div class="field">
-            <label for="transit-airport">Zwischenstop / Airport:</label>
-            <input type="text" id="transit-airport" placeholder="Optionaler Flughafen...">
-            <span class="tech-warning">⚠️ Hinweis: Google-Suche ignoriert diesen spezifischen Filter im Freitext-Absprung</span>
-        </div>
-
-        <!-- SEKTION 4: DIE ABSPRUNG-BUTTONS -->
-        <div class="section-divider">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
-
-        <div class="btn-container">
-            <button type="submit" name="q" value="Flüge" class="btn b-g">Google</button>
-            <button type="submit" name="q" value="Skyscanner Flüge" class="btn b-s">Skyscan</button>
-            <button type="submit" name="q" value="Kayak Flüge" class="btn b-k">Kayak</button>
-            <button type="submit" name="q" value="Momondo Flüge" class="btn b-m">Momondo</button>
-            <button type="submit" name="q" value="Kiwi.com Flüge" class="btn b-ki">Kiwi</button>
-            <button type="submit" name="q" value="Trip.com Flüge" class="btn b-t">Trip</button>
-        </div>
-
-    </form>
-</div>
-
-<datalist id="airports">
-    <option value="BER">Berlin Brandenburg (BER)</option>
-    <option value="FRA">Frankfurt am Main (FRA)</option>
-    <option value="MUC">München (MUC)</option>
-    <option value="BKK">Bangkok Suvarnabhumi (BKK)</option>
-</datalist>
-
-</body>
-</html>
+            
+            <!-- FENSTER 2 (RECHTS): OPTIONALE PRÄFERENZEN & TRANSIT -->
+            <div class="fortress-window">
+                <div class="window-title">⚙️ Optionale Präferenzen & Transit</div>
+                
+                <div class="field">
+                    <label>Max. Budget</label>
+                    <div class="budget-combo">
+                        <input type="number" placeholder="Kein Limit" min="0">
+                        <select>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="USD">USD ($)</option>
+                        </select>
+                    </div>
+                    <span class="tech-warning">⚠️ Ohne JavaScript findet keine automatische Umrechnung statt</span>
+                </div>
+                
+                <div class="field">
+                    <label for="stops">Max. Zwischenstopps</label>
+                    <select id="stops">
+                        <option value="any">Beliebig</option>
+                        <option value="0">Direktflug</option>
+                        <option value="1">Max. 1 Stopp</option>
+                    </select>
+                </div>
+                
+                <div class="field">
+                    <label for="transit-airport">Zwischenstop / Airport:</label>
