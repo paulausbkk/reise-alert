@@ -5,24 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO - DASHBOARD LIVE</title>
 <style>
-:root{--rubin:#991b1b;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1e293b;--border:#cbd5e1;--gold:#f59e0b;--version-emerald:#047857;--lock-green:#22c55e;--lowcost-yellow:#fef08a}
+:root{--rubin:#991b1b;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1e293b;--border:#cbd5e1;--gold:#f59e0b;--version-rubin:#991b1b;--lock-green:#22c55e;--lowcost-yellow:#fef08a}
 html,body{height:auto!important;min-height:100%;margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--text)}
 .dashboard-container{width:100%;max-width:100%;box-sizing:border-box}
 .main-header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--border);padding-bottom:10px;margin-bottom:20px}
 .main-title{font-weight:bold;color:var(--rubin);font-size:1.3rem;margin:0}
 .cockpit-display{display:flex;gap:6px;background:#1e293b;padding:4px;border-radius:6px}
-.cockpit-seg{font-size:0.75rem;padding:4px 10px;border-radius:4px;font-weight:bold;color:#ffffff;text-transform:uppercase;background:var(--version-emerald)}
+.cockpit-seg{font-size:0.75rem;padding:4px 10px;border-radius:4px;font-weight:bold;color:#ffffff;text-transform:uppercase;background:var(--version-rubin)}
 .window-flex-row{display:flex;flex-wrap:wrap;gap:20px;width:100%;box-sizing:border-box;margin-bottom:20px}
 .fortress-card{flex:1 1 450px;border:2px solid var(--rubin);border-radius:8px;padding:20px;background:#fef2f2;box-sizing:border-box}
 .card-title{font-weight:bold;font-size:1.1rem;color:var(--rubin);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:15px}
 .field{margin-bottom:16px;display:flex;flex-direction:column}
 label{font-weight:bold;font-size:0.85rem;margin-bottom:6px;color:#475569}
 input[type="text"],input[type="date"],select{height:40px;padding:0 10px;border:1px solid #cbd5e1;border-radius:4px;box-sizing:border-box;font-size:1rem;background:#ffffff;width:100%;color:var(--text)}
-.slider-box{display:flex;align-items:center;gap:12px;background:#ffffff;border:1px solid #cbd5e1;border-radius:4px;height:40px;padding:0 12px;box-sizing:border-box}
+.slider-box{display:flex;align-items:center;gap:10px;background:#ffffff;border:1px solid #cbd5e1;border-radius:4px;height:40px;padding:0 12px;box-sizing:border-box}
 .slider-box input[type="range"]{flex:1;accent-color:var(--rubin);cursor:pointer;height:6px;margin:0}
-.slider-badge{background:var(--rubin);color:#ffffff;font-weight:bold;font-size:0.85rem;padding:4px 10px;border-radius:4px;min-width:58px;text-align:center}
-#return-box.date-invalid,#return-box:has(input:invalid){opacity:0.25}
-#return-box.date-invalid input,#return-box:has(input:invalid) input{background-color:#cbd5e1!important;border-color:#94a3b8!important;color:#64748b!important}
+.slider-scale{font-size:0.75rem;font-weight:bold;color:#64748b;white-space:nowrap}
+#return-box:has(input:invalid),#outbound-date:invalid{opacity:0.35}
+#return-box:has(input:invalid) input,#outbound-date:invalid{background-color:#cbd5e1!important;border-color:#94a3b8!important;color:#64748b!important}
 body:has(#ow-checkbox:checked) #return-box{opacity:0.25;pointer-events:none}
 body:has(#ow-checkbox:checked) #return-box input{background-color:#cbd5e1!important;border-color:#94a3b8!important}
 body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important;color:#000000}
@@ -48,7 +48,7 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
 <div class="cockpit-display">
 <div class="cockpit-seg">14.11.2026</div>
-<div class="cockpit-seg">V21 - DATE FIX</div>
+<div class="cockpit-seg">V22 - PURE HTML5</div>
 <div class="cockpit-seg seg-state">ALL 6 BTN</div>
 </div>
 </div>
@@ -57,13 +57,13 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
 <div class="field"><label for="from-input">Abflug (IATA oder Stadt)</label><input type="text" id="from-input" name="from" list="airports" autocomplete="off" placeholder="z.B. FRA oder Frankfurt" required></div>
 <div class="field"><label for="to-input">Ziel (IATA oder Stadt)</label><input type="text" id="to-input" name="to" list="airports" autocomplete="off" placeholder="z.B. BKK oder Bangkok" required></div>
-<div class="field"><label for="outbound-date">Hinflug</label><input type="date" id="outbound-date" name="outbound" required></div>
-<div class="field" id="return-box"><label for="return-date">Rückflug</label><input type="date" id="return-date" name="return"></div>
+<div class="field"><label for="outbound-date">Hinflug</label><input type="date" id="outbound-date" name="outbound" min="2026-11-14" required></div>
+<div class="field" id="return-box"><label for="return-date">Rückflug</label><input type="date" id="return-date" name="return" min="2026-11-14"></div>
 </div>
 <div class="fortress-card">
 <div class="card-title">⚙️ Filter & Flug-Parameter</div>
 <div class="field"><div class="switch-container"><label for="ow-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Nur Hinflug (One-Way Lock)</label><label class="switch"><input type="checkbox" id="ow-checkbox" name="oneway"><span class="slider"></span></label></div></div>
-<div class="field"><label for="max-duration">Max. Reisezeit</label><div class="slider-box"><input type="range" id="max-duration" name="max_duration" min="1" max="36" value="14"><span class="slider-badge" id="dur-val">14 Std.</span></div></div>
+<div class="field"><label for="max-duration">Max. Reisezeit (1 – 36 Std.)</label><div class="slider-box"><span class="slider-scale">1h</span><input type="range" id="max-duration" name="max_duration" min="1" max="36" value="14"><span class="slider-scale">36h</span></div></div>
 <div class="field"><label for="transit-input">Bevorzugtes Transit-Drehkreuz (Optional)</label><input type="text" id="transit-input" name="transit" list="airports" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"></div>
 <div class="field"><div class="switch-container yellow-highlight"><label for="lc-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Low-Cost Airlines erlauben</label><label class="switch"><input type="checkbox" id="lc-checkbox" name="low_cost"><span class="slider"></span></label></div></div>
 </div>
