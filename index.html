@@ -12,11 +12,12 @@ html,body{height:auto!important;min-height:100%;margin:0;padding:15px;background
 .main-title{font-weight:bold;color:var(--rubin);font-size:1.3rem;margin:0}
 .cockpit-display{display:flex;gap:6px;background:#1e293b;padding:4px;border-radius:6px}
 .cockpit-seg{font-size:0.75rem;padding:4px 10px;border-radius:4px;font-weight:bold;color:#fff;text-transform:uppercase}
-.seg-date{background:#475569}.seg-time{background:var(--time-magenta)}.seg-state{background:var(--lock-green)}
+@keyframes cockpitPulse{0%{background-color:#d946ef}25%{background-color:#991b1b}50%{background-color:#0284c7}75%{background-color:#059669}100%{background-color:#d946ef}}
+.seg-date{background:#475569}.seg-time{animation:cockpitPulse 5s infinite ease-in-out}.seg-state{background:var(--lock-green)}
 .window-flex-row{display:flex;flex-wrap:wrap;gap:20px;width:100%;box-sizing:border-box;margin-bottom:20px}
 .fortress-card{flex:1 1 450px;border:2px solid var(--rubin);border-radius:8px;padding:20px;background:#fef2f2;box-sizing:border-box}
 .card-title{font-weight:bold;font-size:1.1rem;color:var(--rubin);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:15px}
-.field{margin-bottom:16px;display:flex;flex-direction:column}
+.field{margin-bottom:16px;display:flex;flex-direction:column;position:relative}
 label{font-weight:bold;font-size:0.85rem;margin-bottom:6px;color:#475569}
 input,select{height:40px;padding:0 10px;border:1px solid #cbd5e1;border-radius:4px;box-sizing:border-box;font-size:1rem;background:#fff;width:100%;color:var(--text)}
 body:has(#ow-checkbox:checked) #return-box{opacity:0.25;pointer-events:none}
@@ -34,6 +35,9 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 .btn-flow{display:flex;flex-wrap:wrap;gap:10px}
 .touch-btn{flex:1 1 140px;display:flex;align-items:center;justify-content:center;height:45px;color:#fff;font-weight:bold;border:none;border-radius:4px;cursor:pointer;font-size:0.85rem;text-transform:uppercase}
 .btn-google{background:#4285f4}.btn-skyscanner{background:#007054}.btn-kayak{background:#ff690f}.btn-momondo{background:#84329b}.btn-kiwi{background:#00a699}.btn-trip{background:#2f55d4}
+.ac-list{position:absolute;top:64px;left:0;right:0;background:#fff;border:2px solid var(--rubin);border-radius:4px;max-height:200px;overflow-y:auto;z-index:999;display:none;box-shadow:0 6px 12px rgba(0,0,0,0.15)}
+.ac-item{padding:10px;cursor:pointer;border-bottom:1px solid #e2e8f0;font-size:0.95rem}
+.ac-item:hover{background:#fee2e2;font-weight:bold}
 </style>
 </head>
 <body>
@@ -42,16 +46,16 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <div class="main-header">
 <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
 <div class="cockpit-display">
-<div class="cockpit-seg seg-date">14.11.2026</div>
-<div class="cockpit-seg seg-time">HTML5 PURE</div>
-<div class="cockpit-seg seg-state">DATALIST UNLOCKED</div>
+<div class="cockpit-seg seg-date" id="c-date">14.11.2026</div>
+<div class="cockpit-seg seg-time" id="c-time">LIVE</div>
+<div class="cockpit-seg seg-state">SEARCH UNLOCKED</div>
 </div>
 </div>
 <div class="window-flex-row">
 <div class="fortress-card">
 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-<div class="field"><label for="from-input">Abflug (IATA oder Stadt)</label><input type="text" id="from-input" name="from" list="airports" placeholder="z.B. FRA oder Frankfurt" required></div>
-<div class="field"><label for="to-input">Ziel (IATA oder Stadt)</label><input type="text" id="to-input" name="to" list="airports" placeholder="z.B. BKK oder Bangkok" required></div>
+<div class="field"><label for="from-input">Abflug (IATA oder Stadt)</label><input type="text" id="from-input" name="from" autocomplete="off" placeholder="z.B. FRA oder Frankfurt" required><div class="ac-list" id="from-list"></div></div>
+<div class="field"><label for="to-input">Ziel (IATA oder Stadt)</label><input type="text" id="to-input" name="to" autocomplete="off" placeholder="z.B. BKK oder Bangkok" required><div class="ac-list" id="to-list"></div></div>
 <div class="field"><label for="outbound-date">Hinflug</label><input type="date" id="outbound-date" name="outbound" required></div>
 <div class="field" id="return-box"><label for="return-date">Rückflug</label><input type="date" id="return-date" name="return"></div>
 </div>
@@ -59,7 +63,7 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <div class="card-title">⚙️ Filter & Flug-Parameter</div>
 <div class="field"><div class="switch-container"><label for="ow-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Nur Hinflug (One-Way Lock)</label><label class="switch"><input type="checkbox" id="ow-checkbox" name="oneway"><span class="slider"></span></label></div></div>
 <div class="field"><label for="max-duration">Max. Reisezeit</label><select id="max-duration" name="max_duration"><option value="">Beliebig (Kein Limit)</option><option value="4">Max. 4 Stunden</option><option value="8">Max. 8 Stunden</option><option value="14">Max. 14 Stunden</option><option value="20">Max. 20 Stunden</option><option value="30">Max. 30 Stunden</option></select></div>
-<div class="field"><label for="transit-input">Transit-Drehkreuz (Optional)</label><input type="text" id="transit-input" name="transit" list="airports" placeholder="z.B. DXB, DOH, IST, SIN"></div>
+<div class="field"><label for="transit-input">Transit-Drehkreuz (Optional)</label><input type="text" id="transit-input" name="transit" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"><div class="ac-list" id="transit-list"></div></div>
 <div class="field"><div class="switch-container yellow-highlight"><label for="lc-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Low-Cost Airlines erlauben</label><label class="switch"><input type="checkbox" id="lc-checkbox" name="low_cost"><span class="slider"></span></label></div></div>
 </div>
 </div>
@@ -74,3 +78,6 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <button type="submit" class="touch-btn btn-trip" formaction="https://trip.com">Trip.com</button>
 </div>
 </div>
+</form>
+</div>
+<script>
