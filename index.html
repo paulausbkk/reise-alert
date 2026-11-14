@@ -12,7 +12,7 @@
             --text: #1e293b; 
             --border: #cbd5e1; 
             --gold: #f59e0b; 
-            --time-magenta: #d946ef; 
+            --version-blue: #0284c7; 
             --lock-green: #22c55e; 
             --lowcost-yellow: #fef08a;
         }
@@ -24,10 +24,7 @@
         .main-title { font-weight: bold; color: var(--rubin); font-size: 1.3rem; margin: 0; }
         
         .cockpit-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
-        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; }
-        .seg-date { background: #475569; }
-        .seg-time { background: var(--time-magenta); }
-        .seg-state { background: var(--lock-green); }
+        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; background: var(--version-blue); }
         
         .window-flex-row { display: flex; flex-wrap: wrap; gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 20px; }
         
@@ -73,9 +70,9 @@
         <div class="main-header">
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
-                <div class="cockpit-seg seg-date">14.11.2026</div>
-                <div class="cockpit-seg seg-time">HTML5 PURE</div>
-                <div class="cockpit-seg seg-state">0% JS LOCKED</div>
+                <div class="cockpit-seg">14.11.2026</div>
+                <div class="cockpit-seg">V12 - BASIS</div>
+                <div class="cockpit-seg seg-state">0% JS OK</div>
             </div>
         </div>
         
@@ -164,3 +161,4 @@
         <!-- NATIVE FLUGHAFEN-DATENBANK (100% REINES HTML5) -->
         <datalist id="airports">
             <option value="FRA">FRA - Frankfurt am Main (Deutschland)</option>
+            <option value="HHN">HHN - Frankfurt-Hahn (Deutschland)</option>
