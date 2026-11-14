@@ -18,7 +18,6 @@
         }
         
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
-        
         .dashboard-container { width: 100%; max-width: 100%; box-sizing: border-box; }
         
         .main-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
@@ -74,9 +73,9 @@
         <div class="main-header">
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
-                <div class="cockpit-seg seg-date">09.11.2026</div>
-                <div class="cockpit-seg seg-time">21:40</div>
-                <div class="cockpit-seg seg-state">DATALIST UNLOCKED</div>
+                <div class="cockpit-seg seg-date">14.11.2026</div>
+                <div class="cockpit-seg seg-time">HTML5 PURE</div>
+                <div class="cockpit-seg seg-state">0% JS LOCKED</div>
             </div>
         </div>
         
@@ -87,72 +86,55 @@
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
                 
                 <div class="field">
-                    <label>Abflug (IATA oder Stadt)</label>
-                    <!-- EXAKT AUS SKRIPT 1: Reine, unblockierte Freitextfelder -->
-                    <input type="text" name="from" list="airports" placeholder="z.B. FRA" required>
+                    <label for="from-input">Abflug (IATA oder Stadt)</label>
+                    <input type="text" id="from-input" name="from" list="airports" autocomplete="off" placeholder="z.B. FRA oder Frankfurt" required>
                 </div>
                 
                 <div class="field">
-                    <label>Ziel (IATA oder Stadt)</label>
-                    <input type="text" name="to" list="airports" placeholder="z.B. BKK" required>
+                    <label for="to-input">Ziel (IATA oder Stadt)</label>
+                    <input type="text" id="to-input" name="to" list="airports" autocomplete="off" placeholder="z.B. BKK oder Bangkok" required>
                 </div>
                 
                 <div class="field">
                     <label for="outbound-date">Hinflug</label>
-                    <input type="date" id="outbound-date" min="2026-11-09" value="2026-11-19" required>
+                    <input type="date" id="outbound-date" name="outbound" required>
                 </div>
-                
+
                 <div class="field" id="return-box">
-                    <label>Rückflug</label>
-                    <input type="date" name="return-date" min="2026-11-09">
+                    <label for="return-date">Rückflug</label>
+                    <input type="date" id="return-date" name="return">
                 </div>
-                
-                <div class="field">
-                    <label>Reisende</label>
-                    <input type="text" value="1 Erwachsener" style="background-color: #e2e8f0; color: #64748b; cursor: not-allowed;" readonly>
-                </div>
-                
+            </div>
+
+            <!-- FENSTER 2: PARAMETER & SCHALTER -->
+            <div class="fortress-card">
+                <div class="card-title">⚙️ Filter & Flug-Parameter</div>
+
                 <div class="field">
                     <div class="switch-container">
-                        <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Nur Hinflug (One-Way Riegel)</label>
+                        <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Nur Hinflug (One-Way Lock)</label>
                         <label class="switch">
-                            <input type="checkbox" id="ow-checkbox">
+                            <input type="checkbox" id="ow-checkbox" name="oneway">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div>
-            </div>
-            
-            <!-- FENSTER 2: OPTIONALE PRÄFERENZEN & SCHALTER -->
-            <div class="fortress-card">
-                <div class="card-title">⚙️ Optionale Präferenzen & Schalter</div>
-                
+
                 <div class="field">
-                    <label for="stops">Max. Zwischenstopps</label>
-                    <select id="stops" name="stops">
-                        <option value="any">Beliebig</option>
-                        <option value="0">Direktflug</option>
-                        <option value="1">Max. 1 Stopp</option>
-                        <option value="2">Max. 2 Stopps</option>
+                    <label for="max-duration">Max. Reisezeit</label>
+                    <select id="max-duration" name="max_duration">
+                        <option value="">Beliebig (Kein Limit)</option>
+                        <option value="4">Max. 4 Stunden (Kurzstrecke)</option>
+                        <option value="8">Max. 8 Stunden (Mittelstrecke)</option>
+                        <option value="14">Max. 14 Stunden (Langstrecke Direkt)</option>
+                        <option value="20">Max. 20 Stunden (1 Stopp)</option>
+                        <option value="30">Max. 30 Stunden (Weltweit)</option>
                     </select>
-                </div>
-                
-                <div class="field">
-                    <label>Zwischenstop / Airport:</label>
-                    <input type="text" name="transit" list="airports" placeholder="z.B. DXB">
                 </div>
 
                 <div class="field">
-                    <label for="max-time">Max. Reisezeit</label>
-                    <select id="max-time" name="max_time">
-                        <option value="any">Beliebig (Kein Limit)</option>
-                        <option value="12">Max. 12 Stunden</option>
-                        <option value="16">Max. 16 Stunden</option>
-                        <option value="20">Max. 20 Stunden</option>
-                        <option value="24" selected>Max. 24 Stunden</option>
-                        <option value="32">Max. 32 Stunden</option>
-                        <option value="48">Max. 48 Stunden</option>
-                    </select>
+                    <label for="transit-input">Bevorzugtes Transit-Drehkreuz (Optional)</label>
+                    <input type="text" id="transit-input" name="transit" list="airports" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN">
                 </div>
 
                 <div class="field">
@@ -171,4 +153,14 @@
             <div class="card-title" style="font-size: 0.95rem; margin-bottom: 12px; border:none;">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
             <div class="btn-flow">
                 <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
-                <button type="submit" class="touch-btn btn-skyscanner" formacti
+                <button type="submit" class="touch-btn btn-skyscanner" formaction="https://skyscanner.de">Skyscanner</button>
+                <button type="submit" class="touch-btn btn-kayak" formaction="https://kayak.de">Kayak</button>
+                <button type="submit" class="touch-btn btn-momondo" formaction="https://momondo.de">Momondo</button>
+                <button type="submit" class="touch-btn btn-kiwi" formaction="https://kiwi.com">Kiwi</button>
+                <button type="submit" class="touch-btn btn-trip" formaction="https://trip.com">Trip.com</button>
+            </div>
+        </div>
+
+        <!-- NATIVE FLUGHAFEN-DATENBANK (100% REINES HTML5) -->
+        <datalist id="airports">
+            <option value="FRA">Frankfurt am Main (Deutschland)</option>
