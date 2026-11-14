@@ -48,33 +48,19 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <div class="cockpit-display">
 <div class="cockpit-seg seg-date">14.11.2026</div>
 <div class="cockpit-seg seg-time">COCKPIT AKTIV</div>
-<div class="cockpit-seg seg-state">0% JS LOCKED</div>
+<div class="cockpit-seg seg-state">SELECT UNLOCKED</div>
 </div>
 </div>
 <div class="window-flex-row">
 <div class="fortress-card">
 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-<div class="field"><label for="from-input">Abflug (IATA oder Stadt)</label><input type="text" id="from-input" name="from" list="airports" autocomplete="off" placeholder="z.B. FRA oder Frankfurt" required></div>
-<div class="field"><label for="to-input">Ziel (IATA oder Stadt)</label><input type="text" id="to-input" name="to" list="airports" autocomplete="off" placeholder="z.B. BKK oder Bangkok" required></div>
-<div class="field"><label for="outbound-date">Hinflug</label><input type="date" id="outbound-date" name="outbound" required></div>
-<div class="field" id="return-box"><label for="return-date">Rückflug</label><input type="date" id="return-date" name="return"></div>
-</div>
-<div class="fortress-card">
-<div class="card-title">⚙️ Filter & Flug-Parameter</div>
-<div class="field"><div class="switch-container"><label for="ow-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Nur Hinflug (One-Way Lock)</label><label class="switch"><input type="checkbox" id="ow-checkbox" name="oneway"><span class="slider"></span></label></div></div>
-<div class="field"><label for="max-duration">Max. Reisezeit</label><select id="max-duration" name="max_duration"><option value="">Beliebig (Kein Limit)</option><option value="4">Max. 4 Std.</option><option value="8">Max. 8 Std.</option><option value="14">Max. 14 Std.</option><option value="20">Max. 20 Std.</option><option value="30">Max. 30 Std.</option></select></div>
-<div class="field"><label for="transit-input">Transit-Drehkreuz (Optional)</label><input type="text" id="transit-input" name="transit" list="airports" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"></div>
-<div class="field"><div class="switch-container yellow-highlight"><label for="lc-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Low-Cost Airlines erlauben</label><label class="switch"><input type="checkbox" id="lc-checkbox" name="low_cost"><span class="slider"></span></label></div></div>
-</div>
-</div>
-<div class="button-bar">
-<div class="card-title" style="font-size:0.95rem;margin-bottom:12px;border:none">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
-<div class="btn-flow">
-<button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
-<button type="submit" class="touch-btn btn-skyscanner" formaction="https://skyscanner.de">Skyscanner</button>
-<button type="submit" class="touch-btn btn-kayak" formaction="https://kayak.de">Kayak</button>
-<button type="submit" class="touch-btn btn-momondo" formaction="https://momondo.de">Momondo</button>
-<button type="submit" class="touch-btn btn-kiwi" formaction="https://kiwi.com">Kiwi</button>
-<button type="submit" class="touch-btn btn-trip" formaction="https://trip.com">Trip.com</button>
-</div>
-</div>
+<div class="field"><label for="from-select">Abflug (Flughafen & IATA)</label>
+<select id="from-select" name="from" required>
+<option value="">-- Abflughafen wählen --</option>
+<optgroup label="Deutschland, Österreich & Schweiz">
+<option value="FRA">FRA - Frankfurt am Main</option><option value="MUC">MUC - München</option><option value="BER">BER - Berlin Brandenburg</option><option value="DUS">DUS - Düsseldorf</option><option value="HAM">HAM - Hamburg</option><option value="CGN">CGN - Köln/Bonn</option><option value="STR">STR - Stuttgart</option><option value="LEJ">LEJ - Leipzig/Halle</option><option value="DRS">DRS - Dresden</option><option value="HAJ">HAJ - Hannover</option><option value="NUE">NUE - Nürnberg</option><option value="BRE">BRE - Bremen</option><option value="DTM">DTM - Dortmund</option><option value="FMM">FMM - Memmingen</option><option value="VIE">VIE - Wien</option><option value="SZG">SZG - Salzburg</option><option value="INN">INN - Innsbruck</option><option value="ZRH">ZRH - Zürich</option><option value="GVA">GVA - Genf</option><option value="BSL">BSL - Basel</option>
+</optgroup>
+<optgroup label="Europa">
+<option value="LHR">LHR - London Heathrow</option><option value="LGW">LGW - London Gatwick</option><option value="STN">STN - London Stansted</option><option value="MAN">MAN - Manchester</option><option value="EDI">EDI - Edinburgh</option><option value="DUB">DUB - Dublin</option><option value="CDG">CDG - Paris CDG</option><option value="ORY">ORY - Paris Orly</option><option value="NCE">NCE - Nizza</option><option value="AMS">AMS - Amsterdam</option><option value="BRU">BRU - Brüssel</option><option value="CPH">CPH - Kopenhagen</option><option value="OSL">OSL - Oslo</option><option value="ARN">ARN - Stockholm</option><option value="HEL">HEL - Helsinki</option><option value="KEF">KEF - Reykjavík</option><option value="MAD">MAD - Madrid</option><option value="BCN">BCN - Barcelona</option><option value="PMI">PMI - Palma de Mallorca</option><option value="AGP">AGP - Málaga</option><option value="ALC">ALC - Alicante</option><option value="LPA">LPA - Gran Canaria</option><option value="TFS">TFS - Teneriffa Süd</option><option value="LIS">LIS - Lissabon</option><option value="OPO">OPO - Porto</option><option value="FAO">FAO - Faro</option><option value="FNC">FNC - Madeira</option><option value="FCO">FCO - Rom Fiumicino</option><option value="MXP">MXP - Mailand Malpensa</option><option value="VCE">VCE - Venedig</option><option value="NAP">NAP - Neapel</option><option value="CTA">CTA - Catania</option><option value="ATH">ATH - Athen</option><option value="HER">HER - Heraklion</option><option value="RHO">RHO - Rhodos</option><option value="LCA">LCA - Larnaka</option><option value="WAW">WAW - Warschau</option><option value="PRG">PRG - Prag</option><option value="BUD">BUD - Budapest</option><option value="OTP">OTP - Bukarest</option><option value="SOF">SOF - Sofia</option><option value="ZAG">ZAG - Zagreb</option><option value="SPU">SPU - Split</option><option value="IST">IST - Istanbul</option><option value="AYT">AYT - Antalya</option>
+</optgroup>
+<optgroup label="Weltweit (Asien, Amerika, Orient, Afrika)">
