@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO - DASHBOARD LIVE</title>
 <style>
-:root{--rubin:#991b1b;--bg:#f0f4f8;--text:#1e293b;--border:#cbd5e1;--gold:#f59e0b;--time-magenta:#d946ef;--lock-green:#22c55e;--lowcost-yellow:#fef08a}
+:root{--rubin:#991b1b;--bg:#f0f4f8;--text:#1e293b;--border:#cbd5e1;--gold:#f59e0b;--lock-green:#22c55e;--lowcost-yellow:#fef08a}
 html,body{height:auto!important;min-height:100%;margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--text)}
 .dashboard-container{width:100%;max-width:100%;box-sizing:border-box}
 .main-header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--border);padding-bottom:10px;margin-bottom:20px}
@@ -36,8 +36,45 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 .switch input:checked+.slider:before{transform:translateX(18px)}
 .button-bar{width:100%;border:2px solid var(--border);background:#fff;border-radius:8px;padding:15px;box-sizing:border-box}
 .btn-flow{display:flex;flex-wrap:wrap;gap:10px}
-.touch-btn{flex:1 1 140px;display:flex;align-items:center;justify-content:center;height:45px;color:#fff;font-weight:bold;border:none;border-radius:4px;cursor:pointer;font-size:0.85rem;text-transform:uppercase;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.touch-btn{flex:1 1 140px;display:flex;align-items:center;justify-content:center;height:45px;color:#fff;font-weight:bold;border:none;border-radius:4px;cursor:pointer;font-size:0.85rem;text-transform:uppercase}
 .btn-google{background:#4285f4}.btn-skyscanner{background:#007054}.btn-kayak{background:#ff690f}.btn-momondo{background:#84329b}.btn-kiwi{background:#00a699}.btn-trip{background:#2f55d4}
 </style>
 </head>
 <body>
+<div class="dashboard-container">
+<form action="https://google.com" method="get" target="_blank">
+<div class="main-header">
+<h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
+<div class="cockpit-display">
+<div class="cockpit-seg seg-date">14.11.2026</div>
+<div class="cockpit-seg seg-time">COCKPIT AKTIV</div>
+<div class="cockpit-seg seg-state">0% JS LOCKED</div>
+</div>
+</div>
+<div class="window-flex-row">
+<div class="fortress-card">
+<div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
+<div class="field"><label for="from-input">Abflug (IATA oder Stadt)</label><input type="text" id="from-input" name="from" list="airports" autocomplete="off" placeholder="z.B. FRA oder Frankfurt" required></div>
+<div class="field"><label for="to-input">Ziel (IATA oder Stadt)</label><input type="text" id="to-input" name="to" list="airports" autocomplete="off" placeholder="z.B. BKK oder Bangkok" required></div>
+<div class="field"><label for="outbound-date">Hinflug</label><input type="date" id="outbound-date" name="outbound" required></div>
+<div class="field" id="return-box"><label for="return-date">Rückflug</label><input type="date" id="return-date" name="return"></div>
+</div>
+<div class="fortress-card">
+<div class="card-title">⚙️ Filter & Flug-Parameter</div>
+<div class="field"><div class="switch-container"><label for="ow-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Nur Hinflug (One-Way Lock)</label><label class="switch"><input type="checkbox" id="ow-checkbox" name="oneway"><span class="slider"></span></label></div></div>
+<div class="field"><label for="max-duration">Max. Reisezeit</label><select id="max-duration" name="max_duration"><option value="">Beliebig (Kein Limit)</option><option value="4">Max. 4 Std.</option><option value="8">Max. 8 Std.</option><option value="14">Max. 14 Std.</option><option value="20">Max. 20 Std.</option><option value="30">Max. 30 Std.</option></select></div>
+<div class="field"><label for="transit-input">Transit-Drehkreuz (Optional)</label><input type="text" id="transit-input" name="transit" list="airports" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"></div>
+<div class="field"><div class="switch-container yellow-highlight"><label for="lc-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Low-Cost Airlines erlauben</label><label class="switch"><input type="checkbox" id="lc-checkbox" name="low_cost"><span class="slider"></span></label></div></div>
+</div>
+</div>
+<div class="button-bar">
+<div class="card-title" style="font-size:0.95rem;margin-bottom:12px;border:none">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
+<div class="btn-flow">
+<button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
+<button type="submit" class="touch-btn btn-skyscanner" formaction="https://skyscanner.de">Skyscanner</button>
+<button type="submit" class="touch-btn btn-kayak" formaction="https://kayak.de">Kayak</button>
+<button type="submit" class="touch-btn btn-momondo" formaction="https://momondo.de">Momondo</button>
+<button type="submit" class="touch-btn btn-kiwi" formaction="https://kiwi.com">Kiwi</button>
+<button type="submit" class="touch-btn btn-trip" formaction="https://trip.com">Trip.com</button>
+</div>
+</div>
