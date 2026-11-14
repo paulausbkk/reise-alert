@@ -50,8 +50,8 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <div class="window-flex-row">
 <div class="fortress-card">
 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-<div class="field"><label for="from-input">Abflug (IATA oder Stadt)</label><input type="text" id="from-input" name="from" list="airports" autocomplete="off" placeholder="z.B. FRA" required></div>
-<div class="field"><label for="to-input">Ziel (IATA oder Stadt)</label><input type="text" id="to-input" name="to" list="airports" autocomplete="off" placeholder="z.B. BKK" required></div>
+<div class="field"><label for="from-input">Abflug (IATA oder Stadt)</label><input type="text" id="from-input" name="from" list="airports" placeholder="z.B. FRA" required></div>
+<div class="field"><label for="to-input">Ziel (IATA oder Stadt)</label><input type="text" id="to-input" name="to" list="airports" placeholder="z.B. BKK" required></div>
 <div class="field"><label for="outbound-date">Hinflug</label><input type="date" id="outbound-date" name="outbound" required></div>
 <div class="field" id="return-box"><label for="return-date">Rückflug</label><input type="date" id="return-date" name="return"></div>
 </div>
@@ -59,7 +59,7 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <div class="card-title">⚙️ Filter & Flug-Parameter</div>
 <div class="field"><div class="switch-container"><label for="ow-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Nur Hinflug (One-Way Lock)</label><label class="switch"><input type="checkbox" id="ow-checkbox" name="oneway"><span class="slider"></span></label></div></div>
 <div class="field"><label for="max-duration">Max. Reisezeit</label><select id="max-duration" name="max_duration"><option value="">Beliebig (Kein Limit)</option><option value="4">Max. 4 Stunden</option><option value="8">Max. 8 Stunden</option><option value="14">Max. 14 Stunden</option><option value="20">Max. 20 Stunden</option><option value="30">Max. 30 Stunden</option></select></div>
-<div class="field"><label for="transit-input">Transit-Drehkreuz (Optional)</label><input type="text" id="transit-input" name="transit" list="airports" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"></div>
+<div class="field"><label for="transit-input">Transit-Drehkreuz (Optional)</label><input type="text" id="transit-input" name="transit" list="airports" placeholder="z.B. DXB, DOH, IST, SIN"></div>
 <div class="field"><div class="switch-container yellow-highlight"><label for="lc-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Low-Cost Airlines erlauben</label><label class="switch"><input type="checkbox" id="lc-checkbox" name="low_cost"><span class="slider"></span></label></div></div>
 </div>
 </div>
