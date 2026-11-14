@@ -12,7 +12,7 @@
             --text: #1e293b; 
             --border: #cbd5e1; 
             --gold: #f59e0b; 
-            --version-emerald: #059669; 
+            --version-rubin: #991b1b; 
             --lock-green: #22c55e; 
             --lowcost-yellow: #fef08a;
         }
@@ -24,7 +24,7 @@
         .main-title { font-weight: bold; color: var(--rubin); font-size: 1.3rem; margin: 0; }
         
         .cockpit-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
-        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; background: var(--version-emerald); }
+        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; background: var(--version-rubin); }
         
         .window-flex-row { display: flex; flex-wrap: wrap; gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 20px; }
         
@@ -35,8 +35,9 @@
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
         input[type="text"], input[type="date"], select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; color: var(--text); }
         
-        /* ROTER WARNHINWEIS FALLS RÜCKFLUG VOR HINFLUG LIEGT */
-        #return-date:invalid { background-color: #fee2e2 !important; border: 2px solid #dc2626 !important; color: #991b1b !important; opacity: 0.65; }
+        /* AUSGRAUUNG BEI UNGÜLTIGEM RÜCKFLUGDATUM (VOR HINFLUG) */
+        #return-box.date-invalid { opacity: 0.35; }
+        #return-box.date-invalid input { background-color: #cbd5e1 !important; border: 2px solid #94a3b8 !important; color: #64748b !important; }
 
         /* SCHIEBEREGLER FÜR MAX. REISEZEIT */
         .slider-box { display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; height: 40px; padding: 0 12px; box-sizing: border-box; }
@@ -79,8 +80,8 @@
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
                 <div class="cockpit-seg">14.11.2026</div>
-                <div class="cockpit-seg">V13 - SLIDER+DATE</div>
-                <div class="cockpit-seg seg-state">UPDATE OK</div>
+                <div class="cockpit-seg">V14 - FIX ALL</div>
+                <div class="cockpit-seg seg-state">6 BUTTONS OK</div>
             </div>
         </div>
         
@@ -102,7 +103,7 @@
                 
                 <div class="field">
                     <label for="outbound-date">Hinflug</label>
-                    <input type="date" id="outbound-date" name="outbound" oninput="document.getElementById('return-date').min=this.value" required>
+                    <input type="date" id="outbound-date" name="outbound" required>
                 </div>
 
                 <div class="field" id="return-box">
@@ -128,7 +129,7 @@
                 <div class="field">
                     <label for="max-duration">Max. Reisezeit</label>
                     <div class="slider-box">
-                        <input type="range" id="max-duration" name="max_duration" min="1" max="36" value="14" oninput="document.getElementById('dur-val').textContent=this.value+' Std.'">
+                        <input type="range" id="max-duration" name="max_duration" min="1" max="36" value="14">
                         <span class="slider-badge" id="dur-val">14 Std.</span>
                     </div>
                 </div>
@@ -155,4 +156,5 @@
             <div class="btn-flow">
                 <button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
                 <button type="submit" class="touch-btn btn-skyscanner" formaction="https://skyscanner.de">Skyscanner</button>
-                <button type="submit" class="touch-btn btn-kayak" formaction="
+                <button type="submit" class="touch-btn btn-kayak" formaction="https://kayak.de">Kayak</button>
+                <button type="submit" class="touch-btn btn-momondo" formaction=
