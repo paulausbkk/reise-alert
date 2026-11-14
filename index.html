@@ -5,15 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO - DASHBOARD LIVE</title>
 <style>
-:root{--rubin:#991b1b;--bg:#f0f4f8;--text:#1e293b;--border:#cbd5e1;--gold:#f59e0b;--time-magenta:#d946ef;--lock-green:#22c55e;--lowcost-yellow:#fef08a}
+:root{--rubin:#991b1b;--bg:#f0f4f8;--text:#1e293b;--border:#cbd5e1;--gold:#f59e0b;--lock-green:#22c55e;--lowcost-yellow:#fef08a}
 html,body{height:auto!important;min-height:100%;margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--text)}
 .dashboard-container{width:100%;max-width:100%;box-sizing:border-box}
 .main-header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--border);padding-bottom:10px;margin-bottom:20px}
 .main-title{font-weight:bold;color:var(--rubin);font-size:1.3rem;margin:0}
 .cockpit-display{display:flex;gap:6px;background:#1e293b;padding:4px;border-radius:6px}
 .cockpit-seg{font-size:0.75rem;padding:4px 10px;border-radius:4px;font-weight:bold;color:#fff;text-transform:uppercase}
-.seg-date{background:#475569}
-.seg-time{background:var(--time-magenta)}
+@keyframes cockpitPulse{0%{background-color:#d946ef}25%{background-color:#991b1b}50%{background-color:#0284c7}75%{background-color:#059669}100%{background-color:#d946ef}}
+@keyframes dateShift{0%{background-color:#475569}50%{background-color:#1e3a8a}100%{background-color:#475569}}
+.seg-date{animation:dateShift 8s infinite ease-in-out}
+.seg-time{animation:cockpitPulse 5s infinite ease-in-out}
 .seg-state{background:var(--lock-green)}
 .window-flex-row{display:flex;flex-wrap:wrap;gap:20px;width:100%;box-sizing:border-box;margin-bottom:20px}
 .fortress-card{flex:1 1 450px;border:2px solid var(--rubin);border-radius:8px;padding:20px;background:#fef2f2;box-sizing:border-box}
@@ -45,34 +47,14 @@ body:has(#ow-checkbox:checked) .seg-state{background-color:var(--gold)!important
 <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
 <div class="cockpit-display">
 <div class="cockpit-seg seg-date">14.11.2026</div>
-<div class="cockpit-seg seg-time">HTML5 PURE</div>
+<div class="cockpit-seg seg-time">COCKPIT AKTIV</div>
 <div class="cockpit-seg seg-state">0% JS LOCKED</div>
 </div>
 </div>
 <div class="window-flex-row">
 <div class="fortress-card">
 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-<div class="field"><label for="from-input">Abflug (IATA oder Stadt)</label><input type="text" id="from-input" name="from" list="airports" autocomplete="off" placeholder="z.B. FRA oder Frankfurt" required></div>
-<div class="field"><label for="to-input">Ziel (IATA oder Stadt)</label><input type="text" id="to-input" name="to" list="airports" autocomplete="off" placeholder="z.B. BKK oder Bangkok" required></div>
-<div class="field"><label for="outbound-date">Hinflug</label><input type="date" id="outbound-date" name="outbound" required></div>
-<div class="field" id="return-box"><label for="return-date">Rückflug</label><input type="date" id="return-date" name="return"></div>
+<div class="field"><label for="from-select">Abflug (IATA & Stadt)</label>
+<select id="from-select" name="from" required><option value="">-- Abflug wählen --</option><option value="FRA">FRA - Frankfurt</option><option value="MUC">MUC - München</option><option value="BER">BER - Berlin</option><option value="DUS">DUS - Düsseldorf</option><option value="HAM">HAM - Hamburg</option><option value="CGN">CGN - Köln/Bonn</option><option value="STR">STR - Stuttgart</option><option value="LEJ">LEJ - Leipzig</option><option value="DRS">DRS - Dresden</option><option value="HAJ">HAJ - Hannover</option><option value="NUE">NUE - Nürnberg</option><option value="VIE">VIE - Wien</option><option value="ZRH">ZRH - Zürich</option><option value="GVA">GVA - Genf</option><option value="BSL">BSL - Basel</option><option value="LHR">LHR - London Heathrow</option><option value="LGW">LGW - London Gatwick</option><option value="STN">STN - London Stansted</option><option value="MAN">MAN - Manchester</option><option value="EDI">EDI - Edinburgh</option><option value="DUB">DUB - Dublin</option><option value="CDG">CDG - Paris CDG</option><option value="ORY">ORY - Paris Orly</option><option value="NCE">NCE - Nizza</option><option value="AMS">AMS - Amsterdam</option><option value="BRU">BRU - Brüssel</option><option value="CPH">CPH - Kopenhagen</option><option value="OSL">OSL - Oslo</option><option value="ARN">ARN - Stockholm</option><option value="HEL">HEL - Helsinki</option><option value="KEF">KEF - Reykjavík</option><option value="MAD">MAD - Madrid</option><option value="BCN">BCN - Barcelona</option><option value="PMI">PMI - Palma de Mallorca</option><option value="AGP">AGP - Málaga</option><option value="ALC">ALC - Alicante</option><option value="LPA">LPA - Gran Canaria</option><option value="TFS">TFS - Teneriffa</option><option value="LIS">LIS - Lissabon</option><option value="OPO">OPO - Porto</option><option value="FAO">FAO - Faro</option><option value="FNC">FNC - Madeira</option><option value="FCO">FCO - Rom</option><option value="MXP">MXP - Mailand</option><option value="VCE">VCE - Venedig</option><option value="NAP">NAP - Neapel</option><option value="CTA">CTA - Catania</option><option value="ATH">ATH - Athen</option><option value="HER">HER - Heraklion</option><option value="RHO">RHO - Rhodos</option><option value="LCA">LCA - Larnaka</option><option value="WAW">WAW - Warschau</option><option value="PRG">PRG - Prag</option><option value="BUD">BUD - Budapest</option><option value="OTP">OTP - Bukarest</option><option value="SOF">SOF - Sofia</option><option value="ZAG">ZAG - Zagreb</option><option value="SPU">SPU - Split</option><option value="IST">IST - Istanbul</option><option value="AYT">AYT - Antalya</option><option value="DXB">DXB - Dubai</option><option value="AUH">AUH - Abu Dhabi</option><option value="DOH">DOH - Doha</option><option value="TLV">TLV - Tel Aviv</option><option value="BKK">BKK - Bangkok</option><option value="HKT">HKT - Phuket</option><option value="USM">USM - Koh Samui</option><option value="CNX">CNX - Chiang Mai</option><option value="SIN">SIN - Singapur</option><option value="KUL">KUL - Kuala Lumpur</option><option value="DPS">DPS - Bali</option><option value="SGN">SGN - Ho-Chi-Minh-Stadt</option><option value="HAN">HAN - Hanoi</option><option value="MNL">MNL - Manila</option><option value="HKG">HKG - Hongkong</option><option value="PVG">PVG - Shanghai</option><option value="PEK">PEK - Peking</option><option value="TPE">TPE - Taipeh</option><option value="HND">HND - Tokio Haneda</option><option value="NRT">NRT - Tokio Narita</option><option value="ICN">ICN - Seoul</option><option value="DEL">DEL - Neu-Delhi</option><option value="BOM">BOM - Mumbai</option><option value="CMB">CMB - Colombo</option><option value="MLE">MLE - Malediven</option><option value="SYD">SYD - Sydney</option><option value="MEL">MEL - Melbourne</option><option value="AKL">AKL - Auckland</option><option value="JFK">JFK - New York JFK</option><option value="EWR">EWR - New York Newark</option><option value="BOS">BOS - Boston</option><option value="IAD">IAD - Washington</option><option value="ATL">ATL - Atlanta</option><option value="MIA">MIA - Miami</option><option value="MCO">MCO - Orlando</option><option value="ORD">ORD - Chicago</option><option value="DFW">DFW - Dallas</option><option value="DEN">DEN - Denver</option><option value="LAS">LAS - Las Vegas</option><option value="LAX">LAX - Los Angeles</option><option value="SFO">SFO - San Francisco</option><option value="SEA">SEA - Seattle</option><option value="HNL">HNL - Hawaii</option><option value="YYZ">YYZ - Toronto</option><option value="YVR">YVR - Vancouver</option><option value="MEX">MEX - Mexiko-Stadt</option><option value="CUN">CUN - Cancún</option><option value="PTY">PTY - Panama</option><option value="PUJ">PUJ - Punta Cana</option><option value="BOG">BOG - Bogotá</option><option value="LIM">LIM - Lima</option><option value="GRU">GRU - São Paulo</option><option value="GIG">GIG - Rio de Janeiro</option><option value="EZE">EZE - Buenos Aires</option><option value="SCL">SCL - Santiago</option><option value="CAI">CAI - Kairo</option><option value="HRG">HRG - Hurghada</option><option value="RAK">RAK - Marrakesch</option><option value="CMN">CMN - Casablanca</option><option value="NBO">NBO - Nairobi</option><option value="ZNZ">ZNZ - Sansibar</option><option value="CPT">CPT - Kapstadt</option><option value="JNB">JNB - Johannesburg</option><option value="MRU">MRU - Mauritius</option><option value="SEZ">SEZ - Seychellen</option></select>
 </div>
-<div class="fortress-card">
-<div class="card-title">⚙️ Filter & Flug-Parameter</div>
-<div class="field"><div class="switch-container"><label for="ow-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Nur Hinflug (One-Way Lock)</label><label class="switch"><input type="checkbox" id="ow-checkbox" name="oneway"><span class="slider"></span></label></div></div>
-<div class="field"><label for="max-duration">Max. Reisezeit</label><select id="max-duration" name="max_duration"><option value="">Beliebig (Kein Limit)</option><option value="4">Max. 4 Std.</option><option value="8">Max. 8 Std.</option><option value="14">Max. 14 Std.</option><option value="20">Max. 20 Std.</option><option value="30">Max. 30 Std.</option></select></div>
-<div class="field"><label for="transit-input">Transit-Drehkreuz (Optional)</label><input type="text" id="transit-input" name="transit" list="airports" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"></div>
-<div class="field"><div class="switch-container yellow-highlight"><label for="lc-checkbox" style="margin:0;cursor:pointer;font-size:0.85rem;font-weight:bold;color:#475569">Low-Cost Airlines erlauben</label><label class="switch"><input type="checkbox" id="lc-checkbox" name="low_cost"><span class="slider"></span></label></div></div>
-</div>
-</div>
-<div class="button-bar">
-<div class="card-title" style="font-size:0.95rem;margin-bottom:12px;border:none">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
-<div class="btn-flow">
-<button type="submit" name="q" value="Flüge" class="touch-btn btn-google">Google</button>
-<button type="submit" class="touch-btn btn-skyscanner" formaction="https://skyscanner.de">Skyscanner</button>
-<button type="submit" class="touch-btn btn-kayak" formaction="https://kayak.de">Kayak</button>
-<button type="submit" class="touch-btn btn-momondo" formaction="https://momondo.de">Momondo</button>
-<button type="submit" class="touch-btn btn-kiwi" formaction="https://kiwi.com">Kiwi</button>
-<button type="submit" class="touch-btn btn-trip" formaction="https://trip.com">Trip.com</button>
-</div>
-</div>
+<div class="field"><label for="to-select">Ziel (IATA & Stadt)</label>
