@@ -8,7 +8,6 @@
         :root { 
             --rubin: #991b1b; 
             --bg: #f0f4f8; 
-            --card-bg: #ffffff; 
             --text: #1e293b; 
             --border: #cbd5e1; 
             --gold: #f59e0b; 
@@ -16,33 +15,24 @@
             --lock-green: #22c55e; 
             --lowcost-yellow: #fef08a;
         }
-        
         html, body { height: auto !important; min-height: 100%; margin: 0; padding: 15px; background: var(--bg); font-family: sans-serif; color: var(--text); }
         .dashboard-container { width: 100%; max-width: 100%; box-sizing: border-box; }
-        
         .main-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
         .main-title { font-weight: bold; color: var(--rubin); font-size: 1.3rem; margin: 0; }
-        
         .cockpit-display { display: flex; gap: 6px; background: #1e293b; padding: 4px; border-radius: 6px; }
-        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; }
+        .cockpit-seg { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: #ffffff; text-transform: uppercase; transition: background-color 0.4s ease; }
         .seg-date { background: #475569; }
         .seg-time { background: var(--time-magenta); }
         .seg-state { background: var(--lock-green); }
-        
         .window-flex-row { display: flex; flex-wrap: wrap; gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 20px; }
-        
         .fortress-card { flex: 1 1 450px; border: 2px solid var(--rubin); border-radius: 8px; padding: 20px; background: #fef2f2; box-sizing: border-box; }
         .card-title { font-weight: bold; font-size: 1.1rem; color: var(--rubin); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin-bottom: 15px; }
-        
         .field { margin-bottom: 16px; display: flex; flex-direction: column; }
         label { font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
         input, select { height: 40px; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; box-sizing: border-box; font-size: 1rem; background: #ffffff; width: 100%; color: var(--text); }
-        
-        /* UNZERSTÖRBARER CODELOSER LOCK FÜR RETURNDATE VIA CSS */
         body:has(#ow-checkbox:checked) #return-box { opacity: 0.25; pointer-events: none; }
         body:has(#ow-checkbox:checked) #return-box input { background-color: #cbd5e1 !important; border-color: #94a3b8 !important; }
         body:has(#ow-checkbox:checked) .seg-state { background-color: var(--gold) !important; color: #000000; }
-        
         .switch-container { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 0 10px; border: 1px solid #cbd5e1; border-radius: 4px; height: 40px; box-sizing: border-box; }
         .switch-container.yellow-highlight { background-color: var(--lowcost-yellow); border: 1px solid #eab308; }
         .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
@@ -51,12 +41,10 @@
         .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; border-radius: 50%; transition: .3s; }
         .switch input:checked + .slider { background-color: var(--lock-green) !important; }
         .switch input:checked + .slider:before { transform: translateX(18px); }
-
         .button-bar { width: 100%; border: 2px solid var(--border); background: #ffffff; border-radius: 8px; padding: 15px; box-sizing: border-box; }
         .btn-flow { display: flex; flex-wrap: wrap; gap: 10px; }
         .touch-btn { flex: 1 1 140px; display: flex; align-items: center; justify-content: center; height: 45px; color: #ffffff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.15); }
-        
+        .touch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
         .btn-google { background: #4285f4; }
         .btn-skyscanner { background: #007054; }
         .btn-kayak { background: #ff690f; }
@@ -67,59 +55,43 @@
 </head>
 <body>
 <div class="dashboard-container">
-    
     <form action="https://google.com" method="get" target="_blank">
-        
         <div class="main-header">
             <h1 class="main-title">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
             <div class="cockpit-display">
-                <div class="cockpit-seg seg-date" id="live-date">--.--.----</div>
-                <div class="cockpit-seg seg-time" id="live-time">--:--:--</div>
-                <div class="cockpit-seg seg-state">230+ AIRPORTS LIVE</div>
+                <div class="cockpit-seg seg-date" id="live-date">14.11.2026</div>
+                <div class="cockpit-seg seg-time" id="live-time">LIVE</div>
+                <div class="cockpit-seg seg-state" id="live-state">AIRPORTS READY</div>
             </div>
         </div>
-        
         <div class="window-flex-row">
-            
-            <!-- FENSTER 1: KERN-REISEDATEN -->
             <div class="fortress-card">
                 <div class="card-title">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-                
                 <div class="field">
                     <label for="from-input">Abflug (IATA oder Stadt)</label>
                     <input type="text" id="from-input" name="from" list="airports" autocomplete="off" placeholder="z.B. FRA oder Frankfurt" required>
                 </div>
-                
                 <div class="field">
                     <label for="to-input">Ziel (IATA oder Stadt)</label>
                     <input type="text" id="to-input" name="to" list="airports" autocomplete="off" placeholder="z.B. BKK oder Bangkok" required>
                 </div>
-                
                 <div class="field">
                     <label for="outbound-date">Hinflug</label>
                     <input type="date" id="outbound-date" name="outbound" required>
                 </div>
-
                 <div class="field" id="return-box">
                     <label for="return-date">Rückflug</label>
                     <input type="date" id="return-date" name="return">
                 </div>
             </div>
-
-            <!-- FENSTER 2: PARAMETER & SCHALTER -->
             <div class="fortress-card">
                 <div class="card-title">⚙️ Filter & Flug-Parameter</div>
-
                 <div class="field">
                     <div class="switch-container">
                         <label for="ow-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Nur Hinflug (One-Way Lock)</label>
-                        <label class="switch">
-                            <input type="checkbox" id="ow-checkbox" name="oneway">
-                            <span class="slider"></span>
-                        </label>
+                        <label class="switch"><input type="checkbox" id="ow-checkbox" name="oneway"><span class="slider"></span></label>
                     </div>
                 </div>
-
                 <div class="field">
                     <label for="max-duration">Max. Reisezeit</label>
                     <select id="max-duration" name="max_duration">
@@ -131,24 +103,18 @@
                         <option value="30">Max. 30 Stunden (Weltweit)</option>
                     </select>
                 </div>
-
                 <div class="field">
                     <label for="transit-input">Bevorzugtes Transit-Drehkreuz (Optional)</label>
                     <input type="text" id="transit-input" name="transit" list="airports" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN">
                 </div>
-
                 <div class="field">
                     <div class="switch-container yellow-highlight">
                         <label for="lc-checkbox" style="margin: 0; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: #475569;">Low-Cost Airlines erlauben</label>
-                        <label class="switch">
-                            <input type="checkbox" id="lc-checkbox" name="low_cost">
-                            <span class="slider"></span>
-                        </label>
+                        <label class="switch"><input type="checkbox" id="lc-checkbox" name="low_cost"><span class="slider"></span></label>
                     </div>
                 </div>
             </div>
         </div>
-            
         <div class="button-bar">
             <div class="card-title" style="font-size: 0.95rem; margin-bottom: 12px; border:none;">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
             <div class="btn-flow">
@@ -160,145 +126,4 @@
                 <button type="submit" class="touch-btn btn-trip" formaction="https://trip.com">Trip.com</button>
             </div>
         </div>
-
-        <!-- WELTWEITE FLUGHAFEN-DATENBANK (230+ AIRPORTS - 100% REINES HTML5) -->
         <datalist id="airports">
-<option value="FRA">FRA - Frankfurt am Main (Deutschland)</option>
-            <option value="HHN">HHN - Frankfurt-Hahn (Deutschland)</option>
-            <option value="MUC">MUC - München (Deutschland)</option>
-            <option value="BER">BER - Berlin Brandenburg (Deutschland)</option>
-            <option value="DUS">DUS - Düsseldorf (Deutschland)</option>
-            <option value="NRN">NRN - Düsseldorf Weeze (Deutschland)</option>
-            <option value="HAM">HAM - Hamburg (Deutschland)</option>
-            <option value="CGN">CGN - Köln/Bonn (Deutschland)</option>
-            <option value="STR">STR - Stuttgart (Deutschland)</option>
-            <option value="LEJ">LEJ - Leipzig/Halle (Deutschland)</option>
-            <option value="DRS">DRS - Dresden (Deutschland)</option>
-            <option value="HAJ">HAJ - Hannover (Deutschland)</option>
-            <option value="NUE">NUE - Nürnberg (Deutschland)</option>
-            <option value="BRE">BRE - Bremen (Deutschland)</option>
-            <option value="DTM">DTM - Dortmund (Deutschland)</option>
-            <option value="FMO">FMO - Münster/Osnabrück (Deutschland)</option>
-            <option value="PAD">PAD - Paderborn/Lippstadt (Deutschland)</option>
-            <option value="FKB">FKB - Karlsruhe/Baden-Baden (Deutschland)</option>
-            <option value="FMM">FMM - Memmingen (Deutschland)</option>
-            <option value="VIE">VIE - Wien (Österreich)</option>
-            <option value="SZG">SZG - Salzburg (Österreich)</option>
-            <option value="INN">INN - Innsbruck (Österreich)</option>
-            <option value="GRZ">GRZ - Graz (Österreich)</option>
-            <option value="ZRH">ZRH - Zürich (Schweiz)</option>
-            <option value="GVA">GVA - Genf (Schweiz)</option>
-            <option value="BSL">BSL - Basel-Mulhouse (Schweiz)</option>
-            <option value="LHR">LHR - London Heathrow (Großbritannien)</option>
-            <option value="LGW">LGW - London Gatwick (Großbritannien)</option>
-            <option value="STN">STN - London Stansted (Großbritannien)</option>
-            <option value="MAN">MAN - Manchester (Großbritannien)</option>
-            <option value="EDI">EDI - Edinburgh (Schottland)</option>
-            <option value="DUB">DUB - Dublin (Irland)</option>
-            <option value="CDG">CDG - Paris Charles de Gaulle (Frankreich)</option>
-            <option value="ORY">ORY - Paris Orly (Frankreich)</option>
-            <option value="NCE">NCE - Nizza (Frankreich)</option>
-            <option value="LYS">LYS - Lyon (Frankreich)</option>
-            <option value="AMS">AMS - Amsterdam Schiphol (Niederlande)</option>
-            <option value="BRU">BRU - Brüssel (Belgien)</option>
-            <option value="LUX">LUX - Luxemburg (Luxemburg)</option>
-            <option value="CPH">CPH - Kopenhagen (Dänemark)</option>
-            <option value="OSL">OSL - Oslo (Norwegen)</option>
-            <option value="ARN">ARN - Stockholm Arlanda (Schweden)</option>
-            <option value="HEL">HEL - Helsinki (Finnland)</option>
-            <option value="KEF">KEF - Reykjavík (Island)</option>
-Verwende Code mit Vorsicht.
-
-Häppchen B (Süd- & Osteuropa):
-
-html
-            <option value="MAD">MAD - Madrid (Spanien)</option>
-            <option value="BCN">BCN - Barcelona (Spanien)</option>
-            <option value="PMI">PMI - Palma de Mallorca (Spanien)</option>
-            <option value="IBZ">IBZ - Ibiza (Spanien)</option>
-            <option value="AGP">AGP - Málaga (Spanien)</option>
-            <option value="ALC">ALC - Alicante (Spanien)</option>
-            <option value="VLC">VLC - Valencia (Spanien)</option>
-            <option value="LPA">LPA - Gran Canaria (Spanien)</option>
-            <option value="TFS">TFS - Teneriffa Süd (Spanien)</option>
-            <option value="ACE">ACE - Lanzarote (Spanien)</option>
-            <option value="FUE">FUE - Fuerteventura (Spanien)</option>
-            <option value="LIS">LIS - Lissabon (Portugal)</option>
-            <option value="OPO">OPO - Porto (Portugal)</option>
-            <option value="FAO">FAO - Faro (Portugal)</option>
-            <option value="FNC">FNC - Madeira (Portugal)</option>
-            <option value="FCO">FCO - Rom Fiumicino (Italien)</option>
-            <option value="MXP">MXP - Mailand Malpensa (Italien)</option>
-            <option value="VCE">VCE - Venedig (Italien)</option>
-            <option value="BLQ">BLQ - Bologna (Italien)</option>
-            <option value="NAP">NAP - Neapel (Italien)</option>
-            <option value="CTA">CTA - Catania / Sizilien (Italien)</option>
-            <option value="PMO">PMO - Palermo / Sizilien (Italien)</option>
-            <option value="OLB">OLB - Olbia / Sardinien (Italien)</option>
-            <option value="MLA">MLA - Malta (Malta)</option>
-            <option value="ATH">ATH - Athen (Griechenland)</option>
-            <option value="SKG">SKG - Thessaloniki (Griechenland)</option>
-            <option value="HER">HER - Heraklion / Kreta (Griechenland)</option>
-            <option value="RHO">RHO - Rhodos (Griechenland)</option>
-            <option value="KGS">KGS - Kos (Griechenland)</option>
-            <option value="CFU">CFU - Korfu (Griechenland)</option>
-            <option value="LCA">LCA - Larnaka (Zypern)</option>
-            <option value="WAW">WAW - Warschau (Polen)</option>
-            <option value="KRK">KRK - Krakau (Polen)</option>
-            <option value="PRG">PRG - Prag (Tschechien)</option>
-            <option value="BUD">BUD - Budapest (Ungarn)</option>
-            <option value="OTP">OTP - Bukarest (Rumänien)</option>
-            <option value="SOF">SOF - Sofia (Bulgarien)</option>
-            <option value="ZAG">ZAG - Zagreb (Kroatien)</option>
-            <option value="SPU">SPU - Split (Kroatien)</option>
-            <option value="DBV">DBV - Dubrovnik (Kroatien)</option>
-            <option value="BEG">BEG - Belgrad (Serbien)</option>
-            <option value="RIX">RIX - Riga (Lettland)</option>
-            <option value="TLL">TLL - Tallinn (Estland)</option>
-            <option value="VNO">VNO - Vilnius (Litauen)</option>
-Verwende Code mit Vorsicht.
-
-Häppchen C (Naher Osten, Asien & Ozeanien):
-
-html
-            <option value="IST">IST - Istanbul Airport (Türkei)</option>
-            <option value="SAW">SAW - Istanbul Sabiha Gökçen (Türkei)</option>
-            <option value="AYT">AYT - Antalya (Türkei)</option>
-            <option value="ADB">ADB - Izmir (Türkei)</option>
-            <option value="DXB">DXB - Dubai International (VAE)</option>
-            <option value="AUH">AUH - Abu Dhabi (VAE)</option>
-            <option value="DOH">DOH - Doha Hamad (Katar)</option>
-            <option value="MCT">MCT - Maskat (Oman)</option>
-            <option value="RUH">RUH - Riad (Saudi-Arabien)</option>
-            <option value="JED">JED - Dschidda (Saudi-Arabien)</option>
-            <option value="TLV">TLV - Tel Aviv (Israel)</option>
-            <option value="AMM">AMM - Amman (Jordanien)</option>
-            <option value="BKK">BKK - Bangkok Suvarnabhumi (Thailand)</option>
-            <option value="DMK">DMK - Bangkok Don Mueang (Thailand)</option>
-            <option value="HKT">HKT - Phuket (Thailand)</option>
-            <option value="USM">USM - Koh Samui (Thailand)</option>
-            <option value="CNX">CNX - Chiang Mai (Thailand)</option>
-            <option value="SIN">SIN - Singapur Changi (Singapur)</option>
-            <option value="KUL">KUL - Kuala Lumpur (Malaysia)</option>
-            <option value="DPS">DPS - Denpasar Bali (Indonesien)</option>
-            <option value="CGK">CGK - Jakarta (Indonesien)</option>
-            <option value="SGN">SGN - Ho-Chi-Minh-Stadt (Vietnam)</option>
-            <option value="HAN">HAN - Hanoi (Vietnam)</option>
-            <option value="MNL">MNL - Manila (Philippinen)</option>
-            <option value="HKG">HKG - Hongkong (China)</option>
-            <option value="PVG">PVG - Shanghai Pudong (China)</option>
-            <option value="PEK">PEK - Peking Capital (China)</option>
-            <option value="TPE">TPE - Taipeh (Taiwan)</option>
-            <option value="HND">HND - Tokio Haneda (Japan)</option>
-            <option value="NRT">NRT - Tokio Narita (Japan)</option>
-            <option value="KIX">KIX - Osaka Kansai (Japan)</option>
-            <option value="ICN">ICN - Seoul Incheon (Südkorea)</option>
-            <option value="DEL">DEL - Neu-Delhi (Indien)</option>
-            <option value="BOM">BOM - Mumbai (Indien)</option>
-            <option value="CMB">CMB - Colombo (Sri Lanka)</option>
-            <option value="MLE">MLE - Malé (Malediven)</option>
-            <option value="SYD">SYD - Sydney (Australien)</option>
-            <option value="MEL">MEL - Melbourne (Australien)</option>
-            <option value="BNE">BNE - Brisbane (Australien)</option>
-            <option value="PER">PER - Perth (Australien)</option>
-            <option value="AKL">AKL - Auckland (Neuseeland)</option>
