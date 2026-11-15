@@ -75,8 +75,8 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </head>
 <body>
 <div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-<div class="cp"><div class="seg">15.11.2026</div>
-<div class="seg st">6/6 AKTIV</div>
+<div class="cp"><div class="seg" id="dt">15.11.2026</div>
+<div class="seg st">HIN & RÜCK</div>
 <a href="upgrade.html" class="seg upg">🎫 Upgrade-Cockpit ➡️</a></div>
 </div>
 <div class="row">
@@ -107,8 +107,8 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <label class="sw"><input type="checkbox" id="ns"><span class="sl"></span></label>
 </div></div>
 <div class="f"><div class="swc">
-<label for="lc" style="margin:0;cursor:pointer">Nur Low-Cost Airlines</label>
-<label class="sw"><input type="checkbox" id="lc"><span class="sl"></span></label>
+<label for="lc" style="margin:0;cursor:pointer">Inkl. Low-Cost Airlines (zusätzlich)</label>
+<label class="sw"><input type="checkbox" id="lc" checked><span class="sl"></span></label>
 </div></div>
 <div class="bn">Gepäck muss auf der entsprechend angeklickten Website beim Anbieter ausgewählt werden.</div>
 </div>
@@ -140,19 +140,19 @@ const ap=[
 let hrs=14;
 function code(v){
   const m=v.trim().toUpperCase().match(/\b([A-Z]{3})\b/);
-  return m?m:v.trim().toUpperCase().slice(0,3);
+  return m?m[1]:v.trim().toUpperCase().slice(0,3);
 }
 function ac(inp,box){
   inp.addEventListener("input",()=>{
     const q=inp.value.trim().toLowerCase();
     box.innerHTML="";
     if(!q){box.style.display="none";upd();return;}
-    const hits=ap.filter(x=>x.toLowerCase().startsWith(q)||x.toLowerCase().includes(q));
+    const hits=ap.filter(x=>x[0].toLowerCase().startsWith(q)||x[1].toLowerCase().includes(q));
     if(!hits.length){box.style.display="none";upd();return;}
     hits.forEach(h=>{
       const d=document.createElement("div");
-      d.textContent=h+" – "+h;
-      d.onclick=()=>{inp.value=h+" ("+h+")";box.style.display="none";upd();};
+      d.textContent=h[0]+" – "+h[1];
+      d.onclick=()=>{inp.value=h[0]+" ("+h[1]+")";box.style.display="none";upd();};
       box.appendChild(d);
     });
     box.style.display="block";
@@ -181,21 +181,24 @@ function upd(){
     $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(rd6?"/"+rdVal:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
     $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(rd6?"/"+rdVal:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
     $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(!ow&&rdVal?"&leg2=from:"+d+",to:"+o+",departure:"+rdVal+"TANYT":"")+"&passengers=adults:1&mode=search";
-    $("u5").href="https://kiwi.comsearch/results/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od+(rd6?"/"+rdVal:"no-return")+"?sortBy=price"+(ns?"&stopNumber=0":"")+(lc?"&carriersList=FR,U2,W6,VY,EW,AK,FD,Z2,5J,TR,3K,JQ":"");
+    $("u5").href="https://kiwi.comsearch/results/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od+(rd6?"/"+rdVal:"/no-return")+"?sortBy=price"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
     $("u6").href="https://trip.com"+o.toLowerCase()+"-to-"+d.toLowerCase()+"/tickets-"+o.toLowerCase()+"-"+d.toLowerCase()+"?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(!ow&&rdVal?"&rdate="+rdVal+"&flighttype=rt":"&flighttype=ow")+"&class=y&quantity=1"+(ns?"&nonstoponly=on":"");
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd:$("rd").value,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
 }
 (function init(){
+  const today=new Date().toISOString().split("T")[0];
+  $("od").min=today;$("rd").min=today;
   try{
     const raw=localStorage.getItem("rk_main");
     if(raw){
       const d=JSON.parse(raw);
       if(d.i1)$("i1").value=d.i1;if(d.i2)$("i2").value=d.i2;
-      if(d.od)$("od").value=d.od;if(d.rd)$("rd").value=d.rd;
+      if(d.od&&d.od>=today)$("od").value=d.od;
+      if(d.rd&&d.rd>=today)$("rd").value=d.rd;
       if(d.ow)$("ow").checked=true;if(d.ns)$("ns").checked=true;
-      if(d.lc)$("lc").checked=true;
+      if(d.lc!==undefined)$("lc").checked=d.lc;
       if(d.hrs)hrs=d.hrs;
     }
   }catch(e){}
@@ -206,7 +209,7 @@ function upd(){
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
-    const cx=e.touches?e.touches.clientX:e.clientX;
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
     const r=tk.getBoundingClientRect();
     let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
     hrs=Math.round(1+p*35);
@@ -222,4 +225,3 @@ function upd(){
 </script>
 </body>
 </html>
-
