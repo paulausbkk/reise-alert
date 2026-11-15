@@ -119,41 +119,43 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
 <a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia</a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
+<a id="u5" href="https://www.kiwi.com/de/" target="_blank" class="btn b6">Kiwi.com</a>
 <a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
 const ap=[
-  ["BER","Berlin Brandenburg"],["FRA","Frankfurt am Main"],["MUC","München"],
-  ["LEJ","Leipzig/Halle"],["DUS","Düsseldorf"],["HAM","Hamburg"],
-  ["DRS","Dresden"],["STR","Stuttgart"],["CGN","Köln/Bonn"],
-  ["VIE","Wien"],["ZRH","Zürich"],["IST","Istanbul"],
-  ["FAO","Faro (Pharo)"],["CHC","Christchurch"],
-  ["BKK","Bangkok Suvarnabhumi"],["DMK","Bangkok Don Mueang"],["HKT","Phuket"],
-  ["CNX","Chiang Mai"],["USM","Koh Samui"],["KBV","Krabi"],
-  ["DAD","Da Nang"],["UIH","Quy Nhon (Qui Nonh)"],["SGN","Ho-Chi-Minh-Stadt"],["HAN","Hanoi"],
-  ["MNL","Manila"],["CEB","Cebu"],["DGT","Dumaguete (Dumaquete)"],["PAG","Pagadian"],["CRK","Clark"],
-  ["SIN","Singapur"],["KUL","Kuala Lumpur"],["DPS","Denpasar (Bali)"],
-  ["DXB","Dubai"],["DOH","Doha"],["HND","Tokio Haneda"],["NRT","Tokio Narita"]
+  "BER|Berlin Brandenburg","FRA|Frankfurt am Main","MUC|München",
+  "LEJ|Leipzig/Halle","DUS|Düsseldorf","HAM|Hamburg",
+  "DRS|Dresden","STR|Stuttgart","CGN|Köln/Bonn",
+  "VIE|Wien","ZRH|Zürich","IST|Istanbul",
+  "FAO|Faro (Pharo)","CHC|Christchurch",
+  "BKK|Bangkok Suvarnabhumi","DMK|Bangkok Don Mueang","HKT|Phuket",
+  "CNX|Chiang Mai","USM|Koh Samui","KBV|Krabi",
+  "DAD|Da Nang","UIH|Quy Nhon (Qui Nonh)","SGN|Ho-Chi-Minh-Stadt","HAN|Hanoi",
+  "MNL|Manila","CEB|Cebu","DGT|Dumaguete (Dumaquete)","PAG|Pagadian","CRK|Clark",
+  "SIN|Singapur","KUL|Kuala Lumpur","DPS|Denpasar (Bali)",
+  "DXB|Dubai","DOH|Doha","HND|Tokio Haneda","NRT|Tokio Narita"
 ];
 let hrs=14;
 function code(v){
   const m=v.trim().toUpperCase().match(/\b([A-Z]{3})\b/);
-  return m?m:v.trim().toUpperCase().slice(0,3);
+  return m?m.at(1):v.trim().toUpperCase().slice(0,3);
 }
 function ac(inp,box){
   inp.addEventListener("input",()=>{
     const q=inp.value.trim().toLowerCase();
     box.innerHTML="";
     if(!q){box.style.display="none";upd();return;}
-    const hits=ap.filter(x=>x.toLowerCase().startsWith(q)||x.toLowerCase().includes(q));
+    const hits=ap.filter(x=>x.toLowerCase().includes(q));
     if(!hits.length){box.style.display="none";upd();return;}
     hits.forEach(h=>{
+      const p=h.split("|");
+      const c=p.at(0),n=p.at(1);
       const d=document.createElement("div");
-      d.textContent=h+" – "+h;
-      d.onclick=()=>{inp.value=h+" ("+h+")";box.style.display="none";upd();};
+      d.textContent=c+" – "+n;
+      d.onclick=()=>{inp.value=c+" ("+n+")";box.style.display="none";upd();};
       box.appendChild(d);
     });
     box.style.display="block";
@@ -179,13 +181,13 @@ function upd(){
     $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
     $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(hasRd?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
     $("u5").href="https://kiwi.com"+o+"&to="+d+"&departure="+od+(hasRd?"&return="+rd:"")+"&lang=de&currency=EUR"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
-    $("u6").href="https://trip.comshowfarefirst?dcity="+o+"&acity="+d+"&ddate="+od+(hasRd?"&rdate="+rd+"&triptype=rt":"&triptype=ow")+"&class=y&lowpricesource=searchform&quantity=1"+(ns?"&nonstoponly=on":"");
+    $("u6").href="https://trip.comshowfarefirst?dcity="+o+"&acity="+d+"&ddate="+od+(hasRd?"&rdate="+rd+"&triptype=rt":"&triptype=ow")+"&class=Y&lowpricesource=searchform&quantity=1"+(ns?"&nonstoponly=on":"");
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
 }
 (function init(){
-  const today=new Date().toISOString().split("T");
+  const today=new Date().toISOString().slice(0,10);
   $("od").min=today;$("rd").min=today;
   try{
     const raw=localStorage.getItem("rk_main");
@@ -206,7 +208,7 @@ function upd(){
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
-    const cx=e.touches?e.touches.clientX:e.clientX;
+    const cx=e.touches?e.touches.at(0).clientX:e.clientX;
     const r=tk.getBoundingClientRect();
     let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
     hrs=Math.round(1+p*35);
