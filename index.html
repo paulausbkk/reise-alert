@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO</title>
 <style>
-:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#4f46e5;--lg:#22c55e;--ly:#fef08a}
+:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#0891b2;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
@@ -16,7 +16,10 @@ html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;colo
 .ct{font-weight:bold;font-size:1.1rem;color:var(--r);border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
 .f{margin-bottom:16px;display:flex;flex-direction:column}
 label{font-weight:bold;font-size:.85rem;margin-bottom:6px;color:#475569}
-select,input[type=date]{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:4px;box-sizing:border-box;font-size:1rem;background:#fff;width:100%}
+.cb{display:flex;height:40px;border:1px solid var(--b);border-radius:4px;background:#fff;overflow:hidden}
+.cb input{flex:1;border:none;padding:0 10px;font-size:1rem;outline:none;min-width:0}
+.cb select{width:155px;border:none;border-left:1px solid var(--b);background:#f8fafc;padding:0 6px;font-size:.85rem;color:#334155;cursor:pointer}
+input[type=date]{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:4px;box-sizing:border-box;font-size:1rem;background:#fff;width:100%}
 .sb{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--b);border-radius:4px;height:40px;padding:0 12px}
 .sb input{flex:1;accent-color:var(--r);cursor:pointer;margin:0}
 .sc{font-size:.75rem;font-weight:bold;color:#64748b}
@@ -43,13 +46,13 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 <form action="https://google.com" method="get" target="_blank">
 <div class="hdr">
 <h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V31 - SELECT+FIX</div><div class="seg st">ALL 6 BTN</div></div>
+<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V32 - COMBO+BIG</div><div class="seg st">ALL 6 BTN</div></div>
 </div>
 <div class="row">
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-<div class="f"><label>Abflug (DACH & Europa)</label><select name="from" required><option value="FRA">FRA - Frankfurt</option><option value="MUC">MUC - München</option><option value="BER">BER - Berlin</option><option value="DUS">DUS - Düsseldorf</option><option value="HAM">HAM - Hamburg</option><option value="LEJ">LEJ - Leipzig/Halle</option><option value="VIE">VIE - Wien</option><option value="ZRH">ZRH - Zürich</option></select></div>
-<div class="f"><label>Ziel (Asien & Weltweit)</label><select name="to" required><option value="BKK">BKK - Bangkok</option><option value="HKT">HKT - Phuket</option><option value="CNX">CNX - Chiang Mai</option><option value="SIN">SIN - Singapur</option><option value="KUL">KUL - Kuala Lumpur</option><option value="SGN">SGN - Ho-Chi-Minh-Stadt</option><option value="HAN">HAN - Hanoi</option><option value="DPS">DPS - Bali (Denpasar)</option><option value="MNL">MNL - Manila</option><option value="TYO">TYO - Tokio</option><option value="ICN">ICN - Seoul</option><option value="HKG">HKG - Hongkong</option><option value="DEL">DEL - Neu-Delhi</option></select></div>
+<div class="f"><label>Abflug (Freitext oder Schnellwahl)</label><div class="cb"><input type="text" name="from" placeholder="Stadt / IATA tippen..."><select name="from_p"><option value="">⚡ Schnellwahl</option><option>FRA Frankfurt</option><option>MUC München</option><option>BER Berlin</option><option>DUS Düsseldorf</option><option>HAM Hamburg</option><option>LEJ Leipzig</option><option>CGN Köln/Bonn</option><option>STR Stuttgart</option><option>HAJ Hannover</option><option>NUE Nürnberg</option><option>DRS Dresden</option><option>VIE Wien</option><option>ZRH Zürich</option><option>GVA Genf</option><option>AMS Amsterdam</option><option>CDG Paris</option><option>LHR London</option><option>IST Istanbul</option><option>DXB Dubai</option><option>DOH Doha</option></select></div></div>
+<div class="f"><label>Ziel (Freitext oder Schnellwahl)</label><div class="cb"><input type="text" name="to" placeholder="Stadt / IATA tippen..."><select name="to_p"><option value="">⚡ Schnellwahl</option><option>BKK Bangkok</option><option>HKT Phuket</option><option>CNX Chiang Mai</option><option>USM Koh Samui</option><option>KBV Krabi</option><option>SIN Singapur</option><option>KUL Kuala Lumpur</option><option>PEN Penang</option><option>SGN Saigon</option><option>HAN Hanoi</option><option>DAD Da Nang</option><option>DPS Bali</option><option>CGK Jakarta</option><option>MNL Manila</option><option>CEB Cebu</option><option>TYO Tokio</option><option>KIX Osaka</option><option>ICN Seoul</option><option>HKG Hongkong</option><option>TPE Taipeh</option><option>DEL Neu-Delhi</option><option>BOM Mumbai</option><option>CMB Colombo</option><option>MLE Malediven</option><option>SYD Sydney</option><option>MEL Melbourne</option><option>AKL Auckland</option><option>JFK New York</option><option>LAX Los Angeles</option><option>MIA Miami</option><option>CPT Kapstadt</option></select></div></div>
 <div class="f"><label>Hinflug</label><input type="date" id="od" name="outbound" min="2026-11-15" required></div>
 <div class="f" id="rb"><label>Rückflug</label><input type="date" name="return" min="2026-11-15"></div>
 </div>
@@ -57,7 +60,7 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 <div class="ct">⚙️ Filter & Flug-Parameter</div>
 <div class="f"><div class="swc"><label for="ow" style="margin:0;cursor:pointer">Nur Hinflug (One-Way Lock)</label><label class="sw"><input type="checkbox" id="ow" name="oneway"><span class="sl"></span></label></div></div>
 <div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label><div class="sb"><span class="sc">1h</span><input type="range" name="max_duration" min="1" max="36" value="14"><span class="sc">36h</span></div></div>
-<div class="f"><label>Transit-Drehkreuz (Optional)</label><select name="transit"><option value="">Kein fester Transit (Alle)</option><option value="DXB">DXB - Dubai</option><option value="DOH">DOH - Doha</option><option value="IST">IST - Istanbul</option><option value="AUH">AUH - Abu Dhabi</option><option value="SIN">SIN - Singapur</option><option value="BKK">BKK - Bangkok</option><option value="HKG">HKG - Hongkong</option></select></div>
+<div class="f"><label>Transit-Drehkreuz (Optional)</label><div class="cb"><input type="text" name="transit" placeholder="Hub tippen..."><select name="tr_p"><option value="">⚡ Hubs</option><option>DXB Dubai</option><option>DOH Doha</option><option>IST Istanbul</option><option>AUH Abu Dhabi</option><option>SIN Singapur</option><option>BKK Bangkok</option><option>HKG Hongkong</option><option>ICN Seoul</option><option>HND Tokio</option><option>KUL Kuala Lumpur</option><option>DEL Neu-Delhi</option></select></div></div>
 <div class="f"><div class="swc yl"><label for="lc" style="margin:0;cursor:pointer">Sichere Low-Cost Airlines (Asien)</label><label class="sw"><input type="checkbox" id="lc" name="safe_asia_lcc" value="TR,3K,AK,FD,D7,VJ,5J,ZG,MM,GK,UO,IT,7C,TW,LJ,BX,6E,IX,FZ,G9"><span class="sl"></span></label></div></div>
 </div>
 </div>
