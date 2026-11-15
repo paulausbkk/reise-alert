@@ -6,7 +6,7 @@
 <title>✈️ Reisekonfiguration PRO</title>
 <style>
 :root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;
---v:#15803d;--lg:#22c55e;--ly:#fef08a}
+--v:#1e3a8a;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;
 color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;
@@ -73,7 +73,7 @@ font-size:.78rem;text-transform:uppercase;text-decoration:none}
 <h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
 <div class="cp">
 <div class="seg">15.11.2026</div>
-<div class="seg">V48 - SHORT+LINES</div>
+<div class="seg">V49 - TFS+MEM</div>
 <div class="seg st">2/6 AKTIV</div>
 </div>
 </div>
@@ -81,10 +81,10 @@ font-size:.78rem;text-transform:uppercase;text-decoration:none}
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
 <div class="f"><label>Abflug (IATA oder Stadt)</label>
-<input type="text" id="i1" autocomplete="off" placeholder="z.B. FRA, PAG">
+<input type="text" id="i1" placeholder="z.B. FRA, PAG">
 <div id="l1" class="ac"></div></div>
 <div class="f"><label>Ziel (IATA oder Stadt)</label>
-<input type="text" id="i2" autocomplete="off" placeholder="z.B. BKK, MNL">
+<input type="text" id="i2" placeholder="z.B. BKK, MNL">
 <div id="l2" class="ac"></div></div>
 <div class="f"><label>Hinflug</label>
 <input type="date" id="od" min="2026-11-15"></div>
@@ -102,7 +102,7 @@ font-size:.78rem;text-transform:uppercase;text-decoration:none}
 <div id="fl"></div><div id="sv">14h</div></div>
 <input type="hidden" id="sr" value="14"></div></div>
 <div class="f"><label>Transit-Drehkreuz (Optional)</label>
-<input type="text" id="i3" autocomplete="off" placeholder="z.B. DXB, SIN">
+<input type="text" id="i3" placeholder="z.B. DXB, SIN">
 <div id="l3" class="ac"></div></div>
 <div class="f"><div class="swc yl">
 <label for="lc" style="margin:0;cursor:pointer">Sichere Low-Cost Airlines (Asien)</label>
@@ -139,6 +139,25 @@ const A=(
 ).split("|");
 const $=id=>document.getElementById(id);
 const code=v=>(v||"").trim().split(" ").at(0).toUpperCase();
+const te=new TextEncoder();
+function b64u(u){
+  let s="";u.forEach(b=>s+=String.fromCharCode(b));
+  return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function pbStr(f,s){
+  const b=te.encode(s);return Uint8Array.of((f<<3)|2,b.length,...b);
+}
+function pbLeg(o,d,dt){
+  const a=pbStr(2,dt),b=pbStr(13,o),c=pbStr(14,d);
+  const L=a.length+b.length+c.length;
+  return Uint8Array.of(0x1a,L,...a,...b,...c);
+}
+function mkTfs(f,t,d1,d2){
+  const l1=pbLeg(f,t,d1),l2=d2?pbLeg(t,f,d2):new Uint8Array(0);
+  const tp=d2?1:2;
+  const u=Uint8Array.of(0x08,0x1c,0x10,tp,...l1,...l2,0x40,0x01,0x48,0x01);
+  return b64u(u);
+}
 function setH(h){
   const v=Math.max(1,Math.min(36,parseInt(h)||14)),q=((v-1)/35)*100;
   $("sr").value=v;$("sv").textContent=v+"h";
@@ -148,16 +167,18 @@ function sync(){
   const f=code($("i1").value),t=code($("i2").value),d1=$("od").value;
   const ow=$("ow").checked,d2=ow?"":$("rd").value,hr=$("sr").value;
   const tr=code($("i3").value),lc=$("lc").checked;
-  try{localStorage.setItem("rk48",JSON.stringify({
+  const st=JSON.stringify({
     i1:$("i1").value,i2:$("i2").value,i3:$("i3").value,
     od:d1,rd:$("rd").value,ow:ow,hr:hr,lc:lc
-  }))}catch(e){}
-  let q="Flüge von "+(f||"BER")+" nach "+(t||"BKK");
-  if(d1)q+=" am "+d1;
-  q+=ow?" Nur Hinflug":(d2?" bis "+d2:"");
-  if(tr)q+=" über "+tr;
-  q+=" unter "+hr+" Stunden";
-  $("b1").href="https://google.com?q="+encodeURIComponent(q);
+  });
+  window.name="RK:"+st;
+  try{localStorage.setItem("rk49",st)}catch(e){}
+  try{history.replaceState(null,"","#"+encodeURIComponent(st))}catch(e){}
+  let gu="https://google.com?hl=de&curr=EUR";
+  if(f.length===3&&t.length===3&&d1){
+    gu+="&tfs="+mkTfs(f,t,d1,d2);
+  }
+  $("b1").href=gu;
   let su="https://skyscanner.de";
   if(f&&t&&d1){
     const s1=d1.replace(/-/g,"").slice(2);
@@ -167,14 +188,20 @@ function sync(){
   }
   $("b2").href=su;
 }
-try{
-  const s=JSON.parse(localStorage.getItem("rk48")||"{}");
-  if(s.i1)$("i1").value=s.i1;if(s.i2)$("i2").value=s.i2;
-  if(s.i3)$("i3").value=s.i3;if(s.od)$("od").value=s.od;
-  if(s.rd)$("rd").value=s.rd;if(s.ow)$("ow").checked=1;
-  if(s.lc)$("lc").checked=1;setH(s.hr||14);
-}catch(e){setH(14)}
-sync();
+function load(){
+  let raw="";
+  if(location.hash.length>2)raw=decodeURIComponent(location.hash.slice(1));
+  else if(window.name.startsWith("RK:"))raw=window.name.slice(3);
+  else{try{raw=localStorage.getItem("rk49")||""}catch(e){}}
+  try{
+    const s=JSON.parse(raw||"{}");
+    if(s.i1)$("i1").value=s.i1;if(s.i2)$("i2").value=s.i2;
+    if(s.i3)$("i3").value=s.i3;if(s.od)$("od").value=s.od;
+    if(s.rd)$("rd").value=s.rd;if(s.ow)$("ow").checked=1;
+    if(s.lc)$("lc").checked=1;setH(s.hr||14);
+  }catch(e){setH(14)}
+}
+load();sync();
 Array.of(1,2,3).forEach(n=>{
   const i=$("i"+n),l=$("l"+n);
   i.oninput=()=>{
@@ -191,21 +218,3 @@ Array.of(1,2,3).forEach(n=>{
   i.onchange=sync;
   document.addEventListener("click",e=>{if(e.target!==i)l.style.display="none"});
 });
-let dr=0;
-const mv=e=>{
-  const t=e.touches?e.touches.item(0):e,rc=$("tk").getBoundingClientRect();
-  const p=Math.max(0,Math.min(1,(t.clientX-rc.left)/rc.width));
-  setH(Math.round(1+p*35));sync();
-};
-$("sb").onmousedown=e=>{dr=1;mv(e)};
-window.onmousemove=e=>{if(dr)mv(e)};
-window.onmouseup=()=>{dr=0};
-$("sb").ontouchstart=e=>{dr=1;mv(e)};
-window.ontouchmove=e=>{if(dr)mv(e)};
-window.ontouchend=()=>{dr=0};
-Array.of("od","rd","ow","lc").forEach(id=>{
-  $(id).onchange=sync;$(id).oninput=sync;
-});
-</script>
-</body>
-</html>
