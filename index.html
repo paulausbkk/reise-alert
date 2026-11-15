@@ -115,12 +115,12 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </div>
 <div class="bb">
 <div class="bf">
-<a id="u1" href="https://skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
+<a id="u1" href="https://www.skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
 <a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia</a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
-<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
+<a id="u5" href="https://www.kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
+<a id="u6" href="https://de.trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
 <script>
@@ -141,7 +141,7 @@ const ap=[
 let hrs=14;
 function code(v){
   const m=v.trim().toUpperCase().match(/\b([A-Z]{3})\b/);
-  return m?m[1]:v.trim().toUpperCase().slice(0,3);
+  return m?m.at(1):v.trim().toUpperCase().slice(0,3);
 }
 function ac(inp,box){
   inp.addEventListener("input",()=>{
@@ -152,7 +152,7 @@ function ac(inp,box){
     if(!hits.length){box.style.display="none";upd();return;}
     hits.forEach(h=>{
       const p=h.split("|");
-      const c=p[0],n=p[1];
+      const c=p.at(0),n=p.at(1);
       const d=document.createElement("div");
       d.textContent=c+" – "+n;
       d.onclick=()=>{inp.value=c+" ("+n+")";box.style.display="none";upd();};
@@ -172,13 +172,12 @@ function upd(){
     const od6=od.replace(/-/g,"").slice(2);
     const hasRd=(!ow&&rd&&!badDate);
     const rd6=hasRd?rd.replace(/-/g,"").slice(2):"";
-    const durMin=hrs*60;
-    $("u1").href=["https://skyscanner.de",o.toLowerCase(),d.toLowerCase(),od6].concat(rd6?[rd6]:[]).join("/")+"/?adultsv2=1"+(ns?"&preferdirects=true":"");
-    $("u2").href=["https://kayak.de",o+"-"+d,od].concat(hasRd?[rd]:[]).join("/")+"?sort=price_a&fs="+(ns?"stops=0;":"")+"bfc=1;dur=-"+durMin;
-    $("u3").href=["https://momondo.de",o+"-"+d,od].concat(hasRd?[rd]:[]).join("/")+"?sort=price_a"+(ns?"&fs=stops=0":"");
-    $("u4").href="https://expedia.de"+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(hasRd?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1,children:0,seniors:0,infantinlap:Y&options=cabinclass:economy&mode=search";
-    $("u5").href=["https://kiwi.com",o,d,od,hasRd?rd:"no-return"].join("/")+"?sortBy=price&maxFlightDuration="+hrs+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
-    $("u6").href=["https://trip.com",o.toLowerCase()+"-to-"+d.toLowerCase(),"tickets-"+o.toLowerCase()+"-"+d.toLowerCase()].join("/")+"?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(hasRd?"&rdate="+rd+"&flighttype=rt":"&flighttype=ow")+"&class=y&quantity=1&curr=EUR"+(ns?"&nonstop=yes":"");
+    $("u1").href="https://skyscanner.de"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od6+(rd6?"/"+rd6:"")+"/?adultsv2=1"+(ns?"&preferdirects=true":"");
+    $("u2").href="https://kayak.de"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
+    $("u3").href="https://momondo.de"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
+    $("u4").href="https://expedia.de"+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(hasRd?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
+    $("u5").href="https://www.kiwi.com/deep?from="+o+"&to="+d+"&departure="+od+(hasRd?"&return="+rd:"")+"&lang=de&currency=EUR&sortBy=price&maxFlightDuration="+hrs+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
+    $("u6").href="https://trip.com"+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW")+"&class=y&quantity=1&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
@@ -205,7 +204,7 @@ function upd(){
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
-    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const cx=e.touches?e.touches.at(0).clientX:e.clientX;
     const r=tk.getBoundingClientRect();
     let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
     hrs=Math.round(1+p*35);
