@@ -54,8 +54,8 @@ border-radius:3px}
 width:48px;height:30px;line-height:30px;text-align:center;background:var(--r);
 color:#fff;font-size:1.05rem;font-weight:bold;border-radius:15px;
 box-shadow:0 2px 5px rgba(0,0,0,.3)}
-#rb:has(input:invalid),#od:out-of-range{opacity:.35}
-#rb:has(input:invalid) input,#od:out-of-range{background:#cbd5e1!important}
+.dis{opacity:.32;pointer-events:none}
+.dis input{background:#cbd5e1!important}
 body:has(#ow:checked) #rb{opacity:.25;pointer-events:none}
 body:has(#ow:checked) #rb input{background:#cbd5e1!important}
 body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
@@ -83,14 +83,14 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
 <div class="f"><label>Abflug (IATA oder Stadt)</label>
-<input type="text" id="i1" placeholder="z.B. BER, FRA, MUC">
+<input type="text" id="i1" placeholder="z.B. BER, FRA, MUC" autocomplete="off">
 <div id="l1" class="ac"></div></div>
 <div class="f"><label>Ziel (IATA oder Stadt)</label>
-<input type="text" id="i2" placeholder="z.B. BKK, DAD, MNL">
+<input type="text" id="i2" placeholder="z.B. BKK, DAD, MNL" autocomplete="off">
 <div id="l2" class="ac"></div></div>
 <div class="f"><label>Hinflug</label>
 <input type="date" id="od" min="2026-11-15"></div>
-<div class="f" id="rb"><label>Rückflug</label>
+<div class="f dis" id="rb"><label>Rückflug</label>
 <input type="date" id="rd" min="2026-11-15"></div>
 </div>
 <div class="card">
@@ -106,7 +106,11 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <label for="ns" style="margin:0;cursor:pointer">Nur Direktflüge (Non-Stop)</label>
 <label class="sw"><input type="checkbox" id="ns"><span class="sl"></span></label>
 </div></div>
-<div class="bn" id="bn">Bitte Abflug, Ziel & Datum wählen – danach Portal anklicken.</div>
+<div class="f"><div class="swc">
+<label for="lc" style="margin:0;cursor:pointer">Nur Low-Cost Airlines</label>
+<label class="sw"><input type="checkbox" id="lc"><span class="sl"></span></label>
+</div></div>
+<div class="bn">Gepäck muss auf der entsprechend angeklickten Website beim Anbieter ausgewählt werden.</div>
 </div>
 </div>
 <div class="bb">
@@ -124,10 +128,13 @@ const $=id=>document.getElementById(id);
 const ap=[
   ["BER","Berlin Brandenburg"],["FRA","Frankfurt am Main"],["MUC","München"],
   ["DUS","Düsseldorf"],["HAM","Hamburg"],["LEJ","Leipzig/Halle"],
-  ["DRS","Dresden"],["VIE","Wien"],["ZRH","Zürich"],["IST","Istanbul"],
-  ["BKK","Bangkok Suvarnabhumi"],["HKT","Phuket"],["CNX","Chiang Mai"],
+  ["DRS","Dresden"],["STR","Stuttgart"],["CGN","Köln/Bonn"],
+  ["VIE","Wien"],["ZRH","Zürich"],["IST","Istanbul"],
+  ["BKK","Bangkok Suvarnabhumi"],["DMK","Bangkok Don Mueang"],["HKT","Phuket"],
+  ["CNX","Chiang Mai"],["USM","Koh Samui"],["KBV","Krabi"],
   ["DAD","Da Nang"],["SGN","Ho-Chi-Minh-Stadt"],["HAN","Hanoi"],
-  ["MNL","Manila"],["CEB","Cebu"],["SIN","Singapur"],["KUL","Kuala Lumpur"],
+  ["MNL","Manila"],["CEB","Cebu"],["CRK","Clark"],
+  ["SIN","Singapur"],["KUL","Kuala Lumpur"],["DPS","Denpasar (Bali)"],
   ["DXB","Dubai"],["DOH","Doha"],["HND","Tokio Haneda"],["NRT","Tokio Narita"]
 ];
 let hrs=14;
@@ -135,41 +142,49 @@ function code(v){
   const m=v.trim().toUpperCase().match(/\b([A-Z]{3})\b/);
   return m?m:v.trim().toUpperCase().slice(0,3);
 }
-function showAC(inp,box){
-  const q=inp.value.trim().toLowerCase();
-  box.innerHTML="";
-  const hits=q?ap.filter(x=>x.toLowerCase().includes(q)||x.toLowerCase().includes(q)):ap.slice(0,8);
-  if(!hits.length){box.style.display="none";return;}
-  hits.forEach(h=>{
-    const d=document.createElement("div");
-    d.textContent=h+" – "+h;
-    d.onclick=()=>{inp.value=h+" ("+h+")";box.style.display="none";upd();};
-    box.appendChild(d);
-  });
-  box.style.display="block";
-}
 function ac(inp,box){
-  inp.addEventListener("input",()=>{showAC(inp,box);upd();});
-  inp.addEventListener("focus",()=>showAC(inp,box));
+  inp.addEventListener("input",()=>{
+    const q=inp.value.trim().toLowerCase();
+    box.innerHTML="";
+    if(!q){box.style.display="none";upd();return;}
+    const hits=ap.filter(x=>x.toLowerCase().startsWith(q)||x.toLowerCase().includes(q));
+    if(!hits.length){box.style.display="none";upd();return;}
+    hits.forEach(h=>{
+      const d=document.createElement("div");
+      d.textContent=h+" – "+h;
+      d.onclick=()=>{inp.value=h+" ("+h+")";box.style.display="none";upd();};
+      box.appendChild(d);
+    });
+    box.style.display="block";
+    upd();
+  });
   document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";});
 }
 function upd(){
   const o=code($("i1").value),d=code($("i2").value);
-  const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked;
+  const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,lc=$("lc").checked;
+  const rb=$("rb");
+  if(!od||ow){
+    rb.classList.add("dis");
+  }else{
+    rb.classList.remove("dis");
+    $("rd").min=od;
+    if(rd&&rd<od)$("rd").value=od;
+  }
   const st=document.querySelector(".st");
   if(st)st.textContent=ow?"ONE-WAY":"HIN & RÜCK";
   if(o.length===3&&d.length===3&&od){
     const od6=od.replace(/-/g,"").slice(2);
-    const rd6=(!ow&&rd)?rd.replace(/-/g,"").slice(2):"";
+    const rdVal=$("rd").value;
+    const rd6=(!ow&&rdVal)?rdVal.replace(/-/g,"").slice(2):"";
     $("u1").href="https://skyscanner.de/transport/fluge/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od6+(rd6?"/"+rd6:"")+"/?adultsv2=1"+(ns?"&preferdirects=true":"");
-    $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(rd6?"/"+rd:"")+"?sort=bestflight_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
-    $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(rd6?"/"+rd:"")+"?sort=bestflight_a"+(ns?"&fs=stops=0":"");
-    $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(!ow&&rd?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
-    $("u5").href="https://kiwi.comsearch/results/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od+(rd6?"/"+rd:"no-return")+(ns?"?stopNumber=0":"");
-    $("u6").href="https://trip.com"+o.toLowerCase()+"-to-"+d.toLowerCase()+"/tickets-"+o.toLowerCase()+"-"+d.toLowerCase()+"?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd+"&flighttype=rt":"&flighttype=ow")+"&class=y&quantity=1"+(ns?"&nonstoponly=on":"");
-    $("bn").textContent="✅ Bereit: "+o+" → "+d+" | Max. "+hrs+"h"+(ns?" | Direktflug":"");
+    $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(rd6?"/"+rdVal:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
+    $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(rd6?"/"+rdVal:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
+    $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(!ow&&rdVal?"&leg2=from:"+d+",to:"+o+",departure:"+rdVal+"TANYT":"")+"&passengers=adults:1&mode=search";
+    $("u5").href="https://kiwi.comsearch/results/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od+(rd6?"/"+rdVal:"no-return")+"?sortBy=price"+(ns?"&stopNumber=0":"")+(lc?"&carriersList=FR,U2,W6,VY,EW,AK,FD,Z2,5J,TR,3K,JQ":"");
+    $("u6").href="https://trip.com"+o.toLowerCase()+"-to-"+d.toLowerCase()+"/tickets-"+o.toLowerCase()+"-"+d.toLowerCase()+"?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(!ow&&rdVal?"&rdate="+rdVal+"&flighttype=rt":"&flighttype=ow")+"&class=y&quantity=1"+(ns?"&nonstoponly=on":"");
   }
-  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,hrs});
+  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd:$("rd").value,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
 }
 (function init(){
@@ -180,13 +195,14 @@ function upd(){
       if(d.i1)$("i1").value=d.i1;if(d.i2)$("i2").value=d.i2;
       if(d.od)$("od").value=d.od;if(d.rd)$("rd").value=d.rd;
       if(d.ow)$("ow").checked=true;if(d.ns)$("ns").checked=true;
+      if(d.lc)$("lc").checked=true;
       if(d.hrs)hrs=d.hrs;
     }
   }catch(e){}
   const pct=Math.round(((hrs-1)/35)*100);
   $("fl").style.width=pct+"%";$("sv").style.left=pct+"%";$("sv").textContent=hrs+"h";
   ac($("i1"),$("l1"));ac($("i2"),$("l2"));
-  ["i1","i2","od","rd","ow","ns"].forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
+  ["i1","i2","od","rd","ow","ns","lc"].forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
@@ -206,3 +222,4 @@ function upd(){
 </script>
 </body>
 </html>
+
