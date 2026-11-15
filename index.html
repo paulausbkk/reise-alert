@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO</title>
 <style>
-:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#15803d;--lg:#22c55e;--ly:#fef08a}
+:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#6d28d9;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
@@ -21,7 +21,9 @@ input[type=text],input[type=date]{height:40px;padding:0 10px;border:1px solid va
 .ac div{padding:9px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:.95rem}
 .ac div:hover{background:#fee2e2;font-weight:bold}
 .sb{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--b);border-radius:4px;height:40px;padding:0 12px}
-.sb input{flex:1;accent-color:var(--r);cursor:pointer;margin:0}
+.swr{position:relative;flex:1;display:flex;align-items:center}
+.swr input{width:100%;accent-color:var(--r);cursor:pointer;margin:0}
+#sv{position:absolute;top:-22px;transform:translateX(-50%);background:var(--r);color:#fff;font-size:1.05rem;font-weight:bold;padding:1px 6px;border-radius:4px;pointer-events:none;white-space:nowrap}
 .sc{font-size:.75rem;font-weight:bold;color:#64748b}
 #rb:has(input:invalid),#od:invalid{opacity:.35}
 #rb:has(input:invalid) input,#od:invalid{background:#cbd5e1!important}
@@ -46,7 +48,7 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 <form action="https://google.com" method="get" target="_blank">
 <div class="hdr">
 <h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V34 - LIVE+AUTO</div><div class="seg st">ALL 6 BTN</div></div>
+<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V35 - SLIDER+BADGE</div><div class="seg st">ALL 6 BTN</div></div>
 </div>
 <div class="row">
 <div class="card">
@@ -59,7 +61,7 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 <div class="card">
 <div class="ct">⚙️ Filter & Flug-Parameter</div>
 <div class="f"><div class="swc"><label for="ow" style="margin:0;cursor:pointer">Nur Hinflug (One-Way Lock)</label><label class="sw"><input type="checkbox" id="ow" name="oneway"><span class="sl"></span></label></div></div>
-<div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label><div class="sb"><span class="sc">1h</span><input type="range" name="max_duration" min="1" max="36" value="14"><span class="sc">36h</span></div></div>
+<div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label><div class="sb"><span class="sc">1h</span><div class="swr"><output id="sv">14h</output><input type="range" id="sr" name="max_duration" min="1" max="36" value="14"></div><span class="sc">36h</span></div></div>
 <div class="f"><label>Transit-Drehkreuz (Optional)</label><input type="text" id="i3" name="transit" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"><div id="l3" class="ac"></div></div>
 <div class="f"><div class="swc yl"><label for="lc" style="margin:0;cursor:pointer">Sichere Low-Cost Airlines (Asien)</label><label class="sw"><input type="checkbox" id="lc" name="safe_asia_lcc" value="TR,3K,AK,FD,D7,VJ,5J,ZG,MM,GK,UO,IT,7C,TW,LJ,BX,6E,IX,FZ,G9"><span class="sl"></span></label></div></div>
 </div>
@@ -77,8 +79,7 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 </div>
 </form>
 <script>
-const A=["FRA - Frankfurt","MUC - München","BER - Berlin","DUS - Düsseldorf","HAM - Hamburg","LEJ - Leipzig/Halle","CGN - Köln/Bonn","STR - Stuttgart","HAJ - Hannover","NUE - Nürnberg","DRS - Dresden","VIE - Wien","ZRH - Zürich","GVA - Genf","AMS - Amsterdam","CDG - Paris","LHR - London","IST - Istanbul","DXB - Dubai","DOH - Doha","AUH - Abu Dhabi","BKK - Bangkok","HKT - Phuket","CNX - Chiang Mai","USM - Koh Samui","KBV - Krabi","SIN - Singapur","KUL - Kuala Lumpur","PEN - Penang","SGN - Ho-Chi-Minh-Stadt","HAN - Hanoi","DAD - Da Nang","DPS - Bali","CGK - Jakarta","MNL - Manila","CEB - Cebu","DVO - Davao","PAG - Pagadian","ILO - Iloilo","CRK - Clark","PPS - Puerto Princesa","KLO - Kalibo","TYO - Tokio","HND - Tokio Haneda","NRT - Tokio Narita","KIX - Osaka","ICN - Seoul","HKG - Hongkong","TPE - Taipeh","DEL - Neu-Delhi","BOM - Mumbai","CMB - Colombo","MLE - Malé","SYD - Sydney","MEL - Melbourne","AKL - Auckland","JFK - New York","LAX - Los Angeles","MIA - Miami","CPT - Kapstadt"];
-[1,2,3].forEach(n=>{const i=document.getElementById("i"+n),l=document.getElementById("l"+n);i.oninput=()=>{const v=i.value.toLowerCase().trim();l.innerHTML="";if(!v){l.style.display="none";return}const m=A.filter(x=>x.toLowerCase().includes(v));l.style.display=m.length?"block":"none";m.forEach(x=>{const d=document.createElement("div");d.textContent=x;d.onclick=()=>{i.value=x;l.style.display="none"};l.appendChild(d)})};document.addEventListener("click",e=>{if(e.target!==i)l.style.display="none"})});
+const A=["FRA - Frankfurt","MUC - München","BER - Berlin","DUS - Düsseldorf","HAM - Hamburg","LEJ - Leipzig/Halle","CGN - Köln/Bonn","STR - Stuttgart","HAJ - Hannover","NUE - Nürnberg","DRS - Dresden","VIE - Wien","ZRH - Zürich","GVA - Genf","AMS - Amsterdam","CDG - Paris","LHR - London","IST - Istanbul","DXB - Dubai","DOH - Doha","AUH - Abu Dhabi","BKK - Bangkok","HKT - Phuket","CNX - Chiang Mai","USM - Koh Samui","KBV - Krabi","SIN - Singapur","KUL - Kuala Lumpur","PEN - Penang","SGN - Ho-Chi-Minh-Stadt","HAN - Hanoi","DAD - Da Nang","DPS - Bali","CGK - Jakarta","MNL - Manila","CEB - Cebu","DVO - Davao","PAG - Pagadian","ILO - Iloilo","CRK - Clark","PPS - Puerto Princesa","KLO - Kalibo","TYO - Tokio","HND - Tokio Haneda","NRT - Tokio Narita","KIX - Osaka","ICN - Seoul","HKG - Hongkong","TPE - Taipeh","DEL - Neu-Delhi","BOM - Mumbai","CMB - Colombo","MLE - Malé","SYD - Sydney","MEL - Melbourne","AKL - Auckland","JFK - New York","LAX - Los Angeles","MIA - Miami","CPT - Kapstadt"];.forEach(n=>{const i=document.getElementById("i"+n),l=document.getElementById("l"+n);i.oninput=()=>{const v=i.value.toLowerCase().trim();l.innerHTML="";if(!v){l.style.display="none";return}const m=A.filter(x=>x.toLowerCase().includes(v));l.style.display=m.length?"block":"none";m.forEach(x=>{const d=document.createElement("div");d.textContent=x;d.onclick=()=>{i.value=x;l.style.display="none"};l.appendChild(d)})};document.addEventListener("click",e=>{if(e.target!==i)l.style.display="none"})});const r=document.getElementById("sr"),o=document.getElementById("sv"),u=()=>{const p=(r.value-1)/35;o.textContent=r.value+"h";o.style.left=`calc(${p*100}% + ${8-p*16}px)`};r.oninput=u;u();
 </script>
 </body>
 </html>
