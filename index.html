@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO</title>
 <style>
-:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#047857;--lg:#22c55e;--ly:#fef08a}
+:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#4338ca;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
@@ -24,8 +24,8 @@ input[type=text],input[type=date]{height:40px;padding:0 10px;border:1px solid va
 .trk{position:relative;width:100%;height:6px;background:#cbd5e1;border-radius:3px}
 #fl{height:100%;background:var(--r);border-radius:3px;width:37%}
 #sv{position:absolute;top:50%;left:37%;transform:translate(-50%,-50%);width:48px;height:30px;line-height:30px;text-align:center;background:var(--r);color:#fff;font-size:1.05rem;font-weight:bold;border-radius:15px;box-shadow:0 2px 5px rgba(0,0,0,.3);cursor:grab}
-#rb:has(input:invalid),#od:invalid{opacity:.35}
-#rb:has(input:invalid) input,#od:invalid{background:#cbd5e1!important}
+#rb:has(input:invalid),#od:out-of-range{opacity:.35}
+#rb:has(input:invalid) input,#od:out-of-range{background:#cbd5e1!important}
 body:has(#ow:checked) #rb{opacity:.25;pointer-events:none}
 body:has(#ow:checked) #rb input{background:#cbd5e1!important}
 body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
@@ -50,7 +50,7 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 <input type="hidden" id="gq" name="q" value="Flüge">
 <div class="hdr">
 <h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V41 - GOOGLE+FIX</div><div class="seg st">1/6 AKTIV</div></div>
+<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V42 - DATE+CLEAN</div><div class="seg st">1/6 AKTIV</div></div>
 </div>
 <div class="row">
 <div class="card">
