@@ -20,8 +20,6 @@ background:#fef2f2;box-sizing:border-box}
 .ct{font-weight:bold;font-size:1.1rem;color:var(--r);
 border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
 .f{margin-bottom:14px;display:flex;flex-direction:column}
-.f2{display:flex;gap:10px;margin-bottom:14px}
-.f2>div{flex:1;display:flex;flex-direction:column}
 label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#475569}
 input,select{height:40px;padding:0 10px;border:1px solid var(--b);
 border-radius:4px;box-sizing:border-box;font-size:.98rem;background:#fff;
@@ -47,26 +45,19 @@ font-size:.88rem}
 </div>
 <div class="row">
 <div class="card">
-<div class="ct">✈️ Flug- & Segmentdaten</div>
-<div class="f"><label>Gesamtbuchung (Zubringer + Langstrecke)</label>
-<input type="text" id="u2" placeholder="z.B. BER - IST - BKK"></div>
-<div class="f2">
-<div><label>Upgrade-Teilstrecke</label>
-<input type="text" id="u8" placeholder="z.B. IST - BKK" style="text-transform:uppercase"></div>
-<div><label>Flugnummer (Segment)</label>
-<input type="text" id="u9" placeholder="z.B. TK 68" style="text-transform:uppercase"></div>
-</div>
-<div class="f"><label>Abflugdatum des Upgrade-Flugs (ggf. Folgetag!)</label>
-<input type="date" id="u1" min="2026-11-15"></div>
-<div class="f"><label>Airline-Buchungscode (PNR, 6-stellig – gilt für Gesamtbuchung)</label>
-<div class="cpb"><input type="text" id="u3" placeholder="6-stellig (z.B. TW8ZRK)" style="text-transform:uppercase">
+<div class="ct">🔑 Login-Daten für die Airline</div>
+<div class="f"><label>Airline-Buchungscode (PNR, 6-stellig)</label>
+<div class="cpb"><input type="text" id="u3" placeholder="z.B. TW8ZRK" style="text-transform:uppercase">
 <button type="button" onclick="cp('u3','Buchungscode')">📋</button></div></div>
-<div class="f"><label>Ticketnummer (13-stellig, z.B. 235-...)</label>
+<div class="f"><label>Nachname wie in der Buchung (strikt ohne Vornamen!)</label>
+<div class="cpb"><input type="text" id="u6" placeholder="z.B. MÜLLER" style="text-transform:uppercase">
+<button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
+<div class="f"><label>Ticketnummer (13-stellig – Backup falls PNR nicht klappt)</label>
 <div class="cpb"><input type="text" id="u4" placeholder="z.B. 2354817365876">
 <button type="button" onclick="cp('u4','Ticketnummer')">📋</button></div></div>
 </div>
 <div class="card">
-<div class="ct">🛂 Passagier & Airline / Veranstalter</div>
+<div class="ct">🎯 Airline & Upgrade-Teilstrecke</div>
 <div class="f"><label>Airline / Reiseveranstalter</label><select id="u5">
 <option value="https://turkishairlines.com">Turkish Airlines (Direkt-Upgrade / Buchung)</option>
 <option value="https://expedia.de">Expedia (Reiseplan / PNR ablesen)</option>
@@ -82,12 +73,8 @@ font-size:.88rem}
 <option value="https://trip.com">Trip.com (Veranstalter)</option>
 <option value="https://kiwi.com">Kiwi.com (Veranstalter)</option>
 </select></div>
-<div class="f"><label>Nachname wie im Reisepass (strikt ohne Vornamen!)</label>
-<div class="cpb"><input type="text" id="u6" placeholder="Nur Nachname (z.B. MÜLLER)" style="text-transform:uppercase">
-<button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
-<div class="f"><label>Reisepassnummer (Optional)</label>
-<div class="cpb"><input type="text" id="u7" placeholder="Passnummer" style="text-transform:uppercase">
-<button type="button" onclick="cp('u7','Passnummer')">📋</button></div></div>
+<div class="f"><label>Upgrade-Teilstrecke (Gedächtnisstütze)</label>
+<input type="text" id="u8" placeholder="z.B. IST - BKK" style="text-transform:uppercase"></div>
 </div>
 </div>
 <div class="bb">
@@ -99,7 +86,7 @@ target="_blank" onclick="cp('u3','Buchungscode')" class="btn">
 </div>
 <script>
 const $=id=>document.getElementById(id);
-const keys=["u1","u2","u3","u4","u5","u6","u7","u8","u9"];
+const keys=["u3","u4","u5","u6","u8"];
 function cp(id,lbl){
   const v=$(id).value.trim();if(!v)return;
   try{navigator.clipboard.writeText(v);
@@ -109,9 +96,8 @@ function cp(id,lbl){
 function sv(){
   $("go").href=$("u5").value;
   const seg=$("u8").value.trim().toUpperCase();
-  const fnr=$("u9").value.trim().toUpperCase();
-  if(seg||fnr){
-    $("info").innerHTML="🎯 <b>Upgrade-Fokus:</b> "+(seg||"Teilstrecke")+(fnr?" ("+fnr+")":"")+" – bei der Airline PNR & Nachname eingeben und dieses Segment wählen.";
+  if(seg){
+    $("info").innerHTML="🎯 <b>Upgrade-Fokus:</b> "+seg+" – bei der Airline PNR & Nachname eingeben und dieses Segment wählen.";
   }else{
     $("info").textContent="💡 Tipp: Bei der Airline mit PNR + Nachname einloggen und dort gezielt das Langstrecken-Segment für das Upgrade auswählen.";
   }
