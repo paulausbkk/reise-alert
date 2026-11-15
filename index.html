@@ -119,29 +119,33 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
 <a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia</a>
-<a id="b5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi</a>
-<a id="b6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
+<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
+<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
 const ap=[
-  "BER|Berlin Brandenburg","FRA|Frankfurt am Main","MUC|München",
-  "LEJ|Leipzig/Halle","DUS|Düsseldorf","HAM|Hamburg",
-  "DRS|Dresden","STR|Stuttgart","CGN|Köln/Bonn",
-  "VIE|Wien","ZRH|Zürich","IST|Istanbul",
-  "FAO|Faro (Pharo)","CHC|Christchurch",
-  "BKK|Bangkok Suvarnabhumi","DMK|Bangkok Don Mueang","HKT|Phuket",
-  "CNX|Chiang Mai","USM|Koh Samui","KBV|Krabi",
-  "DAD|Da Nang","UIH|Quy Nhon (Qui Nonh)","SGN|Ho-Chi-Minh-Stadt","HAN|Hanoi",
-  "MNL|Manila","CEB|Cebu","DGT|Dumaguete (Dumaquete)","PAG|Pagadian","CRK|Clark",
-  "SIN|Singapur","KUL|Kuala Lumpur","DPS|Denpasar (Bali)",
-  "DXB|Dubai","DOH|Doha","HND|Tokio Haneda","NRT|Tokio Narita"
+  "BER|Berlin Brandenburg|berlin-deutschland","FRA|Frankfurt am Main|frankfurt-am-main-deutschland","MUC|München|munchen-deutschland",
+  "LEJ|Leipzig/Halle|leipzig-deutschland","DUS|Düsseldorf|dusseldorf-deutschland","HAM|Hamburg|hamburg-deutschland",
+  "DRS|Dresden|dresden-deutschland","STR|Stuttgart|stuttgart-deutschland","CGN|Köln/Bonn|koln-deutschland",
+  "VIE|Wien|wien-osterreich","ZRH|Zürich|zurich-schweiz","IST|Istanbul|istanbul-turkei",
+  "FAO|Faro (Pharo)|faro-portugal","CHC|Christchurch|christchurch-neuseeland",
+  "BKK|Bangkok Suvarnabhumi|bangkok-thailand","DMK|Bangkok Don Mueang|bangkok-thailand","HKT|Phuket|phuket-thailand",
+  "CNX|Chiang Mai|chiang-mai-thailand","USM|Koh Samui|ko-samui-thailand","KBV|Krabi|krabi-thailand",
+  "DAD|Da Nang|da-nang-vietnam","UIH|Quy Nhon (Qui Nonh)|qui-nhon-vietnam","SGN|Ho-Chi-Minh-Stadt|ho-chi-minh-stadt-vietnam","HAN|Hanoi|hanoi-vietnam",
+  "MNL|Manila|manila-philippinen","CEB|Cebu|cebu-philippinen","DGT|Dumaguete (Dumaquete)|dumaguete-philippinen","PAG|Pagadian|pagadian-philippinen","CRK|Clark|angeles-philippinen",
+  "SIN|Singapur|singapur-singapur","KUL|Kuala Lumpur|kuala-lumpur-malaysia","DPS|Denpasar (Bali)|denpasar-indonesien",
+  "DXB|Dubai|dubai-vereinigte-arabische-emirate","DOH|Doha|doha-katar","HND|Tokio Haneda|tokio-japan","NRT|Tokio Narita|tokio-japan"
 ];
 let hrs=14;
 function code(v){
   const m=v.trim().toUpperCase().match(/\b([A-Z]{3})\b/);
   return m?m.at(1):v.trim().toUpperCase().slice(0,3);
+}
+function slug(c){
+  const hit=ap.find(x=>x.startsWith(c+"|"));
+  return hit?hit.split("|").at(2):"";
 }
 function ac(inp,box){
   inp.addEventListener("input",()=>{
@@ -180,6 +184,13 @@ function upd(){
     $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
     $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
     $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(hasRd?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
+    const s1=slug(o),s2=slug(d);
+    if(s1&&s2){
+      $("u5").href="https://kiwi.comsearch/results/"+s1+"/"+s2+"/"+od+"/"+(hasRd?rd:"no-return")+"?sortBy=price"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
+    }else{
+      $("u5").href="https://kiwi.comsearch/results?from="+o+"&to="+d+"&departure="+od+(hasRd?"&return="+rd:"")+"&sortBy=price"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
+    }
+    $("u6").href="https://trip.comshowfarefirst?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(hasRd?"&rdate="+rd+"&triptype=rt":"&triptype=ow")+"&class=y&lowpricesource=searchform&quantity=1"+(ns?"&nonstoponly=on":"");
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
