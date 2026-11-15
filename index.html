@@ -83,10 +83,10 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
 <div class="f"><label>Abflug (IATA oder Stadt)</label>
-<input type="text" id="i1" placeholder="z.B. BER, FRA, MUC" autocomplete="off">
+<input type="text" id="i1" placeholder="z.B. BER, FRA, MUC, LEJ" autocomplete="off">
 <div id="l1" class="ac"></div></div>
 <div class="f"><label>Ziel (IATA oder Stadt)</label>
-<input type="text" id="i2" placeholder="z.B. BKK, DAD, MNL" autocomplete="off">
+<input type="text" id="i2" placeholder="z.B. BKK, DAD, DGT, CEB, PAG" autocomplete="off">
 <div id="l2" class="ac"></div></div>
 <div class="f"><label>Hinflug</label>
 <input type="date" id="od" min="2026-11-15"></div>
@@ -127,13 +127,14 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 const $=id=>document.getElementById(id);
 const ap=[
   ["BER","Berlin Brandenburg"],["FRA","Frankfurt am Main"],["MUC","München"],
-  ["DUS","Düsseldorf"],["HAM","Hamburg"],["LEJ","Leipzig/Halle"],
+  ["LEJ","Leipzig/Halle"],["DUS","Düsseldorf"],["HAM","Hamburg"],
   ["DRS","Dresden"],["STR","Stuttgart"],["CGN","Köln/Bonn"],
   ["VIE","Wien"],["ZRH","Zürich"],["IST","Istanbul"],
+  ["FAO","Faro (Pharo)"],["CHC","Christchurch"],
   ["BKK","Bangkok Suvarnabhumi"],["DMK","Bangkok Don Mueang"],["HKT","Phuket"],
   ["CNX","Chiang Mai"],["USM","Koh Samui"],["KBV","Krabi"],
-  ["DAD","Da Nang"],["SGN","Ho-Chi-Minh-Stadt"],["HAN","Hanoi"],
-  ["MNL","Manila"],["CEB","Cebu"],["CRK","Clark"],
+  ["DAD","Da Nang"],["UIH","Quy Nhon (Qui Nonh)"],["SGN","Ho-Chi-Minh-Stadt"],["HAN","Hanoi"],
+  ["MNL","Manila"],["CEB","Cebu"],["DGT","Dumaguete (Dumaquete)"],["PAG","Pagadian"],["CRK","Clark"],
   ["SIN","Singapur"],["KUL","Kuala Lumpur"],["DPS","Denpasar (Bali)"],
   ["DXB","Dubai"],["DOH","Doha"],["HND","Tokio Haneda"],["NRT","Tokio Narita"]
 ];
