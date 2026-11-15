@@ -10,8 +10,12 @@
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;
 color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;
-border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px}
+border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px;
+flex-wrap:wrap;gap:8px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
+.nv{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ub{background:var(--r);color:#fff;text-decoration:none;padding:6px 12px;
+border-radius:6px;font-weight:bold;font-size:.8rem}
 .cp{display:flex;gap:6px;background:#1e293b;padding:4px;border-radius:6px}
 .seg{font-size:.75rem;padding:4px 10px;border-radius:4px;font-weight:bold;
 color:#fff;text-transform:uppercase;background:var(--v)}
@@ -51,7 +55,7 @@ border-radius:3px}
 width:48px;height:30px;line-height:30px;text-align:center;background:var(--r);
 color:#fff;font-size:1.05rem;font-weight:bold;border-radius:15px;
 box-shadow:0 2px 5px rgba(0,0,0,.3)}
- #rb:has(input:invalid),#od:out-of-range{opacity:.35}
+#rb:has(input:invalid),#od:out-of-range{opacity:.35}
 #rb:has(input:invalid) input,#od:out-of-range{background:#cbd5e1!important}
 body:has(#ow:checked) #rb{opacity:.25;pointer-events:none}
 body:has(#ow:checked) #rb input{background:#cbd5e1!important}
@@ -72,9 +76,10 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </head>
 <body>
 <div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
+<div class="nv"><a href="flugupgrade.html" class="ub">🎫 Flug-Upgrade</a>
 <div class="cp"><div class="seg">15.11.2026</div>
-<div class="seg">V72 - 5BTN+SHORT</div><div class="seg st">5/5 AKTIV</div></div>
-</div>
+<div class="seg">V74 - NAV+UPGRADE</div><div class="seg st">5/5 AKTIV</div></div>
+</div></div>
 <div class="row">
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
