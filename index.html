@@ -141,19 +141,19 @@ const ap=[
 let hrs=14;
 function code(v){
   const m=v.trim().toUpperCase().match(/\b([A-Z]{3})\b/);
-  return m?m[1]:v.trim().toUpperCase().slice(0,3);
+  return m?m:v.trim().toUpperCase().slice(0,3);
 }
 function ac(inp,box){
   inp.addEventListener("input",()=>{
     const q=inp.value.trim().toLowerCase();
     box.innerHTML="";
     if(!q){box.style.display="none";upd();return;}
-    const hits=ap.filter(x=>x[0].toLowerCase().startsWith(q)||x[1].toLowerCase().includes(q));
+    const hits=ap.filter(x=>x.toLowerCase().startsWith(q)||x.toLowerCase().includes(q));
     if(!hits.length){box.style.display="none";upd();return;}
     hits.forEach(h=>{
       const d=document.createElement("div");
-      d.textContent=h[0]+" – "+h[1];
-      d.onclick=()=>{inp.value=h[1]+" ("+h[0]+")";box.style.display="none";upd();};
+      d.textContent=h+" – "+h;
+      d.onclick=()=>{inp.value=h+" ("+h+")";box.style.display="none";upd();};
       box.appendChild(d);
     });
     box.style.display="block";
@@ -172,19 +172,20 @@ function upd(){
   if(st)st.textContent=ow?"ONE-WAY":"HIN & RÜCK";
   if(o.length===3&&d.length===3&&od){
     const od6=od.replace(/-/g,"").slice(2);
-    const rd6=(!ow&&rd&&!badDate)?rd.replace(/-/g,"").slice(2):"";
+    const hasRd=(!ow&&rd&&!badDate);
+    const rd6=hasRd?rd.replace(/-/g,"").slice(2):"";
     $("u1").href="https://skyscanner.de/transport/fluge/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od6+(rd6?"/"+rd6:"")+"/?adultsv2=1"+(ns?"&preferdirects=true":"");
-    $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(rd6?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
-    $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(rd6?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
-    $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(!ow&&rd&&!badDate?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
-    $("u5").href="https://kiwi.comsearch/results/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od+(rd6?"/"+rd:"/no-return")+"?sortBy=price"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
-    $("u6").href="https://trip.com"+o.toLowerCase()+"-to-"+d.toLowerCase()+"/tickets-"+o.toLowerCase()+"-"+d.toLowerCase()+"?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(!ow&&rd&&!badDate?"&rdate="+rd+"&flighttype=rt":"&flighttype=ow")+"&class=y&quantity=1"+(ns?"&nonstoponly=on":"");
+    $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
+    $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
+    $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(hasRd?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
+    $("u5").href="https://kiwi.com"+o+"&to="+d+"&departure="+od+(hasRd?"&return="+rd:"")+"&lang=de&currency=EUR"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
+    $("u6").href="https://trip.comshowfarefirst?dcity="+o+"&acity="+d+"&ddate="+od+(hasRd?"&rdate="+rd+"&triptype=rt":"&triptype=ow")+"&class=y&lowpricesource=searchform&quantity=1"+(ns?"&nonstoponly=on":"");
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
 }
 (function init(){
-  const today=new Date().toISOString().split("T")[0];
+  const today=new Date().toISOString().split("T");
   $("od").min=today;$("rd").min=today;
   try{
     const raw=localStorage.getItem("rk_main");
@@ -205,7 +206,7 @@ function upd(){
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
-    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const cx=e.touches?e.touches.clientX:e.clientX;
     const r=tk.getBoundingClientRect();
     let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
     hrs=Math.round(1+p*35);
