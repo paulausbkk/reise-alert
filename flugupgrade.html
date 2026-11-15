@@ -48,22 +48,23 @@ font-size:.88rem}
 <input type="date" id="u1" min="2026-11-15"></div>
 <div class="f"><label>Strecke (z.B. BER - BKK)</label>
 <input type="text" id="u2" placeholder="z.B. BER - BKK"></div>
-<div class="f"><label>Buchungsnummer (PNR, 6-stellig)</label>
-<div class="cpb"><input type="text" id="u3" placeholder="z.B. ABC123">
+<div class="f"><label>Airline-Buchungscode (PNR, 6-stellig)</label>
+<div class="cpb"><input type="text" id="u3" placeholder="6-stellig (z.B. ABC123)">
 <button type="button" onclick="cp('u3','Buchungscode')">📋</button></div></div>
-<div class="f"><label>Ticketnummer (13-stellig)</label>
-<div class="cpb"><input type="text" id="u4" placeholder="z.B. 220-1234567890">
+<div class="f"><label>Ticketnummer (13-stellig, z.B. 235-...)</label>
+<div class="cpb"><input type="text" id="u4" placeholder="z.B. 2351234567890">
 <button type="button" onclick="cp('u4','Ticketnummer')">📋</button></div></div>
 </div>
 <div class="card">
 <div class="ct">🛂 Passagier & Airline / Veranstalter</div>
 <div class="f"><label>Airline / Reiseveranstalter</label><select id="u5">
+<option value="https://turkishairlines.com">Turkish Airlines (Direkt-Upgrade)</option>
+<option value="https://expedia.de">Expedia (Reiseplan / PNR ablesen)</option>
 <option value="https://lufthansa.com">Lufthansa</option>
 <option value="https://qatarairways.com">Qatar Airways</option>
 <option value="https://emirates.com">Emirates</option>
 <option value="https://singaporeair.com">Singapore Airlines</option>
 <option value="https://thaiairways.com">Thai Airways</option>
-<option value="https://turkishairlines.com">Turkish Airlines</option>
 <option value="https://cathaypacific.com">Cathay Pacific</option>
 <option value="https://philippineairlines.com">Philippine Airlines</option>
 <option value="https://cebupacificair.com">Cebu Pacific</option>
@@ -71,17 +72,18 @@ font-size:.88rem}
 <option value="https://trip.com">Trip.com (Veranstalter)</option>
 <option value="https://kiwi.com">Kiwi.com (Veranstalter)</option>
 </select></div>
-<div class="f"><label>Name wie im Reisepass</label>
-<div class="cpb"><input type="text" id="u6" placeholder="Nachname / Vorname">
-<button type="button" onclick="cp('u6','Name')">📋</button></div></div>
+<div class="f"><label>Nachname wie im Reisepass</label>
+<div class="cpb"><input type="text" id="u6" placeholder="Nur Nachname (z.B. MÜLLER)">
+<button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
 <div class="f"><label>Reisepassnummer (Optional)</label>
 <div class="cpb"><input type="text" id="u7" placeholder="Passnummer">
 <button type="button" onclick="cp('u7','Passnummer')">📋</button></div></div>
 </div>
 </div>
 <div class="bb">
-<a id="go" href="https://lufthansa.com"
-target="_blank" class="btn">🚀 Upgrade & Buchung bei Airline prüfen</a>
+<a id="go" href="https://turkishairlines.com"
+target="_blank" onclick="cp('u3','Buchungscode')" class="btn">
+🚀 Upgrade & Buchung bei Airline prüfen</a>
 <div id="ts"></div>
 </div>
 <script>
