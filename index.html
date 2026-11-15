@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO</title>
 <style>
-:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#c2410c;--lg:#22c55e;--ly:#fef08a}
+:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#2563eb;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
@@ -40,14 +40,14 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 .bb{border:2px solid var(--b);background:#fff;border-radius:8px;padding:15px}
 .bf{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
 .btn{display:flex;align-items:center;justify-content:center;height:45px;color:#fff;font-weight:bold;border:none;border-radius:4px;cursor:pointer;font-size:.78rem;text-transform:uppercase}
-.b1{background:#4285f4}.b2{background:#007054}.b3{background:#ff690f}.b4{background:#84329b}.b5{background:#00a699}.b6{background:#2f55d4}
+.b1{background:#4285f4}.b2{background:#007054;opacity:.45}.b3{background:#ff690f;opacity:.45}.b4{background:#84329b;opacity:.45}.b5{background:#00a699;opacity:.45}.b6{background:#2f55d4;opacity:.45}
 </style>
 </head>
 <body>
-<form id="fm" onsubmit="return false">
+<form onsubmit="return false">
 <div class="hdr">
 <h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V39 - LIVE+22LCC</div><div class="seg st">ALL 6 BTN</div></div>
+<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V40 - GOOGLE+LIVE</div><div class="seg st">1/6 AKTIV</div></div>
 </div>
 <div class="row">
 <div class="card">
@@ -68,13 +68,17 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 <div class="bb">
 <div class="ct" style="font-size:.95rem;margin-bottom:12px;border:none">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
 <div class="bf">
-<button type="button" onclick="go(1)" class="btn b1">Google</button>
-<button type="button" onclick="go(2)" class="btn b2">Skyscanner</button>
-<button type="button" onclick="go(3)" class="btn b3">Kayak</button>
-<button type="button" onclick="go(4)" class="btn b4">Momondo</button>
-<button type="button" onclick="go(5)" class="btn b5">Kiwi</button>
-<button type="button" onclick="go(6)" class="btn b6">Trip.com</button>
+<button type="button" onclick="goG()" class="btn b1">Google</button>
+<button type="button" class="btn b2">Skyscanner</button>
+<button type="button" class="btn b3">Kayak</button>
+<button type="button" class="btn b4">Momondo</button>
+<button type="button" class="btn b5">Kiwi</button>
+<button type="button" class="btn b6">Trip.com</button>
 </div>
 </div>
 </form>
 <script>
+const A=["FRA - Frankfurt","MUC - München","BER - Berlin","DUS - Düsseldorf","HAM - Hamburg","LEJ - Leipzig/Halle","CGN - Köln/Bonn","STR - Stuttgart","HAJ - Hannover","NUE - Nürnberg","DRS - Dresden","VIE - Wien","ZRH - Zürich","GVA - Genf","AMS - Amsterdam","CDG - Paris","LHR - London","IST - Istanbul","DXB - Dubai","DOH - Doha","AUH - Abu Dhabi","BKK - Bangkok","HKT - Phuket","CNX - Chiang Mai","USM - Koh Samui","KBV - Krabi","SIN - Singapur","KUL - Kuala Lumpur","PEN - Penang","SGN - Ho-Chi-Minh-Stadt","HAN - Hanoi","DAD - Da Nang","DPS - Bali","CGK - Jakarta","MNL - Manila","CEB - Cebu","DVO - Davao","PAG - Pagadian","ILO - Iloilo","CRK - Clark","PPS - Puerto Princesa","KLO - Kalibo","TYO - Tokio","HND - Tokio Haneda","NRT - Tokio Narita","KIX - Osaka","ICN - Seoul","HKG - Hongkong","TPE - Taipeh","DEL - Neu-Delhi","BOM - Mumbai","CMB - Colombo","MLE - Malé","SYD - Sydney","MEL - Melbourne","AKL - Auckland","JFK - New York","LAX - Los Angeles","MIA - Miami","CPT - Kapstadt"];[1,2,3].forEach(n=>{const i=document.getElementById("i"+n),l=document.getElementById("l"+n);i.oninput=()=>{const v=i.value.toLowerCase().trim();l.innerHTML="";if(!v){l.style.display="none";return}const m=A.filter(x=>x.toLowerCase().includes(v));l.style.display=m.length?"block":"none";m.forEach(x=>{const d=document.createElement("div");d.textContent=x;d.onclick=()=>{i.value=x;l.style.display="none"};l.appendChild(d)})};document.addEventListener("click",e=>{if(e.target!==i)l.style.display="none"})});const sb=document.getElementById("sb"),tk=document.getElementById("tk"),sv=document.getElementById("sv"),fl=document.getElementById("fl"),sr=document.getElementById("sr");let dr=0;const mv=e=>{const x=e.touches?e.touches[0].clientX:e.clientX,rc=tk.getBoundingClientRect(),p=Math.max(0,Math.min(1,(x-rc.left)/rc.width)),h=Math.round(1+p*35),q=((h-1)/35)*100;sr.value=h;sv.textContent=h+"h";sv.style.left=q+"%";fl.style.width=q+"%"};sb.onmousedown=e=>{dr=1;mv(e)};window.onmousemove=e=>{if(dr)mv(e)};window.onmouseup=()=>{dr=0};sb.ontouchstart=e=>{dr=1;mv(e)};window.ontouchmove=e=>{if(dr)mv(e)};window.ontouchend=()=>{dr=0};const code=v=>v.trim().split(" ")[0].toUpperCase();function goG(){const f=code(document.getElementById("i1").value),t=code(document.getElementById("i2").value),d1=document.getElementById("od").value,ow=document.getElementById("ow").checked,d2=ow?"":document.getElementById("rd").value,hr=sr.value,tr=code(document.getElementById("i3").value),lc=document.getElementById("lc").checked?document.getElementById("lc").value:"";if(!f||!t||!d1){alert("Bitte Abflug, Ziel und Hinflug ausfüllen!");return}let q=`Flights from ${f} to ${t} on ${d1}`;if(ow)q+=" one way";else if(d2)q+=` return ${d2}`;if(tr)q+=` via ${tr}`;q+=` under ${hr} hours`;if(lc)q+=` airlines ${lc}`;window.open("https://google.com"+encodeURIComponent(q),"_blank")}
+</script>
+</body>
+</html>
