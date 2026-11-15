@@ -98,4 +98,113 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label>
 <div class="sb" id="sb"><div class="trk" id="tk">
 <div id="fl"></div><div id="sv">14h</div></div>
-
+<input type="hidden" id="sr" value="14"></div></div>
+<div class="f"><label>Gepäck-Hinweis</label>
+<div class="bn">Achtung! Die Gepäckstückeauswahl muss auf der Suchseite der gewählten Webseite eingegeben werden!</div></div>
+<div class="f"><label>Transit-Drehkreuz (Optional, max. 1 Stopp)</label>
+<input type="text" id="i3" placeholder="z.B. DXB, DOH, SIN">
+<div id="l3" class="ac"></div></div>
+<div class="f"><div class="swc yl">
+<label for="lc" style="margin:0;cursor:pointer">Sichere Low-Cost Airlines (Asien)</label>
+<label class="sw"><input type="checkbox" id="lc"
+value="TR,JQ,AK,FD,D7,VJ,5J,DG,Z2,ZG,MM,GK,UO,IT,7C,TW,LJ,BX,6E,IX,FZ,G9">
+<span class="sl"></span></label></div></div>
+</div>
+</div>
+<div class="bb">
+<div class="ct" style="font-size:.95rem;margin-bottom:12px;border:none">
+🔍 Direkte Such-Schnittstellen (Alle 5 Portale aktiv)</div>
+<div class="bf">
+<a id="b2" href="https://skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
+<a id="b3" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
+<a id="b4" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
+<a id="b5" href="https://kiwi.com" target="_blank" class="btn b5">Kiwi</a>
+<a id="b6" href="https://trip.com" target="_blank" class="btn b6">Trip.com</a>
+</div></div>
+<script>
+const $=id=>document.getElementById(id),
+cd=v=>(v||"").trim().split(" ").at(0).toUpperCase(),
+A=("BER - Berlin|FRA - Frankfurt|LEJ - Leipzig/Halle|MUC - München|" +
+"FAO - Faro (Pharo)|BKK - Bangkok|DAD - Da Nang|" +
+"UIH - Quy Nhon (Qui Nhon)|SGN - Ho-Chi-Minh-Stadt|MNL - Manila|" +
+"PAG - Pagadian|CEB - Cebu|DGT - Dumaguete|HKG - Hongkong|" +
+"CHC - Christchurch|DXB - Dubai|DOH - Doha|IST - Istanbul|SIN - Singapur"
+).split("|");
+let dr=0;
+const setH=h=>{
+  const v=Math.max(1,Math.min(36,parseInt(h)||14)),q=((v-1)/35)*100;
+  $("sr").value=v;$("sv").textContent=v+"h";
+  $("sv").style.left=q+"%";$("fl").style.width=q+"%";
+},
+mv=e=>{
+  const t=e.touches?e.touches.item(0):e,rc=$("tk").getBoundingClientRect();
+  setH(Math.round(1+Math.max(0,Math.min(1,(t.clientX-rc.left)/rc.width))*35));
+  sync();
+};
+$("sb").onmousedown=e=>{dr=1;mv(e)};
+window.onmousemove=e=>{if(dr)mv(e)};
+window.onmouseup=()=>{dr=0};
+$("sb").ontouchstart=e=>{dr=1;mv(e)};
+window.ontouchmove=e=>{if(dr)mv(e)};
+window.ontouchend=()=>{dr=0};
+function sync(){
+  const f=cd($("i1").value),t=cd($("i2").value),d1=$("od").value;
+  const ow=$("ow").checked,d2=ow?"":$("rd").value,hr=$("sr").value;
+  const lc=$("lc").checked;
+  $("rd").min=(d1&&d1>"2026-11-15")?d1:"2026-11-15";
+  const st=JSON.stringify({
+    i1:$("i1").value,i2:$("i2").value,i3:$("i3").value,
+    od:d1,rd:$("rd").value,ow:ow,hr:hr,lc:lc
+  });
+  window.name="RK:"+st;
+  try{history.replaceState(null,"","#"+encodeURIComponent(st))}catch(e){}
+  if(f&&t&&d1){
+    const s1=d1.replace(/-/g,"").slice(2),
+      s2=d2?d2.replace(/-/g,"").slice(2):"",
+      fs="stops=-2;legdur=-"+(hr*60)+(lc?";airlines="+$("lc").value:"");
+    $("b2").href="https://skyscanner.de/transport/fluge/"+
+      f.toLowerCase()+"/"+t.toLowerCase()+"/"+s1+"/"+(s2?s2+"/":"")+
+      "?adultsv2=1&cabinclass=economy&rtn="+(ow?0:1);
+    $("b3").href="https://kayak.de/flights/"+f+"-"+t+"/"+d1+
+      (d2?"/"+d2:"")+"?sort=bestflight_a&fs="+fs;
+    $("b4").href="https://momondo.de/flight-search/"+f+"-"+t+"/"+d1+
+      (d2?"/"+d2:"")+"?sort=bestflight_a&fs="+fs;
+    $("b5").href="https://kiwi.com/deep?from="+f+"&to="+t+
+      "&departure="+d1+(d2?"&return="+d2:"")+"&lang=de&currency=EUR";
+    $("b6").href="https://trip.com/flights/"+f.toLowerCase()+"-to-"+
+      t.toLowerCase()+"/tickets-"+f.toLowerCase()+"-"+t.toLowerCase()+
+      "?dcity="+f+"&acity="+t+"&ddate="+d1+(d2?"&rdate="+d2:"")+
+      "&flighttype="+(ow?"ow":"rt")+"&class=y&quantity=1";
+  }
+}
+try{
+  const r=location.hash.length>2?decodeURIComponent(location.hash.slice(1)):
+    window.name.startsWith("RK:")?window.name.slice(3):"{}";
+  const s=JSON.parse(r);
+  if(s.i1)$("i1").value=s.i1;if(s.i2)$("i2").value=s.i2;
+  if(s.i3)$("i3").value=s.i3;if(s.od)$("od").value=s.od;
+  if(s.rd)$("rd").value=s.rd;if(s.ow)$("ow").checked=1;
+  if(s.lc)$("lc").checked=1;setH(s.hr||14);
+}catch(e){setH(14)}
+sync();
+Array.of(1,2,3).forEach(n=>{
+  const i=$("i"+n),l=$("l"+n);
+  i.oninput=()=>{
+    const v=i.value.toLowerCase().trim();l.innerHTML="";sync();
+    if(!v){l.style.display="none";return}
+    A.filter(x=>x.toLowerCase().includes(v)).forEach(x=>{
+      const d=document.createElement("div");d.textContent=x;
+      d.onclick=()=>{i.value=x;l.style.display="none";sync()};
+      l.appendChild(d);
+    });
+    l.style.display=l.children.length?"block":"none";
+  };
+  i.onchange=sync;
+  document.addEventListener("click",e=>{if(e.target!==i)l.style.display="none"});
+});
+Array.of("od","rd","ow","lc").forEach(id=>{
+  $(id).onchange=sync;$(id).oninput=sync;
+});
+</script>
+</body>
+</html> 
