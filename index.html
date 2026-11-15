@@ -6,7 +6,7 @@
 <title>✈️ Reisekonfiguration PRO</title>
 <style>
 :root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;
---v:#1d4ed8;--lg:#22c55e;--ly:#fef08a}
+--v:#047857;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;
 color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;
@@ -72,7 +72,7 @@ font-size:.78rem;text-transform:uppercase;text-decoration:none}
 <h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
 <div class="cp">
 <div class="seg">15.11.2026</div>
-<div class="seg">V54 - CLEAN+80</div>
+<div class="seg">V55 - SKY+FIX</div>
 <div class="seg st">6/6 AKTIV</div>
 </div>
 </div>
@@ -183,8 +183,7 @@ function sync(){
     const fs="stops=-2;legdur=-"+(hr*60)+
       (lc?";airlines="+$("lc").value:"")+(hb?";bags=1":"");
     su+="/transport/fluge/"+f.toLowerCase()+"/"+t.toLowerCase()+"/"+s1+"/";
-    su+=(s2?s2+"/":"")+"?adultsv2=1&cabinclass=economy&rtn="+(ow?0:1)+
-      "&stops=!twoPlusStops";
+    su+=(s2?s2+"/":"")+"?adultsv2=1&cabinclass=economy&rtn="+(ow?0:1);
     ku+="/flights/"+f+"-"+t+"/"+d1+(d2?"/"+d2:"")+
       "?sort=bestflight_a&fs="+fs;
     mu+="/flight-search/"+f+"-"+t+"/"+d1+(d2?"/"+d2:"")+
@@ -204,3 +203,4 @@ try{
   const r=location.hash.length>2?decodeURIComponent(location.hash.slice(1)):
     window.name.startsWith("RK:")?window.name.slice(3):"{}";
   const s=JSON.parse(r);
+  if(s.i1)$("i1").value=s.i1;if(s.i2)$("i2").value=s.i2;
