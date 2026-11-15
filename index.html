@@ -12,8 +12,9 @@ color:var(--t)}
 border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px;
 flex-wrap:wrap;gap:10px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
-.bk{background:#1e293b;color:#fff;text-decoration:none;padding:8px 14px;
-border-radius:6px;font-weight:bold;font-size:.85rem;border:none;cursor:pointer}
+.bk{display:inline-flex;align-items:center;background:#1e293b;color:#fff;
+text-decoration:none;padding:8px 14px;border-radius:6px;font-weight:bold;
+font-size:.85rem}
 .row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
 .card{flex:1 1 360px;border:2px solid var(--r);border-radius:8px;padding:18px;
 background:#fef2f2;box-sizing:border-box}
@@ -41,7 +42,7 @@ font-size:.86rem}
 <body>
 <div class="hdr">
 <h1 class="tit">🎫 Flug-Upgrade & Buchungs-Cockpit</h1>
-<button type="button" onclick="goBack()" class="bk">⬅️ Zurück zur Flugsuche</button>
+<a href="./index.html" onclick="resetWin()" class="bk">⬅️ Zurück zur Flugsuche</a>
 </div>
 <div class="row">
 <div class="card">
@@ -56,7 +57,7 @@ font-size:.86rem}
 <div class="cpb"><input type="text" id="u4" placeholder="z.B. 2354817365876">
 <button type="button" onclick="cp('u4','Ticketnummer')">📋</button></div></div>
 </div>
-<div class="card">
+ <div class="card">
 <div class="ct">🎯 Airline & Upgrade-Teilstrecke</div>
 <div class="f"><label>Airline / Reiseveranstalter (Direktsprung)</label><select id="u5">
 <option value="https://turkishairlines.com">Turkish Airlines (Buchung verwalten)</option>
@@ -86,15 +87,8 @@ font-size:.86rem}
 <script>
 const $=id=>document.getElementById(id);
 const keys=["u3","u4","u5","u6","u8"];
-function goBack(){
-  if(document.referrer&&document.referrer.indexOf(location.host)!==-1){
-    history.back();
-  }else if(window.opener&&!window.opener.closed){
-    window.opener.focus();
-    window.close();
-  }else{
-    location.href="index.html";
-  }
+function resetWin(){
+  try{window.moveTo(0,0);window.resizeTo(screen.availWidth||1280,screen.availHeight||800)}catch(e){}
 }
 function cp(id,lbl){
   const v=$(id).value.trim();if(!v)return;
@@ -143,4 +137,4 @@ keys.forEach(k=>{
 });
 </script>
 </body>
-</html>
+</html> 
