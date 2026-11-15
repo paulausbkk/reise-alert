@@ -3,91 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🎫 Flug-Upgrade & Buchungs-Check</title>
+<title>✈️ Reisekonfiguration PRO</title>
 <style>
-:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--v:#15803d}
+:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;
+--v:#15803d;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;
 color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;
-border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px;
-flex-wrap:wrap;gap:10px}
+border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
-.bk{background:#1e293b;color:#fff;text-decoration:none;padding:8px 14px;
-border-radius:6px;font-weight:bold;font-size:.85rem}
+.cp{display:flex;gap:6px;background:#1e293b;padding:4px;border-radius:6px}
+.seg{font-size:.75rem;padding:4px 10px;border-radius:4px;font-weight:bold;
+color:#fff;text-transform:uppercase;background:var(--v)}
 .row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
 .card{flex:1 1 420px;border:2px solid var(--r);border-radius:8px;padding:20px;
 background:#fef2f2;box-sizing:border-box}
 .ct{font-weight:bold;font-size:1.1rem;color:var(--r);
 border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
-.f{margin-bottom:14px;display:flex;flex-direction:column}
-.f2{display:flex;gap:10px;margin-bottom:14px}
-.f2>div{flex:1;display:flex;flex-direction:column}
+.f{margin-bottom:14px;display:flex;flex-direction:column;position:relative}
 label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#475569}
-input,select{height:40px;padding:0 10px;border:1px solid var(--b);
-border-radius:4px;box-sizing:border-box;font-size:.98rem;background:#fff;
-width:100%}
-.cpb{display:flex;gap:6px}
-.cpb button{width:46px;height:40px;border:1px solid var(--b);background:#fff;
-border-radius:4px;cursor:pointer;font-size:1.1rem;flex-shrink:0}
+input[type=text],input[type=date]{height:40px;padding:0 10px;
+border:1px solid var(--b);border-radius:4px;box-sizing:border-box;
+font-size:.98rem;background:#fff;width:100%}
+.ac{position:absolute;top:65px;left:0;right:0;background:#fff;
+border:1px solid var(--r);border-radius:4px;z-index:99;max-height:180px;
+overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);display:none}
+.ac div{padding:9px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;
+font-size:.95rem}
+.ac div:hover{background:#fee2e2;font-weight:bold}
+.bn{background:#fff;border:2px solid #ff0000;border-radius:4px;
+padding:9px 12px;color:#ff0000;font-weight:bold;font-size:.9rem;
+line-height:1.35}
 .bb{border:2px solid var(--b);background:#fff;border-radius:8px;padding:15px}
-.btn{display:flex;align-items:center;justify-content:center;height:48px;
-background:var(--v);color:#fff;font-weight:bold;border-radius:6px;
-font-size:.95rem;text-transform:uppercase;text-decoration:none}
-.info{margin-top:10px;background:#f8fafc;border:1px solid var(--b);
-color:#334155;padding:8px 12px;border-radius:4px;font-size:.86rem}
-#ts{display:none;margin-top:10px;background:#dcfce7;border:1px solid var(--v);
-color:#14532d;padding:8px 12px;border-radius:4px;font-weight:bold;
-font-size:.88rem}
+.bf{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.btn{display:flex;align-items:center;justify-content:center;height:45px;
+color:#fff;font-weight:bold;border-radius:4px;font-size:.8rem;
+text-transform:uppercase;text-decoration:none}
+.b2{background:#007054}.b3{background:#ff690f}.b4{background:#84329b}
+.b5{background:#00a699}.b6{background:#2f55d4}
+.sb{position:relative;display:flex;align-items:center;background:#fff;
+border:1px solid var(--b);border-radius:4px;height:40px;padding:0 26px;
+user-select:none;touch-action:none;cursor:pointer}
+.trk{position:relative;width:100%;height:6px;background:#cbd5e1;
+border-radius:3px}
+#fl{height:100%;background:var(--r);border-radius:3px;width:37%}
+#sv{position:absolute;top:50%;left:37%;transform:translate(-50%,-50%);
+width:48px;height:30px;line-height:30px;text-align:center;background:var(--r);
+color:#fff;font-size:1.05rem;font-weight:bold;border-radius:15px;
+box-shadow:0 2px 5px rgba(0,0,0,.3)}
+ #rb:has(input:invalid),#od:out-of-range{opacity:.35}
+#rb:has(input:invalid) input,#od:out-of-range{background:#cbd5e1!important}
+body:has(#ow:checked) #rb{opacity:.25;pointer-events:none}
+body:has(#ow:checked) #rb input{background:#cbd5e1!important}
+body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
+.swc{display:flex;align-items:center;justify-content:space-between;
+background:#fff;padding:0 10px;border:1px solid var(--b);border-radius:4px;
+height:40px}
+.swc.yl{background:var(--ly);border:1px solid #eab308}
+.sw{position:relative;display:inline-block;width:40px;height:22px}
+.sw input{opacity:0;width:0;height:0}
+.sl{position:absolute;cursor:pointer;inset:0;background:#ccc;
+border-radius:20px;transition:.3s}
+.sl:before{position:absolute;content:"";height:16px;width:16px;left:3px;
+bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.sw input:checked+.sl{background:var(--lg)!important}
+.sw input:checked+.sl:before{transform:translateX(18px)}
 </style>
 </head>
 <body>
-<div class="hdr">
-<h1 class="tit">🎫 Flug-Upgrade & Buchungs-Cockpit</h1>
-<a href="index.html" class="bk">⬅️ Zurück zur Flugsuche</a>
+<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
+<div class="cp"><div class="seg">15.11.2026</div>
+<div class="seg">V72 - 5BTN+SHORT</div><div class="seg st">5/5 AKTIV</div></div>
 </div>
 <div class="row">
 <div class="card">
-<div class="ct">✈️ Flug- & Segmentdaten</div>
-<div class="f"><label>Gesamtbuchung (Zubringer + Langstrecke)</label>
-<input type="text" id="u2" placeholder="z.B. BER - IST - BKK"></div>
-<div class="f2">
-<div><label>Upgrade-Teilstrecke</label>
-<input type="text" id="u8" placeholder="z.B. IST - BKK" style="text-transform:uppercase"></div>
-<div><label>Flugnummer (Segment)</label>
-<input type="text" id="u9" placeholder="z.B. TK 68" style="text-transform:uppercase"></div>
-</div>
-<div class="f"><label>Abflugdatum des Upgrade-Flugs (ggf. Folgetag!)</label>
-<input type="date" id="u1" min="2026-11-15"></div>
-<div class="f"><label>Airline-Buchungscode (PNR, 6-stellig – gilt für Gesamtbuchung)</label>
-<div class="cpb"><input type="text" id="u3" placeholder="6-stellig (z.B. TW8ZRK)" style="text-transform:uppercase">
-<button type="button" onclick="cp('u3','Buchungscode')">📋</button></div></div>
-<div class="f"><label>Ticketnummer (13-stellig, z.B. 235-...)</label>
-<div class="cpb"><input type="text" id="u4" placeholder="z.B. 2354817365876">
-<button type="button" onclick="cp('u4','Ticketnummer')">📋</button></div></div>
+<div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
+<div class="f"><label>Abflug (IATA oder Stadt)</label>
+<input type="text" id="i1" placeholder="z.B. BER, FRA, PAG">
+<div id="l1" class="ac"></div></div>
+<div class="f"><label>Ziel (IATA oder Stadt)</label>
+<input type="text" id="i2" placeholder="z.B. BKK, DAD, MNL">
+<div id="l2" class="ac"></div></div>
+<div class="f"><label>Hinflug</label>
+<input type="date" id="od" min="2026-11-15"></div>
+<div class="f" id="rb"><label>Rückflug</label>
+<input type="date" id="rd" min="2026-11-15"></div>
 </div>
 <div class="card">
-<div class="ct">🛂 Passagier & Airline / Veranstalter</div>
-<div class="f"><label>Airline / Reiseveranstalter</label><select id="u5">
-<option value="https://turkishairlines.com">Turkish Airlines (Direkt-Upgrade / Buchung)</option>
-<option value="https://expedia.de">Expedia (Reiseplan / PNR ablesen)</option>
-<option value="https://lufthansa.com">Lufthansa</option>
-<option value="https://qatarairways.com">Qatar Airways</option>
-<option value="https://emirates.com">Emirates</option>
-<option value="https://singaporeair.com">Singapore Airlines</option>
-<option value="https://thaiairways.com">Thai Airways</option>
-<option value="https://cathaypacific.com">Cathay Pacific</option>
-<option value="https://philippineairlines.com">Philippine Airlines</option>
-<option value="https://cebupacificair.com">Cebu Pacific</option>
-<option value="https://airasia.com">AirAsia</option>
-<option value="https://trip.com">Trip.com (Veranstalter)</option>
-<option value="https://kiwi.com">Kiwi.com (Veranstalter)</option>
-</select></div>
-<div class="f"><label>Nachname wie im Reisepass (strikt ohne Vornamen!)</label>
-<div class="cpb"><input type="text" id="u6" placeholder="Nur Nachname (z.B. MÜLLER)" style="text-transform:uppercase">
-<button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
-<div class="f"><label>Reisepassnummer (Optional)</label>
-<div class="cpb"><input type="text" id="u7" placeholder="Passnummer" style="text-transform:uppercase">
-<button type="button" onclick="cp('u7','Passnummer')">📋</button></div></div>
+<div class="ct">⚙️ Filter & Flug-Parameter</div>
+<div class="f"><div class="swc">
+<label for="ow" style="margin:0;cursor:pointer">Nur Hinflug (One-Way Lock)</label>
+<label class="sw"><input type="checkbox" id="ow"><span class="sl"></span></label>
+</div></div>
+<div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label>
+<div class="sb" id="sb"><div class="trk" id="tk">
+<div id="fl"></div><div id="sv">14h</div></div>
+<input type="hidden" id="sr" value="14"></div></div>
+<div class="f"><label>Gepäck-Hinweis</label>
+<div class="bn">Achtung! Die Gepäckstückeauswahl muss auf der Suchseite der gewählten Webseite eingegeben werden!</div></div>
+<div class="f"><label>Transit-Drehkreuz (Optional, max. 1 Stopp)</label>
+<input type="text" id="i3" placeholder="z.B. DXB, DOH, SIN">
+<div id="l3" class="ac"></div></div>
+<div class="f"><div class="swc yl">
+<label for="lc" style="margin:0;cursor:pointer">Sichere Low-Cost Airlines (Asien)</label>
+<label class="sw"><input type="checkbox" id="lc"
+value="TR,JQ,AK,FD,D7,VJ,5J,DG,Z2,ZG,MM,GK,UO,IT,7C,TW,LJ,BX,6E,IX,FZ,G9">
+<span class="sl"></span></label></div></div>
 </div>
 </div>
 <div class="bb">
+<div class="ct" style="font-size:.95rem;margin-bottom:12px;border:none">
+🔍 Direkte Such-Schnittstellen (Alle 5 Portale aktiv)</div>
+<div class="bf">
+<a id="b2" href="https://skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
+<a id="b3" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
+<a id="b4" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
+<a id="b5" href="https://kiwi.com" target="_blank" class="btn b5">Kiwi</a>
+<a id="b6" href="https://trip.com" target="_blank" class="btn b6">Trip.com</a>
+</div></div>
+<script>
+const $=id=>document.getElementById(id),
+cd=v=>(v||"").trim().split(" ").at(0).toUpperCase(),
+A=("BER - Berlin|FRA - Frankfurt|LEJ - Leipzig/Halle|MUC - München|" +
+"FAO - Faro (Pharo)|BKK - Bangkok|DAD - Da Nang|" +
+"UIH - Quy Nhon (Qui Nhon)|SGN - Ho-Chi-Minh-Stadt|MNL - Manila|" +
+"PAG - Pagadian|CEB - Cebu|DGT - Dumaguete|HKG - Hongkong|" +
+"CHC - Christchurch|DXB - Dubai|DOH - Doha|IST - Istanbul|SIN - Singapur"
+).split("|");
+let dr=0;
+const setH=h=>{
+  const v=Math.max(1,Math.min(36,parseInt(h)||14)),q=((v-1)/35)*100;
+  $("sr").value=v;$("sv").textContent=v+"h";
+  $("sv").style.left=q+"%";$("fl").style.width=q+"%";
+},
+mv=e=>{
+  const t=e.touches?e.touches.item(0):e,rc=$("tk").getBoundingClientRect();
+  setH(Math.round(1+Math.max(0,Math.min(1,(t.clientX-rc.left)/rc.width))*35));
+  sync();
+};
+$("sb").onmousedown=e=>{dr=1;mv(e)};
+window.onmousemove=e=>{if(dr)mv(e)};
+window.onmouseup=()=>{dr=0};
+$("sb").ontouchstart=e=>{dr=1;mv(e)};
+window.ontouchmove=e=>{if(dr)mv(e)};
+window.ontouchend=()=>{dr=0};
+function sync(){
+  const f=cd($("i1").value),t=cd($("i2").value),d1=$("od").value;
+  const ow=$("ow").checked,d2=ow?"":$("rd").value,hr=$("sr").value;
+  const lc=$("lc").checked;
+  $("rd").min=(d1&&d1>"2026-11-15")?d1:"2026-11-15";
+  const st=JSON.stringify({
+    i1:$("i1").value,i2:$("i2").value,i3:$("i3").value,
+    od:d1,rd:$("rd").value,ow:ow,hr:hr,lc:lc
+  });
+  window.name="RK:"+st;
+  try{history.replaceState(null,"","#"+encodeURIComponent(st))}catch(e){}
+  if(f&&t&&d1){
+    const s1=d1.replace(/-/g,"").slice(2),
+      s2=d2?d2.replace(/-/g,"").slice(2):"",
+      fs="stops=-2;legdur=-"+(hr*60)+(lc?";airlines="+$("lc").value:"");
+    $("b2").href="https://skyscanner.de/transport/fluge/"+
+      f.toLowerCase()+"/"+t.toLowerCase()+"/"+s1+"/"+(s2?s2+"/":"")+
+      "?adultsv2=1&cabinclass=economy&rtn="+(ow?0:1);
+    $("b3").href="https://kayak.de/flights/"+f+"-"+t+"/"+d1+
+      (d2?"/"+d2:"")+"?sort=bestflight_a&fs="+fs;
+    $("b4").href="https://momondo.de/flight-search/"+f+"-"+t+"/"+d1+
+      (d2?"/"+d2:"")+"?sort=bestflight_a&fs="+fs;
+    $("b5").href="https://kiwi.com/deep?from="+f+"&to="+t+
+      "&departure="+d1+(d2?"&return="+d2:"")+"&lang=de&currency=EUR";
+    $("b6").href="https://trip.com/flights/"+f.toLowerCase()+"-to-"+
+      t.toLowerCase()+"/tickets-"+f.toLowerCase()+"-"+t.toLowerCase()+
+      "?dcity="+f+"&acity="+t+"&ddate="+d1+(d2?"&rdate="+d2:"")+
+      "&flighttype="+(ow?"ow":"rt")+"&class=y&quantity=1";
+  }
+}
+try{
+  const r=location.hash.length>2?decodeURIComponent(location.hash.slice(1)):
+    window.name.startsWith("RK:")?window.name.slice(3):"{}";
+  const s=JSON.parse(r);
+  if(s.i1)$("i1").value=s.i1;if(s.i2)$("i2").value=s.i2;
+  if(s.i3)$("i3").value=s.i3;if(s.od)$("od").value=s.od;
+  if(s.rd)$("rd").value=s.rd;if(s.ow)$("ow").checked=1;
+  if(s.lc)$("lc").checked=1;setH(s.hr||14);
+}catch(e){setH(14)}
+sync();
+Array.of(1,2,3).forEach(n=>{
+  const i=$("i"+n),l=$("l"+n);
+  i.oninput=()=>{
+    const v=i.value.toLowerCase().trim();l.innerHTML="";sync();
+    if(!v){l.style.display="none";return}
+    A.filter(x=>x.toLowerCase().includes(v)).forEach(x=>{
+      const d=document.createElement("div");d.textContent=x;
+      d.onclick=()=>{i.value=x;l.style.display="none";sync()};
+      l.appendChild(d);
+    });
+    l.style.display=l.children.length?"block":"none";
+  };
+  i.onchange=sync;
+  document.addEventListener("click",e=>{if(e.target!==i)l.style.display="none"});
+});
+Array.of("od","rd","ow","lc").forEach(id=>{
+  $(id).onchange=sync;$(id).oninput=sync;
+});
+</script>
+</body>
+</html> 
