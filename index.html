@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO</title>
 <style>
-:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#1d4ed8;--lg:#22c55e;--ly:#fef08a}
+:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;--v:#c2410c;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
 .hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
@@ -44,41 +44,37 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 </style>
 </head>
 <body>
-<form action="https://google.com" method="get" target="_blank">
+<form id="fm" onsubmit="return false">
 <div class="hdr">
 <h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V38 - FIX+SLIDE</div><div class="seg st">ALL 6 BTN</div></div>
+<div class="cp"><div class="seg">15.11.2026</div><div class="seg">V39 - LIVE+22LCC</div><div class="seg st">ALL 6 BTN</div></div>
 </div>
 <div class="row">
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-<div class="f"><label>Abflug (IATA oder Stadt)</label><input type="text" id="i1" name="from" autocomplete="off" placeholder="z.B. FRA, Frankfurt, PAG" required><div id="l1" class="ac"></div></div>
-<div class="f"><label>Ziel (IATA oder Stadt)</label><input type="text" id="i2" name="to" autocomplete="off" placeholder="z.B. BKK, Bangkok, MNL" required><div id="l2" class="ac"></div></div>
-<div class="f"><label>Hinflug</label><input type="date" id="od" name="outbound" min="2026-11-15" required></div>
-<div class="f" id="rb"><label>Rückflug</label><input type="date" name="return" min="2026-11-15"></div>
+<div class="f"><label>Abflug (IATA oder Stadt)</label><input type="text" id="i1" autocomplete="off" placeholder="z.B. FRA, Frankfurt, PAG" required><div id="l1" class="ac"></div></div>
+<div class="f"><label>Ziel (IATA oder Stadt)</label><input type="text" id="i2" autocomplete="off" placeholder="z.B. BKK, Bangkok, MNL" required><div id="l2" class="ac"></div></div>
+<div class="f"><label>Hinflug</label><input type="date" id="od" min="2026-11-15" required></div>
+<div class="f" id="rb"><label>Rückflug</label><input type="date" id="rd" min="2026-11-15"></div>
 </div>
 <div class="card">
 <div class="ct">⚙️ Filter & Flug-Parameter</div>
-<div class="f"><div class="swc"><label for="ow" style="margin:0;cursor:pointer">Nur Hinflug (One-Way Lock)</label><label class="sw"><input type="checkbox" id="ow" name="oneway"><span class="sl"></span></label></div></div>
-<div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label><div class="sb" id="sb"><div class="trk" id="tk"><div id="fl"></div><div id="sv">14h</div></div><input type="hidden" id="sr" name="max_duration" value="14"></div></div>
-<div class="f"><label>Transit-Drehkreuz (Optional)</label><input type="text" id="i3" name="transit" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"><div id="l3" class="ac"></div></div>
-<div class="f"><div class="swc yl"><label for="lc" style="margin:0;cursor:pointer">Sichere Low-Cost Airlines (Asien)</label><label class="sw"><input type="checkbox" id="lc" name="safe_asia_lcc" value="TR,3K,AK,FD,D7,VJ,5J,ZG,MM,GK,UO,IT,7C,TW,LJ,BX,6E,IX,FZ,G9"><span class="sl"></span></label></div></div>
+<div class="f"><div class="swc"><label for="ow" style="margin:0;cursor:pointer">Nur Hinflug (One-Way Lock)</label><label class="sw"><input type="checkbox" id="ow"><span class="sl"></span></label></div></div>
+<div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label><div class="sb" id="sb"><div class="trk" id="tk"><div id="fl"></div><div id="sv">14h</div></div><input type="hidden" id="sr" value="14"></div></div>
+<div class="f"><label>Transit-Drehkreuz (Optional)</label><input type="text" id="i3" autocomplete="off" placeholder="z.B. DXB, DOH, IST, SIN"><div id="l3" class="ac"></div></div>
+<div class="f"><div class="swc yl"><label for="lc" style="margin:0;cursor:pointer">Sichere Low-Cost Airlines (Asien)</label><label class="sw"><input type="checkbox" id="lc" value="TR,JQ,AK,FD,D7,VJ,5J,DG,Z2,ZG,MM,GK,UO,IT,7C,TW,LJ,BX,6E,IX,FZ,G9"><span class="sl"></span></label></div></div>
 </div>
 </div>
 <div class="bb">
 <div class="ct" style="font-size:.95rem;margin-bottom:12px;border:none">🔍 Direkte Such-Schnittstellen (Google-Brücke)</div>
 <div class="bf">
-<button type="submit" name="q" value="Flüge" class="btn b1">Google</button>
-<button type="submit" class="btn b2" formaction="https://skyscanner.de">Skyscanner</button>
-<button type="submit" class="btn b3" formaction="https://kayak.de">Kayak</button>
-<button type="submit" class="btn b4" formaction="https://momondo.de">Momondo</button>
-<button type="submit" class="btn b5" formaction="https://kiwi.com">Kiwi</button>
-<button type="submit" class="btn b6" formaction="https://trip.com">Trip.com</button>
+<button type="button" onclick="go(1)" class="btn b1">Google</button>
+<button type="button" onclick="go(2)" class="btn b2">Skyscanner</button>
+<button type="button" onclick="go(3)" class="btn b3">Kayak</button>
+<button type="button" onclick="go(4)" class="btn b4">Momondo</button>
+<button type="button" onclick="go(5)" class="btn b5">Kiwi</button>
+<button type="button" onclick="go(6)" class="btn b6">Trip.com</button>
 </div>
 </div>
 </form>
 <script>
-const A=["FRA - Frankfurt","MUC - München","BER - Berlin","DUS - Düsseldorf","HAM - Hamburg","LEJ - Leipzig/Halle","CGN - Köln/Bonn","STR - Stuttgart","HAJ - Hannover","NUE - Nürnberg","DRS - Dresden","VIE - Wien","ZRH - Zürich","GVA - Genf","AMS - Amsterdam","CDG - Paris","LHR - London","IST - Istanbul","DXB - Dubai","DOH - Doha","AUH - Abu Dhabi","BKK - Bangkok","HKT - Phuket","CNX - Chiang Mai","USM - Koh Samui","KBV - Krabi","SIN - Singapur","KUL - Kuala Lumpur","PEN - Penang","SGN - Ho-Chi-Minh-Stadt","HAN - Hanoi","DAD - Da Nang","DPS - Bali","CGK - Jakarta","MNL - Manila","CEB - Cebu","DVO - Davao","PAG - Pagadian","ILO - Iloilo","CRK - Clark","PPS - Puerto Princesa","KLO - Kalibo","TYO - Tokio","HND - Tokio Haneda","NRT - Tokio Narita","KIX - Osaka","ICN - Seoul","HKG - Hongkong","TPE - Taipeh","DEL - Neu-Delhi","BOM - Mumbai","CMB - Colombo","MLE - Malé","SYD - Sydney","MEL - Melbourne","AKL - Auckland","JFK - New York","LAX - Los Angeles","MIA - Miami","CPT - Kapstadt"];[1,2,3].forEach(n=>{const i=document.getElementById("i"+n),l=document.getElementById("l"+n);i.oninput=()=>{const v=i.value.toLowerCase().trim();l.innerHTML="";if(!v){l.style.display="none";return}const m=A.filter(x=>x.toLowerCase().includes(v));l.style.display=m.length?"block":"none";m.forEach(x=>{const d=document.createElement("div");d.textContent=x;d.onclick=()=>{i.value=x;l.style.display="none"};l.appendChild(d)})};document.addEventListener("click",e=>{if(e.target!==i)l.style.display="none"})});const sb=document.getElementById("sb"),tk=document.getElementById("tk"),sv=document.getElementById("sv"),fl=document.getElementById("fl"),sr=document.getElementById("sr");let dr=0;const mv=e=>{const x=e.touches?e.touches[0].clientX:e.clientX,rc=tk.getBoundingClientRect(),p=Math.max(0,Math.min(1,(x-rc.left)/rc.width)),h=Math.round(1+p*35),q=((h-1)/35)*100;sr.value=h;sv.textContent=h+"h";sv.style.left=q+"%";fl.style.width=q+"%"};sb.onmousedown=e=>{dr=1;mv(e)};window.onmousemove=e=>{if(dr)mv(e)};window.onmouseup=()=>{dr=0};sb.ontouchstart=e=>{dr=1;mv(e)};window.ontouchmove=e=>{if(dr)mv(e)};window.ontouchend=()=>{dr=0};
-</script>
-</body>
-</html>
