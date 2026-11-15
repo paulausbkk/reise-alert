@@ -115,16 +115,18 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </div>
 <div class="bb">
 <div class="bf">
-<a id="u1" href="https://skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
-<a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
-<a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
-<a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia</a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
-<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
+<a id="u1" href="#" target="_blank" class="btn b2">Skyscanner</a>
+<a id="u2" href="#" target="_blank" class="btn b3">Kayak</a>
+<a id="u3" href="#" target="_blank" class="btn b4">Momondo</a>
+<a id="u4" href="#" target="_blank" class="btn b5">Expedia</a>
+<a id="u5" href="#" target="_blank" class="btn b6">Kiwi.com</a>
+<a id="u6" href="#" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
+const S=String.fromCharCode(47);
+const P="https:"+S+S;
 const ap=[
   "BER|Berlin Brandenburg","FRA|Frankfurt am Main","MUC|München",
   "LEJ|Leipzig/Halle","DUS|Düsseldorf","HAM|Hamburg",
@@ -176,14 +178,18 @@ function upd(){
     const od6=od.replace(/-/g,"").slice(2);
     const hasRd=(!ow&&rd&&!badDate);
     const rd6=hasRd?rd.replace(/-/g,"").slice(2):"";
-    const odDe=od.split("-").reverse().join(".");
-    const rdDe=hasRd?rd.split("-").reverse().join("."):"";
-    $("u1").href="https://skyscanner.de"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od6+(rd6?"/"+rd6:"")+"/?adultsv2=1"+(ns?"&preferdirects=true":"");
-    $("u2").href="https://kayak.de"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
-    $("u3").href="https://momondo.de"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
-    $("u4").href="https://expedia.de"+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+odDe+"TANYT"+(hasRd?"&leg2=from:"+d+",to:"+o+",departure:"+rdDe+"TANYT":"")+"&options=cabinclass:economy"+(ns?",maxhops:0":"")+"&passengers=adults:1,children:0,infantinlap:N";
-    $("u5").href="https://kiwi.com"+o+"&to="+d+"&departure="+od+(hasRd?"&return="+rd:"")+"&lang=de&currency=EUR&sortBy=price&maxFlightDuration="+hrs+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
-    $("u6").href="https://trip.com"+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW")+"&class=y&quantity=1&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
+    const u1p=["www.skyscanner.de","transport","fluge",o.toLowerCase(),d.toLowerCase(),od6];
+    if(rd6)u1p.push(rd6);
+    $("u1").href=P+u1p.join(S)+S+"?adultsv2=1"+(ns?"&preferdirects=true":"");
+    const u2p=["www.kayak.de","flights",o+"-"+d,od];
+    if(hasRd)u2p.push(rd);
+    $("u2").href=P+u2p.join(S)+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
+    const u3p=["www.momondo.de","flight-search",o+"-"+d,od];
+    if(hasRd)u3p.push(rd);
+    $("u3").href=P+u3p.join(S)+"?sort=price_a"+(ns?"&fs=stops=0":"");
+    $("u4").href=P+["www.expedia.de","Flights-Search"].join(S)+"?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(hasRd?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
+    $("u5").href=P+["://kiwi.com","deep"].join(S)+"?from="+o+"&to="+d+"&departure="+od+(hasRd?"&return="+rd:"")+"&lang=de&currency=EUR&sortBy=price&maxFlightDuration="+hrs+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
+    $("u6").href=P+["://trip.com","flights","showfarefirst"].join(S)+"?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW")+"&class=y&quantity=1&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
@@ -225,5 +231,6 @@ function upd(){
 })();
 </script>
 </body>
+</html>
 
 
