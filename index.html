@@ -20,8 +20,12 @@ input[type=text],input[type=date]{height:40px;padding:0 10px;border:1px solid va
 .ac{position:absolute;top:65px;left:0;right:0;background:#fff;border:1px solid var(--r);border-radius:4px;z-index:99;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);display:none}
 .ac div{padding:9px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:.95rem}
 .ac div:hover{background:#fee2e2;font-weight:bold}
-.bn{background:#fff;border:2px solid #ff0000;border-radius:4px;padding:9px 12px
-.sb{position:relative;display:flex;align-items:center;background:#fff;border:1px solid var(--b);border-radius:4px;height:40px;padding:0 26px;user-select:none;touch-action:none;cursor:pointer}
+.bn{background:#fff;border:2px solid #ff0000;border-radius:4px;padding:9px 12px;color:#ff0000;font-weight:bold;font-size:.9rem;line-height:1.35}
+.bb{border:2px solid var(--b);background:#fff;border-radius:8px;padding:15px}
+.bf{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;height:45px;color:#fff;font-weight:bold;border-radius:4px;font-size:.82rem;text-transform:uppercase;text-decoration:none}
+.b2{background:#007054}.b3{background:#ff690f}.b4{background:#84329b}.b5{backg
+ .sb{position:relative;display:flex;align-items:center;background:#fff;border:1px solid var(--b);border-radius:4px;height:40px;padding:0 26px;user-select:none;touch-action:none;cursor:pointer}
 .trk{position:relative;width:100%;height:6px;background:#cbd5e1;border-radius:3px}
 #fl{height:100%;background:var(--r);border-radius:3px;width:37%}
 #sv{position:absolute;top:50%;left:37%;transform:translate(-50%,-50%);width:48px;height:30px;line-height:30px;text-align:center;background:var(--r);color:#fff;font-size:1.05rem;font-weight:bold;border-radius:15px;box-shadow:0 2px 5px rgba(0,0,0,.3)}
@@ -38,14 +42,10 @@ body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 .sl:before{position:absolute;content:"";height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 .sw input:checked+.sl{background:var(--lg)!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
-.bb{border:2px solid var(--b);background:#fff;border-radius:8px;padding:15px}
-.bf{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.btn{display:flex;align-items:center;justify-content:center;height:45px;color:#fff;font-weight:bold;border:none;border-radius:4px;cursor:pointer;font-size:.82rem;text-transform:uppercase;text-decoration:none}
-.b2{background:#007054}.b3{background:#ff690f}.b4{background:#84329b}.b5{background:#00a699}.b6{background:#2f55d4}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1><div class="cp"><div class="seg">15.11.2026</div><div class="seg">V68 - 5-PORTALE</div><div class="seg st">5/5 AKTIV</div></div></div>
+<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1><div class="cp"><div class="seg">15.11.2026</div><div class="seg">V69 - 5BTN+FIX</div><div class="seg st">5/5 AKTIV</div></div></div>
 <div class="row">
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
@@ -74,4 +74,4 @@ Array.of(1,2,3).forEach(n=>{const i=$("i"+n),l=$("l"+n);i.oninput=()=>{const v=i
 Array.of("od","rd","ow","lc").forEach(id=>{$(id).onchange=sync;$(id).oninput=sync});
 </script>
 </body>
-</html>
+</html>                                                                      
