@@ -119,8 +119,8 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
 <a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia</a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
-<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
+<a id="b5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi</a>
+<a id="b6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
 <script>
@@ -180,8 +180,6 @@ function upd(){
     $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
     $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(hasRd?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
     $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(hasRd?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
-    $("u5").href="https://kiwi.com"+o+"&to="+d+"&departure="+od+(hasRd?"&return="+rd:"")+"&lang=de&currency=EUR"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
-    $("u6").href="https://trip.comshowfarefirst?dcity="+o+"&acity="+d+"&ddate="+od+(hasRd?"&rdate="+rd+"&triptype=rt":"&triptype=ow")+"&class=Y&lowpricesource=searchform&quantity=1&locale=de-DE&curr=EUR"+(ns?"&nonstoponly=on":"");
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
