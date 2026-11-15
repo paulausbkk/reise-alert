@@ -54,8 +54,8 @@ border-radius:3px}
 width:48px;height:30px;line-height:30px;text-align:center;background:var(--r);
 color:#fff;font-size:1.05rem;font-weight:bold;border-radius:15px;
 box-shadow:0 2px 5px rgba(0,0,0,.3)}
-.dis{opacity:.32;pointer-events:none}
-.dis input{background:#cbd5e1!important}
+.err{opacity:.35}
+.err input{background:#cbd5e1!important}
 body:has(#ow:checked) #rb{opacity:.25;pointer-events:none}
 body:has(#ow:checked) #rb input{background:#cbd5e1!important}
 body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
@@ -90,7 +90,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <div id="l2" class="ac"></div></div>
 <div class="f"><label>Hinflug</label>
 <input type="date" id="od" min="2026-11-15"></div>
-<div class="f dis" id="rb"><label>Rückflug</label>
+<div class="f" id="rb"><label>Rückflug</label>
 <input type="date" id="rd" min="2026-11-15"></div>
 </div>
 <div class="card">
@@ -153,7 +153,7 @@ function ac(inp,box){
     hits.forEach(h=>{
       const d=document.createElement("div");
       d.textContent=h[0]+" – "+h[1];
-      d.onclick=()=>{inp.value=h[0]+" ("+h[1]+")";box.style.display="none";upd();};
+      d.onclick=()=>{inp.value=h[1]+" ("+h[0]+")";box.style.display="none";upd();};
       box.appendChild(d);
     });
     box.style.display="block";
@@ -165,27 +165,22 @@ function upd(){
   const o=code($("i1").value),d=code($("i2").value);
   const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,lc=$("lc").checked;
   const rb=$("rb");
-  if(!od||ow){
-    rb.classList.add("dis");
-  }else{
-    rb.classList.remove("dis");
-    $("rd").min=od;
-    if(rd&&rd<od)$("rd").value=od;
-  }
+  if(od)$("rd").min=od;
+  const badDate=(!ow&&rd&&od&&rd<od)||!$("rd").checkValidity();
+  if(!ow&&badDate){rb.classList.add("err");}else{rb.classList.remove("err");}
   const st=document.querySelector(".st");
   if(st)st.textContent=ow?"ONE-WAY":"HIN & RÜCK";
   if(o.length===3&&d.length===3&&od){
     const od6=od.replace(/-/g,"").slice(2);
-    const rdVal=$("rd").value;
-    const rd6=(!ow&&rdVal)?rdVal.replace(/-/g,"").slice(2):"";
+    const rd6=(!ow&&rd&&!badDate)?rd.replace(/-/g,"").slice(2):"";
     $("u1").href="https://skyscanner.de/transport/fluge/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od6+(rd6?"/"+rd6:"")+"/?adultsv2=1"+(ns?"&preferdirects=true":"");
-    $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(rd6?"/"+rdVal:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
-    $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(rd6?"/"+rdVal:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
-    $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(!ow&&rdVal?"&leg2=from:"+d+",to:"+o+",departure:"+rdVal+"TANYT":"")+"&passengers=adults:1&mode=search";
-    $("u5").href="https://kiwi.comsearch/results/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od+(rd6?"/"+rdVal:"/no-return")+"?sortBy=price"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
-    $("u6").href="https://trip.com"+o.toLowerCase()+"-to-"+d.toLowerCase()+"/tickets-"+o.toLowerCase()+"-"+d.toLowerCase()+"?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(!ow&&rdVal?"&rdate="+rdVal+"&flighttype=rt":"&flighttype=ow")+"&class=y&quantity=1"+(ns?"&nonstoponly=on":"");
+    $("u2").href="https://kayak.de/flights/"+o+"-"+d+"/"+od+(rd6?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
+    $("u3").href="https://momondo.de/flight-search/"+o+"-"+d+"/"+od+(rd6?"/"+rd:"")+"?sort=price_a"+(ns?"&fs=stops=0":"");
+    $("u4").href="https://expedia.de/Flights-Search?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT"+(!ow&&rd&&!badDate?"&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT":"")+"&passengers=adults:1&mode=search";
+    $("u5").href="https://kiwi.comsearch/results/"+o.toLowerCase()+"/"+d.toLowerCase()+"/"+od+(rd6?"/"+rd:"/no-return")+"?sortBy=price"+(ns?"&stopNumber=0":"")+(lc?"":"&virtualInterlining=false");
+    $("u6").href="https://trip.com"+o.toLowerCase()+"-to-"+d.toLowerCase()+"/tickets-"+o.toLowerCase()+"-"+d.toLowerCase()+"?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od+(!ow&&rd&&!badDate?"&rdate="+rd+"&flighttype=rt":"&flighttype=ow")+"&class=y&quantity=1"+(ns?"&nonstoponly=on":"");
   }
-  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd:$("rd").value,ow,ns,lc,hrs});
+  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
 }
 (function init(){
