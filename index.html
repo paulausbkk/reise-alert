@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -196,8 +196,10 @@ function upd(){
     if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
     $("u4").href=P+["www.expedia.de","Flights-Search"].join(S)+u4q+"&passengers=adults:1&mode=search";
 
-    const u5p=["://kiwi.com","de","search","results",o.toLowerCase(),d.toLowerCase(),od,hasRd?rd:"no-return"];
-    $("u5").href=P+u5p.join(S)+"?adults=1&sortBy=price"+(ns?"&stopNumber=0":"");
+    let u5q="?from="+o+"&to="+d+"&departure="+od+"&adults=1&lang=de&currency=EUR&sortBy=price";
+    if(hasRd)u5q+="&return="+rd;
+    if(ns)u5q+="&stopNumber=0";
+    $("u5").href=P+["://kiwi.com","deep"].join(S)+u5q;
 
     let u6q="?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od;
     u6q+=(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW");
