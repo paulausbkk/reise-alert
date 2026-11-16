@@ -166,3 +166,33 @@ function ac(inp,box){
   });
   document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";});
 }
+ /* === TRESOR: VERIFIZIERTE ANBIETER (u1 bis u5 UNBERÜHRT) === */
+const TRESOR=Object.freeze({
+  build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6){
+    const d1="www."+"skyscanner"+".de";
+    const u1p=[d1,"transport","fluge",o.toLowerCase(),d.toLowerCase(),od6];
+    if(rd6)u1p.push(rd6);
+    $("u1").href=P+u1p.join(S)+S+"?adultsv2=1"+(ns?"&preferdirects=true":"");
+
+    const d2="www."+"kayak"+".de";
+    const u2p=[d2,"flights",o+"-"+d,od];
+    if(hasRd)u2p.push(rd);
+    $("u2").href=P+u2p.join(S)+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
+
+    const d3="www."+"momondo"+".de";
+    const u3p=[d3,"flight-search",o+"-"+d,od];
+    if(hasRd)u3p.push(rd);
+    $("u3").href=P+u3p.join(S)+"?sort=price_a"+(ns?"&fs=stops=0":"");
+
+    const d4="www."+"expedia"+".de";
+    let u4q="?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT";
+    if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
+    $("u4").href=P+[d4,"Flights-Search"].join(S)+u4q+"&passengers=adults:1&mode=search";
+
+    const d5="www."+"kiwi"+".com";
+    let u5q="?from="+o+"&to="+d+"&departure="+od;
+    if(hasRd)u5q+="&return="+rd;
+    $("u5").href=P+d5+S+"deep"+u5q;
+  }
+});
+/* === ENDE TRESOR === */ 
