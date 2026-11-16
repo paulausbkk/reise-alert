@@ -117,7 +117,7 @@ font-size:.88rem}
 
 <div class="bb">
 <button type="button" onclick="openNote()" class="btn note">
-📌 1. Schwebenden Notizzettel öffnen</button>
+📌 1. Schwebenden Spickzettel starten (Immer im Vordergrund)</button>
 <a id="go" href="https://turkishairlines.com" target="_blank" class="btn">
 🚀 2. Airline-Seite öffnen</a>
 <div id="ts"></div>
@@ -134,32 +134,48 @@ function cp(id,lbl){
   $("ts").textContent="✅ "+lbl+" kopiert: "+v;
   $("ts").style.display="block"}catch(e){}
 }
-function buildNoteHTML(){
-  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
-  let rows="";
-  items.forEach(it=>{
-    const p=it.split("|");
-    const lbl=p.shift();
-    const id=p.join("");
-    const val=$(id).value.trim();
-    if(val){
-      rows+="<div style='display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #cbd5e1;padding:6px 8px;border-radius:5px;margin-bottom:6px;gap:6px'>"
-           +"<div><div style='font-size:10px;color:#64748b;font-weight:bold'>"+lbl+"</div>"
-           +"<div style='font-size:14px;font-weight:bold;color:#0f172a;user-select:all'>"+val+"</div></div>"
-           +"<button onclick=\"navigator.clipboard.writeText('"+val.replace(/'/g,"")+"');this.textContent='✅'\" style='background:#15803d;color:#fff;border:none;border-radius:4px;padding:6px 10px;cursor:pointer;font-weight:bold'>📋</button></div>";
-    }
-  });
-  if(!rows)rows="<div style='color:#991b1b;font-weight:bold;font-size:13px'>Noch keine Daten im Cockpit eingetragen.</div>";
-  return "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>📌 Flug-Notizzettel</title></head>"
-        +"<body style='margin:0;padding:10px;background:#fef2f2;font-family:sans-serif'>"
-        +"<div style='font-weight:bold;color:#991b1b;font-size:14px;margin-bottom:8px;border-bottom:2px solid #991b1b;padding-bottom:4px'>📌 Flug-Spickzettel (Immer oben)</div>"
-        +rows+"</body></html>";
-}
-function openNote(){
+async function openNote(){
   sv();
-  const html=buildNoteHTML();
-  const w=window.open("","FlugNotiz","width=320,height=390,left=30,top=80");
-  if(w){w.document.open();w.document.write(html);w.document.close();}
+  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
+  let clipAll="";
+  items.forEach(it=>{
+    const p=it.split("|");const lbl=p.shift();const val=$(p.join("")).value.trim();
+    if(val)clipAll+=lbl+": "+val+" | ";
+  });
+  if(clipAll){
+    try{navigator.clipboard.writeText(clipAll);
+    $("ts").textContent="✅ Alle Daten kopiert! Tipp: Auf der Airline-Seite Windows-Taste + V drücken oder Spickzettel nutzen.";
+    $("ts").style.display="block";}catch(e){}
+  }
+  if("documentPictureInPicture" in window){
+    try{
+      const pip=await window.documentPictureInPicture.requestWindow({width:310,height:380});
+      const b=pip.document.body;
+      b.style.margin="0";b.style.padding="10px";b.style.background="#fef2f2";b.style.fontFamily="sans-serif";
+      const h=pip.document.createElement("div");
+      h.textContent="📌 Flug-Spickzettel (Immer oben)";
+      h.style.fontWeight="bold";h.style.color="#991b1b";h.style.marginBottom="8px";
+      h.style.borderBottom="2px solid #991b1b";h.style.paddingBottom="4px";
+      b.appendChild(h);
+      items.forEach(it=>{
+        const p=it.split("|");const lbl=p.shift();const val=$(p.join("")).value.trim();
+        if(val){
+          const row=pip.document.createElement("div");
+          row.style.display="flex";row.style.justifyContent="space-between";row.style.alignItems="center";
+          row.style.background="#fff";row.style.border="1px solid #cbd5e1";row.style.padding="6px 8px";
+          row.style.borderRadius="5px";row.style.marginBottom="6px";
+          const txt=pip.document.createElement("div");
+          txt.innerHTML="<div style='font-size:10px;color:#64748b;font-weight:bold'>"+lbl+"</div><div style='font-size:14px;font-weight:bold;color:#0f172a'>"+val+"</div>";
+          const btn=pip.document.createElement("button");
+          btn.textContent="📋";btn.style.background="#15803d";btn.style.color="#fff";btn.style.border="none";
+          btn.style.borderRadius="4px";btn.style.padding="6px 10px";btn.style.cursor="pointer";
+          btn.onclick=()=>{navigator.clipboard.writeText(val);btn.textContent="✅";};
+          row.appendChild(txt);row.appendChild(btn);b.appendChild(row);
+        }
+      });
+      return;
+    }catch(e){}
+  }
 }
 function sv(){
   const now=new Date();
