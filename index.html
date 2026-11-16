@@ -119,7 +119,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
 <a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia</a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
+<a id="u5" href="https://www.kiwi.com/de/" target="_blank" class="btn b6">Kiwi.com</a>
 <a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
@@ -194,6 +194,19 @@ const TRESOR=Object.freeze({
 });
 /* === ENDE TRESOR === */
 
+function kiwiUrl(){
+  const o=code($("i1").value),d=code($("i2").value);
+  const od=$("od").value,rd=$("rd").value,ow=$("ow").checked;
+  const badDate=(!ow&&od&&rd&&rd<od);
+  const hasRd=(!ow&&rd&&!badDate);
+  if(o.length===3&&d.length===3&&od){
+    let q="?from="+o+"&to="+d+"&departure="+od;
+    if(hasRd)q+="&return="+rd;
+    return P+"www.kiwi.com"+S+"deep"+q;
+  }
+  return P+"www.kiwi.com"+S+"de"+S;
+}
+
 function upd(){
   const now=new Date();
   const dtEl=$("dt");
@@ -209,11 +222,7 @@ function upd(){
     const rd6=hasRd?rd.replace(/-/g,"").slice(2):"";
 
     TRESOR.build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6);
-
-    let u5q="?from="+o+"&to="+d+"&departure="+od;
-    if(hasRd)u5q+="&return="+rd;
-    if(ns)u5q+="&stops=0";
-    $("u5").href=P+["www.kiwi.com","deep"].join(S)+u5q;
+    $("u5").href=kiwiUrl();
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
@@ -237,6 +246,7 @@ function upd(){
   $("fl").style.width=pct+"%";$("sv").style.left=pct+"%";$("sv").textContent=hrs+"h";
   ac($("i1"),$("l1"));ac($("i2"),$("l2"));
   ["i1","i2","od","rd","ow","ns","lc"].forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
+  $("u5").addEventListener("click",()=>{ $("u5").href=kiwiUrl(); });
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
