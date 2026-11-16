@@ -25,7 +25,7 @@ background:#fef2f2;box-sizing:border-box}
 border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
 .f{margin-bottom:14px;display:flex;flex-direction:column;position:relative}
 label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#475569}
-input[type=text],input[type=date]{height:40px;padding:0 10px;
+input[type=text],input[type=date],select{height:40px;padding:0 10px;
 border:1px solid var(--b);border-radius:4px;box-sizing:border-box;
 font-size:.98rem;background:#fff;width:100%}
 .ac{position:absolute;top:65px;left:0;right:0;background:#fff;
@@ -92,6 +92,13 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <input type="date" id="od" min="2026-11-15"></div>
 <div class="f" id="rb"><label>Rückflug</label>
 <input type="date" id="rd" min="2026-11-15"></div>
+<div class="f"><label for="px">Personenzahl (Erwachsene)</label>
+<select id="px">
+<option value="1" selected>1 Person</option>
+<option value="2">2 Personen</option>
+<option value="3">3 Personen</option>
+<option value="4">4 Personen</option>
+</select></div>
 </div>
 <div class="card">
 <div class="ct">⚙️ Filter & Flug-Parameter</div>
@@ -166,92 +173,3 @@ function ac(inp,box){
   });
   document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";});
 }
-
-/* === TRESOR: VERIFIZIERTE ANBIETER (u1 bis u5 UNBERÜHRT) === */
-const TRESOR=Object.freeze({
-  build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6){
-    const u1p=["www.skyscanner.de","transport","fluge",o.toLowerCase(),d.toLowerCase(),od6];
-    if(rd6)u1p.push(rd6);
-    $("u1").href=P+u1p.join(S)+S+"?adultsv2=1"+(ns?"&preferdirects=true":"");
-
-    const u2p=["www.kayak.de","flights",o+"-"+d,od];
-    if(hasRd)u2p.push(rd);
-    $("u2").href=P+u2p.join(S)+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
-
-    const u3p=["www.momondo.de","flight-search",o+"-"+d,od];
-    if(hasRd)u3p.push(rd);
-    $("u3").href=P+u3p.join(S)+"?sort=price_a"+(ns?"&fs=stops=0":"");
-
-    let u4q="?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT";
-    if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
-    $("u4").href=P+["www.expedia.de","Flights-Search"].join(S)+u4q+"&passengers=adults:1&mode=search";
-
-    let u5q="?from="+o+"&to="+d+"&departure="+od;
-    if(hasRd)u5q+="&return="+rd;
-    $("u5").href=P+"www.kiwi.com"+S+"deep"+u5q;
-  }
-});
-/* === ENDE TRESOR === */
-
-function upd(){
-  const now=new Date();
-  const dtEl=$("dt");
-  dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
-  dtEl.style.setProperty("background-color",cols[ci++%cols.length],"important");
-  const o=code($("i1").value),d=code($("i2").value);
-  const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,lc=$("lc").checked;
-  const badDate=(!ow&&od&&rd&&rd<od);
-  $("rb").classList.toggle("err",badDate);
-  if(o.length===3&&d.length===3&&od){
-    const od6=od.replace(/-/g,"").slice(2);
-    const hasRd=(!ow&&rd&&!badDate);
-    const rd6=hasRd?rd.replace(/-/g,"").slice(2):"";
-    TRESOR.build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6);
-
-    let u6q="?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od;
-    u6q+=(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW");
-    u6q+="&class=Y&quantity=1&sort=price&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
-    $("u6").href=P+["www.trip.com","flights","showfarefirst"].join(S)+u6q;
-  }
-  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
-  try{localStorage.setItem("rk_main",s)}catch(e){}
-}
-(function init(){
-  const today=new Date().toISOString().slice(0,10);
-  $("od").min=today;$("rd").min=today;
-  try{
-    const raw=localStorage.getItem("rk_main");
-    if(raw){
-      const d=JSON.parse(raw);
-      if(d.i1)$("i1").value=d.i1;if(d.i2)$("i2").value=d.i2;
-      if(d.od)$("od").value=d.od;if(d.rd)$("rd").value=d.rd;
-      if(d.ow!==undefined)$("ow").checked=d.ow;
-      if(d.ns!==undefined)$("ns").checked=d.ns;
-      if(d.lc!==undefined)$("lc").checked=d.lc;
-      if(d.hrs)hrs=d.hrs;
-    }
-  }catch(e){}
-  const pct=Math.round(((hrs-1)/35)*100);
-  $("fl").style.width=pct+"%";$("sv").style.left=pct+"%";$("sv").textContent=hrs+"h";
-  ac($("i1"),$("l1"));ac($("i2"),$("l2"));
-  ["i1","i2","od","rd","ow","ns","lc"].forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
-  ["u1","u2","u3","u4","u5","u6"].forEach(id=>{$(id).addEventListener("click",upd);});
-  const sb=$("sb"),tk=$("tk");
-  let drag=false;
-  function move(e){
-    const cx=e.touches?e.touches.at(0).clientX:e.clientX;
-    const r=tk.getBoundingClientRect();
-    let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
-    hrs=Math.round(1+p*35);
-    const pc=Math.round(((hrs-1)/35)*100);
-    $("fl").style.width=pc+"%";$("sv").style.left=pc+"%";$("sv").textContent=hrs+"h";
-    upd();
-  }
-  sb.addEventListener("pointerdown",e=>{drag=true;move(e)});
-  window.addEventListener("pointermove",e=>{if(drag)move(e)});
-  window.addEventListener("pointerup",()=>{drag=false});
-  upd();
-})();
-</script>
-</body>
-
