@@ -25,7 +25,9 @@ border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
 label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#475569}
 input,select{height:40px;padding:0 10px;border:1px solid var(--b);
 border-radius:4px;box-sizing:border-box;font-size:.98rem;background:#fff;
-width:100%}
+width:100%;color:#000}
+.req::placeholder{color:#ff0000;font-weight:bold;opacity:1}
+.req-lbl{color:#ff0000}
 .cpb{display:flex;gap:6px}
 .cpb button{width:46px;height:40px;border:1px solid var(--b);background:#fff;
 border-radius:4px;cursor:pointer;font-size:1.1rem;flex-shrink:0}
@@ -58,8 +60,8 @@ font-size:.88rem}
 </div>
 <div class="f"><label>Abflugdatum des Upgrade-Flugs (ggf. Folgetag!)</label>
 <input type="date" id="u1" min="2026-11-15"></div>
-<div class="f"><label>Airline-Buchungscode (PNR, 6-stellig – gilt für Gesamtbuchung)</label>
-<div class="cpb"><input type="text" id="u3" placeholder="6-stellig (z.B. TW8ZRK)" style="text-transform:uppercase">
+<div class="f"><label class="req-lbl">Airline-Buchungscode (PNR, 6-stellig – Pflichtfeld)</label>
+<div class="cpb"><input type="text" id="u3" class="req" placeholder="PFLICHT: 6-stellig (z.B. TW8ZRK)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u3','Buchungscode')">📋</button></div></div>
 <div class="f"><label>Ticketnummer (13-stellig, z.B. 235-...)</label>
 <div class="cpb"><input type="text" id="u4" placeholder="z.B. 2354817365876">
@@ -67,7 +69,7 @@ font-size:.88rem}
 </div>
 <div class="card">
 <div class="ct">🛂 Passagier, Airline & Upgrade-Limit</div>
-<div class="f"><label>Airline / Reiseveranstalter (Direkt zu „Buchung verwalten“)</label><select id="u5">
+<div class="f"><label class="req-lbl">Airline / Reiseveranstalter (Pflichtfeld)</label><select id="u5">
 <option value="https://turkishairlines.com">Turkish Airlines (Buchung verwalten / Upgrade)</option>
 <option value="https://expedia.de">Expedia (Meine Reisen / PNR ablesen)</option>
 <option value="https://lufthansa.com">Lufthansa (Meine Buchungen)</option>
@@ -82,8 +84,8 @@ font-size:.88rem}
 <option value="https://trip.com?">Trip.com (Meine Buchungen)</option>
 <option value="https://kiwi.com">Kiwi.com (Buchungen)</option>
 </select></div>
-<div class="f"><label>Nachname wie im Reisepass (strikt ohne Vornamen!)</label>
-<div class="cpb"><input type="text" id="u6" placeholder="Nur Nachname (z.B. MÜLLER)" style="text-transform:uppercase">
+<div class="f"><label class="req-lbl">Nachname wie im Reisepass (Pflichtfeld, ohne Vornamen!)</label>
+<div class="cpb"><input type="text" id="u6" class="req" placeholder="PFLICHT: Nur Nachname (z.B. MÜLLER)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
 <div class="f2">
 <div><label>Max. Upgrade-Preis (€)</label>
