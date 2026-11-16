@@ -169,7 +169,8 @@ function ac(inp,box){
     if(!hits.length){box.style.display="none";upd();return;}
     hits.forEach(h=>{
       const p=h.split("|");
-      const c=p[0],n=p[1];
+      const c=p.shift();
+      const n=p.join("");
       const d=document.createElement("div");
       d.textContent=c+" – "+n;
       d.onclick=()=>{inp.value=c+" ("+n+")";box.style.display="none";upd();};
@@ -276,7 +277,7 @@ function upd(){
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
-    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const cx=e.touches?e.touches.item(0).clientX:e.clientX;
     const r=tk.getBoundingClientRect();
     let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
     hrs=Math.round(1+p*35);
