@@ -77,7 +77,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <body>
 <div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
 <div class="cp"><div class="seg" id="dt">15.11.2026</div>
-<div class="seg st">HIN & RÜCK</div>
+<div class="seg st" id="st">HIN & RÜCK</div>
 <a href="upgrade.html" class="seg upg">🎫 Upgrade-Cockpit ➡️</a></div>
 </div>
 <div class="row">
@@ -140,21 +140,9 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 const $=id=>document.getElementById(id);
 const S=String.fromCharCode(47);
 const P="https:"+S+S;
-const ap=[
-  "BER|Berlin Brandenburg","FRA|Frankfurt am Main","MUC|München",
-  "LEJ|Leipzig/Halle","DUS|Düsseldorf","HAM|Hamburg",
-  "DRS|Dresden","STR|Stuttgart","CGN|Köln/Bonn",
-  "VIE|Wien","ZRH|Zürich","IST|Istanbul",
-  "FAO|Faro (Pharo)","CHC|Christchurch",
-  "BKK|Bangkok Suvarnabhumi","DMK|Bangkok Don Mueang","HKT|Phuket",
-  "CNX|Chiang Mai","USM|Koh Samui","KBV|Krabi",
-  "DAD|Da Nang","UIH|Quy Nhon (Qui Nonh)","SGN|Ho-Chi-Minh-Stadt","HAN|Hanoi",
-  "MNL|Manila","CEB|Cebu","DGT|Dumaguete (Dumaquete)","PAG|Pagadian","CRK|Clark",
-  "SIN|Singapur","KUL|Kuala Lumpur","DPS|Denpasar (Bali)",
-  "DXB|Dubai","DOH|Doha","HND|Tokio Haneda","NRT|Tokio Narita"
-];
+const ap="BER|Berlin Brandenburg;FRA|Frankfurt am Main;MUC|München;LEJ|Leipzig/Halle;DUS|Düsseldorf;HAM|Hamburg;DRS|Dresden;STR|Stuttgart;CGN|Köln/Bonn;VIE|Wien;ZRH|Zürich;IST|Istanbul;FAO|Faro (Pharo);CHC|Christchurch;BKK|Bangkok Suvarnabhumi;DMK|Bangkok Don Mueang;HKT|Phuket;CNX|Chiang Mai;USM|Koh Samui;KBV|Krabi;DAD|Da Nang;UIH|Quy Nhon (Qui Nonh);SGN|Ho-Chi-Minh-Stadt;HAN|Hanoi;MNL|Manila;CEB|Cebu;DGT|Dumaguete (Dumaquete);PAG|Pagadian;CRK|Clark;SIN|Singapur;KUL|Kuala Lumpur;DPS|Denpasar (Bali);DXB|Dubai;DOH|Doha;HND|Tokio Haneda;NRT|Tokio Narita".split(";");
 let hrs=14,ci=0;
-const cols=["#2563eb","#7c3aed","#ea580c","#0891b2","#db2777","#15803d"];
+const cols="#2563eb;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");
 function code(v){
   const t=v.trim().toUpperCase();
   if(t.length>=3&&t>="A"&&t<="Z")return t.slice(0,3);
@@ -184,35 +172,35 @@ function ac(inp,box){
 const TRESOR=Object.freeze({
   build(o,d,od,rd,ow,ns,s1,hrs,od6,hasRd,rd6,px){
     const d1="www."+"skyscanner"+".de";
-    const u1p=[d1,"transport","fluge",o.toLowerCase(),d.toLowerCase(),od6];
-    if(rd6)u1p.push(rd6);
+    let u1u=P+d1+S+"transport"+S+"fluge"+S+o.toLowerCase()+S+d.toLowerCase()+S+od6;
+    if(rd6)u1u+=S+rd6;
     let u1s="?adultsv2="+px;
     if(ns)u1s+="&preferdirects=true";
     else if(s1)u1s+="&stops=1";
-    $("u1").href=P+u1p.join(S)+S+u1s;
+    $("u1").href=u1u+S+u1s;
 
     const d2="www."+"kayak"+".de";
-    const u2p=[d2,"flights",o+"-"+d,od];
-    if(hasRd)u2p.push(rd);
-    if(px>1)u2p.push(px+"adults");
+    let u2u=P+d2+S+"flights"+S+o+"-"+d+S+od;
+    if(hasRd)u2u+=S+rd;
+    if(px>1)u2u+=S+px+"adults";
     let u2f="bfc=1;dur=-"+(hrs*60);
     if(ns)u2f="stops=0;"+u2f;
     else if(s1)u2f="stops=-1;"+u2f;
-    $("u2").href=P+u2p.join(S)+"?sort=price_a&fs="+u2f;
+    $("u2").href=u2u+"?sort=price_a&fs="+u2f;
 
     const d3="www."+"momondo"+".de";
-    const u3p=[d3,"flight-search",o+"-"+d,od];
-    if(hasRd)u3p.push(rd);
-    if(px>1)u3p.push(px+"adults");
+    let u3u=P+d3+S+"flight-search"+S+o+"-"+d+S+od;
+    if(hasRd)u3u+=S+rd;
+    if(px>1)u3u+=S+px+"adults";
     let u3f="";
     if(ns)u3f="&fs=stops=0";
     else if(s1)u3f="&fs=stops=-1";
-    $("u3").href=P+u3p.join(S)+"?sort=price_a"+u3f;
+    $("u3").href=u3u+"?sort=price_a"+u3f;
 
     const d4="www."+"expedia"+".de";
     let u4q="?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT";
     if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
-    $("u4").href=P+[d4,"Flights-Search"].join(S)+u4q+"&passengers=adults:"+px+"&mode=search";
+    $("u4").href=P+d4+S+"Flights-Search"+u4q+"&passengers=adults:"+px+"&mode=search";
 
     const d5="www."+"kiwi"+".com";
     let u5q="?from="+o+"&to="+d+"&departure="+od;
@@ -231,6 +219,7 @@ function upd(){
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
   const o=code($("i1").value),d=code($("i2").value);
   const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,s1=$("s1").checked,lc=$("lc").checked;
+  $("st").textContent=ow?"NUR HINFLUG":"HIN & RÜCK";
   const px=parseInt($("px").value,10)||1;
   const badDate=(!ow&&od&&rd&&rd<od);
   $("rb").classList.toggle("err",badDate);
@@ -246,7 +235,7 @@ function upd(){
     u6q+="&class=Y&quantity="+px+"&sort=price&locale=de-DE&curr=EUR";
     if(ns)u6q+="&nonstop=yes";
     else if(s1)u6q+="&stops=1";
-    $("u6").href=P+[d6,"flights","showfarefirst"].join(S)+u6q;
+    $("u6").href=P+d6+S+"flights"+S+"showfarefirst"+u6q;
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,s1,lc,hrs,px});
   try{localStorage.setItem("rk_main",s)}catch(e){}
@@ -273,8 +262,8 @@ function upd(){
   ac($("i1"),$("l1"));ac($("i2"),$("l2"));
   $("ns").addEventListener("change",()=>{if($("ns").checked)$("s1").checked=false;upd();});
   $("s1").addEventListener("change",()=>{if($("s1").checked)$("ns").checked=false;upd();});
-  ["i1","i2","od","rd","ow","lc","px"].forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
-  ["u1","u2","u3","u4","u5","u6"].forEach(id=>{$(id).addEventListener("click",upd);});
+  "i1;i2;od;rd;ow;lc;px".split(";").forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
+  "u1;u2;u3;u4;u5;u6".split(";").forEach(id=>{$(id).addEventListener("click",upd);});
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
@@ -294,3 +283,4 @@ function upd(){
 </script>
 </body>
 </html>
+
