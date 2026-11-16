@@ -90,27 +90,27 @@ font-size:.88rem}
 </select></div>
 <div id="hint" class="hinweis">Benötigt: Buchungscode (PNR) + Nachname</div>
 <div id="f_pnr" class="f"><label>Airline- / Vermittler-Buchungscode (PNR)</label>
-<div class="cpb"><input type="text" id="u3" autocomplete="off" placeholder="PFLICHT: Buchungscode (z.B. TW8ZRK)" style="text-transform:uppercase">
+<div class="cpb"><input type="text" id="u3" autocomplete="new-password" placeholder="PFLICHT: Buchungscode (z.B. TW8ZRK)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u3','Buchungscode')">📋</button></div></div>
 
 <div id="f_fn" class="f"><label>Vorname wie im Reisepass</label>
-<div class="cpb"><input type="text" id="u_fn" autocomplete="off" placeholder="PFLICHT: Vorname (z.B. MAX)" style="text-transform:uppercase">
+<div class="cpb"><input type="text" id="u_fn" autocomplete="new-password" placeholder="PFLICHT: Vorname (z.B. MAX)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u_fn','Vorname')">📋</button></div></div>
 
 <div id="f_ln" class="f"><label>Nachname wie im Reisepass (ohne Vornamen!)</label>
-<div class="cpb"><input type="text" id="u6" autocomplete="off" placeholder="PFLICHT: Nur Nachname (z.B. MUSTERMANN)" style="text-transform:uppercase">
+<div class="cpb"><input type="text" id="u6" autocomplete="new-password" placeholder="PFLICHT: Nur Nachname (z.B. MUSTERMANN)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
 
 <div id="f_mail" class="f"><label>Buchungs-E-Mail / Konto-Login</label>
-<div class="cpb"><input type="email" id="u4" autocomplete="off" placeholder="PFLICHT: E-Mail-Adresse der Buchung">
+<div class="cpb"><input type="email" id="u4" autocomplete="new-password" placeholder="PFLICHT: E-Mail-Adresse der Buchung">
 <button type="button" onclick="cp('u4','E-Mail')">📋</button></div></div>
 
 <div class="f2">
 <div><label class="opt">Ticketnummer (für Notizzettel)</label>
-<div class="cpb"><input type="text" id="u_tk" class="opt" autocomplete="off" placeholder="z.B. 2354817365876">
+<div class="cpb"><input type="tel" id="u_tk" class="opt" autocomplete="new-password" placeholder="z.B. 2354817365876">
 <button type="button" onclick="cp('u_tk','Ticketnummer')">📋</button></div></div>
 <div><label class="opt">Reisepassnummer (für Notizzettel)</label>
-<div class="cpb"><input type="text" id="u_pp" class="opt" autocomplete="off" placeholder="z.B. C01X00T47" style="text-transform:uppercase">
+<div class="cpb"><input type="text" id="u_pp" class="opt" autocomplete="new-password" placeholder="z.B. C01X00T47" style="text-transform:uppercase">
 <button type="button" onclick="cp('u_pp','Reisepass')">📋</button></div></div>
 </div>
 </div>
@@ -155,18 +155,10 @@ function buildNoteHTML(){
         +"<div style='font-weight:bold;color:#991b1b;font-size:14px;margin-bottom:8px;border-bottom:2px solid #991b1b;padding-bottom:4px'>📌 Flug-Spickzettel (Immer oben)</div>"
         +rows+"</body></html>";
 }
-async function openNote(){
+function openNote(){
   const html=buildNoteHTML();
-  if("documentPictureInPicture" in window){
-    try{
-      const pip=await window.documentPictureInPicture.requestWindow({width:310,height:360});
-      pip.document.write(html);
-      pip.document.close();
-      return;
-    }catch(e){}
-  }
-  const w=window.open("","FlugNotiz","width=320,height=380,left=30,top=80,alwaysOnTop=yes");
-  if(w){w.document.write(html);w.document.close();}
+  const w=window.open("","FlugNotiz","width=320,height=390,left=30,top=80");
+  if(w){w.document.open();w.document.write(html);w.document.close();}
 }
 function startAll(){
   sv();
