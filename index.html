@@ -130,6 +130,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
+<script>
 const $=id=>document.getElementById(id);
 const S=String.fromCharCode(47);
 const P="https:"+S+S;
@@ -149,19 +150,20 @@ const ap=[
 let hrs=14,ci=0;
 const cols=["#2563eb","#7c3aed","#ea580c","#0891b2","#db2777","#15803d"];
 function code(v){
-  const m=v.trim().toUpperCase().match(/\b([A-Z]{3})\b/);
-  return m?m.at(1):v.trim().toUpperCase().slice(0,3);
+  const t=v.trim().toUpperCase();
+  if(t.length>=3&&t[0]>="A"&&t[0]<="Z"&&t[1]>="A"&&t[1]<="Z"&&t[2]>="A"&&t[2]<="Z")return t.slice(0,3);
+  return "";
 }
 function ac(inp,box){
   inp.addEventListener("input",()=>{
     const q=inp.value.trim().toLowerCase();
     box.innerHTML="";
     if(!q){box.style.display="none";upd();return;}
-    const hits=ap.filter(x=>x.toLowerCase().includes(q));
+    const hits=ap.filter(x=>x.toLowerCase().indexOf(q)!==-1);
     if(!hits.length){box.style.display="none";upd();return;}
     hits.forEach(h=>{
       const p=h.split("|");
-      const c=p.at(0),n=p.at(1);
+      const c=p[0],n=p[1];
       const d=document.createElement("div");
       d.textContent=c+" – "+n;
       d.onclick=()=>{inp.value=c+" ("+n+")";box.style.display="none";upd();};
@@ -214,9 +216,9 @@ function upd(){
   const badDate=(!ow&&od&&rd&&rd<od);
   $("rb").classList.toggle("err",badDate);
   if(o.length===3&&d.length===3&&od){
-    const od6=od.replace(/-/g,"").slice(2);
+    const od6=od.split("-").join("").slice(2);
     const hasRd=(!ow&&rd&&!badDate);
-    const rd6=hasRd?rd.replace(/-/g,"").slice(2):"";
+    const rd6=hasRd?rd.split("-").join("").slice(2):"";
     TRESOR.build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6,px);
 
     const d6="www."+"trip"+".com";
@@ -252,7 +254,7 @@ function upd(){
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
-    const cx=e.touches?e.touches.at(0).clientX:e.clientX;
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
     const r=tk.getBoundingClientRect();
     let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
     hrs=Math.round(1+p*35);
