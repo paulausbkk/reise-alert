@@ -48,6 +48,7 @@ font-size:.88rem}
 <div class="ct">1️⃣ Airline / Veranstalter wählen</div>
 <div class="f"><label>Airline / Reiseveranstalter</label>
 <select id="u5">
+<optgroup label="✈️ Airlines">
 <option value="pnr_ln|https://turkishairlines.com">Turkish Airlines</option>
 <option value="pnr_ln|https://lufthansa.com">Lufthansa</option>
 <option value="pnr_ln|https://qatarairways.com">Qatar Airways</option>
@@ -61,13 +62,21 @@ font-size:.88rem}
 <option value="pnr_ln|https://bangkokair.com">Bangkok Airways</option>
 <option value="pnr_fn_ln|https://vietjetair.com">VietJet Air (Low-Cost Asien)</option>
 <option value="mail_pnr|https://airasia.com">AirAsia (Low-Cost Asien)</option>
+</optgroup>
+<optgroup label="🧳 Reisevermittler & Portale">
+<option value="mail_pnr|https://gotogate.de">Gotogate (Meine Buchungen)</option>
 <option value="mail_only|https://expedia.de">Expedia (Reiseplan)</option>
 <option value="mail_pnr|https://trip.com?">Trip.com (Buchungen)</option>
 <option value="mail_only|https://kiwi.com">Kiwi.com (Buchungen)</option>
+<option value="mail_only|https://skyscanner.de">Skyscanner (Mein Konto)</option>
+<option value="mail_only|https://kayak.de">Kayak (Trips)</option>
+<option value="mail_only|https://momondo.de">Momondo (Trips)</option>
+<option value="mail_pnr|https://opodo.de">Opodo (Meine Reisen)</option>
+</optgroup>
 </select></div>
 <div id="hint" class="hinweis">Benötigt: 6-stelliger Buchungscode (PNR) + Nachname</div>
-<div id="f_pnr" class="f"><label>Airline-Buchungscode (PNR, 6-stellig)</label>
-<div class="cpb"><input type="text" id="u3" placeholder="PFLICHT: 6-stellig (z.B. TW8ZRK)" style="text-transform:uppercase">
+<div id="f_pnr" class="f"><label>Airline- / Vermittler-Buchungscode (PNR)</label>
+<div class="cpb"><input type="text" id="u3" placeholder="PFLICHT: Buchungscode (z.B. TW8ZRK)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u3','Buchungscode')">📋</button></div></div>
 
 <div id="f_fn" class="f" style="display:none"><label>Vorname wie im Reisepass</label>
@@ -86,7 +95,7 @@ font-size:.88rem}
 <div class="bb">
 <a id="go" href="https://turkishairlines.com"
 target="_blank" onclick="cpAuto()" class="btn">
-🚀 Buchung bei Airline öffnen (Code wird kopiert)</a>
+🚀 Buchung bei Anbieter öffnen (Code wird kopiert)</a>
 <div id="ts"></div>
 </div>
 
@@ -113,10 +122,10 @@ function sv(){
   $("f_fn").style.display=(mode==="pnr_fn_ln")?"flex":"none";
   $("f_ln").style.display=(mode==="pnr_ln"||mode==="pnr_fn_ln")?"flex":"none";
   $("f_mail").style.display=(mode==="mail_pnr"||mode==="mail_only")?"flex":"none";
-  if(mode==="pnr_ln")$("hint").textContent="Benötigt: 6-stelliger Buchungscode (PNR) + Nachname";
-  if(mode==="pnr_fn_ln")$("hint").textContent="Benötigt (VietJet): Buchungscode (PNR) + Vorname + Nachname";
-  if(mode==="mail_pnr")$("hint").textContent="Benötigt: Buchungs-E-Mail (Konto) + Buchungscode (PNR)";
-  if(mode==="mail_only")$("hint").textContent="Benötigt: Login mit deiner Buchungs-E-Mail beim Veranstalter";
+  if(mode==="pnr_ln")$("hint").textContent="Benötigt: Buchungscode (PNR) + Nachname";
+  if(mode==="pnr_fn_ln")$("hint").textContent="Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
+  if(mode==="mail_pnr")$("hint").textContent="Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
+  if(mode==="mail_only")$("hint").textContent="Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
   const d={};keys.forEach(k=>d[k]=$(k).value);
   try{localStorage.setItem("rk_upg",JSON.stringify(d))}catch(e){}
 }
