@@ -42,7 +42,7 @@ border-radius:8px;padding:15px;display:flex;flex-direction:column;gap:10px}
 .btn{display:flex;align-items:center;justify-content:center;height:48px;
 background:var(--v);color:#fff;font-weight:bold;border-radius:6px;
 font-size:.95rem;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none}
-.btn.note{background:#1e293b;height:42px;font-size:.85rem}
+.btn.note{background:#1e293b;height:44px;font-size:.9rem}
 .hinweis{background:#fff;border:1px solid var(--r);color:#991b1b;
 padding:8px 12px;border-radius:4px;font-size:.85rem;margin-bottom:14px;font-weight:bold}
 #ts{display:none;background:#dcfce7;border:1px solid var(--v);
@@ -107,8 +107,8 @@ font-size:.88rem}
 
 <div class="f2">
 <div><label class="opt">Ticketnummer (für Notizzettel)</label>
-<div class="cpb"><input type="tel" id="u_ticket" class="opt" autocomplete="off" placeholder="z.B. 2354817365876">
-<button type="button" onclick="cp('u_ticket','Ticketnummer')">📋</button></div></div>
+<div class="cpb"><input type="text" id="u_tknr" class="opt" autocomplete="off" placeholder="z.B. 2354817365876">
+<button type="button" onclick="cp('u_tknr','Ticketnummer')">📋</button></div></div>
 <div><label class="opt">Reisepassnummer (für Notizzettel)</label>
 <div class="cpb"><input type="text" id="u_pp" class="opt" autocomplete="off" placeholder="z.B. C01X00T47" style="text-transform:uppercase">
 <button type="button" onclick="cp('u_pp','Reisepass')">📋</button></div></div>
@@ -116,16 +116,16 @@ font-size:.88rem}
 </div>
 
 <div class="bb">
-<a id="go" href="https://turkishairlines.com" target="_blank" onclick="openNote()" class="btn">
-🚀 Airline öffnen + Schwebenden Notizzettel starten</a>
 <button type="button" onclick="openNote()" class="btn note">
-📌 Nur schwebenden Notizzettel öffnen</button>
+📌 1. Schwebenden Notizzettel öffnen</button>
+<a id="go" href="https://turkishairlines.com" target="_blank" class="btn">
+🚀 2. Airline-Seite öffnen</a>
 <div id="ts"></div>
 </div>
 
 <script>
 const $=id=>document.getElementById(id);
-const keys="u_fn;u3;u4;u5;u6;u_ticket;u_pp".split(";");
+const keys="u_fn;u3;u4;u5;u6;u_tknr;u_pp".split(";");
 let ci=0;
 const cols="#2563eb;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");
 function cp(id,lbl){
@@ -135,7 +135,7 @@ function cp(id,lbl){
   $("ts").style.display="block"}catch(e){}
 }
 function buildNoteHTML(){
-  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_ticket;Pass-Nr.|u_pp".split(";");
+  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
   let rows="";
   items.forEach(it=>{
     const p=it.split("|");
@@ -169,8 +169,7 @@ function sv(){
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
   const parts=$("u5").value.split("|");
   const mode=parts.shift();
-  const url=parts.join("|");
-  $("go").href=url;
+  $("go").href=parts.join("|");
   $("f_pnr").classList.toggle("off",mode==="mail_only");
   $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
   $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
