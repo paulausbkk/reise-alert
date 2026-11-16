@@ -12,13 +12,20 @@ color:var(--t)}
 border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px;
 flex-wrap:wrap;gap:10px}
 .tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
-.bk{background:#1e293b;color:#fff;text-decoration:none;padding:8px 14px;
-border-radius:6px;font-weight:bold;font-size:.85rem}
+.cp{display:flex;gap:6px;background:#1e293b;padding:4px;border-radius:6px;
+align-items:center}
+.seg{font-size:.75rem;padding:6px 10px;border-radius:4px;font-weight:bold;
+color:#fff;text-transform:uppercase;background:var(--v);text-decoration:none}
+.bk{background:#475569}
 .card{max-width:650px;margin:0 auto 20px auto;border:2px solid var(--r);
 border-radius:8px;padding:20px;background:#fef2f2;box-sizing:border-box}
 .ct{font-weight:bold;font-size:1.1rem;color:var(--r);
 border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
-.f{margin-bottom:14px;display:flex;flex-direction:column}
+.f{margin-bottom:14px;display:flex;flex-direction:column;transition:.2s}
+.f.off{opacity:.35;pointer-events:none}
+.f.off input{background:#cbd5e1!important}
+.f.off label{color:#64748b!important}
+.f.off input::placeholder{color:#64748b!important}
 label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#ff0000}
 input,select{height:40px;padding:0 10px;border:1px solid var(--b);
 border-radius:4px;box-sizing:border-box;font-size:.98rem;background:#fff;
@@ -42,7 +49,10 @@ font-size:.88rem}
 <body>
 <div class="hdr">
 <h1 class="tit">✈️ Flugcockpit – Meine Buchungen</h1>
-<a href="index.html" class="bk">⬅️ Zurück zur Flugsuche</a>
+<div class="cp">
+<div class="seg" id="dt">16.11.2026</div>
+<a href="index.html" class="seg bk">⬅️ Zurück zur Flugsuche</a>
+</div>
 </div>
 <div class="card">
 <div class="ct">1️⃣ Airline / Veranstalter wählen</div>
@@ -74,20 +84,20 @@ font-size:.88rem}
 <option value="mail_pnr|https://opodo.de">Opodo (Meine Reisen)</option>
 </optgroup>
 </select></div>
-<div id="hint" class="hinweis">Benötigt: 6-stelliger Buchungscode (PNR) + Nachname</div>
+<div id="hint" class="hinweis">Benötigt: Buchungscode (PNR) + Nachname</div>
 <div id="f_pnr" class="f"><label>Airline- / Vermittler-Buchungscode (PNR)</label>
 <div class="cpb"><input type="text" id="u3" placeholder="PFLICHT: Buchungscode (z.B. TW8ZRK)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u3','Buchungscode')">📋</button></div></div>
 
-<div id="f_fn" class="f" style="display:none"><label>Vorname wie im Reisepass</label>
-<div class="cpb"><input type="text" id="u1" placeholder="PFLICHT: Vorname (z.B. MAX)" style="text-transform:uppercase">
-<button type="button" onclick="cp('u1','Vorname')">📋</button></div></div>
+<div id="f_fn" class="f"><label>Vorname wie im Reisepass</label>
+<div class="cpb"><input type="text" id="u_fn" placeholder="PFLICHT: Vorname (z.B. MAX)" style="text-transform:uppercase">
+<button type="button" onclick="cp('u_fn','Vorname')">📋</button></div></div>
 
 <div id="f_ln" class="f"><label>Nachname wie im Reisepass (ohne Vornamen!)</label>
 <div class="cpb"><input type="text" id="u6" placeholder="PFLICHT: Nur Nachname (z.B. MÜLLER)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
 
-<div id="f_mail" class="f" style="display:none"><label>Buchungs-E-Mail / Konto-Login</label>
+<div id="f_mail" class="f"><label>Buchungs-E-Mail / Konto-Login</label>
 <div class="cpb"><input type="email" id="u4" placeholder="PFLICHT: E-Mail-Adresse der Buchung">
 <button type="button" onclick="cp('u4','E-Mail')">📋</button></div></div>
 </div>
@@ -101,7 +111,9 @@ target="_blank" onclick="cpAuto()" class="btn">
 
 <script>
 const $=id=>document.getElementById(id);
-const keys="u1;u3;u4;u5;u6".split(";");
+const keys="u_fn;u3;u4;u5;u6".split(";");
+let ci=0;
+const cols="#2563eb;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");
 function cp(id,lbl){
   const v=$(id).value.trim();if(!v)return;
   try{navigator.clipboard.writeText(v);
@@ -112,16 +124,22 @@ function cpAuto(){
   const mode=$("u5").value.split("|").shift();
   if(mode==="mail_only")cp("u4","E-Mail");
   else cp("u3","Buchungscode");
+  sv();
 }
 function sv(){
+  const now=new Date();
+  const dtEl=$("dt");
+  dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
+  const idx=ci++%cols.length;
+  dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
   const parts=$("u5").value.split("|");
   const mode=parts.shift();
   const url=parts.join("|");
   $("go").href=url;
-  $("f_pnr").style.display=(mode==="mail_only")?"none":"flex";
-  $("f_fn").style.display=(mode==="pnr_fn_ln")?"flex":"none";
-  $("f_ln").style.display=(mode==="pnr_ln"||mode==="pnr_fn_ln")?"flex":"none";
-  $("f_mail").style.display=(mode==="mail_pnr"||mode==="mail_only")?"flex":"none";
+  $("f_pnr").classList.toggle("off",mode==="mail_only");
+  $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
+  $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
+  $("f_mail").classList.toggle("off",mode!=="mail_pnr"&&mode!=="mail_only");
   if(mode==="pnr_ln")$("hint").textContent="Benötigt: Buchungscode (PNR) + Nachname";
   if(mode==="pnr_fn_ln")$("hint").textContent="Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
   if(mode==="mail_pnr")$("hint").textContent="Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
