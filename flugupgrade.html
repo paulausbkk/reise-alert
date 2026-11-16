@@ -66,7 +66,7 @@ font-size:.88rem}
 <button type="button" onclick="cp('u4','Ticketnummer')">📋</button></div></div>
 </div>
 <div class="card">
-<div class="ct">🛂 Passagier & Airline / Veranstalter</div>
+<div class="ct">🛂 Passagier, Airline & Upgrade-Limit</div>
 <div class="f"><label>Airline / Reiseveranstalter (Direkt zu „Buchung verwalten“)</label><select id="u5">
 <option value="https://turkishairlines.com">Turkish Airlines (Buchung verwalten / Upgrade)</option>
 <option value="https://expedia.de">Expedia (Meine Reisen / PNR ablesen)</option>
@@ -85,18 +85,24 @@ font-size:.88rem}
 <div class="f"><label>Nachname wie im Reisepass (strikt ohne Vornamen!)</label>
 <div class="cpb"><input type="text" id="u6" placeholder="Nur Nachname (z.B. MÜLLER)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
+<div class="f2">
+<div><label>Max. Upgrade-Preis (€)</label>
+<input type="number" id="u10" placeholder="z.B. 450"></div>
+<div><label>Vorhandene Meilen / Budget</label>
+<input type="number" id="u11" placeholder="z.B. 35000"></div>
+</div>
 </div>
 </div>
 <div class="bb">
 <a id="go" href="https://turkishairlines.com"
 target="_blank" onclick="cp('u3','Buchungscode')" class="btn">
 🚀 Upgrade & Buchung bei Airline prüfen</a>
-<div id="info" class="info">💡 Tipp: Bei der Airline mit PNR + Nachname einloggen und dort gezielt das Langstrecken-Segment für das Upgrade auswählen.</div>
+<div id="info" class="info">💡 Tipp: Bei der Airline unter „Buchung verwalten“ PNR + Nachname eingeben und gezielt das Langstrecken-Segment wählen.</div>
 <div id="ts"></div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
-const keys="u1;u2;u3;u4;u5;u6;u8;u9".split(";");
+const keys="u1;u2;u3;u4;u5;u6;u8;u9;u10;u11".split(";");
 function cp(id,lbl){
   const v=$(id).value.trim();if(!v)return;
   try{navigator.clipboard.writeText(v);
@@ -107,10 +113,15 @@ function sv(){
   $("go").href=$("u5").value;
   const seg=$("u8").value.trim().toUpperCase();
   const fnr=$("u9").value.trim().toUpperCase();
-  if(seg||fnr){
-    $("info").innerHTML="🎯 <b>Upgrade-Fokus:</b> "+(seg||"Teilstrecke")+(fnr?" ("+fnr+")":"")+" – bei der Airline PNR & Nachname eingeben und dieses Segment wählen.";
+  const prc=$("u10").value.trim();
+  const mls=$("u11").value.trim();
+  let txt="🎯 <b>Upgrade-Fokus:</b> "+(seg||"Langstrecke")+(fnr?" ("+fnr+")":"");
+  if(prc)txt+=" • <b>Limit:</b> max. "+prc+" €";
+  if(mls)txt+=" • <b>Meilen:</b> "+mls;
+  if(seg||fnr||prc||mls){
+    $("info").innerHTML=txt+" – bei der Airline PNR & Nachname eingeben.";
   }else{
-    $("info").textContent="💡 Tipp: Bei der Airline mit PNR + Nachname einloggen und dort gezielt das Langstrecken-Segment für das Upgrade auswählen.";
+    $("info").textContent="💡 Tipp: Bei der Airline unter „Buchung verwalten“ PNR + Nachname eingeben und gezielt das Langstrecken-Segment wählen.";
   }
   const d={};keys.forEach(k=>d[k]=$(k).value);
   const s=JSON.stringify(d);
