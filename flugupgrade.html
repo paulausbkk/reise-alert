@@ -90,34 +90,34 @@ font-size:.88rem}
 </select></div>
 <div id="hint" class="hinweis">Benötigt: Buchungscode (PNR) + Nachname</div>
 <div id="f_pnr" class="f"><label>Airline- / Vermittler-Buchungscode (PNR)</label>
-<div class="cpb"><input type="text" id="u3" autocomplete="new-password" placeholder="PFLICHT: Buchungscode (z.B. TW8ZRK)" style="text-transform:uppercase">
+<div class="cpb"><input type="text" id="u3" autocomplete="off" placeholder="PFLICHT: Buchungscode (z.B. TW8ZRK)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u3','Buchungscode')">📋</button></div></div>
 
 <div id="f_fn" class="f"><label>Vorname wie im Reisepass</label>
-<div class="cpb"><input type="text" id="u_fn" autocomplete="new-password" placeholder="PFLICHT: Vorname (z.B. MAX)" style="text-transform:uppercase">
+<div class="cpb"><input type="text" id="u_fn" autocomplete="off" placeholder="PFLICHT: Vorname (z.B. MAX)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u_fn','Vorname')">📋</button></div></div>
 
 <div id="f_ln" class="f"><label>Nachname wie im Reisepass (ohne Vornamen!)</label>
-<div class="cpb"><input type="text" id="u6" autocomplete="new-password" placeholder="PFLICHT: Nur Nachname (z.B. MUSTERMANN)" style="text-transform:uppercase">
+<div class="cpb"><input type="text" id="u6" autocomplete="off" placeholder="PFLICHT: Nur Nachname (z.B. MUSTERMANN)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
 
 <div id="f_mail" class="f"><label>Buchungs-E-Mail / Konto-Login</label>
-<div class="cpb"><input type="email" id="u4" autocomplete="new-password" placeholder="PFLICHT: E-Mail-Adresse der Buchung">
+<div class="cpb"><input type="email" id="u4" autocomplete="off" placeholder="PFLICHT: E-Mail-Adresse der Buchung">
 <button type="button" onclick="cp('u4','E-Mail')">📋</button></div></div>
 
 <div class="f2">
 <div><label class="opt">Ticketnummer (für Notizzettel)</label>
-<div class="cpb"><input type="tel" id="u_tk" class="opt" autocomplete="new-password" placeholder="z.B. 2354817365876">
-<button type="button" onclick="cp('u_tk','Ticketnummer')">📋</button></div></div>
+<div class="cpb"><input type="tel" id="u_ticket" class="opt" autocomplete="off" placeholder="z.B. 2354817365876">
+<button type="button" onclick="cp('u_ticket','Ticketnummer')">📋</button></div></div>
 <div><label class="opt">Reisepassnummer (für Notizzettel)</label>
-<div class="cpb"><input type="text" id="u_pp" class="opt" autocomplete="new-password" placeholder="z.B. C01X00T47" style="text-transform:uppercase">
+<div class="cpb"><input type="text" id="u_pp" class="opt" autocomplete="off" placeholder="z.B. C01X00T47" style="text-transform:uppercase">
 <button type="button" onclick="cp('u_pp','Reisepass')">📋</button></div></div>
 </div>
 </div>
 
 <div class="bb">
-<button type="button" onclick="startAll()" class="btn">
-🚀 Airline öffnen + Schwebenden Notizzettel starten</button>
+<a id="go" href="https://turkishairlines.com" target="_blank" onclick="openNote()" class="btn">
+🚀 Airline öffnen + Schwebenden Notizzettel starten</a>
 <button type="button" onclick="openNote()" class="btn note">
 📌 Nur schwebenden Notizzettel öffnen</button>
 <div id="ts"></div>
@@ -125,7 +125,7 @@ font-size:.88rem}
 
 <script>
 const $=id=>document.getElementById(id);
-const keys="u_fn;u3;u4;u5;u6;u_tk;u_pp".split(";");
+const keys="u_fn;u3;u4;u5;u6;u_ticket;u_pp".split(";");
 let ci=0;
 const cols="#2563eb;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");
 function cp(id,lbl){
@@ -135,7 +135,7 @@ function cp(id,lbl){
   $("ts").style.display="block"}catch(e){}
 }
 function buildNoteHTML(){
-  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tk;Pass-Nr.|u_pp".split(";");
+  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_ticket;Pass-Nr.|u_pp".split(";");
   let rows="";
   items.forEach(it=>{
     const p=it.split("|");
@@ -156,17 +156,10 @@ function buildNoteHTML(){
         +rows+"</body></html>";
 }
 function openNote(){
+  sv();
   const html=buildNoteHTML();
   const w=window.open("","FlugNotiz","width=320,height=390,left=30,top=80");
   if(w){w.document.open();w.document.write(html);w.document.close();}
-}
-function startAll(){
-  sv();
-  const parts=$("u5").value.split("|");
-  parts.shift();
-  const url=parts.join("|");
-  openNote();
-  window.open(url,"_blank");
 }
 function sv(){
   const now=new Date();
@@ -176,6 +169,8 @@ function sv(){
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
   const parts=$("u5").value.split("|");
   const mode=parts.shift();
+  const url=parts.join("|");
+  $("go").href=url;
   $("f_pnr").classList.toggle("off",mode==="mail_only");
   $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
   $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
