@@ -67,27 +67,24 @@ font-size:.88rem}
 </div>
 <div class="card">
 <div class="ct">🛂 Passagier & Airline / Veranstalter</div>
-<div class="f"><label>Airline / Reiseveranstalter</label><select id="u5">
-<option value="https://turkishairlines.com">Turkish Airlines (Direkt-Upgrade / Buchung)</option>
-<option value="https://expedia.de">Expedia (Reiseplan / PNR ablesen)</option>
-<option value="https://lufthansa.com">Lufthansa</option>
-<option value="https://qatarairways.com">Qatar Airways</option>
-<option value="https://emirates.com">Emirates</option>
-<option value="https://singaporeair.com">Singapore Airlines</option>
-<option value="https://thaiairways.com">Thai Airways</option>
-<option value="https://cathaypacific.com">Cathay Pacific</option>
-<option value="https://philippineairlines.com">Philippine Airlines</option>
-<option value="https://cebupacificair.com">Cebu Pacific</option>
-<option value="https://airasia.com">AirAsia</option>
-<option value="https://trip.com">Trip.com (Veranstalter)</option>
-<option value="https://kiwi.com">Kiwi.com (Veranstalter)</option>
+<div class="f"><label>Airline / Reiseveranstalter (Direkt zu „Buchung verwalten“)</label><select id="u5">
+<option value="https://turkishairlines.com">Turkish Airlines (Buchung verwalten / Upgrade)</option>
+<option value="https://expedia.de">Expedia (Meine Reisen / PNR ablesen)</option>
+<option value="https://lufthansa.com">Lufthansa (Meine Buchungen)</option>
+<option value="https://qatarairways.com">Qatar Airways (Manage Booking)</option>
+<option value="https://emirates.com">Emirates (Manage Booking)</option>
+<option value="https://singaporeair.com">Singapore Airlines (Manage Booking)</option>
+<option value="https://thaiairways.com">Thai Airways (My Booking)</option>
+<option value="https://cathaypacific.com">Cathay Pacific (Manage Booking)</option>
+<option value="https://philippineairlines.com">Philippine Airlines (Manage Booking)</option>
+<option value="https://cebupacificair.com">Cebu Pacific (Manage Booking)</option>
+<option value="https://airasia.com">AirAsia (My Bookings)</option>
+<option value="https://trip.com?">Trip.com (Meine Buchungen)</option>
+<option value="https://kiwi.com">Kiwi.com (Buchungen)</option>
 </select></div>
 <div class="f"><label>Nachname wie im Reisepass (strikt ohne Vornamen!)</label>
 <div class="cpb"><input type="text" id="u6" placeholder="Nur Nachname (z.B. MÜLLER)" style="text-transform:uppercase">
 <button type="button" onclick="cp('u6','Nachname')">📋</button></div></div>
-<div class="f"><label>Reisepassnummer (Optional)</label>
-<div class="cpb"><input type="text" id="u7" placeholder="Passnummer" style="text-transform:uppercase">
-<button type="button" onclick="cp('u7','Passnummer')">📋</button></div></div>
 </div>
 </div>
 <div class="bb">
@@ -99,7 +96,7 @@ target="_blank" onclick="cp('u3','Buchungscode')" class="btn">
 </div>
 <script>
 const $=id=>document.getElementById(id);
-const keys=["u1","u2","u3","u4","u5","u6","u7","u8","u9"];
+const keys="u1;u2;u3;u4;u5;u6;u8;u9".split(";");
 function cp(id,lbl){
   const v=$(id).value.trim();if(!v)return;
   try{navigator.clipboard.writeText(v);
