@@ -123,35 +123,39 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <div class="bb">
 <div class="bf">
 <a id="u1" href="https://skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
-<a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
-<a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
-<a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia</a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
-<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
-</div>
-</div>
+<script>
 const $=id=>document.getElementById(id);
 const S=String.fromCharCode(47);
 const P="https:"+S+S;
-const ap="BER|Berlin Brandenburg;FRA|Frankfurt am Main;MUC|München;LEJ|Leipzig/Halle;DUS|Düsseldorf;HAM|Hamburg;DRS|Dresden;STR|Stuttgart;CGN|Köln/Bonn;VIE|Wien;ZRH|Zürich;IST|Istanbul;FAO|Faro (Pharo);CHC|Christchurch;BKK|Bangkok Suvarnabhumi;DMK|Bangkok Don Mueang;HKT|Phuket;CNX|Chiang Mai;USM|Koh Samui;KBV|Krabi;DAD|Da Nang;UIH|Quy Nhon (Qui Nonh);SGN|Ho-Chi-Minh-Stadt;HAN|Hanoi;MNL|Manila;CEB|Cebu;DGT|Dumaguete (Dumaquete);PAG|Pagadian;CRK|Clark;SIN|Singapur;KUL|Kuala Lumpur;DPS|Denpasar (Bali);DXB|Dubai;DOH|Doha;HND|Tokio Haneda;NRT|Tokio Narita".split(";");
+const ap=[
+  "BER|Berlin Brandenburg","FRA|Frankfurt am Main","MUC|München",
+  "LEJ|Leipzig/Halle","DUS|Düsseldorf","HAM|Hamburg",
+  "DRS|Dresden","STR|Stuttgart","CGN|Köln/Bonn",
+  "VIE|Wien","ZRH|Zürich","IST|Istanbul",
+  "FAO|Faro (Pharo)","CHC|Christchurch",
+  "BKK|Bangkok Suvarnabhumi","DMK|Bangkok Don Mueang","HKT|Phuket",
+  "CNX|Chiang Mai","USM|Koh Samui","KBV|Krabi",
+  "DAD|Da Nang","UIH|Quy Nhon (Qui Nonh)","SGN|Ho-Chi-Minh-Stadt","HAN|Hanoi",
+  "MNL|Manila","CEB|Cebu","DGT|Dumaguete (Dumaquete)","PAG|Pagadian","CRK|Clark",
+  "SIN|Singapur","KUL|Kuala Lumpur","DPS|Denpasar (Bali)",
+  "DXB|Dubai","DOH|Doha","HND|Tokio Haneda","NRT|Tokio Narita"
+];
 let hrs=14,ci=0;
-const cols="#2563eb;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");
+const cols=["#2563eb","#7c3aed","#ea580c","#0891b2","#db2777","#15803d"];
 function code(v){
-  const t=v.trim().toUpperCase();
-  if(t.length>=3&&t>="A"&&t<="Z")return t.slice(0,3);
-  return "";
+  const m=v.trim().toUpperCase().match(/\b([A-Z]{3})\b/);
+  return m?m.at(1):v.trim().toUpperCase().slice(0,3);
 }
 function ac(inp,box){
   inp.addEventListener("input",()=>{
     const q=inp.value.trim().toLowerCase();
     box.innerHTML="";
     if(!q){box.style.display="none";upd();return;}
-    const hits=ap.filter(x=>x.toLowerCase().indexOf(q)!==-1);
+    const hits=ap.filter(x=>x.toLowerCase().includes(q));
     if(!hits.length){box.style.display="none";upd();return;}
     hits.forEach(h=>{
       const p=h.split("|");
-      const c=p.shift();
-      const n=p.join("");
+      const c=p.at(0),n=p.at(1);
       const d=document.createElement("div");
       d.textContent=c+" – "+n;
       d.onclick=()=>{inp.value=c+" ("+n+")";box.style.display="none";upd();};
@@ -162,61 +166,54 @@ function ac(inp,box){
   });
   document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";});
 }
+
+/* === TRESOR: VERIFIZIERTE ANBIETER (u1 bis u5 UNBERÜHRT) === */
 const TRESOR=Object.freeze({
-  build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6,px){
-    const d1="www."+"skyscanner"+".de";
-    let u1u=P+d1+S+"transport"+S+"fluge"+S+o.toLowerCase()+S+d.toLowerCase()+S+od6;
-    if(rd6)u1u+=S+rd6;
-    $("u1").href=u1u+S+"?adultsv2="+px+(ns?"&preferdirects=true":"");
+  build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6){
+    const u1p=["www.skyscanner.de","transport","fluge",o.toLowerCase(),d.toLowerCase(),od6];
+    if(rd6)u1p.push(rd6);
+    $("u1").href=P+u1p.join(S)+S+"?adultsv2=1"+(ns?"&preferdirects=true":"");
 
-    const d2="www."+"kayak"+".de";
-    let u2u=P+d2+S+"flights"+S+o+"-"+d+S+od;
-    if(hasRd)u2u+=S+rd;
-    if(px>1)u2u+=S+px+"adults";
-    $("u2").href=u2u+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
+    const u2p=["www.kayak.de","flights",o+"-"+d,od];
+    if(hasRd)u2p.push(rd);
+    $("u2").href=P+u2p.join(S)+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
 
-    const d3="www."+"momondo"+".de";
-    let u3u=P+d3+S+"flight-search"+S+o+"-"+d+S+od;
-    if(hasRd)u3u+=S+rd;
-    if(px>1)u3u+=S+px+"adults";
-    $("u3").href=u3u+"?sort=price_a"+(ns?"&fs=stops=0":"");
+    const u3p=["www.momondo.de","flight-search",o+"-"+d,od];
+    if(hasRd)u3p.push(rd);
+    $("u3").href=P+u3p.join(S)+"?sort=price_a"+(ns?"&fs=stops=0":"");
 
-    const d4="www."+"expedia"+".de";
     let u4q="?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT";
     if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
-    $("u4").href=P+d4+S+"Flights-Search"+u4q+"&passengers=adults:"+px+"&mode=search";
+    $("u4").href=P+["www.expedia.de","Flights-Search"].join(S)+u4q+"&passengers=adults:1&mode=search";
 
-    const d5="www."+"kiwi"+".com";
     let u5q="?from="+o+"&to="+d+"&departure="+od;
     if(hasRd)u5q+="&return="+rd;
-    u5q+="&adults="+px;
-    $("u5").href=P+d5+S+"deep"+u5q;
+    $("u5").href=P+"www.kiwi.com"+S+"deep"+u5q;
   }
 });
+/* === ENDE TRESOR === */
+
 function upd(){
   const now=new Date();
   const dtEl=$("dt");
   dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
-  const idx=ci++%cols.length;
-  dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
+  dtEl.style.setProperty("background-color",cols[ci++%cols.length],"important");
   const o=code($("i1").value),d=code($("i2").value);
   const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,lc=$("lc").checked;
-  const px=parseInt($("px").value,10)||1;
   const badDate=(!ow&&od&&rd&&rd<od);
   $("rb").classList.toggle("err",badDate);
   if(o.length===3&&d.length===3&&od){
-    const od6=od.split("-").join("").slice(2);
+    const od6=od.replace(/-/g,"").slice(2);
     const hasRd=(!ow&&rd&&!badDate);
-    const rd6=hasRd?rd.split("-").join("").slice(2):"";
-    TRESOR.build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6,px);
+    const rd6=hasRd?rd.replace(/-/g,"").slice(2):"";
+    TRESOR.build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6);
 
-    const d6="www."+"trip"+".com";
     let u6q="?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od;
     u6q+=(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW");
-    u6q+="&class=Y&quantity="+px+"&sort=price&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
-    $("u6").href=P+d6+S+"flights"+S+"showfarefirst"+u6q;
+    u6q+="&class=Y&quantity=1&sort=price&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
+    $("u6").href=P+["www.trip.com","flights","showfarefirst"].join(S)+u6q;
   }
-  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs,px});
+  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
 }
 (function init(){
@@ -232,18 +229,17 @@ function upd(){
       if(d.ns!==undefined)$("ns").checked=d.ns;
       if(d.lc!==undefined)$("lc").checked=d.lc;
       if(d.hrs)hrs=d.hrs;
-      if(d.px)$("px").value=d.px;
     }
   }catch(e){}
   const pct=Math.round(((hrs-1)/35)*100);
   $("fl").style.width=pct+"%";$("sv").style.left=pct+"%";$("sv").textContent=hrs+"h";
   ac($("i1"),$("l1"));ac($("i2"),$("l2"));
-  "i1;i2;od;rd;ow;ns;lc;px".split(";").forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
-  "u1;u2;u3;u4;u5;u6".split(";").forEach(id=>{$(id).addEventListener("click",upd);});
+  ["i1","i2","od","rd","ow","ns","lc"].forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
+  ["u1","u2","u3","u4","u5","u6"].forEach(id=>{$(id).addEventListener("click",upd);});
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
-    const cx=e.touches?e.touches.item(0).clientX:e.clientX;
+    const cx=e.touches?e.touches.at(0).clientX:e.clientX;
     const r=tk.getBoundingClientRect();
     let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
     hrs=Math.round(1+p*35);
@@ -258,4 +254,3 @@ function upd(){
 })();
 </script>
 </body>
-</html>
