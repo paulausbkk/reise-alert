@@ -188,7 +188,7 @@ const TRESOR=Object.freeze({
 
     let u5q="?from="+o+"&to="+d+"&departure="+od;
     if(hasRd)u5q+="&return="+rd;
-    $("u5").href=P+"://kiwi.com"+S+"deep"+u5q;
+    $("u5").href=P+"www.kiwi.com"+S+"deep"+u5q;
   }
 });
 /* === ENDE TRESOR === */
@@ -210,8 +210,8 @@ function upd(){
 
     let u6q="?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od;
     u6q+=(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW");
-    u6q+="&class=y&quantity=1"+(ns?"&nonstop=yes":"");
-    $("u6").href=P+["://trip.com","flights","showfarefirst"].join(S)+u6q;
+    u6q+="&class=Y&quantity=1&sort=price&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
+    $("u6").href=P+["www.trip.com","flights","showfarefirst"].join(S)+u6q;
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
@@ -254,5 +254,4 @@ function upd(){
 })();
 </script>
 </body>
-</html>
 
