@@ -63,29 +63,29 @@ font-size:.88rem}
 <div class="f"><label>Airline / Reiseveranstalter</label>
 <select id="u5">
 <optgroup label="✈️ Airlines">
-<option value="pnr_ln|https://turkishairlines.com">Turkish Airlines</option>
-<option value="pnr_ln|https://lufthansa.com">Lufthansa</option>
-<option value="pnr_ln|https://qatarairways.com">Qatar Airways</option>
-<option value="pnr_ln|https://emirates.com">Emirates</option>
-<option value="pnr_ln|https://singaporeair.com">Singapore Airlines</option>
-<option value="pnr_ln|https://thaiairways.com">Thai Airways</option>
-<option value="pnr_ln|https://cathaypacific.com">Cathay Pacific</option>
-<option value="pnr_ln|https://philippineairlines.com">Philippine Airlines</option>
-<option value="pnr_ln|https://cebupacificair.com">Cebu Pacific (Low-Cost Asien)</option>
-<option value="pnr_ln|https://flyscoot.com">Scoot (Low-Cost Asien)</option>
-<option value="pnr_ln|https://bangkokair.com">Bangkok Airways</option>
-<option value="pnr_fn_ln|https://vietjetair.com">VietJet Air (Low-Cost Asien)</option>
-<option value="mail_pnr|https://airasia.com">AirAsia (Low-Cost Asien)</option>
+<option value="tk|pnr_ln|https://turkishairlines.com">Turkish Airlines</option>
+<option value="lh|pnr_ln|https://lufthansa.com">Lufthansa</option>
+<option value="qr|pnr_ln|https://qatarairways.com">Qatar Airways</option>
+<option value="ek|pnr_ln|https://emirates.com">Emirates</option>
+<option value="sq|pnr_ln|https://singaporeair.com">Singapore Airlines</option>
+<option value="tg|pnr_ln|https://thaiairways.com">Thai Airways</option>
+<option value="cx|pnr_ln|https://cathaypacific.com">Cathay Pacific</option>
+<option value="pr|pnr_ln|https://philippineairlines.com">Philippine Airlines</option>
+<option value="5j|pnr_ln|https://cebupacificair.com">Cebu Pacific (Low-Cost Asien)</option>
+<option value="tr|pnr_ln|https://flyscoot.com">Scoot (Low-Cost Asien)</option>
+<option value="pg|pnr_ln|https://bangkokair.com">Bangkok Airways</option>
+<option value="vj|pnr_fn_ln|https://vietjetair.com">VietJet Air (Low-Cost Asien)</option>
+<option value="ak|mail_pnr|https://airasia.com">AirAsia (Low-Cost Asien)</option>
 </optgroup>
 <optgroup label="🧳 Reisevermittler & Portale">
-<option value="mail_pnr|https://gotogate.de">Gotogate (Meine Buchungen)</option>
-<option value="mail_only|https://expedia.de">Expedia (Reiseplan)</option>
-<option value="mail_pnr|https://trip.com?">Trip.com (Buchungen)</option>
-<option value="mail_only|https://kiwi.com">Kiwi.com (Buchungen)</option>
-<option value="mail_only|https://skyscanner.de">Skyscanner (Mein Konto)</option>
-<option value="mail_only|https://kayak.de">Kayak (Trips)</option>
-<option value="mail_only|https://momondo.de">Momondo (Trips)</option>
-<option value="mail_pnr|https://opodo.de">Opodo (Meine Reisen)</option>
+<option value="gtg|mail_pnr|https://gotogate.de">Gotogate (Meine Buchungen)</option>
+<option value="exp|mail_only|https://expedia.de">Expedia (Reiseplan)</option>
+<option value="trp|mail_pnr|https://trip.com?">Trip.com (Buchungen)</option>
+<option value="kwi|mail_only|https://kiwi.com">Kiwi.com (Buchungen)</option>
+<option value="sky|mail_only|https://skyscanner.de">Skyscanner (Mein Konto)</option>
+<option value="kyk|mail_only|https://kayak.de">Kayak (Trips)</option>
+<option value="mom|mail_only|https://momondo.de">Momondo (Trips)</option>
+<option value="opo|mail_pnr|https://opodo.de">Opodo (Meine Reisen)</option>
 </optgroup>
 </select></div>
 <div id="hint" class="hinweis">Benötigt: Buchungscode (PNR) + Nachname</div>
@@ -128,6 +128,29 @@ const $=id=>document.getElementById(id);
 const keys="u_fn;u3;u4;u5;u6;u_tknr;u_pp".split(";");
 let ci=0;
 const cols="#2563eb;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");
+const guides={
+  tk:"1. Reiter „Buchung verwalten“ antippen.|2. Reservierungscode (PNR) oder Ticketnummer eingeben.|3. Nachnamen des Passagiers eingeben & Pfeil drücken.",
+  lh:"1. Auf „Meine Buchungen“ / „Buchung aufrufen“ klicken.|2. Buchungscode (PNR) einfügen.|3. Nachnamen eingeben & bestätigen.",
+  qr:"1. Feld „Manage Booking“ öffnen.|2. Buchungsreferenz (PNR) einfügen.|3. Nachnamen (Last Name) eingeben & abrufen.",
+  ek:"1. Bereich „Buchung verwalten“ (Manage Booking) nutzen.|2. Buchungsreferenz (PNR) eingeben.|3. Nachnamen eingeben & Buchung aufrufen.",
+  sq:"1. Reiter „Manage Booking“ wählen.|2. Buchungsreferenz (PNR) oder E-Ticket-Nr. eingeben.|3. Nachnamen eingeben & fortfahren.",
+  tg:"1. Feld „My Booking“ öffnen.|2. Buchungscode (PNR) einfügen.|3. Nachnamen eingeben & absenden.",
+  cx:"1. Auf „Buchung verwalten“ (Manage Booking) klicken.|2. Buchungsreferenz (PNR) einfügen.|3. Vor- oder Nachnamen laut Maske eingeben.",
+  pr:"1. Bereich „Manage Booking“ öffnen.|2. Booking Reference (PNR) einfügen.|3. Nachnamen (Last Name) eingeben.",
+  "5j":"1. Auf „Manage Booking“ klicken.|2. Buchungscode (PNR) einfügen.|3. Nachnamen (Last Name) eingeben.",
+  tr:"1. Bereich „Manage My Booking“ wählen.|2. Buchungsreferenz (PNR) einfügen.|3. Nachnamen + ggf. Abflugstadt eingeben.",
+  pg:"1. Feld „Manage My Booking“ öffnen.|2. Buchungscode (PNR) einfügen.|3. Nachnamen eingeben.",
+  vj:"1. Bereich „My Booking / Search Booking“ öffnen.|2. Reservation Code (PNR) einfügen.|3. Vorname UND Nachname eingeben.",
+  ak:"1. Bei AirAsia MOVE mit E-Mail einloggen.|2. Unter „Purchases / My Bookings“ Buchung wählen.|3. Ggf. PNR zum Verknüpfen nutzen.",
+  gtg:"1. Auf „Meine Buchungen“ klicken.|2. Buchungs-E-Mail & Auftragsnummer (PNR) eingeben.|3. Dort Airline-PNR für Direkt-Check-in ablesen.",
+  exp:"1. Oben rechts auf „Meine Reisen“ / Anmelden klicken.|2. Mit Buchungs-E-Mail einloggen.|3. Im Reiseplan den 6-stelligen Airline-PNR ablesen.",
+  trp:"1. Auf „Buchungen verwalten“ klicken.|2. Mit Buchungs-E-Mail oder Bestellnummer anmelden.|3. Airline-PNR aus dem E-Ticket kopieren.",
+  kwi:"1. Auf „Meine Buchungen“ / Anmelden klicken.|2. Mit Buchungs-E-Mail einloggen.|3. Airline-PNR im E-Ticket für den Check-in nutzen.",
+  sky:"1. Oben rechts im Profil anmelden.|2. Weiterleitung zum eigentlichen Buchungsanbieter prüfen.",
+  kyk:"1. Bereich „Trips“ öffnen & mit E-Mail anmelden.|2. Buchungsbestätigung / Anbieter-Link aufrufen.",
+  mom:"1. Bereich „Trips“ öffnen & mit E-Mail anmelden.|2. Buchungsbestätigung / Anbieter-Link aufrufen.",
+  opo:"1. Auf „Meine Reisen“ klicken.|2. Buchungsnummer (PNR) & Buchungs-E-Mail eingeben.|3. Airline-Referenz für Check-in ablesen."
+};
 function cp(id,lbl){
   const v=$(id).value.trim();if(!v)return;
   try{navigator.clipboard.writeText(v);
@@ -136,6 +159,10 @@ function cp(id,lbl){
 }
 async function openNote(){
   sv();
+  const parts=$("u5").value.split("|");
+  const code=parts.shift();
+  const airlineName=$("u5").options[$("u5").selectedIndex].text;
+  const steps=(guides[code]||"").split("|");
   const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
   let clipAll="";
   items.forEach(it=>{
@@ -144,19 +171,26 @@ async function openNote(){
   });
   if(clipAll){
     try{navigator.clipboard.writeText(clipAll);
-    $("ts").textContent="✅ Alle Daten kopiert! Tipp: Auf der Airline-Seite Windows-Taste + V drücken oder Spickzettel nutzen.";
+    $("ts").textContent="✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
     $("ts").style.display="block";}catch(e){}
   }
   if("documentPictureInPicture" in window){
     try{
-      const pip=await window.documentPictureInPicture.requestWindow({width:310,height:380});
+      const pip=await window.documentPictureInPicture.requestWindow({width:330,height:480});
       const b=pip.document.body;
       b.style.margin="0";b.style.padding="10px";b.style.background="#fef2f2";b.style.fontFamily="sans-serif";
       const h=pip.document.createElement("div");
-      h.textContent="📌 Flug-Spickzettel (Immer oben)";
-      h.style.fontWeight="bold";h.style.color="#991b1b";h.style.marginBottom="8px";
+      h.textContent="📌 "+airlineName;
+      h.style.fontWeight="bold";h.style.color="#991b1b";h.style.fontSize="15px";h.style.marginBottom="8px";
       h.style.borderBottom="2px solid #991b1b";h.style.paddingBottom="4px";
       b.appendChild(h);
+      if(steps.length&&steps[0]){
+        const box=pip.document.createElement("div");
+        box.style.background="#fef08a";box.style.border="1px solid #eab308";box.style.borderRadius="5px";
+        box.style.padding="7px 9px";box.style.marginBottom="10px";box.style.fontSize="12px";box.style.color="#1e293b";box.style.lineHeight="1.4";
+        box.innerHTML="<div style='font-weight:bold;color:#854d0e;margin-bottom:3px'>🧭 So geht es auf der Seite weiter:</div>"+steps.join("<br>");
+        b.appendChild(box);
+      }
       items.forEach(it=>{
         const p=it.split("|");const lbl=p.shift();const val=$(p.join("")).value.trim();
         if(val){
@@ -184,6 +218,7 @@ function sv(){
   const idx=ci++%cols.length;
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
   const parts=$("u5").value.split("|");
+  parts.shift();
   const mode=parts.shift();
   $("go").href=parts.join("|");
   $("f_pnr").classList.toggle("off",mode==="mail_only");
