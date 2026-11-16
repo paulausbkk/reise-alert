@@ -119,7 +119,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
 <a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia</a>
-<a id="u5" href="https://www.kiwi.com/de/" target="_blank" class="btn b6">Kiwi.com</a>
+<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
 <a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
@@ -167,7 +167,7 @@ function ac(inp,box){
   document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";});
 }
 
-/* === TRESOR: VERIFIZIERTE ANBIETER-LOGIK (u1, u2, u3, u4, u6) === */
+/* === TRESOR: VERIFIZIERTE ANBIETER (u1 bis u5 UNBERÜHRT) === */
 const TRESOR=Object.freeze({
   build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6){
     const u1p=["www.skyscanner.de","transport","fluge",o.toLowerCase(),d.toLowerCase(),od6];
@@ -186,26 +186,12 @@ const TRESOR=Object.freeze({
     if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
     $("u4").href=P+["www.expedia.de","Flights-Search"].join(S)+u4q+"&passengers=adults:1&mode=search";
 
-    let u6q="?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od;
-    u6q+=(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW");
-    u6q+="&class=y&quantity=1&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
-    $("u6").href=P+["://trip.com","flights","showfarefirst"].join(S)+u6q;
+    let u5q="?from="+o+"&to="+d+"&departure="+od;
+    if(hasRd)u5q+="&return="+rd;
+    $("u5").href=P+"://kiwi.com"+S+"deep"+u5q;
   }
 });
 /* === ENDE TRESOR === */
-
-function kiwiUrl(){
-  const o=code($("i1").value),d=code($("i2").value);
-  const od=$("od").value,rd=$("rd").value,ow=$("ow").checked;
-  const badDate=(!ow&&od&&rd&&rd<od);
-  const hasRd=(!ow&&rd&&!badDate);
-  if(o.length===3&&d.length===3&&od){
-    let q="?from="+o+"&to="+d+"&departure="+od;
-    if(hasRd)q+="&return="+rd;
-    return P+"www.kiwi.com"+S+"deep"+q;
-  }
-  return P+"www.kiwi.com"+S+"de"+S;
-}
 
 function upd(){
   const now=new Date();
@@ -220,9 +206,12 @@ function upd(){
     const od6=od.replace(/-/g,"").slice(2);
     const hasRd=(!ow&&rd&&!badDate);
     const rd6=hasRd?rd.replace(/-/g,"").slice(2):"";
-
     TRESOR.build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6);
-    $("u5").href=kiwiUrl();
+
+    let u6q="?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od;
+    u6q+=(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW");
+    u6q+="&class=y&quantity=1"+(ns?"&nonstop=yes":"");
+    $("u6").href=P+["://trip.com","flights","showfarefirst"].join(S)+u6q;
   }
   const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs});
   try{localStorage.setItem("rk_main",s)}catch(e){}
@@ -246,7 +235,7 @@ function upd(){
   $("fl").style.width=pct+"%";$("sv").style.left=pct+"%";$("sv").textContent=hrs+"h";
   ac($("i1"),$("l1"));ac($("i2"),$("l2"));
   ["i1","i2","od","rd","ow","ns","lc"].forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
-  $("u5").addEventListener("click",()=>{ $("u5").href=kiwiUrl(); });
+  ["u1","u2","u3","u4","u5","u6"].forEach(id=>{$(id).addEventListener("click",upd);});
   const sb=$("sb"),tk=$("tk");
   let drag=false;
   function move(e){
