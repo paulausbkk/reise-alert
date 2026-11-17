@@ -24,6 +24,7 @@ background:#fef2f2;box-sizing:border-box}
 .ct{font-weight:bold;font-size:1.1rem;color:var(--r);
 border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
 .f{margin-bottom:14px;display:flex;flex-direction:column;position:relative}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
 label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#475569}
 input[type=text],input[type=date],select{height:40px;padding:0 10px;
 border:1px solid var(--b);border-radius:4px;box-sizing:border-box;
@@ -61,9 +62,9 @@ body:has(#ow:checked) #rb input{background:#cbd5e1!important}
 body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
 .swc{display:flex;align-items:center;justify-content:space-between;
 background:#fff;padding:0 10px;border:1px solid var(--b);border-radius:4px;
-height:40px}
+height:40px;gap:6px}
 .swc.yl{background:var(--ly);border:1px solid #eab308}
-.sw{position:relative;display:inline-block;width:40px;height:22px}
+.sw{position:relative;display:inline-block;width:40px;height:22px;flex-shrink:0}
 .sw input{opacity:0;width:0;height:0}
 .sl{position:absolute;cursor:pointer;inset:0;background:#ccc;
 border-radius:20px;transition:.3s}
@@ -109,10 +110,16 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label>
 <div class="sb" id="sb"><div class="trk" id="tk">
 <div id="fl"></div><div id="sv">14h</div></div></div></div>
-<div class="f"><div class="swc yl">
-<label for="ns" style="margin:0;cursor:pointer">Nur Direktflüge (Non-Stop)</label>
+<div class="f2">
+<div class="swc yl">
+<label for="ns" style="margin:0;cursor:pointer;font-size:.8rem">Nur Direktflüge (Non-Stop)</label>
 <label class="sw"><input type="checkbox" id="ns"><span class="sl"></span></label>
-</div></div>
+</div>
+<div class="swc yl">
+<label for="s2" style="margin:0;cursor:pointer;font-size:.8rem">Max. 2 Stops</label>
+<label class="sw"><input type="checkbox" id="s2"><span class="sl"></span></label>
+</div>
+</div>
 <div class="f"><div class="swc">
 <label for="lc" style="margin:0;cursor:pointer">Inkl. Low-Cost Airlines (zusätzlich)</label>
 <label class="sw"><input type="checkbox" id="lc"><span class="sl"></span></label>
@@ -164,7 +171,7 @@ function ac(inp,box){
   document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";});
 }
 const TRESOR=Object.freeze({
-  build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6,px){
+  build(o,d,od,rd,ow,ns,s2,hrs,od6,hasRd,rd6,px){
     const d1="www."+"skyscanner"+".de";
     let u1u=P+d1+S+"transport"+S+"fluge"+S+o.toLowerCase()+S+d.toLowerCase()+S+od6;
     if(rd6)u1u+=S+rd6;
@@ -174,23 +181,27 @@ const TRESOR=Object.freeze({
     let u2u=P+d2+S+"flights"+S+o+"-"+d+S+od;
     if(hasRd)u2u+=S+rd;
     if(px>1)u2u+=S+px+"adults";
-    $("u2").href=u2u+"?sort=price_a"+(ns?"&fs=stops=0":"")+"&fs=bfc=1;dur=-"+(hrs*60);
+    const st2=ns?"stops=0;":(s2?"stops=0,1,2;":"");
+    $("u2").href=u2u+"?sort=price_a&fs="+st2+"bfc=1;dur=-"+(hrs*60);
 
     const d3="www."+"momondo"+".de";
     let u3u=P+d3+S+"flight-search"+S+o+"-"+d+S+od;
     if(hasRd)u3u+=S+rd;
     if(px>1)u3u+=S+px+"adults";
-    $("u3").href=u3u+"?sort=price_a"+(ns?"&fs=stops=0":"");
+    const st3=ns?"&fs=stops=0":(s2?"&fs=stops=0,1,2":"");
+    $("u3").href=u3u+"?sort=price_a"+st3;
 
     const d4="www."+"expedia"+".de";
     let u4q="?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT";
     if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
-    $("u4").href=P+d4+S+"Flights-Search"+u4q+"&passengers=adults:"+px+"&mode=search";
+    const st4=ns?"&options=maxhops:0":(s2?"&options=maxhops:2":"");
+    $("u4").href=P+d4+S+"Flights-Search"+u4q+"&passengers=adults:"+px+st4+"&mode=search";
 
     const d5="www."+"kiwi"+".com";
     let u5q="?from="+o+"&to="+d+"&departure="+od;
     if(hasRd)u5q+="&return="+rd;
-    $("u5").href=P+d5+S+"deep"+u5q+"&adults="+px;
+    const st5=ns?"&stopNumber=0":(s2?"&stopNumber=2":"");
+    $("u5").href=P+d5+S+"deep"+u5q+"&adults="+px+st5;
   }
 });
 function upd(){
@@ -200,7 +211,7 @@ function upd(){
   const idx=ci++%cols.length;
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
   const o=code($("i1").value),d=code($("i2").value);
-  const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,lc=$("lc").checked;
+  const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,s2=$("s2").checked,lc=$("lc").checked;
   const px=parseInt($("px").value,10)||1;
   $("st").textContent=ow?"NUR HINFLUG":"HIN & RÜCK";
   const badDate=(!ow&&od&&rd&&rd<od);
@@ -209,7 +220,7 @@ function upd(){
     const od6=od.split("-").join("").slice(2);
     const hasRd=(!ow&&rd&&!badDate);
     const rd6=hasRd?rd.split("-").join("").slice(2):"";
-    TRESOR.build(o,d,od,rd,ow,ns,hrs,od6,hasRd,rd6,px);
+    TRESOR.build(o,d,od,rd,ow,ns,s2,hrs,od6,hasRd,rd6,px);
 
     const d6="www."+"trip"+".com";
     let u6q="?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od;
@@ -217,7 +228,7 @@ function upd(){
     u6q+="&class=Y&quantity="+px+"&sort=price&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
     $("u6").href=P+d6+S+"flights"+S+"showfarefirst"+u6q;
   }
-  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,lc,hrs,px});
+  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,s2,lc,hrs,px});
   try{localStorage.setItem("rk_main",s)}catch(e){}
 }
 (function init(){
@@ -231,15 +242,18 @@ function upd(){
       if(d.od)$("od").value=d.od;if(d.rd)$("rd").value=d.rd;
       if(d.ow!==undefined)$("ow").checked=d.ow;
       if(d.ns!==undefined)$("ns").checked=d.ns;
+      if(d.s2!==undefined)$("s2").checked=d.s2;
       if(d.lc!==undefined)$("lc").checked=d.lc;
       if(d.px)$("px").value=String(d.px);
       if(d.hrs)hrs=d.hrs;
     }
   }catch(e){}
+  $("ns").addEventListener("change",()=>{if($("ns").checked)$("s2").checked=false;upd();});
+  $("s2").addEventListener("change",()=>{if($("s2").checked)$("ns").checked=false;upd();});
   const pct=Math.round(((hrs-1)/35)*100);
   $("fl").style.width=pct+"%";$("sv").style.left=pct+"%";$("sv").textContent=hrs+"h";
   ac($("i1"),$("l1"));ac($("i2"),$("l2"));
-  "i1;i2;od;rd;ow;ns;lc;px".split(";").forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
+  "i1;i2;od;rd;ow;lc;px".split(";").forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
   "u1;u2;u3;u4;u5;u6".split(";").forEach(id=>{$(id).addEventListener("click",upd);});
   const sb=$("sb"),tk=$("tk");
   let drag=false;
