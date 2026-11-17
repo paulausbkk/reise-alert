@@ -76,7 +76,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <body>
 <div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
 <div class="cp"><div class="seg" id="dt">16.11.2026</div>
-<div class="seg st">HIN & RÜCK</div>
+<div class="seg st" id="st">HIN & RÜCK</div>
 <a href="flugupgrade.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div>
 </div>
 <div class="row">
@@ -192,6 +192,7 @@ function upd(){
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
   const o=code($("i1").value),d=code($("i2").value);
   const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,lc=$("lc").checked;
+  $("st").textContent=ow?"NUR HINFLUG":"HIN & RÜCK";
   const badDate=(!ow&&od&&rd&&rd<od);
   $("rb").classList.toggle("err",badDate);
   if(o.length===3&&d.length===3&&od){
