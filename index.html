@@ -209,7 +209,7 @@ const TRESOR=Object.freeze({
     const d4="www."+"expedia"+".de";
     let u4q="?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT";
     if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
-    const st4=ns?"&options=maxhops:0":(s1?"&options=maxhops:1":(s2?"&options=maxhops:2":""));
+    const st4=ns?"&stops=0":(s1?"&stops=0,1":(s2?"&stops=0,1,2":""));
     $("u4").href=P+d4+S+"Flights-Search"+u4q+"&passengers=adults:"+px+st4+"&mode=search";
 
     const d5="www."+"kiwi"+".com";
