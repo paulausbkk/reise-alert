@@ -187,12 +187,12 @@ function upd(){
     const bStars=st>0?"class%3D"+st:"";
     const bMeal=bf?"mealplan%3D1":"";
     const bFilt=[bStars,bMeal].filter(Boolean).join("%3B");
-    $("h1").href=P+"www.booking.com"+S+"searchresults.de.html?ss="+q+"&checkin_year="+p1[0]+"&checkin_month="+parseInt(p1[1],10)+"&checkin_monthday="+parseInt(p1[2],10)+"&checkout_year="+p2[0]+"&checkout_month="+parseInt(p2[1],10)+"&checkout_monthday="+parseInt(p2[2],10)+"&group_adults="+px+"&no_rooms="+rm+(bFilt?"&nflt="+bFilt:"");
-    $("h2").href=P+"://agoda.com"+S+"de-de"+S+"pages"+S+"agoda"+S+"default"+S+"DestinationSearchResult.aspx?textToSearch="+q+"&checkIn="+ci+"&los="+n+"&adults="+px+"&rooms="+rm;
-    $("h3").href=P+"de.hotels.com"+S+"Hotel-Search?destination="+q+"&startDate="+ci+"&endDate="+co+"&d1="+ci+"&d2="+co+"&adults="+px+"&rooms="+rm;
+    $("h1").href=P+"://booking.com"+S+"searchresults.de.html?ss="+q+"&checkin_year="+p1+"&checkin_month="+parseInt(p1,10)+"&checkin_monthday="+parseInt(p1,10)+"&checkout_year="+p2+"&checkout_month="+parseInt(p2,10)+"&checkout_monthday="+parseInt(p2,10)+"&group_adults="+px+"&no_rooms="+rm+(bFilt?"&nflt="+bFilt:"");
+    $("h2").href=P+"://agoda.com"+S+"de-de"+S+"search?text="+q+"&checkIn="+ci+"&los="+n+"&adults="+px+"&rooms="+rm;
+    $("h3").href=P+"://hotels.com"+S+"Hotel-Search?destination="+q+"&startDate="+ci+"&endDate="+co+"&d1="+ci+"&d2="+co+"&adults="+px+"&rooms="+rm;
     $("h4").href=P+"www.kayak.de"+S+"hotels"+S+q+S+ci+S+co+S+px+"adults"+S+rm+"rooms";
     $("h5").href=P+"www.expedia.de"+S+"Hotel-Search?destination="+q+"&startDate="+ci+"&endDate="+co+"&d1="+ci+"&d2="+co+"&adults="+px+"&rooms="+rm;
-    $("h6").href=P+"de.trip.com"+S+"hotels"+S+"list?keyword="+q+"&checkin="+ci+"&checkout="+co+"&adult="+px+"&room="+rm+"&curr=EUR";
+    $("h6").href=P+"://trip.com"+S+"hotels"+S+"list?cityName="+q+"&checkin="+ci+"&checkout="+co+"&adult="+px+"&room="+rm+"&curr=EUR&locale=de-DE";
     $("h7").href=P+"www.airbnb.de"+S+"s"+S+q+S+"homes?checkin="+ci+"&checkout="+co+"&adults="+px;
   }
   const s=JSON.stringify({city:$("city").value,ci,co,px,rm,st,bf,ab});
@@ -221,4 +221,3 @@ function upd(){
 })();
 </script>
 </body>
-</html>
