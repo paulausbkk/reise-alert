@@ -25,9 +25,13 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 .ac div:hover{background:#e0f2fe;font-weight:bold}
 .bn{background:#fff;border:2px solid var(--r);border-radius:4px;padding:9px 12px;color:var(--r);font-weight:bold;font-size:.9rem;line-height:1.35}
 .bb{border:2px solid var(--b);background:#fff;border-radius:8px;padding:15px}
-.bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
-.btn{display:flex;align-items:center;justify-content:center;height:45px;color:#fff;font-weight:bold;border-radius:4px;font-size:.82rem;text-transform:uppercase;text-decoration:none;text-align:center;padding:0 4px;transition:.2s}
-.b1{background:#003580}.b2{background:#5392f9}.b3{background:#d32f2f}.b4{background:#ff690f}.b5{background:#1e3a8a}.b6{background:#287dfa}.b7{background:#ff5a5f}
+.stitle{font-size:.78rem;font-weight:bold;color:#475569;text-transform:uppercase;margin:0 0 8px}
+.bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px;margin-bottom:12px}
+.bf:last-child{margin-bottom:0}
+.btn{display:flex;flex-direction:column;align-items:center;justify-content:center;height:46px;color:#fff;font-weight:bold;border-radius:4px;font-size:.82rem;text-transform:uppercase;text-decoration:none;text-align:center;line-height:1.15;padding:0 4px;transition:.2s}
+.btn .sub{font-size:.62rem;font-weight:bold;text-transform:none;margin-top:2px;color:#fff}
+.b1{background:#ff690f}.b2{background:#1e3a8a}.b3{background:#007faf}.b4{background:#84329b}
+.b5{background:#003580}.b6{background:#1d4ed8}.b7{background:#2563eb}.b8{background:#ff5a5f}
 .off{opacity:.25;pointer-events:none;filter:grayscale(100%)}
 .err{opacity:.35}.err input{background:#cbd5e1!important}
 .swc{display:flex;align-items:center;justify-content:space-between;background:#fff;padding:0 10px;border:1px solid var(--b);border-radius:4px;min-height:40px;gap:6px}
@@ -58,19 +62,26 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 <div class="f"><div class="swc yl"><label for="bf" style="margin:0;cursor:pointer">Inkl. Frühstück bevorzugt</label><label class="sw"><input type="checkbox" id="bf"><span class="sl"></span></label></div></div>
 <div class="f"><div class="swc ab"><label for="ab" style="margin:0;cursor:pointer">Nur Airbnb (Ferienwohnung / Apartment)</label><label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label></div></div>
 <div class="bn" id="info">Bitte Reiseziel, Check-in und Check-out wählen.</div></div></div>
-<div class="bb"><div class="bf">
-<a id="h1" href="https://booking.com" target="_blank" class="btn b1 htl">Booking.com</a>
-<a id="h2" href="https://agoda.com" target="_blank" class="btn b2 htl">Agoda</a>
-<a id="h3" href="https://hotels.com" target="_blank" class="btn b3 htl">Hotels.com</a>
-<a id="h4" href="https://kayak.de" target="_blank" class="btn b4 htl">Kayak Hotels</a>
-<a id="h5" href="https://expedia.de" target="_blank" class="btn b5 htl">Expedia Hotels</a>
-<a id="h6" href="https://trip.com" target="_blank" class="btn b6 htl">Trip.com Hotels</a>
-<a id="h7" href="https://airbnb.de" target="_blank" class="btn b7 off">Airbnb</a></div></div>
+<div class="bb">
+<div class="stitle">⚡ Direkt-Suche (Daten werden automatisch übergeben)</div>
+<div class="bf">
+<a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
+<a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+<a id="h3" href="https://trivago.de" target="_blank" class="btn b3 htl">Trivago</a>
+<a id="h4" href="https://momondo.de" target="_blank" class="btn b4 htl">Momondo Hotels</a>
+<a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
+</div>
+<div class="stitle">📋 Einzel-Portale (Kopiert Zielort automatisch für Strg+V)</div>
+<div class="bf">
+<a id="h5" href="https://booking.com" target="_blank" class="btn b5 htl cpbtn">Booking.com<span class="sub">Ort kopiert → Strg+V</span></a>
+<a id="h6" href="https://agoda.com" target="_blank" class="btn b6 htl cpbtn">Agoda<span class="sub">Ort kopiert → Strg+V</span></a>
+<a id="h7" href="https://trip.com" target="_blank" class="btn b7 htl cpbtn">Trip.com<span class="sub">Ort kopiert → Strg+V</span></a>
+</div></div>
 <script>
 const $=id=>document.getElementById(id),S="/",P="https://",cities="Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;Ho-Chi-Minh-Stadt;Hanoi;Manila;Cebu;Dumaguete;Pagadian;Singapur;Kuala Lumpur;Denpasar Bali;Dubai;Doha;Tokio;Istanbul;Faro;Christchurch;Berlin;München;Frankfurt".split(";"),cols="#0369a1;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");let cidx=0;
 function ac(inp,box){inp.addEventListener("input",()=>{const q=inp.value.trim().toLowerCase();box.innerHTML="";if(!q){box.style.display="none";upd();return}const hits=cities.filter(x=>x.toLowerCase().includes(q));if(!hits.length){box.style.display="none";upd();return}hits.forEach(h=>{const d=document.createElement("div");d.textContent=h;d.onclick=()=>{inp.value=h;box.style.display="none";upd()};box.appendChild(d)});box.style.display="block";upd()});document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none"})}
-function upd(){const now=new Date(),dtEl=$("dt");dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");dtEl.style.setProperty("background-color",cols[cidx++%cols.length],"important");const city=$("city").value.trim(),ci=$("ci").value,co=$("co").value,px=+$("px").value||2,rm=+$("rm").value||1,st=+$("st").value||0,bf=$("bf").checked,ab=$("ab").checked;document.querySelectorAll(".htl").forEach(el=>el.classList.toggle("off",ab));$("h7").classList.toggle("off",!ab);const badDate=(ci&&co&&co<=ci);$("cob").classList.toggle("err",badDate);if(ci&&co&&!badDate){const n=Math.round((new Date(co)-new Date(ci))/86400000);$("nt").textContent=n+(n===1?" NACHT":" NÄCHTE");$("info").textContent=(ab?"[AIRBNB] ":"")+"Auswahl: "+(city||"Ziel offen")+" • "+n+(n===1?" Nacht":" Nächte")+" • "+px+" Pers. • "+rm+" Zi."}else{$("nt").textContent="ZEITRAUM WÄHLEN";$("info").textContent="Bitte Reiseziel, Check-in und Check-out wählen."}if(city&&ci&&co&&!badDate){const q=encodeURIComponent(city),n=Math.round((new Date(co)-new Date(ci))/86400000),bFilt=[st>0?"class%3D"+st:"",bf?"mealplan%3D1":""].filter(Boolean).join("%3B");$("h1").href=P+"://booking.com"+q+"&checkin="+ci+"&checkout="+co+"&group_adults="+px+"&no_rooms="+rm+(bFilt?"&nflt="+bFilt:"");$("h2").href=P+"://agoda.com"+q+"&checkIn="+ci+"&los="+n+"&adults="+px+"&rooms="+rm;$("h3").href=P+"://hotels.com"+q+"&startDate="+ci+"&endDate="+co+"&adults="+px+"&rooms="+rm;$("h4").href=P+"www.kayak.de/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";$("h5").href=P+"www.expedia.de/Hotel-Search?destination="+q+"&startDate="+ci+"&endDate="+co+"&adults="+px+"&rooms="+rm;$("h6").href=P+"://trip.com"+q+"&checkin="+ci+"&checkout="+co+"&adult="+px+"&room="+rm;$("h7").href=P+"www.airbnb.de/s/"+q+"/homes?checkin="+ci+"&checkout="+co+"&adults="+px}try{localStorage.setItem("rk_hotel",JSON.stringify({city:$("city").value,ci,co,px,rm,st,bf,ab}))}catch(e){}}
-(function(){const t=new Date().toISOString().slice(0,10);$("ci").min=t;$("co").min=t;try{const d=JSON.parse(localStorage.getItem("rk_hotel")||"null");if(d){if(d.city)$("city").value=d.city;if(d.ci)$("ci").value=d.ci;if(d.co)$("co").value=d.co;if(d.px)$("px").value=d.px;if(d.rm)$("rm").value=d.rm;if(d.st)$("st").value=d.st;if(d.bf!==undefined)$("bf").checked=d.bf;if(d.ab!==undefined)$("ab").checked=d.ab}}catch(e){}ac($("city"),$("lc"));"city;ci;co;px;rm;st;bf;ab".split(";").forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd)});"h1;h2;h3;h4;h5;h6;h7".split(";").forEach(id=>$(id).addEventListener("click",upd));upd()})();
+function upd(){const now=new Date(),dtEl=$("dt");dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");dtEl.style.setProperty("background-color",cols[cidx++%cols.length],"important");const city=$("city").value.trim(),ci=$("ci").value,co=$("co").value,px=+$("px").value||2,rm=+$("rm").value||1,st=+$("st").value||0,bf=$("bf").checked,ab=$("ab").checked;document.querySelectorAll(".htl").forEach(el=>el.classList.toggle("off",ab));$("h8").classList.toggle("off",!ab);const badDate=(ci&&co&&co<=ci);$("cob").classList.toggle("err",badDate);if(ci&&co&&!badDate){const n=Math.round((new Date(co)-new Date(ci))/86400000);$("nt").textContent=n+(n===1?" NACHT":" NÄCHTE");$("info").textContent=(ab?"[AIRBNB] ":"")+"Auswahl: "+(city||"Ziel offen")+" • "+n+(n===1?" Nacht":" Nächte")+" • "+px+" Pers. • "+rm+" Zi."}else{$("nt").textContent="ZEITRAUM WÄHLEN";$("info").textContent="Bitte Reiseziel, Check-in und Check-out wählen."}if(city&&ci&&co&&!badDate){const q=encodeURIComponent(city);$("h1").href=P+"www.kayak.de/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";$("h2").href=P+"www.expedia.de/Hotel-Search?destination="+q+"&d1="+ci+"&d2="+co+"&startDate="+ci+"&endDate="+co+"&adults="+px+"&rooms="+rm;$("h3").href=P+"www.trivago.de/de/srl?search="+q+"&arrival="+ci+"&departure="+co+"&adults="+px+"&rooms="+rm;$("h4").href=P+"www.momondo.de/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";$("h8").href=P+"www.airbnb.de/s/"+q+"/homes?checkin="+ci+"&checkout="+co+"&adults="+px}try{localStorage.setItem("rk_hotel",JSON.stringify({city:$("city").value,ci,co,px,rm,st,bf,ab}))}catch(e){}}
+(function(){const t=new Date().toISOString().slice(0,10);$("ci").min=t;$("co").min=t;try{const d=JSON.parse(localStorage.getItem("rk_hotel")||"null");if(d){if(d.city)$("city").value=d.city;if(d.ci)$("ci").value=d.ci;if(d.co)$("co").value=d.co;if(d.px)$("px").value=d.px;if(d.rm)$("rm").value=d.rm;if(d.st)$("st").value=d.st;if(d.bf!==undefined)$("bf").checked=d.bf;if(d.ab!==undefined)$("ab").checked=d.ab}}catch(e){}ac($("city"),$("lc"));"city;ci;co;px;rm;st;bf;ab".split(";").forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd)});"h1;h2;h3;h4;h8".split(";").forEach(id=>$(id).addEventListener("click",upd));document.querySelectorAll(".cpbtn").forEach(b=>b.addEventListener("click",()=>{const c=$("city").value.trim();if(c&&navigator.clipboard)navigator.clipboard.writeText(c);$("info").textContent="📋 '"+c+"' kopiert! Einfach auf der Website mit Strg+V einfügen."}));upd()})();
 </script>
 </body>
 </html>
