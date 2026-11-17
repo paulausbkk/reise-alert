@@ -189,7 +189,8 @@ const TRESOR=Object.freeze({
     const d1="www."+"skyscanner"+".de";
     let u1u=P+d1+S+"transport"+S+"fluge"+S+o.toLowerCase()+S+d.toLowerCase()+S+od6;
     if(rd6)u1u+=S+rd6;
-    $("u1").href=u1u+S+"?adultsv2="+px+(ns?"&preferdirects=true":"");
+    const st1=ns?"&preferdirects=true&stops=!oneStop,!twoPlusStops":(s1?"&preferdirects=false&stops=!twoPlusStops":(s2?"&preferdirects=false":""));
+    $("u1").href=u1u+S+"?adultsv2="+px+st1;
 
     const d2="www."+"kayak"+".de";
     let u2u=P+d2+S+"flights"+S+o+"-"+d+S+od;
