@@ -40,14 +40,20 @@ padding:9px 12px;color:#ff0000;font-weight:bold;font-size:.9rem;
 line-height:1.35}
 .bb{border:2px solid var(--b);background:#fff;border-radius:8px;padding:15px}
 .bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}
-.btn{display:flex;flex-direction:column;align-items:center;justify-content:center;
+.btn{display:flex;align-items:center;justify-content:center;
 height:45px;color:#fff;font-weight:bold;border-radius:4px;font-size:.82rem;
 text-transform:uppercase;text-decoration:none;text-align:center;line-height:1.15;
-padding:0 4px}
-.btn .sub{font-size:.64rem;font-weight:bold;text-transform:none;opacity:1;
-margin-top:2px;color:#ffffff}
+padding:0 4px;position:relative;box-sizing:border-box}
+.b5{background:#1e3a8a;justify-content:space-between;padding:2px 4px}
+.b5 .mid{display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+height:100%;flex:1;padding:3px 0 1px}
+.b5 .side{writing-mode:vertical-rl;font-size:.5rem;font-weight:bold;
+text-transform:none;line-height:1;letter-spacing:-.2px;color:#fff;white-space:nowrap}
+.b5 .side.l{transform:rotate(180deg)}
+.b5 .bot{font-size:.53rem;font-weight:bold;text-transform:none;line-height:1;
+color:#fff;white-space:nowrap}
 .b2{background:#007054}.b3{background:#ff690f}.b4{background:#84329b}
-.b5{background:#1e3a8a}.b6{background:#00a991}.b7{background:#287dfa}
+.b6{background:#00a991}.b7{background:#287dfa}
 .sb{position:relative;display:flex;align-items:center;background:#fff;
 border:1px solid var(--b);border-radius:4px;height:40px;padding:0 26px;
 user-select:none;touch-action:none;cursor:pointer}
@@ -149,7 +155,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u1" href="https://skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
-<a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia<span class="sub">Stopps auf Website wählen</span></a>
+<a id="u4" href="https://expedia.de" target="_blank" class="btn b5"><span class="side l">Stopps auf der</span><span class="mid"><span>Expedia</span><span class="bot">Website bitte</span></span><span class="side">separat eintragen</span></a>
 <a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
 <a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
