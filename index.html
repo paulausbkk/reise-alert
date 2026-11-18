@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Reisekonfiguration PRO v27</title>
+<title>✈️ Reisekonfiguration PRO v28</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--g:#0ea5e9;
 --v:#0284c7;--lg:#0284c7;--ly:#e0f2fe}
@@ -48,7 +48,7 @@ box-shadow:0 4px 12px rgba(3,105,161,.08)}
 .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;
 height:46px;color:#fff;font-weight:bold;border-radius:8px;font-size:.84rem;
 text-transform:uppercase;text-decoration:none;text-align:center;line-height:1.15;
-padding:0 6px;transition:.2s;box-shadow:0 2px 6px rgba(15,41,66,.15)}
+padding:0 6px;transition:.2s;box-shadow:0 2px 6px rgba(15,41,66,.15);cursor:pointer}
 .btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn .sub{font-size:.64rem;font-weight:bold;text-transform:none;opacity:1;
 margin-top:2px;color:#e0f2fe}
@@ -92,7 +92,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO v27</h1>
+<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO v28</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div>
 <div class="seg st" id="st">HIN & RÜCK</div>
 <a href="meine-hotelsuche.html" class="seg upg htl">🏨 Meine Hotelsuche ➡️</a>
@@ -163,8 +163,8 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
 <a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia<span class="sub">Stopps auf Website wählen</span></a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
-<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
+<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6" onclick="return openPortal('kiwi')">Kiwi.com</a>
+<a id="u6" href="https://trip.com" target="_blank" class="btn b7" onclick="return openPortal('trip')">Trip.com</a>
 </div>
 </div>
 <script>
@@ -250,15 +250,8 @@ function bindSlider(){
   sb.addEventListener("pointercancel",()=>{drag=false;});
 }
 
-function upd(){
-  const now=new Date(),dtEl=$("dt");
-  dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
-  const idx=cidx++%cols.length;
-  dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
-
+function buildUrls(){
   const ow=$("ow").checked;
-  $("st").textContent=ow?"NUR HINFLUG":"HIN & RÜCK";
-
   const c1=iata($("i1").value);
   const c2=iata($("i2").value);
   const od=$("od").value;
@@ -268,42 +261,80 @@ function upd(){
   const s1=$("s1").checked;
   const s2=$("s2").checked;
   const lc=$("lc").checked;
+  const badDate=(!ow&&od&&rd&&rd<od);
 
+  if(!isThreeLetters(c1)||!isThreeLetters(c2)||!od||(!ow&&(!rd||badDate)))return null;
+
+  const ymd1=od.slice(2).replace(/-/g,"");
+  const ymd2=(!ow&&rd)?rd.slice(2).replace(/-/g,""):"";
+  const mins=hrs*60;
+
+  let skyStp="";
+  if(ns)skyStp="&stops=!oneStop,!twoPlusStops";
+  else if(s1)skyStp="&stops=!twoPlusStops";
+  const u1=P+"www.skyscanner.de/transport/fluge/"+c1.toLowerCase()+"/"+c2.toLowerCase()+"/"+ymd1+(ymd2?"/"+ymd2:"")+"/?adults="+px+"&duration="+mins+skyStp;
+
+  const kStp=ns?"stops=0":(s1?"stops=1":(s2?"stops=2":""));
+  const kQ=(kStp+"|duration=-"+mins+"|"+(lc?"":"noLowCost=true")).split("|").filter(Boolean).join("&");
+  const u2=P+"www.kayak.de/flights/"+c1+"-"+c2+"/"+od+(!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
+  const u3=P+"www.momondo.de/flight-search/"+c1+"-"+c2+"/"+od+(!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
+
+  const tripType=ow?"oneway":"roundtrip";
+  const leg1="from:"+c1+",to:"+c2+",departure:"+od+"TANYT";
+  const leg2=!ow&&rd?"&leg2=from:"+c2+",to:"+c1+",departure:"+rd+"TANYT":"";
+  const u4=P+"www.expedia.de/Flights-Search?trip="+tripType+"&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
+
+  const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
+  const u5=P+"://kiwi.com"+slug(c1)+"/"+slug(c2)+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
+
+  const trWay=ow?"ow":"rt";
+  const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
+  const u6=P+"://trip.com"+slug(c1)+"-to-"+slug(c2)+"/tickets-"+c1.toLowerCase()+"-"+c2.toLowerCase()+"?dcity="+c1.toLowerCase()+"&acity="+c2.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&flighttype="+trWay+"&class=y&lowpricesource=searchform&quantity="+px+"&searchboxarg=t"+trStp;
+
+  return {u1,u2,u3,u4,u5,u6};
+}
+
+function openPortal(which){
+  upd();
+  const urls=buildUrls();
+  if(!urls){
+    alert("Bitte zuerst Abflug, Ziel und Reisedatum ausfüllen!");
+    return false;
+  }
+  const targetUrl=(which==="kiwi")?urls.u5:urls.u6;
+  window.open(targetUrl,"_blank");
+  return false;
+}
+
+function upd(){
+  const now=new Date(),dtEl=$("dt");
+  dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
+  const idx=cidx++%cols.length;
+  dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
+
+  const ow=$("ow").checked;
+  $("st").textContent=ow?"NUR HINFLUG":"HIN & RÜCK";
+
+  const od=$("od").value;
+  const rd=$("rd").value;
   const badDate=(!ow&&od&&rd&&rd<od);
   $("rb").classList.toggle("err",badDate);
 
-  if(isThreeLetters(c1)&&isThreeLetters(c2)&&od&&(ow||(rd&&!badDate))){
-    const ymd1=od.slice(2).replace(/-/g,"");
-    const ymd2=(!ow&&rd)?rd.slice(2).replace(/-/g,""):"";
-    const mins=hrs*60;
-
-    let skyStp="";
-    if(ns)skyStp="&stops=!oneStop,!twoPlusStops";
-    else if(s1)skyStp="&stops=!twoPlusStops";
-
-    $("u1").href=P+"www.skyscanner.de/transport/fluge/"+c1.toLowerCase()+"/"+c2.toLowerCase()+"/"+ymd1+(ymd2?"/"+ymd2:"")+"/?adults="+px+"&duration="+mins+skyStp;
-
-    const kStp=ns?"stops=0":(s1?"stops=1":(s2?"stops=2":""));
-    const kQ=(kStp+"|duration=-"+mins+"|"+(lc?"":"noLowCost=true")).split("|").filter(Boolean).join("&");
-    $("u2").href=P+"www.kayak.de/flights/"+c1+"-"+c2+"/"+od+(!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
-    $("u3").href=P+"www.momondo.de/flight-search/"+c1+"-"+c2+"/"+od+(!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
-
-    const tripType=ow?"oneway":"roundtrip";
-    const leg1="from:"+c1+",to:"+c2+",departure:"+od+"TANYT";
-    const leg2=!ow&&rd?"&leg2=from:"+c2+",to:"+c1+",departure:"+rd+"TANYT":"";
-    $("u4").href=P+"www.expedia.de/Flights-Search?trip="+tripType+"&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
-
-    const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
-    $("u5").href=P+"://kiwi.com"+slug(c1)+"/"+slug(c2)+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
-
-    const trWay=ow?"ow":"rt";
-    const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
-    $("u6").href=P+"://trip.com"+c1.toLowerCase()+"&acity="+c2.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&triptype="+trWay+"&class=y&lowpricesource=searchform&quantity="+px+"&searchboxarg=t"+trStp;
+  const urls=buildUrls();
+  if(urls){
+    $("u1").href=urls.u1;
+    $("u2").href=urls.u2;
+    $("u3").href=urls.u3;
+    $("u4").href=urls.u4;
+    $("u5").href=urls.u5;
+    $("u6").href=urls.u6;
   }
 
   try{
     localStorage.setItem("rk_flt",JSON.stringify({
-      i1:$("i1").value,i2:$("i2").value,od,rd,ow,px,hrs,ns,s1,s2,lc
+      i1:$("i1").value,i2:$("i2").value,od,rd,ow,
+      px:+$("px").value||1,hrs,
+      ns:$("ns").checked,s1:$("s1").checked,s2:$("s2").checked,lc:$("lc").checked
     }));
   }catch(e){}
 }
@@ -341,9 +372,6 @@ function upd(){
   "i1;i2;od;rd;ow;px;lc".split(";").forEach(id=>{
     $(id).addEventListener("input",upd);
     $(id).addEventListener("change",upd);
-  });
-  "u1;u2;u3;u4;u5;u6".split(";").forEach(id=>{
-    $(id).addEventListener("click",upd);
   });
 
   setHrs(hrs);
