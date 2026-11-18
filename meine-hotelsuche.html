@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v16</title>
+<title>🏨 Meine Hotelsuche PRO v17</title>
 <style>
 :root{--r:#0369a1;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--v:#15803d;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
@@ -42,7 +42,7 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v16</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v17</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -72,6 +72,8 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 </form>
 <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo Hotels</a>
 <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
+<input type="hidden" name="aid" value="304142">
+<input type="hidden" name="sb_travel_purpose" value="leisure">
 <input type="hidden" name="ss" id="b_ss">
 <input type="hidden" name="dest_type" value="city">
 <input type="hidden" name="checkin" id="b_ci">
@@ -133,22 +135,20 @@ function norm(s) {
 }
 
 function openHint() {
-  setTimeout(() => {
-    const w = window.open("", "filterHinweis", "width=440,height=230,left=80,top=80,resizable=yes,scrollbars=no");
-    if (!w) return;
-    w.document.open();
-    w.document.write(
-      "<!DOCTYPE html><html lang='de'><head><meta charset='UTF-8'><title>Filter-Hinweis</title>" +
-      "<style>body{margin:0;padding:18px;background:#0f172a;color:#fff;font-family:sans-serif;line-height:1.45;font-size:15px}" +
-      "h3{margin:0 0 8px 0;color:#7dd3fc;font-size:17px}" +
-      "button{margin-top:14px;background:#1d4ed8;color:#fff;border:1px solid #60a5fa;border-radius:5px;padding:8px 14px;font-weight:bold;cursor:pointer}</style></head>" +
-      "<body><h3>ℹ️ Wichtiger Hinweis zur Filtersuche</h3>" +
-      "<div>Filter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> müssen auf der Website des Anbieters direkt eingegeben werden.</div>" +
-      "<button onclick='window.close()'>Verstanden / Schließen</button></body></html>"
-    );
-    w.document.close();
-    try { w.focus(); } catch (e) {}
-  }, 350);
+  const w = window.open("", "filterHinweis", "width=440,height=230,left=80,top=80,resizable=yes,scrollbars=no");
+  if (!w) return;
+  w.document.open();
+  w.document.write(
+    "<!DOCTYPE html><html lang='de'><head><meta charset='UTF-8'><title>Filter-Hinweis</title>" +
+    "<style>body{margin:0;padding:18px;background:#0f172a;color:#fff;font-family:sans-serif;line-height:1.45;font-size:15px}" +
+    "h3{margin:0 0 8px 0;color:#7dd3fc;font-size:17px}" +
+    "button{margin-top:14px;background:#1d4ed8;color:#fff;border:1px solid #60a5fa;border-radius:5px;padding:8px 14px;font-weight:bold;cursor:pointer}</style></head>" +
+    "<body><h3>ℹ️ Wichtiger Hinweis zur Filtersuche</h3>" +
+    "<div>Filter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> müssen auf der Website des Anbieters direkt eingegeben werden.</div>" +
+    "<button onclick='window.close()'>Verstanden / Schließen</button></body></html>"
+  );
+  w.document.close();
+  try { w.focus(); } catch (e) {}
 }
 
 function ac(inp, box) {
