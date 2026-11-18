@@ -93,7 +93,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </head>
 <body>
 <div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO - DASHBOARD</h1>
-<div class="cp"><div class="seg" id="dt">16.11.2026</div>
+<div class="cp"><div class="seg" id="dt">18.11.2026</div>
 <div class="seg st" id="st">HIN & RÜCK</div>
 <a href="meine-hotelsuche.html" class="seg upg htl">🏨 Meine Hotelsuche ➡️</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div>
@@ -111,9 +111,9 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </div>
 <div class="f2" style="margin-bottom:0">
 <div class="f" style="margin:0"><label>Hinflug</label>
-<input type="date" id="od" min="2026-11-16"></div>
+<input type="date" id="od"></div>
 <div class="f" id="rb" style="margin:0"><label>Rückflug</label>
-<input type="date" id="rd" min="2026-11-16"></div>
+<input type="date" id="rd"></div>
 </div>
 </div>
 <div class="card">
@@ -172,51 +172,60 @@ const $=id=>document.getElementById(id);
 const P="https://";
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 const airports=[
-  {c:"BER",n:"Berlin Brandenburg"},
-  {c:"FRA",n:"Frankfurt am Main"},
-  {c:"MUC",n:"München"},
-  {c:"LEJ",n:"Leipzig/Halle"},
-  {c:"DUS",n:"Düsseldorf"},
-  {c:"HAM",n:"Hamburg"},
-  {c:"CGN",n:"Köln/Bonn"},
-  {c:"STR",n:"Stuttgart"},
-  {c:"HAJ",n:"Hannover"},
-  {c:"NUE",n:"Nürnberg"},
-  {c:"VIE",n:"Wien"},
-  {c:"ZRH",n:"Zürich"},
-  {c:"BKK",n:"Bangkok Suvarnabhumi"},
-  {c:"DMK",n:"Bangkok Don Mueang"},
-  {c:"HKT",n:"Phuket"},
-  {c:"CNX",n:"Chiang Mai"},
-  {c:"USM",n:"Koh Samui"},
-  {c:"KBV",n:"Krabi"},
-  {c:"DAD",n:"Da Nang"},
-  {c:"UIH",n:"Quy Nhon"},
-  {c:"SGN",n:"Ho-Chi-Minh-Stadt (Saigon)"},
-  {c:"HAN",n:"Hanoi"},
-  {c:"MNL",n:"Manila"},
-  {c:"CEB",n:"Cebu"},
-  {c:"DGT",n:"Dumaguete"},
-  {c:"PAG",n:"Pagadian"},
-  {c:"SIN",n:"Singapur"},
-  {c:"KUL",n:"Kuala Lumpur"},
-  {c:"DPS",n:"Denpasar Bali"},
-  {c:"DXB",n:"Dubai"},
-  {c:"DOH",n:"Doha"},
-  {c:"IST",n:"Istanbul"},
-  {c:"TYO",n:"Tokio"},
-  {c:"FAO",n:"Faro"},
-  {c:"CHC",n:"Christchurch"}
+  {c:"BER",n:"Berlin Brandenburg",k:"berlin"},
+  {c:"FRA",n:"Frankfurt am Main",k:"frankfurt"},
+  {c:"MUC",n:"München",k:"munich"},
+  {c:"LEJ",n:"Leipzig/Halle",k:"leipzig"},
+  {c:"DUS",n:"Düsseldorf",k:"dusseldorf"},
+  {c:"HAM",n:"Hamburg",k:"hamburg"},
+  {c:"CGN",n:"Köln/Bonn",k:"cologne"},
+  {c:"STR",n:"Stuttgart",k:"stuttgart"},
+  {c:"HAJ",n:"Hannover",k:"hanover"},
+  {c:"NUE",n:"Nürnberg",k:"nuremberg"},
+  {c:"VIE",n:"Wien",k:"vienna"},
+  {c:"ZRH",n:"Zürich",k:"zurich"},
+  {c:"BKK",n:"Bangkok Suvarnabhumi",k:"bangkok"},
+  {c:"DMK",n:"Bangkok Don Mueang",k:"bangkok"},
+  {c:"HKT",n:"Phuket",k:"phuket"},
+  {c:"CNX",n:"Chiang Mai",k:"chiang-mai"},
+  {c:"USM",n:"Koh Samui",k:"ko-samui"},
+  {c:"KBV",n:"Krabi",k:"krabi"},
+  {c:"DAD",n:"Da Nang",k:"da-nang"},
+  {c:"UIH",n:"Quy Nhon",k:"quy-nhon"},
+  {c:"SGN",n:"Ho-Chi-Minh-Stadt (Saigon)",k:"ho-chi-minh-city"},
+  {c:"HAN",n:"Hanoi",k:"hanoi"},
+  {c:"MNL",n:"Manila",k:"manila"},
+  {c:"CEB",n:"Cebu",k:"cebu"},
+  {c:"DGT",n:"Dumaguete",k:"dumaguete"},
+  {c:"PAG",n:"Pagadian",k:"pagadian"},
+  {c:"SIN",n:"Singapur",k:"singapore"},
+  {c:"KUL",n:"Kuala Lumpur",k:"kuala-lumpur"},
+  {c:"DPS",n:"Denpasar Bali",k:"denpasar"},
+  {c:"DXB",n:"Dubai",k:"dubai"},
+  {c:"DOH",n:"Doha",k:"doha"},
+  {c:"IST",n:"Istanbul",k:"istanbul"},
+  {c:"TYO",n:"Tokio",k:"tokyo"},
+  {c:"FAO",n:"Faro",k:"faro"},
+  {c:"CHC",n:"Christchurch",k:"christchurch"}
 ];
 let hrs=14,cidx=0,drag=false;
 
 function iata(v){
   const s=v.trim();
-  const m=s.match(/\(([a-zA-Z]{3})\)/);
-  if(m)return m.pop().toUpperCase();
+  const idx1=s.indexOf("(");
+  const idx2=s.indexOf(")");
+  if(idx1!==-1&&idx2===idx1+4){
+    const sub=s.slice(idx1+1,idx2);
+    if(/^[a-zA-Z]{3}$/.test(sub))return sub.toUpperCase();
+  }
   if(/^[a-zA-Z]{3}$/.test(s))return s.toUpperCase();
   const hit=airports.find(a=>a.n.toLowerCase().includes(s.toLowerCase())||a.c.toLowerCase()===s.toLowerCase());
   return hit?hit.c:s.toUpperCase().slice(0,3);
+}
+
+function slug(code){
+  const hit=airports.find(a=>a.c===code);
+  return hit?hit.k:code.toLowerCase();
 }
 
 function ac(inp,box){
@@ -305,11 +314,11 @@ function upd(){
     $("u4").href=P+"www.expedia.de/Flights-Search?trip="+tripType+"&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
 
     const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
-    $("u5").href=P+"://kiwi.com"+c1+"/"+c2+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
+    $("u5").href=P+"://kiwi.com"+slug(c1)+"/"+slug(c2)+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
 
     const trWay=ow?"ow":"rt";
     const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
-    $("u6").href=P+"://trip.com"+c1+"&acity="+c2+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&triptype="+trWay+"&class=y&lowpricesource=searchform&quantity="+px+"&searchboxarg=t"+trStp;
+    $("u6").href=P+"://trip.com"+slug(c1)+"-to-"+slug(c2)+"/tickets-"+c1.toLowerCase()+"-"+c2.toLowerCase()+"?dcity="+c1+"&acity="+c2+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&triptype="+trWay+"&class=y&lowpricesource=searchform&quantity="+px+"&searchboxarg=t"+trStp;
   }
 
   try{
