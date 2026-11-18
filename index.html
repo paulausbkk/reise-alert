@@ -167,6 +167,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
+<script>
 const $=id=>document.getElementById(id);
 const P="https://";
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
@@ -211,8 +212,8 @@ let hrs=14,cidx=0,drag=false;
 
 function iata(v){
   const s=v.trim();
-  const m=s.match(/\(([A-Z]{3})\)/i);
-  if(m&&m)return m.toUpperCase();
+  const m=s.match(/\(([a-zA-Z]{3})\)/);
+  if(m)return m.pop().toUpperCase();
   if(/^[a-zA-Z]{3}$/.test(s))return s.toUpperCase();
   const hit=airports.find(a=>a.n.toLowerCase().includes(s.toLowerCase())||a.c.toLowerCase()===s.toLowerCase());
   return hit?hit.c:s.toUpperCase().slice(0,3);
