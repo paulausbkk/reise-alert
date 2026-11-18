@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v14</title>
+<title>🏨 Meine Hotelsuche PRO v15</title>
 <style>
 :root{--r:#0369a1;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--v:#15803d;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
@@ -39,13 +39,10 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 .sl:before{position:absolute;content:"";height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 .sw input:checked+.sl{background:var(--lg)!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
-.pop{position:fixed;bottom:20px;right:20px;left:20px;max-width:460px;margin:0 auto;background:#0f172a;color:#fff;border:2px solid #38bdf8;border-radius:10px;padding:16px 18px;box-shadow:0 10px 25px rgba(0,0,0,.45);z-index:9999;display:none;line-height:1.45;font-size:.92rem}
-.popt{font-weight:bold;color:#7dd3fc;margin-bottom:6px;font-size:1rem}
-.popb{margin-top:12px;background:#1d4ed8;color:#fff;border:1px solid #60a5fa;border-radius:5px;padding:7px 14px;font-weight:bold;cursor:pointer;font-size:.85rem}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v14</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v15</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -75,10 +72,7 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 </form>
 <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo Hotels</a>
 <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
-<input type="hidden" name="sb" value="1">
-<input type="hidden" name="src" value="searchresults">
 <input type="hidden" name="ss" id="b_ss">
-<input type="hidden" name="ss_raw" id="b_ssr">
 <input type="hidden" name="dest_type" value="city">
 <input type="hidden" name="checkin" id="b_ci">
 <input type="hidden" name="checkout" id="b_co">
@@ -106,11 +100,6 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 </form>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
 </div></div>
-<div id="pop" class="pop">
-<div class="popt">ℹ️ Wichtiger Hinweis zur Filtersuche</div>
-<div>Filter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> müssen auf der Website des Anbieters direkt eingegeben werden.</div>
-<button type="button" class="popb" onclick="document.getElementById('pop').style.display='none'">Verstanden / Schließen</button>
-</div>
 <script>
 const $ = id => document.getElementById(id);
 const P = "https://";
@@ -137,18 +126,27 @@ const tvIds = {
 const bMeal = { ro:"999", "1":"1", "9":"9", "3":"3", "4":"4" };
 const exMeal = { ro:"ROOM_ONLY", "1":"FREE_BREAKFAST", "9":"HALF_BOARD", "3":"FULL_BOARD", "4":"ALL_INCLUSIVE" };
 const mpTxt = { ro:"Nur Übernachtung", "1":"Frühstück", "9":"Halbpension", "3":"Vollpension", "4":"All-Inclusive" };
-let cidx = 0, pTmr = null;
+let cidx = 0;
 
 function norm(s) {
   return s.toLowerCase().replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
 }
 
-function showPop() {
-  const p = $("pop");
-  if (!p) return;
-  p.style.display = "block";
-  clearTimeout(pTmr);
-  pTmr = setTimeout(() => { p.style.display = "none"; }, 12000);
+function openHint() {
+  const w = window.open("", "filterHinweis", "width=440,height=230,left=80,top=80,resizable=yes,scrollbars=no");
+  if (!w) return;
+  w.document.open();
+  w.document.write(
+    "<!DOCTYPE html><html lang='de'><head><meta charset='UTF-8'><title>Filter-Hinweis</title>" +
+    "<style>body{margin:0;padding:18px;background:#0f172a;color:#fff;font-family:sans-serif;line-height:1.45;font-size:15px}" +
+    "h3{margin:0 0 8px 0;color:#7dd3fc;font-size:17px}" +
+    "button{margin-top:14px;background:#1d4ed8;color:#fff;border:1px solid #60a5fa;border-radius:5px;padding:8px 14px;font-weight:bold;cursor:pointer}</style></head>" +
+    "<body><h3>ℹ️ Wichtiger Hinweis zur Filtersuche</h3>" +
+    "<div>Filter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> müssen auf der Website des Anbieters direkt eingegeben werden.</div>" +
+    "<button onclick='window.close()'>Verstanden / Schließen</button></body></html>"
+  );
+  w.document.close();
+  try { w.focus(); } catch (e) {}
 }
 
 function ac(inp, box) {
@@ -228,7 +226,6 @@ function upd() {
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
     $("b_ss").value = city;
-    $("b_ssr").value = city;
     $("b_ci").value = ci;
     $("b_co").value = co;
     $("b_px").value = px;
@@ -278,14 +275,13 @@ function upd() {
     $(id).addEventListener("change", upd);
   });
   "h1;h3;h8".split(";").forEach(id => {
-    $(id).addEventListener("click", () => { upd(); showPop(); });
+    $(id).addEventListener("click", () => { upd(); openHint(); });
   });
   "f2;f4;f5;f6".split(";").forEach(id => {
-    $(id).addEventListener("submit", () => { upd(); showPop(); });
+    $(id).addEventListener("submit", () => { upd(); openHint(); });
   });
   upd();
 })();
 </script>
 </body>
 </html>
-  
