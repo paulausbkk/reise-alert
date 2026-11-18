@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v19</title>
+<title>🏨 Meine Hotelsuche PRO v20</title>
 <style>
 :root{--r:#0369a1;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--v:#15803d;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
@@ -39,11 +39,12 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 .sl:before{position:absolute;content:"";height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 .sw input:checked+.sl{background:var(--lg)!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
-.hint{margin-top:14px;background:#0f172a;color:#fff;border-left:4px solid #38bdf8;border-radius:6px;padding:10px 14px;font-size:.86rem;line-height:1.4}
+@keyframes pulseHint{0%,100%{background:#0f172a;border-color:#38bdf8;box-shadow:0 0 0 rgba(56,189,248,0)}50%{background:#1e3a8a;border-color:#93c5fd;box-shadow:0 0 12px rgba(56,189,248,.55)}}
+.hint{margin-top:14px;background:#0f172a;color:#fff;border:2px solid #38bdf8;border-left:6px solid #38bdf8;border-radius:6px;padding:11px 14px;font-size:.88rem;line-height:1.45;animation:pulseHint 2.4s infinite ease-in-out}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v19</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v20</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -99,7 +100,7 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 </form>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
 </div>
-<div class="hint">ℹ️ <b>Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> müssen auf der Website des Anbieters direkt ausgewählt werden.</div>
+<div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> – sowie bei <b>Booking.com</b> und <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des jeweiligen Anbieters direkt eingegeben werden.</div>
 </div>
 <script>
 const $ = id => document.getElementById(id);
