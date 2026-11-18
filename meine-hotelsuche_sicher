@@ -3,46 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v12</title>
+<title>🏨 Meine Hotelsuche PRO v21</title>
 <style>
-:root{--r:#0369a1;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--v:#15803d;--lg:#22c55e;--ly:#fef08a}
-html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
-.hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px;flex-wrap:wrap;gap:10px}
-.tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
-.cp{display:flex;gap:6px;background:#1e293b;padding:4px;border-radius:6px;align-items:center;flex-wrap:wrap}
-.seg{font-size:.75rem;padding:4px 10px;border-radius:4px;font-weight:bold;color:#fff;text-transform:uppercase;background:var(--v);text-decoration:none}
-.seg.nav{background:#991b1b;font-size:.92rem;padding:8px 16px}
-.seg.upg{background:#dc2626;font-size:.92rem;padding:8px 16px}
+:root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--v:#0284c7;--lg:#0ea5e9}
+html,body{margin:0;padding:16px;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);min-height:100vh;font-family:sans-serif;color:var(--t);box-sizing:border-box}
+.hdr{display:flex;justify-content:space-between;align-items:center;background:#0f2942;padding:14px 18px;border-radius:12px;margin-bottom:20px;flex-wrap:wrap;gap:10px;box-shadow:0 4px 14px rgba(15,41,66,.18)}
+.tit{font-weight:bold;color:#fff;font-size:1.25rem;margin:0;letter-spacing:.3px}
+.cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{font-size:.78rem;padding:6px 12px;border-radius:6px;font-weight:bold;color:#fff;text-transform:uppercase;background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
+.seg.nav{background:#1e40af;font-size:.88rem;padding:8px 14px;border-color:#60a5fa}
+.seg.upg{background:#0369a1;font-size:.88rem;padding:8px 14px;border-color:#7dd3fc}
 .row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
-.card{flex:1 1 420px;border:2px solid var(--r);border-radius:8px;padding:20px;background:#f0f9ff;box-sizing:border-box}
-.ct{font-weight:bold;font-size:1.1rem;color:var(--r);border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
+.card{flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;padding:20px;background:#ffffff;box-sizing:border-box;box-shadow:0 4px 12px rgba(3,105,161,.08)}
+.ct{font-weight:bold;font-size:1.08rem;color:var(--d);border-bottom:2px solid #e0f2fe;padding-bottom:8px;margin-bottom:16px}
 .f{margin-bottom:14px;display:flex;flex-direction:column;position:relative}
-.f2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#475569}
-input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:4px;box-sizing:border-box;font-size:.98rem;background:#fff;width:100%}
-.ac{position:absolute;top:65px;left:0;right:0;background:#fff;border:1px solid var(--r);border-radius:4px;z-index:99;max-height:180px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);display:none}
-.ac div{padding:9px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:.95rem}
-.ac div:hover{background:#e0f2fe;font-weight:bold}
-.bn{background:#fff;border:2px solid var(--r);border-radius:4px;padding:9px 12px;color:var(--r);font-weight:bold;font-size:.9rem;line-height:1.35}
-.bb{border:2px solid var(--b);background:#fff;border-radius:8px;padding:15px}
-.bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}
-.btn{display:flex;align-items:center;justify-content:center;height:46px;color:#fff;font-weight:bold;border-radius:4px;font-size:.82rem;text-transform:uppercase;text-decoration:none;text-align:center;padding:0 4px;transition:.2s;border:none;cursor:pointer;width:100%}
-.b1{background:#ff690f}.b2{background:#1e3a8a}.b3{background:#84329b}.b8{background:#ff5a5f}
-.b4{background:#003580}.b5{background:#1d4ed8}.b6{background:#007faf}
-.off{opacity:.25;pointer-events:none;filter:grayscale(100%)}
-.err{opacity:.35}.err input{background:#cbd5e1!important}
-.swc{display:flex;align-items:center;justify-content:space-between;background:#fff;padding:0 10px;border:1px solid var(--b);border-radius:4px;min-height:40px;gap:6px}
-.swc.ab{background:#ffe4e6;border:1px solid #fb7185}
-.sw{position:relative;display:inline-block;width:40px;height:22px;flex-shrink:0}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#1e3a8a}
+input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8px;box-sizing:border-box;font-size:.98rem;background:#f8fafc;color:var(--t);width:100%;transition:.2s}
+input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-shadow:0 0 0 3px rgba(2,132,199,.15)}
+.ac{position:absolute;top:68px;left:0;right:0;background:#fff;border:1px solid #0284c7;border-radius:8px;z-index:99;max-height:180px;overflow-y:auto;box-shadow:0 8px 20px rgba(12,74,110,.18);display:none}
+.ac div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;font-size:.95rem}
+.ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
+.bn{background:#eff6ff;border:1px solid #93c5fd;border-left:5px solid #0284c7;border-radius:8px;padding:10px 14px;color:#1e3a8a;font-weight:bold;font-size:.9rem;line-height:1.4}
+.bb{border:1px solid #93c5fd;background:#ffffff;border-radius:12px;padding:18px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
+.bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;height:48px;color:#fff;font-weight:bold;border-radius:8px;font-size:.84rem;text-transform:uppercase;text-decoration:none;text-align:center;padding:0 6px;transition:.2s;border:none;cursor:pointer;width:100%;box-shadow:0 2px 6px rgba(15,41,66,.15)}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.b1{background:#0284c7}.b2{background:#1d4ed8}.b3{background:#0369a1}.b8{background:#0ea5e9}
+.b4{background:#1e3a8a}.b5{background:#2563eb}.b6{background:#0077b6}
+.off{opacity:.28;pointer-events:none;filter:grayscale(80%)}
+.err{opacity:.4}.err input{background:#e2e8f0!important;border-color:#94a3b8!important}
+.swc{display:flex;align-items:center;justify-content:space-between;background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;border-radius:8px;min-height:42px;gap:8px}
+.sw{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0}
 .sw input{opacity:0;width:0;height:0}
-.sl{position:absolute;cursor:pointer;inset:0;background:#ccc;border-radius:20px;transition:.3s}
-.sl:before{position:absolute;content:"";height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
-.sw input:checked+.sl{background:var(--lg)!important}
+.sl{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:20px;transition:.3s}
+.sl:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.sw input:checked+.sl{background:#0284c7!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
+@keyframes pulseHint{0%,100%{background:#0f2942;border-color:#38bdf8;box-shadow:0 0 0 rgba(56,189,248,0)}50%{background:#1e3a8a;border-color:#93c5fd;box-shadow:0 0 14px rgba(56,189,248,.45)}}
+.hint{margin-top:16px;background:#0f2942;color:#fff;border:2px solid #38bdf8;border-left:6px solid #38bdf8;border-radius:8px;padding:12px 15px;font-size:.88rem;line-height:1.45;animation:pulseHint 2.4s infinite ease-in-out}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v12</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v21</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -54,24 +57,55 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 <div class="card"><div class="ct">🛏️ Gäste, Zimmer & Hotel-Filter</div>
 <div class="f2"><div class="f" style="margin:0"><label for="px">Personenzahl</label><select id="px"><option value="1">1 Erwachsener</option><option value="2" selected>2 Erwachsene</option><option value="3">3 Erwachsene</option><option value="4">4 Erwachsene</option></select></div>
 <div class="f" style="margin:0"><label for="rm">Zimmer</label><select id="rm"><option value="1" selected>1 Zimmer</option><option value="2">2 Zimmer</option><option value="3">3 Zimmer</option></select></div></div>
-<div class="f2"><div class="f" style="margin:0"><label for="st">Mindest-Sterne</label><select id="st"><option value="0">Alle Kategorien</option><option value="3">Ab 3 Sterne ⭐⭐⭐</option><option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option><option value="5">5 Sterne ⭐⭐⭐⭐⭐</option></select></div>
-<div class="f" style="margin:0"><label for="mp">Verpflegung</label><select id="mp"><option value="0">Alle Verpflegungen</option><option value="ro">Nur Übernachtung</option><option value="1">Frühstück inbegriffen</option><option value="9">Halbpension</option><option value="3">Vollpension</option><option value="4">All-Inclusive</option></select></div></div>
-<div class="f"><div class="swc ab"><label for="ab" style="margin:0;cursor:pointer">Nur Airbnb (Ferienwohnung / Apartment)</label><label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label></div></div>
+<div class="f"><label for="st">Mindest-Sterne</label><select id="st"><option value="0">Alle Kategorien</option><option value="3">Ab 3 Sterne ⭐⭐⭐</option><option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option><option value="5">5 Sterne ⭐⭐⭐⭐⭐</option></select></div>
+<div class="f"><div class="swc"><label for="ab" style="margin:0;cursor:pointer">Nur Airbnb (Ferienwohnung / Apartment)</label><label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label></div></div>
 <div class="bn" id="info">Bitte Reiseziel, Check-in und Check-out wählen.</div></div></div>
 <div class="bb"><div class="bf">
 <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-<form id="f2" action="https://expedia.de" method="get" target="_blank" class="htl" style="margin:0"><input type="hidden" name="destination" id="e_dest"><input type="hidden" name="d1" id="e_d1"><input type="hidden" name="d2" id="e_d2"><input type="hidden" name="startDate" id="e_ci"><input type="hidden" name="endDate" id="e_co"><input type="hidden" name="adults" id="e_px"><input type="hidden" name="rooms" id="e_rm"><input type="hidden" name="star" id="e_st"><input type="hidden" name="mealPlan" id="e_mp"><button type="submit" class="btn b2">Expedia Hotels</button></form>
+<form id="f2" action="https://expedia.de" method="get" target="_blank" class="htl" style="margin:0">
+<input type="hidden" name="destination" id="e_dest">
+<input type="hidden" name="startDate" id="e_ci">
+<input type="hidden" name="endDate" id="e_co">
+<input type="hidden" name="rooms" id="e_rm">
+<input type="hidden" name="adults" id="e_px">
+<input type="hidden" name="star" id="e_st" disabled>
+<button type="submit" class="btn b2">Expedia Hotels</button>
+</form>
 <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo Hotels</a>
-<form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0"><input type="hidden" name="sb" value="1"><input type="hidden" name="src" value="index"><input type="hidden" name="ss" id="b_ss"><input type="hidden" name="checkin" id="b_ci"><input type="hidden" name="checkout" id="b_co"><input type="hidden" name="group_adults" id="b_px"><input type="hidden" name="no_rooms" id="b_rm"><input type="hidden" name="nflt" id="b_flt"><input type="hidden" name="lang" value="de"><input type="hidden" name="selected_currency" value="EUR"><button type="submit" class="btn b4">Booking.com</button></form>
-<form id="f5" action="https://agoda.com" method="get" target="_blank" class="htl" style="margin:0"><input type="hidden" name="city" id="a_id"><input type="hidden" name="checkIn" id="a_ci"><input type="hidden" name="checkOut" id="a_co"><input type="hidden" name="los" id="a_los"><input type="hidden" name="adults" id="a_px"><input type="hidden" name="children" value="0"><input type="hidden" name="rooms" id="a_rm"><input type="hidden" name="currency" value="EUR"><button type="submit" class="btn b5">Agoda</button></form>
-<form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0"><input type="hidden" name="themeId" value="280"><input type="hidden" name="search" id="t_s"><button type="submit" class="btn b6">Trivago</button></form>
+<form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
+<input type="hidden" name="ss" id="b_ss">
+<input type="hidden" name="checkin" id="b_ci">
+<input type="hidden" name="checkout" id="b_co">
+<input type="hidden" name="group_adults" id="b_px">
+<input type="hidden" name="no_rooms" id="b_rm">
+<input type="hidden" name="nflt" id="b_flt" disabled>
+<input type="hidden" name="lang" value="de">
+<input type="hidden" name="selected_currency" value="EUR">
+<button type="submit" class="btn b4">Booking.com</button>
+</form>
+<form id="f5" action="https://agoda.com" method="get" target="_blank" class="htl" style="margin:0">
+<input type="hidden" name="city" id="a_id">
+<input type="hidden" name="checkIn" id="a_ci">
+<input type="hidden" name="los" id="a_los">
+<input type="hidden" name="adults" id="a_px">
+<input type="hidden" name="children" value="0">
+<input type="hidden" name="rooms" id="a_rm">
+<input type="hidden" name="currency" value="EUR">
+<button type="submit" class="btn b5">Agoda</button>
+</form>
+<form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
+<input type="hidden" name="search" id="t_s">
+<button type="submit" class="btn b6">Trivago</button>
+</form>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
-</div></div>
+</div>
+<div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> – sowie bei <b>Booking.com</b> und <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des jeweiligen Anbieters direkt eingegeben werden.</div>
+</div>
 <script>
 const $ = id => document.getElementById(id);
 const P = "https://";
 const cities = "Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;Ho-Chi-Minh-Stadt;Hanoi;Manila;Cebu;Dumaguete;Pagadian;Singapur;Kuala Lumpur;Denpasar Bali;Dubai;Doha;Tokio;Istanbul;Faro;Christchurch;Berlin;München;Frankfurt".split(";");
-const cols = "#0369a1;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");
+const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 const agIds = {
   "bangkok": "9395", "phuket": "16056", "chiang mai": "7401", "koh samui": "17198",
   "krabi": "14865", "da nang": "16440", "quy nhon": "17264", "ho-chi-minh-stadt": "13170",
@@ -81,22 +115,14 @@ const agIds = {
   "faro": "15356", "christchurch": "13726", "berlin": "2128", "muenchen": "14163",
   "frankfurt": "14223"
 };
-const tvIds = {
-  "bangkok": "200-15666", "phuket": "200-15685", "chiang mai": "200-15669", "koh samui": "200-15678",
-  "krabi": "200-15680", "da nang": "200-16364", "quy nhon": "200-74074", "ho-chi-minh-stadt": "200-16368",
-  "hanoi": "200-16365", "manila": "200-15192", "cebu": "200-15177", "dumaguete": "200-72186",
-  "pagadian": "200-72235", "singapur": "200-15517", "kuala lumpur": "200-14912", "denpasar bali": "200-14201",
-  "dubai": "200-16164", "doha": "200-15342", "tokio": "200-14575", "istanbul": "200-15971",
-  "faro": "200-15318", "christchurch": "200-15080", "berlin": "200-8514", "muenchen": "200-8746",
-  "frankfurt": "200-8582"
-};
-const bMeal = { ro:"999", "1":"1", "9":"9", "3":"3", "4":"4" };
-const exMeal = { ro:"ROOM_ONLY", "1":"FREE_BREAKFAST", "9":"HALF_BOARD", "3":"FULL_BOARD", "4":"ALL_INCLUSIVE" };
-const mpTxt = { ro:"Nur Übernachtung", "1":"Frühstück", "9":"Halbpension", "3":"Vollpension", "4":"All-Inclusive" };
 let cidx = 0;
 
 function norm(s) {
   return s.toLowerCase().replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
+}
+
+function slug(s) {
+  return norm(s).replace(/ß/g,"ss").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 }
 
 function ac(inp, box) {
@@ -131,7 +157,6 @@ function upd() {
   const px = +$("px").value || 2;
   const rm = +$("rm").value || 1;
   const st = +$("st").value || 0;
-  const mp = $("mp").value || "0";
   const ab = $("ab").checked;
 
   document.querySelectorAll(".htl").forEach(el => el.classList.toggle("off", ab));
@@ -142,10 +167,9 @@ function upd() {
 
   if (ci && co && !badDate) {
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const mInfo = (!ab && mp !== "0" && mpTxt[mp]) ? " • " + mpTxt[mp] : "";
     $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
     $("info").textContent = (ab ? "(AIRBNB) " : "") + "Auswahl: " + (city || "Ziel offen") +
-      " • " + n + (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi." + mInfo;
+      " • " + n + (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi.";
   } else {
     $("nt").textContent = "ZEITRAUM WÄHLEN";
     $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
@@ -154,24 +178,22 @@ function upd() {
   if (city && ci && co && !badDate) {
     const q = encodeURIComponent(city);
     const key = norm(city);
+    const sl = slug(city);
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
     const aid = agIds[key] || "";
-    const vid = tvIds[key] || "";
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
-    const bFilt = [st > 0 ? "class=" + st : "", bMeal[mp] ? "mealplan=" + bMeal[mp] : ""].filter(Boolean).join(";");
+    const bFilt = st > 0 ? "class=" + st : "";
 
     $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
     $("e_dest").value = city;
-    $("e_d1").value = ci;
-    $("e_d2").value = co;
     $("e_ci").value = ci;
     $("e_co").value = co;
-    $("e_px").value = px;
     $("e_rm").value = rm;
+    $("e_px").value = px;
+    $("e_st").disabled = !(st > 0);
     $("e_st").value = st > 0 ? (st * 10) : "";
-    $("e_mp").value = exMeal[mp] || "";
 
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
@@ -180,23 +202,24 @@ function upd() {
     $("b_co").value = co;
     $("b_px").value = px;
     $("b_rm").value = rm;
+    $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
     $("a_id").value = aid;
     $("a_ci").value = ci;
-    $("a_co").value = co;
     $("a_los").value = n;
     $("a_px").value = px;
     $("a_rm").value = rm;
 
-    $("t_s").value = (vid ? vid + ";" : "") + "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+    $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
+    $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
   }
 
   try {
     localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, mp, ab
+      city: $("city").value, ci, co, px, rm, st, ab
     }));
   } catch (e) {}
 }
@@ -214,14 +237,12 @@ function upd() {
       if (d.px) $("px").value = d.px;
       if (d.rm) $("rm").value = d.rm;
       if (d.st) $("st").value = d.st;
-      if (d.mp !== undefined) $("mp").value = d.mp;
-      else if (d.bf) $("mp").value = "1";
       if (d.ab !== undefined) $("ab").checked = d.ab;
     }
   } catch (e) {}
 
   ac($("city"), $("lc"));
-  "city;ci;co;px;rm;st;mp;ab".split(";").forEach(id => {
+  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
@@ -236,4 +257,3 @@ function upd() {
 </script>
 </body>
 </html>
-  
