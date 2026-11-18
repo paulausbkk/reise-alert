@@ -5,83 +5,88 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>✈️ Reisekonfiguration PRO</title>
 <style>
-:root{--r:#991b1b;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--g:#f59e0b;
---v:#15803d;--lg:#22c55e;--ly:#fef08a}
-html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;
-color:var(--t)}
+:root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--g:#0ea5e9;
+--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe}
+html,body{margin:0;padding:16px;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
+min-height:100vh;font-family:sans-serif;color:var(--t);box-sizing:border-box}
 .hdr{display:flex;justify-content:space-between;align-items:center;
-border-bottom:2px solid var(--b);padding-bottom:10px;margin-bottom:20px;
-flex-wrap:wrap;gap:10px}
-.tit{font-weight:bold;color:var(--r);font-size:1.3rem;margin:0}
-.cp{display:flex;gap:6px;background:#1e293b;padding:4px;border-radius:6px;
-align-items:center;flex-wrap:wrap}
-.seg{font-size:.75rem;padding:4px 10px;border-radius:4px;font-weight:bold;
-color:#fff;text-transform:uppercase;background:var(--v);text-decoration:none}
-.seg.upg{background:#dc2626;font-size:.92rem;padding:8px 16px}
-.seg.htl{background:#0369a1}
+background:#0f2942;padding:14px 18px;border-radius:12px;margin-bottom:20px;
+flex-wrap:wrap;gap:10px;box-shadow:0 4px 14px rgba(15,41,66,.18)}
+.tit{font-weight:bold;color:#fff;font-size:1.25rem;margin:0;letter-spacing:.3px}
+.cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{font-size:.78rem;padding:6px 12px;border-radius:6px;font-weight:bold;
+color:#fff;text-transform:uppercase;background:#0284c7;text-decoration:none;
+border:1px solid #38bdf8}
+.seg.upg{background:#1e40af;font-size:.88rem;padding:8px 14px;border-color:#60a5fa}
+.seg.htl{background:#0369a1;border-color:#7dd3fc}
 .row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
-.card{flex:1 1 420px;border:2px solid var(--r);border-radius:8px;padding:20px;
-background:#fef2f2;box-sizing:border-box}
-.ct{font-weight:bold;font-size:1.1rem;color:var(--r);
-border-bottom:1px solid var(--b);padding-bottom:6px;margin-bottom:15px}
+.card{flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;padding:20px;
+background:#ffffff;box-sizing:border-box;box-shadow:0 4px 12px rgba(3,105,161,.08)}
+.ct{font-weight:bold;font-size:1.08rem;color:var(--d);
+border-bottom:2px solid #e0f2fe;padding-bottom:8px;margin-bottom:16px}
 .f{margin-bottom:14px;display:flex;flex-direction:column;position:relative}
-.f2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#475569}
-input[type=text],input[type=date],select{height:40px;padding:0 10px;
-border:1px solid var(--b);border-radius:4px;box-sizing:border-box;
-font-size:.98rem;background:#fff;width:100%}
-.ac{position:absolute;top:65px;left:0;right:0;background:#fff;
-border:1px solid var(--r);border-radius:4px;z-index:99;max-height:180px;
-overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.15);display:none}
-.ac div{padding:9px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#1e3a8a}
+input[type=text],input[type=date],select{height:42px;padding:0 12px;
+border:1px solid #93c5fd;border-radius:8px;box-sizing:border-box;
+font-size:.98rem;background:#f8fafc;color:var(--t);width:100%;transition:.2s}
+input[type=text]:focus,input[type=date]:focus,select:focus{outline:none;
+border-color:#0284c7;background:#fff;box-shadow:0 0 0 3px rgba(2,132,199,.15)}
+.ac{position:absolute;top:68px;left:0;right:0;background:#fff;
+border:1px solid #0284c7;border-radius:8px;z-index:99;max-height:180px;
+overflow-y:auto;box-shadow:0 8px 20px rgba(12,74,110,.18);display:none}
+.ac div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;
 font-size:.95rem}
-.ac div:hover{background:#fee2e2;font-weight:bold}
-.bn{background:#fff;border:2px solid #ff0000;border-radius:4px;
-padding:9px 12px;color:#ff0000;font-weight:bold;font-size:.9rem;
-line-height:1.35}
-.bb{border:2px solid var(--b);background:#fff;border-radius:8px;padding:15px}
-.bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px}
+.ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
+@keyframes pulseHint{0%,100%{background:#0f2942;border-color:#38bdf8}50%{background:#1e3a8a;border-color:#93c5fd}}
+.bn{background:#0f2942;border:2px solid #38bdf8;border-left:6px solid #38bdf8;
+border-radius:8px;padding:11px 14px;color:#fff;font-weight:bold;font-size:.88rem;
+line-height:1.4;animation:pulseHint 2.4s infinite ease-in-out}
+.bb{border:1px solid #93c5fd;background:#ffffff;border-radius:12px;padding:18px;
+box-shadow:0 4px 12px rgba(3,105,161,.08)}
+.bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
 .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;
-height:45px;color:#fff;font-weight:bold;border-radius:4px;font-size:.82rem;
+height:48px;color:#fff;font-weight:bold;border-radius:8px;font-size:.84rem;
 text-transform:uppercase;text-decoration:none;text-align:center;line-height:1.15;
-padding:0 4px}
+padding:0 6px;transition:.2s;box-shadow:0 2px 6px rgba(15,41,66,.15)}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn .sub{font-size:.64rem;font-weight:bold;text-transform:none;opacity:1;
-margin-top:2px;color:#ffffff}
-.b2{background:#007054}.b3{background:#ff690f}.b4{background:#84329b}
-.b5{background:#1e3a8a}.b6{background:#00a991}.b7{background:#287dfa}
-.sb{position:relative;display:flex;align-items:center;background:#fff;
-border:1px solid var(--b);border-radius:4px;height:40px;padding:0 26px;
+margin-top:2px;color:#e0f2fe}
+.b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
+.b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
+.sb{position:relative;display:flex;align-items:center;background:#f8fafc;
+border:1px solid #93c5fd;border-radius:8px;height:42px;padding:0 26px;
 user-select:none;touch-action:none;cursor:pointer}
 .trk{position:relative;width:100%;height:6px;background:#cbd5e1;
 border-radius:3px}
-#fl{height:100%;background:var(--r);border-radius:3px;width:37%}
+#fl{height:100%;background:#0284c7;border-radius:3px;width:37%}
 #sv{position:absolute;top:50%;left:37%;transform:translate(-50%,-50%);
-width:48px;height:30px;line-height:30px;text-align:center;background:var(--r);
+width:48px;height:30px;line-height:30px;text-align:center;background:#0369a1;
 color:#fff;font-size:1.05rem;font-weight:bold;border-radius:15px;
-box-shadow:0 2px 5px rgba(0,0,0,.3)}
-.err{opacity:.35}
-.err input{background:#cbd5e1!important}
-body:has(#ow:checked) #rb{opacity:.25;pointer-events:none}
-body:has(#ow:checked) #rb input{background:#cbd5e1!important}
-body:has(#ow:checked) .st{background:var(--g)!important;color:#000}
+box-shadow:0 2px 5px rgba(15,41,66,.25)}
+.err{opacity:.4}
+.err input{background:#e2e8f0!important;border-color:#94a3b8!important}
+body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
+body:has(#ow:checked) #rb input{background:#e2e8f0!important}
+body:has(#ow:checked) .st{background:#0369a1!important;color:#fff;border-color:#7dd3fc}
 .swc{display:flex;align-items:center;justify-content:space-between;
-background:#fff;padding:0 10px;border:1px solid var(--b);border-radius:4px;
-min-height:40px;gap:6px}
-.swc.yl{background:var(--ly);border:1px solid #eab308}
+background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;border-radius:8px;
+min-height:42px;gap:8px}
+.swc.yl{background:#e0f2fe;border:1px solid #7dd3fc}
 .swc.split{flex-direction:column;justify-content:center;align-items:stretch;
 padding:0;gap:0;overflow:hidden}
 .swh{display:flex;align-items:center;justify-content:space-between;
 padding:4px 10px;gap:6px;min-height:28px}
-.swh:first-child{border-bottom:1px solid #eab308}
-.sw{position:relative;display:inline-block;width:40px;height:22px;flex-shrink:0}
+.swh:first-child{border-bottom:1px solid #7dd3fc}
+.sw{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0}
 .sw.sm{width:34px;height:18px}
 .sw input{opacity:0;width:0;height:0}
-.sl{position:absolute;cursor:pointer;inset:0;background:#ccc;
+.sl{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;
 border-radius:20px;transition:.3s}
-.sl:before{position:absolute;content:"";height:16px;width:16px;left:3px;
+.sl:before{position:absolute;content:"";height:18px;width:18px;left:3px;
 bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 .sw.sm .sl:before{height:14px;width:14px;left:2px;bottom:2px}
-.sw input:checked+.sl{background:var(--lg)!important}
+.sw input:checked+.sl{background:#0284c7!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
 .sw.sm input:checked+.sl:before{transform:translateX(16px)}
 </style>
@@ -156,142 +161,3 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
-<script>
-const $=id=>document.getElementById(id);
-const S=String.fromCharCode(47);
-const P="https:"+S+S;
-const ap="BER|Berlin Brandenburg;FRA|Frankfurt am Main;MUC|München;LEJ|Leipzig/Halle;DUS|Düsseldorf;HAM|Hamburg;DRS|Dresden;STR|Stuttgart;CGN|Köln/Bonn;VIE|Wien;ZRH|Zürich;IST|Istanbul;FAO|Faro (Pharo);CHC|Christchurch;BKK|Bangkok Suvarnabhumi;DMK|Bangkok Don Mueang;HKT|Phuket;CNX|Chiang Mai;USM|Koh Samui;KBV|Krabi;DAD|Da Nang;UIH|Quy Nhon (Qui Nonh);SGN|Ho-Chi-Minh-Stadt;HAN|Hanoi;MNL|Manila;CEB|Cebu;DGT|Dumaguete (Dumaquete);PAG|Pagadian;CRK|Clark;SIN|Singapur;KUL|Kuala Lumpur;DPS|Denpasar (Bali);DXB|Dubai;DOH|Doha;HND|Tokio Haneda;NRT|Tokio Narita".split(";");
-let hrs=14,ci=0;
-const cols="#2563eb;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";");
-function code(v){
-  const t=v.trim().toUpperCase();
-  if(t.length>=3&&t>="A"&&t<="Z")return t.slice(0,3);
-  return "";
-}
-function ac(inp,box){
-  inp.addEventListener("input",()=>{
-    const q=inp.value.trim().toLowerCase();
-    box.innerHTML="";
-    if(!q){box.style.display="none";upd();return;}
-    const hits=ap.filter(x=>x.toLowerCase().indexOf(q)!==-1);
-    if(!hits.length){box.style.display="none";upd();return;}
-    hits.forEach(h=>{
-      const p=h.split("|");
-      const c=p.shift();
-      const n=p.join("");
-      const d=document.createElement("div");
-      d.textContent=c+" – "+n;
-      d.onclick=()=>{inp.value=c+" ("+n+")";box.style.display="none";upd();};
-      box.appendChild(d);
-    });
-    box.style.display="block";
-    upd();
-  });
-  document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";});
-}
-const TRESOR=Object.freeze({
-  build(o,d,od,rd,ow,ns,s1,s2,hrs,od6,hasRd,rd6,px){
-    const d1="www."+"skyscanner"+".de";
-    let u1u=P+d1+S+"transport"+S+"fluge"+S+o.toLowerCase()+S+d.toLowerCase()+S+od6;
-    if(rd6)u1u+=S+rd6;
-    const st1=ns?"&preferdirects=true&stops=!oneStop,!twoPlusStops":(s1?"&preferdirects=false&stops=!twoPlusStops":(s2?"&preferdirects=false":""));
-    $("u1").href=u1u+S+"?adultsv2="+px+st1;
-
-    const d2="www."+"kayak"+".de";
-    let u2u=P+d2+S+"flights"+S+o+"-"+d+S+od;
-    if(hasRd)u2u+=S+rd;
-    if(px>1)u2u+=S+px+"adults";
-    const st2=ns?"stops=0;":(s1?"stops=0,1;":(s2?"stops=0,1,2;":""));
-    $("u2").href=u2u+"?sort=price_a&fs="+st2+"bfc=1;dur=-"+(hrs*60);
-
-    const d3="www."+"momondo"+".de";
-    let u3u=P+d3+S+"flight-search"+S+o+"-"+d+S+od;
-    if(hasRd)u3u+=S+rd;
-    if(px>1)u3u+=S+px+"adults";
-    const st3=ns?"&fs=stops=0":(s1?"&fs=stops=0,1":(s2?"&fs=stops=0,1,2":""));
-    $("u3").href=u3u+"?sort=price_a"+st3;
-
-    const d4="www."+"expedia"+".de";
-    let u4q="?trip="+(ow?"oneway":"roundtrip")+"&leg1=from:"+o+",to:"+d+",departure:"+od+"TANYT";
-    if(hasRd)u4q+="&leg2=from:"+d+",to:"+o+",departure:"+rd+"TANYT";
-    $("u4").href=P+d4+S+"Flights-Search"+u4q+"&passengers=adults:"+px+"&mode=search";
-
-    const d5="www."+"kiwi"+".com";
-    let u5q="?from="+o+"&to="+d+"&departure="+od;
-    if(hasRd)u5q+="&return="+rd;
-    const st5=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
-    $("u5").href=P+d5+S+"deep"+u5q+"&adults="+px+st5;
-  }
-});
-function upd(){
-  const now=new Date();
-  const dtEl=$("dt");
-  dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
-  const idx=ci++%cols.length;
-  dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
-  const o=code($("i1").value),d=code($("i2").value);
-  const od=$("od").value,rd=$("rd").value,ow=$("ow").checked,ns=$("ns").checked,s1=$("s1").checked,s2=$("s2").checked,lc=$("lc").checked;
-  const px=parseInt($("px").value,10)||1;
-  $("st").textContent=ow?"NUR HINFLUG":"HIN & RÜCK";
-  const badDate=(!ow&&od&&rd&&rd<od);
-  $("rb").classList.toggle("err",badDate);
-  if(o.length===3&&d.length===3&&od){
-    const od6=od.split("-").join("").slice(2);
-    const hasRd=(!ow&&rd&&!badDate);
-    const rd6=hasRd?rd.split("-").join("").slice(2):"";
-    TRESOR.build(o,d,od,rd,ow,ns,s1,s2,hrs,od6,hasRd,rd6,px);
-
-    const d6="www."+"trip"+".com";
-    let u6q="?dcity="+o.toLowerCase()+"&acity="+d.toLowerCase()+"&ddate="+od;
-    u6q+=(hasRd?"&rdate="+rd+"&triptype=RT":"&triptype=OW");
-    u6q+="&class=Y&quantity="+px+"&sort=price&locale=de-DE&curr=EUR"+(ns?"&nonstop=yes":"");
-    $("u6").href=P+d6+S+"flights"+S+"showfarefirst"+u6q;
-  }
-  const s=JSON.stringify({i1:$("i1").value,i2:$("i2").value,od,rd,ow,ns,s1,s2,lc,hrs,px});
-  try{localStorage.setItem("rk_main",s)}catch(e){}
-}
-(function init(){
-  const today=new Date().toISOString().slice(0,10);
-  $("od").min=today;$("rd").min=today;
-  try{
-    const raw=localStorage.getItem("rk_main");
-    if(raw){
-      const d=JSON.parse(raw);
-      if(d.i1)$("i1").value=d.i1;if(d.i2)$("i2").value=d.i2;
-      if(d.od)$("od").value=d.od;if(d.rd)$("rd").value=d.rd;
-      if(d.ow!==undefined)$("ow").checked=d.ow;
-      if(d.ns!==undefined)$("ns").checked=d.ns;
-      if(d.s1!==undefined)$("s1").checked=d.s1;
-      if(d.s2!==undefined)$("s2").checked=d.s2;
-      if(d.lc!==undefined)$("lc").checked=d.lc;
-      if(d.px)$("px").value=String(d.px);
-      if(d.hrs)hrs=d.hrs;
-    }
-  }catch(e){}
-  $("ns").addEventListener("change",()=>{if($("ns").checked){$("s1").checked=false;$("s2").checked=false;}upd();});
-  $("s1").addEventListener("change",()=>{if($("s1").checked){$("ns").checked=false;$("s2").checked=false;}upd();});
-  $("s2").addEventListener("change",()=>{if($("s2").checked){$("ns").checked=false;$("s1").checked=false;}upd();});
-  const pct=Math.round(((hrs-1)/35)*100);
-  $("fl").style.width=pct+"%";$("sv").style.left=pct+"%";$("sv").textContent=hrs+"h";
-  ac($("i1"),$("l1"));ac($("i2"),$("l2"));
-  "i1;i2;od;rd;ow;lc;px".split(";").forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);});
-  "u1;u2;u3;u4;u5;u6".split(";").forEach(id=>{$(id).addEventListener("click",upd);});
-  const sb=$("sb"),tk=$("tk");
-  let drag=false;
-  function move(e){
-    const cx=e.touches?e.touches.item(0).clientX:e.clientX;
-    const r=tk.getBoundingClientRect();
-    let p=Math.max(0,Math.min(1,(cx-r.left)/r.width));
-    hrs=Math.round(1+p*35);
-    const pc=Math.round(((hrs-1)/35)*100);
-    $("fl").style.width=pc+"%";$("sv").style.left=pc+"%";$("sv").textContent=hrs+"h";
-    upd();
-  }
-  sb.addEventListener("pointerdown",e=>{drag=true;move(e)});
-  window.addEventListener("pointermove",e=>{if(drag)move(e)});
-  window.addEventListener("pointerup",()=>{drag=false});
-  upd();
-})();
-</script>
-</body>
-</html>
