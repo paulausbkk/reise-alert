@@ -142,6 +142,7 @@ line-height:1.4;animation:pulseHint 2.2s infinite ease-in-out}
 <script>
 const $=id=>document.getElementById(id);
 const keys="u5;u3;u_fn;u6;u4;u_tknr;u_pp".split(";");
+const upKeys="u3;u_fn;u6;u_pp".split(";");
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let ci=0;
 const guides={
@@ -167,7 +168,17 @@ const guides={
   mom:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
   opo:"1. 'Meine Reisen' öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
 };
+function normCaps(){
+  upKeys.forEach(k=>{
+    const el=$(k);
+    if(el&&el.value){
+      const up=el.value.toUpperCase();
+      if(el.value!==up)el.value=up;
+    }
+  });
+}
 function cp(id,label){
+  normCaps();
   const el=$(id);
   const val=el.value.trim();
   if(!val){
@@ -192,7 +203,9 @@ async function openNote(){
   const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
   let clipAll="";
   items.forEach(it=>{
-    const p=it.split("|");const lbl=p.shift();const val=$(p.join("")).value.trim();
+    const p=it.split("|");const lbl=p.shift();const id=p.join("");
+    let val=$(id).value.trim();
+    if(upKeys.includes(id))val=val.toUpperCase();
     if(val)clipAll+=lbl+": "+val+" | ";
   });
   if(clipAll){
@@ -218,7 +231,9 @@ async function openNote(){
         b.appendChild(box);
       }
       items.forEach(it=>{
-        const p=it.split("|");const lbl=p.shift();const val=$(p.join("")).value.trim();
+        const p=it.split("|");const lbl=p.shift();const id=p.join("");
+        let val=$(id).value.trim();
+        if(upKeys.includes(id))val=val.toUpperCase();
         if(val){
           const row=pip.document.createElement("div");
           row.style.display="flex";row.style.justifyContent="space-between";row.style.alignItems="center";
@@ -238,6 +253,7 @@ async function openNote(){
   }
 }
 function sv(){
+  normCaps();
   const now=new Date();
   const dtEl=$("dt");
   dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
