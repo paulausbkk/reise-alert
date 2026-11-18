@@ -167,44 +167,43 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
 </div>
 </div>
-<script>
 const $=id=>document.getElementById(id);
 const P="https://";
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 const airports=[
   {c:"BER",n:"Berlin Brandenburg",k:"berlin"},
   {c:"FRA",n:"Frankfurt am Main",k:"frankfurt"},
-  {c:"MUC",n:"München",k:"muenchen"},
+  {c:"MUC",n:"München",k:"munich"},
   {c:"LEJ",n:"Leipzig/Halle",k:"leipzig"},
-  {c:"DUS",n:"Düsseldorf",k:"duesseldorf"},
+  {c:"DUS",n:"Düsseldorf",k:"dusseldorf"},
   {c:"HAM",n:"Hamburg",k:"hamburg"},
-  {c:"CGN",n:"Köln/Bonn",k:"koeln"},
+  {c:"CGN",n:"Köln/Bonn",k:"cologne"},
   {c:"STR",n:"Stuttgart",k:"stuttgart"},
-  {c:"HAJ",n:"Hannover",k:"hannover"},
-  {c:"NUE",n:"Nürnberg",k:"nuernberg"},
-  {c:"VIE",n:"Wien",k:"wien"},
-  {c:"ZRH",n:"Zürich",k:"zuerich"},
+  {c:"HAJ",n:"Hannover",k:"hanover"},
+  {c:"NUE",n:"Nürnberg",k:"nuremberg"},
+  {c:"VIE",n:"Wien",k:"vienna"},
+  {c:"ZRH",n:"Zürich",k:"zurich"},
   {c:"BKK",n:"Bangkok Suvarnabhumi",k:"bangkok"},
-  {c:"DMK",n:"Bangkok Don Mueang",k:"bangkok-don-mueang"},
+  {c:"DMK",n:"Bangkok Don Mueang",k:"bangkok"},
   {c:"HKT",n:"Phuket",k:"phuket"},
   {c:"CNX",n:"Chiang Mai",k:"chiang-mai"},
-  {c:"USM",n:"Koh Samui",k:"koh-samui"},
+  {c:"USM",n:"Koh Samui",k:"ko-samui"},
   {c:"KBV",n:"Krabi",k:"krabi"},
   {c:"DAD",n:"Da Nang",k:"da-nang"},
   {c:"UIH",n:"Quy Nhon",k:"quy-nhon"},
-  {c:"SGN",n:"Ho-Chi-Minh-Stadt (Saigon)",k:"ho-chi-minh-stadt"},
+  {c:"SGN",n:"Ho-Chi-Minh-Stadt (Saigon)",k:"ho-chi-minh-city"},
   {c:"HAN",n:"Hanoi",k:"hanoi"},
   {c:"MNL",n:"Manila",k:"manila"},
   {c:"CEB",n:"Cebu",k:"cebu"},
   {c:"DGT",n:"Dumaguete",k:"dumaguete"},
   {c:"PAG",n:"Pagadian",k:"pagadian"},
-  {c:"SIN",n:"Singapur",k:"singapur"},
+  {c:"SIN",n:"Singapur",k:"singapore"},
   {c:"KUL",n:"Kuala Lumpur",k:"kuala-lumpur"},
-  {c:"DPS",n:"Denpasar Bali",k:"denpasar-bali"},
+  {c:"DPS",n:"Denpasar Bali",k:"denpasar"},
   {c:"DXB",n:"Dubai",k:"dubai"},
   {c:"DOH",n:"Doha",k:"doha"},
   {c:"IST",n:"Istanbul",k:"istanbul"},
-  {c:"TYO",n:"Tokio",k:"tokio"},
+  {c:"TYO",n:"Tokio",k:"tokyo"},
   {c:"FAO",n:"Faro",k:"faro"},
   {c:"CHC",n:"Christchurch",k:"christchurch"}
 ];
@@ -213,7 +212,7 @@ let hrs=14,cidx=0,drag=false;
 function iata(v){
   const s=v.trim();
   const m=s.match(/\(([A-Z]{3})\)/i);
-  if(m&&m[1])return m[1].toUpperCase();
+  if(m&&m)return m.toUpperCase();
   if(/^[a-zA-Z]{3}$/.test(s))return s.toUpperCase();
   const hit=airports.find(a=>a.n.toLowerCase().includes(s.toLowerCase())||a.c.toLowerCase()===s.toLowerCase());
   return hit?hit.c:s.toUpperCase().slice(0,3);
@@ -314,7 +313,7 @@ function upd(){
 
     const trWay=ow?"ow":"rt";
     const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
-    $("u6").href=P+"://trip.com"+slug(c1)+"-to-"+slug(c2)+"/tickets-"+c1.toLowerCase()+"-"+c2.toLowerCase()+"?dcity="+c1.toLowerCase()+"&acity="+c2.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&flighttype="+trWay+"&adult="+px+trStp;
+    $("u6").href=P+"://trip.com"+c1.toLowerCase()+"&acity="+c2.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&triptype="+trWay+"&class=y&lowpricesource=searchform&quantity="+px+"&searchboxarg=t"+trStp;
   }
 
   try{
