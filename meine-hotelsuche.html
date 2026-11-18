@@ -69,10 +69,168 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
 </div></div>
 <script>
-const $=id=>document.getElementById(id),P="https://",cities="Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;Ho-Chi-Minh-Stadt;Hanoi;Manila;Cebu;Dumaguete;Pagadian;Singapur;Kuala Lumpur;Denpasar Bali;Dubai;Doha;Tokio;Istanbul;Faro;Christchurch;Berlin;München;Frankfurt".split(";"),cols="#0369a1;#7c3aed;#ea580c;#0891b2;#db2777;#15803d".split(";"),agId={bangkok:9395,phuket:16056,"chiang mai":7401,"koh samui":17198,krabi:14865,"da nang":16440,"quy nhon":17264,"ho-chi-minh-stadt":13170,hanoi:2758,manila:16592,cebu:4001,dumaguete:16562,pagadian:18952,singapur:4064,"kuala lumpur":14524,"denpasar bali":17193,dubai:2994,doha:11977,tokio:5085,istanbul:14932,faro:15356,christchurch:13726,berlin:2128,"münchen":14163,frankfurt:14223},trId={bangkok:359,phuket:725,"chiang mai":623,"koh samui":1218,krabi:1221,"da nang":1356,"quy nhon":42616,"ho-chi-minh-stadt":301,hanoi:286,manila:364,cebu:1239,dumaguete:18253,pagadian:56414,singapur:73,"kuala lumpur":315,"denpasar bali":723,dubai:220,doha:297,tokio:228,istanbul:532,faro:1384,christchurch:682,berlin:193,"münchen":363,frankfurt:250},tvId={bangkok:"200-15666",phuket:"200-15685","chiang mai":"200-15669","koh samui":"200-15678",krabi:"200-15680","da nang":"200-16364","quy nhon":"200-74074","ho-chi-minh-stadt":"200-16368",hanoi:"200-16365",manila:"200-15192",cebu:"200-15177",dumaguete:"200-72186",pagadian:"200-72235",singapur:"200-15517","kuala lumpur":"200-14912","denpasar bali":"200-14201",dubai:"200-16164",doha:"200-15342",tokio:"200-14575",istanbul:"200-15971",faro:"200-15318",christchurch:"200-15080",berlin:"200-8514","münchen":"200-8746",frankfurt:"200-8582"},exMeal={ro:"ROOM_ONLY","1":"FREE_BREAKFAST","9":"HALF_BOARD","3":"FULL_BOARD","4":"ALL_INCLUSIVE"},mpTxt={ro:"Nur Übernachtung","1":"Frühstück","9":"Halbpension","3":"Vollpension","4":"All-Inclusive"};let cidx=0;
-function ac(inp,box){inp.addEventListener("input",()=>{const q=inp.value.trim().toLowerCase();box.innerHTML="";if(!q){box.style.display="none";upd();return}const hits=cities.filter(x=>x.toLowerCase().includes(q));if(!hits.length){box.style.display="none";upd();return}hits.forEach(h=>{const d=document.createElement("div");d.textContent=h;d.onclick=()=>{inp.value=h;box.style.display="none";upd()};box.appendChild(d)});box.style.display="block";upd()});document.addEventListener("click",e=>{if(!box.contains(e.target)&&e.target!==inp)box.style.display="none"})}
-function upd(){const now=new Date(),dtEl=$("dt");dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");dtEl.style.setProperty("background-color",cols[cidx++%cols.length],"important");const city=$("city").value.trim(),ci=$("ci").value,co=$("co").value,px=+$("px").value||2,rm=+$("rm").value||1,st=+$("st").value||0,mp=$("mp").value||"0",ab=$("ab").checked;document.querySelectorAll(".htl").forEach(el=>el.classList.toggle("off",ab));$("h8").classList.toggle("off",!ab);const badDate=(ci&&co&&co<=ci);$("cob").classList.toggle("err",badDate);if(ci&&co&&!badDate){const n=Math.round((new Date(co)-new Date(ci))/86400000),mInfo=(!ab&&mp!=="0"&&mpTxt[mp])?" • "+mpTxt[mp]:"";$("nt").textContent=n+(n===1?" NACHT":" NÄCHTE");$("info").textContent=(ab?"[AIRBNB] ":"")+"Auswahl: "+(city||"Ziel offen")+" • "+n+(n===1?" Nacht":" Nächte")+" • "+px+" Pers. • "+rm+" Zi."+mInfo}else{$("nt").textContent="ZEITRAUM WÄHLEN";$("info").textContent="Bitte Reiseziel, Check-in und Check-out wählen."}if(city&&ci&&co&&!badDate){const q=encodeURIComponent(city),k=city.toLowerCase(),dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,""),exExtra=(st>0?"&star="+(st*10):"")+(exMeal[mp]?"&mealPlan="+exMeal[mp]:""),aid=agId[k],tid=trId[k],vid=tvId[k];$("h1").href=P+"www.kayak.de/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";$("h2").href=P+"www.expedia.de/Hotel-Search?destination="+q+"&startDate="+ci+"&endDate="+co+"&adults="+px+"&rooms="+rm+exExtra;$("h3").href=P+"www.momondo.de/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";$("h4").href=P+"://booking.com"+q+"&checkin="+ci+"&checkout="+co+"&group_adults="+px+"&no_rooms="+rm;$("h5").href=aid?P+"://agoda.com"+aid+"&checkIn="+ci+"&checkOut="+co+"&adults="+px+"&rooms="+rm:P+"://agoda.com"+q+"&checkIn="+ci+"&checkOut="+co+"&adults="+px+"&rooms="+rm;$("h6").href=vid?P+"www.trivago.de/de/srl?search="+vid+";dr-"+dt1+"-"+dt2+";rc-"+rm+"-"+px:P+"www.trivago.de/de/srl?q="+q+"&search=dr-"+dt1+"-"+dt2;$("h7").href=tid?P+"://trip.com"+tid+"&checkin="+ci+"&checkout="+co+"&adult="+px+"&crn="+rm+"&curr=EUR":P+"://trip.com"+q+"&checkin="+ci+"&checkout="+co+"&adult="+px+"&crn="+rm;$("h8").href=P+"www.airbnb.de/s/"+q+"/homes?checkin="+ci+"&checkout="+co+"&adults="+px}try{localStorage.setItem("rk_hotel",JSON.stringify({city:$("city").value,ci,co,px,rm,st,mp,ab}))}catch(e){}}
-(function(){const t=new Date().toISOString().slice(0,10);$("ci").min=t;$("co").min=t;try{const d=JSON.parse(localStorage.getItem("rk_hotel")||"null");if(d){if(d.city)$("city").value=d.city;if(d.ci)$("ci").value=d.ci;if(d.co)$("co").value=d.co;if(d.px)$("px").value=d.px;if(d.rm)$("rm").value=d.rm;if(d.st)$("st").value=d.st;if(d.mp!==undefined)$("mp").value=d.mp;else if(d.bf)$("mp").value="1";if(d.ab!==undefined)$("ab").checked=d.ab}}catch(e){}ac($("city"),$("lc"));"city;ci;co;px;rm;st;mp;ab".split(";").forEach(id=>{$(id).addEventListener("input",upd);$(id).addEventListener("change",upd)});"h1;h2;h3;h4;h5;h6;h7;h8".split(";").forEach(id=>$(id).addEventListener("click",upd));upd()})();
+const $ = id => document.getElementById(id);
+const P = "https://";
+const cities = [
+  "Bangkok","Phuket","Chiang Mai","Koh Samui","Krabi",
+  "Da Nang","Quy Nhon","Ho-Chi-Minh-Stadt","Hanoi","Manila",
+  "Cebu","Dumaguete","Pagadian","Singapur","Kuala Lumpur",
+  "Denpasar Bali","Dubai","Doha","Tokio","Istanbul",
+  "Faro","Christchurch","Berlin","München","Frankfurt"
+];
+const cols = ["#0369a1","#7c3aed","#ea580c","#0891b2","#db2777","#15803d"];
+const db = {
+  "bangkok": [9395, 359, "200-15666"],
+  "phuket": [16056, 725, "200-15685"],
+  "chiang mai": [7401, 623, "200-15669"],
+  "koh samui": [17198, 1218, "200-15678"],
+  "krabi": [14865, 1221, "200-15680"],
+  "da nang": [16440, 1356, "200-16364"],
+  "quy nhon": [17264, 42616, "200-74074"],
+  "ho-chi-minh-stadt": [13170, 301, "200-16368"],
+  "hanoi": [2758, 286, "200-16365"],
+  "manila": [16592, 364, "200-15192"],
+  "cebu": [4001, 1239, "200-15177"],
+  "dumaguete": [16562, 18253, "200-72186"],
+  "pagadian": [18952, 56414, "200-72235"],
+  "singapur": [4064, 73, "200-15517"],
+  "kuala lumpur": [14524, 315, "200-14912"],
+  "denpasar bali": [17193, 723, "200-14201"],
+  "dubai": [2994, 220, "200-16164"],
+  "doha": [11977, 297, "200-15342"],
+  "tokio": [5085, 228, "200-14575"],
+  "istanbul": [14932, 532, "200-15971"],
+  "faro": [15356, 1384, "200-15318"],
+  "christchurch": [13726, 682, "200-15080"],
+  "berlin": [2128, 193, "200-8514"],
+  "muenchen": [14163, 363, "200-8746"],
+  "frankfurt": [14223, 250, "200-8582"]
+};
+const exMeal = {
+  ro:"ROOM_ONLY", "1":"FREE_BREAKFAST", "9":"HALF_BOARD",
+  "3":"FULL_BOARD", "4":"ALL_INCLUSIVE"
+};
+const mpTxt = {
+  ro:"Nur Übernachtung", "1":"Frühstück", "9":"Halbpension",
+  "3":"Vollpension", "4":"All-Inclusive"
+};
+let cidx = 0;
+
+function norm(s) {
+  return s.toLowerCase().replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
+}
+
+function ac(inp, box) {
+  inp.addEventListener("input", () => {
+    const q = inp.value.trim().toLowerCase();
+    box.innerHTML = "";
+    if (!q) { box.style.display = "none"; upd(); return; }
+    const hits = cities.filter(x => x.toLowerCase().includes(q));
+    if (!hits.length) { box.style.display = "none"; upd(); return; }
+    hits.forEach(h => {
+      const d = document.createElement("div");
+      d.textContent = h;
+      d.onclick = () => { inp.value = h; box.style.display = "none"; upd(); };
+      box.appendChild(d);
+    });
+    box.style.display = "block";
+    upd();
+  });
+  document.addEventListener("click", e => {
+    if (!box.contains(e.target) && e.target !== inp) box.style.display = "none";
+  });
+}
+
+function upd() {
+  const now = new Date(), dtEl = $("dt");
+  dtEl.textContent = now.toLocaleDateString("de-DE") + " • " + now.toLocaleTimeString("de-DE");
+  dtEl.style.setProperty("background-color", cols[cidx++ % cols.length], "important");
+
+  const city = $("city").value.trim();
+  const ci = $("ci").value;
+  const co = $("co").value;
+  const px = +$("px").value || 2;
+  const rm = +$("rm").value || 1;
+  const st = +$("st").value || 0;
+  const mp = $("mp").value || "0";
+  const ab = $("ab").checked;
+
+  document.querySelectorAll(".htl").forEach(el => el.classList.toggle("off", ab));
+  $("h8").classList.toggle("off", !ab);
+
+  const badDate = (ci && co && co <= ci);
+  $("cob").classList.toggle("err", badDate);
+
+  if (ci && co && !badDate) {
+    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    const mInfo = (!ab && mp !== "0" && mpTxt[mp]) ? " • " + mpTxt[mp] : "";
+    $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
+    $("info").textContent = (ab ? "[AIRBNB] " : "") + "Auswahl: " + (city || "Ziel offen") +
+      " • " + n + (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi." + mInfo;
+  } else {
+    $("nt").textContent = "ZEITRAUM WÄHLEN";
+    $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
+  }
+
+  if (city && ci && co && !badDate) {
+    const q = encodeURIComponent(city);
+    const ids = db[norm(city)] || [];
+    const dt1 = ci.replace(/-/g, "");
+    const dt2 = co.replace(/-/g, "");
+    const exExtra = (st > 0 ? "&star=" + (st * 10) : "") + (exMeal[mp] ? "&mealPlan=" + exMeal[mp] : "");
+
+    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("h2").href = P + "www.expedia.de/Hotel-Search?destination=" + q + "&startDate=" + ci + "&endDate=" + co + "&adults=" + px + "&rooms=" + rm + exExtra;
+    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("h4").href = P + "://booking.com" + q + "&checkin=" + ci + "&checkout=" + co + "&group_adults=" + px + "&no_rooms=" + rm;
+    $("h5").href = ids[0]
+      ? P + "://agoda.com" + ids[0] + "&checkIn=" + ci + "&checkOut=" + co + "&adults=" + px + "&rooms=" + rm
+      : P + "://agoda.com" + q + "&checkIn=" + ci + "&checkOut=" + co + "&adults=" + px + "&rooms=" + rm;
+    $("h6").href = ids[2]
+      ? P + "www.trivago.de/de/srl?search=" + ids[2] + ";dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px
+      : P + "www.trivago.de/de/srl?q=" + q + "&search=dr-" + dt1 + "-" + dt2;
+    $("h7").href = ids[1]
+      ? P + "://trip.com" + ids[1] + "&checkin=" + ci + "&checkout=" + co + "&adult=" + px + "&crn=" + rm
+      : P + "://trip.com" + q + "&checkin=" + ci + "&checkout=" + co + "&adult=" + px + "&crn=" + rm;
+    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
+  }
+
+  try {
+    localStorage.setItem("rk_hotel", JSON.stringify({
+      city: $("city").value, ci, co, px, rm, st, mp, ab
+    }));
+  } catch (e) {}
+}
+
+(function() {
+  const t = new Date().toISOString().slice(0, 10);
+  $("ci").min = t;
+  $("co").min = t;
+  try {
+    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
+    if (d) {
+      if (d.city) $("city").value = d.city;
+      if (d.ci) $("ci").value = d.ci;
+      if (d.co) $("co").value = d.co;
+      if (d.px) $("px").value = d.px;
+      if (d.rm) $("rm").value = d.rm;
+      if (d.st) $("st").value = d.st;
+      if (d.mp !== undefined) $("mp").value = d.mp;
+      else if (d.bf) $("mp").value = "1";
+      if (d.ab !== undefined) $("ab").checked = d.ab;
+    }
+  } catch (e) {}
+
+  ac($("city"), $("lc"));
+  ["city","ci","co","px","rm","st","mp","ab"].forEach(id => {
+    $(id).addEventListener("input", upd);
+    $(id).addEventListener("change", upd);
+  });
+  ["h1","h2","h3","h4","h5","h6","h7","h8"].forEach(id => {
+    $(id).addEventListener("click", upd);
+  });
+  upd();
+})();
 </script>
 </body>
 </html>
