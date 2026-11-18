@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Reisekonfiguration PRO v30</title>
+<title>✈️ Reisekonfiguration PRO v30 (Pure HTML/CSS)</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;
 --g:#0ea5e9;--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe}
@@ -41,13 +41,7 @@ border-radius:8px;box-sizing:border-box;font-size:.96rem;
 background:#f8fafc;color:var(--t);width:100%;transition:.2s}
 .inp:focus,.dat:focus,select:focus{outline:none;border-color:#0284c7;
 background:#fff;box-shadow:0 0 0 3px rgba(2,132,199,.15)}
-.ac{position:absolute;top:66px;left:0;right:0;background:#fff;
-border:1px solid #0284c7;border-radius:8px;z-index:99;
-max-height:180px;overflow-y:auto;
-box-shadow:0 8px 20px rgba(12,74,110,.18);display:none}
-.ac div{padding:10px 12px;cursor:pointer;
-border-bottom:1px solid #f1f5f9;font-size:.94rem}
-.ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
+.rng{width:100%;accent-color:#0284c7;cursor:pointer;height:36px}
 @keyframes pulseHint{
 0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
 50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
@@ -62,29 +56,15 @@ padding:16px 20px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
 grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
 .btn{display:flex;flex-direction:column;align-items:center;
 justify-content:center;height:46px;color:#fff;font-weight:bold;
-border-radius:8px;font-size:.84rem;text-transform:uppercase;
-text-decoration:none;text-align:center;line-height:1.15;
-padding:0 6px;transition:.2s;
+border:none;border-radius:8px;font-size:.84rem;cursor:pointer;
+text-transform:uppercase;text-decoration:none;text-align:center;
+line-height:1.15;padding:0 6px;transition:.2s;
 box-shadow:0 2px 6px rgba(15,41,66,.15)}
 .btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn .sub{font-size:.64rem;font-weight:bold;text-transform:none;
 opacity:1;margin-top:2px;color:#e0f2fe}
 .b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
 .b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
-.sb{position:relative;display:flex;align-items:center;
-background:#f8fafc;border:1px solid #93c5fd;border-radius:8px;
-height:41px;padding:0 26px;user-select:none;touch-action:none;
-cursor:pointer}
-.trk{position:relative;width:100%;height:6px;background:#cbd5e1;
-border-radius:3px}
-#fl{height:100%;background:#0284c7;border-radius:3px;width:37%}
-#sv{position:absolute;top:50%;left:37%;
-transform:translate(-50%,-50%);width:48px;height:30px;
-line-height:30px;text-align:center;background:#0369a1;color:#fff;
-font-size:1.02rem;font-weight:bold;border-radius:15px;
-box-shadow:0 2px 5px rgba(15,41,66,.25)}
-.err{opacity:.4}
-.err input{background:#e2e8f0!important;border-color:#94a3b8!important}
 body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
 body:has(#ow:checked) #rb input{background:#e2e8f0!important}
 body:has(#ow:checked) .st{background:#0369a1!important;color:#fff;
@@ -113,28 +93,66 @@ left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </style>
 </head>
 <body>
+<datalist id="ap">
+<option value="BER">Berlin Brandenburg</option>
+<option value="FRA">Frankfurt am Main</option>
+<option value="MUC">München</option>
+<option value="LEJ">Leipzig/Halle</option>
+<option value="DUS">Düsseldorf</option>
+<option value="HAM">Hamburg</option>
+<option value="CGN">Köln/Bonn</option>
+<option value="STR">Stuttgart</option>
+<option value="HAJ">Hannover</option>
+<option value="NUE">Nürnberg</option>
+<option value="VIE">Wien</option>
+<option value="ZRH">Zürich</option>
+<option value="BKK">Bangkok Suvarnabhumi</option>
+<option value="DMK">Bangkok Don Mueang</option>
+<option value="HKT">Phuket</option>
+<option value="CNX">Chiang Mai</option>
+<option value="USM">Koh Samui</option>
+<option value="KBV">Krabi</option>
+<option value="DAD">Da Nang</option>
+<option value="UIH">Quy Nhon</option>
+<option value="SGN">Ho-Chi-Minh-Stadt</option>
+<option value="HAN">Hanoi</option>
+<option value="MNL">Manila</option>
+<option value="CEB">Cebu</option>
+<option value="DGT">Dumaguete</option>
+<option value="PAG">Pagadian</option>
+<option value="SIN">Singapur</option>
+<option value="KUL">Kuala Lumpur</option>
+<option value="DPS">Denpasar Bali</option>
+<option value="DXB">Dubai</option>
+<option value="DOH">Doha</option>
+<option value="IST">Istanbul</option>
+<option value="TYO">Tokio</option>
+<option value="FAO">Faro</option>
+<option value="CHC">Christchurch</option>
+</datalist>
 <div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div>
 <div class="seg st" id="st">HIN & RÜCK</div>
 <a href="meine-hotelsuche.html" class="seg upg htl">🏨 Meine Hotelsuche ➡️</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div>
 </div>
+<form target="_blank" method="get">
 <div class="row">
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
 <div class="f2" style="margin-bottom:14px">
-<div class="f" style="margin:0"><label>Abflug (IATA oder Stadt)</label>
-<input type="text" class="inp" id="i1" placeholder="z.B. BER, FRA, MUC" autocomplete="off">
-<div id="l1" class="ac"></div></div>
-<div class="f" style="margin:0"><label>Ziel (IATA oder Stadt)</label>
-<input type="text" class="inp" id="i2" placeholder="z.B. BKK, DAD, CEB" autocomplete="off">
-<div id="l2" class="ac"></div></div>
+<div class="f" style="margin:0"><label for="i1">Abflug (IATA-Code)</label>
+<input type="text" class="inp" id="i1" name="from" list="ap"
+placeholder="z.B. BER, FRA, MUC" maxlength="3" required></div>
+<div class="f" style="margin:0"><label for="i2">Ziel (IATA-Code)</label>
+<input type="text" class="inp" id="i2" name="to" list="ap"
+placeholder="z.B. BKK, DAD, CEB" maxlength="3" required></div>
 </div>
 <div class="f2" style="margin-bottom:0">
-<div class="f" style="margin:0"><label>Hinflug</label>
-<input type="date" class="dat" id="od"></div>
-<div class="f" id="rb" style="margin:0"><label>Rückflug</label>
-<input type="date" class="dat" id="rd"></div>
+<div class="f" style="margin:0"><label for="od">Hinflug</label>
+<input type="date" class="dat" id="od" name="departure" required></div>
+<div class="f" id="rb" style="margin:0"><label for="rd">Rückflug</label>
+<input type="date" class="dat" id="rd" name="return"></div>
 </div>
 </div>
 <div class="card">
@@ -142,284 +160,63 @@ left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <div class="f2" style="align-items:end">
 <div class="swc">
 <label for="ow" style="margin:0;cursor:pointer;font-size:.82rem">Nur Hinflug (One-Way)</label>
-<label class="sw"><input type="checkbox" id="ow"><span class="sl"></span></label>
+<label class="sw"><input type="checkbox" id="ow" name="oneway" value="1">
+<span class="sl"></span></label>
 </div>
 <div class="f" style="margin:0"><label for="px">Personenzahl</label>
-<select id="px">
+<select id="px" name="adults">
 <option value="1">1 Person</option>
 <option value="2">2 Personen</option>
 <option value="3">3 Personen</option>
 <option value="4">4 Personen</option>
 </select></div>
 </div>
-<div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label>
-<div class="sb" id="sb"><div class="trk" id="tk">
-<div id="fl"></div><div id="sv">14h</div></div></div></div>
+<div class="f"><label for="rng">Max. Reisezeit (1 – 36 Std.)</label>
+<input type="range" class="rng" id="rng" name="maxDuration"
+min="1" max="36" value="14"></div>
 <div class="f2">
 <div class="swc yl">
 <label for="ns" style="margin:0;cursor:pointer;font-size:.82rem">Nur Direktflüge (Non-Stop)</label>
-<label class="sw"><input type="checkbox" id="ns"><span class="sl"></span></label>
+<label class="sw"><input type="checkbox" id="ns" name="stopNumber" value="0">
+<span class="sl"></span></label>
 </div>
 <div class="swc yl split">
 <div class="swh">
 <label for="s1" style="margin:0;cursor:pointer;font-size:.8rem">Max. 1 Stop</label>
-<label class="sw sm"><input type="checkbox" id="s1"><span class="sl"></span></label>
+<label class="sw sm"><input type="checkbox" id="s1" name="stopNumber" value="1">
+<span class="sl"></span></label>
 </div>
 <div class="swh">
 <label for="s2" style="margin:0;cursor:pointer;font-size:.8rem">Max. 2 Stopps</label>
-<label class="sw sm"><input type="checkbox" id="s2"><span class="sl"></span></label>
+<label class="sw sm"><input type="checkbox" id="s2" name="stopNumber" value="2">
+<span class="sl"></span></label>
 </div>
 </div>
 </div>
 <div class="f" style="margin-bottom:12px"><div class="swc">
 <label for="lc" style="margin:0;cursor:pointer;font-size:.82rem">Inkl. Low-Cost Airlines (zusätzlich)</label>
-<label class="sw"><input type="checkbox" id="lc"><span class="sl"></span></label>
+<label class="sw"><input type="checkbox" id="lc" name="lowcost" value="1">
+<span class="sl"></span></label>
 </div></div>
 <div class="bn">ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend angeklickten Website beim Anbieter ausgewählt werden.</div>
 </div>
 </div>
 <div class="bb">
 <div class="bf">
-<a id="u1" href="https://skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
-<a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
-<a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
-<a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia<span class="sub">Stopps auf Website wählen</span></a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
-<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
+<button type="submit" formaction="https://skyscanner.de"
+class="btn b2">Skyscanner</button>
+<button type="submit" formaction="https://kayak.de"
+class="btn b3">Kayak</button>
+<button type="submit" formaction="https://momondo.de"
+class="btn b4">Momondo</button>
+<button type="submit" formaction="https://expedia.de"
+class="btn b5">Expedia<span class="sub">Stopps auf Website wählen</span></button>
+<button type="submit" formaction="https://kiwi.com"
+class="btn b6">Kiwi.com</button>
+<button type="submit" formaction="https://trip.com"
+class="btn b7">Trip.com</button>
 </div>
 </div>
-<script>
-const $=id=>document.getElementById(id);
-const P="https://";
-const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const a1="BER|Berlin Brandenburg|berlin;FRA|Frankfurt am Main|frankfurt";
-const a2="MUC|München|munich;LEJ|Leipzig/Halle|leipzig";
-const a3="DUS|Düsseldorf|dusseldorf;HAM|Hamburg|hamburg";
-const a4="CGN|Köln/Bonn|cologne;STR|Stuttgart|stuttgart";
-const a5="HAJ|Hannover|hanover;NUE|Nürnberg|nuremberg";
-const a6="VIE|Wien|vienna;ZRH|Zürich|zurich";
-const a7="BKK|Bangkok Suvarnabhumi|bangkok;DMK|Bangkok Don Mueang|bangkok";
-const a8="HKT|Phuket|phuket;CNX|Chiang Mai|chiang-mai";
-const a9="USM|Koh Samui|ko-samui;KBV|Krabi|krabi";
-const a10="DAD|Da Nang|da-nang;UIH|Quy Nhon|quy-nhon";
-const a11="SGN|Ho-Chi-Minh-Stadt (Saigon)|ho-chi-minh-city;HAN|Hanoi|hanoi";
-const a12="MNL|Manila|manila;CEB|Cebu|cebu";
-const a13="DGT|Dumaguete|dumaguete;PAG|Pagadian|pagadian";
-const a14="SIN|Singapur|singapore;KUL|Kuala Lumpur|kuala-lumpur";
-const a15="DPS|Denpasar Bali|denpasar;DXB|Dubai|dubai";
-const a16="DOH|Doha|doha;IST|Istanbul|istanbul";
-const a17="TYO|Tokio|tokyo;FAO|Faro|faro;CHC|Christchurch|christchurch";
-const airports=(a1+";"+a2+";"+a3+";"+a4+";"+a5+";"+a6+";"+a7+";"+a8+";"+
-a9+";"+a10+";"+a11+";"+a12+";"+a13+";"+a14+";"+a15+";"+a16+";"+a17)
-.split(";");
-let hrs=14,cidx=0,drag=false;
-
-function isThreeLetters(s){
-  if(s.length!==3)return false;
-  for(let i=0;i<3;i++){
-    const c=s.toUpperCase().charCodeAt(i);
-    if(c<65||c>90)return false;
-  }
-  return true;
-}
-
-function iata(v){
-  const s=v.trim();
-  const idx1=s.indexOf("(");
-  const idx2=s.indexOf(")");
-  if(idx1!==-1&&idx2===idx1+4){
-    const sub=s.slice(idx1+1,idx2);
-    if(isThreeLetters(sub))return sub.toUpperCase();
-  }
-  if(isThreeLetters(s))return s.toUpperCase();
-  const q=s.toLowerCase();
-  const hit=airports.find(row=>row.toLowerCase().includes(q));
-  if(hit)return hit.split("|").shift();
-  return s.toUpperCase().slice(0,3);
-}
-
-function slug(code){
-  const hit=airports.find(row=>row.startsWith(code+"|"));
-  if(hit)return hit.split("|").pop();
-  return code.toLowerCase();
-}
-
-function ac(inp,box){
-  inp.addEventListener("input",()=>{
-    const q=inp.value.trim().toLowerCase();
-    box.innerHTML="";
-    if(!q){box.style.display="none";upd();return;}
-    const hits=airports.filter(row=>row.toLowerCase().includes(q));
-    if(!hits.length){box.style.display="none";upd();return;}
-    hits.forEach(row=>{
-      const parts=row.split("|");
-      const code=parts.shift();
-      const name=parts.shift();
-      const d=document.createElement("div");
-      d.textContent=name+" ("+code+")";
-      d.onclick=()=>{
-        inp.value=name+" ("+code+")";
-        box.style.display="none";
-        upd();
-      };
-      box.appendChild(d);
-    });
-    box.style.display="block";
-    upd();
-  });
-  document.addEventListener("click",e=>{
-    if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";
-  });
-}
-
-function setHrs(h){
-  hrs=Math.max(1,Math.min(36,Math.round(h)));
-  const pct=((hrs-1)/35)*100;
-  $("fl").style.width=pct+"%";
-  $("sv").style.left=pct+"%";
-  $("sv").textContent=hrs+"h";
-  upd();
-}
-
-function bindSlider(){
-  const sb=$("sb"),tk=$("tk");
-  const move=clientX=>{
-    const r=tk.getBoundingClientRect();
-    const ratio=Math.max(0,Math.min(1,(clientX-r.left)/r.width));
-    setHrs(1+ratio*35);
-  };
-  sb.addEventListener("pointerdown",e=>{
-    drag=true;sb.setPointerCapture(e.pointerId);move(e.clientX);
-  });
-  sb.addEventListener("pointermove",e=>{if(drag)move(e.clientX);});
-  sb.addEventListener("pointerup",e=>{
-    drag=false;
-    try{sb.releasePointerCapture(e.pointerId);}catch(err){}
-  });
-  sb.addEventListener("pointercancel",()=>{drag=false;});
-}
-
-function upd(){
-  const now=new Date(),dtEl=$("dt");
-  const dStr=now.toLocaleDateString("de-DE");
-  const tStr=now.toLocaleTimeString("de-DE");
-  dtEl.textContent=dStr+" • "+tStr;
-  const idx=cidx++%cols.length;
-  const bg=cols.slice(idx,idx+1).join("");
-  dtEl.style.setProperty("background-color",bg,"important");
-
-  const ow=$("ow").checked;
-  $("st").textContent=ow?"NUR HINFLUG":"HIN & RÜCK";
-
-  const c1=iata($("i1").value);
-  const c2=iata($("i2").value);
-  const od=$("od").value;
-  const rd=$("rd").value;
-  const px=+$("px").value||1;
-  const ns=$("ns").checked;
-  const s1=$("s1").checked;
-  const s2=$("s2").checked;
-  const lc=$("lc").checked;
-
-  const badDate=(!ow&&od&&rd&&rd<od);
-  $("rb").classList.toggle("err",badDate);
-
-  if(isThreeLetters(c1)&&isThreeLetters(c2)&&od&&(ow||(rd&&!badDate))){
-    const ymd1=od.slice(2).replace(/-/g,"");
-    const ymd2=(!ow&&rd)?rd.slice(2).replace(/-/g,""):"";
-    const mins=hrs*60;
-
-    let skyStp="";
-    if(ns)skyStp="&stops=!oneStop,!twoPlusStops";
-    else if(s1)skyStp="&stops=!twoPlusStops";
-    $("u1").href=P+"www.skyscanner.de/transport/fluge/"+
-      c1.toLowerCase()+"/"+c2.toLowerCase()+"/"+ymd1+
-      (ymd2?"/"+ymd2:"")+"/?adults="+px+"&duration="+mins+skyStp;
-
-    const kStp=ns?"stops=0":(s1?"stops=1":(s2?"stops=2":""));
-    const kLc=lc?"":"noLowCost=true";
-    const kQ=(kStp+"|duration=-"+mins+"|"+kLc)
-      .split("|").filter(Boolean).join("&");
-    $("u2").href=P+"www.kayak.de/flights/"+c1+"-"+c2+"/"+od+
-      (!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
-    $("u3").href=P+"www.momondo.de/flight-search/"+c1+"-"+c2+"/"+od+
-      (!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
-
-    const tripType=ow?"oneway":"roundtrip";
-    const leg1="from:"+c1+",to:"+c2+",departure:"+od+"TANYT";
-    const leg2=!ow&&rd?"&leg2=from:"+c2+",to:"+c1+",departure:"+rd+"TANYT":"";
-    $("u4").href=P+"www.expedia.de/Flights-Search?trip="+tripType+
-      "&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
-
-    const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
-    $("u5").href=P+"://kiwi.com"+c1+"&to="+c2+
-      "&departure="+od+(!ow&&rd?"&return="+rd:"")+
-      "&adults="+px+"&maxDuration="+hrs+kwStp;
-
-    const trWay=ow?"OW":"RT";
-    const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
-    $("u6").href=P+"://trip.com"+c1+
-      "&acity="+c2+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+
-      "&triptype="+trWay+"&class=y&quantity="+px+
-      "&locale=de-DE&curr=EUR"+trStp;
-  }
-
-  try{
-    localStorage.setItem("rk_flt",JSON.stringify({
-      i1:$("i1").value,i2:$("i2").value,od,rd,ow,px,hrs,ns,s1,s2,lc
-    }));
-  }catch(e){}
-}
-
-(function(){
-  const t=new Date().toISOString().slice(0,10);
-  $("od").min=t;
-  $("rd").min=t;
-
-  try{
-    const d=JSON.parse(localStorage.getItem("rk_flt")||"null");
-    if(d){
-      if(d.i1)$("i1").value=d.i1;
-      if(d.i2)$("i2").value=d.i2;
-      if(d.od)$("od").value=d.od;
-      if(d.rd)$("rd").value=d.rd;
-      if(d.ow!==undefined)$("ow").checked=d.ow;
-      if(d.px)$("px").value=d.px;
-      if(d.hrs)hrs=d.hrs;
-      if(d.ns!==undefined)$("ns").checked=d.ns;
-      if(d.s1!==undefined)$("s1").checked=d.s1;
-      if(d.s2!==undefined)$("s2").checked=d.s2;
-      if(d.lc!==undefined)$("lc").checked=d.lc;
-    }
-  }catch(e){}
-
-  $("ns").addEventListener("change",()=>{
-    if($("ns").checked){$("s1").checked=false;$("s2").checked=false;}
-    upd();
-  });
-  $("s1").addEventListener("change",()=>{
-    if($("s1").checked){$("ns").checked=false;$("s2").checked=false;}
-    upd();
-  });
-  $("s2").addEventListener("change",()=>{
-    if($("s2").checked){$("ns").checked=false;$("s1").checked=false;}
-    upd();
-  });
-
-  ac($("i1"),$("l1"));
-  ac($("i2"),$("l2"));
-  bindSlider();
-
-  "i1;i2;od;rd;ow;px;lc".split(";").forEach(id=>{
-    $(id).addEventListener("input",upd);
-    $(id).addEventListener("change",upd);
-  });
-  "u1;u2;u3;u4;u5;u6".split(";").forEach(id=>{
-    $(id).addEventListener("click",upd);
-  });
-
-  setHrs(hrs);
-})();
-</script>
+</form>
 </body>
 </html>
