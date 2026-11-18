@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v8</title>
+<title>🏨 Meine Hotelsuche PRO v10</title>
 <style>
 :root{--r:#0369a1;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--v:#15803d;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
@@ -42,7 +42,7 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v8</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v10</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -62,9 +62,9 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
 <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
 <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo Hotels</a>
-<form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0"><input type="hidden" name="ss" id="b_ss"><input type="hidden" name="checkin" id="b_ci"><input type="hidden" name="checkout" id="b_co"><input type="hidden" name="group_adults" id="b_px"><input type="hidden" name="no_rooms" id="b_rm"><button type="submit" class="btn b4">Booking.com</button></form>
+<form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0"><input type="hidden" name="sb" value="1"><input type="hidden" name="src" value="index"><input type="hidden" name="ss" id="b_ss"><input type="hidden" name="checkin" id="b_ci"><input type="hidden" name="checkout" id="b_co"><input type="hidden" name="group_adults" id="b_px"><input type="hidden" name="no_rooms" id="b_rm"><input type="hidden" name="lang" value="de"><input type="hidden" name="selected_currency" value="EUR"><button type="submit" class="btn b4">Booking.com</button></form>
 <form id="f5" action="https://agoda.com" method="get" target="_blank" class="htl" style="margin:0"><input type="hidden" name="city" id="a_id"><input type="hidden" name="checkIn" id="a_ci"><input type="hidden" name="checkOut" id="a_co"><input type="hidden" name="adults" id="a_px"><input type="hidden" name="rooms" id="a_rm"><input type="hidden" name="currency" value="EUR"><button type="submit" class="btn b5">Agoda</button></form>
-<a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+<form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0"><input type="hidden" name="sQuery" id="t_q"><input type="hidden" name="search" id="t_s"><button type="submit" class="btn b6">Trivago</button></form>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
 </div></div>
 <script>
@@ -165,7 +165,9 @@ function upd() {
     $("a_px").value = px;
     $("a_rm").value = rm;
 
-    $("h6").href = P + "www.trivago.de/de/srl?q=" + q + "&search=dr-" + dt1 + "-" + dt2;
+    $("t_q").value = city;
+    $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
   }
 
@@ -200,11 +202,12 @@ function upd() {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
-  "h1;h2;h3;h6;h8".split(";").forEach(id => {
+  "h1;h2;h3;h8".split(";").forEach(id => {
     $(id).addEventListener("click", upd);
   });
   $("f4").addEventListener("submit", upd);
   $("f5").addEventListener("submit", upd);
+  $("f6").addEventListener("submit", upd);
   upd();
 })();
 </script>
