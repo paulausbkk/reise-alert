@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO</title>
+<title>🏨 Meine Hotelsuche PRO v5</title>
 <style>
 :root{--r:#0369a1;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--v:#15803d;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
@@ -39,10 +39,11 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 .sl:before{position:absolute;content:"";height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 .sw input:checked+.sl{background:var(--lg)!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
+.dbg{margin-top:10px;font-size:.75rem;color:#64748b;word-break:break-all}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO - DASHBOARD</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v5</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -67,7 +68,7 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
 <a id="h7" href="https://trip.com" target="_blank" class="btn b7 htl">Trip.com</a>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
-</div></div>
+</div><div class="dbg" id="dbg">Status: Bereit (v5)</div></div>
 <script>
 const $ = id => document.getElementById(id);
 const P = "https://";
@@ -108,6 +109,10 @@ function norm(s) {
   return s.toLowerCase().replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
 }
 
+function getPart(str, idx) {
+  return str ? str.split(",").slice(idx, idx + 1).join("") : "";
+}
+
 function ac(inp, box) {
   inp.addEventListener("input", () => {
     const q = inp.value.trim().toLowerCase();
@@ -132,7 +137,9 @@ function ac(inp, box) {
 function upd() {
   const now = new Date(), dtEl = $("dt");
   dtEl.textContent = now.toLocaleDateString("de-DE") + " • " + now.toLocaleTimeString("de-DE");
-  dtEl.style.setProperty("background-color", cols.at(cidx++ % cols.length), "important");
+  const col = cols.slice(cidx % cols.length, (cidx % cols.length) + 1).join("");
+  cidx++;
+  dtEl.style.setProperty("background-color", col, "important");
 
   const city = $("city").value.trim();
   const ci = $("ci").value;
@@ -151,7 +158,7 @@ function upd() {
 
   if (ci && co && !badDate) {
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const mInfo = (!ab && mp !== "0" && mpTxt.hasOwnProperty(mp)) ? " • " + Reflect.get(mpTxt, mp) : "";
+    const mInfo = (!ab && mp !== "0" && Object.prototype.hasOwnProperty.call(mpTxt, mp)) ? " • " + Reflect.get(mpTxt, mp) : "";
     $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
     $("info").textContent = (ab ? "(AIRBNB) " : "") + "Auswahl: " + (city || "Ziel offen") +
       " • " + n + (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi." + mInfo;
@@ -162,29 +169,30 @@ function upd() {
 
   if (city && ci && co && !badDate) {
     const q = encodeURIComponent(city);
-    const raw = Reflect.get(db, norm(city)) || "";
-    const parts = raw ? raw.split(",") : null;
-    const aid = parts ? parts.at(0) : "";
-    const tid = parts ? parts.at(1) : "";
-    const vid = parts ? parts.at(2) : "";
+    const key = norm(city);
+    const raw = Object.prototype.hasOwnProperty.call(db, key) ? Reflect.get(db, key) : "";
+    const aid = getPart(raw, 0);
+    const tid = getPart(raw, 1);
+    const vid = getPart(raw, 2);
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
-    const exExtra = (st > 0 ? "&star=" + (st * 10) : "") + (Reflect.has(exMeal, mp) ? "&mealPlan=" + Reflect.get(exMeal, mp) : "");
+    const exExtra = (st > 0 ? "&star=" + (st * 10) : "") + (Object.prototype.hasOwnProperty.call(exMeal, mp) ? "&mealPlan=" + Reflect.get(exMeal, mp) : "");
 
     $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
     $("h2").href = P + "www.expedia.de/Hotel-Search?destination=" + q + "&startDate=" + ci + "&endDate=" + co + "&adults=" + px + "&rooms=" + rm + exExtra;
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
     $("h4").href = P + "://booking.com" + q + "&checkin=" + ci + "&checkout=" + co + "&group_adults=" + px + "&no_rooms=" + rm;
     $("h5").href = aid
-      ? P + "://agoda.com" + aid + "&checkIn=" + ci + "&checkOut=" + co + "&adults=" + px + "&rooms=" + rm
+      ? P + "://agoda.com" + aid + "&checkIn=" + ci + "&checkOut=" + co + "&adults=" + px + "&rooms=" + rm + "&currency=EUR"
       : P + "://agoda.com" + q + "&checkIn=" + ci + "&checkOut=" + co + "&adults=" + px + "&rooms=" + rm;
     $("h6").href = vid
       ? P + "www.trivago.de/de/srl?search=" + vid + ";dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px
       : P + "www.trivago.de/de/srl?q=" + q + "&search=dr-" + dt1 + "-" + dt2;
     $("h7").href = tid
-      ? P + "://trip.com" + tid + "&checkin=" + ci + "&checkout=" + co + "&adult=" + px + "&crn=" + rm
+      ? P + "://trip.com" + tid + "&checkin=" + ci + "&checkout=" + co + "&adult=" + px + "&crn=" + rm + "&curr=EUR"
       : P + "://trip.com" + q + "&checkin=" + ci + "&checkout=" + co + "&adult=" + px + "&crn=" + rm;
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
+    $("dbg").textContent = "Aktiv (v5): " + city + " | IDs: Agoda=" + (aid||"-") + ", Trip=" + (tid||"-") + ", Trivago=" + (vid||"-");
   }
 
   try {
