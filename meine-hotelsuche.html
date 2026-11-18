@@ -182,7 +182,7 @@ function upd() {
     $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
     $("h2").href = P + "www.expedia.de/Hotel-Search?destination=" + q + "&startDate=" + ci + "&endDate=" + co + "&adults=" + px + "&rooms=" + rm + exExtra;
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
-    $("h4").href = P + "://booking.com" + q + "&checkin=" + ci + "&checkout=" + co + "&group_adults=" + px + "&no_rooms=" + rm;
+    $("h4").href = P + "://booking.com" + q + "&checkin=" + ci + "&checkout=" + co + "&group_adults=" + px + "&no_rooms=" + rm + "&do_availability_check=1";
     $("h5").href = ids[0]
       ? P + "://agoda.com" + ids[0] + "&checkIn=" + ci + "&checkOut=" + co + "&adults=" + px + "&rooms=" + rm
       : P + "://agoda.com" + q + "&checkIn=" + ci + "&checkOut=" + co + "&adults=" + px + "&rooms=" + rm;
