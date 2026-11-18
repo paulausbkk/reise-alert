@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Reisekonfiguration PRO v24</title>
+<title>✈️ Reisekonfiguration PRO v25</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--g:#0ea5e9;
 --v:#0284c7;--lg:#0284c7;--ly:#e0f2fe}
@@ -92,7 +92,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO v24</h1>
+<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO v25</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div>
 <div class="seg st" id="st">HIN & RÜCK</div>
 <a href="meine-hotelsuche.html" class="seg upg htl">🏨 Meine Hotelsuche ➡️</a>
@@ -171,7 +171,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 const $=id=>document.getElementById(id);
 const P="https://";
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const airports="BER|Berlin Brandenburg;FRA|Frankfurt am Main;MUC|München;LEJ|Leipzig/Halle;DUS|Düsseldorf;HAM|Hamburg;CGN|Köln/Bonn;STR|Stuttgart;HAJ|Hannover;NUE|Nürnberg;VIE|Wien;ZRH|Zürich;BKK|Bangkok Suvarnabhumi;DMK|Bangkok Don Mueang;HKT|Phuket;CNX|Chiang Mai;USM|Koh Samui;KBV|Krabi;DAD|Da Nang;UIH|Quy Nhon;SGN|Ho-Chi-Minh-Stadt (Saigon);HAN|Hanoi;MNL|Manila;CEB|Cebu;DGT|Dumaguete;PAG|Pagadian;SIN|Singapur;KUL|Kuala Lumpur;DPS|Denpasar Bali;DXB|Dubai;DOH|Doha;IST|Istanbul;TYO|Tokio;FAO|Faro;CHC|Christchurch".split(";");
+const airports="BER|Berlin Brandenburg|berlin;FRA|Frankfurt am Main|frankfurt;MUC|München|munich;LEJ|Leipzig/Halle|leipzig;DUS|Düsseldorf|dusseldorf;HAM|Hamburg|hamburg;CGN|Köln/Bonn|cologne;STR|Stuttgart|stuttgart;HAJ|Hannover|hanover;NUE|Nürnberg|nuremberg;VIE|Wien|vienna;ZRH|Zürich|zurich;BKK|Bangkok Suvarnabhumi|bangkok;DMK|Bangkok Don Mueang|bangkok;HKT|Phuket|phuket;CNX|Chiang Mai|chiang-mai;USM|Koh Samui|ko-samui;KBV|Krabi|krabi;DAD|Da Nang|da-nang;UIH|Quy Nhon|quy-nhon;SGN|Ho-Chi-Minh-Stadt (Saigon)|ho-chi-minh-city;HAN|Hanoi|hanoi;MNL|Manila|manila;CEB|Cebu|cebu;DGT|Dumaguete|dumaguete;PAG|Pagadian|pagadian;SIN|Singapur|singapore;KUL|Kuala Lumpur|kuala-lumpur;DPS|Denpasar Bali|denpasar;DXB|Dubai|dubai;DOH|Doha|doha;IST|Istanbul|istanbul;TYO|Tokio|tokyo;FAO|Faro|faro;CHC|Christchurch|christchurch".split(";");
 let hrs=14,cidx=0,drag=false;
 
 function isThreeLetters(s){
@@ -198,6 +198,12 @@ function iata(v){
   return s.toUpperCase().slice(0,3);
 }
 
+function slug(code){
+  const hit=airports.find(row=>row.startsWith(code+"|"));
+  if(hit)return hit.split("|").pop();
+  return code.toLowerCase();
+}
+
 function ac(inp,box){
   inp.addEventListener("input",()=>{
     const q=inp.value.trim().toLowerCase();
@@ -208,7 +214,7 @@ function ac(inp,box){
     hits.forEach(row=>{
       const parts=row.split("|");
       const code=parts.shift();
-      const name=parts.join("|");
+      const name=parts.shift();
       const d=document.createElement("div");
       d.textContent=name+" ("+code+")";
       d.onclick=()=>{inp.value=name+" ("+code+")";box.style.display="none";upd();};
@@ -288,11 +294,11 @@ function upd(){
     $("u4").href=P+"www.expedia.de/Flights-Search?trip="+tripType+"&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
 
     const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
-    $("u5").href=P+"://kiwi.com"+c1+"/"+c2+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
+    $("u5").href=P+"://kiwi.com"+slug(c1)+"/"+slug(c2)+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
 
     const trWay=ow?"ow":"rt";
     const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
-    $("u6").href=P+"://trip.com"+c1.toLowerCase()+"&acity="+c2.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&triptype="+trWay+"&class=y&lowpricesource=searchform&quantity="+px+"&searchboxarg=t"+trStp;
+    $("u6").href=P+"://trip.com"+slug(c1)+"-to-"+slug(c2)+"/tickets-"+c1.toLowerCase()+"-"+c2.toLowerCase()+"?dcity="+c1.toLowerCase()+"&acity="+c2.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&flighttype="+trWay+"&class=y&quantity="+px+trStp;
   }
 
   try{
