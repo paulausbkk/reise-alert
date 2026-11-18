@@ -42,14 +42,9 @@ background:#f8fafc;color:var(--t);width:100%;transition:.2s}
 .inp:focus,.dat:focus,select:focus{outline:none;border-color:#0284c7;
 background:#fff;box-shadow:0 0 0 3px rgba(2,132,199,.15)}
 .rng{width:100%;accent-color:#0284c7;cursor:pointer;height:36px}
-@keyframes pulseHint{
-0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
-50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
-}
 .bn{background:#0f2942;border:3px solid #991b1b;
 border-left:7px solid #991b1b;border-radius:8px;padding:11px 14px;
-color:#fff;font-weight:bold;font-size:.88rem;line-height:1.4;
-animation:pulseHint 2.2s infinite ease-in-out}
+color:#fff;font-weight:bold;font-size:.88rem;line-height:1.4}
 .bb{border:1px solid #93c5fd;background:#ffffff;border-radius:12px;
 padding:16px 20px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
 .bf{display:grid;
@@ -58,7 +53,7 @@ grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
 justify-content:center;height:46px;color:#fff;font-weight:bold;
 border:none;border-radius:8px;font-size:.84rem;cursor:pointer;
 text-transform:uppercase;text-decoration:none;text-align:center;
-line-height:1.15;padding:0 6px;transition:.2s;
+line-height:1.15;padding:0 6px;transition:.2s;width:100%;
 box-shadow:0 2px 6px rgba(15,41,66,.15)}
 .btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn .sub{font-size:.64rem;font-weight:bold;text-transform:none;
@@ -136,7 +131,8 @@ left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a href="meine-hotelsuche.html" class="seg upg htl">🏨 Meine Hotelsuche ➡️</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div>
 </div>
-<form target="_blank" method="get">
+<form action="https://kiwi.com" target="_blank" method="get">
+<input type="hidden" name="lang" value="de">
 <div class="row">
 <div class="card">
 <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
@@ -160,8 +156,7 @@ placeholder="z.B. BKK, DAD, CEB" maxlength="3" required></div>
 <div class="f2" style="align-items:end">
 <div class="swc">
 <label for="ow" style="margin:0;cursor:pointer;font-size:.82rem">Nur Hinflug (One-Way)</label>
-<label class="sw"><input type="checkbox" id="ow" name="oneway" value="1">
-<span class="sl"></span></label>
+<label class="sw"><input type="checkbox" id="ow"><span class="sl"></span></label>
 </div>
 <div class="f" style="margin:0"><label for="px">Personenzahl</label>
 <select id="px" name="adults">
@@ -195,26 +190,19 @@ min="1" max="36" value="14"></div>
 </div>
 <div class="f" style="margin-bottom:12px"><div class="swc">
 <label for="lc" style="margin:0;cursor:pointer;font-size:.82rem">Inkl. Low-Cost Airlines (zusätzlich)</label>
-<label class="sw"><input type="checkbox" id="lc" name="lowcost" value="1">
-<span class="sl"></span></label>
+<label class="sw"><input type="checkbox" id="lc"><span class="sl"></span></label>
 </div></div>
-<div class="bn">ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend angeklickten Website beim Anbieter ausgewählt werden.</div>
+<div class="bn">ℹ️ <b>Hinweis:</b> Wichtig: Diese HTML-Datei bitte direkt im Browser (Chrome, Edge, Firefox) öffnen, nicht in einer blockierten Vorschau.</div>
 </div>
 </div>
 <div class="bb">
 <div class="bf">
-<button type="submit" formaction="https://skyscanner.de"
-class="btn b2">Skyscanner</button>
-<button type="submit" formaction="https://kayak.de"
-class="btn b3">Kayak</button>
-<button type="submit" formaction="https://momondo.de"
-class="btn b4">Momondo</button>
-<button type="submit" formaction="https://expedia.de"
-class="btn b5">Expedia<span class="sub">Stopps auf Website wählen</span></button>
-<button type="submit" formaction="https://kiwi.com"
-class="btn b6">Kiwi.com</button>
-<button type="submit" formaction="https://trip.com"
-class="btn b7">Trip.com</button>
+<button type="submit" class="btn b6">Kiwi.com (Daten-Suche)</button>
+<a href="https://skyscanner.de" target="_blank" rel="noopener" class="btn b2">Skyscanner</a>
+<a href="https://kayak.de" target="_blank" rel="noopener" class="btn b3">Kayak</a>
+<a href="https://momondo.de" target="_blank" rel="noopener" class="btn b4">Momondo</a>
+<a href="https://expedia.de" target="_blank" rel="noopener" class="btn b5">Expedia</a>
+<a href="https://trip.com" target="_blank" rel="noopener" class="btn b7">Trip.com</a>
 </div>
 </div>
 </form>
