@@ -288,7 +288,7 @@ function upd(){
     $("u4").href=P+"www.expedia.de/Flights-Search?trip="+tripType+"&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
 
     const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
-    $("u5").href=P+"://kiwi.com"+c1+"/"+c2+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
+    $("u5").href=P+"://kiwi.com"+c1+"&to="+c2+"&departure="+od+(!ow&&rd?"&return="+rd:"")+"&adults="+px+"&maxDuration="+hrs+kwStp;
 
     const trWay=ow?"ow":"rt";
     const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
