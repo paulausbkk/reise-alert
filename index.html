@@ -172,41 +172,41 @@ const $=id=>document.getElementById(id);
 const P="https://";
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 const airports=[
-  {c:"BER",n:"Berlin Brandenburg",k:"berlin"},
-  {c:"FRA",n:"Frankfurt am Main",k:"frankfurt"},
-  {c:"MUC",n:"München",k:"munich"},
-  {c:"LEJ",n:"Leipzig/Halle",k:"leipzig"},
-  {c:"DUS",n:"Düsseldorf",k:"dusseldorf"},
-  {c:"HAM",n:"Hamburg",k:"hamburg"},
-  {c:"CGN",n:"Köln/Bonn",k:"cologne"},
-  {c:"STR",n:"Stuttgart",k:"stuttgart"},
-  {c:"HAJ",n:"Hannover",k:"hanover"},
-  {c:"NUE",n:"Nürnberg",k:"nuremberg"},
-  {c:"VIE",n:"Wien",k:"vienna"},
-  {c:"ZRH",n:"Zürich",k:"zurich"},
-  {c:"BKK",n:"Bangkok Suvarnabhumi",k:"bangkok"},
-  {c:"DMK",n:"Bangkok Don Mueang",k:"bangkok"},
-  {c:"HKT",n:"Phuket",k:"phuket"},
-  {c:"CNX",n:"Chiang Mai",k:"chiang-mai"},
-  {c:"USM",n:"Koh Samui",k:"ko-samui"},
-  {c:"KBV",n:"Krabi",k:"krabi"},
-  {c:"DAD",n:"Da Nang",k:"da-nang"},
-  {c:"UIH",n:"Quy Nhon",k:"quy-nhon"},
-  {c:"SGN",n:"Ho-Chi-Minh-Stadt (Saigon)",k:"ho-chi-minh-city"},
-  {c:"HAN",n:"Hanoi",k:"hanoi"},
-  {c:"MNL",n:"Manila",k:"manila"},
-  {c:"CEB",n:"Cebu",k:"cebu"},
-  {c:"DGT",n:"Dumaguete",k:"dumaguete"},
-  {c:"PAG",n:"Pagadian",k:"pagadian"},
-  {c:"SIN",n:"Singapur",k:"singapore"},
-  {c:"KUL",n:"Kuala Lumpur",k:"kuala-lumpur"},
-  {c:"DPS",n:"Denpasar Bali",k:"denpasar"},
-  {c:"DXB",n:"Dubai",k:"dubai"},
-  {c:"DOH",n:"Doha",k:"doha"},
-  {c:"IST",n:"Istanbul",k:"istanbul"},
-  {c:"TYO",n:"Tokio",k:"tokyo"},
-  {c:"FAO",n:"Faro",k:"faro"},
-  {c:"CHC",n:"Christchurch",k:"christchurch"}
+  {c:"BER",n:"Berlin Brandenburg"},
+  {c:"FRA",n:"Frankfurt am Main"},
+  {c:"MUC",n:"München"},
+  {c:"LEJ",n:"Leipzig/Halle"},
+  {c:"DUS",n:"Düsseldorf"},
+  {c:"HAM",n:"Hamburg"},
+  {c:"CGN",n:"Köln/Bonn"},
+  {c:"STR",n:"Stuttgart"},
+  {c:"HAJ",n:"Hannover"},
+  {c:"NUE",n:"Nürnberg"},
+  {c:"VIE",n:"Wien"},
+  {c:"ZRH",n:"Zürich"},
+  {c:"BKK",n:"Bangkok Suvarnabhumi"},
+  {c:"DMK",n:"Bangkok Don Mueang"},
+  {c:"HKT",n:"Phuket"},
+  {c:"CNX",n:"Chiang Mai"},
+  {c:"USM",n:"Koh Samui"},
+  {c:"KBV",n:"Krabi"},
+  {c:"DAD",n:"Da Nang"},
+  {c:"UIH",n:"Quy Nhon"},
+  {c:"SGN",n:"Ho-Chi-Minh-Stadt (Saigon)"},
+  {c:"HAN",n:"Hanoi"},
+  {c:"MNL",n:"Manila"},
+  {c:"CEB",n:"Cebu"},
+  {c:"DGT",n:"Dumaguete"},
+  {c:"PAG",n:"Pagadian"},
+  {c:"SIN",n:"Singapur"},
+  {c:"KUL",n:"Kuala Lumpur"},
+  {c:"DPS",n:"Denpasar Bali"},
+  {c:"DXB",n:"Dubai"},
+  {c:"DOH",n:"Doha"},
+  {c:"IST",n:"Istanbul"},
+  {c:"TYO",n:"Tokio"},
+  {c:"FAO",n:"Faro"},
+  {c:"CHC",n:"Christchurch"}
 ];
 let hrs=14,cidx=0,drag=false;
 
@@ -217,11 +217,6 @@ function iata(v){
   if(/^[a-zA-Z]{3}$/.test(s))return s.toUpperCase();
   const hit=airports.find(a=>a.n.toLowerCase().includes(s.toLowerCase())||a.c.toLowerCase()===s.toLowerCase());
   return hit?hit.c:s.toUpperCase().slice(0,3);
-}
-
-function slug(code){
-  const hit=airports.find(a=>a.c===code);
-  return hit?hit.k:code.toLowerCase();
 }
 
 function ac(inp,box){
@@ -310,7 +305,7 @@ function upd(){
     $("u4").href=P+"www.expedia.de/Flights-Search?trip="+tripType+"&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
 
     const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
-    $("u5").href=P+"://kiwi.com"+slug(c1)+"/"+slug(c2)+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
+    $("u5").href=P+"://kiwi.com"+c1+"&to="+c2+"&departure="+od+(!ow&&rd?"&return="+rd:"")+"&adults="+px+"&maxDuration="+hrs+kwStp;
 
     const trWay=ow?"ow":"rt";
     const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
