@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v18</title>
+<title>🏨 Meine Hotelsuche PRO v19</title>
 <style>
 :root{--r:#0369a1;--bg:#f0f4f8;--t:#1e293b;--b:#cbd5e1;--v:#15803d;--lg:#22c55e;--ly:#fef08a}
 html,body{margin:0;padding:15px;background:var(--bg);font-family:sans-serif;color:var(--t)}
@@ -43,7 +43,7 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v18</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v19</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -74,13 +74,11 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo Hotels</a>
 <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
 <input type="hidden" name="ss" id="b_ss">
-<input type="hidden" name="dest_id" id="b_did" disabled>
-<input type="hidden" name="dest_type" value="city">
 <input type="hidden" name="checkin" id="b_ci">
 <input type="hidden" name="checkout" id="b_co">
 <input type="hidden" name="group_adults" id="b_px">
 <input type="hidden" name="no_rooms" id="b_rm">
-<input type="hidden" name="nflt" id="b_flt">
+<input type="hidden" name="nflt" id="b_flt" disabled>
 <input type="hidden" name="lang" value="de">
 <input type="hidden" name="selected_currency" value="EUR">
 <button type="submit" class="btn b4">Booking.com</button>
@@ -96,7 +94,6 @@ input,select{height:40px;padding:0 10px;border:1px solid var(--b);border-radius:
 <button type="submit" class="btn b5">Agoda</button>
 </form>
 <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
-<input type="hidden" name="themeId" value="280">
 <input type="hidden" name="search" id="t_s">
 <button type="submit" class="btn b6">Trivago</button>
 </form>
@@ -118,24 +115,6 @@ const agIds = {
   "faro": "15356", "christchurch": "13726", "berlin": "2128", "muenchen": "14163",
   "frankfurt": "14223"
 };
-const bkIds = {
-  "bangkok": "-3414440", "phuket": "-3250083", "chiang mai": "-3247138", "koh samui": "-3251284",
-  "krabi": "-3251449", "da nang": "-3712045", "quy nhon": "-3727579", "ho-chi-minh-stadt": "-3730078",
-  "hanoi": "-3714993", "manila": "-2437894", "cebu": "-2420605", "dumaguete": "-2424766",
-  "pagadian": "-2443823", "singapur": "-73635", "kuala lumpur": "-2403010", "denpasar bali": "-2676772",
-  "dubai": "-782831", "doha": "-782066", "tokio": "-246227", "istanbul": "-755070",
-  "faro": "-2165269", "christchurch": "-1508090", "berlin": "-1746443", "muenchen": "-1829149",
-  "frankfurt": "-1771148"
-};
-const tvIds = {
-  "bangkok": "200-15666", "phuket": "200-15685", "chiang mai": "200-15669", "koh samui": "200-15678",
-  "krabi": "200-15680", "da nang": "200-16364", "quy nhon": "200-74074", "ho-chi-minh-stadt": "200-16368",
-  "hanoi": "200-16365", "manila": "200-15192", "cebu": "200-15177", "dumaguete": "200-72186",
-  "pagadian": "200-72235", "singapur": "200-15517", "kuala lumpur": "200-14912", "denpasar bali": "200-14201",
-  "dubai": "200-16164", "doha": "200-15342", "tokio": "200-14575", "istanbul": "200-15971",
-  "faro": "200-15318", "christchurch": "200-15080", "berlin": "200-8514", "muenchen": "200-8746",
-  "frankfurt": "200-8582"
-};
 const bMeal = { ro:"999", "1":"1", "9":"9", "3":"3", "4":"4" };
 const exMeal = { ro:"ROOM_ONLY", "1":"FREE_BREAKFAST", "9":"HALF_BOARD", "3":"FULL_BOARD", "4":"ALL_INCLUSIVE" };
 const mpTxt = { ro:"Nur Übernachtung", "1":"Frühstück", "9":"Halbpension", "3":"Vollpension", "4":"All-Inclusive" };
@@ -143,6 +122,10 @@ let cidx = 0;
 
 function norm(s) {
   return s.toLowerCase().replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
+}
+
+function slug(s) {
+  return norm(s).replace(/ß/g,"ss").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 }
 
 function ac(inp, box) {
@@ -200,10 +183,9 @@ function upd() {
   if (city && ci && co && !badDate) {
     const q = encodeURIComponent(city);
     const key = norm(city);
+    const sl = slug(city);
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
     const aid = agIds[key] || "";
-    const bid = bkIds[key] || "";
-    const vid = tvIds[key] || "";
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
     const bFilt = [st > 0 ? "class=" + st : "", bMeal[mp] ? "mealplan=" + bMeal[mp] : ""].filter(Boolean).join(";");
@@ -223,12 +205,11 @@ function upd() {
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
     $("b_ss").value = city;
-    $("b_did").disabled = !bid;
-    $("b_did").value = bid;
     $("b_ci").value = ci;
     $("b_co").value = co;
     $("b_px").value = px;
     $("b_rm").value = rm;
+    $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
     $("a_id").value = aid;
@@ -237,7 +218,8 @@ function upd() {
     $("a_px").value = px;
     $("a_rm").value = rm;
 
-    $("t_s").value = (vid ? vid + ";" : "") + "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+    $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
+    $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
   }
