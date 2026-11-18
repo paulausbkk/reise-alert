@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Reisekonfiguration PRO v26</title>
+<title>✈️ Reisekonfiguration PRO v27</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--g:#0ea5e9;
 --v:#0284c7;--lg:#0284c7;--ly:#e0f2fe}
@@ -48,7 +48,7 @@ box-shadow:0 4px 12px rgba(3,105,161,.08)}
 .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;
 height:46px;color:#fff;font-weight:bold;border-radius:8px;font-size:.84rem;
 text-transform:uppercase;text-decoration:none;text-align:center;line-height:1.15;
-padding:0 6px;transition:.2s;box-shadow:0 2px 6px rgba(15,41,66,.15);border:none;cursor:pointer;width:100%}
+padding:0 6px;transition:.2s;box-shadow:0 2px 6px rgba(15,41,66,.15)}
 .btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn .sub{font-size:.64rem;font-weight:bold;text-transform:none;opacity:1;
 margin-top:2px;color:#e0f2fe}
@@ -92,7 +92,7 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO v26</h1>
+<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO v27</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div>
 <div class="seg st" id="st">HIN & RÜCK</div>
 <a href="meine-hotelsuche.html" class="seg upg htl">🏨 Meine Hotelsuche ➡️</a>
@@ -163,21 +163,10 @@ bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 <a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
 <a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
 <a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia<span class="sub">Stopps auf Website wählen</span></a>
-<form id="f5" action="https://kiwi.com" method="get" target="_blank" style="margin:0">
-<input type="hidden" name="from" id="kw_from">
-<input type="hidden" name="to" id="kw_to">
-<input type="hidden" name="departure" id="kw_dep">
-<input type="hidden" name="return" id="kw_ret">
-<input type="hidden" name="adults" id="kw_px">
-<input type="hidden" name="maxDuration" id="kw_dur">
-<input type="hidden" name="stopNumber" id="kw_stp" disabled>
-<button type="submit" class="btn b6">Kiwi.com</button>
-</form>
-<form id="f6" action="https://trip.com" method="get" target="_blank" style="margin:0">
-<input type="hidden" name="dcity" id="tr_dc">
-<input type="hidden" name="acity" id="tr_ac">
-<input type="hidden" name="ddate" id="tr_dd">
-<input type="hidden" name="rdate" id="tr_rd">
+<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
+<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
+</div>
+</div>
 <script>
 const $=id=>document.getElementById(id);
 const P="https://";
@@ -207,6 +196,12 @@ function iata(v){
   const hit=airports.find(row=>row.toLowerCase().includes(q));
   if(hit)return hit.split("|").shift();
   return s.toUpperCase().slice(0,3);
+}
+
+function slug(code){
+  const hit=airports.find(row=>row.startsWith(code+"|"));
+  if(hit)return hit.split("|").pop();
+  return code.toLowerCase();
 }
 
 function ac(inp,box){
@@ -298,26 +293,12 @@ function upd(){
     const leg2=!ow&&rd?"&leg2=from:"+c2+",to:"+c1+",departure:"+rd+"TANYT":"";
     $("u4").href=P+"www.expedia.de/Flights-Search?trip="+tripType+"&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
 
-    $("kw_from").value=c1;
-    $("kw_to").value=c2;
-    $("kw_dep").value=od;
-    $("kw_ret").disabled=ow;
-    $("kw_ret").value=ow?"":rd;
-    $("kw_px").value=px;
-    $("kw_dur").value=hrs;
-    $("kw_stp").disabled=!(ns||s1||s2);
-    $("kw_stp").value=ns?"0":(s1?"1":(s2?"2":""));
+    const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
+    $("u5").href=P+"://kiwi.com"+slug(c1)+"/"+slug(c2)+"/"+od+"/"+(!ow&&rd?rd:"no-return")+"?adults="+px+"&maxDuration="+hrs+kwStp;
 
-    $("tr_dc").value=c1;
-    $("tr_ac").value=c2;
-    $("tr_dd").value=od;
-    $("tr_rd").disabled=ow;
-    $("tr_rd").value=ow?"":rd;
-    $("tr_tt").value=ow?"ow":"rt";
-    $("tr_px").value=px;
-    $("tr_ns").disabled=!ns;
-    $("tr_ms").disabled=!(s1||s2);
-    $("tr_ms").value=s1?"1":(s2?"2":"");
+    const trWay=ow?"ow":"rt";
+    const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
+    $("u6").href=P+"://trip.com"+c1.toLowerCase()+"&acity="+c2.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+"&triptype="+trWay+"&class=y&lowpricesource=searchform&quantity="+px+"&searchboxarg=t"+trStp;
   }
 
   try{
@@ -361,11 +342,8 @@ function upd(){
     $(id).addEventListener("input",upd);
     $(id).addEventListener("change",upd);
   });
-  "u1;u2;u3;u4".split(";").forEach(id=>{
+  "u1;u2;u3;u4;u5;u6".split(";").forEach(id=>{
     $(id).addEventListener("click",upd);
-  });
-  "f5;f6".split(";").forEach(id=>{
-    $(id).addEventListener("submit",upd);
   });
 
   setHrs(hrs);
