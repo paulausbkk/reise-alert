@@ -146,7 +146,7 @@ const upKeys="u3;u_fn;u6;u_pp".split(";");
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let ci=0;
 const guides={
-  tk:"1. Oben 'Buchung verwalten' wählen.|2. PNR (Ticket-/Buchungscode) eingeben.|3. Nachname eingeben.",
+  tk:"1. 'Buchung verwalten' wählen.|2. PNR (Ticket-/Buchungscode) eingeben.|3. Nachname eingeben.",
   lh:"1. 'Meine Buchungen' öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
   qr:"1. 'Buchung verwalten' öffnen.|2. Buchungsreferenz (PNR) eingeben.|3. Nachname eingeben.",
   ek:"1. 'Buchung verwalten' klicken.|2. Nachname eingeben.|3. Buchungsreferenz eingeben.",
@@ -163,7 +163,7 @@ const guides={
   exp:"1. 'Meine Reisen' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
   trp:"1. 'Buchungen suchen' öffnen.|2. Buchungs-E-Mail eingeben.|3. Buchungsnummer / PNR eingeben.",
   kwi:"1. 'Buchungen verwalten' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  sky:"1. Oben 'Anmelden' wählen.|2. Mit Buchungs-E-Mail einloggen.",
+  sky:"1. 'Anmelden' wählen.|2. Mit Buchungs-E-Mail einloggen.",
   kyk:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
   mom:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
   opo:"1. 'Meine Reisen' öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
@@ -223,7 +223,7 @@ async function openNote(){
       h.style.fontWeight="bold";h.style.color="#0c4a6e";h.style.fontSize="14px";h.style.marginBottom="6px";
       h.style.borderBottom="2px solid #0284c7";h.style.paddingBottom="4px";
       b.appendChild(h);
-      if(steps.length&&steps[0]){
+      if(steps.length&&steps){
         const box=pip.document.createElement("div");
         box.style.background="#fef2f2";box.style.border="2px solid #991b1b";box.style.borderRadius="6px";
         box.style.padding="7px 9px";box.style.marginBottom="7px";box.style.fontSize="13.5px";
