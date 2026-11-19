@@ -25,16 +25,20 @@ html,body{
   margin:0;letter-spacing:.3px
 }
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.mwrap{
-  display:inline-flex;align-items:center;gap:5px;
+.mbtn{
+  position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;justify-content:center;
   background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
-  border-radius:6px;padding:2px 8px 2px 4px;
-  font-size:.78rem;font-weight:bold;height:30px;
-  box-sizing:border-box
+  border-radius:6px;padding:6px 12px;font-size:.78rem;
+  font-weight:bold;cursor:pointer;transition:.2s;white-space:nowrap
 }
-.mwrap audio{
-  width:28px;height:24px;border-radius:4px;
-  filter:invert(1) hue-rotate(180deg) brightness(1.2)
+.mbtn:hover{
+  background:#0284c7;border-color:#7dd3fc;
+  box-shadow:0 0 8px rgba(125,211,252,.5)
+}
+.mbtn audio{
+  position:absolute;left:-8px;top:-6px;
+  width:280px;height:44px;opacity:0;cursor:pointer
 }
 .seg{
   font-size:.78rem;padding:6px 12px;border-radius:6px;
@@ -156,12 +160,12 @@ input:focus,select:focus{
 <div class="hdr">
   <h1 class="tit">🏨 Meine Hotelsuche PRO v23</h1>
   <div class="cp">
-    <div class="mwrap">
+    <div class="mbtn" title="Musik An / Aus">
+      <span>🎵 Musik An / Aus</span>
       <audio controls loop preload="auto">
         <source src="../musik.mp3" type="audio/mpeg">
         <source src="musik.mp3" type="audio/mpeg">
       </audio>
-      <span>Musik</span>
     </div>
     <div class="seg" id="dt">18.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -442,4 +446,3 @@ function upd(){
 }
 
 (function(){
-  const t = new Date().toISOString().slice(0, 10);
