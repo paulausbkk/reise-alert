@@ -62,41 +62,11 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 <div class="bn" id="info">Bitte Reiseziel, Check-in und Check-out wählen.</div></div></div>
 <div class="bb"><div class="bf">
 <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-<form id="f2" action="https://expedia.de" method="get" target="_blank" class="htl" style="margin:0">
-<input type="hidden" name="destination" id="e_dest">
-<input type="hidden" name="startDate" id="e_ci">
-<input type="hidden" name="endDate" id="e_co">
-<input type="hidden" name="rooms" id="e_rm">
-<input type="hidden" name="adults" id="e_px">
-<input type="hidden" name="star" id="e_st" disabled>
-<button type="submit" class="btn b2">Expedia Hotels</button>
-</form>
+<a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
 <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo Hotels</a>
-<form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
-<input type="hidden" name="ss" id="b_ss">
-<input type="hidden" name="checkin" id="b_ci">
-<input type="hidden" name="checkout" id="b_co">
-<input type="hidden" name="group_adults" id="b_px">
-<input type="hidden" name="no_rooms" id="b_rm">
-<input type="hidden" name="nflt" id="b_flt" disabled>
-<input type="hidden" name="lang" value="de">
-<input type="hidden" name="selected_currency" value="EUR">
-<button type="submit" class="btn b4">Booking.com</button>
-</form>
-<form id="f5" action="https://agoda.com" method="get" target="_blank" class="htl" style="margin:0">
-<input type="hidden" name="city" id="a_id">
-<input type="hidden" name="checkIn" id="a_ci">
-<input type="hidden" name="los" id="a_los">
-<input type="hidden" name="adults" id="a_px">
-<input type="hidden" name="children" value="0">
-<input type="hidden" name="rooms" id="a_rm">
-<input type="hidden" name="currency" value="EUR">
-<button type="submit" class="btn b5">Agoda</button>
-</form>
-<form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
-<input type="hidden" name="search" id="t_s">
-<button type="submit" class="btn b6">Trivago</button>
-</form>
+<a id="h4" href="https://booking.com" target="_blank" class="btn b4 htl">Booking.com</a>
+<a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+<a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
 </div>
 <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> – sowie bei <b>Booking.com</b> und <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des jeweiligen Anbieters direkt eingegeben werden.</div>
@@ -183,36 +153,25 @@ function upd() {
     const aid = agIds[key] || "";
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
-    const bFilt = st > 0 ? "class=" + st : "";
+    const bFilt = st > 0 ? "&nflt=" + encodeURIComponent("class=" + st) : "";
+    const eStar = st > 0 ? "&star=" + (st * 10) : "";
 
     $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
-    $("e_dest").value = city;
-    $("e_ci").value = ci;
-    $("e_co").value = co;
-    $("e_rm").value = rm;
-    $("e_px").value = px;
-    $("e_st").disabled = !(st > 0);
-    $("e_st").value = st > 0 ? (st * 10) : "";
+    $("h2").href = P + "www.expedia.de/Hotel-Search?destination=" + q +
+      "&startDate=" + ci + "&endDate=" + co + "&rooms=" + rm + "&adults=" + px + eStar;
 
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
-    $("b_ss").value = city;
-    $("b_ci").value = ci;
-    $("b_co").value = co;
-    $("b_px").value = px;
-    $("b_rm").value = rm;
-    $("b_flt").disabled = !bFilt;
-    $("b_flt").value = bFilt;
+    $("h4").href = P + "://booking.com" + q +
+      "&checkin=" + ci + "&checkout=" + co + "&group_adults=" + px + "&no_rooms=" + rm +
+      bFilt + "&lang=de&selected_currency=EUR";
 
-    $("a_id").value = aid;
-    $("a_ci").value = ci;
-    $("a_los").value = n;
-    $("a_px").value = px;
-    $("a_rm").value = rm;
+    $("h5").href = P + "://agoda.com" + aid +
+      "&checkIn=" + ci + "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm + "&currency=EUR";
 
-    $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
-    $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+    $("h6").href = P + "www.trivago.de/de/lm/hotels-" + sl +
+      "?search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
   }
@@ -246,11 +205,8 @@ function upd() {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
-  "h1;h3;h8".split(";").forEach(id => {
+  "h1;h2;h3;h4;h5;h6;h8".split(";").forEach(id => {
     $(id).addEventListener("click", upd);
-  });
-  "f2;f4;f5;f6".split(";").forEach(id => {
-    $(id).addEventListener("submit", upd);
   });
   upd();
 })();
