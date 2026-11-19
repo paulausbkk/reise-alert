@@ -321,6 +321,7 @@ function upd(){
   const s2=$("s2").checked;
   const lc=$("lc").checked;
 
+  if(od)$("rd").min=od;
   const badDate=(!ow&&od&&rd&&rd<od);
   $("rb").classList.toggle("err",badDate);
 
@@ -338,8 +339,7 @@ function upd(){
 
     const kStp=ns?"stops=0":(s1?"stops=1":(s2?"stops=2":""));
     const kLc=lc?"":"noLowCost=true";
-    const kQ=(kStp+"|duration=-"+mins+"|"+kLc)
-      .split("|").filter(Boolean).join("&");
+    const kQ=[kStp,"duration=-"+mins,kLc].filter(Boolean).join("&");
     $("u2").href=P+"www.kayak.de/flights/"+c1+"-"+c2+"/"+od+
       (!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
     $("u3").href=P+"www.momondo.de/flight-search/"+c1+"-"+c2+"/"+od+
@@ -358,8 +358,8 @@ function upd(){
 
     const trWay=ow?"OW":"RT";
     const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
-    $("u6").href=P+"://trip.com"+c1+
-      "&acity="+c2+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+
+    $("u6").href=P+"://trip.com"+c1.toLowerCase()+
+      "&acity="+c2.toLowerCase()+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+
       "&triptype="+trWay+"&class=y&quantity="+px+
       "&locale=de-DE&curr=EUR"+trStp;
   }
