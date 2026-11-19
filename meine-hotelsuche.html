@@ -51,16 +51,13 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 </style>
 </head>
 <body>
-<audio id="bgm" loop preload="auto">
-  <source src="../musik.mp3" type="audio/mpeg">
-  <source src="musik.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 
 <div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v23</h1>
 <div class="cp">
 <button type="button" class="mbtn" id="mbtn" onclick="toggleBgm()">
 <span class="m-on">🎵 Musik An</span>
-<span class="m-off">🔇 Musik Aus</span>
+<span class="m-off" id="moff">🔇 Musik Aus</span>
 </button>
 <div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
@@ -120,18 +117,56 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 <script>
 const $ = id => document.getElementById(id);
 
+const bgmPaths=["../musik.mp3","musik.mp3","/musik.mp3","/reise-alert/musik.mp3"];
+let bgmIdx=0;
+
 function syncBgm(){
   const a=$("bgm"),b=$("mbtn");
   if(a&&b)b.classList.toggle("on",!a.paused);
 }
+
+function tryPlay(idx){
+  const a=$("bgm");
+  if(!a)return;
+  if(idx>=bgmPaths.length){
+    const m=$("moff");
+    if(m)m.textContent="⚠️ MP3 fehlt";
+    return;
+  }
+  bgmIdx=idx;
+  a.src=bgmPaths[idx];
+  a.volume=0.45;
+  a.play().then(syncBgm).catch(function(err){
+    if(err&&err.name==="NotAllowedError"){
+      syncBgm();
+    }else{
+      tryPlay(idx+1);
+    }
+  });
+}
+
 function startBgm(){
   const a=$("bgm");
-  if(a){a.volume=0.45;a.play().then(syncBgm).catch(syncBgm);}
+  if(!a)return;
+  a.volume=0.45;
+  a.play().then(syncBgm).catch(function(err){
+    if(err&&err.name==="NotAllowedError"){
+      syncBgm();
+    }else{
+      tryPlay(0);
+    }
+  });
 }
+
 function toggleBgm(){
   const a=$("bgm");
   if(!a)return;
-  if(a.paused)startBgm();else{a.pause();syncBgm();}
+  if(a.paused){
+    startBgm();
+  }else{
+    a.pause();
+    syncBgm();
+  }
 }
 
 const P = "https://";
@@ -250,23 +285,3 @@ function upd() {
 
   try {
     localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab
-    }));
-  } catch (e) {}
-}
-
-(function() {
-  const t = new Date().toISOString().slice(0, 10);
-  $("ci").min = t;
-  $("co").min = t;
-  try {
-    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
-    if (d) {
-      if (d.city) $("city").value = d.city;
-      if (d.ci) $("ci").value = d.ci;
-      if (d.co) $("co").value = d.co;
-      if (d.px) $("px").value = d.px;
-      if (d.rm) $("rm").value = d.rm;
-      if (d.st) $("st").value = d.st;
-      if (d.ab !== undefined) $("ab").checked = d.ab;
-    }
