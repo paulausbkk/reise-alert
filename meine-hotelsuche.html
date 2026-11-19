@@ -26,20 +26,19 @@ html,body{
 }
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .mbtn{
-  position:relative;overflow:hidden;
-  display:inline-flex;align-items:center;justify-content:center;
   background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
-  border-radius:6px;padding:6px 12px;font-size:.78rem;
-  font-weight:bold;cursor:pointer;transition:.2s;white-space:nowrap
+  border-radius:6px;padding:4px 8px;font-size:.72rem;
+  font-weight:bold;cursor:pointer;transition:.2s;
+  white-space:nowrap
 }
-.mbtn:hover{
+.mbtn:hover,.mbtn.on{
   background:#0284c7;border-color:#7dd3fc;
   box-shadow:0 0 8px rgba(125,211,252,.5)
 }
-.mbtn audio{
-  position:absolute;left:-8px;top:-6px;
-  width:280px;height:44px;opacity:0;cursor:pointer
-}
+.mbtn .m-off{display:inline}
+.mbtn .m-on{display:none}
+.mbtn.on .m-off{display:none}
+.mbtn.on .m-on{display:inline}
 .seg{
   font-size:.78rem;padding:6px 12px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
@@ -157,16 +156,17 @@ input:focus,select:focus{
 </style>
 </head>
 <body>
+<audio id="bgm" src="/musik.mp3" loop preload="auto"
+  onerror="if(!this.dataset.f){this.dataset.f=1;this.src='musik.mp3'}">
+</audio>
+
 <div class="hdr">
   <h1 class="tit">🏨 Meine Hotelsuche PRO v23</h1>
   <div class="cp">
-    <div class="mbtn" title="Musik An / Aus">
-      <span>🎵 Musik An / Aus</span>
-      <audio controls loop preload="auto">
-        <source src="../musik.mp3" type="audio/mpeg">
-        <source src="musik.mp3" type="audio/mpeg">
-      </audio>
-    </div>
+    <button type="button" class="mbtn" id="mbtn" onclick="toggleBgm()">
+      <span class="m-on">🎵 Musik An</span>
+      <span class="m-off">🔇 Musik Aus</span>
+    </button>
     <div class="seg" id="dt">18.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
     <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
@@ -299,6 +299,24 @@ input:focus,select:focus{
 
 <script>
 const $ = id => document.getElementById(id);
+
+function syncBgm(){
+  const a = $("bgm"), b = $("mbtn");
+  if(a && b) b.classList.toggle("on", !a.paused);
+}
+
+function toggleBgm(){
+  const a = $("bgm");
+  if(!a) return;
+  if(a.paused){
+    a.volume = 0.45;
+    a.play().then(syncBgm).catch(syncBgm);
+  }else{
+    a.pause();
+    syncBgm();
+  }
+}
+
 const P = "https://";
 const cities = (
   "Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;" +
@@ -432,17 +450,3 @@ function upd(){
     $("a_rm").value = rm;
 
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
-    $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
-
-    $("h8").href = P + "www.airbnb.de/s/" + q +
-      "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
-  }
-
-  try{
-    localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab
-    }));
-  }catch(e){}
-}
-
-(function(){
