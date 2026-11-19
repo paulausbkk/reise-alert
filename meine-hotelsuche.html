@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v22</title>
+<title>🏨 Meine Hotelsuche PRO v24</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--v:#0284c7;--lg:#0ea5e9}
 html,body{margin:0;padding:16px;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);min-height:100vh;font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -45,7 +45,7 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v22</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v24</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -95,6 +95,8 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 </form>
 <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
 <input type="hidden" name="search" id="t_s">
+<input type="hidden" name="checkin" id="t_ci">
+<input type="hidden" name="checkout" id="t_co">
 <button type="submit" class="btn b6">Trivago</button>
 </form>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
@@ -213,6 +215,8 @@ function upd() {
 
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+    $("t_ci").value = ci;
+    $("t_co").value = co;
 
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
   }
@@ -250,10 +254,3 @@ function upd() {
     $(id).addEventListener("click", upd);
   });
   "f2;f4;f5;f6".split(";").forEach(id => {
-    $(id).addEventListener("submit", upd);
-  });
-  upd();
-})();
-</script>
-</body>
-</html>
