@@ -27,21 +27,26 @@ gap:16px;margin-bottom:16px}
 padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
 .box.wide{grid-column:span 2}
 @media(max-width:720px){.box.wide{grid-column:span 1}}
-@keyframes dayNight{
-0%,38%{filter:brightness(1.12) contrast(1.04)}
-50%,88%{filter:brightness(0.72) contrast(1.1)}
-100%{filter:brightness(1.12) contrast(1.04)}
+@keyframes dayBase{
+0%,28%{filter:brightness(1.12) saturate(1.15) hue-rotate(0deg)}
+45%,75%{filter:brightness(0.65) saturate(1.3) hue-rotate(-10deg)}
+92%,100%{filter:brightness(1.12) saturate(1.15) hue-rotate(0deg)}
 }
-@keyframes sunsetFade{
-0%,35%{opacity:0;filter:brightness(1.15) sepia(0.15) saturate(1.2)}
-50%,75%{opacity:1;filter:brightness(0.95) sepia(0.38) saturate(1.65) hue-rotate(-14deg)}
-88%{opacity:1;filter:brightness(0.58) sepia(0.45) saturate(1.5) hue-rotate(-18deg)}
-100%{opacity:0;filter:brightness(1.15) sepia(0.15) saturate(1.2)}
+@keyframes sunCycle{
+0%,25%{opacity:0;filter:brightness(1.1) sepia(0.1) saturate(1.2) hue-rotate(0deg)}
+35%{opacity:1;filter:brightness(1.05) sepia(0.35) saturate(1.6) hue-rotate(-10deg)}
+48%{opacity:1;filter:brightness(0.82) sepia(0.55) saturate(2.1) hue-rotate(-22deg)}
+60%{opacity:1;filter:brightness(0.45) sepia(0.35) saturate(1.4) hue-rotate(195deg)}
+72%{opacity:1;filter:brightness(0.78) sepia(0.5) saturate(1.9) hue-rotate(-18deg)}
+84%{opacity:1;filter:brightness(1.15) sepia(0.3) saturate(1.5) hue-rotate(-5deg)}
+94%,100%{opacity:0;filter:brightness(1.1) sepia(0.1) saturate(1.2) hue-rotate(0deg)}
 }
-@keyframes glowPulse{
-0%,38%{opacity:0}
-52%,85%{opacity:1}
-100%{opacity:0}
+@keyframes skyTint{
+0%,28%{opacity:0}
+42%{opacity:1;background:linear-gradient(180deg,rgba(251,146,60,.25) 0%,rgba(220,38,38,.45) 65%,rgba(124,45,18,.6) 100%)}
+60%{opacity:1;background:linear-gradient(180deg,rgba(15,23,42,.55) 0%,rgba(30,58,138,.45) 65%,rgba(15,23,42,.7) 100%)}
+78%{opacity:1;background:linear-gradient(180deg,rgba(253,224,71,.22) 0%,rgba(249,115,22,.42) 60%,rgba(154,52,18,.5) 100%)}
+92%,100%{opacity:0}
 }
 .pic{position:relative;border-radius:10px;overflow:hidden;
 min-height:300px;display:flex;align-items:flex-end;padding:20px;
@@ -50,20 +55,18 @@ background-image:url("fluegel.jpg");
 background-size:cover;
 background-position:center center;
 background-repeat:no-repeat;
-animation:dayNight 14s infinite ease-in-out}
+animation:dayBase 18s infinite ease-in-out}
 .pic-fade{position:absolute;inset:0;z-index:1;
 background-image:url("LiS.jpg");
 background-size:cover;
 background-position:center center;
 background-repeat:no-repeat;
-animation:sunsetFade 14s infinite ease-in-out}
+animation:sunCycle 18s infinite ease-in-out}
 .sun-glow{position:absolute;inset:0;z-index:2;pointer-events:none;
-background:linear-gradient(180deg,rgba(251,146,60,.22) 0%,
-rgba(234,88,12,.38) 55%,rgba(124,45,18,.55) 100%);
 mix-blend-mode:multiply;
-animation:glowPulse 14s infinite ease-in-out}
+animation:skyTint 18s infinite ease-in-out}
 .pic::after{content:"";position:absolute;inset:0;z-index:3;
-background:linear-gradient(0deg,rgba(15,23,42,.88) 12%,
+background:linear-gradient(0deg,rgba(15,23,42,.86) 12%,
 rgba(15,41,66,.12) 100%)}
 .ptxt{position:relative;z-index:4;color:#fff}
 .ptxt h2{margin:0 0 6px 0;font-size:1.45rem}
