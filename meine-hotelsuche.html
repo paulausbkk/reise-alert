@@ -158,7 +158,7 @@ input:focus,select:focus{
 </style>
 </head>
 <body>
-<audio id="bgm" src="/musik.mp3" loop preload="none"></audio>
+<audio id="bgm" src="../musik.mp3" loop preload="none"></audio>
 
 <div class="hdr">
   <h1 class="tit">🏨 Meine Hotelsuche PRO v21</h1>
@@ -298,58 +298,27 @@ input:focus,select:focus{
 
 <script>
 const $ = id => document.getElementById(id);
-
-(function(){
-  const b = $("mbtn"), a = $("bgm");
-  let on = true;
-  try{
-    if(localStorage.getItem("pab_bgm") === "off") on = false;
-  }catch(e){}
-
-  function draw(){
-    b.textContent = on ? "🎵 Musik An" : "🔇 Musik Aus";
-    b.classList.toggle("on", on);
-  }
-  draw();
-
-  b.onclick = function(){
-    on = !on;
-    draw();
-    try{
-      localStorage.setItem("pab_bgm", on ? "on" : "off");
-      localStorage.setItem("pab_bgm_ts", String(Date.now()));
-    }catch(e){}
-    if(a){
-      if(on){
-        a.volume = 0.45;
-        a.play().catch(function(){});
-      }else{
-        a.pause();
-      }
-    }
-  };
-})();
-
 const P = "https://";
-const cities = (
-  "Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;" +
-  "Ho-Chi-Minh-Stadt;Hanoi;Manila;Cebu;Dumaguete;Pagadian;" +
-  "Singapur;Kuala Lumpur;Denpasar Bali;Dubai;Doha;Tokio;" +
-  "Istanbul;Faro;Christchurch;Berlin;München;Frankfurt"
-).split(";");
-const cols = (
-  "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af"
-).split(";");
+const cities = [
+  "Bangkok","Phuket","Chiang Mai","Koh Samui","Krabi",
+  "Da Nang","Quy Nhon","Ho-Chi-Minh-Stadt","Hanoi","Manila",
+  "Cebu","Dumaguete","Pagadian","Singapur","Kuala Lumpur",
+  "Denpasar Bali","Dubai","Doha","Tokio","Istanbul",
+  "Faro","Christchurch","Berlin","München","Frankfurt"
+];
+const cols = [
+  "#0284c7","#0369a1","#1d4ed8","#0077b6","#0ea5e9","#1e40af"
+];
 const agIds = {
-  "bangkok": "9395", "phuket": "16056", "chiang mai": "7401",
-  "koh samui": "17198", "krabi": "14865", "da nang": "16440",
-  "quy nhon": "17264", "ho-chi-minh-stadt": "13170",
-  "hanoi": "2758", "manila": "16592", "cebu": "4001",
-  "dumaguete": "16562", "pagadian": "18952", "singapur": "4064",
-  "kuala lumpur": "14524", "denpasar bali": "17193",
-  "dubai": "2994", "doha": "11977", "tokio": "5085",
-  "istanbul": "14932", "faro": "15356", "christchurch": "13726",
-  "berlin": "2128", "muenchen": "14163", "frankfurt": "14223"
+  "bangkok":"9395","phuket":"16056","chiang mai":"7401",
+  "koh samui":"17198","krabi":"14865","da nang":"16440",
+  "quy nhon":"17264","ho-chi-minh-stadt":"13170","hanoi":"2758",
+  "manila":"16592","cebu":"4001","dumaguete":"16562",
+  "pagadian":"18952","singapur":"4064","kuala lumpur":"14524",
+  "denpasar bali":"17193","dubai":"2994","doha":"11977",
+  "tokio":"5085","istanbul":"14932","faro":"15356",
+  "christchurch":"13726","berlin":"2128","muenchen":"14163",
+  "frankfurt":"14223"
 };
 let cidx = 0;
 
@@ -364,24 +333,28 @@ function slug(s){
 }
 
 function ac(inp, box){
-  inp.addEventListener("input", () => {
+  inp.addEventListener("input", function(){
     const q = inp.value.trim().toLowerCase();
     box.innerHTML = "";
     if(!q){ box.style.display = "none"; upd(); return; }
-    const hits = cities.filter(x => x.toLowerCase().includes(q));
+    const hits = cities.filter(function(x){
+      return x.toLowerCase().indexOf(q) !== -1;
+    });
     if(!hits.length){ box.style.display = "none"; upd(); return; }
-    hits.forEach(h => {
+    hits.forEach(function(h){
       const d = document.createElement("div");
       d.textContent = h;
-      d.onclick = () => {
-        inp.value = h; box.style.display = "none"; upd();
+      d.onclick = function(){
+        inp.value = h;
+        box.style.display = "none";
+        upd();
       };
       box.appendChild(d);
     });
     box.style.display = "block";
     upd();
   });
-  document.addEventListener("click", e => {
+  document.addEventListener("click", function(e){
     if(!box.contains(e.target) && e.target !== inp){
       box.style.display = "none";
     }
@@ -404,11 +377,12 @@ function upd(){
   const st = +$("st").value || 0;
   const ab = $("ab").checked;
 
-  document.querySelectorAll(".htl")
-    .forEach(el => el.classList.toggle("off", ab));
+  document.querySelectorAll(".htl").forEach(function(el){
+    el.classList.toggle("off", ab);
+  });
   $("h8").classList.toggle("off", !ab);
 
-  const badDate = (ci && co && co <= ci);
+  const badDate = Boolean(ci && co && co <= ci);
   $("cob").classList.toggle("err", badDate);
 
   if(ci && co && !badDate){
@@ -455,3 +429,23 @@ function upd(){
     $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
+
+    $("a_id").value = aid;
+    $("a_ci").value = ci;
+    $("a_los").value = n;
+    $("a_px").value = px;
+    $("a_rm").value = rm;
+
+    $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
+    $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+
+    $("h8").href = P + "www.airbnb.de/s/" + q +
+      "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
+  }
+
+  try{
+    localStorage.setItem("rk_hotel", JSON.stringify({
+      city: $("city").value, ci: ci, co: co,
+      px: px, rm: rm, st: st, ab: ab
+    }));
+  }catch(e){}
