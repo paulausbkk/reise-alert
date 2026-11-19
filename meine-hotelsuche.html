@@ -97,14 +97,16 @@ const $ = id => document.getElementById(id);
 const P = "https://";
 const cities = "Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;Ho-Chi-Minh-Stadt;Hanoi;Manila;Cebu;Dumaguete;Pagadian;Singapur;Kuala Lumpur;Denpasar Bali;Dubai;Doha;Tokio;Istanbul;Faro;Christchurch;Berlin;München;Frankfurt".split(";");
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const agIds = {
-  "bangkok": "9395", "phuket": "16056", "chiang mai": "7401", "koh samui": "17198",
-  "krabi": "14865", "da nang": "16440", "quy nhon": "17264", "ho-chi-minh-stadt": "13170",
-  "hanoi": "2758", "manila": "16592", "cebu": "4001", "dumaguete": "16562",
-  "pagadian": "18952", "singapur": "4064", "kuala lumpur": "14524", "denpasar bali": "17193",
-  "dubai": "2994", "doha": "11977", "tokio": "5085", "istanbul": "14932",
-  "faro": "15356", "christchurch": "13726", "berlin": "2128", "muenchen": "14163",
-  "frankfurt": "14223"
+const agSlugs = {
+  "bangkok": "bangkok-th.html", "phuket": "phuket-th.html", "chiang mai": "chiang-mai-th.html",
+  "koh samui": "koh-samui-th.html", "krabi": "krabi-th.html", "da nang": "da-nang-vn.html",
+  "quy nhon": "quy-nhon-vn.html", "ho-chi-minh-stadt": "ho-chi-minh-city-vn.html",
+  "hanoi": "hanoi-vn.html", "manila": "manila-ph.html", "cebu": "cebu-ph.html",
+  "dumaguete": "dumaguete-ph.html", "pagadian": "pagadian-ph.html", "singapur": "singapore-sg.html",
+  "kuala lumpur": "kuala-lumpur-my.html", "denpasar bali": "bali-id.html",
+  "dubai": "dubai-ae.html", "doha": "doha-qa.html", "tokio": "tokyo-jp.html",
+  "istanbul": "istanbul-tr.html", "faro": "faro-pt.html", "christchurch": "christchurch-nz.html",
+  "berlin": "berlin-de.html", "muenchen": "munich-de.html", "frankfurt": "frankfurt-am-main-de.html"
 };
 let cidx = 0;
 
@@ -171,7 +173,7 @@ function upd() {
     const key = norm(city);
     const sl = slug(city);
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const aid = agIds[key] || "";
+    const agFile = agSlugs[key] || "";
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
     const bFilt = st > 0 ? "class=" + st : "";
@@ -196,10 +198,9 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    if (aid) {
-      $("h5").href = P + "://agoda.com" +
-        aid + "&checkIn=" + ci + "&los=" + n + "&rooms=" + rm + "&adults=" + px +
-        "&children=0&currency=EUR&languageId=9";
+    if (agFile) {
+      $("h5").href = P + "://agoda.com" + agFile +
+        "?checkIn=" + ci + "&los=" + n + "&rooms=" + rm + "&adults=" + px + "&children=0&currency=EUR";
     } else {
       $("h5").href = P + "://agoda.com";
     }
