@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v24</title>
+<title>🏨 Meine Hotelsuche PRO v25</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--v:#0284c7;--lg:#0ea5e9}
 html,body{margin:0;padding:16px;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);min-height:100vh;font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,10 +42,12 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 .sw input:checked+.sl:before{transform:translateX(18px)}
 @keyframes pulseHint{0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}}
 .hint{margin-top:16px;background:#0f2942;color:#fff;border:3px solid #991b1b;border-left:7px solid #991b1b;border-radius:8px;padding:12px 15px;font-size:.88rem;line-height:1.45;animation:pulseHint 2.2s infinite ease-in-out}
+.bm-bar{margin-top:12px;background:#eff6ff;border:1px dashed #0284c7;border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.86rem;color:#0c4a6e}
+.bm-btn{display:inline-block;background:#0284c7;color:#fff;font-weight:bold;text-decoration:none;padding:7px 12px;border-radius:6px;border:1px solid #0369a1;cursor:grab;white-space:nowrap}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v24</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v25</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -95,11 +97,13 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 </form>
 <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
 <input type="hidden" name="search" id="t_s">
-<input type="hidden" name="checkin" id="t_ci">
-<input type="hidden" name="checkout" id="t_co">
 <button type="submit" class="btn b6">Trivago</button>
 </form>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
+</div>
+<div class="bm-bar">
+<span>⚡ <b>1-Klick-Helfer für Booking, Agoda & Trivago:</b> Ziehe diesen Button einmal in deine Lesezeichenleiste und klicke ihn auf der Anbieterseite an:</span>
+<a class="bm-btn" href="javascript:(async()=>{const t=await navigator.clipboard.readText();const el=document.querySelector('input[name=%22ss%22],input[placeholder*=%22Wohin%22],input[placeholder*=%22Reiseziel%22],input[data-selenium=%22textInput%22],input[type=%22search%22],input[type=%22text%22]');if(el){el.focus();const s=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;s.call(el,t);el.dispatchEvent(new Event('input',{bubbles:true}));}})();">📥 Zielort einfügen</a>
 </div>
 <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> – sowie bei <b>Booking.com</b> und <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des jeweiligen Anbieters direkt eingegeben werden.</div>
 </div>
@@ -125,6 +129,13 @@ function norm(s) {
 
 function slug(s) {
   return norm(s).replace(/ß/g,"ss").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+}
+
+function cpCity() {
+  const c = $("city").value.trim();
+  if (c && navigator.clipboard) {
+    navigator.clipboard.writeText(c).catch(() => {});
+  }
 }
 
 function ac(inp, box) {
@@ -215,8 +226,6 @@ function upd() {
 
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
-    $("t_ci").value = ci;
-    $("t_co").value = co;
 
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
   }
@@ -236,21 +245,3 @@ function upd() {
     const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
     if (d) {
       if (d.city) $("city").value = d.city;
-      if (d.ci) $("ci").value = d.ci;
-      if (d.co) $("co").value = d.co;
-      if (d.px) $("px").value = d.px;
-      if (d.rm) $("rm").value = d.rm;
-      if (d.st) $("st").value = d.st;
-      if (d.ab !== undefined) $("ab").checked = d.ab;
-    }
-  } catch (e) {}
-
-  ac($("city"), $("lc"));
-  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
-    $(id).addEventListener("input", upd);
-    $(id).addEventListener("change", upd);
-  });
-  "h1;h3;h8".split(";").forEach(id => {
-    $(id).addEventListener("click", upd);
-  });
-  "f2;f4;f5;f6".split(";").forEach(id => {
