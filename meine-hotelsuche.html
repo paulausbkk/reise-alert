@@ -83,7 +83,7 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 <input type="hidden" name="selected_currency" value="EUR">
 <button type="submit" class="btn b4">Booking.com</button>
 </form>
-<a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+<a id="h5" href="https://agoda.com" target="_blank" rel="noopener" class="btn b5 htl">Agoda</a>
 <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
 <input type="hidden" name="search" id="t_s">
 <button type="submit" class="btn b6">Trivago</button>
@@ -196,9 +196,8 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = P + "://agoda.com" + aid + "&city=" + aid +
-      "&selectedValue=" + aid + "&searchText=" + q + "&checkIn=" + ci +
-      "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm + "&currency=EUR";
+    $("h5").href = P + "://agoda.com" + aid + "&checkIn=" + ci +
+      "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm + "&currency=EUR&locale=de-de";
 
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
@@ -235,7 +234,7 @@ function upd() {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
-  "h1;h3;h5;h8".split(";").forEach(id => {
+  "h1;h3;h8".split(";").forEach(id => {
     $(id).addEventListener("click", upd);
   });
   "f2;f4;f6".split(";").forEach(id => {
