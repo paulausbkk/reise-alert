@@ -61,13 +61,13 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 <div class="f"><div class="swc"><label for="ab" style="margin:0;cursor:pointer">Nur Airbnb (Ferienwohnung / Apartment)</label><label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label></div></div>
 <div class="bn" id="info">Bitte Reiseziel, Check-in und Check-out wählen.</div></div></div>
 <div class="bb"><div class="bf">
-<a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-<a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
-<a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo Hotels</a>
-<a id="h4" href="https://booking.com" target="_blank" class="btn b4 htl">Booking.com</a>
-<a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
-<a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
-<a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
+<a id="h1" href="https://kayak.de" target="_blank" rel="noopener" class="btn b1 htl">Kayak Hotels</a>
+<a id="h2" href="https://expedia.de" target="_blank" rel="noopener" class="btn b2 htl">Expedia Hotels</a>
+<a id="h3" href="https://momondo.de" target="_blank" rel="noopener" class="btn b3 htl">Momondo Hotels</a>
+<a id="h4" href="https://booking.com" target="_blank" rel="noopener" class="btn b4 htl">Booking.com</a>
+<a id="h5" href="https://agoda.com" target="_blank" rel="noopener" class="btn b5 htl">Agoda</a>
+<a id="h6" href="https://trivago.de" target="_blank" rel="noopener" class="btn b6 htl">Trivago</a>
+<a id="h8" href="https://airbnb.de" target="_blank" rel="noopener" class="btn b8 off">Airbnb</a>
 </div>
 <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> – sowie bei <b>Booking.com</b> und <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des jeweiligen Anbieters direkt eingegeben werden.</div>
 </div>
@@ -168,9 +168,10 @@ function upd() {
       bFilt + "&lang=de&selected_currency=EUR";
 
     $("h5").href = P + "://agoda.com" + aid +
-      "&checkIn=" + ci + "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm + "&currency=EUR";
+      "&textToSearch=" + q + "&checkIn=" + ci + "&los=" + n +
+      "&adults=" + px + "&children=0&rooms=" + rm + "&currency=EUR";
 
-    $("h6").href = P + "www.trivago.de/de/lm/hotels-" + sl +
+    $("h6").href = P + "www.trivago.de/de/srl/hotels-" + sl +
       "?search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
