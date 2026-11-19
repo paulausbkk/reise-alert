@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v26</title>
+<title>🏨 Meine Hotelsuche PRO v27</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--v:#0284c7;--lg:#0ea5e9}
 html,body{margin:0;padding:16px;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);min-height:100vh;font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -45,7 +45,7 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v26</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v27</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -130,9 +130,10 @@ function openAgoda() {
   const dom = ["www", "agoda", "com"].join(".");
   let url = P + dom + "/de-de/";
   if (city && ci && co && co > ci) {
-    url += "search?checkIn=" + ci + "&los=" + n + "&rooms=" + rm + "&adults=" + px + "&children=0&currency=EUR";
+    url += "search?checkIn=" + ci + "&los=" + n + "&rooms=" + rm + "&adults=" + px +
+      "&children=0&currency=EUR&locale=de-de&ds=1";
     if (aid) {
-      url += "&city=" + aid + "&selectedValue=" + aid;
+      url += "&city=" + aid + "&selectedCity=" + aid + "&cityId=" + aid;
     } else {
       url += "&textToSearch=" + q;
     }
