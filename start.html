@@ -24,19 +24,50 @@ background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
 grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 gap:16px;margin-bottom:16px}
 .box{background:#fff;border:1px solid #93c5fd;border-radius:12px;
-padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08);
-resize:both;overflow:auto}
+padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
 .box.wide{grid-column:span 2}
 @media(max-width:720px){.box.wide{grid-column:span 1}}
+@keyframes dayNight{
+0%,38%{filter:brightness(1.12) contrast(1.04)}
+50%,88%{filter:brightness(0.72) contrast(1.1)}
+100%{filter:brightness(1.12) contrast(1.04)}
+}
+@keyframes sunsetFade{
+0%,35%{opacity:0;filter:brightness(1.15) sepia(0.15) saturate(1.2)}
+50%,75%{opacity:1;filter:brightness(0.95) sepia(0.38) saturate(1.65) hue-rotate(-14deg)}
+88%{opacity:1;filter:brightness(0.58) sepia(0.45) saturate(1.5) hue-rotate(-18deg)}
+100%{opacity:0;filter:brightness(1.15) sepia(0.15) saturate(1.2)}
+}
+@keyframes glowPulse{
+0%,38%{opacity:0}
+52%,85%{opacity:1}
+100%{opacity:0}
+}
 .pic{position:relative;border-radius:10px;overflow:hidden;
-min-height:240px;display:flex;align-items:flex-end;padding:18px;
-background:#0f2942 url("https://unsplash.com") center/cover no-repeat}
-.pic::before{content:"";position:absolute;inset:0;
-background:linear-gradient(0deg,rgba(15,41,66,.88) 10%,
-rgba(15,41,66,.15) 100%)}
-.ptxt{position:relative;z-index:2;color:#fff}
-.ptxt h2{margin:0 0 6px 0;font-size:1.4rem}
-.ptxt p{margin:0 0 12px 0;font-size:.92rem;color:#e0f2fe}
+min-height:300px;display:flex;align-items:flex-end;padding:20px;
+background-color:#0f2942;
+background-image:url("fluegel.jpg");
+background-size:cover;
+background-position:center center;
+background-repeat:no-repeat;
+animation:dayNight 14s infinite ease-in-out}
+.pic-fade{position:absolute;inset:0;z-index:1;
+background-image:url("LiS.jpg");
+background-size:cover;
+background-position:center center;
+background-repeat:no-repeat;
+animation:sunsetFade 14s infinite ease-in-out}
+.sun-glow{position:absolute;inset:0;z-index:2;pointer-events:none;
+background:linear-gradient(180deg,rgba(251,146,60,.22) 0%,
+rgba(234,88,12,.38) 55%,rgba(124,45,18,.55) 100%);
+mix-blend-mode:multiply;
+animation:glowPulse 14s infinite ease-in-out}
+.pic::after{content:"";position:absolute;inset:0;z-index:3;
+background:linear-gradient(0deg,rgba(15,23,42,.88) 12%,
+rgba(15,41,66,.12) 100%)}
+.ptxt{position:relative;z-index:4;color:#fff}
+.ptxt h2{margin:0 0 6px 0;font-size:1.45rem}
+.ptxt p{margin:0 0 12px 0;font-size:.94rem;color:#e0f2fe}
 .cta{display:inline-block;background:#0284c7;color:#fff;
 font-weight:bold;text-decoration:none;padding:10px 18px;
 border-radius:8px;font-size:.9rem;border:1px solid #7dd3fc}
@@ -50,8 +81,8 @@ font-size:.92rem}
 details p{margin:8px 0 0 0;font-size:.88rem;line-height:1.45;
 color:#1e293b}
 .gal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.gal img{width:100%;height:105px;object-fit:cover;
-border-radius:8px;border:1px solid #bae6fd}
+.gal img{width:100%;height:110px;object-fit:cover;
+object-position:center;border-radius:8px;border:1px solid #bae6fd}
 </style>
 </head>
 <body>
@@ -65,6 +96,8 @@ border-radius:8px;border:1px solid #bae6fd}
 <div class="bento">
 <div class="box wide">
 <div class="pic">
+<div class="pic-fade"></div>
+<div class="sun-glow"></div>
 <div class="ptxt">
 <h2>Dein Startpunkt für die Philippinen</h2>
 <p>Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian –
@@ -76,10 +109,10 @@ plane deine Route und vergleiche alle Flüge direkt.</p>
 <div class="box">
 <div class="ct">📸 Impressionen & Inseln</div>
 <div class="gal">
-<img src="https://unsplash.com" alt="Cebu">
-<img src="https://unsplash.com" alt="Bohol">
-<img src="https://unsplash.com" alt="Palawan">
-<img src="https://unsplash.com" alt="Strand">
+<img src="cebu.jpg" alt="Cebu">
+<img src="bohol.jpg" alt="Bohol">
+<img src="palawan.jpg" alt="Palawan">
+<img src="strand.jpg" alt="Strand">
 </div>
 </div>
 <div class="box">
