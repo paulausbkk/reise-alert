@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v21</title>
+<title>🏨 Meine Hotelsuche PRO v26</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--v:#0284c7;--lg:#0ea5e9}
 html,body{margin:0;padding:16px;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);min-height:100vh;font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -45,7 +45,7 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v21</h1>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v26</h1>
 <div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
@@ -83,7 +83,7 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 <input type="hidden" name="selected_currency" value="EUR">
 <button type="submit" class="btn b4">Booking.com</button>
 </form>
-<a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+<button type="button" id="b5" class="btn b5 htl">Agoda</button>
 <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
 <input type="hidden" name="search" id="t_s">
 <button type="submit" class="btn b6">Trivago</button>
@@ -97,16 +97,14 @@ const $ = id => document.getElementById(id);
 const P = "https://";
 const cities = "Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;Ho-Chi-Minh-Stadt;Hanoi;Manila;Cebu;Dumaguete;Pagadian;Singapur;Kuala Lumpur;Denpasar Bali;Dubai;Doha;Tokio;Istanbul;Faro;Christchurch;Berlin;München;Frankfurt".split(";");
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const agSlugs = {
-  "bangkok": "bangkok-th.html", "phuket": "phuket-th.html", "chiang mai": "chiang-mai-th.html",
-  "koh samui": "koh-samui-th.html", "krabi": "krabi-th.html", "da nang": "da-nang-vn.html",
-  "quy nhon": "quy-nhon-vn.html", "ho-chi-minh-stadt": "ho-chi-minh-city-vn.html",
-  "hanoi": "hanoi-vn.html", "manila": "manila-ph.html", "cebu": "cebu-ph.html",
-  "dumaguete": "dumaguete-ph.html", "pagadian": "pagadian-ph.html", "singapur": "singapore-sg.html",
-  "kuala lumpur": "kuala-lumpur-my.html", "denpasar bali": "bali-id.html",
-  "dubai": "dubai-ae.html", "doha": "doha-qa.html", "tokio": "tokyo-jp.html",
-  "istanbul": "istanbul-tr.html", "faro": "faro-pt.html", "christchurch": "christchurch-nz.html",
-  "berlin": "berlin-de.html", "muenchen": "munich-de.html", "frankfurt": "frankfurt-am-main-de.html"
+const agIds = {
+  "bangkok": "9395", "phuket": "16056", "chiang mai": "7401", "koh samui": "17198",
+  "krabi": "14865", "da nang": "16440", "quy nhon": "17264", "ho-chi-minh-stadt": "13170",
+  "hanoi": "2758", "manila": "16592", "cebu": "4001", "dumaguete": "16562",
+  "pagadian": "18952", "singapur": "4064", "kuala lumpur": "14524", "denpasar bali": "17193",
+  "dubai": "2994", "doha": "11977", "tokio": "5085", "istanbul": "14932",
+  "faro": "15356", "christchurch": "13726", "berlin": "2128", "muenchen": "14163",
+  "frankfurt": "14223"
 };
 let cidx = 0;
 
@@ -116,6 +114,30 @@ function norm(s) {
 
 function slug(s) {
   return norm(s).replace(/ß/g,"ss").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+}
+
+function openAgoda() {
+  upd();
+  const city = $("city").value.trim();
+  const ci = $("ci").value;
+  const co = $("co").value;
+  const px = +$("px").value || 2;
+  const rm = +$("rm").value || 1;
+  const key = norm(city);
+  const aid = agIds[key] || "";
+  const q = encodeURIComponent(city);
+  const n = (ci && co && co > ci) ? Math.round((new Date(co) - new Date(ci)) / 86400000) : 1;
+  const dom = ["www", "agoda", "com"].join(".");
+  let url = P + dom + "/de-de/";
+  if (city && ci && co && co > ci) {
+    url += "search?checkIn=" + ci + "&los=" + n + "&rooms=" + rm + "&adults=" + px + "&children=0&currency=EUR";
+    if (aid) {
+      url += "&city=" + aid + "&selectedValue=" + aid;
+    } else {
+      url += "&textToSearch=" + q;
+    }
+  }
+  window.open(url, "_blank");
 }
 
 function ac(inp, box) {
@@ -170,10 +192,7 @@ function upd() {
 
   if (city && ci && co && !badDate) {
     const q = encodeURIComponent(city);
-    const key = norm(city);
     const sl = slug(city);
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const agFile = agSlugs[key] || "";
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
     const bFilt = st > 0 ? "class=" + st : "";
@@ -197,13 +216,6 @@ function upd() {
     $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
-
-    if (agFile) {
-      $("h5").href = P + "://agoda.com" + agFile +
-        "?checkIn=" + ci + "&los=" + n + "&rooms=" + rm + "&adults=" + px + "&children=0&currency=EUR";
-    } else {
-      $("h5").href = P + "://agoda.com";
-    }
 
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
@@ -236,6 +248,7 @@ function upd() {
   } catch (e) {}
 
   ac($("city"), $("lc"));
+  $("b5").addEventListener("click", openAgoda);
   "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
