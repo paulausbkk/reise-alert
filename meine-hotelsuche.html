@@ -10,6 +10,12 @@ html,body{margin:0;padding:16px;background:linear-gradient(180deg,#dbeafe 0%,#f0
 .hdr{display:flex;justify-content:space-between;align-items:center;background:#0f2942;padding:14px 18px;border-radius:12px;margin-bottom:20px;flex-wrap:wrap;gap:10px;box-shadow:0 4px 14px rgba(15,41,66,.18)}
 .tit{font-weight:bold;color:#fff;font-size:1.25rem;margin:0;letter-spacing:.3px}
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mbtn{background:#1e3a8a;color:#fff;border:1px solid #60a5fa;border-radius:6px;padding:6px 10px;font-size:.78rem;font-weight:bold;cursor:pointer;transition:.2s;white-space:nowrap}
+.mbtn:hover,.mbtn.on{background:#0284c7;border-color:#7dd3fc;box-shadow:0 0 8px rgba(125,211,252,.5)}
+.mbtn .m-off{display:inline}
+.mbtn .m-on{display:none}
+.mbtn.on .m-off{display:none}
+.mbtn.on .m-on{display:inline}
 .seg{font-size:.78rem;padding:6px 12px;border-radius:6px;font-weight:bold;color:#fff;text-transform:uppercase;background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
 .seg.nav{background:#1e40af;font-size:.88rem;padding:8px 14px;border-color:#60a5fa}
 .seg.upg{background:#0369a1;font-size:.88rem;padding:8px 14px;border-color:#7dd3fc}
@@ -45,8 +51,15 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 </style>
 </head>
 <body>
+<audio id="bgm" src="musik.mp3" loop preload="auto"></audio>
+
 <div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v23</h1>
-<div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
+<div class="cp">
+<button type="button" class="mbtn" id="mbtn" onclick="toggleBgm()">
+<span class="m-on">🎵 Musik An</span>
+<span class="m-off">🔇 Musik Aus</span>
+</button>
+<div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
 <div class="row">
@@ -103,6 +116,21 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 </div>
 <script>
 const $ = id => document.getElementById(id);
+
+function syncBgm(){
+  const a=$("bgm"),b=$("mbtn");
+  if(a&&b)b.classList.toggle("on",!a.paused);
+}
+function startBgm(){
+  const a=$("bgm");
+  if(a){a.volume=0.45;a.play().then(syncBgm).catch(syncBgm);}
+}
+function toggleBgm(){
+  const a=$("bgm");
+  if(!a)return;
+  if(a.paused)startBgm();else{a.pause();syncBgm();}
+}
+
 const P = "https://";
 const cities = "Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;Ho-Chi-Minh-Stadt;Hanoi;Manila;Cebu;Dumaguete;Pagadian;Singapur;Kuala Lumpur;Denpasar Bali;Dubai;Doha;Tokio;Istanbul;Faro;Christchurch;Berlin;München;Frankfurt".split(";");
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
@@ -242,18 +270,3 @@ function upd() {
   } catch (e) {}
 
   ac($("city"), $("lc"));
-  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
-    $(id).addEventListener("input", upd);
-    $(id).addEventListener("change", upd);
-  });
-  "h1;h3;h8".split(";").forEach(id => {
-    $(id).addEventListener("click", upd);
-  });
-  "f2;f4;f5;f6".split(";").forEach(id => {
-    $(id).addEventListener("submit", upd);
-  });
-  upd();
-})();
-</script>
-</body>
-</html>
