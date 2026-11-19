@@ -83,16 +83,7 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 <input type="hidden" name="selected_currency" value="EUR">
 <button type="submit" class="btn b4">Booking.com</button>
 </form>
-<form id="f5" action="https://agoda.com" method="get" target="_blank" class="htl" style="margin:0">
-<input type="hidden" name="city" id="a_id">
-<input type="hidden" name="checkIn" id="a_ci">
-<input type="hidden" name="los" id="a_los">
-<input type="hidden" name="adults" id="a_px">
-<input type="hidden" name="children" value="0">
-<input type="hidden" name="rooms" id="a_rm">
-<input type="hidden" name="currency" value="EUR">
-<button type="submit" class="btn b5">Agoda</button>
-</form>
+<a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
 <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
 <input type="hidden" name="search" id="t_s">
 <button type="submit" class="btn b6">Trivago</button>
@@ -205,11 +196,9 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("a_id").value = aid;
-    $("a_ci").value = ci;
-    $("a_los").value = n;
-    $("a_px").value = px;
-    $("a_rm").value = rm;
+    $("h5").href = P + "://agoda.com" + aid + "&city=" + aid +
+      "&selectedValue=" + aid + "&searchText=" + q + "&checkIn=" + ci +
+      "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm + "&currency=EUR";
 
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
@@ -246,10 +235,10 @@ function upd() {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
-  "h1;h3;h8".split(";").forEach(id => {
+  "h1;h3;h5;h8".split(";").forEach(id => {
     $(id).addEventListener("click", upd);
   });
-  "f2;f4;f5;f6".split(";").forEach(id => {
+  "f2;f4;f6".split(";").forEach(id => {
     $(id).addEventListener("submit", upd);
   });
   upd();
