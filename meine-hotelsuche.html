@@ -25,19 +25,17 @@ html,body{
   margin:0;letter-spacing:.3px
 }
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.mbtn{
+.mwrap{
+  display:inline-flex;align-items:center;gap:5px;
   background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
-  border-radius:6px;padding:6px 10px;font-size:.78rem;
-  font-weight:bold;cursor:pointer;transition:.2s;white-space:nowrap
+  border-radius:6px;padding:2px 8px 2px 4px;
+  font-size:.78rem;font-weight:bold;height:30px;
+  box-sizing:border-box
 }
-.mbtn:hover,.mbtn.on{
-  background:#0284c7;border-color:#7dd3fc;
-  box-shadow:0 0 8px rgba(125,211,252,.5)
+.mwrap audio{
+  width:28px;height:24px;border-radius:4px;
+  filter:invert(1) hue-rotate(180deg) brightness(1.2)
 }
-.mbtn .m-off{display:inline}
-.mbtn .m-on{display:none}
-.mbtn.on .m-off{display:none}
-.mbtn.on .m-on{display:inline}
 .seg{
   font-size:.78rem;padding:6px 12px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
@@ -158,10 +156,13 @@ input:focus,select:focus{
 <div class="hdr">
   <h1 class="tit">🏨 Meine Hotelsuche PRO v23</h1>
   <div class="cp">
-    <button type="button" class="mbtn" id="mbtn" onclick="toggleBgm()">
-      <span class="m-on">🎵 Musik An</span>
-      <span class="m-off">🔇 Musik Aus</span>
-    </button>
+    <div class="mwrap">
+      <audio controls loop preload="auto">
+        <source src="../musik.mp3" type="audio/mpeg">
+        <source src="musik.mp3" type="audio/mpeg">
+      </audio>
+      <span>Musik</span>
+    </div>
     <div class="seg" id="dt">18.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
     <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
@@ -294,44 +295,6 @@ input:focus,select:focus{
 
 <script>
 const $ = id => document.getElementById(id);
-
-let actx = null, bgmOn = false, bgmTimer = null, step = 0;
-const notes = [261.63, 329.63, 392.00, 493.88, 392.00, 329.63];
-
-function playTone(){
-  if(!bgmOn || !actx) return;
-  const now = actx.currentTime;
-  const osc = actx.createOscillator();
-  const gain = actx.createGain();
-  osc.type = "sine";
-  osc.frequency.setValueAtTime(notes[step % notes.length], now);
-  step++;
-  gain.gain.setValueAtTime(0.001, now);
-  gain.gain.exponentialRampToValueAtTime(0.045, now + 0.15);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.1);
-  osc.connect(gain);
-  gain.connect(actx.destination);
-  osc.start(now);
-  osc.stop(now + 1.15);
-}
-
-function toggleBgm(){
-  const btn = $("mbtn");
-  if(!bgmOn){
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if(!actx && AC) actx = new AC();
-    if(actx && actx.state === "suspended") actx.resume();
-    bgmOn = true;
-    if(btn) btn.classList.add("on");
-    playTone();
-    bgmTimer = setInterval(playTone, 950);
-  }else{
-    bgmOn = false;
-    if(btn) btn.classList.remove("on");
-    if(bgmTimer){ clearInterval(bgmTimer); bgmTimer = null; }
-  }
-}
-
 const P = "https://";
 const cities = (
   "Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;" +
@@ -441,3 +404,42 @@ function upd(){
 
     $("e_dest").value = city;
     $("e_ci").value = ci;
+    $("e_co").value = co;
+    $("e_rm").value = rm;
+    $("e_px").value = px;
+    $("e_st").disabled = !(st > 0);
+    $("e_st").value = st > 0 ? (st * 10) : "";
+
+    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" +
+      ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+
+    $("b_ss").value = city;
+    $("b_ci").value = ci;
+    $("b_co").value = co;
+    $("b_px").value = px;
+    $("b_rm").value = rm;
+    $("b_flt").disabled = !bFilt;
+    $("b_flt").value = bFilt;
+
+    $("a_id").value = aid;
+    $("a_ci").value = ci;
+    $("a_los").value = n;
+    $("a_px").value = px;
+    $("a_rm").value = rm;
+
+    $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
+    $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+
+    $("h8").href = P + "www.airbnb.de/s/" + q +
+      "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
+  }
+
+  try{
+    localStorage.setItem("rk_hotel", JSON.stringify({
+      city: $("city").value, ci, co, px, rm, st, ab
+    }));
+  }catch(e){}
+}
+
+(function(){
+  const t = new Date().toISOString().slice(0, 10);
