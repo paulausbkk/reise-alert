@@ -183,9 +183,9 @@ input:focus,select:focus{
 <div class="bb">
   <div class="bf">
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="https://www.expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://www.booking.com/searchresults.de.html" method="get" target="_blank" class="htl">
+    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
@@ -202,8 +202,8 @@ input:focus,select:focus{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="https://www.agoda.com/de-de/" target="_blank" class="btn b5 htl">Agoda</a>
-    <a id="h6" href="https://www.trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint">
@@ -260,12 +260,12 @@ async function resolveAgodaInBg(city) {
     upd();
     return;
   }
-  const target = P + "www.agoda.com/api/cronos/search/" +
+  const target = P + "://agoda.com" +
     "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=" +
     encodeURIComponent(city);
   const endpoints = (
     P + "corsproxy.io/?" + encodeURIComponent(target) + ";" +
-    P + "api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(target) + ";" +
+    P + "://codetabs.com" + encodeURIComponent(target) + ";" +
     P + "api.allorigins.win/raw?url=" + encodeURIComponent(target)
   ).split(";");
 
@@ -316,11 +316,11 @@ function buildAgodaUrl(city, cc, ci, n, px, rm) {
     p.set("children", "0");
     p.set("rooms", String(rm));
     p.set("currency", "EUR");
-    return P + "www.agoda.com/de-de/search?" + p.toString();
+    return P + "://agoda.com?" + p.toString();
   }
   const sl = slug(city);
   const ctry = (cc || "de").toLowerCase();
-  return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry + ".html";
+  return P + "://agoda.com" + sl + "-" + ctry + ".html";
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
@@ -337,13 +337,12 @@ function liveAc(inp, box) {
     resolvedAgodaId = "";
     upd();
     clearTimeout(acTimer);
-    clearTimeout(bgTimer);
     const q = inp.value.trim();
     if (q.length < 2) { box.style.display = "none"; return; }
     bgTimer = setTimeout(() => resolveAgodaInBg(q), 300);
     acTimer = setTimeout(async () => {
       try {
-        const u = P + "geocoding-api.open-meteo.com/v1/search?name=" +
+        const u = P + "://open-meteo.com" +
           encodeURIComponent(q) + "&count=6&language=de&format=json";
         const r = await fetch(u);
         const j = await r.json();
