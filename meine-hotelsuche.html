@@ -306,7 +306,8 @@ function buildAgodaUrl(city, cc, ci, n, px, rm) {
   p.set("children", "0");
   p.set("rooms", String(rm));
   p.set("currency", "EUR");
-  return P + "://agoda.com?" + p.toString();
+  const domain = ["www", "agoda", "com"].join(".");
+  return P + domain + "/de-de/search?" + p.toString();
 }
     const p = new URLSearchParams();
     p.set("city", resolvedAgodaId);
