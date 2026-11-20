@@ -307,9 +307,9 @@ async function resolveAgodaInBg(city) {
 
 function buildBookingUrl(city, ci, co, px, rm, st) {
   const p = new URLSearchParams();
-  p.set("ss", city);
-  p.set("checkin", ci);
-  p.set("checkout", co);
+  if (city) p.set("ss", city);
+  if (ci) p.set("checkin", ci);
+  if (co) p.set("checkout", co);
   p.set("group_adults", String(px));
   p.set("no_rooms", String(rm));
   if (st > 0) p.set("nflt", "class=" + st);
@@ -450,20 +450,26 @@ function upd() {
       "Bitte Reiseziel, Check-in und Check-out wählen.";
   }
 
-  if (city && ci && co && !pastCi && !badCo) {
+  if (city) {
     const q = encodeURIComponent(city);
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    const okDates = Boolean(ci && co && !pastCi && !badCo);
+    const n = okDates ? Math.round((new Date(co) - new Date(ci)) / 86400000) : 1;
 
-    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci +
-      "/" + co + "/" + px + "adults/" + rm + "rooms";
-    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
-    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci +
-      "/" + co + "/" + px + "adults/" + rm + "rooms";
-    $("h4").href = buildBookingUrl(city, ci, co, px, rm, st);
-    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, n, px, rm);
-    $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
-    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" +
-      ci + "&checkout=" + co + "&adults=" + px;
+    $("h4").href = buildBookingUrl(
+      city, okDates ? ci : "", okDates ? co : "", px, rm, st
+    );
+
+    if (okDates) {
+      $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci +
+        "/" + co + "/" + px + "adults/" + rm + "rooms";
+      $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
+      $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci +
+        "/" + co + "/" + px + "adults/" + rm + "rooms";
+      $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, n, px, rm);
+      $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
+      $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" +
+        ci + "&checkout=" + co + "&adults=" + px;
+    }
   }
 
   try {
