@@ -75,10 +75,13 @@ rgba(15,41,66,.12) 100%)}
 .ptxt{position:relative;z-index:4;color:#fff}
 .ptxt h2{margin:0 0 6px 0;font-size:1.45rem}
 .ptxt p{margin:0 0 12px 0;font-size:.94rem;color:#e0f2fe}
-.cta{display:inline-block;background:#0284c7;color:#fff;
-font-weight:bold;text-decoration:none;padding:10px 18px;
-border-radius:8px;font-size:.9rem;border:1px solid #7dd3fc}
+.cta{display:inline-flex;align-items:center;background:#0284c7;color:#fff;
+font-weight:bold;text-decoration:none;padding:11px 18px;
+border-radius:8px;font-size:.94rem;border:1px solid #7dd3fc}
 .cta:hover{background:#0369a1}
+.cta-arrow{display:inline-block;margin-left:16px;font-size:1.45rem;
+line-height:1;transform:rotate(180deg);color:#fde047;
+text-shadow:0 1px 3px rgba(0,0,0,.45)}
 .ct{font-weight:bold;font-size:1.05rem;color:var(--d);
 border-bottom:2px solid #e0f2fe;padding-bottom:6px;margin-bottom:10px}
 details{background:#f0f9ff;border:1px solid #bae6fd;
@@ -110,7 +113,7 @@ object-position:center;border-radius:8px;border:1px solid #bae6fd}
 <h2 id="h_tit">Dein Startpunkt für die Philippinen</h2>
 <p id="h_sub">Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian –
 plane deine Route und vergleiche alle Flüge direkt.</p>
-<a href="index.html" id="h_cta" class="cta">✈️ Flugkonfiguration öffnen ➡️</a>
+<a href="index.html" class="cta"><span id="h_cta">✈️ Flugkonfiguration öffnen</span><span class="cta-arrow">➤</span></a>
 </div>
 </div>
 </div>
@@ -154,7 +157,7 @@ const T = {
     nav_fl: "✈️ Zur Flugsuche ➡️",
     h_tit: "Dein Startpunkt für die Philippinen",
     h_sub: "Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian – plane deine Route und vergleiche alle Flüge direkt.",
-    h_cta: "✈️ Flugkonfiguration öffnen ➡️",
+    h_cta: "✈️ Flugkonfiguration öffnen",
     g_tit: "📸 Impressionen & Inseln",
     i_tit: "ℹ️ Wichtige Reise-Hinweise (Klicken)",
     s1: "🛂 Einreise & eTravel-Pflicht",
@@ -172,7 +175,7 @@ const T = {
     nav_fl: "✈️ Flight Search ➡️",
     h_tit: "Your Gateway to the Philippines",
     h_sub: "From Germany to Manila, Cebu, Dumaguete or Pagadian – plan your route and compare all flights directly.",
-    h_cta: "✈️ Open Flight Configurator ➡️",
+    h_cta: "✈️ Open Flight Configurator",
     g_tit: "📸 Impressions & Islands",
     i_tit: "ℹ️ Important Travel Notes (Click)",
     s1: "🛂 Entry & eTravel Requirement",
@@ -201,3 +204,4 @@ function toggleLang() { applyLang(curLang === "de" ? "en" : "de"); }
 applyLang(curLang);
 </script>
 </body>
+</html>
