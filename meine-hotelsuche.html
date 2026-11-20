@@ -293,22 +293,21 @@ async function resolveAgodaInBg(city) {
   }
 }
 
-function buildAgodaUrl(city, cc, ci, n, px, rm) {
+function buildExpediaUrl(city, ci, co, px, rm, st) {
   const p = new URLSearchParams();
-  if (resolvedAgodaId) {
-    p.set("city", resolvedAgodaId);
-  } else {
-    p.set("textToSearch", city);
-  }
-  p.set("checkIn", ci);
-  p.set("los", String(n));
+  p.set("destination", city);
+  p.set("startDate", ci);
+  p.set("endDate", co);
+  p.set("d1", ci);
+  p.set("d2", co);
   p.set("adults", String(px));
-  p.set("children", "0");
   p.set("rooms", String(rm));
-  p.set("currency", "EUR");
-  const domain = ["www", "agoda", "com"].join(".");
-  return P + domain + "/de-de/search?" + p.toString();
+  if (st > 0) p.set("star", String(st * 10));
+  return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
+
+function buildAgodaUrl(city, cc, ci, n, px, rm) {
+  if (resolvedAgodaId) {
     const p = new URLSearchParams();
     p.set("city", resolvedAgodaId);
     p.set("checkIn", ci);
