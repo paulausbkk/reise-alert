@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v68</title>
+<title>🏨 Meine Hotelsuche PRO v69</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -121,7 +122,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit" id="m_tit">🏨 Meine Hotelsuche PRO v68</h1>
+  <h1 class="tit" id="m_tit">🏨 Meine Hotelsuche PRO v69</h1>
   <div class="cp">
     <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">🇬🇧 EN</button>
     <div class="seg" id="dt">20.11.2026</div>
@@ -219,7 +220,7 @@ input:focus,select:focus{
     müssen auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
-  <script>
+<script>
 const $ = id => document.getElementById(id);
 const PROT = "https:" + "//";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
@@ -248,7 +249,7 @@ const DOMS = {
 const HT = {
   de: {
     btn: "🇬🇧 EN",
-    m_tit: "🏨 Meine Hotelsuche PRO v68",
+    m_tit: "🏨 Meine Hotelsuche PRO v69",
     nav_fl: "⬅️ Zurück zur Flugsuche",
     nav_bk: "✈️ Flugbuchungen ➡️",
     c1_tit: "📍 Zielort & Reisedaten",
@@ -275,7 +276,7 @@ const HT = {
   },
   en: {
     btn: "🇩🇪 DE",
-    m_tit: "🏨 My Hotel Search PRO v68",
+    m_tit: "🏨 My Hotel Search PRO v69",
     nav_fl: "⬅️ Back to Flight Search",
     nav_bk: "✈️ Flight Bookings ➡️",
     c1_tit: "📍 Destination & Travel Dates",
@@ -366,11 +367,7 @@ async function resolveAgodaInBg(city) {
     return;
   }
   const target = DOMS.agoda + "/api/cronos/search/GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=" + encodeURIComponent(clean);
-  const urls = new Array(
-    DOMS.px1 + encodeURIComponent(target),
-    DOMS.px2 + encodeURIComponent(target),
-    DOMS.px3 + encodeURIComponent(target)
-  );
+  const enc = encodeURIComponent(target);
   const probe = async u => {
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), 3500);
@@ -383,7 +380,9 @@ async function resolveAgodaInBg(city) {
     return id;
   };
   try {
-    const found = await Promise.any(urls.map(probe));
+    const found = await Promise.any(
+      (DOMS.px1 + enc + ";" + DOMS.px2 + enc + ";" + DOMS.px3 + enc).split(";").map(probe)
+    );
     agodaCache.set(key, found);
     if (norm(fixQuery($("city").value)) === key) {
       resolvedAgodaId = found;
@@ -491,3 +490,5 @@ function upd() {
   const rm = +$("rm").value || 1;
   const st = +$("st").value || 0;
   const ab = $("ab").checked;
+
+  document.querySelectorAll(".htl").forEach(el => el.classList.toggle("off", ab));
