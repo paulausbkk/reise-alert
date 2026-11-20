@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v69</title>
+<title>🏨 Meine Hotelsuche PRO v64</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -33,7 +33,7 @@ html,body{
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
   padding:20px;background:#fff;box-sizing:border-box;
-  box-shadow:0 4px 12px rgba(3,105,161,.08);position:relative
+  box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
 .ct{
   font-weight:bold;font-size:1.08rem;color:var(--d);
@@ -52,6 +52,14 @@ input:focus,select:focus{
   outline:none;border-color:#0284c7;background:#fff;
   box-shadow:0 0 0 3px rgba(2,132,199,.15)
 }
+.ac{
+  position:absolute;top:68px;left:0;right:0;background:#fff;
+  border:1px solid #0284c7;border-radius:8px;z-index:99;
+  max-height:180px;overflow-y:auto;display:none;
+  box-shadow:0 8px 20px rgba(12,74,110,.18)
+}
+.ac div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9}
+.ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
   border-left:5px solid #0284c7;border-radius:8px;
@@ -74,6 +82,9 @@ input:focus,select:focus{
 .b1{background:#0284c7}.b2{background:#1d4ed8}.b3{background:#0369a1}
 .b4{background:#1e3a8a}.b5{background:#2563eb}.b6{background:#0077b6}
 .b8{background:#0ea5e9}
+.off{opacity:.28;pointer-events:none;filter:grayscale(80%)}
+.err{opacity:.4}
+.err input{background:#e2e8f0!important;border-color:#94a3b8!important}
 .swc{
   display:flex;align-items:center;justify-content:space-between;
   background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
@@ -89,11 +100,8 @@ input:focus,select:focus{
   position:absolute;content:"";height:18px;width:18px;
   left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s
 }
-#ab-state{display:none}
-#ab-state:checked ~ .row .sl{background:#0284c7}
-#ab-state:checked ~ .row .sl:before{transform:translateX(18px)}
-#ab-state:checked ~ .bb .htl{opacity:.28;pointer-events:none;filter:grayscale(80%)}
-#ab-state:not(:checked) ~ .bb .b8{opacity:.28;pointer-events:none;filter:grayscale(80%)}
+.sw input:checked+.sl{background:#0284c7!important}
+.sw input:checked+.sl:before{transform:translateX(18px)}
 @keyframes pulseHint{
   0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
   50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
@@ -107,70 +115,38 @@ input:focus,select:focus{
 </style>
 </head>
 <body>
-<input type="checkbox" id="ab-state">
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v69</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v64</h1>
   <div class="cp">
-    <div class="seg">REINES HTML</div>
+    <div class="seg" id="dt">20.11.2026</div>
+    <div class="seg" id="nt">1 NACHT</div>
     <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg">✈️ Flugbuchungen ➡️</a>
   </div>
 </div>
-
 <div class="row">
   <div class="card">
     <div class="ct">📍 Zielort & Reisedaten</div>
     <div class="f">
-      <label for="city">Reiseziel (beliebige Stadt weltweit)</label>
-      <input type="text" id="city" name="ss" list="staedte-liste" placeholder="z.B. Amsterdam, Bangkok, Manila" autocomplete="on" form="f4">
-      <datalist id="staedte-liste">
-        <option value="Amsterdam">
-        <option value="Bangkok">
-        <option value="Manila">
-        <option value="Cebu">
-        <option value="Boracay">
-        <option value="Bohol">
-        <option value="Palawan">
-        <option value="El Nido">
-        <option value="Pagadian">
-        <option value="Davao">
-        <option value="Phuket">
-        <option value="Pattaya">
-        <option value="Chiang Mai">
-        <option value="Singapur">
-        <option value="Kuala Lumpur">
-        <option value="Tokio">
-        <option value="Dubai">
-        <option value="Paris">
-        <option value="London">
-        <option value="Mailand">
-        <option value="Rom">
-        <option value="Barcelona">
-        <option value="Madrid">
-        <option value="Lissabon">
-        <option value="Berlin">
-        <option value="München">
-        <option value="Hamburg">
-        <option value="Wien">
-        <option value="New York">
-      </datalist>
+      <label>Reiseziel (beliebige Stadt weltweit)</label>
+      <input type="text" id="city" placeholder="z.B. Mailand, Pagadian, Bangkok" autocomplete="off">
+      <div id="lc" class="ac"></div>
     </div>
-    <div class="f">
-      <label for="ci">Check-in (Anreise)</label>
-      <input type="date" id="ci" name="checkin" form="f4">
+    <div class="f" id="cib">
+      <label>Check-in (Anreise)</label>
+      <input type="date" id="ci">
     </div>
-    <div class="f">
-      <label for="co">Check-out (Abreise)</label>
-      <input type="date" id="co" name="checkout" form="f4">
+    <div class="f" id="cob">
+      <label>Check-out (Abreise)</label>
+      <input type="date" id="co">
     </div>
   </div>
-
   <div class="card">
     <div class="ct">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
       <div class="f" style="margin:0">
         <label for="px">Personenzahl</label>
-        <select id="px" name="group_adults" form="f4">
+        <select id="px">
           <option value="1">1 Erwachsener</option>
           <option value="2" selected>2 Erwachsene</option>
           <option value="3">3 Erwachsene</option>
@@ -179,7 +155,7 @@ input:focus,select:focus{
       </div>
       <div class="f" style="margin:0">
         <label for="rm">Zimmer</label>
-        <select id="rm" name="no_rooms" form="f4">
+        <select id="rm">
           <option value="1" selected>1 Zimmer</option>
           <option value="2">2 Zimmer</option>
           <option value="3">3 Zimmer</option>
@@ -188,41 +164,292 @@ input:focus,select:focus{
     </div>
     <div class="f">
       <label for="st">Mindest-Sterne</label>
-      <select id="st" name="nflt" form="f4">
-        <option value="">Alle Kategorien</option>
-        <option value="class=3">Ab 3 Sterne ⭐⭐⭐</option>
-        <option value="class=4">Ab 4 Sterne ⭐⭐⭐⭐</option>
-        <option value="class=5">5 Sterne ⭐⭐⭐⭐⭐</option>
+      <select id="st">
+        <option value="0">Alle Kategorien</option>
+        <option value="3">Ab 3 Sterne ⭐⭐⭐</option>
+        <option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option>
+        <option value="5">5 Sterne ⭐⭐⭐⭐⭐</option>
       </select>
     </div>
     <div class="f">
       <div class="swc">
-        <label for="ab-state" style="margin:0;cursor:pointer">Nur Airbnb</label>
-        <label for="ab-state" class="sw"><span class="sl"></span></label>
+        <label for="ab" style="margin:0;cursor:pointer">Nur Airbnb</label>
+        <label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label>
       </div>
     </div>
-    <div class="bn">Wähle oben Reiseziel, Check-in und Check-out und starte die Suche.</div>
+    <div class="bn" id="info">Bitte Reiseziel und Daten wählen.</div>
   </div>
 </div>
-
 <div class="bb">
   <div class="bf">
-    <a href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-    <a href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
-    <a href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
+    <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
+    <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
     <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
+      <input type="hidden" name="ss" id="b_ss">
+      <input type="hidden" name="checkin" id="b_ci">
+      <input type="hidden" name="checkout" id="b_co">
+      <input type="hidden" name="checkin_year" id="b_ciy">
+      <input type="hidden" name="checkin_month" id="b_cim">
+      <input type="hidden" name="checkin_monthday" id="b_cid">
+      <input type="hidden" name="checkout_year" id="b_coy">
+      <input type="hidden" name="checkout_month" id="b_com">
+      <input type="hidden" name="checkout_monthday" id="b_cod">
+      <input type="hidden" name="group_adults" id="b_px">
+      <input type="hidden" name="no_rooms" id="b_rm">
+      <input type="hidden" name="nflt" id="b_flt" disabled>
       <input type="hidden" name="lang" value="de">
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
-    <a href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
-    <a href="https://airbnb.de" target="_blank" class="btn b8">Airbnb</a>
+    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+    <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
-    <b>Terrasse</b> oder <b>Frühstück</b> müssen auf der Anbieterseite direkt gewählt werden.
+    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> (falls ein
+    kleiner Ort keine direkte Kalender-ID hat) das <b>Datum & Gäste</b> –
+    müssen auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
-</body>
-</html>
+<script>
+const $ = id => document.getElementById(id);
+const P = "https://";
+const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
+const agodaCache = new Map();
+let cidx = 0;
+let acTimer = null;
+let bgTimer = null;
+let lastCountryCode = "de";
+let resolvedAgodaId = "";
+
+function todayIso() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return y + "-" + m + "-" + day;
+}
+
+function norm(s) {
+  return s.toLowerCase()
+    .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
+}
+
+function slug(s) {
+  return norm(s).replace(/ß/g,"ss")
+    .replace(/\W+/g,"-").replace(/^-|-$/g,"");
+}
+
+function extractAgodaId(txt) {
+  const m1 = txt.match(/"ObjectId"\s*:\s*(\d+)/i);
+  if (m1) return m1.slice(1, 2).join("");
+  const m2 = txt.match(/"CityId"\s*:\s*(\d+)/i);
+  if (m2) return m2.slice(1, 2).join("");
+  const m3 = txt.match(/"Id"\s*:\s*(\d+)/i);
+  if (m3) return m3.slice(1, 2).join("");
+  return "";
+}
+
+async function resolveAgodaInBg(city) {
+  const key = norm(city).trim();
+  if (!key) return;
+  if (agodaCache.has(key)) {
+    resolvedAgodaId = agodaCache.get(key);
+    upd();
+    return;
+  }
+  try {
+    const u = P + "://agoda.com" +
+      encodeURIComponent(city);
+    const r = await fetch(u);
+    const txt = await r.text();
+    const id = extractAgodaId(txt);
+    if (id) {
+      agodaCache.set(key, id);
+      if (norm($("city").value).trim() === key) {
+        resolvedAgodaId = id;
+        upd();
+      }
+    }
+  } catch (e) {}
+}
+
+function buildExpediaUrl(city, ci, co, px, rm, st) {
+  const p = new URLSearchParams();
+  p.set("destination", city);
+  p.set("startDate", ci);
+  p.set("endDate", co);
+  p.set("d1", ci);
+  p.set("d2", co);
+  p.set("adults", String(px));
+  p.set("rooms", String(rm));
+  if (st > 0) p.set("star", String(st * 10));
+  return P + "www.expedia.de/Hotel-Search?" + p.toString();
+}
+
+function buildAgodaUrl(city, cc, ci, co, n, px, rm, st) {
+  const p = new URLSearchParams();
+  if (resolvedAgodaId) {
+    p.set("city", resolvedAgodaId);
+  } else {
+    p.set("textToSearch", city);
+  }
+  p.set("checkIn", ci);
+  p.set("checkOut", co);
+  p.set("los", String(n));
+  p.set("adults", String(px));
+  p.set("children", "0");
+  p.set("rooms", String(rm));
+  p.set("currency", "EUR");
+  if (st > 0) p.set("hotelStarRating", String(st));
+  return P + "://agoda.com?" + p.toString();
+}
+
+function buildTrivagoUrl(city, ci, co, px, rm) {
+  const q = encodeURIComponent(city);
+  const dt1 = ci.replace(/-/g, "");
+  const dt2 = co.replace(/-/g, "");
+  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
+    "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
+    "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+}
+
+function liveAc(inp, box) {
+  inp.addEventListener("input", () => {
+    resolvedAgodaId = "";
+    upd();
+    clearTimeout(acTimer);
+    clearTimeout(bgTimer);
+    const q = inp.value.trim();
+    if (q.length < 2) { box.style.display = "none"; return; }
+    bgTimer = setTimeout(() => resolveAgodaInBg(q), 300);
+    acTimer = setTimeout(async () => {
+      try {
+        const u = P + "://open-meteo.com" +
+          encodeURIComponent(q) + "&count=6&language=de&format=json";
+        const r = await fetch(u);
+        const j = await r.json();
+        box.innerHTML = "";
+        if (!j || !j.results) { box.style.display = "none"; return; }
+        j.results.forEach(item => {
+          const d = document.createElement("div");
+          const sub = item.country ? " (" + item.country + ")" : "";
+          d.textContent = item.name + sub;
+          d.onclick = () => {
+            inp.value = item.name;
+            lastCountryCode = (item.country_code || "de").toLowerCase();
+            box.style.display = "none";
+            resolveAgodaInBg(item.name);
+            upd();
+          };
+          box.appendChild(d);
+        });
+        box.style.display = "block";
+      } catch (e) {
+        box.style.display = "none";
+      }
+    }, 200);
+  });
+  document.addEventListener("click", e => {
+    if (!box.contains(e.target) && e.target !== inp) box.style.display = "none";
+  });
+}
+
+function upd() {
+  const now = new Date(), dtEl = $("dt");
+  const t = todayIso();
+  dtEl.textContent = now.toLocaleDateString("de-DE") + " • " +
+    now.toLocaleTimeString("de-DE");
+  const idx = cidx++ % cols.length;
+  const col = cols.slice(idx, idx + 1).join("") || "#0284c7";
+  dtEl.style.setProperty("background-color", col, "important");
+
+  const city = $("city").value.trim();
+  const ci = $("ci").value;
+  const co = $("co").value;
+  const px = +$("px").value || 2;
+  const rm = +$("rm").value || 1;
+  const st = +$("st").value || 0;
+  const ab = $("ab").checked;
+
+  document.querySelectorAll(".htl").forEach(el => el.classList.toggle("off", ab));
+  $("h8").classList.toggle("off", !ab);
+
+  const pastCi = Boolean(ci && ci < t);
+  const badCo = Boolean((co && co <= t) || (ci && co && co <= ci));
+  $("cib").classList.toggle("err", pastCi);
+  $("cob").classList.toggle("err", badCo);
+
+  if (ci && co && !pastCi && !badCo) {
+    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
+    $("info").style.background = "#eff6ff";
+    $("info").style.color = "#1e3a8a";
+    $("info").textContent = (ab ? "(AIRBNB) " : "") +
+      "Auswahl: " + (city || "Ziel offen") + " • " + n +
+      (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi.";
+  } else if (pastCi || badCo) {
+    $("nt").textContent = "DATUM PRÜFEN";
+    $("info").style.background = "#fee2e2";
+    $("info").style.color = "#991b1b";
+    $("info").textContent = "Datum liegt in der Vergangenheit oder Check-out vor Check-in.";
+  } else {
+    $("nt").textContent = "ZEITRAUM WÄHLEN";
+    $("info").style.background = "#eff6ff";
+    $("info").style.color = "#1e3a8a";
+    $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
+  }
+
+  if (city && ci && co && !pastCi && !badCo) {
+    const q = encodeURIComponent(city);
+    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    const c1 = ci.split("-");
+    const c2 = co.split("-");
+    const bFilt = st > 0 ? "class=" + st : "";
+
+    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
+      "/" + px + "adults/" + rm + "rooms";
+    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
+
+    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
+      "/" + px + "adults/" + rm + "rooms";
+    $("b_ss").value = city;
+    $("b_ci").value = ci;
+    $("b_co").value = co;
+    $("b_ciy").value = c1.slice(0, 1).join("");
+    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
+    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
+    $("b_coy").value = c2.slice(0, 1).join("");
+    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
+    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
+    $("b_px").value = px;
+    $("b_rm").value = rm;
+    $("b_flt").disabled = !bFilt;
+    $("b_flt").value = bFilt;
+
+    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, co, n, px, rm, st);
+    $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
+    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
+      "&checkout=" + co + "&adults=" + px;
+  }
+
+  try {
+    localStorage.setItem("rk_hotel", JSON.stringify({
+      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
+    }));
+  } catch (e) {}
+}
+
+(function() {
+  const t = todayIso();
+  $("ci").min = t;
+  $("co").min = t;
+  try {
+    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
+    if (d) {
+      if (d.city) $("city").value = d.city;
+      if (d.ci) $("ci").value = d.ci;
+      if (d.co) $("co").value = d.co;
+      if (d.px) $("px").value = d.px;
