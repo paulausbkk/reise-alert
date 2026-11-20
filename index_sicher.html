@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Reisekonfiguration PRO v30</title>
+<title>🌴 Philippinen & Asien Reiseportal</title>
 <style>
-:root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;
---g:#0ea5e9;--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe}
+:root{--d:#0c4a6e;--t:#0f172a;--b:#bae6fd;--v:#0284c7}
 html,body{margin:0;padding:14px;
 background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
 min-height:100vh;font-family:sans-serif;color:var(--t);
@@ -15,411 +14,130 @@ box-sizing:border-box}
 background:#0f2942;padding:13px 18px;border-radius:12px;
 margin-bottom:16px;flex-wrap:wrap;gap:10px;
 box-shadow:0 4px 14px rgba(15,41,66,.18)}
-.tit{font-weight:bold;color:#fff;font-size:1.22rem;margin:0;
-letter-spacing:.3px}
+.tit{font-weight:bold;color:#fff;font-size:1.22rem;margin:0}
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.seg{font-size:.78rem;padding:6px 12px;border-radius:6px;
+.seg{font-size:.82rem;padding:8px 14px;border-radius:6px;
 font-weight:bold;color:#fff;text-transform:uppercase;
 background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
-.seg.upg{background:#1e40af;font-size:.86rem;padding:8px 14px;
-border-color:#60a5fa}
-.seg.htl{background:#0369a1;border-color:#7dd3fc}
-.row{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px}
-.card{flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-padding:18px 20px;background:#ffffff;box-sizing:border-box;
-box-shadow:0 4px 12px rgba(3,105,161,.08)}
-.ct{font-weight:bold;font-size:1.06rem;color:var(--d);
-border-bottom:2px solid #e0f2fe;padding-bottom:7px;margin-bottom:14px}
-.f{margin-bottom:13px;display:flex;flex-direction:column;
-position:relative}
-.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px;
-margin-bottom:13px}
-label{font-weight:bold;font-size:.84rem;margin-bottom:4px;
-color:#1e3a8a}
-.inp,.dat,select{height:41px;padding:0 12px;border:1px solid #93c5fd;
-border-radius:8px;box-sizing:border-box;font-size:.96rem;
-background:#f8fafc;color:var(--t);width:100%;transition:.2s}
-.inp:focus,.dat:focus,select:focus{outline:none;border-color:#0284c7;
-background:#fff;box-shadow:0 0 0 3px rgba(2,132,199,.15)}
-.ac{position:absolute;top:66px;left:0;right:0;background:#fff;
-border:1px solid #0284c7;border-radius:8px;z-index:99;
-max-height:180px;overflow-y:auto;
-box-shadow:0 8px 20px rgba(12,74,110,.18);display:none}
-.ac div{padding:10px 12px;cursor:pointer;
-border-bottom:1px solid #f1f5f9;font-size:.94rem}
-.ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
-@keyframes pulseHint{
-0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
-50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
+.seg.upg{background:#1e40af;border-color:#60a5fa}
+.bento{display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:16px;margin-bottom:16px}
+.box{background:#fff;border:1px solid #93c5fd;border-radius:12px;
+padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
+.box.wide{grid-column:span 2}
+@media(max-width:720px){.box.wide{grid-column:span 1}}
+@keyframes dayBase{
+0%,28%{filter:brightness(1.12) saturate(1.15) hue-rotate(0deg)}
+45%,75%{filter:brightness(0.65) saturate(1.3) hue-rotate(-10deg)}
+92%,100%{filter:brightness(1.12) saturate(1.15) hue-rotate(0deg)}
 }
-.bn{background:#0f2942;border:3px solid #991b1b;
-border-left:7px solid #991b1b;border-radius:8px;padding:11px 14px;
-color:#fff;font-weight:bold;font-size:.88rem;line-height:1.4;
-animation:pulseHint 2.2s infinite ease-in-out}
-.bb{border:1px solid #93c5fd;background:#ffffff;border-radius:12px;
-padding:16px 20px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
-.bf{display:grid;
-grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
-.btn{display:flex;flex-direction:column;align-items:center;
-justify-content:center;height:46px;color:#fff;font-weight:bold;
-border-radius:8px;font-size:.84rem;text-transform:uppercase;
-text-decoration:none;text-align:center;line-height:1.15;
-padding:0 6px;transition:.2s;
-box-shadow:0 2px 6px rgba(15,41,66,.15)}
-.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.btn .sub{font-size:.64rem;font-weight:bold;text-transform:none;
-opacity:1;margin-top:2px;color:#e0f2fe}
-.b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
-.b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
-.sb{position:relative;display:flex;align-items:center;
-background:#f8fafc;border:1px solid #93c5fd;border-radius:8px;
-height:41px;padding:0 26px;user-select:none;touch-action:none;
-cursor:pointer}
-.trk{position:relative;width:100%;height:6px;background:#cbd5e1;
-border-radius:3px}
-#fl{height:100%;background:#0284c7;border-radius:3px;width:37%}
-#sv{position:absolute;top:50%;left:37%;
-transform:translate(-50%,-50%);width:48px;height:30px;
-line-height:30px;text-align:center;background:#0369a1;color:#fff;
-font-size:1.02rem;font-weight:bold;border-radius:15px;
-box-shadow:0 2px 5px rgba(15,41,66,.25)}
-.err{opacity:.4}
-.err input{background:#e2e8f0!important;border-color:#94a3b8!important}
-body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
-body:has(#ow:checked) #rb input{background:#e2e8f0!important}
-body:has(#ow:checked) .st{background:#0369a1!important;color:#fff;
-border-color:#7dd3fc}
-.swc{display:flex;align-items:center;justify-content:space-between;
-background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-border-radius:8px;min-height:41px;gap:8px}
-.swc.yl{background:#e0f2fe;border:1px solid #7dd3fc}
-.swc.split{flex-direction:column;justify-content:center;
-align-items:stretch;padding:0;gap:0;overflow:hidden}
-.swh{display:flex;align-items:center;justify-content:space-between;
-padding:4px 10px;gap:6px;min-height:28px}
-.swh:first-child{border-bottom:1px solid #7dd3fc}
-.sw{position:relative;display:inline-block;width:42px;height:24px;
-flex-shrink:0}
-.sw.sm{width:34px;height:18px}
-.sw input{opacity:0;width:0;height:0}
-.sl{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;
-border-radius:20px;transition:.3s}
-.sl:before{position:absolute;content:"";height:18px;width:18px;
-left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
-.sw.sm .sl:before{height:14px;width:14px;left:2px;bottom:2px}
-.sw input:checked+.sl{background:#0284c7!important}
-.sw input:checked+.sl:before{transform:translateX(18px)}
-.sw.sm input:checked+.sl:before{transform:translateX(16px)}
+@keyframes sunCycle{
+0%,25%{opacity:0;filter:brightness(1.1) sepia(0.1) saturate(1.2) hue-rotate(0deg)}
+35%{opacity:1;filter:brightness(1.05) sepia(0.35) saturate(1.6) hue-rotate(-10deg)}
+48%{opacity:1;filter:brightness(0.82) sepia(0.55) saturate(2.1) hue-rotate(-22deg)}
+60%{opacity:1;filter:brightness(0.45) sepia(0.35) saturate(1.4) hue-rotate(195deg)}
+72%{opacity:1;filter:brightness(0.78) sepia(0.5) saturate(1.9) hue-rotate(-18deg)}
+84%{opacity:1;filter:brightness(1.15) sepia(0.3) saturate(1.5) hue-rotate(-5deg)}
+94%,100%{opacity:0;filter:brightness(1.1) sepia(0.1) saturate(1.2) hue-rotate(0deg)}
+}
+@keyframes skyTint{
+0%,28%{opacity:0}
+42%{opacity:1;background:linear-gradient(180deg,rgba(251,146,60,.25) 0%,rgba(220,38,38,.45) 65%,rgba(124,45,18,.6) 100%)}
+60%{opacity:1;background:linear-gradient(180deg,rgba(15,23,42,.55) 0%,rgba(30,58,138,.45) 65%,rgba(15,23,42,.7) 100%)}
+78%{opacity:1;background:linear-gradient(180deg,rgba(253,224,71,.22) 0%,rgba(249,115,22,.42) 60%,rgba(154,52,18,.5) 100%)}
+92%,100%{opacity:0}
+}
+.pic{position:relative;border-radius:10px;overflow:hidden;
+min-height:300px;display:flex;align-items:flex-end;padding:20px;
+background-color:#0f2942;
+background-image:url("Fl%C3%BCgel.jpg");
+background-size:cover;
+background-position:center center;
+background-repeat:no-repeat;
+animation:dayBase 18s infinite ease-in-out}
+.pic-fade{position:absolute;inset:0;z-index:1;
+background-image:url("LiS.jpg");
+background-size:cover;
+background-position:center center;
+background-repeat:no-repeat;
+animation:sunCycle 18s infinite ease-in-out}
+.sun-glow{position:absolute;inset:0;z-index:2;pointer-events:none;
+mix-blend-mode:multiply;
+animation:skyTint 18s infinite ease-in-out}
+.pic::after{content:"";position:absolute;inset:0;z-index:3;
+background:linear-gradient(0deg,rgba(15,23,42,.86) 12%,
+rgba(15,41,66,.12) 100%)}
+.ptxt{position:relative;z-index:4;color:#fff}
+.ptxt h2{margin:0 0 6px 0;font-size:1.45rem}
+.ptxt p{margin:0 0 12px 0;font-size:.94rem;color:#e0f2fe}
+.cta{display:inline-block;background:#0284c7;color:#fff;
+font-weight:bold;text-decoration:none;padding:10px 18px;
+border-radius:8px;font-size:.9rem;border:1px solid #7dd3fc}
+.cta:hover{background:#0369a1}
+.ct{font-weight:bold;font-size:1.05rem;color:var(--d);
+border-bottom:2px solid #e0f2fe;padding-bottom:6px;margin-bottom:10px}
+details{background:#f0f9ff;border:1px solid #bae6fd;
+border-radius:8px;padding:8px 12px;margin-bottom:8px}
+summary{font-weight:bold;cursor:pointer;color:var(--d);
+font-size:.92rem}
+details p{margin:8px 0 0 0;font-size:.88rem;line-height:1.45;
+color:#1e293b}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gal img{width:100%;height:110px;object-fit:cover;
+object-position:center;border-radius:8px;border:1px solid #bae6fd}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
-<div class="cp"><div class="seg" id="dt">18.11.2026</div>
-<div class="seg st" id="st">HIN & RÜCK</div>
-<a href="meine-hotelsuche.html" class="seg upg htl">🏨 Meine Hotelsuche ➡️</a>
-<a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div>
-</div>
-<div class="row">
-<div class="card">
-<div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-<div class="f2" style="margin-bottom:14px">
-<div class="f" style="margin:0"><label>Abflug (IATA oder Stadt)</label>
-<input type="text" class="inp" id="i1" placeholder="z.B. BER, FRA, MUC" autocomplete="off">
-<div id="l1" class="ac"></div></div>
-<div class="f" style="margin:0"><label>Ziel (IATA oder Stadt)</label>
-<input type="text" class="inp" id="i2" placeholder="z.B. BKK, DAD, CEB" autocomplete="off">
-<div id="l2" class="ac"></div></div>
-</div>
-<div class="f2" style="margin-bottom:0">
-<div class="f" style="margin:0"><label>Hinflug</label>
-<input type="date" class="dat" id="od"></div>
-<div class="f" id="rb" style="margin:0"><label>Rückflug</label>
-<input type="date" class="dat" id="rd"></div>
+<div class="hdr"><h1 class="tit">🌴 Philippinen & Asien Reiseportal</h1>
+<div class="cp">
+<a href="meine-hotelsuche.html" class="seg">🏨 Hotelsuche</a>
+<a href="meine-flugbuchungen.html" class="seg">📋 Flugbuchungen</a>
+<a href="index.html" class="seg upg">✈️ Zur Flugsuche ➡️</a>
 </div>
 </div>
-<div class="card">
-<div class="ct">⚙️ Filter & Flug-Parameter</div>
-<div class="f2" style="align-items:end">
-<div class="swc">
-<label for="ow" style="margin:0;cursor:pointer;font-size:.82rem">Nur Hinflug (One-Way)</label>
-<label class="sw"><input type="checkbox" id="ow"><span class="sl"></span></label>
-</div>
-<div class="f" style="margin:0"><label for="px">Personenzahl</label>
-<select id="px">
-<option value="1">1 Person</option>
-<option value="2">2 Personen</option>
-<option value="3">3 Personen</option>
-<option value="4">4 Personen</option>
-</select></div>
-</div>
-<div class="f"><label>Max. Reisezeit (1 – 36 Std.)</label>
-<div class="sb" id="sb"><div class="trk" id="tk">
-<div id="fl"></div><div id="sv">14h</div></div></div></div>
-<div class="f2">
-<div class="swc yl">
-<label for="ns" style="margin:0;cursor:pointer;font-size:.82rem">Nur Direktflüge (Non-Stop)</label>
-<label class="sw"><input type="checkbox" id="ns"><span class="sl"></span></label>
-</div>
-<div class="swc yl split">
-<div class="swh">
-<label for="s1" style="margin:0;cursor:pointer;font-size:.8rem">Max. 1 Stop</label>
-<label class="sw sm"><input type="checkbox" id="s1"><span class="sl"></span></label>
-</div>
-<div class="swh">
-<label for="s2" style="margin:0;cursor:pointer;font-size:.8rem">Max. 2 Stopps</label>
-<label class="sw sm"><input type="checkbox" id="s2"><span class="sl"></span></label>
+<div class="bento">
+<div class="box wide">
+<div class="pic">
+<div class="pic-fade"></div>
+<div class="sun-glow"></div>
+<div class="ptxt">
+<h2>Dein Startpunkt für die Philippinen</h2>
+<p>Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian –
+plane deine Route und vergleiche alle Flüge direkt.</p>
+<a href="index.html" class="cta">✈️ Flugkonfiguration öffnen ➡️</a>
 </div>
 </div>
 </div>
-<div class="f" style="margin-bottom:12px"><div class="swc">
-<label for="lc" style="margin:0;cursor:pointer;font-size:.82rem">Inkl. Low-Cost Airlines (zusätzlich)</label>
-<label class="sw"><input type="checkbox" id="lc"><span class="sl"></span></label>
-</div></div>
-<div class="bn">ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend angeklickten Website beim Anbieter ausgewählt werden.</div>
+<div class="box">
+<div class="ct">📸 Impressionen & Inseln</div>
+<div class="gal">
+<img src="cebu.jpg" alt="Cebu">
+<img src="bohol.jpg" alt="Bohol">
+<img src="palawan.jpg" alt="Palawan">
+<img src="strand.jpg" alt="Strand">
 </div>
 </div>
-<div class="bb">
-<div class="bf">
-<a id="u1" href="https://skyscanner.de" target="_blank" class="btn b2">Skyscanner</a>
-<a id="u2" href="https://kayak.de" target="_blank" class="btn b3">Kayak</a>
-<a id="u3" href="https://momondo.de" target="_blank" class="btn b4">Momondo</a>
-<a id="u4" href="https://expedia.de" target="_blank" class="btn b5">Expedia<span class="sub">Stopps auf Website wählen</span></a>
-<a id="u5" href="https://kiwi.com" target="_blank" class="btn b6">Kiwi.com</a>
-<a id="u6" href="https://trip.com" target="_blank" class="btn b7">Trip.com</a>
+<div class="box">
+<div class="ct">ℹ️ Wichtige Reise-Hinweise (Klicken)</div>
+<details open>
+<summary>🛂 Einreise & eTravel-Pflicht</summary>
+<p>Reisepass mindestens 6 Monate gültig. Die kostenlose
+eTravel-Registrierung spätestens 72 Stunden vor Abflug online
+ausfüllen und QR-Code speichern.</p>
+</details>
+<details>
+<summary>🧳 Inlandsflüge & Gepäckregeln</summary>
+<p>Bei Cebu Pacific oder Philippine Airlines sind günstige
+Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung
+hinzufügen.</p>
+</details>
+<details>
+<summary>☀️ Beste Reisezeit Visayas & Palawan</summary>
+<p>Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter
+für Inselhopping, Tauchen und Badeurlaub.</p>
+</details>
 </div>
 </div>
-<script>
-const $=id=>document.getElementById(id);
-const P="https://";
-const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const a1="BER|Berlin Brandenburg|berlin;FRA|Frankfurt am Main|frankfurt";
-const a2="MUC|München|munich;LEJ|Leipzig/Halle|leipzig";
-const a3="DUS|Düsseldorf|dusseldorf;HAM|Hamburg|hamburg";
-const a4="CGN|Köln/Bonn|cologne;STR|Stuttgart|stuttgart";
-const a5="HAJ|Hannover|hanover;NUE|Nürnberg|nuremberg";
-const a6="VIE|Wien|vienna;ZRH|Zürich|zurich";
-const a7="BKK|Bangkok Suvarnabhumi|bangkok;DMK|Bangkok Don Mueang|bangkok";
-const a8="HKT|Phuket|phuket;CNX|Chiang Mai|chiang-mai";
-const a9="USM|Koh Samui|ko-samui;KBV|Krabi|krabi";
-const a10="DAD|Da Nang|da-nang;UIH|Quy Nhon|quy-nhon";
-const a11="SGN|Ho-Chi-Minh-Stadt (Saigon)|ho-chi-minh-city;HAN|Hanoi|hanoi";
-const a12="MNL|Manila|manila;CEB|Cebu|cebu";
-const a13="DGT|Dumaguete|dumaguete;PAG|Pagadian|pagadian";
-const a14="SIN|Singapur|singapore;KUL|Kuala Lumpur|kuala-lumpur";
-const a15="DPS|Denpasar Bali|denpasar;DXB|Dubai|dubai";
-const a16="DOH|Doha|doha;IST|Istanbul|istanbul";
-const a17="TYO|Tokio|tokyo;FAO|Faro|faro;CHC|Christchurch|christchurch";
-const airports=(a1+";"+a2+";"+a3+";"+a4+";"+a5+";"+a6+";"+a7+";"+a8+";"+
-a9+";"+a10+";"+a11+";"+a12+";"+a13+";"+a14+";"+a15+";"+a16+";"+a17)
-.split(";");
-let hrs=14,cidx=0,drag=false;
-
-function isThreeLetters(s){
-  if(s.length!==3)return false;
-  for(let i=0;i<3;i++){
-    const c=s.toUpperCase().charCodeAt(i);
-    if(c<65||c>90)return false;
-  }
-  return true;
-}
-
-function iata(v){
-  const s=v.trim();
-  const idx1=s.indexOf("(");
-  const idx2=s.indexOf(")");
-  if(idx1!==-1&&idx2===idx1+4){
-    const sub=s.slice(idx1+1,idx2);
-    if(isThreeLetters(sub))return sub.toUpperCase();
-  }
-  if(isThreeLetters(s))return s.toUpperCase();
-  const q=s.toLowerCase();
-  const hit=airports.find(row=>row.toLowerCase().includes(q));
-  if(hit)return hit.split("|").shift();
-  return s.toUpperCase().slice(0,3);
-}
-
-function slug(code){
-  const hit=airports.find(row=>row.startsWith(code+"|"));
-  if(hit)return hit.split("|").pop();
-  return code.toLowerCase();
-}
-
-function ac(inp,box){
-  inp.addEventListener("input",()=>{
-    const q=inp.value.trim().toLowerCase();
-    box.innerHTML="";
-    if(!q){box.style.display="none";upd();return;}
-    const hits=airports.filter(row=>row.toLowerCase().includes(q));
-    if(!hits.length){box.style.display="none";upd();return;}
-    hits.forEach(row=>{
-      const parts=row.split("|");
-      const code=parts.shift();
-      const name=parts.shift();
-      const d=document.createElement("div");
-      d.textContent=name+" ("+code+")";
-      d.onclick=()=>{
-        inp.value=name+" ("+code+")";
-        box.style.display="none";
-        upd();
-      };
-      box.appendChild(d);
-    });
-    box.style.display="block";
-    upd();
-  });
-  document.addEventListener("click",e=>{
-    if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";
-  });
-}
-
-function setHrs(h){
-  hrs=Math.max(1,Math.min(36,Math.round(h)));
-  const pct=((hrs-1)/35)*100;
-  $("fl").style.width=pct+"%";
-  $("sv").style.left=pct+"%";
-  $("sv").textContent=hrs+"h";
-  upd();
-}
-
-function bindSlider(){
-  const sb=$("sb"),tk=$("tk");
-  const move=clientX=>{
-    const r=tk.getBoundingClientRect();
-    const ratio=Math.max(0,Math.min(1,(clientX-r.left)/r.width));
-    setHrs(1+ratio*35);
-  };
-  sb.addEventListener("pointerdown",e=>{
-    drag=true;sb.setPointerCapture(e.pointerId);move(e.clientX);
-  });
-  sb.addEventListener("pointermove",e=>{if(drag)move(e.clientX);});
-  sb.addEventListener("pointerup",e=>{
-    drag=false;
-    try{sb.releasePointerCapture(e.pointerId);}catch(err){}
-  });
-  sb.addEventListener("pointercancel",()=>{drag=false;});
-}
-
-function upd(){
-  const now=new Date(),dtEl=$("dt");
-  const dStr=now.toLocaleDateString("de-DE");
-  const tStr=now.toLocaleTimeString("de-DE");
-  dtEl.textContent=dStr+" • "+tStr;
-  const idx=cidx++%cols.length;
-  const bg=cols.slice(idx,idx+1).join("");
-  dtEl.style.setProperty("background-color",bg,"important");
-
-  const ow=$("ow").checked;
-  $("st").textContent=ow?"NUR HINFLUG":"HIN & RÜCK";
-
-  const c1=iata($("i1").value);
-  const c2=iata($("i2").value);
-  const od=$("od").value;
-  const rd=$("rd").value;
-  const px=+$("px").value||1;
-  const ns=$("ns").checked;
-  const s1=$("s1").checked;
-  const s2=$("s2").checked;
-  const lc=$("lc").checked;
-
-  const badDate=(!ow&&od&&rd&&rd<od);
-  $("rb").classList.toggle("err",badDate);
-
-  if(isThreeLetters(c1)&&isThreeLetters(c2)&&od&&(ow||(rd&&!badDate))){
-    const ymd1=od.slice(2).replace(/-/g,"");
-    const ymd2=(!ow&&rd)?rd.slice(2).replace(/-/g,""):"";
-    const mins=hrs*60;
-
-    let skyStp="";
-    if(ns)skyStp="&stops=!oneStop,!twoPlusStops";
-    else if(s1)skyStp="&stops=!twoPlusStops";
-    $("u1").href=P+"www.skyscanner.de/transport/fluge/"+
-      c1.toLowerCase()+"/"+c2.toLowerCase()+"/"+ymd1+
-      (ymd2?"/"+ymd2:"")+"/?adults="+px+"&duration="+mins+skyStp;
-
-    const kStp=ns?"stops=0":(s1?"stops=1":(s2?"stops=2":""));
-    const kLc=lc?"":"noLowCost=true";
-    const kQ=(kStp+"|duration=-"+mins+"|"+kLc)
-      .split("|").filter(Boolean).join("&");
-    $("u2").href=P+"www.kayak.de/flights/"+c1+"-"+c2+"/"+od+
-      (!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
-    $("u3").href=P+"www.momondo.de/flight-search/"+c1+"-"+c2+"/"+od+
-      (!ow&&rd?"/"+rd:"")+"/"+px+"adults"+(kQ?"?"+kQ:"");
-
-    const tripType=ow?"oneway":"roundtrip";
-    const leg1="from:"+c1+",to:"+c2+",departure:"+od+"TANYT";
-    const leg2=!ow&&rd?"&leg2=from:"+c2+",to:"+c1+",departure:"+rd+"TANYT":"";
-    $("u4").href=P+"www.expedia.de/Flights-Search?trip="+tripType+
-      "&leg1="+leg1+leg2+"&passengers=adults:"+px+"&mode=search";
-
-    const kwStp=ns?"&stopNumber=0":(s1?"&stopNumber=1":(s2?"&stopNumber=2":""));
-    $("u5").href=P+"://kiwi.com"+c1+"&to="+c2+
-      "&departure="+od+(!ow&&rd?"&return="+rd:"")+
-      "&adults="+px+"&maxDuration="+hrs+kwStp;
-
-    const trWay=ow?"OW":"RT";
-    const trStp=ns?"&nonstoponly=1":(s1?"&maxstop=1":(s2?"&maxstop=2":""));
-    $("u6").href=P+"://trip.com"+c1+
-      "&acity="+c2+"&ddate="+od+(!ow&&rd?"&rdate="+rd:"")+
-      "&triptype="+trWay+"&class=y&quantity="+px+
-      "&locale=de-DE&curr=EUR"+trStp;
-  }
-
-  try{
-    localStorage.setItem("rk_flt",JSON.stringify({
-      i1:$("i1").value,i2:$("i2").value,od,rd,ow,px,hrs,ns,s1,s2,lc
-    }));
-  }catch(e){}
-}
-
-(function(){
-  const t=new Date().toISOString().slice(0,10);
-  $("od").min=t;
-  $("rd").min=t;
-
-  try{
-    const d=JSON.parse(localStorage.getItem("rk_flt")||"null");
-    if(d){
-      if(d.i1)$("i1").value=d.i1;
-      if(d.i2)$("i2").value=d.i2;
-      if(d.od)$("od").value=d.od;
-      if(d.rd)$("rd").value=d.rd;
-      if(d.ow!==undefined)$("ow").checked=d.ow;
-      if(d.px)$("px").value=d.px;
-      if(d.hrs)hrs=d.hrs;
-      if(d.ns!==undefined)$("ns").checked=d.ns;
-      if(d.s1!==undefined)$("s1").checked=d.s1;
-      if(d.s2!==undefined)$("s2").checked=d.s2;
-      if(d.lc!==undefined)$("lc").checked=d.lc;
-    }
-  }catch(e){}
-
-  $("ns").addEventListener("change",()=>{
-    if($("ns").checked){$("s1").checked=false;$("s2").checked=false;}
-    upd();
-  });
-  $("s1").addEventListener("change",()=>{
-    if($("s1").checked){$("ns").checked=false;$("s2").checked=false;}
-    upd();
-  });
-  $("s2").addEventListener("change",()=>{
-    if($("s2").checked){$("ns").checked=false;$("s1").checked=false;}
-    upd();
-  });
-
-  ac($("i1"),$("l1"));
-  ac($("i2"),$("l2"));
-  bindSlider();
-
-  "i1;i2;od;rd;ow;px;lc".split(";").forEach(id=>{
-    $(id).addEventListener("input",upd);
-    $(id).addEventListener("change",upd);
-  });
-  "u1;u2;u3;u4;u5;u6".split(";").forEach(id=>{
-    $(id).addEventListener("click",upd);
-  });
-
-  setHrs(hrs);
-})();
-</script>
 </body>
 </html>
