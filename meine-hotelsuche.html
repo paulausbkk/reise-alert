@@ -203,12 +203,6 @@ input:focus,select:focus{
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
-      <input type="hidden" name="checkin_year" id="b_ciy">
-      <input type="hidden" name="checkin_month" id="b_cim">
-      <input type="hidden" name="checkin_monthday" id="b_cid">
-      <input type="hidden" name="checkout_year" id="b_coy">
-      <input type="hidden" name="checkout_month" id="b_com">
-      <input type="hidden" name="checkout_monthday" id="b_cod">
       <input type="hidden" name="group_adults" id="b_px">
       <input type="hidden" name="no_rooms" id="b_rm">
       <input type="hidden" name="nflt" id="b_flt" disabled>
@@ -231,7 +225,7 @@ input:focus,select:focus{
     Anbieterseite direkt gewählt werden.
   </div>
 </div>
-<script>
+  <script>
 const $ = id => document.getElementById(id);
 const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
@@ -334,7 +328,7 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
   return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function buildAgodaUrl(city, cc, ci, co, n, px, rm) {
+function buildAgodaUrl(city, cc, ci, co, n, px, rm, st) {
   const p = new URLSearchParams();
   if (resolvedAgodaId) {
     p.set("city", resolvedAgodaId);
@@ -348,6 +342,7 @@ function buildAgodaUrl(city, cc, ci, co, n, px, rm) {
   p.set("children", "0");
   p.set("rooms", String(rm));
   p.set("currency", "EUR");
+  if (st > 0) p.set("hotelStarRating", String(st));
   return P + "://agoda.com?" + p.toString();
 }
 
@@ -456,8 +451,6 @@ function upd() {
   if (city && ci && co && !pastCi && !badCo) {
     const q = encodeURIComponent(city);
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const c1 = ci.split("-");
-    const c2 = co.split("-");
     const bFilt = st > 0 ? "class=" + st : "";
 
     $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci +
@@ -469,18 +462,12 @@ function upd() {
     $("b_ss").value = city;
     $("b_ci").value = ci;
     $("b_co").value = co;
-    $("b_ciy").value = c1.slice(0, 1).join("");
-    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
-    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
-    $("b_coy").value = c2.slice(0, 1).join("");
-    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
-    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
     $("b_px").value = px;
     $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, co, n, px, rm);
+    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, co, n, px, rm, st);
     $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" +
       ci + "&checkout=" + co + "&adults=" + px;
