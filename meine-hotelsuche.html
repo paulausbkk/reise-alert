@@ -12,15 +12,10 @@ const $ = id => document.getElementById(id);
 const P = "https://";
 const cities = "Bangkok;Phuket;Chiang Mai;Koh Samui;Krabi;Da Nang;Quy Nhon;Ho-Chi-Minh-Stadt;Hanoi;Manila;Cebu;Dumaguete;Pagadian;Singapur;Kuala Lumpur;Denpasar Bali;Dubai;Doha;Tokio;Istanbul;Faro;Christchurch;Berlin;München;Frankfurt".split(";");
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const agIds = {
-  "bangkok": "9395", "phuket": "16056", "chiang mai": "7401", "koh samui": "17198",
-  "krabi": "14865", "da nang": "16440", "quy nhon": "17264", "ho-chi-minh-stadt": "13170",
-  "hanoi": "2758", "manila": "16592", "cebu": "4001", "dumaguete": "16562",
-  "pagadian": "18952", "singapur": "4064", "kuala lumpur": "14524", "denpasar bali": "17193",
-  "dubai": "2994", "doha": "11977", "tokio": "5085", "istanbul": "14932",
-  "faro": "15356", "christchurch": "13726", "berlin": "2128", "muenchen": "14163",
-  "frankfurt": "14223"
-};
+const agIds = new Map(
+  "bangkok:9395;phuket:16056;chiang mai:7401;koh samui:17198;krabi:14865;da nang:16440;quy nhon:17264;ho-chi-minh-stadt:13170;hanoi:2758;manila:16592;cebu:4001;dumaguete:16562;pagadian:18952;singapur:4064;kuala lumpur:14524;denpasar bali:17193;dubai:2994;doha:11977;tokio:5085;istanbul:14932;faro:15356;christchurch:13726;berlin:2128;muenchen:14163;frankfurt:14223"
+  .split(";").map(p => p.split(":"))
+);
 let cidx = 0;
 
 function norm(s) {
@@ -28,53 +23,61 @@ function norm(s) {
 }
 
 function slug(s) {
-  return norm(s).replace(/ß/g,"ss").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  return norm(s).replace(/ß/g,"ss").replace(/\W+/g,"-").replace(/^-|-$/g,"");
 }
 
 function fakeGuid() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
-    const r = Math.random() * 16 | 0;
-    return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
-  });
+  const hex = "0123456789abcdef";
+  let out = "";
+  for (let i = 0; i < 36; i++) {
+    if (i === 8 || i === 13 || i === 18 || i === 23) {
+      out += "-";
+    } else if (i === 14) {
+      out += "4";
+    } else if (i === 19) {
+      out += hex.charAt((Math.random() * 4 | 0) + 8);
+    } else {
+      out += hex.charAt(Math.random() * 16 | 0);
+    }
+  }
+  return out;
 }
 
 function buildAgodaUrl(city, aid, ci, co, n, px, rm) {
   const g = fakeGuid();
   const base = P + "://agoda.com";
-  const params = new URLSearchParams({
-    guid: g,
-    asq: btoa(city + "|" + ci),
-    cid: "-218",
-    tick: String(Date.now()),
-    locale: "de-de",
-    ckuid: g,
-    prid: "0",
-    currency: "EUR",
-    correlationId: fakeGuid(),
-    analyticsSessionId: String(Math.floor(Math.random() * 9e15) + 1e15),
-    pageTypeId: aid ? "103" : "1",
-    realLanguageId: "6",
-    languageId: "6",
-    origin: "DE",
-    userId: g,
-    whitelabelid: "1",
-    loginLvl: "0",
-    storefrontId: "3",
-    currencyId: "1",
-    currencyCode: "EUR",
-    htmlLanguage: "de-de",
-    cultureInfoName: "de-DE",
-    checkIn: ci,
-    checkOut: co,
-    los: String(n),
-    rooms: String(rm),
-    adults: String(px),
-    children: "0",
-    travellerType: px === 1 ? "0" : "1",
-    familyMode: "off",
-    productType: "-1",
-    textToSearch: city
-  });
+  const params = new URLSearchParams();
+  params.set("guid", g);
+  params.set("cid", "-218");
+  params.set("tick", String(Date.now()));
+  params.set("locale", "de-de");
+  params.set("ckuid", g);
+  params.set("prid", "0");
+  params.set("currency", "EUR");
+  params.set("correlationId", fakeGuid());
+  params.set("analyticsSessionId", String(Math.floor(Math.random() * 9e15) + 1e15));
+  params.set("pageTypeId", aid ? "103" : "1");
+  params.set("realLanguageId", "6");
+  params.set("languageId", "6");
+  params.set("origin", "DE");
+  params.set("userId", g);
+  params.set("whitelabelid", "1");
+  params.set("loginLvl", "0");
+  params.set("storefrontId", "3");
+  params.set("currencyId", "1");
+  params.set("currencyCode", "EUR");
+  params.set("htmlLanguage", "de-de");
+  params.set("cultureInfoName", "de-DE");
+  params.set("checkIn", ci);
+  params.set("checkOut", co);
+  params.set("los", String(n));
+  params.set("rooms", String(rm));
+  params.set("adults", String(px));
+  params.set("children", "0");
+  params.set("travellerType", px === 1 ? "0" : "1");
+  params.set("familyMode", "off");
+  params.set("productType", "-1");
+  params.set("textToSearch", city);
   if (aid) params.set("city", aid);
   return base + "?" + params.toString();
 }
@@ -102,7 +105,8 @@ function ac(inp, box) {
 function upd() {
   const now = new Date(), dtEl = $("dt");
   dtEl.textContent = now.toLocaleDateString("de-DE") + " • " + now.toLocaleTimeString("de-DE");
-  dtEl.style.setProperty("background-color", cols[cidx++ % cols.length], "important");
+  const col = cols.at(cidx++ % cols.length) || "#0284c7";
+  dtEl.style.setProperty("background-color", col, "important");
 
   const city = $("city").value.trim();
   const ci = $("ci").value;
@@ -133,7 +137,7 @@ function upd() {
     const key = norm(city);
     const sl = slug(city);
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const aid = agIds[key] || "";
+    const aid = agIds.get(key) || "";
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
     const bFilt = st > 0 ? "class=" + st : "";
@@ -188,6 +192,11 @@ function upd() {
       if (d.st) $("st").value = d.st;
       if (d.ab !== undefined) $("ab").checked = d.ab;
     }
+    const u = new URLSearchParams(window.location.search);
+    if (u.get("city")) $("city").value = u.get("city");
+    if (u.get("ci")) $("ci").value = u.get("ci");
+    if (u.get("co")) $("co").value = u.get("co");
+    if (u.get("px")) $("px").value = u.get("px");
   } catch (e) {}
 
   ac($("city"), $("lc"));
