@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v42</title>
+<title>🏨 Meine Hotelsuche PRO v43</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v42</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v43</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -217,6 +217,7 @@ const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let cidx = 0;
 let acTimer = null;
 let lastCountryCode = "de";
+let lastLatLon = "";
 
 function todayIso() {
   const d = new Date();
@@ -236,14 +237,18 @@ function slug(s) {
     .replace(/\W+/g,"-").replace(/^-|-$/g,"");
 }
 
-function buildExpediaUrl(city, ci, co, px, rm, st) {
+function buildExpediaUrl(city, latLon, ci, co, px, rm, st) {
   const p = new URLSearchParams();
-  p.set("Destination", city);
-  p.set("Adults", String(px));
-  p.set("Rooms", String(rm));
-  if (st > 0) p.set("StarRating", String(st));
-  return P + "www.expedia.de/go/hotel/search/Destination/" +
-    ci + "/" + co + "?" + p.toString();
+  p.set("destination", city);
+  if (latLon) p.set("latLong", latLon);
+  p.set("startDate", ci);
+  p.set("endDate", co);
+  p.set("d1", ci);
+  p.set("d2", co);
+  p.set("adults", String(px));
+  p.set("rooms", String(rm));
+  if (st > 0) p.set("star", String(st * 10));
+  return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
 function buildAgodaUrl(city, cc, ci, co, n, px, rm) {
@@ -265,6 +270,7 @@ function buildAgodaUrl(city, cc, ci, co, n, px, rm) {
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
+    lastLatLon = "";
     upd();
     clearTimeout(acTimer);
     const q = inp.value.trim();
@@ -284,6 +290,9 @@ function liveAc(inp, box) {
           d.onclick = () => {
             inp.value = item.name;
             lastCountryCode = (item.country_code || "de").toLowerCase();
+            if (item.latitude && item.longitude) {
+              lastLatLon = item.latitude + "," + item.longitude;
+            }
             box.style.display = "none";
             upd();
           };
@@ -355,7 +364,7 @@ function upd() {
 
     $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
       "/" + px + "adults/" + rm + "rooms";
-    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
+    $("h2").href = buildExpediaUrl(city, lastLatLon, ci, co, px, rm, st);
 
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
       "/" + px + "adults/" + rm + "rooms";
@@ -376,7 +385,8 @@ function upd() {
 
   try {
     localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
+      city: $("city").value, ci, co, px, rm, st, ab,
+      cc: lastCountryCode, ll: lastLatLon
     }));
   } catch (e) {}
 }
@@ -396,6 +406,7 @@ function upd() {
       if (d.st) $("st").value = d.st;
       if (d.ab !== undefined) $("ab").checked = d.ab;
       if (d.cc) lastCountryCode = d.cc;
+      if (d.ll) lastLatLon = d.ll;
     }
     const u = new URLSearchParams(window.location.search);
     if (u.get("city")) $("city").value = u.get("city");
