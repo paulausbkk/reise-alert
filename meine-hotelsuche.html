@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v61</title>
+<title>🏨 Meine Hotelsuche PRO v62</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v61</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v62</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -129,7 +129,7 @@ input:focus,select:focus{
     <div class="ct">📍 Zielort & Reisedaten</div>
     <div class="f">
       <label>Reiseziel (beliebige Stadt weltweit)</label>
-      <input type="text" id="city" placeholder="z.B. Spremberg, Wien, Bangkok" autocomplete="off">
+      <input type="text" id="city" placeholder="z.B. Pagadian, Spremberg, Bangkok" autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
@@ -212,7 +212,6 @@ input:focus,select:focus{
     <b>Datum & Gäste</b> – müssen auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
-Block 3:
 <script>
 const $ = id => document.getElementById(id);
 const P = "https://";
@@ -262,221 +261,9 @@ function buildTrivagoUrl(city, ci, co, px, rm) {
   const q = encodeURIComponent(city);
   const dt1 = ci.replace(/-/g, "");
   const dt2 = co.replace(/-/g, "");
-  const seg = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
-  return P + "www.trivago.de/de/srl?search=" + seg +
-    "&query=" + q + "&sQuery=" + q + "#search=" + seg;
-}
-
-function liveAc(inp, box) {
-  inp.addEventListener("input", () => {
-    upd();
-    clearTimeout(acTimer);
-    const q = inp.value.trim();
-    if (q.length < 2) { box.style.display = "none"; return; }
-    acTimer = setTimeout(async () => {
-      try {
-        const u = P + "geocoding-api.open-meteo.com/v1/search?name=" +
-          encodeURIComponent(q) + "&count=6&language=de&format=json";
-        const r = await fetch(u);
-        const j = await r.json();
-        box.innerHTML = "";
-        if (!j || !j.results) { box.style.display = "none"; return; }
-        j.results.forEach(item => {
-          const d = document.createElement("div");
-          const sub = item.country ? " (" + item.country + ")" : "";
-          d.textContent = item.name + sub;
-          d.onclick = () => {
-            inp.value = item.name;
-            lastCountryCode = (item.country_code || "de").toLowerCase();
-            box.style.display = "none";
-            upd();
-          };
-          box.appendChild(d);
-        });
-        box.style.display = "block";
-      } catch (e) {
-        box.style.display = "none";
-      }
-    }, 200);
-  });
-  document.addEventListener("click", e => {
-    if (!box.contains(e.target) && e.target !== inp) box.style.display = "none";
-  });
-}
-
-function upd() {
-  const now = new Date(), dtEl = $("dt");
-  const t = todayIso();
-  dtEl.textContent = now.toLocaleDateString("de-DE") + " • " +
-    now.toLocaleTimeString("de-DE");
-  const idx = cidx++ % cols.length;
-  const col = cols.slice(idx, idx + 1).join("") || "#0284c7";
-  dtEl.style.setProperty("background-color", col, "important");
-
-  const city = $("city").value.trim();
-  const ci = $("ci").value;
-  const co = $("co").value;
-  const px = +$("px").value || 2;
-  const rm = +$("rm").value || 1;
-  const st = +$("st").value || 0;
-  const ab = $("ab").checked;
-
-  document.querySelectorAll(".htl").forEach(el => el.classList.toggle("off", ab));
-  $("h8").classList.toggle("off", !ab);
-
-  const pastCi = Boolean(ci && ci < t);
-  const badCo = Boolean((co && co <= t) || (ci && co && co <= ci));
-  $("cib").classList.toggle("err", pastCi);
-  $("cob").classList.toggle("err", badCo);
-
-  if (ci && co && !pastCi && !badCo) {
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
-    $("info").style.background = "#eff6ff";
-    $("info").style.color = "#1e3a8a";
-    $("info").textContent = (ab ? "(AIRBNB) " : "") +
-      "Auswahl: " + (city || "Ziel offen") + " • " + n +
-      (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi.";
-  } else if (pastCi || badCo) {
-    $("nt").textContent = "DATUM PRÜFEN";
-    $("info").style.background = "#fee2e2";
-    $("info").style.color = "#991b1b";
-    $("info").textContent = "Datum liegt in der Vergangenheit oder Check-out vor Check-in.";
-  } else {
-    $("nt").textContent = "ZEITRAUM WÄHLEN";
-    $("info").style.background = "#eff6ff";
-    $("info").style.color = "#1e3a8a";
-    $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
-  }
-
-  if (city && ci && co && !pastCi && !badCo) {
-    const q = encodeURIComponent(city);
-    const c1 = ci.split("-");
-    const c2 = co.split("-");
-    const bFilt = st > 0 ? "class=" + st : "";
-
-    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
-      "/" + px + "adults/" + rm + "rooms";
-    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
-
-    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
-      "/" + px + "adults/" + rm + "rooms";
-    $("b_ss").value = city;
-    $("b_ci").value = ci;
-    $("b_co").value = co;
-    $("b_ciy").value = c1 || "";
-    $("b_cim").value = String(+(c1 || 0));
-    $("b_cid").value = String(+(c1 || 0));
-    $("b_coy").value = c2 || "";
-    $("b_com").value = String(+(c2 || 0));
-    $("b_cod").value = String(+(c2 || 0));
-    $("b_px").value = px;
-    $("b_rm").value = rm;
-    $("b_flt").disabled = !bFilt;
-    $("b_flt").value = bFilt;
-
-    $("h5").href = buildAgodaUrl(city, lastCountryCode);
-    $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
-    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
-      "&checkout=" + co + "&adults=" + px;
-  }
-
-  try {
-    localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
-    }));
-  } catch (e) {}
-}
-
-(function() {
-  const t = todayIso();
-  $("ci").min = t;
-  $("co").min = t;
-  try {
-    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
-    if (d) {
-      if (d.city) $("city").value = d.city;
-      if (d.ci) $("ci").value = d.ci;
-      if (d.co) $("co").value = d.co;
-      if (d.px) $("px").value = d.px;
-      if (d.rm) $("rm").value = d.rm;
-      if (d.st) $("st").value = d.st;
-      if (d.ab !== undefined) $("ab").checked = d.ab;
-      if (d.cc) lastCountryCode = d.cc;
-    }
-    const u = new URLSearchParams(window.location.search);
-    if (u.get("city")) $("city").value = u.get("city");
-    if (u.get("ci")) $("ci").value = u.get("ci");
-    if (u.get("co")) $("co").value = u.get("co");
-    if (u.get("px")) $("px").value = u.get("px");
-  } catch (e) {}
-
-  liveAc($("city"), $("lc"));
-  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
-    $(id).addEventListener("input", upd);
-    $(id).addEventListener("change", upd);
-  });
-  "h1;h2;h3;h5;h6;h8".split(";").forEach(id => {
-    $(id).addEventListener("click", upd);
-  });
-  $("f4").addEventListener("submit", upd);
-  upd();
-})();
-</script>
-</body>
-</html>
-<script>
-const $ = id => document.getElementById(id);
-const P = "https://";
-const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-let cidx = 0;
-let acTimer = null;
-let lastCountryCode = "de";
-
-function todayIso() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return y + "-" + m + "-" + day;
-}
-
-function norm(s) {
-  return s.toLowerCase()
-    .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
-}
-
-function slug(s) {
-  return norm(s).replace(/ß/g,"ss")
-    .replace(/\W+/g,"-").replace(/^-|-$/g,"");
-}
-
-function buildExpediaUrl(city, ci, co, px, rm, st) {
-  const p = new URLSearchParams();
-  p.set("destination", city);
-  p.set("startDate", ci);
-  p.set("endDate", co);
-  p.set("d1", ci);
-  p.set("d2", co);
-  p.set("adults", String(px));
-  p.set("rooms", String(rm));
-  if (st > 0) p.set("star", String(st * 10));
-  return P + "www.expedia.de/Hotel-Search?" + p.toString();
-}
-
-function buildAgodaUrl(city, cc) {
-  const sl = slug(city);
-  const ctry = (cc || "de").toLowerCase();
-  return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry + ".html";
-}
-
-function buildTrivagoUrl(city, ci, co, px, rm) {
-  const q = encodeURIComponent(city);
-  const dt1 = ci.replace(/-/g, "");
-  const dt2 = co.replace(/-/g, "");
-  const seg = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
-  return P + "www.trivago.de/de/srl?search=" + seg +
-    "&query=" + q + "&sQuery=" + q + "#search=" + seg;
+  return P + "www.trivago.de/de/srl?query=" + q +
+    "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
+    "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 }
 
 function liveAc(inp, box) {
