@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v27</title>
+<title>🏨 Meine Hotelsuche PRO v28</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v27</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v28</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -243,26 +243,10 @@ function slug(s) {
     .replace(/\W+/g,"-").replace(/^-|-$/g,"");
 }
 
-function buildAgodaFallback(city, ci, co, n, px, rm, st) {
-  const p = new URLSearchParams();
-  p.set("textToSearch", city);
-  p.set("isFromSearchBox", "true");
-  p.set("checkIn", ci);
-  p.set("checkOut", co);
-  p.set("los", String(n));
-  p.set("rooms", String(rm));
-  p.set("adults", String(px));
-  p.set("children", "0");
-  p.set("currency", "EUR");
-  p.set("locale", "de-de");
-  if (st > 0) p.set("starRating", String(st));
-  return P + "www.agoda.com/de-de/search?" + p.toString();
-}
-
 function buildAgodaPartner(cid, ci, co, n, px, rm, st) {
   const p = new URLSearchParams();
   p.set("pcs", "1");
-  p.set("cid", "-218");
+  p.set("cid", "1844104");
   p.set("city", String(cid));
   p.set("checkIn", ci);
   p.set("checkOut", co);
@@ -276,20 +260,49 @@ function buildAgodaPartner(cid, ci, co, n, px, rm, st) {
   return P + "www.agoda.com/partners/partnersearch.aspx?" + p.toString();
 }
 
+function buildAgodaCityPage(city, ci, co, n, px, rm) {
+  const sl = slug(city);
+  const p = new URLSearchParams();
+  p.set("checkIn", ci);
+  p.set("los", String(n));
+  p.set("rooms", String(rm));
+  p.set("adults", String(px));
+  p.set("children", "0");
+  p.set("currencyCode", "EUR");
+  p.set("htmlLanguage", "de-de");
+  return P + "www.agoda.com/de-de/city/" + sl + "-de.html?" + p.toString();
+}
+
+function extractId(txt) {
+  const m1 = txt.match(/"ObjectId"\s*:\s*(\d+)/i);
+  if (m1) return m1.slice(1, 2).join("");
+  const m2 = txt.match(/"CityId"\s*:\s*(\d+)/i);
+  if (m2) return m2.slice(1, 2).join("");
+  const m3 = txt.match(/city=(\d+)/i);
+  if (m3) return m3.slice(1, 2).join("");
+  return "";
+}
+
 async function resolveAgodaCityId(city) {
-  try {
-    const api = P + "www.agoda.com/api/cronos/search/" +
-      "GetUnifiedSuggestResult/3/6/6/0/de-de/?searchText=" +
-      encodeURIComponent(city);
-    const res = await fetch(api);
-    if (!res.ok) return "";
-    const txt = await res.text();
-    const m = txt.match(/"ObjectId"\s*:\s*(\d+)/i) ||
-              txt.match(/"CityId"\s*:\s*(\d+)/i);
-    return m ? m.slice(1, 2).join("") : "";
-  } catch (e) {
-    return "";
+  const rawApi = P + "www.agoda.com/api/cronos/search/" +
+    "GetUnifiedSuggestResult/3/6/6/0/de-de/?searchText=" +
+    encodeURIComponent(city);
+  const proxies = (
+    P + "api.allorigins.win/raw?url=" + encodeURIComponent(rawApi) + ";" +
+    P + "corsproxy.io/?" + encodeURIComponent(rawApi)
+  ).split(";");
+  for (let i = 0; i < proxies.length; i++) {
+    const pxUrl = proxies.slice(i, i + 1).join("");
+    try {
+      const res = await fetch(pxUrl);
+      if (res.ok) {
+        const txt = await res.text();
+        const id = extractId(txt);
+        if (id && id !== "0") return id;
+      }
+    } catch (e) {}
   }
+  return "";
 }
 
 async function goAgoda() {
@@ -308,15 +321,23 @@ async function goAgoda() {
     return;
   }
   const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-  dbg.textContent = "⏳ Ermittle Zielort live bei Agoda...";
+  const win = window.open("about:blank", "_blank");
+  if (win) {
+    win.document.write("<p style='font-family:sans-serif;padding:20px'>" +
+      "⏳ Suche <b>" + city + "</b> bei Agoda...</p>");
+  }
+  dbg.textContent = "⏳ Ermittle Agoda-Orts-ID über Proxy für " + city + "...";
   const liveId = await resolveAgodaCityId(city);
   const url = liveId
     ? buildAgodaPartner(liveId, ci, co, n, px, rm, st)
-    : buildAgodaFallback(city, ci, co, n, px, rm, st);
-  dbg.innerHTML = "✅ <b>Agoda Ziel-URL:</b> <a href='" + url +
-    "' target='_blank'>" + url + "</a>";
-  const win = window.open(url, "_blank");
-  if (!win) window.location.assign(url);
+    : buildAgodaCityPage(city, ci, co, n, px, rm);
+  dbg.innerHTML = "✅ <b>Agoda-ID (" + (liveId || "Fallback") +
+    "):</b> <a href='" + url + "' target='_blank'>" + url + "</a>";
+  if (win) {
+    win.location.replace(url);
+  } else {
+    window.location.assign(url);
+  }
 }
 
 function liveAc(inp, box) {
@@ -327,7 +348,7 @@ function liveAc(inp, box) {
     if (q.length < 2) { box.style.display = "none"; return; }
     acTimer = setTimeout(async () => {
       try {
-        const u = "https://geocoding-api.open-meteo.com/v1/search?name=" +
+        const u = P + "geocoding-api.open-meteo.com/v1/search?name=" +
           encodeURIComponent(q) + "&count=6&language=de&format=json";
         const r = await fetch(u);
         const j = await r.json();
