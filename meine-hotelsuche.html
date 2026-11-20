@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v32 (Versuch 2/3)</title>
+<title>🏨 Meine Hotelsuche PRO v33 (Versuch 3/3)</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v32</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v33</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -224,6 +224,7 @@ const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let cidx = 0;
 let acTimer = null;
+let agodaWarmed = false;
 
 function todayIso() {
   const d = new Date();
@@ -243,25 +244,20 @@ function slug(s) {
     .replace(/\W+/g,"-").replace(/^-|-$/g,"");
 }
 
-function toBase64Utf8(str) {
-  const bytes = new TextEncoder().encode(str);
-  let bin = "";
-  bytes.forEach(b => { bin += String.fromCharCode(b); });
-  return btoa(bin);
+function warmAgodaSession() {
+  if (agodaWarmed) return;
+  agodaWarmed = true;
+  try {
+    const img = new Image();
+    img.src = P + "www.agoda.com/de-de/favicon.ico?t=" + Date.now();
+  } catch (e) {}
 }
 
-function buildAgodaLegacyUrl(city, ci, co, n, px, rm, st) {
-  const payload = JSON.stringify({
-    SearchText: city,
-    CheckIn: ci,
-    CheckOut: co,
-    LengthOfStay: n,
-    Rooms: rm,
-    Adults: px,
-    Children: 0
-  });
+function buildAgodaMetaUrl(city, ci, co, n, px, rm, st) {
   const p = new URLSearchParams();
-  p.set("asq", toBase64Utf8(payload));
+  p.set("site_id", "1811314");
+  p.set("tag", "direct");
+  p.set("searchText", city);
   p.set("textToSearch", city);
   p.set("checkIn", ci);
   p.set("checkOut", co);
@@ -273,12 +269,12 @@ function buildAgodaLegacyUrl(city, ci, co, n, px, rm, st) {
   p.set("locale", "de-de");
   p.set("isFromSearchBox", "true");
   if (st > 0) p.set("starRating", String(st));
-  return P + "www.agoda.com/de-de/pages/agoda/default/" +
-    "DestinationSearchResult.aspx?" + p.toString();
+  return P + "www.agoda.com/de-de/search?" + p.toString();
 }
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
+    warmAgodaSession();
     upd();
     clearTimeout(acTimer);
     const q = inp.value.trim();
@@ -386,7 +382,7 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaLegacyUrl(city, ci, co, n, px, rm, st);
+    $("h5").href = buildAgodaMetaUrl(city, ci, co, n, px, rm, st);
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
