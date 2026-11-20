@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v33 (Versuch 3/3)</title>
+<title>🏨 Meine Hotelsuche PRO v30</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v33</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v30</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -213,9 +213,9 @@ input:focus,select:focus{
   </div>
   <div class="hint">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
-    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Booking.com</b> und
-    <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des
-    jeweiligen Anbieters direkt eingegeben werden.
+    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> das
+    <b>Datum & Gäste</b> und bei <b>Booking.com</b> / <b>Trivago</b> der
+    <b>Zielort</b> – müssen auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
 <script>
@@ -224,7 +224,7 @@ const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let cidx = 0;
 let acTimer = null;
-let agodaWarmed = false;
+let lastCountryCode = "de";
 
 function todayIso() {
   const d = new Date();
@@ -244,37 +244,23 @@ function slug(s) {
     .replace(/\W+/g,"-").replace(/^-|-$/g,"");
 }
 
-function warmAgodaSession() {
-  if (agodaWarmed) return;
-  agodaWarmed = true;
-  try {
-    const img = new Image();
-    img.src = P + "www.agoda.com/de-de/favicon.ico?t=" + Date.now();
-  } catch (e) {}
-}
-
-function buildAgodaMetaUrl(city, ci, co, n, px, rm, st) {
+function buildAgodaInstantUrl(city, cc, ci, co, n, px, rm) {
+  const sl = slug(city);
+  const ctry = (cc || "de").toLowerCase();
   const p = new URLSearchParams();
-  p.set("site_id", "1811314");
-  p.set("tag", "direct");
-  p.set("searchText", city);
-  p.set("textToSearch", city);
-  p.set("checkIn", ci);
-  p.set("checkOut", co);
+  p.set("checkin", ci);
+  p.set("checkout", co);
   p.set("los", String(n));
   p.set("rooms", String(rm));
   p.set("adults", String(px));
   p.set("children", "0");
   p.set("currency", "EUR");
-  p.set("locale", "de-de");
-  p.set("isFromSearchBox", "true");
-  if (st > 0) p.set("starRating", String(st));
-  return P + "www.agoda.com/de-de/search?" + p.toString();
+  return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry +
+    ".html?" + p.toString();
 }
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
-    warmAgodaSession();
     upd();
     clearTimeout(acTimer);
     const q = inp.value.trim();
@@ -293,6 +279,7 @@ function liveAc(inp, box) {
           d.textContent = item.name + sub;
           d.onclick = () => {
             inp.value = item.name;
+            lastCountryCode = (item.country_code || "de").toLowerCase();
             box.style.display = "none";
             upd();
           };
@@ -382,7 +369,7 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaMetaUrl(city, ci, co, n, px, rm, st);
+    $("h5").href = buildAgodaInstantUrl(city, lastCountryCode, ci, co, n, px, rm);
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
@@ -391,7 +378,7 @@ function upd() {
 
   try {
     localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab
+      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
     }));
   } catch (e) {}
 }
@@ -410,6 +397,7 @@ function upd() {
       if (d.rm) $("rm").value = d.rm;
       if (d.st) $("st").value = d.st;
       if (d.ab !== undefined) $("ab").checked = d.ab;
+      if (d.cc) lastCountryCode = d.cc;
     }
     const u = new URLSearchParams(window.location.search);
     if (u.get("city")) $("city").value = u.get("city");
