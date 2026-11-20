@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v59</title>
+<title>🏨 Meine Hotelsuche PRO v60</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v59</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v60</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -262,6 +262,8 @@ function buildTrivagoUrl(city, ci, co, px, rm) {
   const dt1 = ci.replace(/-/g, "");
   const dt2 = co.replace(/-/g, "");
   return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
+    "&arrival=" + ci + "&departure=" + co +
+    "&dateFrom=" + ci + "&dateTo=" + co +
     "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 }
 
