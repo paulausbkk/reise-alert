@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v57</title>
+<title>🏨 Meine Hotelsuche PRO v59</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v57</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v59</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -258,11 +258,11 @@ function buildAgodaUrl(city, cc) {
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
-  const sl = slug(city);
+  const q = encodeURIComponent(city);
   const dt1 = ci.replace(/-/g, "");
   const dt2 = co.replace(/-/g, "");
-  return P + "www.trivago.de/de/srl/hotels-" + sl +
-    "?search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
+    "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 }
 
 function liveAc(inp, box) {
