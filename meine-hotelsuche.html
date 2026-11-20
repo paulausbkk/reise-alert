@@ -331,21 +331,21 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
   return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function buildAgodaUrl(city, cc, ci, n, px, rm) {
+function buildAgodaUrl(city, cc, ci, co, n, px, rm) {
+  const p = new URLSearchParams();
   if (resolvedAgodaId) {
-    const p = new URLSearchParams();
     p.set("city", resolvedAgodaId);
-    p.set("checkIn", ci);
-    p.set("los", String(n));
-    p.set("adults", String(px));
-    p.set("children", "0");
-    p.set("rooms", String(rm));
-    p.set("currency", "EUR");
-    return P + "://agoda.com?" + p.toString();
+  } else {
+    p.set("textToSearch", city);
   }
-  const sl = slug(city);
-  const ctry = (cc || "de").toLowerCase();
-  return P + "://agoda.com" + sl + "-" + ctry + ".html";
+  if (ci) p.set("checkIn", ci);
+  if (co) p.set("checkOut", co);
+  p.set("los", String(n));
+  p.set("adults", String(px));
+  p.set("children", "0");
+  p.set("rooms", String(rm));
+  p.set("currency", "EUR");
+  return P + "://agoda.com?" + p.toString();
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
@@ -458,6 +458,9 @@ function upd() {
     $("h4").href = buildBookingUrl(
       city, okDates ? ci : "", okDates ? co : "", px, rm, st
     );
+    $("h5").href = buildAgodaUrl(
+      city, lastCountryCode, okDates ? ci : "", okDates ? co : "", n, px, rm
+    );
 
     if (okDates) {
       $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci +
@@ -465,7 +468,6 @@ function upd() {
       $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
       $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci +
         "/" + co + "/" + px + "adults/" + rm + "rooms";
-      $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, n, px, rm);
       $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
       $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" +
         ci + "&checkout=" + co + "&adults=" + px;
