@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v64</title>
+<title>🏨 Meine Hotelsuche PRO v70</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v64</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v70</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -244,27 +244,37 @@ function todayIso() {
 }
 
 function norm(s) {
-  return s.toLowerCase()
-    .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
+  return String(s || "").toLowerCase().trim()
+    .split("ü").join("ue")
+    .split("ö").join("oe")
+    .split("ä").join("ae")
+    .split("ß").join("ss");
 }
 
-function slug(s) {
-  return norm(s).replace(/ß/g,"ss")
-    .replace(/\W+/g,"-").replace(/^-|-$/g,"");
-}
-
-function extractAgodaId(txt) {
-  const m1 = txt.match(/"ObjectId"\s*:\s*(\d+)/i);
-  if (m1) return m1.slice(1, 2).join("");
-  const m2 = txt.match(/"CityId"\s*:\s*(\d+)/i);
-  if (m2) return m2.slice(1, 2).join("");
-  const m3 = txt.match(/"Id"\s*:\s*(\d+)/i);
-  if (m3) return m3.slice(1, 2).join("");
+function extractIdSafe(txt) {
+  const tags = '"ObjectId":;"CityId":;"Id":'.split(";");
+  for (let i = 0; i < tags.length; i++) {
+    const tag = tags.slice(i, i + 1).join("");
+    const pos = txt.indexOf(tag);
+    if (pos !== -1) {
+      let rest = txt.slice(pos + tag.length).trim();
+      let num = "";
+      for (let j = 0; j < rest.length; j++) {
+        const ch = rest.charAt(j);
+        if (ch >= "0" && ch <= "9") {
+          num += ch;
+        } else if (num.length > 0) {
+          break;
+        }
+      }
+      if (num.length > 0 && num !== "0") return num;
+    }
+  }
   return "";
 }
 
 async function resolveAgodaInBg(city) {
-  const key = norm(city).trim();
+  const key = norm(city);
   if (!key) { resolvedAgodaId = ""; upd(); return; }
   if (agodaKnown[key]) {
     resolvedAgodaId = agodaKnown[key];
@@ -292,15 +302,15 @@ async function resolveAgodaInBg(city) {
     clearTimeout(tid);
     if (!res.ok) throw new Error("fail");
     const txt = await res.text();
-    const id = extractAgodaId(txt);
-    if (!id || id === "0") throw new Error("none");
+    const id = extractIdSafe(txt);
+    if (!id) throw new Error("none");
     return id;
   };
 
   try {
     const found = await Promise.any(endpoints.map(probe));
     agodaCache.set(key, found);
-    if (norm($("city").value).trim() === key) {
+    if (norm($("city").value) === key) {
       resolvedAgodaId = found;
       upd();
     }
@@ -312,27 +322,25 @@ async function resolveAgodaInBg(city) {
 function buildExpediaUrl(city, ci, co, px, rm, st) {
   const p = new URLSearchParams();
   p.set("destination", city);
-  p.set("startDate", ci);
-  p.set("endDate", co);
-  p.set("d1", ci);
-  p.set("d2", co);
+  if (ci) { p.set("startDate", ci); p.set("d1", ci); }
+  if (co) { p.set("endDate", co); p.set("d2", co); }
   p.set("adults", String(px));
   p.set("rooms", String(rm));
   if (st > 0) p.set("star", String(st * 10));
   return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function buildAgodaUrl(city, cc, ci, co, n, px, rm, st) {
-  const cid = resolvedAgodaId || agodaKnown[norm(city).trim()] || "";
+function buildAgodaUrl(city, ci, co, n, px, rm, st) {
+  const cid = resolvedAgodaId || agodaKnown[norm(city)] || "";
   const p = new URLSearchParams();
   if (cid) {
     p.set("city", cid);
   } else {
     p.set("textToSearch", city);
   }
-  p.set("checkIn", ci);
-  p.set("checkOut", co);
-  p.set("los", String(n));
+  if (ci) p.set("checkIn", ci);
+  if (co) p.set("checkOut", co);
+  if (n > 0) p.set("los", String(n));
   p.set("adults", String(px));
   p.set("children", "0");
   p.set("rooms", String(rm));
@@ -343,16 +351,19 @@ function buildAgodaUrl(city, cc, ci, co, n, px, rm, st) {
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
   const q = encodeURIComponent(city);
-  const dt1 = ci.replace(/-/g, "");
-  const dt2 = co.replace(/-/g, "");
-  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
-    "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
-    "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+  if (ci && co) {
+    const dt1 = ci.split("-").join("");
+    const dt2 = co.split("-").join("");
+    return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
+      "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
+      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+  }
+  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q;
 }
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
-    resolvedAgodaId = agodaKnown[norm(inp.value).trim()] || "";
+    resolvedAgodaId = agodaKnown[norm(inp.value)] || "";
     upd();
     clearTimeout(acTimer);
     clearTimeout(bgTimer);
@@ -416,8 +427,10 @@ function upd() {
   $("cib").classList.toggle("err", pastCi);
   $("cob").classList.toggle("err", badCo);
 
-  if (ci && co && !pastCi && !badCo) {
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+  const okDates = Boolean(ci && co && !pastCi && !badCo);
+  const n = okDates ? Math.round((new Date(co) - new Date(ci)) / 86400000) : 0;
+
+  if (okDates) {
     $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
@@ -433,12 +446,3 @@ function upd() {
     $("nt").textContent = "ZEITRAUM WÄHLEN";
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
-    $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
-  }
-
-  if (city && ci && co && !pastCi && !badCo) {
-    const q = encodeURIComponent(city);
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const c1 = ci.split("-");
-    const c2 = co.split("-");
-    const bFilt = st > 0 ? "class=" + st : "";
