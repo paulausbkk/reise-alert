@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v35</title>
+<title>🏨 Meine Hotelsuche PRO v38</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v35</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v38</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -129,7 +129,7 @@ input:focus,select:focus{
     <div class="ct">📍 Zielort & Reisedaten</div>
     <div class="f">
       <label>Reiseziel (beliebige Stadt weltweit)</label>
-      <input type="text" id="city" placeholder="z.B. Leipzig, Wien, Bangkok" autocomplete="off">
+      <input type="text" id="city" placeholder="z.B. Magdeburg, Wien, Bangkok" autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
@@ -213,41 +213,15 @@ input:focus,select:focus{
   </div>
   <div class="hint">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
-    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Booking.com</b> und
-    <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des
-    jeweiligen Anbieters direkt eingegeben werden.
+    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> das
+    <b>Datum & Gäste</b> und bei <b>Booking.com</b> / <b>Trivago</b> der
+    <b>Zielort</b> – müssen auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
 <script>
 const $ = id => document.getElementById(id);
 const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const agStr = "leipzig:13895;berlin:2128;muenchen:14163;frankfurt:14223;" +
-  "hamburg:13956;dresden:13876;koeln:13972;duesseldorf:13904;stuttgart:14266;" +
-  "nuernberg:14184;hannover:13961;bremen:13853;essen:13919;dortmund:13874;" +
-  "wien:14972;vienna:14972;salzburg:14969;innsbruck:14966;graz:14965;" +
-  "zuerich:15058;genf:15048;basel:15044;prag:14952;prague:14952;" +
-  "paris:15470;london:233;rom:14924;rome:14924;mailand:14916;venedig:14930;" +
-  "florenz:14912;neapel:14918;madrid:5531;barcelona:5532;valencia:5543;" +
-  "sevilla:5540;malaga:5536;palma de mallorca:5538;mallorca:5538;" +
-  "lissabon:15362;porto:15366;faro:15356;amsterdam:13864;rotterdam:13872;" +
-  "bruessel:13845;antwerpen:13844;kopenhagen:13885;stockholm:15035;" +
-  "oslo:15018;helsinki:13936;warschau:15338;krakau:15334;budapest:14940;" +
-  "athen:14896;istanbul:14932;antalya:14886;dubai:2994;abu dhabi:2993;" +
-  "doha:11977;bangkok:9395;phuket:16056;pattaya:8584;chiang mai:7401;" +
-  "koh samui:17198;krabi:14865;hua hin:16057;khao lak:16058;" +
-  "da nang:16440;quy nhon:17264;ho-chi-minh-stadt:13170;saigon:13170;" +
-  "hanoi:2758;nha trang:2679;phu quoc:16441;hoi an:16442;dalat:16439;" +
-  "manila:16592;cebu:4001;dumaguete:16562;pagadian:18952;boracay:16557;" +
-  "el nido:16558;bohol:16556;puerto princesa:16565;davao:16559;" +
-  "singapur:4064;singapore:4064;kuala lumpur:14524;penang:14526;" +
-  "langkawi:14525;denpasar bali:17193;bali:17193;ubud:17194;jakarta:8691;" +
-  "tokio:5085;tokyo:5085;osaka:9590;kyoto:14502;seoul:14690;hongkong:16808;" +
-  "taipeh:4951;peking:5172;shanghai:3987;sydney:14370;melbourne:14366;" +
-  "auckland:13724;christchurch:13726;new york:318;los angeles:12772;" +
-  "las vegas:17072;miami:14644;san francisco:13801;toronto:13825;" +
-  "kapstadt:14756;kairo:13880;hurghada:13882;marrakesch:14620";
-const agIds = new Map(agStr.split(";").map(p => p.split(":")));
 let cidx = 0;
 let acTimer = null;
 let lastCountryCode = "de";
@@ -270,20 +244,7 @@ function slug(s) {
     .replace(/\W+/g,"-").replace(/^-|-$/g,"");
 }
 
-function buildAgodaUrl(city, cc, ci, co, n, px, rm) {
-  const key = norm(city);
-  const aid = agIds.get(key) || "";
-  if (aid) {
-    const p = new URLSearchParams();
-    p.set("city", aid);
-    p.set("checkIn", ci);
-    p.set("los", String(n));
-    p.set("adults", String(px));
-    p.set("children", "0");
-    p.set("rooms", String(rm));
-    p.set("currency", "EUR");
-    return P + "www.agoda.com/de-de/search?" + p.toString();
-  }
+function buildAgodaInstantUrl(city, cc) {
   const sl = slug(city);
   const ctry = (cc || "de").toLowerCase();
   return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry + ".html";
@@ -374,7 +335,6 @@ function upd() {
   if (city && ci && co && !pastCi && !badCo) {
     const q = encodeURIComponent(city);
     const sl = slug(city);
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
     const bFilt = st > 0 ? "class=" + st : "";
@@ -399,7 +359,7 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, co, n, px, rm);
+    $("h5").href = buildAgodaInstantUrl(city, lastCountryCode);
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
