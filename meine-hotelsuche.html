@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v70</title>
+<title>🏨 Meine Hotelsuche PRO v71</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -122,7 +122,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit" id="m_tit">🏨 Meine Hotelsuche PRO v70</h1>
+  <h1 class="tit" id="m_tit">🏨 Meine Hotelsuche PRO v71</h1>
   <div class="cp">
     <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">🇬🇧 EN</button>
     <div class="seg" id="dt">20.11.2026</div>
@@ -136,7 +136,7 @@ input:focus,select:focus{
     <div class="ct" id="c1_tit">📍 Zielort & Reisedaten</div>
     <div class="f">
       <label id="l_city">Reiseziel (beliebige Stadt weltweit)</label>
-      <input type="text" id="city" placeholder="z.B. Peking, Mailand, Bangkok" autocomplete="off">
+      <input type="text" id="city" placeholder="z.B. Mailand, Pagadian, Bangkok" autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
@@ -189,10 +189,10 @@ input:focus,select:focus{
 </div>
 <div class="bb">
   <div class="bf">
-    <a id="h1" href="#_" target="_blank" rel="noopener" class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="#_" target="_blank" rel="noopener" class="btn b2 htl">Expedia Hotels</a>
-    <a id="h3" href="#_" target="_blank" rel="noopener" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="" method="get" target="_blank" class="htl">
+    <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
+    <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
+    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
@@ -209,44 +209,35 @@ input:focus,select:focus{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="#_" target="_blank" rel="noopener" class="btn b5 htl">Agoda</a>
-    <a id="h6" href="#_" target="_blank" rel="noopener" class="btn b6 htl">Trivago</a>
-    <a id="h8" href="#_" target="_blank" rel="noopener" class="btn b8 off">Airbnb</a>
+    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+    <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintbox">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
-    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> das
-    <b>Datum & Gäste</b> – müssen auf der Anbieterseite direkt gewählt werden.
+    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> (falls ein
+    kleiner Ort keine direkte Kalender-ID hat) das <b>Datum & Gäste</b> –
+    müssen auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
-<script>
+  <script>
 const $ = id => document.getElementById(id);
-const PROT = "https:" + "//";
+const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let cidx = 0;
 let acTimer = null;
+let lastCountryCode = "de";
 let curLang = "de";
-
-const DOMS = {
-  kayak: PROT + "www." + "kayak" + ".de",
-  expedia: PROT + "www." + "expedia" + ".de",
-  momondo: PROT + "www." + "momondo" + ".de",
-  booking: PROT + "www." + "booking" + ".com/searchresults.de.html",
-  agoda: PROT + "www." + "agoda" + ".com",
-  trivago: PROT + "www." + "trivago" + ".de",
-  airbnb: PROT + "www." + "airbnb" + ".de",
-  geo: PROT + "geocoding-api." + "open-meteo" + ".com/v1/search"
-};
 
 const HT = {
   de: {
     btn: "🇬🇧 EN",
-    m_tit: "🏨 Meine Hotelsuche PRO v70",
+    m_tit: "🏨 Meine Hotelsuche PRO v71",
     nav_fl: "⬅️ Zurück zur Flugsuche",
     nav_bk: "✈️ Flugbuchungen ➡️",
     c1_tit: "📍 Zielort & Reisedaten",
     l_city: "Reiseziel (beliebige Stadt weltweit)",
-    ph_city: "z.B. Peking, Mailand, Bangkok",
+    ph_city: "z.B. Mailand, Pagadian, Bangkok",
     l_ci: "Check-in (Anreise)",
     l_co: "Check-out (Abreise)",
     c2_tit: "🛏️ Gäste, Zimmer & Hotel-Filter",
@@ -268,12 +259,12 @@ const HT = {
   },
   en: {
     btn: "🇩🇪 DE",
-    m_tit: "🏨 My Hotel Search PRO v70",
+    m_tit: "🏨 My Hotel Search PRO v71",
     nav_fl: "⬅️ Back to Flight Search",
     nav_bk: "✈️ Flight Bookings ➡️",
     c1_tit: "📍 Destination & Travel Dates",
     l_city: "Destination (any city worldwide)",
-    ph_city: "e.g. Beijing, Milan, Bangkok",
+    ph_city: "e.g. Milan, Pagadian, Bangkok",
     l_ci: "Check-in",
     l_co: "Check-out",
     c2_tit: "🛏️ Guests, Rooms & Hotel Filters",
@@ -317,22 +308,10 @@ function toggleLang() {
 
 function todayIso() {
   const d = new Date();
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-}
-
-function addDaysIso(iso, days) {
-  const parts = iso.split("-");
-  const y = +parts.slice(0, 1).join("");
-  const m = +parts.slice(1, 2).join("") - 1;
-  const day = +parts.slice(2, 3).join("") + days;
-  const d = new Date(y, m, day);
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-}
-
-function fixQuery(q) {
-  const low = q.trim().toLowerCase();
-  if (low === "bejing" || low === "peking") return "Beijing";
-  return q.trim();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return y + "-" + m + "-" + day;
 }
 
 function buildExpediaUrl(city, ci, co, px, rm, st) {
@@ -345,26 +324,26 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
   p.set("adults", String(px));
   p.set("rooms", String(rm));
   if (st > 0) p.set("star", String(st * 10));
-  return DOMS.expedia + "/Hotel-Search?" + p.toString();
+  return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
 function buildAgodaUrl(city, ci, n, px, rm) {
   const p = new URLSearchParams();
-  p.set("textToSearch", fixQuery(city));
+  p.set("textToSearch", city);
   p.set("checkIn", ci);
   p.set("los", String(n));
   p.set("adults", String(px));
   p.set("children", "0");
   p.set("rooms", String(rm));
   p.set("currency", "EUR");
-  return DOMS.agoda + "/de-de/search?" + p.toString();
+  return P + "://agoda.com?" + p.toString();
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
   const q = encodeURIComponent(city);
   const dt1 = ci.replace(/-/g, "");
   const dt2 = co.replace(/-/g, "");
-  return DOMS.trivago + "/de/srl?query=" + q + "&sQuery=" + q +
+  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
     "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
     "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 }
@@ -373,12 +352,12 @@ function liveAc(inp, box) {
   inp.addEventListener("input", () => {
     upd();
     clearTimeout(acTimer);
-    const raw = inp.value.trim();
-    if (raw.length < 2) { box.style.display = "none"; return; }
-    const q = fixQuery(raw);
+    const q = inp.value.trim();
+    if (q.length < 2) { box.style.display = "none"; return; }
     acTimer = setTimeout(async () => {
       try {
-        const u = DOMS.geo + "?name=" + encodeURIComponent(q) + "&count=6&language=" + curLang + "&format=json";
+        const u = P + "://open-meteo.com" +
+          encodeURIComponent(q) + "&count=6&language=" + curLang + "&format=json";
         const r = await fetch(u);
         const j = await r.json();
         box.innerHTML = "";
@@ -389,13 +368,16 @@ function liveAc(inp, box) {
           d.textContent = item.name + sub;
           d.onclick = () => {
             inp.value = item.name;
+            lastCountryCode = (item.country_code || "de").toLowerCase();
             box.style.display = "none";
             upd();
           };
           box.appendChild(d);
         });
         box.style.display = "block";
-      } catch (e) { box.style.display = "none"; }
+      } catch (e) {
+        box.style.display = "none";
+      }
     }, 200);
   });
   document.addEventListener("click", e => {
@@ -407,18 +389,15 @@ function upd() {
   const now = new Date(), dtEl = $("dt");
   const t = todayIso();
   const d = HT[curLang];
-  dtEl.textContent = now.toLocaleDateString(curLang === "en" ? "en-GB" : "de-DE") + " • " + now.toLocaleTimeString(curLang === "en" ? "en-GB" : "de-DE");
+  dtEl.textContent = now.toLocaleDateString(curLang === "en" ? "en-GB" : "de-DE") +
+    " • " + now.toLocaleTimeString(curLang === "en" ? "en-GB" : "de-DE");
   const idx = cidx++ % cols.length;
   const col = cols.slice(idx, idx + 1).join("") || "#0284c7";
   dtEl.style.setProperty("background-color", col, "important");
 
   const city = $("city").value.trim();
   const ci = $("ci").value;
-  let co = $("co").value;
-  if (ci && (!co || co <= ci)) {
-    co = addDaysIso(ci, 1);
-    $("co").value = co;
-  }
+  const co = $("co").value;
   const px = +$("px").value || 2;
   const rm = +$("rm").value || 1;
   const st = +$("st").value || 0;
@@ -437,7 +416,9 @@ function upd() {
     $("nt").textContent = n + (n === 1 ? d.night1 : d.nights);
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
-    $("info").textContent = (ab ? "(AIRBNB) " : "") + d.sel + (city || d.open) + " • " + n + (n === 1 ? d.n1 : d.nn) + " • " + px + d.pers + rm + d.room;
+    $("info").textContent = (ab ? "(AIRBNB) " : "") +
+      d.sel + (city || d.open) + " • " + n +
+      (n === 1 ? d.n1 : d.nn) + " • " + px + d.pers + rm + d.room;
   } else if (pastCi || badCo) {
     $("nt").textContent = d.badDt;
     $("info").style.background = "#fee2e2";
@@ -450,7 +431,6 @@ function upd() {
     $("info").textContent = d.pickMsg;
   }
 
-  $("f4").action = DOMS.booking;
   if (city && ci && co && !pastCi && !badCo) {
     const q = encodeURIComponent(city);
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
@@ -458,9 +438,11 @@ function upd() {
     const c2 = co.split("-");
     const bFilt = st > 0 ? "class=" + st : "";
 
-    $("h1").href = DOMS.kayak + "/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
+      "/" + px + "adults/" + rm + "rooms";
     $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
-    $("h3").href = DOMS.momondo + "/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
+      "/" + px + "adults/" + rm + "rooms";
 
     $("b_ss").value = city;
     $("b_ci").value = ci;
@@ -478,3 +460,31 @@ function upd() {
 
     $("h5").href = buildAgodaUrl(city, ci, n, px, rm);
     $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
+    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
+      "&checkout=" + co + "&adults=" + px;
+  }
+
+  try {
+    localStorage.setItem("rk_hotel", JSON.stringify({
+      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
+    }));
+  } catch (e) {}
+}
+
+(function() {
+  const t = todayIso();
+  $("ci").min = t;
+  $("co").min = t;
+  try {
+    curLang = localStorage.getItem("rk_lang") || "de";
+    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
+    if (d) {
+      if (d.city) $("city").value = d.city;
+      if (d.ci) $("ci").value = d.ci;
+      if (d.co) $("co").value = d.co;
+      if (d.px) $("px").value = d.px;
+      if (d.rm) $("rm").value = d.rm;
+      if (d.st) $("st").value = d.st;
+      if (d.ab !== undefined) $("ab").checked = d.ab;
+      if (d.cc) lastCountryCode = d.cc;
+    }
