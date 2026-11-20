@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v22</title>
+<title>🏨 Meine Hotelsuche PRO v23</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;--b:#bae6fd;--v:#0284c7;--lg:#0ea5e9}
 html,body{margin:0;padding:16px;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);min-height:100vh;font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,11 +42,12 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 .sw input:checked+.sl:before{transform:translateX(18px)}
 @keyframes pulseHint{0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}}
 .hint{margin-top:16px;background:#0f2942;color:#fff;border:3px solid #991b1b;border-left:7px solid #991b1b;border-radius:8px;padding:12px 15px;font-size:.88rem;line-height:1.45;animation:pulseHint 2.2s infinite ease-in-out}
+.dbg{margin-top:10px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;padding:8px 12px;font-size:.78rem;color:#334155;word-break:break-all;display:none}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v22</h1>
-<div class="cp"><div class="seg" id="dt">18.11.2026</div><div class="seg" id="nt">1 NACHT</div>
+<div class="hdr"><h1 class="tit">🏨 Meine Hotelsuche PRO v23</h1>
+<div class="cp"><div class="seg" id="dt">20.11.2026</div><div class="seg" id="nt">1 NACHT</div>
 <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
 <a href="meine-flugbuchungen.html" class="seg upg">✈️ Meine Flugbuchungen ➡️</a></div></div>
 <div class="row">
@@ -83,13 +84,14 @@ input:focus,select:focus{outline:none;border-color:#0284c7;background:#fff;box-s
 <input type="hidden" name="selected_currency" value="EUR">
 <button type="submit" class="btn b4">Booking.com</button>
 </form>
-<a id="h5" href="https://agoda.com" target="_blank" rel="noopener" class="btn b5 htl">Agoda</a>
+<button type="button" id="h5" class="btn b5 htl">Agoda</button>
 <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl" style="margin:0">
 <input type="hidden" name="search" id="t_s">
 <button type="submit" class="btn b6">Trivago</button>
 </form>
 <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
 </div>
+<div class="dbg" id="dbg"></div>
 <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b>, <b>inklusive Frühstück</b> oder <b>All-Inclusive</b> – sowie bei <b>Booking.com</b> und <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des jeweiligen Anbieters direkt eingegeben werden.</div>
 </div>
 <script>
@@ -102,6 +104,7 @@ const agIds = new Map(
   .split(";").map(p => p.split(":"))
 );
 let cidx = 0;
+let agodaTargetUrl = P + "://agoda.com";
 
 function norm(s) {
   return s.toLowerCase().replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
@@ -122,14 +125,9 @@ function fakeGuid() {
     } else if (i === 19) {
       out += hex.charAt((Math.random() * 4 | 0) + 8);
     } else {
-      out += hex.charAt(Math.random() * 16 | 0);
-    }
-  }
-  return out;
-}
-function buildAgodaUrl(city, aid, ci, co, n, px, rm) {
+    function buildAgodaUrl(city, aid, ci, co, n, px, rm) {
   const g = fakeGuid();
-  const base = P + "://agoda.com";
+  const base = P + "www.agoda.com/de-de/search";
   const params = new URLSearchParams();
   params.set("guid", g);
   params.set("cid", "-218");
@@ -164,6 +162,26 @@ function buildAgodaUrl(city, aid, ci, co, n, px, rm) {
   params.set("textToSearch", city);
   if (aid) params.set("city", aid);
   return base + "?" + params.toString();
+}
+
+function goAgoda() {
+  upd();
+  const city = $("city").value.trim();
+  const ci = $("ci").value;
+  const co = $("co").value;
+  const dbg = $("dbg");
+  dbg.style.display = "block";
+  if (!city || !ci || !co || co <= ci) {
+    dbg.textContent = "⚠️ Bitte zuerst Reiseziel, Check-in und gültiges Check-out-Datum eingeben!";
+    $("info").style.background = "#fee2e2";
+    $("info").style.color = "#991b1b";
+    return;
+  }
+  dbg.innerHTML = "✅ <b>Agoda-Sprung ausgelöst:</b> <a href='" + agodaTargetUrl + "' target='_blank'>" + agodaTargetUrl + "</a>";
+  const win = window.open(agodaTargetUrl, "_blank");
+  if (!win) {
+    window.location.assign(agodaTargetUrl);
+  }
 }
 
 function ac(inp, box) {
@@ -210,6 +228,8 @@ function upd() {
   if (ci && co && !badDate) {
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
     $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
+    $("info").style.background = "#eff6ff";
+    $("info").style.color = "#1e3a8a";
     $("info").textContent = (ab ? "(AIRBNB) " : "") + "Auswahl: " + (city || "Ziel offen") +
       " • " + n + (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi.";
   } else {
@@ -247,7 +267,7 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaUrl(city, aid, ci, co, n, px, rm);
+    agodaTargetUrl = buildAgodaUrl(city, aid, ci, co, n, px, rm);
 
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
@@ -289,9 +309,10 @@ function upd() {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
-  "h1;h3;h5;h8".split(";").forEach(id => {
+  "h1;h3;h8".split(";").forEach(id => {
     $(id).addEventListener("click", upd);
   });
+  $("h5").addEventListener("click", goAgoda);
   "f2;f4;f6".split(";").forEach(id => {
     $(id).addEventListener("submit", upd);
   });
