@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v64</title>
+<title>🏨 Meine Hotelsuche PRO v80</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -120,7 +120,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v64</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v80</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -230,10 +230,17 @@ function todayIso() {
   return y + "-" + m + "-" + day;
 }
 
+function slug(s) {
+  return s.toLowerCase().trim()
+    .split("ü").join("ue").split("ö").join("oe")
+    .split("ä").join("ae").split("ß").join("ss")
+    .replace(/\W+/g, "-").replace(/^-|-$/g, "");
+}
+
 function buildBookingUrl(city, ci, co, px, rm, st) {
   const q = encodeURIComponent(city);
   let u = P + "://booking.com" + q +
-    "&group_adults=" + px + "&no_rooms=" + rm +
+    "&sb=1&src=index&group_adults=" + px + "&no_rooms=" + rm +
     "&lang=de&selected_currency=EUR";
   if (ci && co) u += "&checkin=" + ci + "&checkout=" + co;
   if (st > 0) u += "&nflt=class%3D" + st;
@@ -251,29 +258,24 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
   return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function buildAgodaUrl(city, ci, co, n, px, rm) {
-  const p = new URLSearchParams();
-  p.set("textToSearch", city);
-  if (ci) p.set("checkIn", ci);
-  if (co) p.set("checkOut", co);
-  p.set("los", String(n));
-  p.set("adults", String(px));
-  p.set("children", "0");
-  p.set("rooms", String(rm));
-  p.set("currency", "EUR");
-  return P + "://agoda.com?" + p.toString();
+function buildAgodaUrl(city, ci, n, px, rm) {
+  const base = P + "://agoda.com";
+  const page = "DestinationSearchResult.aspx?city=-1&selectedproperty=-1";
+  let u = base + page + "&txtSearch=" + encodeURIComponent(city) +
+    "&adults=" + px + "&children=0&rooms=" + rm + "&currency=EUR";
+  if (ci) u += "&checkIn=" + ci + "&los=" + n;
+  return u;
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
-  const q = encodeURIComponent(city);
+  const sl = slug(city);
   if (ci && co) {
     const dt1 = ci.replace(/-/g, "");
     const dt2 = co.replace(/-/g, "");
-    return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
-      "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
-      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+    return P + "www.trivago.de/de/srl/hotels-" + sl +
+      "?search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
   }
-  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q;
+  return P + "www.trivago.de/de/srl/hotels-" + sl;
 }
 
 function liveAc(inp, box) {
@@ -374,7 +376,7 @@ function upd() {
 
     $("h2").href = buildExpediaUrl(city, d1, d2, px, rm, st);
     $("h4").href = buildBookingUrl(city, d1, d2, px, rm, st);
-    $("h5").href = buildAgodaUrl(city, d1, d2, n, px, rm);
+    $("h5").href = buildAgodaUrl(city, d1, n, px, rm);
     $("h6").href = buildTrivagoUrl(city, d1, d2, px, rm);
 
     if (okDates) {
