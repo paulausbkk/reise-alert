@@ -20,6 +20,10 @@ box-shadow:0 4px 14px rgba(15,41,66,.18)}
 font-weight:bold;color:#fff;text-transform:uppercase;
 background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
 .seg.upg{background:#1e40af;border-color:#60a5fa}
+.lang-btn{font-size:.82rem;padding:8px 12px;border-radius:6px;
+font-weight:bold;color:#fff;background:#0f766e;
+border:1px solid #5eead4;cursor:pointer}
+.lang-btn:hover{filter:brightness(1.12)}
 .bento{display:grid;
 grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 gap:16px;margin-bottom:16px}
@@ -89,11 +93,12 @@ object-position:center;border-radius:8px;border:1px solid #bae6fd}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit">🌴 Philippinen & Asien Reiseportal</h1>
+<div class="hdr"><h1 class="tit" id="p_tit">🌴 Philippinen & Asien Reiseportal</h1>
 <div class="cp">
-<a href="meine-hotelsuche.html" class="seg">🏨 Hotelsuche</a>
-<a href="meine-flugbuchungen.html" class="seg">📋 Flugbuchungen</a>
-<a href="index.html" class="seg upg">✈️ Zur Flugsuche ➡️</a>
+<button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">🇬🇧 EN</button>
+<a href="meine-hotelsuche.html" id="nav_htl" class="seg">🏨 Hotelsuche</a>
+<a href="meine-flugbuchungen.html" id="nav_bk" class="seg">📋 Flugbuchungen</a>
+<a href="index.html" id="nav_fl" class="seg upg">✈️ Zur Flugsuche ➡️</a>
 </div>
 </div>
 <div class="bento">
@@ -102,15 +107,15 @@ object-position:center;border-radius:8px;border:1px solid #bae6fd}
 <div class="pic-fade"></div>
 <div class="sun-glow"></div>
 <div class="ptxt">
-<h2>Dein Startpunkt für die Philippinen</h2>
-<p>Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian –
+<h2 id="h_tit">Dein Startpunkt für die Philippinen</h2>
+<p id="h_sub">Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian –
 plane deine Route und vergleiche alle Flüge direkt.</p>
-<a href="index.html" class="cta">✈️ Flugkonfiguration öffnen ➡️</a>
+<a href="index.html" id="h_cta" class="cta">✈️ Flugkonfiguration öffnen ➡️</a>
 </div>
 </div>
 </div>
 <div class="box">
-<div class="ct">📸 Impressionen & Inseln</div>
+<div class="ct" id="g_tit">📸 Impressionen & Inseln</div>
 <div class="gal">
 <img src="cebu.jpg" alt="Cebu">
 <img src="bohol.jpg" alt="Bohol">
@@ -119,25 +124,80 @@ plane deine Route und vergleiche alle Flüge direkt.</p>
 </div>
 </div>
 <div class="box">
-<div class="ct">ℹ️ Wichtige Reise-Hinweise (Klicken)</div>
+<div class="ct" id="i_tit">ℹ️ Wichtige Reise-Hinweise (Klicken)</div>
 <details open>
-<summary>🛂 Einreise & eTravel-Pflicht</summary>
-<p>Reisepass mindestens 6 Monate gültig. Die kostenlose
+<summary id="s1">🛂 Einreise & eTravel-Pflicht</summary>
+<p id="p1">Reisepass mindestens 6 Monate gültig. Die kostenlose
 eTravel-Registrierung spätestens 72 Stunden vor Abflug online
 ausfüllen und QR-Code speichern.</p>
 </details>
 <details>
-<summary>🧳 Inlandsflüge & Gepäckregeln</summary>
-<p>Bei Cebu Pacific oder Philippine Airlines sind günstige
+<summary id="s2">🧳 Inlandsflüge & Gepäckregeln</summary>
+<p id="p2">Bei Cebu Pacific oder Philippine Airlines sind günstige
 Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung
 hinzufügen.</p>
 </details>
 <details>
-<summary>☀️ Beste Reisezeit Visayas & Palawan</summary>
-<p>Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter
+<summary id="s3">☀️ Beste Reisezeit Visayas & Palawan</summary>
+<p id="p3">Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter
 für Inselhopping, Tauchen und Badeurlaub.</p>
 </details>
 </div>
 </div>
+<script>
+const T = {
+  de: {
+    btn: "🇬🇧 EN",
+    p_tit: "🌴 Philippinen & Asien Reiseportal",
+    nav_htl: "🏨 Hotelsuche",
+    nav_bk: "📋 Flugbuchungen",
+    nav_fl: "✈️ Zur Flugsuche ➡️",
+    h_tit: "Dein Startpunkt für die Philippinen",
+    h_sub: "Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian – plane deine Route und vergleiche alle Flüge direkt.",
+    h_cta: "✈️ Flugkonfiguration öffnen ➡️",
+    g_tit: "📸 Impressionen & Inseln",
+    i_tit: "ℹ️ Wichtige Reise-Hinweise (Klicken)",
+    s1: "🛂 Einreise & eTravel-Pflicht",
+    p1: "Reisepass mindestens 6 Monate gültig. Die kostenlose eTravel-Registrierung spätestens 72 Stunden vor Abflug online ausfüllen und QR-Code speichern.",
+    s2: "🧳 Inlandsflüge & Gepäckregeln",
+    p2: "Bei Cebu Pacific oder Philippine Airlines sind günstige Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung hinzufügen.",
+    s3: "☀️ Beste Reisezeit Visayas & Palawan",
+    p3: "Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter für Inselhopping, Tauchen und Badeurlaub."
+  },
+  en: {
+    btn: "🇩🇪 DE",
+    p_tit: "🌴 Philippines & Asia Travel Portal",
+    nav_htl: "🏨 Hotel Search",
+    nav_bk: "📋 Flight Bookings",
+    nav_fl: "✈️ Flight Search ➡️",
+    h_tit: "Your Gateway to the Philippines",
+    h_sub: "From Germany to Manila, Cebu, Dumaguete or Pagadian – plan your route and compare all flights directly.",
+    h_cta: "✈️ Open Flight Configurator ➡️",
+    g_tit: "📸 Impressions & Islands",
+    i_tit: "ℹ️ Important Travel Notes (Click)",
+    s1: "🛂 Entry & eTravel Requirement",
+    p1: "Passport valid for at least 6 months. Complete the free eTravel registration online at least 72 hours before departure and save the QR code.",
+    s2: "🧳 Domestic Flights & Baggage Rules",
+    p2: "With Cebu Pacific or Philippine Airlines, basic fares often exclude checked baggage – add it directly during booking.",
+    s3: "☀️ Best Travel Season Visayas & Palawan",
+    p3: "From December to May is dry season with ideal weather for island hopping, diving and beach holidays."
+  }
+};
+let curLang = "de";
+try { curLang = localStorage.getItem("rk_lang") || "de"; } catch(e) {}
+function applyLang(l) {
+  curLang = l === "en" ? "en" : "de";
+  try { localStorage.setItem("rk_lang", curLang); } catch(e) {}
+  document.documentElement.lang = curLang;
+  const d = T[curLang];
+  document.getElementById("langBtn").textContent = d.btn;
+  Object.keys(d).forEach(k => {
+    if (k !== "btn" && document.getElementById(k)) {
+      document.getElementById(k).textContent = d[k];
+    }
+  });
+}
+function toggleLang() { applyLang(curLang === "de" ? "en" : "de"); }
+applyLang(curLang);
+</script>
 </body>
-</html>
