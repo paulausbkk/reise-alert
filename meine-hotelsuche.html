@@ -233,7 +233,7 @@ function todayIso() {
 }
 
 function norm(s) {
-  return s.toLowerCase()
+  return String(s || "").toLowerCase()
     .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
 }
 
@@ -279,26 +279,24 @@ async function resolveAgodaInBg(city) {
 function buildExpediaUrl(city, ci, co, px, rm, st) {
   const p = new URLSearchParams();
   p.set("destination", city);
-  p.set("startDate", ci);
-  p.set("endDate", co);
-  p.set("d1", ci);
-  p.set("d2", co);
+  if (ci) { p.set("startDate", ci); p.set("d1", ci); }
+  if (co) { p.set("endDate", co); p.set("d2", co); }
   p.set("adults", String(px));
   p.set("rooms", String(rm));
   if (st > 0) p.set("star", String(st * 10));
   return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function buildAgodaUrl(city, cc, ci, co, n, px, rm, st) {
+function buildAgodaUrl(city, ci, co, n, px, rm, st) {
   const p = new URLSearchParams();
   if (resolvedAgodaId) {
     p.set("city", resolvedAgodaId);
   } else {
     p.set("textToSearch", city);
   }
-  p.set("checkIn", ci);
-  p.set("checkOut", co);
-  p.set("los", String(n));
+  if (ci) p.set("checkIn", ci);
+  if (co) p.set("checkOut", co);
+  if (n > 0) p.set("los", String(n));
   p.set("adults", String(px));
   p.set("children", "0");
   p.set("rooms", String(rm));
@@ -309,11 +307,14 @@ function buildAgodaUrl(city, cc, ci, co, n, px, rm, st) {
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
   const q = encodeURIComponent(city);
-  const dt1 = ci.replace(/-/g, "");
-  const dt2 = co.replace(/-/g, "");
-  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
-    "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
-    "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+  if (ci && co) {
+    const dt1 = ci.replace(/-/g, "");
+    const dt2 = co.replace(/-/g, "");
+    return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
+      "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
+      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+  }
+  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q;
 }
 
 function liveAc(inp, box) {
@@ -382,8 +383,10 @@ function upd() {
   $("cib").classList.toggle("err", pastCi);
   $("cob").classList.toggle("err", badCo);
 
-  if (ci && co && !pastCi && !badCo) {
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+  const okDates = Boolean(ci && co && !pastCi && !badCo);
+  const n = okDates ? Math.round((new Date(co) - new Date(ci)) / 86400000) : 0;
+
+  if (okDates) {
     $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
@@ -402,54 +405,45 @@ function upd() {
     $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
   }
 
-  if (city && ci && co && !pastCi && !badCo) {
+  if (city) {
     const q = encodeURIComponent(city);
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const c1 = ci.split("-");
-    const c2 = co.split("-");
     const bFilt = st > 0 ? "class=" + st : "";
 
-    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
-      "/" + px + "adults/" + rm + "rooms";
-    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
-
-    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
-      "/" + px + "adults/" + rm + "rooms";
     $("b_ss").value = city;
-    $("b_ci").value = ci;
-    $("b_co").value = co;
-    $("b_ciy").value = c1.slice(0, 1).join("");
-    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
-    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
-    $("b_coy").value = c2.slice(0, 1).join("");
-    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
-    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
     $("b_px").value = px;
     $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, co, n, px, rm, st);
-    $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
-    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
-      "&checkout=" + co + "&adults=" + px;
-  }
+    if (okDates) {
+      const c1 = ci.split("-");
+      const c2 = co.split("-");
+      $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
+        "/" + px + "adults/" + rm + "rooms";
+      $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
+        "/" + px + "adults/" + rm + "rooms";
+      $("b_ci").value = ci;
+      $("b_co").value = co;
+      $("b_ciy").value = c1.slice(0, 1).join("");
+      $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
+      $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
+      $("b_coy").value = c2.slice(0, 1).join("");
+      $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
+      $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
+      $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
+        "&checkout=" + co + "&adults=" + px;
+    } else {
+      $("h1").href = P + "www.kayak.de/hotels/" + q;
+      $("h3").href = P + "www.momondo.de/hotels/" + q;
+      $("b_ci").value = "";
+      $("b_co").value = "";
+      $("b_ciy").value = "";
+      $("b_cim").value = "";
+      $("b_cid").value = "";
+      $("b_coy").value = "";
+      $("b_com").value = "";
+      $("b_cod").value = "";
+      $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?adults=" + px;
+    }
 
-  try {
-    localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
-    }));
-  } catch (e) {}
-}
-
-(function() {
-  const t = todayIso();
-  $("ci").min = t;
-  $("co").min = t;
-  try {
-    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
-    if (d) {
-      if (d.city) $("city").value = d.city;
-      if (d.ci) $("ci").value = d.ci;
-      if (d.co) $("co").value = d.co;
-      if (d.px) $("px").value = d.px;
+    $("h2").href = buildExpediaUrl(city, okDates ? ci : "", okDates ? co : "", px, rm, st);
