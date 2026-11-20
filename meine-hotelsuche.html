@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v67</title>
+<title>🏨 Meine Hotelsuche PRO v64</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -29,12 +29,6 @@ html,body{
 }
 .seg.nav{background:#1e40af;font-size:.88rem;padding:8px 14px}
 .seg.upg{background:#0369a1;font-size:.88rem;padding:8px 14px}
-.lang-btn{
-  font-size:.82rem;padding:8px 12px;border-radius:6px;
-  font-weight:bold;color:#fff;background:#0f766e;
-  border:1px solid #5eead4;cursor:pointer
-}
-.lang-btn:hover{filter:brightness(1.12)}
 .row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
@@ -122,65 +116,64 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit" id="m_tit">🏨 Meine Hotelsuche PRO v67</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v64</h1>
   <div class="cp">
-    <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">🇬🇧 EN</button>
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
-    <a href="index.html" id="nav_fl" class="seg nav">⬅️ Zurück zur Flugsuche</a>
-    <a href="meine-flugbuchungen.html" id="nav_bk" class="seg upg">✈️ Flugbuchungen ➡️</a>
+    <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
+    <a href="meine-flugbuchungen.html" class="seg upg">✈️ Flugbuchungen ➡️</a>
   </div>
 </div>
 <div class="row">
   <div class="card">
-    <div class="ct" id="c1_tit">📍 Zielort & Reisedaten</div>
+    <div class="ct">📍 Zielort & Reisedaten</div>
     <div class="f">
-      <label id="l_city">Reiseziel (beliebige Stadt weltweit)</label>
+      <label>Reiseziel (beliebige Stadt weltweit)</label>
       <input type="text" id="city" placeholder="z.B. Mailand, Pagadian, Bangkok" autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
-      <label id="l_ci">Check-in (Anreise)</label>
+      <label>Check-in (Anreise)</label>
       <input type="date" id="ci">
     </div>
     <div class="f" id="cob">
-      <label id="l_co">Check-out (Abreise)</label>
+      <label>Check-out (Abreise)</label>
       <input type="date" id="co">
     </div>
   </div>
   <div class="card">
-    <div class="ct" id="c2_tit">🛏️ Gäste, Zimmer & Hotel-Filter</div>
+    <div class="ct">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
       <div class="f" style="margin:0">
-        <label for="px" id="l_px">Personenzahl</label>
+        <label for="px">Personenzahl</label>
         <select id="px">
-          <option value="1" id="px1">1 Erwachsener</option>
-          <option value="2" id="px2" selected>2 Erwachsene</option>
-          <option value="3" id="px3">3 Erwachsene</option>
-          <option value="4" id="px4">4 Erwachsene</option>
+          <option value="1">1 Erwachsener</option>
+          <option value="2" selected>2 Erwachsene</option>
+          <option value="3">3 Erwachsene</option>
+          <option value="4">4 Erwachsene</option>
         </select>
       </div>
       <div class="f" style="margin:0">
-        <label for="rm" id="l_rm">Zimmer</label>
+        <label for="rm">Zimmer</label>
         <select id="rm">
-          <option value="1" id="rm1" selected>1 Zimmer</option>
-          <option value="2" id="rm2">2 Zimmer</option>
-          <option value="3" id="rm3">3 Zimmer</option>
+          <option value="1" selected>1 Zimmer</option>
+          <option value="2">2 Zimmer</option>
+          <option value="3">3 Zimmer</option>
         </select>
       </div>
     </div>
     <div class="f">
-      <label for="st" id="l_st">Mindest-Sterne</label>
+      <label for="st">Mindest-Sterne</label>
       <select id="st">
-        <option value="0" id="st0">Alle Kategorien</option>
-        <option value="3" id="st3">Ab 3 Sterne ⭐⭐⭐</option>
-        <option value="4" id="st4">Ab 4 Sterne ⭐⭐⭐⭐</option>
-        <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
+        <option value="0">Alle Kategorien</option>
+        <option value="3">Ab 3 Sterne ⭐⭐⭐</option>
+        <option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option>
+        <option value="5">5 Sterne ⭐⭐⭐⭐⭐</option>
       </select>
     </div>
     <div class="f">
       <div class="swc">
-        <label for="ab" id="l_ab" style="margin:0;cursor:pointer">Nur Airbnb</label>
+        <label for="ab" style="margin:0;cursor:pointer">Nur Airbnb</label>
         <label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label>
       </div>
     </div>
@@ -189,10 +182,10 @@ input:focus,select:focus{
 </div>
 <div class="bb">
   <div class="bf">
-    <a id="h1" href="#_" target="_blank" rel="noopener" class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="#_" target="_blank" rel="noopener" class="btn b2 htl">Expedia Hotels</a>
-    <a id="h3" href="#_" target="_blank" rel="noopener" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="" method="get" target="_blank" class="htl">
+    <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
+    <a id="h2" href="https://www.expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
+    <form id="f4" action="https://www.booking.com/searchresults.de.html" method="get" target="_blank" class="htl">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
@@ -209,133 +202,95 @@ input:focus,select:focus{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="#_" target="_blank" rel="noopener" class="btn b5 htl">Agoda</a>
-    <a id="h6" href="#_" target="_blank" rel="noopener" class="btn b6 htl">Trivago</a>
-    <a id="h8" href="#_" target="_blank" rel="noopener" class="btn b8 off">Airbnb</a>
+    <a id="h5" href="https://www.agoda.com/de-de/" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://www.trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+    <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
-  <div class="hint" id="hintbox">
+  <div class="hint">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
-    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> das
-    <b>Datum & Gäste</b> – müssen auf der Anbieterseite direkt gewählt werden.
+    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> (falls ein
+    kleiner Ort keine direkte Kalender-ID hat) das <b>Datum & Gäste</b> –
+    müssen auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
 <script>
 const $ = id => document.getElementById(id);
-const PROT = "https:" + "//";
+const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
+const agodaCache = new Map();
 let cidx = 0;
 let acTimer = null;
+let bgTimer = null;
 let lastCountryCode = "de";
-let curLang = "de";
-
-const DOMS = {
-  kayak: PROT + "www." + "kayak" + ".de",
-  expedia: PROT + "www." + "expedia" + ".de",
-  momondo: PROT + "www." + "momondo" + ".de",
-  booking: PROT + "www." + "booking" + ".com/searchresults.de.html",
-  agoda: PROT + "www." + "agoda" + ".com",
-  trivago: PROT + "www." + "trivago" + ".de",
-  airbnb: PROT + "www." + "airbnb" + ".de",
-  geo: PROT + "geocoding-api." + "open-meteo" + ".com/v1/search"
-};
-
-const HT = {
-  de: {
-    btn: "🇬🇧 EN",
-    m_tit: "🏨 Meine Hotelsuche PRO v67",
-    nav_fl: "⬅️ Zurück zur Flugsuche",
-    nav_bk: "✈️ Flugbuchungen ➡️",
-    c1_tit: "📍 Zielort & Reisedaten",
-    l_city: "Reiseziel (beliebige Stadt weltweit)",
-    ph_city: "z.B. Mailand, Pagadian, Bangkok",
-    l_ci: "Check-in (Anreise)",
-    l_co: "Check-out (Abreise)",
-    c2_tit: "🛏️ Gäste, Zimmer & Hotel-Filter",
-    l_px: "Personenzahl",
-    px1: "1 Erwachsener", px2: "2 Erwachsene", px3: "3 Erwachsene", px4: "4 Erwachsene",
-    l_rm: "Zimmer",
-    rm1: "1 Zimmer", rm2: "2 Zimmer", rm3: "3 Zimmer",
-    l_st: "Mindest-Sterne",
-    st0: "Alle Kategorien", st3: "Ab 3 Sterne ⭐⭐⭐", st4: "Ab 4 Sterne ⭐⭐⭐⭐", st5: "5 Sterne ⭐⭐⭐⭐⭐",
-    l_ab: "Nur Airbnb",
-    night1: " NACHT", nights: " NÄCHTE",
-    n1: " Nacht", nn: " Nächte",
-    sel: "Auswahl: ", open: "Ziel offen", pers: " Pers. • ", room: " Zi.",
-    badDt: "DATUM PRÜFEN",
-    badMsg: "Datum liegt in der Vergangenheit oder Check-out vor Check-in.",
-    pickDt: "ZEITRAUM WÄHLEN",
-    pickMsg: "Bitte Reiseziel, Check-in und Check-out wählen.",
-    hint: "ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>, <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> das <b>Datum & Gäste</b> – müssen auf der Anbieterseite direkt gewählt werden."
-  },
-  en: {
-    btn: "🇩🇪 DE",
-    m_tit: "🏨 My Hotel Search PRO v67",
-    nav_fl: "⬅️ Back to Flight Search",
-    nav_bk: "✈️ Flight Bookings ➡️",
-    c1_tit: "📍 Destination & Travel Dates",
-    l_city: "Destination (any city worldwide)",
-    ph_city: "e.g. Milan, Pagadian, Bangkok",
-    l_ci: "Check-in",
-    l_co: "Check-out",
-    c2_tit: "🛏️ Guests, Rooms & Hotel Filters",
-    l_px: "Guests",
-    px1: "1 Adult", px2: "2 Adults", px3: "3 Adults", px4: "4 Adults",
-    l_rm: "Rooms",
-    rm1: "1 Room", rm2: "2 Rooms", rm3: "3 Rooms",
-    l_st: "Minimum Stars",
-    st0: "All Categories", st3: "3+ Stars ⭐⭐⭐", st4: "4+ Stars ⭐⭐⭐⭐", st5: "5 Stars ⭐⭐⭐⭐⭐",
-    l_ab: "Airbnb only",
-    night1: " NIGHT", nights: " NIGHTS",
-    n1: " night", nn: " nights",
-    sel: "Selection: ", open: "Destination open", pers: " guests • ", room: " rm.",
-    badDt: "CHECK DATES",
-    badMsg: "Date is in the past or check-out is before check-in.",
-    pickDt: "SELECT DATES",
-    pickMsg: "Please select destination, check-in and check-out.",
-    hint: "ℹ️ <b>Important Note:</b> Detailed filters such as <b>Beachfront</b>, <b>Terrace</b> or <b>Breakfast</b> – as well as <b>Dates & Guests</b> on <b>Agoda</b> – must be selected directly on the provider's website."
-  }
-};
-
-function applyLang(l) {
-  curLang = l === "en" ? "en" : "de";
-  try { localStorage.setItem("rk_lang", curLang); } catch (e) {}
-  document.documentElement.lang = curLang;
-  const d = HT[curLang];
-  $("langBtn").textContent = d.btn;
-  $("city").placeholder = d.ph_city;
-  $("hintbox").innerHTML = d.hint;
-  $("nav_fl").href = "index.html?lang=" + curLang;
-  $("nav_bk").href = "meine-flugbuchungen.html?lang=" + curLang;
-  "m_tit;nav_fl;nav_bk;c1_tit;l_city;l_ci;l_co;c2_tit;l_px;px1;px2;px3;px4;l_rm;rm1;rm2;rm3;l_st;st0;st3;st4;st5;l_ab".split(";").forEach(k => {
-    if ($(k)) $(k).textContent = d[k];
-  });
-  upd();
-}
-
-function toggleLang() {
-  applyLang(curLang === "de" ? "en" : "de");
-}
+let resolvedAgodaId = "";
 
 function todayIso() {
   const d = new Date();
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-}
-
-function addDaysIso(iso, days) {
-  const parts = iso.split("-");
-  const y = +parts.slice(0, 1).join("");
-  const m = +parts.slice(1, 2).join("") - 1;
-  const day = +parts.slice(2, 3).join("") + days;
-  const d = new Date(y, m, day);
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return y + "-" + m + "-" + day;
 }
 
 function norm(s) {
-  return s.toLowerCase().replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
+  return s.toLowerCase()
+    .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
 }
 
 function slug(s) {
-  return norm(s).replace(/ß/g,"ss").replace(/\W+/g,"-").replace(/^-|-$/g,"");
+  return norm(s).replace(/ß/g,"ss")
+    .replace(/\W+/g,"-").replace(/^-|-$/g,"");
+}
+
+function extractAgodaId(txt) {
+  const m1 = txt.match(/"ObjectId"\s*:\s*(\d+)/i);
+  if (m1) return m1.slice(1, 2).join("");
+  const m2 = txt.match(/"CityId"\s*:\s*(\d+)/i);
+  if (m2) return m2.slice(1, 2).join("");
+  const m3 = txt.match(/"Id"\s*:\s*(\d+)/i);
+  if (m3) return m3.slice(1, 2).join("");
+  return "";
+}
+
+async function resolveAgodaInBg(city) {
+  const key = norm(city);
+  if (!key) { resolvedAgodaId = ""; upd(); return; }
+  if (agodaCache.has(key)) {
+    resolvedAgodaId = agodaCache.get(key) || "";
+    upd();
+    return;
+  }
+  const target = P + "www.agoda.com/api/cronos/search/" +
+    "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=" +
+    encodeURIComponent(city);
+  const endpoints = (
+    P + "corsproxy.io/?" + encodeURIComponent(target) + ";" +
+    P + "api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(target) + ";" +
+    P + "api.allorigins.win/raw?url=" + encodeURIComponent(target)
+  ).split(";");
+
+  const probe = async url => {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 3500);
+    const res = await fetch(url, { signal: ctrl.signal });
+    clearTimeout(tid);
+    if (!res.ok) throw new Error("fail");
+    const txt = await res.text();
+    const id = extractAgodaId(txt);
+    if (!id || id === "0") throw new Error("none");
+    return id;
+  };
+
+  try {
+    const found = await Promise.any(endpoints.map(probe));
+    agodaCache.set(key, found);
+    if (norm($("city").value.trim()) === key) {
+      resolvedAgodaId = found;
+      upd();
+    }
+  } catch (e) {
+    agodaCache.set(key, "");
+  }
 }
 
 function buildExpediaUrl(city, ci, co, px, rm, st) {
@@ -348,33 +303,48 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
   p.set("adults", String(px));
   p.set("rooms", String(rm));
   if (st > 0) p.set("star", String(st * 10));
-  return DOMS.expedia + "/Hotel-Search?" + p.toString();
+  return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function buildAgodaUrl(city, cc) {
+function buildAgodaUrl(city, cc, ci, n, px, rm) {
+  if (resolvedAgodaId) {
+    const p = new URLSearchParams();
+    p.set("city", resolvedAgodaId);
+    p.set("checkIn", ci);
+    p.set("los", String(n));
+    p.set("adults", String(px));
+    p.set("children", "0");
+    p.set("rooms", String(rm));
+    p.set("currency", "EUR");
+    return P + "www.agoda.com/de-de/search?" + p.toString();
+  }
   const sl = slug(city);
   const ctry = (cc || "de").toLowerCase();
-  return DOMS.agoda + "/de-de/city/" + sl + "-" + ctry + ".html";
+  return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry + ".html";
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
   const q = encodeURIComponent(city);
   const dt1 = ci.replace(/-/g, "");
   const dt2 = co.replace(/-/g, "");
-  return DOMS.trivago + "/de/srl?query=" + q + "&sQuery=" + q +
+  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
     "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
     "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
 }
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
+    resolvedAgodaId = "";
     upd();
     clearTimeout(acTimer);
+    clearTimeout(bgTimer);
     const q = inp.value.trim();
     if (q.length < 2) { box.style.display = "none"; return; }
+    bgTimer = setTimeout(() => resolveAgodaInBg(q), 300);
     acTimer = setTimeout(async () => {
       try {
-        const u = DOMS.geo + "?name=" + encodeURIComponent(q) + "&count=6&language=" + curLang + "&format=json";
+        const u = P + "geocoding-api.open-meteo.com/v1/search?name=" +
+          encodeURIComponent(q) + "&count=6&language=de&format=json";
         const r = await fetch(u);
         const j = await r.json();
         box.innerHTML = "";
@@ -387,12 +357,15 @@ function liveAc(inp, box) {
             inp.value = item.name;
             lastCountryCode = (item.country_code || "de").toLowerCase();
             box.style.display = "none";
+            resolveAgodaInBg(item.name);
             upd();
           };
           box.appendChild(d);
         });
         box.style.display = "block";
-      } catch (e) { box.style.display = "none"; }
+      } catch (e) {
+        box.style.display = "none";
+      }
     }, 200);
   });
   document.addEventListener("click", e => {
@@ -403,19 +376,15 @@ function liveAc(inp, box) {
 function upd() {
   const now = new Date(), dtEl = $("dt");
   const t = todayIso();
-  const d = HT[curLang];
-  dtEl.textContent = now.toLocaleDateString(curLang === "en" ? "en-GB" : "de-DE") + " • " + now.toLocaleTimeString(curLang === "en" ? "en-GB" : "de-DE");
+  dtEl.textContent = now.toLocaleDateString("de-DE") + " • " +
+    now.toLocaleTimeString("de-DE");
   const idx = cidx++ % cols.length;
   const col = cols.slice(idx, idx + 1).join("") || "#0284c7";
   dtEl.style.setProperty("background-color", col, "important");
 
   const city = $("city").value.trim();
   const ci = $("ci").value;
-  let co = $("co").value;
-  if (ci && (!co || co <= ci)) {
-    co = addDaysIso(ci, 1);
-    $("co").value = co;
-  }
+  const co = $("co").value;
   const px = +$("px").value || 2;
   const rm = +$("rm").value || 1;
   const st = +$("st").value || 0;
@@ -431,46 +400,99 @@ function upd() {
 
   if (ci && co && !pastCi && !badCo) {
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    $("nt").textContent = n + (n === 1 ? d.night1 : d.nights);
+    $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
-    $("info").textContent = (ab ? "(AIRBNB) " : "") + d.sel + (city || d.open) + " • " + n + (n === 1 ? d.n1 : d.nn) + " • " + px + d.pers + rm + d.room;
+    $("info").textContent = (ab ? "(AIRBNB) " : "") +
+      "Auswahl: " + (city || "Ziel offen") + " • " + n +
+      (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi.";
   } else if (pastCi || badCo) {
-    $("nt").textContent = d.badDt;
+    $("nt").textContent = "DATUM PRÜFEN";
     $("info").style.background = "#fee2e2";
     $("info").style.color = "#991b1b";
-    $("info").textContent = d.badMsg;
+    $("info").textContent = "Datum liegt in der Vergangenheit oder Check-out vor Check-in.";
   } else {
-    $("nt").textContent = d.pickDt;
+    $("nt").textContent = "ZEITRAUM WÄHLEN";
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
-    $("info").textContent = d.pickMsg;
+    $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
   }
 
-  $("f4").action = DOMS.booking;
   if (city && ci && co && !pastCi && !badCo) {
     const q = encodeURIComponent(city);
+    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
     const c1 = ci.split("-");
     const c2 = co.split("-");
     const bFilt = st > 0 ? "class=" + st : "";
 
-    $("h1").href = DOMS.kayak + "/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
+      "/" + px + "adults/" + rm + "rooms";
     $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
-    $("h3").href = DOMS.momondo + "/hotels/" + q + "/" + ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
+    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
+      "/" + px + "adults/" + rm + "rooms";
     $("b_ss").value = city;
     $("b_ci").value = ci;
     $("b_co").value = co;
-    $("b_ciy").value = c1.slice(0, 1).join("");
-    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
-    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
-    $("b_coy").value = c2.slice(0, 1).join("");
-    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
-    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
+    $("b_ciy").value = c1 || "";
+    $("b_cim").value = String(+(c1 || 0));
+    $("b_cid").value = String(+(c1 || 0));
+    $("b_coy").value = c2 || "";
+    $("b_com").value = String(+(c2 || 0));
+    $("b_cod").value = String(+(c2 || 0));
     $("b_px").value = px;
     $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaUrl(city, lastCountryCode);
+    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, n, px, rm);
     $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
+    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
+      "&checkout=" + co + "&adults=" + px;
+  }
+
+  try {
+    localStorage.setItem("rk_hotel", JSON.stringify({
+      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
+    }));
+  } catch (e) {}
+}
+
+(function() {
+  const t = todayIso();
+  $("ci").min = t;
+  $("co").min = t;
+  try {
+    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
+    if (d) {
+      if (d.city) $("city").value = d.city;
+      if (d.ci) $("ci").value = d.ci;
+      if (d.co) $("co").value = d.co;
+      if (d.px) $("px").value = d.px;
+      if (d.rm) $("rm").value = d.rm;
+      if (d.st) $("st").value = d.st;
+      if (d.ab !== undefined) $("ab").checked = d.ab;
+      if (d.cc) lastCountryCode = d.cc;
+    }
+    const u = new URLSearchParams(window.location.search);
+    if (u.get("city")) $("city").value = u.get("city");
+    if (u.get("ci")) $("ci").value = u.get("ci");
+    if (u.get("co")) $("co").value = u.get("co");
+    if (u.get("px")) $("px").value = u.get("px");
+  } catch (e) {}
+
+  liveAc($("city"), $("lc"));
+  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
+    $(id).addEventListener("input", upd);
+    $(id).addEventListener("change", upd);
+  });
+  "h1;h2;h3;h5;h6;h8".split(";").forEach(id => {
+    $(id).addEventListener("click", upd);
+  });
+  $("f4").addEventListener("submit", upd);
+  upd();
+  if ($("city").value.trim()) resolveAgodaInBg($("city").value.trim());
+})();
+</script>
+</body>
+</html>
