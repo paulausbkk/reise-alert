@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v64</title>
+<title>🏨 Meine Hotelsuche PRO v65</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v64</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v65</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -183,9 +183,9 @@ input:focus,select:focus{
 <div class="bb">
   <div class="bf">
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="https://www.expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://www.booking.com/searchresults.de.html" method="get" target="_blank" class="htl">
+    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
@@ -202,15 +202,13 @@ input:focus,select:focus{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="https://www.agoda.com/de-de/" target="_blank" class="btn b5 htl">Agoda</a>
-    <a id="h6" href="https://www.trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
-    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> (falls ein
-    kleiner Ort keine direkte Kalender-ID hat) das <b>Datum & Gäste</b> –
-    müssen auf der Anbieterseite direkt gewählt werden.
+    <b>Terrasse</b> oder <b>Frühstück</b> müssen auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
 <script>
@@ -218,6 +216,37 @@ const $ = id => document.getElementById(id);
 const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 const agodaCache = new Map();
+const agodaKnown = {
+  "paris": "15470",
+  "bangkok": "9395",
+  "manila": "16714",
+  "cebu": "4001",
+  "boracay": "15903",
+  "bohol": "16535",
+  "palawan": "16534",
+  "el nido": "16927",
+  "coron": "16928",
+  "phuket": "16056",
+  "pattaya": "8584",
+  "chiang mai": "7401",
+  "singapur": "4064",
+  "singapore": "4064",
+  "kuala lumpur": "14524",
+  "tokio": "5085",
+  "tokyo": "5085",
+  "dubai": "2994",
+  "london": "233",
+  "mailand": "1448",
+  "milan": "1448",
+  "rom": "16594",
+  "rome": "16594",
+  "berlin": "10539",
+  "muenchen": "14690",
+  "hamburg": "13936",
+  "wien": "14932",
+  "vienna": "14932",
+  "new york": "318"
+};
 let cidx = 0;
 let acTimer = null;
 let bgTimer = null;
@@ -233,13 +262,8 @@ function todayIso() {
 }
 
 function norm(s) {
-  return s.toLowerCase()
+  return s.toLowerCase().trim()
     .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
-}
-
-function slug(s) {
-  return norm(s).replace(/ß/g,"ss")
-    .replace(/\W+/g,"-").replace(/^-|-$/g,"");
 }
 
 function extractAgodaId(txt) {
@@ -254,43 +278,31 @@ function extractAgodaId(txt) {
 
 async function resolveAgodaInBg(city) {
   const key = norm(city);
-  if (!key) { resolvedAgodaId = ""; upd(); return; }
-  if (agodaCache.has(key)) {
-    resolvedAgodaId = agodaCache.get(key) || "";
+  if (!key) return;
+  if (agodaKnown[key]) {
+    resolvedAgodaId = agodaKnown[key];
     upd();
     return;
   }
-  const target = P + "www.agoda.com/api/cronos/search/" +
-    "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=" +
-    encodeURIComponent(city);
-  const endpoints = (
-    P + "corsproxy.io/?" + encodeURIComponent(target) + ";" +
-    P + "api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(target) + ";" +
-    P + "api.allorigins.win/raw?url=" + encodeURIComponent(target)
-  ).split(";");
-
-  const probe = async url => {
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), 3500);
-    const res = await fetch(url, { signal: ctrl.signal });
-    clearTimeout(tid);
-    if (!res.ok) throw new Error("fail");
-    const txt = await res.text();
-    const id = extractAgodaId(txt);
-    if (!id || id === "0") throw new Error("none");
-    return id;
-  };
-
-  try {
-    const found = await Promise.any(endpoints.map(probe));
-    agodaCache.set(key, found);
-    if (norm($("city").value.trim()) === key) {
-      resolvedAgodaId = found;
-      upd();
-    }
-  } catch (e) {
-    agodaCache.set(key, "");
+  if (agodaCache.has(key)) {
+    resolvedAgodaId = agodaCache.get(key);
+    upd();
+    return;
   }
+  try {
+    const u = P + "://agoda.com" +
+      encodeURIComponent(city);
+    const r = await fetch(u);
+    const txt = await r.text();
+    const id = extractAgodaId(txt);
+    if (id) {
+      agodaCache.set(key, id);
+      if (norm($("city").value) === key) {
+        resolvedAgodaId = id;
+        upd();
+      }
+    }
+  } catch (e) {}
 }
 
 function buildExpediaUrl(city, ci, co, px, rm, st) {
@@ -306,21 +318,26 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
   return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function buildAgodaUrl(city, cc, ci, n, px, rm) {
-  if (resolvedAgodaId) {
-    const p = new URLSearchParams();
-    p.set("city", resolvedAgodaId);
-    p.set("checkIn", ci);
-    p.set("los", String(n));
-    p.set("adults", String(px));
-    p.set("children", "0");
-    p.set("rooms", String(rm));
-    p.set("currency", "EUR");
-    return P + "www.agoda.com/de-de/search?" + p.toString();
+function buildAgodaUrl(city, ci, co, n, px, rm, st) {
+  const key = norm(city);
+  const cid = resolvedAgodaId || agodaKnown[key] || "";
+  const p = new URLSearchParams();
+  if (cid) {
+    p.set("city", cid);
+  } else {
+    p.set("textToSearch", city);
   }
-  const sl = slug(city);
-  const ctry = (cc || "de").toLowerCase();
-  return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry + ".html";
+  p.set("checkIn", ci);
+  p.set("checkOut", co);
+  p.set("los", String(n));
+  p.set("adults", String(px));
+  p.set("children", "0");
+  p.set("rooms", String(rm));
+  p.set("currency", "EUR");
+  p.set("finalPriceView", "1");
+  p.set("isShowMobileAppPrice", "false");
+  if (st > 0) p.set("hotelStarRating", String(st));
+  return P + "://agoda.com?" + p.toString();
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
@@ -334,16 +351,16 @@ function buildTrivagoUrl(city, ci, co, px, rm) {
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
-    resolvedAgodaId = "";
+    resolvedAgodaId = agodaKnown[norm(inp.value)] || "";
     upd();
     clearTimeout(acTimer);
     clearTimeout(bgTimer);
     const q = inp.value.trim();
     if (q.length < 2) { box.style.display = "none"; return; }
-    bgTimer = setTimeout(() => resolveAgodaInBg(q), 300);
+    bgTimer = setTimeout(() => resolveAgodaInBg(q), 250);
     acTimer = setTimeout(async () => {
       try {
-        const u = P + "geocoding-api.open-meteo.com/v1/search?name=" +
+        const u = P + "://open-meteo.com" +
           encodeURIComponent(q) + "&count=6&language=de&format=json";
         const r = await fetch(u);
         const j = await r.json();
@@ -434,65 +451,15 @@ function upd() {
     $("b_ss").value = city;
     $("b_ci").value = ci;
     $("b_co").value = co;
-    $("b_ciy").value = c1 || "";
-    $("b_cim").value = String(+(c1 || 0));
-    $("b_cid").value = String(+(c1 || 0));
-    $("b_coy").value = c2 || "";
-    $("b_com").value = String(+(c2 || 0));
-    $("b_cod").value = String(+(c2 || 0));
+    $("b_ciy").value = c1.slice(0, 1).join("");
+    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
+    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
+    $("b_coy").value = c2.slice(0, 1).join("");
+    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
+    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
     $("b_px").value = px;
     $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, n, px, rm);
-    $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
-    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
-      "&checkout=" + co + "&adults=" + px;
-  }
-
-  try {
-    localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
-    }));
-  } catch (e) {}
-}
-
-(function() {
-  const t = todayIso();
-  $("ci").min = t;
-  $("co").min = t;
-  try {
-    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
-    if (d) {
-      if (d.city) $("city").value = d.city;
-      if (d.ci) $("ci").value = d.ci;
-      if (d.co) $("co").value = d.co;
-      if (d.px) $("px").value = d.px;
-      if (d.rm) $("rm").value = d.rm;
-      if (d.st) $("st").value = d.st;
-      if (d.ab !== undefined) $("ab").checked = d.ab;
-      if (d.cc) lastCountryCode = d.cc;
-    }
-    const u = new URLSearchParams(window.location.search);
-    if (u.get("city")) $("city").value = u.get("city");
-    if (u.get("ci")) $("ci").value = u.get("ci");
-    if (u.get("co")) $("co").value = u.get("co");
-    if (u.get("px")) $("px").value = u.get("px");
-  } catch (e) {}
-
-  liveAc($("city"), $("lc"));
-  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
-    $(id).addEventListener("input", upd);
-    $(id).addEventListener("change", upd);
-  });
-  "h1;h2;h3;h5;h6;h8".split(";").forEach(id => {
-    $(id).addEventListener("click", upd);
-  });
-  $("f4").addEventListener("submit", upd);
-  upd();
-  if ($("city").value.trim()) resolveAgodaInBg($("city").value.trim());
-})();
-</script>
-</body>
-</html>
+    $("h5").href = buildAgodaUrl(city, ci, co, n, px, rm, st);
