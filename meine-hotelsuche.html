@@ -201,6 +201,9 @@ input:focus,select:focus{
     <form id="f4" method="get" target="_blank" class="htl"
       action="https://booking.com">
       <input type="hidden" name="ss" id="b_ss">
+      <input type="hidden" name="sb" value="1">
+      <input type="hidden" name="src" value="index">
+      <input type="hidden" name="dest_type" value="city">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
       <input type="hidden" name="checkin_year" id="b_ciy">
@@ -529,3 +532,5 @@ function upd() {
   if ($("city").value.trim()) resolveAgodaInBg($("city").value.trim());
 })();
 </script>
+</body>
+</html>
