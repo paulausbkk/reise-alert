@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v65</title>
+<title>🏨 Meine Hotelsuche PRO v66</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -33,7 +33,7 @@ html,body{
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
   padding:20px;background:#fff;box-sizing:border-box;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
+  box-shadow:0 4px 12px rgba(3,105,161,.08);position:relative
 }
 .ct{
   font-weight:bold;font-size:1.08rem;color:var(--d);
@@ -54,11 +54,11 @@ input:focus,select:focus{
 }
 .ac{
   position:absolute;top:68px;left:0;right:0;background:#fff;
-  border:1px solid #0284c7;border-radius:8px;z-index:99;
-  max-height:180px;overflow-y:auto;display:none;
-  box-shadow:0 8px 20px rgba(12,74,110,.18)
+  border:2px solid #0284c7;border-radius:8px;z-index:999;
+  max-height:220px;overflow-y:auto;display:none;
+  box-shadow:0 10px 24px rgba(12,74,110,.25)
 }
-.ac div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9}
+.ac div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #e2e8f0;font-size:.95rem}
 .ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v65</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v66</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -129,7 +129,7 @@ input:focus,select:focus{
     <div class="ct">📍 Zielort & Reisedaten</div>
     <div class="f">
       <label>Reiseziel (beliebige Stadt weltweit)</label>
-      <input type="text" id="city" placeholder="z.B. Mailand, Pagadian, Bangkok" autocomplete="off">
+      <input type="text" id="city" placeholder="z.B. Amsterdam, Bangkok, Manila" autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
@@ -217,6 +217,7 @@ const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 const agodaCache = new Map();
 const agodaKnown = {
+  "amsterdam": "13801",
   "paris": "15470",
   "bangkok": "9395",
   "manila": "16714",
@@ -226,6 +227,8 @@ const agodaKnown = {
   "palawan": "16534",
   "el nido": "16927",
   "coron": "16928",
+  "pagadian": "17368",
+  "davao": "16455",
   "phuket": "16056",
   "pattaya": "8584",
   "chiang mai": "7401",
@@ -240,6 +243,9 @@ const agodaKnown = {
   "milan": "1448",
   "rom": "16594",
   "rome": "16594",
+  "barcelona": "17072",
+  "madrid": "5973",
+  "lissabon": "17309",
   "berlin": "10539",
   "muenchen": "14690",
   "hamburg": "13936",
@@ -247,6 +253,8 @@ const agodaKnown = {
   "vienna": "14932",
   "new york": "318"
 };
+const fallbackCities = "Amsterdam (Niederlande);Bangkok (Thailand);Manila (Philippinen);Cebu (Philippinen);Boracay (Philippinen);Bohol (Philippinen);Palawan (Philippinen);El Nido (Philippinen);Pagadian (Philippinen);Davao (Philippinen);Phuket (Thailand);Pattaya (Thailand);Chiang Mai (Thailand);Singapur (Singapur);Kuala Lumpur (Malaysia);Tokio (Japan);Dubai (VAE);Paris (Frankreich);London (Großbritannien);Mailand (Italien);Rom (Italien);Barcelona (Spanien);Madrid (Spanien);Lissabon (Portugal);Berlin (Deutschland);München (Deutschland);Hamburg (Deutschland);Wien (Österreich);New York (USA)".split(";");
+
 let cidx = 0;
 let acTimer = null;
 let bgTimer = null;
@@ -308,10 +316,8 @@ async function resolveAgodaInBg(city) {
 function buildExpediaUrl(city, ci, co, px, rm, st) {
   const p = new URLSearchParams();
   p.set("destination", city);
-  p.set("startDate", ci);
-  p.set("endDate", co);
-  p.set("d1", ci);
-  p.set("d2", co);
+  if (ci) { p.set("startDate", ci); p.set("d1", ci); }
+  if (co) { p.set("endDate", co); p.set("d2", co); }
   p.set("adults", String(px));
   p.set("rooms", String(rm));
   if (st > 0) p.set("star", String(st * 10));
@@ -327,9 +333,9 @@ function buildAgodaUrl(city, ci, co, n, px, rm, st) {
   } else {
     p.set("textToSearch", city);
   }
-  p.set("checkIn", ci);
-  p.set("checkOut", co);
-  p.set("los", String(n));
+  if (ci) p.set("checkIn", ci);
+  if (co) p.set("checkOut", co);
+  if (n > 0) p.set("los", String(n));
   p.set("adults", String(px));
   p.set("children", "0");
   p.set("rooms", String(rm));
@@ -342,11 +348,36 @@ function buildAgodaUrl(city, ci, co, n, px, rm, st) {
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
   const q = encodeURIComponent(city);
-  const dt1 = ci.replace(/-/g, "");
-  const dt2 = co.replace(/-/g, "");
-  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
-    "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
-    "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+  if (ci && co) {
+    const dt1 = ci.replace(/-/g, "");
+    const dt2 = co.replace(/-/g, "");
+    return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
+      "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
+      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+  }
+  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q;
+}
+
+function renderAcList(items, inp, box) {
+  box.innerHTML = "";
+  if (!items || items.length === 0) {
+    box.style.display = "none";
+    return;
+  }
+  items.forEach(item => {
+    const d = document.createElement("div");
+    d.textContent = item.label;
+    d.onmousedown = e => {
+      e.preventDefault();
+      inp.value = item.name;
+      if (item.cc) lastCountryCode = item.cc;
+      box.style.display = "none";
+      resolveAgodaInBg(item.name);
+      upd();
+    };
+    box.appendChild(d);
+  });
+  box.style.display = "block";
 }
 
 function liveAc(inp, box) {
@@ -357,6 +388,14 @@ function liveAc(inp, box) {
     clearTimeout(bgTimer);
     const q = inp.value.trim();
     if (q.length < 2) { box.style.display = "none"; return; }
+
+    const qn = norm(q);
+    const localHits = fallbackCities
+      .filter(c => norm(c).includes(qn))
+      .slice(0, 6)
+      .map(c => ({ name: c.split(" (").slice(0, 1).join(""), label: c, cc: "" }));
+    if (localHits.length > 0) renderAcList(localHits, inp, box);
+
     bgTimer = setTimeout(() => resolveAgodaInBg(q), 250);
     acTimer = setTimeout(async () => {
       try {
@@ -364,25 +403,15 @@ function liveAc(inp, box) {
           encodeURIComponent(q) + "&count=6&language=de&format=json";
         const r = await fetch(u);
         const j = await r.json();
-        box.innerHTML = "";
-        if (!j || !j.results) { box.style.display = "none"; return; }
-        j.results.forEach(item => {
-          const d = document.createElement("div");
-          const sub = item.country ? " (" + item.country + ")" : "";
-          d.textContent = item.name + sub;
-          d.onclick = () => {
-            inp.value = item.name;
-            lastCountryCode = (item.country_code || "de").toLowerCase();
-            box.style.display = "none";
-            resolveAgodaInBg(item.name);
-            upd();
-          };
-          box.appendChild(d);
-        });
-        box.style.display = "block";
-      } catch (e) {
-        box.style.display = "none";
-      }
+        if (j && j.results && j.results.length > 0) {
+          const apiHits = j.results.map(item => ({
+            name: item.name,
+            label: item.name + (item.country ? " (" + item.country + ")" : ""),
+            cc: (item.country_code || "de").toLowerCase()
+          }));
+          renderAcList(apiHits, inp, box);
+        }
+      } catch (e) {}
     }, 200);
   });
   document.addEventListener("click", e => {
@@ -415,8 +444,10 @@ function upd() {
   $("cib").classList.toggle("err", pastCi);
   $("cob").classList.toggle("err", badCo);
 
-  if (ci && co && !pastCi && !badCo) {
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+  const validDates = Boolean(ci && co && !pastCi && !badCo);
+  const n = validDates ? Math.round((new Date(co) - new Date(ci)) / 86400000) : 0;
+
+  if (validDates) {
     $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
@@ -427,39 +458,3 @@ function upd() {
     $("nt").textContent = "DATUM PRÜFEN";
     $("info").style.background = "#fee2e2";
     $("info").style.color = "#991b1b";
-    $("info").textContent = "Datum liegt in der Vergangenheit oder Check-out vor Check-in.";
-  } else {
-    $("nt").textContent = "ZEITRAUM WÄHLEN";
-    $("info").style.background = "#eff6ff";
-    $("info").style.color = "#1e3a8a";
-    $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
-  }
-
-  if (city && ci && co && !pastCi && !badCo) {
-    const q = encodeURIComponent(city);
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const c1 = ci.split("-");
-    const c2 = co.split("-");
-    const bFilt = st > 0 ? "class=" + st : "";
-
-    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
-      "/" + px + "adults/" + rm + "rooms";
-    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
-
-    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
-      "/" + px + "adults/" + rm + "rooms";
-    $("b_ss").value = city;
-    $("b_ci").value = ci;
-    $("b_co").value = co;
-    $("b_ciy").value = c1.slice(0, 1).join("");
-    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
-    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
-    $("b_coy").value = c2.slice(0, 1).join("");
-    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
-    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
-    $("b_px").value = px;
-    $("b_rm").value = rm;
-    $("b_flt").disabled = !bFilt;
-    $("b_flt").value = bFilt;
-
-    $("h5").href = buildAgodaUrl(city, ci, co, n, px, rm, st);
