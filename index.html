@@ -6,123 +6,134 @@
 <title>🌴 Philippinen & Asien Reiseportal</title>
 <style>
 :root{--d:#0c4a6e;--t:#0f172a;--b:#bae6fd;--v:#0284c7}
-html,body{margin:0;padding:14px;
-background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-min-height:100vh;font-family:sans-serif;color:var(--t);
-box-sizing:border-box}
-.hdr{display:flex;justify-content:space-between;align-items:center;
-background:#0f2942;padding:13px 18px;border-radius:12px;
-margin-bottom:16px;flex-wrap:wrap;gap:10px;
-box-shadow:0 4px 14px rgba(15,41,66,.18)}
+html,body{margin:0;padding:14px;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);min-height:100vh;font-family:sans-serif;color:var(--t);box-sizing:border-box}
+.hdr{display:flex;justify-content:space-between;align-items:center;background:#0f2942;padding:13px 18px;border-radius:12px;margin-bottom:16px;flex-wrap:wrap;gap:10px;box-shadow:0 4px 14px rgba(15,41,66,.18)}
 .tit{font-weight:bold;color:#fff;font-size:1.22rem;margin:0}
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.seg{font-size:.82rem;padding:8px 14px;border-radius:6px;
-font-weight:bold;color:#fff;text-transform:uppercase;
-background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
+.seg{font-size:.82rem;padding:8px 14px;border-radius:6px;font-weight:bold;color:#fff;text-transform:uppercase;background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
 .seg.upg{background:#1e40af;border-color:#60a5fa}
-.lang-btn{font-size:.82rem;padding:8px 12px;border-radius:6px;
-font-weight:bold;color:#fff;background:#0f766e;
-border:1px solid #5eead4;cursor:pointer}
+.lang-btn{font-size:.82rem;padding:8px 12px;border-radius:6px;font-weight:bold;color:#fff;background:#0f766e;border:1px solid #5eead4;cursor:pointer;text-decoration:none}
 .lang-btn:hover{filter:brightness(1.12)}
-.bento{display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:16px;margin-bottom:16px}
-.box{background:#fff;border:1px solid #93c5fd;border-radius:12px;
-padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
+.bento{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:16px}
+.box{background:#fff;border:1px solid #93c5fd;border-radius:12px;padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
 .box.wide{grid-column:span 2}
 @media(max-width:720px){.box.wide{grid-column:span 1}}
-@keyframes dayBase{
-0%,28%{filter:brightness(1.12) saturate(1.15) hue-rotate(0deg)}
-45%,75%{filter:brightness(0.65) saturate(1.3) hue-rotate(-10deg)}
-92%,100%{filter:brightness(1.12) saturate(1.15) hue-rotate(0deg)}
+@keyframes sunCycle1{
+0%,12%{opacity:1;filter:brightness(1.12) saturate(1.15) sepia(0) hue-rotate(0deg)}
+22%{opacity:1;filter:brightness(0.95) saturate(1.85) sepia(0.45) hue-rotate(-18deg)}
+32%{opacity:1;filter:brightness(0.48) saturate(1.35) sepia(0.3) hue-rotate(195deg)}
+42%{opacity:1;filter:brightness(1.05) saturate(1.75) sepia(0.4) hue-rotate(-10deg)}
+50%,92%{opacity:0;filter:brightness(1.12) saturate(1.15) sepia(0) hue-rotate(0deg)}
+100%{opacity:1;filter:brightness(1.12) saturate(1.15) sepia(0) hue-rotate(0deg)}
 }
-@keyframes sunCycle{
-0%,25%{opacity:0;filter:brightness(1.1) sepia(0.1) saturate(1.2) hue-rotate(0deg)}
-35%{opacity:1;filter:brightness(1.05) sepia(0.35) saturate(1.6) hue-rotate(-10deg)}
-48%{opacity:1;filter:brightness(0.82) sepia(0.55) saturate(2.1) hue-rotate(-22deg)}
-60%{opacity:1;filter:brightness(0.45) sepia(0.35) saturate(1.4) hue-rotate(195deg)}
-72%{opacity:1;filter:brightness(0.78) sepia(0.5) saturate(1.9) hue-rotate(-18deg)}
-84%{opacity:1;filter:brightness(1.15) sepia(0.3) saturate(1.5) hue-rotate(-5deg)}
-94%,100%{opacity:0;filter:brightness(1.1) sepia(0.1) saturate(1.2) hue-rotate(0deg)}
+@keyframes sunCycle2{
+0%,42%{opacity:0;filter:brightness(1.12) saturate(1.15) sepia(0) hue-rotate(0deg)}
+50%,62%{opacity:1;filter:brightness(1.12) saturate(1.15) sepia(0) hue-rotate(0deg)}
+72%{opacity:1;filter:brightness(0.95) saturate(1.85) sepia(0.45) hue-rotate(-18deg)}
+82%{opacity:1;filter:brightness(0.48) saturate(1.35) sepia(0.3) hue-rotate(195deg)}
+92%{opacity:1;filter:brightness(1.05) saturate(1.75) sepia(0.4) hue-rotate(-10deg)}
+100%{opacity:0;filter:brightness(1.12) saturate(1.15) sepia(0) hue-rotate(0deg)}
 }
-@keyframes skyTint{
-0%,28%{opacity:0}
-42%{opacity:1;background:linear-gradient(180deg,rgba(251,146,60,.25) 0%,rgba(220,38,38,.45) 65%,rgba(124,45,18,.6) 100%)}
-60%{opacity:1;background:linear-gradient(180deg,rgba(15,23,42,.55) 0%,rgba(30,58,138,.45) 65%,rgba(15,23,42,.7) 100%)}
-78%{opacity:1;background:linear-gradient(180deg,rgba(253,224,71,.22) 0%,rgba(249,115,22,.42) 60%,rgba(154,52,18,.5) 100%)}
-92%,100%{opacity:0}
+@keyframes skyTintDual{
+0%,12%,50%,62%,100%{opacity:0}
+22%,72%{opacity:1;background:linear-gradient(180deg,rgba(251,146,60,.28) 0%,rgba(220,38,38,.52) 60%,rgba(124,45,18,.68) 100%)}
+32%,82%{opacity:1;background:linear-gradient(180deg,rgba(15,23,42,.58) 0%,rgba(30,58,138,.48) 65%,rgba(15,23,42,.75) 100%)}
+42%,92%{opacity:1;background:linear-gradient(180deg,rgba(253,224,71,.32) 0%,rgba(249,115,22,.48) 58%,rgba(154,52,18,.55) 100%)}
 }
-.pic{position:relative;border-radius:10px;overflow:hidden;
-min-height:300px;display:flex;align-items:flex-end;padding:20px;
-background-color:#0f2942;
-background-image:url("fluegel.jpg");
-background-size:cover;
-background-position:center center;
-background-repeat:no-repeat;
-animation:dayBase 18s infinite ease-in-out}
-.pic-fade{position:absolute;inset:0;z-index:1;
-background-image:url("LiS.jpg");
-background-size:cover;
-background-position:center center;
-background-repeat:no-repeat;
-animation:sunCycle 18s infinite ease-in-out}
-.sun-glow{position:absolute;inset:0;z-index:2;pointer-events:none;
-mix-blend-mode:multiply;
-animation:skyTint 18s infinite ease-in-out}
-.pic::after{content:"";position:absolute;inset:0;z-index:3;
-background:linear-gradient(0deg,rgba(15,23,42,.86) 12%,
-rgba(15,41,66,.12) 100%)}
-.ptxt{position:relative;z-index:4;color:#fff}
+.pic{position:relative;border-radius:10px;overflow:hidden;min-height:300px;display:flex;align-items:flex-end;padding:20px;background-color:#0f2942}
+.pic-layer1,.pic-layer2{position:absolute;inset:0;background-size:cover;background-position:center center;background-repeat:no-repeat}
+.pic-layer1{z-index:1;background-image:url("fluegel.jpg");animation:sunCycle1 28s infinite ease-in-out}
+.pic-layer2{z-index:2;background-image:url("LiS.jpg");animation:sunCycle2 28s infinite ease-in-out}
+.sun-glow{position:absolute;inset:0;z-index:3;pointer-events:none;mix-blend-mode:multiply;animation:skyTintDual 28s infinite ease-in-out}
+.pic::after{content:"";position:absolute;inset:0;z-index:4;background:linear-gradient(0deg,rgba(15,23,42,.86) 12%,rgba(15,41,66,.12) 100%)}
+.ptxt{position:relative;z-index:5;color:#fff}
 .ptxt h2{margin:0 0 6px 0;font-size:1.45rem}
 .ptxt p{margin:0 0 12px 0;font-size:.94rem;color:#e0f2fe}
-.cta{display:inline-flex;align-items:center;background:#0284c7;color:#fff;
-font-weight:bold;text-decoration:none;padding:11px 18px;
-border-radius:8px;font-size:.94rem;border:1px solid #7dd3fc}
+.cta{display:inline-flex;align-items:center;background:#0284c7;color:#fff;font-weight:bold;text-decoration:none;padding:11px 18px;border-radius:8px;font-size:.94rem;border:1px solid #7dd3fc}
 .cta:hover{background:#0369a1}
-.cta-arrow{display:inline-block;margin-left:18px;font-size:1.6rem;
-line-height:1;transform:rotate(180deg);color:#fde047;
-text-shadow:0 1px 3px rgba(0,0,0,.45)}
-.ct{font-weight:bold;font-size:1.05rem;color:var(--d);
-border-bottom:2px solid #e0f2fe;padding-bottom:6px;margin-bottom:10px}
-details{background:#f0f9ff;border:1px solid #bae6fd;
-border-radius:8px;padding:8px 12px;margin-bottom:8px}
-summary{font-weight:bold;cursor:pointer;color:var(--d);
-font-size:.92rem}
-details p{margin:8px 0 0 0;font-size:.88rem;line-height:1.45;
-color:#1e293b}
+.cta-arrow{display:inline-block;margin-left:18px;font-size:1.6rem;line-height:1;transform:rotate(180deg);color:#fde047;text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.ct{font-weight:bold;font-size:1.05rem;color:var(--d);border-bottom:2px solid #e0f2fe;padding-bottom:6px;margin-bottom:10px}
+details{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 12px;margin-bottom:8px}
+summary{font-weight:bold;cursor:pointer;color:var(--d);font-size:.92rem}
+details p{margin:8px 0 0 0;font-size:.88rem;line-height:1.45;color:#1e293b}
 .gal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.gal img{width:100%;height:110px;object-fit:cover;
-object-position:center;border-radius:8px;border:1px solid #bae6fd}
-.modal-bg{position:fixed;inset:0;z-index:999;
-background:rgba(15,23,42,.75);backdrop-filter:blur(4px);
-display:flex;align-items:center;justify-content:center;padding:16px}
-.modal-box{background:#fff;border:3px solid #7dd3fc;border-radius:18px;
-max-width:440px;width:100%;padding:26px 22px;text-align:center;
-box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.gal img{width:100%;height:110px;object-fit:cover;object-position:center;border-radius:8px;border:1px solid #bae6fd}
+#enter-toggle{display:none}
+#enter-toggle:checked ~ .modal-bg{display:none}
+.modal-bg{position:fixed;inset:0;z-index:999;background:rgba(15,23,42,.75);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:#fff;border:3px solid #7dd3fc;border-radius:18px;max-width:440px;width:100%;padding:26px 22px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,.35)}
 .modal-box h2{margin:0 0 4px 0;font-size:1.45rem;color:#0f2942}
 .modal-box .sub-en{margin:0 0 12px 0;font-size:1.05rem;font-weight:bold;color:#0369a1}
 .modal-box p{margin:0 0 4px 0;font-size:.95rem;color:#334155}
 .modal-box .p-en{margin:0 0 18px 0;font-size:.86rem;color:#64748b}
-.enter-btn{display:inline-flex;flex-direction:column;align-items:center;
-justify-content:center;background:#0284c7;color:#fff;font-weight:bold;
-border:none;border-radius:12px;padding:12px 26px;cursor:pointer;
-box-shadow:0 4px 12px rgba(2,132,199,.35);transition:.2s}
+.enter-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;background:#0284c7;color:#fff;font-weight:bold;border:none;border-radius:12px;padding:12px 26px;cursor:pointer;box-shadow:0 4px 12px rgba(2,132,199,.35);transition:.2s}
 .enter-btn:hover{background:#0369a1;transform:translateY(-1px)}
 .enter-btn .de-t{font-size:1.02rem}
 .enter-btn .en-t{font-size:.84rem;color:#e0f2fe;margin-top:2px}
 </style>
-</head>
 <body>
+<input type="checkbox" id="enter-toggle">
 <div class="modal-bg" id="welcomeModal">
   <div class="modal-box">
     <h2>🌴 Willkommen bei paulausbkk</h2>
     <div class="sub-en">Welcome to paulausbkk</div>
     <p>Deinem weltweiten Reiseportal für Flüge und Hotels.</p>
     <div class="p-en">Your worldwide travel portal for flights and hotels.</div>
-    <button type="button" class="enter-btn" onclick="enterSite()">
+    <label for="enter-toggle" class="enter-btn">
       <span class="de-t">Seite betreten</span>
       <span class="en-t">Enter site</span>
-    </button>
+    </label>
   </div>
 </div>
-...
+
+<div class="hdr">
+  <h1 class="tit">🌴 paulausbkk – Philippinen & Asien Reiseportal</h1>
+  <div class="cp">
+    <a href="#fluege" class="seg">✈️ Flüge</a>
+    <a href="#hotels" class="seg upg">🏨 Hotels</a>
+    <a href="#infos" class="lang-btn">DE / EN</a>
+  </div>
+</div>
+
+<div class="bento">
+  <div class="box wide">
+    <div class="pic">
+      <div class="pic-layer1"></div>
+      <div class="pic-layer2"></div>
+      <div class="sun-glow"></div>
+      <div class="ptxt">
+        <h2>Traumhafte Inseln & Traumflüge entdecken</h2>
+        <p>Von Bangkok über Manila bis zu den schönsten Stränden von Palawan, Cebu und Bohol.</p>
+        <a href="#angebote" class="cta">Jetzt Angebote prüfen <span class="cta-arrow">➜</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="ct">📸 Impressionen & Inseln</div>
+    <div class="gal">
+      <img src="cebu.jpg" alt="Cebu">
+      <img src="bohol.jpg" alt="Bohol">
+      <img src="palawan.jpg" alt="Palawan">
+      <img src="strand.jpg" alt="Strand">
+    </div>
+  </div>
+
+  <div class="box" id="infos">
+    <div class="ct">ℹ️ Wichtige Reise-Hinweise (Klicken)</div>
+    <details open>
+      <summary>🛂 Einreise & eTravel-Pflicht</summary>
+      <p>Reisepass mindestens 6 Monate gültig. Die kostenlose eTravel-Registrierung spätestens 72 Stunden vor Abflug online ausfüllen und QR-Code speichern.</p>
+    </details>
+    <details>
+      <summary>🧳 Inlandsflüge & Gepäckregeln</summary>
+      <p>Bei Cebu Pacific oder Philippine Airlines sind günstige Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung hinzufügen.</p>
+    </details>
+    <details>
+      <summary>☀️ Beste Reisezeit Visayas & Palawan</summary>
+      <p>Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter für Inselhopping, Tauchen und Badeurlaub.</p>
+    </details>
+  </div>
+</div>
+</body>
+</html>
