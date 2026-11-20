@@ -75,13 +75,14 @@ rgba(15,41,66,.12) 100%)}
 .ptxt{position:relative;z-index:4;color:#fff}
 .ptxt h2{margin:0 0 6px 0;font-size:1.45rem}
 .ptxt p{margin:0 0 12px 0;font-size:.94rem;color:#e0f2fe}
+.cta-wrap{position:relative;display:inline-block;margin-top:6px}
 .cta{display:inline-flex;align-items:center;background:#0284c7;color:#fff;
 font-weight:bold;text-decoration:none;padding:11px 18px;
 border-radius:8px;font-size:.94rem;border:1px solid #7dd3fc}
 .cta:hover{background:#0369a1}
-.cta-arrow{display:inline-block;margin-left:18px;font-size:1.6rem;
-line-height:1;transform:rotate(180deg);color:#fde047;
-text-shadow:0 1px 3px rgba(0,0,0,.45)}
+.cta-arrow{display:block;font-size:2.7rem;line-height:1;
+margin-left:135px;margin-bottom:2px;
+filter:drop-shadow(0 3px 6px rgba(0,0,0,.55))}
 .ct{font-weight:bold;font-size:1.05rem;color:var(--d);
 border-bottom:2px solid #e0f2fe;padding-bottom:6px;margin-bottom:10px}
 details{background:#f0f9ff;border:1px solid #bae6fd;
@@ -143,7 +144,10 @@ box-shadow:0 4px 12px rgba(2,132,199,.35);transition:.2s}
       <div class="ptxt">
         <h2>Traumhafte Inseln & Traumflüge entdecken</h2>
         <p>Von Bangkok über Manila bis zu den schönsten Stränden von Palawan, Cebu und Bohol.</p>
-        <a href="#angebote" class="cta">Jetzt Angebote prüfen <span class="cta-arrow">➜</span></a>
+        <div class="cta-wrap">
+          <span class="cta-arrow">↙️</span>
+          <a href="#angebote" class="cta">Flugkonfiguration öffnen</a>
+        </div>
       </div>
     </div>
   </div>
