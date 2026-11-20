@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v31 (Versuch 1/3)</title>
+<title>🏨 Meine Hotelsuche PRO v32 (Versuch 2/3)</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v31</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v32</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -204,20 +204,7 @@ input:focus,select:focus{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <form id="f5" action="https://www.agoda.com/de-de/search" method="get" target="_blank" class="htl">
-      <input type="hidden" name="textToSearch" id="a_txt">
-      <input type="hidden" name="checkIn" id="a_ci">
-      <input type="hidden" name="checkOut" id="a_co">
-      <input type="hidden" name="los" id="a_los">
-      <input type="hidden" name="rooms" id="a_rm">
-      <input type="hidden" name="adults" id="a_px">
-      <input type="hidden" name="children" value="0">
-      <input type="hidden" name="currency" value="EUR">
-      <input type="hidden" name="locale" value="de-de">
-      <input type="hidden" name="isFromSearchBox" value="true">
-      <input type="hidden" name="SelectedGuestOption" id="a_gopt">
-      <button type="submit" class="btn b5">Agoda</button>
-    </form>
+    <a id="h5" href="https://www.agoda.com/de-de/" target="_blank" class="btn b5 htl">Agoda</a>
     <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl">
       <input type="hidden" name="search" id="t_s">
       <button type="submit" class="btn b6">Trivago</button>
@@ -254,6 +241,40 @@ function norm(s) {
 function slug(s) {
   return norm(s).replace(/ß/g,"ss")
     .replace(/\W+/g,"-").replace(/^-|-$/g,"");
+}
+
+function toBase64Utf8(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = "";
+  bytes.forEach(b => { bin += String.fromCharCode(b); });
+  return btoa(bin);
+}
+
+function buildAgodaLegacyUrl(city, ci, co, n, px, rm, st) {
+  const payload = JSON.stringify({
+    SearchText: city,
+    CheckIn: ci,
+    CheckOut: co,
+    LengthOfStay: n,
+    Rooms: rm,
+    Adults: px,
+    Children: 0
+  });
+  const p = new URLSearchParams();
+  p.set("asq", toBase64Utf8(payload));
+  p.set("textToSearch", city);
+  p.set("checkIn", ci);
+  p.set("checkOut", co);
+  p.set("los", String(n));
+  p.set("rooms", String(rm));
+  p.set("adults", String(px));
+  p.set("children", "0");
+  p.set("currency", "EUR");
+  p.set("locale", "de-de");
+  p.set("isFromSearchBox", "true");
+  if (st > 0) p.set("starRating", String(st));
+  return P + "www.agoda.com/de-de/pages/agoda/default/" +
+    "DestinationSearchResult.aspx?" + p.toString();
 }
 
 function liveAc(inp, box) {
@@ -365,14 +386,7 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("a_txt").value = city;
-    $("a_ci").value = ci;
-    $("a_co").value = co;
-    $("a_los").value = n;
-    $("a_rm").value = rm;
-    $("a_px").value = px;
-    $("a_gopt").value = px === 1 ? "1" : "2";
-
+    $("h5").href = buildAgodaLegacyUrl(city, ci, co, n, px, rm, st);
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
@@ -413,13 +427,14 @@ function upd() {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
-  "h1;h3;h8".split(";").forEach(id => {
+  "h1;h3;h5;h8".split(";").forEach(id => {
     $(id).addEventListener("click", upd);
   });
-  "f2;f4;f5;f6".split(";").forEach(id => {
+  "f2;f4;f6".split(";").forEach(id => {
     $(id).addEventListener("submit", upd);
   });
   upd();
 })();
 </script>
 </body>
+</html>
