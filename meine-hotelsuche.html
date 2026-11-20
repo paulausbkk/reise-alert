@@ -135,18 +135,18 @@ input:focus,select:focus{
     <div class="ct">📍 Zielort & Reisedaten</div>
     <div class="f">
       <label>Reiseziel (beliebige Stadt weltweit)</label>
-      <input type="text" id="city"
+      <input type="text" id="city" name="ss" form="f4"
         placeholder="z.B. Mailand, Pagadian, Bangkok"
         autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
       <label>Check-in (Anreise)</label>
-      <input type="date" id="ci">
+      <input type="date" id="ci" name="checkin" form="f4">
     </div>
     <div class="f" id="cob">
       <label>Check-out (Abreise)</label>
-      <input type="date" id="co">
+      <input type="date" id="co" name="checkout" form="f4">
     </div>
   </div>
   <div class="card">
@@ -154,7 +154,7 @@ input:focus,select:focus{
     <div class="f2">
       <div class="f" style="margin:0">
         <label for="px">Personenzahl</label>
-        <select id="px">
+        <select id="px" name="group_adults" form="f4">
           <option value="1">1 Erwachsener</option>
           <option value="2" selected>2 Erwachsene</option>
           <option value="3">3 Erwachsene</option>
@@ -163,7 +163,7 @@ input:focus,select:focus{
       </div>
       <div class="f" style="margin:0">
         <label for="rm">Zimmer</label>
-        <select id="rm">
+        <select id="rm" name="no_rooms" form="f4">
           <option value="1" selected>1 Zimmer</option>
           <option value="2">2 Zimmer</option>
           <option value="3">3 Zimmer</option>
@@ -200,17 +200,12 @@ input:focus,select:focus{
       class="btn b3 htl">Momondo</a>
     <form id="f4" method="get" target="_blank" class="htl"
       action="https://booking.com">
-      <input type="hidden" name="ss" id="b_ss">
-      <input type="hidden" name="checkin" id="b_ci">
-      <input type="hidden" name="checkout" id="b_co">
       <input type="hidden" name="checkin_year" id="b_ciy">
       <input type="hidden" name="checkin_month" id="b_cim">
       <input type="hidden" name="checkin_monthday" id="b_cid">
       <input type="hidden" name="checkout_year" id="b_coy">
       <input type="hidden" name="checkout_month" id="b_com">
       <input type="hidden" name="checkout_monthday" id="b_cod">
-      <input type="hidden" name="group_adults" id="b_px">
-      <input type="hidden" name="no_rooms" id="b_rm">
       <input type="hidden" name="nflt" id="b_flt" disabled>
       <input type="hidden" name="lang" value="de">
       <input type="hidden" name="selected_currency" value="EUR">
@@ -231,7 +226,7 @@ input:focus,select:focus{
     Anbieterseite direkt gewählt werden.
   </div>
 </div>
-<script>
+  <script>
 const $ = id => document.getElementById(id);
 const P = "https://";
 const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
@@ -466,17 +461,12 @@ function upd() {
 
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci +
       "/" + co + "/" + px + "adults/" + rm + "rooms";
-    $("b_ss").value = city;
-    $("b_ci").value = ci;
-    $("b_co").value = co;
     $("b_ciy").value = c1.slice(0, 1).join("");
     $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
     $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
     $("b_coy").value = c2.slice(0, 1).join("");
     $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
     $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
-    $("b_px").value = px;
-    $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
