@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v43</title>
+<title>🏨 Meine Hotelsuche PRO v45</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v43</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v45</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -183,9 +183,17 @@ input:focus,select:focus{
 <div class="bb">
   <div class="bf">
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="https://www.expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <form id="f2" action="https://www.expedia.de/Hotel-Search" method="get" target="_blank" class="htl">
+      <input type="hidden" name="destination" id="e_dest">
+      <input type="hidden" name="chkin" id="e_ci">
+      <input type="hidden" name="chkout" id="e_co">
+      <input type="hidden" name="rooms" id="e_rm">
+      <input type="hidden" name="adults" id="e_px">
+      <input type="hidden" name="star" id="e_st" disabled>
+      <button type="submit" class="btn b2">Expedia Hotels</button>
+    </form>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
+    <form id="f4" action="https://www.booking.com/searchresults.de.html" method="get" target="_blank" class="htl">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
@@ -206,8 +214,8 @@ input:focus,select:focus{
   <div class="hint">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
     <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> das
-    <b>Datum & Gäste</b> und bei <b>Booking.com</b> / <b>Trivago</b> der
-    <b>Zielort</b> – müssen auf der Anbieterseite direkt gewählt werden.
+    <b>Datum & Gäste</b> und bei <b>Trivago</b> der <b>Zielort</b> – müssen
+    auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
 <script>
@@ -217,7 +225,6 @@ const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let cidx = 0;
 let acTimer = null;
 let lastCountryCode = "de";
-let lastLatLon = "";
 
 function todayIso() {
   const d = new Date();
@@ -235,20 +242,6 @@ function norm(s) {
 function slug(s) {
   return norm(s).replace(/ß/g,"ss")
     .replace(/\W+/g,"-").replace(/^-|-$/g,"");
-}
-
-function buildExpediaUrl(city, latLon, ci, co, px, rm, st) {
-  const p = new URLSearchParams();
-  p.set("destination", city);
-  if (latLon) p.set("latLong", latLon);
-  p.set("startDate", ci);
-  p.set("endDate", co);
-  p.set("d1", ci);
-  p.set("d2", co);
-  p.set("adults", String(px));
-  p.set("rooms", String(rm));
-  if (st > 0) p.set("star", String(st * 10));
-  return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
 function buildAgodaUrl(city, cc, ci, co, n, px, rm) {
@@ -270,7 +263,6 @@ function buildAgodaUrl(city, cc, ci, co, n, px, rm) {
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
-    lastLatLon = "";
     upd();
     clearTimeout(acTimer);
     const q = inp.value.trim();
@@ -290,9 +282,6 @@ function liveAc(inp, box) {
           d.onclick = () => {
             inp.value = item.name;
             lastCountryCode = (item.country_code || "de").toLowerCase();
-            if (item.latitude && item.longitude) {
-              lastLatLon = item.latitude + "," + item.longitude;
-            }
             box.style.display = "none";
             upd();
           };
@@ -364,7 +353,13 @@ function upd() {
 
     $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
       "/" + px + "adults/" + rm + "rooms";
-    $("h2").href = buildExpediaUrl(city, lastLatLon, ci, co, px, rm, st);
+    $("e_dest").value = city;
+    $("e_ci").value = ci;
+    $("e_co").value = co;
+    $("e_rm").value = rm;
+    $("e_px").value = px;
+    $("e_st").disabled = !(st > 0);
+    $("e_st").value = st > 0 ? (st * 10) : "";
 
     $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
       "/" + px + "adults/" + rm + "rooms";
@@ -385,8 +380,7 @@ function upd() {
 
   try {
     localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab,
-      cc: lastCountryCode, ll: lastLatLon
+      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
     }));
   } catch (e) {}
 }
@@ -406,7 +400,6 @@ function upd() {
       if (d.st) $("st").value = d.st;
       if (d.ab !== undefined) $("ab").checked = d.ab;
       if (d.cc) lastCountryCode = d.cc;
-      if (d.ll) lastLatLon = d.ll;
     }
     const u = new URLSearchParams(window.location.search);
     if (u.get("city")) $("city").value = u.get("city");
@@ -420,10 +413,10 @@ function upd() {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
-  "h1;h2;h3;h5;h8".split(";").forEach(id => {
+  "h1;h3;h5;h8".split(";").forEach(id => {
     $(id).addEventListener("click", upd);
   });
-  "f4;f6".split(";").forEach(id => {
+  "f2;f4;f6".split(";").forEach(id => {
     $(id).addEventListener("submit", upd);
   });
   upd();
