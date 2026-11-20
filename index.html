@@ -55,7 +55,7 @@ padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
 .pic{position:relative;border-radius:10px;overflow:hidden;
 min-height:300px;display:flex;align-items:flex-end;padding:20px;
 background-color:#0f2942;
-background-image:url("Fl%C3%BCgel.jpg");
+background-image:url("fluegel.jpg");
 background-size:cover;
 background-position:center center;
 background-repeat:no-repeat;
@@ -93,38 +93,36 @@ color:#1e293b}
 .gal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .gal img{width:100%;height:110px;object-fit:cover;
 object-position:center;border-radius:8px;border:1px solid #bae6fd}
+.modal-bg{position:fixed;inset:0;z-index:999;
+background:rgba(15,23,42,.75);backdrop-filter:blur(4px);
+display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:#fff;border:3px solid #7dd3fc;border-radius:18px;
+max-width:440px;width:100%;padding:26px 22px;text-align:center;
+box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.modal-box h2{margin:0 0 4px 0;font-size:1.45rem;color:#0f2942}
+.modal-box .sub-en{margin:0 0 12px 0;font-size:1.05rem;font-weight:bold;color:#0369a1}
+.modal-box p{margin:0 0 4px 0;font-size:.95rem;color:#334155}
+.modal-box .p-en{margin:0 0 18px 0;font-size:.86rem;color:#64748b}
+.enter-btn{display:inline-flex;flex-direction:column;align-items:center;
+justify-content:center;background:#0284c7;color:#fff;font-weight:bold;
+border:none;border-radius:12px;padding:12px 26px;cursor:pointer;
+box-shadow:0 4px 12px rgba(2,132,199,.35);transition:.2s}
+.enter-btn:hover{background:#0369a1;transform:translateY(-1px)}
+.enter-btn .de-t{font-size:1.02rem}
+.enter-btn .en-t{font-size:.84rem;color:#e0f2fe;margin-top:2px}
 </style>
 </head>
 <body>
-<div class="hdr">
-  <h1 class="tit" id="p_tit">🌴 Philippinen & Asien Reiseportal</h1>
-  <div class="cp">
-    <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">🇬🇧 EN</button>
-    <a href="meine-hotelsuche.html" id="nav_htl" class="seg">🏨 Hotelsuche</a>
-    <a href="meine-flugbuchungen.html" id="nav_bk" class="seg">📋 Flugbuchungen</a>
-    <a href="index.html" id="nav_fl" class="seg upg">✈️ Zur Flugsuche ➡️</a>
+<div class="modal-bg" id="welcomeModal">
+  <div class="modal-box">
+    <h2>🌴 Willkommen bei paulausbkk</h2>
+    <div class="sub-en">Welcome to paulausbkk</div>
+    <p>Deinem weltweiten Reiseportal für Flüge und Hotels.</p>
+    <div class="p-en">Your worldwide travel portal for flights and hotels.</div>
+    <button type="button" class="enter-btn" onclick="enterSite()">
+      <span class="de-t">Seite betreten</span>
+      <span class="en-t">Enter site</span>
+    </button>
   </div>
 </div>
-<!-- Bento-Grid mit Startbereich, Impressionen und einklappbaren Reisehinweisen -->
-<!-- Vollständiger HTML- und JavaScript-Quellcode für Sprachumschaltung (DE/EN) siehe Web-Dokument -->
-<script>
-// Sprachdaten und Umschaltlogik für DE/EN (vollständiges Skript im Quelltext verfügbar)
-let curLang = "de";
-try { curLang = localStorage.getItem("rk_lang") || "de"; } catch(e) {}
-function applyLang(l) {
-  curLang = l === "en" ? "en" : "de";
-  try { localStorage.setItem("rk_lang", curLang); } catch(e) {}
-  document.documentElement.lang = curLang;
-  const d = T[curLang];
-  document.getElementById("langBtn").textContent = d.btn;
-  Object.keys(d).forEach(k => {
-    if (k !== "btn" && document.getElementById(k)) {
-      document.getElementById(k).textContent = d[k];
-    }
-  });
-}
-function toggleLang() { applyLang(curLang === "de" ? "en" : "de"); }
-applyLang(curLang);
-</script>
-</body>
-</html>
+...
