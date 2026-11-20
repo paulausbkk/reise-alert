@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v51</title>
+<title>🏨 Meine Hotelsuche PRO v52</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -116,7 +116,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v51</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v52</h1>
   <div class="cp">
     <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -185,7 +185,7 @@ input:focus,select:focus{
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
     <a id="h2" href="https://www.expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
+    <form id="f4" action="https://www.booking.com/searchresults.de.html" method="get" target="_blank" class="htl">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
@@ -196,7 +196,7 @@ input:focus,select:focus{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <button type="button" id="h5" onclick="goAgoda()" class="btn b5 htl">Agoda</button>
+    <a id="h5" href="https://www.agoda.com/de-de/" target="_blank" class="btn b5 htl">Agoda</a>
     <form id="f6" action="https://trivago.de" method="get" target="_blank" class="htl">
       <input type="hidden" name="search" id="t_s">
       <button type="submit" class="btn b6">Trivago</button>
@@ -205,9 +205,9 @@ input:focus,select:focus{
   </div>
   <div class="hint">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
-    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Booking.com</b> und
-    <b>Trivago</b> der <b>Zielort (Stadt)</b> – müssen auf der Website des
-    jeweiligen Anbieters direkt eingegeben werden.
+    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> das
+    <b>Datum & Gäste</b> und bei <b>Trivago</b> der <b>Zielort</b> – müssen
+    auf der Anbieterseite direkt gewählt werden.
   </div>
 </div>
 <script>
@@ -249,46 +249,10 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
   return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function goAgoda() {
-  upd();
-  const t = todayIso();
-  const city = $("city").value.trim();
-  const ci = $("ci").value;
-  const co = $("co").value;
-  const px = +$("px").value || 2;
-  const rm = +$("rm").value || 1;
-  const st = +$("st").value || 0;
-  if (!city || !ci || !co || ci < t || co <= ci) return;
-  const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-  const f = document.createElement("form");
-  f.method = "GET";
-  f.action = P + "www.agoda.com/de-de/search";
-  f.target = "_blank";
-  const fields = {
-    city: "0",
-    searchText: city,
-    textToSearch: city,
-    checkIn: ci,
-    checkOut: co,
-    los: String(n),
-    rooms: String(rm),
-    adults: String(px),
-    children: "0",
-    currency: "EUR",
-    locale: "de-de",
-    isFromSearchBox: "true"
-  };
-  if (st > 0) fields.starRating = String(st);
-  Object.keys(fields).forEach(k => {
-    const inp = document.createElement("input");
-    inp.type = "hidden";
-    inp.name = k;
-    inp.value = fields[k];
-    f.appendChild(inp);
-  });
-  document.body.appendChild(f);
-  f.submit();
-  document.body.removeChild(f);
+function buildAgodaUrl(city, cc) {
+  const sl = slug(city);
+  const ctry = (cc || "de").toLowerCase();
+  return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry + ".html";
 }
 
 function liveAc(inp, box) {
@@ -394,6 +358,7 @@ function upd() {
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
+    $("h5").href = buildAgodaUrl(city, lastCountryCode);
     $("f6").action = P + "www.trivago.de/de/lm/hotels-" + sl;
     $("t_s").value = "dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
     $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
@@ -435,7 +400,7 @@ function upd() {
     $(id).addEventListener("input", upd);
     $(id).addEventListener("change", upd);
   });
-  "h1;h2;h3;h8".split(";").forEach(id => {
+  "h1;h2;h3;h5;h8".split(";").forEach(id => {
     $(id).addEventListener("click", upd);
   });
   "f4;f6".split(";").forEach(id => {
