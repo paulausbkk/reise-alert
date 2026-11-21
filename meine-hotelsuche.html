@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v98</title>
+<title>🏨 Meine Hotelsuche PRO v93</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v98</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v93</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -74,9 +74,9 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </div>
 <div class="bb">
   <div class="bf">
-    <a id="h1" href="https://kayak.de" target="_blank" rel="noopener" class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="https://expedia.de" target="_blank" rel="noopener" class="btn b2 htl">Expedia Hotels</a>
-    <a id="h3" href="https://momondo.de" target="_blank" rel="noopener" class="btn b3 htl">Momondo</a>
+    <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
+    <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
     <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
@@ -94,23 +94,16 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="https://agoda.com" target="_blank" rel="noopener" class="btn b5 htl">Agoda</a>
-    <a id="h6" href="https://trivago.de" target="_blank" rel="noopener" class="btn b6 htl">Trivago</a>
-    <a id="h8" href="https://airbnb.de" target="_blank" rel="noopener" class="btn b8 off">Airbnb</a>
+    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+    <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>, <b>Frühstück</b>) sowie bei <b>Booking.com</b> (Stadt) und <b>Trivago</b> (Datum & Personen) müssen bei Bedarf auf der Anbieterseite bestätigt werden.</div>
 </div>
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
-var acT = null, cc = "de", aid = "";
-
-function makeSlug(s){
-  return s.toLowerCase().trim()
-    .replace(/\u00fc/g, "ue").replace(/\u00f6/g, "oe")
-    .replace(/\u00e4/g, "ae").replace(/\u00df/g, "ss")
-    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-}
+var acT = null, cc = "de";
 
 function iso(d){
   var m = String(d.getMonth() + 1), t = String(d.getDate());
@@ -119,7 +112,7 @@ function iso(d){
   return d.getFullYear() + "-" + m + "-" + t;
 }
 
-function getAgodaId(city){
+function getAid(city){
   var k = city.toLowerCase().trim();
   if(k === "bangkok") return "9395";
   if(k === "mailand" || k === "milan") return "4894";
@@ -137,20 +130,14 @@ function getAgodaId(city){
   if(k === "amsterdam") return "13868";
   if(k === "prag" || k === "prague") return "16578";
   if(k === "warschau" || k === "warsaw") return "16107";
-  if(k === "lissabon" || k === "lisbon") return "14558";
   if(k === "phuket") return "16056";
-  if(k === "pattaya") return "8584";
   if(k === "bali") return "17193";
   if(k === "manila") return "1622";
   if(k === "cebu") return "4001";
   if(k === "pagadian") return "89122";
-  if(k === "davao") return "14875";
-  if(k === "boracay") return "15903";
-  if(k === "palawan") return "16714";
-  if(k === "leipzig") return "15960";
-  if(k === "dresden") return "14912";
   return "";
 }
+
 function upd(){
   var now = new Date(), t = iso(now);
   $("dt").textContent = now.toLocaleDateString("de-DE") +
@@ -159,7 +146,7 @@ function upd(){
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
-  aid = getAgodaId(city);
+  var aid = getAid(city);
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -179,17 +166,8 @@ function upd(){
     $("info").textContent = "Auswahl: " + (city || "Ziel") +
       " \u2022 " + n + (n === 1 ? " Nacht" : " N\u00e4chte") +
       " \u2022 " + px + " Pers. \u2022 " + rm + " Zi.";
-  } else {
-    $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
-    $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
-    $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
-    $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
-      "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.";
-  }
 
-  if(city && ci && co && !bad){
     var q = encodeURIComponent(city);
-    var n2 = Math.round((new Date(co) - new Date(ci)) / 86400000);
     var c1 = ci.split("-"), c2 = co.split("-");
     var flt = st > 0 ? "class=" + st : "";
 
@@ -212,30 +190,30 @@ function upd(){
     $("b_px").value = px; $("b_rm").value = rm;
     $("b_flt").disabled = !flt; $("b_flt").value = flt;
 
-    var agQ = "?checkIn=" + ci + "&los=" + n2 + "&adults=" + px +
-      "&children=0&rooms=" + rm + "&currency=EUR" +
+    var ag = P + "://agoda.com" + "/de-de/search?checkIn=" + ci +
+      "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
+      "&currency=EUR&locale=de-de" +
       (st > 0 ? "&hotelStarRating=" + st : "");
-    if(aid){
-      $("h5").href = P + "://agoda.com" + "/de-de/search" +
-        agQ + "&city=" + aid;
-    } else {
-      var aSlug = makeSlug(city);
-      var aCc = (cc || "de").toLowerCase();
-      $("h5").href = P + "://agoda.com" + "/de-de/city/" +
-        aSlug + "-" + aCc + ".html" + agQ;
-    }
+    $("h5").href = ag + (aid ? "&city=" + aid : "&textToSearch=" + q);
 
     $("h6").href = P + "www.trivago.de" + "/de/lm?sQuery=" + q;
     $("h8").href = P + "www.airbnb.de" + "/s/" + q +
       "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
+  } else {
+    $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+    $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
+    $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
+    $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
+      "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.";
   }
 
   try {
     localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci: ci, co: co, px: px, rm: rm, st: st, ab: ab, cc: cc
+      city: $("city").value, ci: ci, co: co, px: px, rm: rm, st: st, ab: ab
     }));
   } catch(e){}
-  function showAc(list, msg){
+}
+function showAc(list, msg){
   var box = $("lc");
   box.innerHTML = "";
   if(msg){
@@ -346,7 +324,6 @@ try {
     if(saved.rm) $("rm").value = saved.rm;
     if(saved.st) $("st").value = saved.st;
     if(saved.ab !== undefined) $("ab").checked = saved.ab;
-    if(saved.cc) cc = saved.cc;
   }
 } catch(e){}
 
