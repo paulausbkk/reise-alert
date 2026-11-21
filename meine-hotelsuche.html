@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v75</title>
+<title>🏨 Meine Hotelsuche PRO v76</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -13,11 +13,6 @@ html,body{
   margin:0;padding:16px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
   font-family:sans-serif;color:var(--t);box-sizing:border-box
-}
-.nojs{
-  background:#fee2e2;color:#991b1b;border:2px solid #dc2626;
-  padding:12px 16px;border-radius:10px;font-weight:bold;
-  margin-bottom:16px;text-align:center
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
@@ -125,13 +120,8 @@ input:focus,select:focus{
 </style>
 </head>
 <body>
-<noscript>
-  <div class="nojs">
-    ⚠️ JavaScript ist in deinem Browser deaktiviert! Bitte aktiviere JavaScript für paulausbkk.github.io.
-  </div>
-</noscript>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v75</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v76</h1>
   <div class="cp">
     <div class="seg" id="dt">LADE UHR...</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -247,35 +237,29 @@ input:focus,select:focus{
   </div>
 </div>
 <script>
-window.onerror = function(msg, url, line) {
-  var box = document.getElementById("info");
-  if (box) {
-    box.style.background = "#fee2e2";
-    box.style.color = "#991b1b";
-    box.textContent = "FEHLER Zeile " + line + ": " + msg;
-  }
-};
+function $(id) {
+  return document.getElementById(id);
+}
 
-const $ = id => document.getElementById(id);
-const P = "https://";
-const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const agodaCache = new Map();
-let cidx = 0;
-let acTimer = null;
-let bgTimer = null;
-let lastCountryCode = "de";
-let resolvedAgodaId = "";
+var P = "https://";
+var cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
+var agodaCache = {};
+var cidx = 0;
+var acTimer = null;
+var bgTimer = null;
+var lastCountryCode = "de";
+var resolvedAgodaId = "";
 
-const rawCities =
+var rawCities =
   "Bangkok|Thailand|th|9395;" +
   "Mailand|Italien|it|4894;" +
   "Palermo|Italien|it|16011;" +
   "Berlin|Deutschland|de|16154;" +
-  "München|Deutschland|de|14552;" +
+  "M\u00fcnchen|Deutschland|de|14552;" +
   "Hamburg|Deutschland|de|15727;" +
-  "Wien|Österreich|at|14756;" +
+  "Wien|\u00d6sterreich|at|14756;" +
   "Paris|Frankreich|fr|15470;" +
-  "London|Großbritannien|gb|233;" +
+  "London|Gro\u00dfbritannien|gb|233;" +
   "Rom|Italien|it|16582;" +
   "Barcelona|Spanien|es|14563;" +
   "Madrid|Spanien|es|16583;" +
@@ -283,7 +267,7 @@ const rawCities =
   "Tokio|Japan|jp|5085;" +
   "Singapur|Singapur|sg|4064;" +
   "Dubai|Vereinigte Arabische Emirate|ae|2994;" +
-  "Istanbul|Türkei|tr|14932;" +
+  "Istanbul|T\u00fcrkei|tr|14932;" +
   "Amsterdam|Niederlande|nl|13868;" +
   "Prag|Tschechien|cz|16578;" +
   "Lissabon|Portugal|pt|14558;" +
@@ -298,8 +282,8 @@ const rawCities =
   "Boracay|Philippinen|ph|15903;" +
   "Palawan|Philippinen|ph|16714";
 
-const knownCities = rawCities.split(";").map(row => {
-  const parts = row.split("|");
+var knownCities = rawCities.split(";").map(function(row) {
+  var parts = row.split("|");
   return {
     name: parts.slice(0, 1).join(""),
     country: parts.slice(1, 2).join(""),
@@ -308,53 +292,53 @@ const knownCities = rawCities.split(";").map(row => {
   };
 });
 
+function pad2(n) {
+  var s = String(n);
+  return s.length < 2 ? "0" + s : s;
+}
+
 function tickClock() {
-  const now = new Date();
-  const dtEl = $("dt");
+  var now = new Date();
+  var dtEl = $("dt");
   if (!dtEl) return;
-  dtEl.textContent = now.toLocaleDateString("de-DE") +
-    " • " + now.toLocaleTimeString("de-DE");
+  var dStr = pad2(now.getDate()) + "." + pad2(now.getMonth() + 1) + "." + now.getFullYear();
+  var tStr = pad2(now.getHours()) + ":" + pad2(now.getMinutes()) + ":" + pad2(now.getSeconds());
+  dtEl.textContent = dStr + " \u2022 " + tStr;
 }
 
 function todayIso() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return y + "-" + m + "-" + day;
+  var d = new Date();
+  return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
 }
 
 function addDaysIso(iso, days) {
-  const p = iso.split("-");
-  const y = +(p.slice(0, 1).join("") || 2026);
-  const m = +(p.slice(1, 2).join("") || 1) - 1;
-  const d = +(p.slice(2, 3).join("") || 1);
-  const dt = new Date(y, m, d + days);
-  const yy = dt.getFullYear();
-  const mm = String(dt.getMonth() + 1).padStart(2, "0");
-  const dd = String(dt.getDate()).padStart(2, "0");
-  return yy + "-" + mm + "-" + dd;
+  var p = iso.split("-");
+  var y = +(p.slice(0, 1).join("") || 2026);
+  var m = +(p.slice(1, 2).join("") || 1) - 1;
+  var d = +(p.slice(2, 3).join("") || 1);
+  var dt = new Date(y, m, d + days);
+  return dt.getFullYear() + "-" + pad2(dt.getMonth() + 1) + "-" + pad2(dt.getDate());
 }
 
 function norm(s) {
-  return s.toLowerCase()
-    .replace(/ü/g, "ue")
-    .replace(/ö/g, "oe")
-    .replace(/ä/g, "ae");
+  return String(s || "").toLowerCase()
+    .replace(/\u00fc/g, "ue")
+    .replace(/\u00f6/g, "oe")
+    .replace(/\u00e4/g, "ae");
 }
 
 function findKnownCity(q) {
-  const k = norm(q).trim();
+  var k = norm(q).trim();
   if (!k) return null;
-  for (let i = 0; i < knownCities.length; i++) {
-    const item = knownCities.slice(i, i + 1).pop();
+  for (var i = 0; i < knownCities.length; i++) {
+    var item = knownCities.slice(i, i + 1).pop();
     if (norm(item.name) === k) return item;
   }
   return null;
 }
 
 function saveMemory(obj) {
-  const raw = JSON.stringify(obj);
+  var raw = JSON.stringify(obj);
   try { localStorage.setItem("rk_hotel_mem", raw); } catch (e) {}
   try { sessionStorage.setItem("rk_hotel_mem", raw); } catch (e) {}
   try { window.name = "RK_MEM:" + raw; } catch (e) {}
@@ -362,11 +346,11 @@ function saveMemory(obj) {
 
 function loadMemory() {
   try {
-    const a = localStorage.getItem("rk_hotel_mem");
+    var a = localStorage.getItem("rk_hotel_mem");
     if (a) return JSON.parse(a);
   } catch (e) {}
   try {
-    const b = sessionStorage.getItem("rk_hotel_mem");
+    var b = sessionStorage.getItem("rk_hotel_mem");
     if (b) return JSON.parse(b);
   } catch (e) {}
   try {
@@ -384,25 +368,18 @@ function clearMemory() {
 }
 
 function extractAgodaId(txt) {
-  const q = String.fromCharCode(34);
-  const t1 = q + "ObjectId" + q + ":";
-  const t2 = q + "CityId" + q + ":";
-  const t3 = q + "cityId" + q + ":";
-  const t4 = q + "Id" + q + ":";
-  const tags = (t1 + ";" + t2 + ";" + t3 + ";" + t4).split(";");
-  for (let i = 0; i < tags.length; i++) {
-    const tag = tags.slice(i, i + 1).join("");
-    const pos = txt.indexOf(tag);
+  var q = String.fromCharCode(34);
+  var tags = (q + "ObjectId" + q + ":;" + q + "CityId" + q + ":;" + q + "cityId" + q + ":;" + q + "Id" + q + ":").split(";");
+  for (var i = 0; i < tags.length; i++) {
+    var tag = tags.slice(i, i + 1).join("");
+    var pos = txt.indexOf(tag);
     if (pos !== -1) {
-      const rest = txt.slice(pos + tag.length).trim();
-      let num = "";
-      for (let j = 0; j < rest.length; j++) {
-        const ch = rest.charAt(j);
-        if (ch >= "0" && ch <= "9") {
-          num += ch;
-        } else if (num.length > 0) {
-          break;
-        }
+      var rest = txt.slice(pos + tag.length).trim();
+      var num = "";
+      for (var j = 0; j < rest.length; j++) {
+        var ch = rest.charAt(j);
+        if (ch >= "0" && ch <= "9") num += ch;
+        else if (num.length > 0) break;
       }
       if (num.length > 0 && num !== "0") return num;
     }
@@ -410,53 +387,40 @@ function extractAgodaId(txt) {
   return "";
 }
 
-async function resolveAgodaInBg(city) {
-  const key = norm(city).trim();
+function resolveAgodaInBg(city) {
+  var key = norm(city).trim();
   if (!key) { resolvedAgodaId = ""; upd(); return; }
-  const known = findKnownCity(city);
+  var known = findKnownCity(city);
   if (known && known.aid) {
     resolvedAgodaId = known.aid;
     upd();
     return;
   }
-  if (agodaCache.has(key)) {
-    resolvedAgodaId = agodaCache.get(key) || "";
+  if (agodaCache.hasOwnProperty(key)) {
+    resolvedAgodaId = agodaCache[key] || "";
     upd();
     return;
   }
-  const base = P + "://agoda.com";
-  const path = "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=";
-  const target = base + path + encodeURIComponent(city);
-  const u1 = P + "corsproxy.io/?url=" + encodeURIComponent(target);
-  const u2 = P + "://codetabs.com" + encodeURIComponent(target);
-  const endpoints = (u1 + ";" + u2).split(";");
-
-  const probe = async url => {
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), 3500);
-    const res = await fetch(url, { signal: ctrl.signal });
-    clearTimeout(tid);
-    if (!res.ok) throw new Error("fail");
-    const txt = await res.text();
-    const id = extractAgodaId(txt);
-    if (!id || id === "0") throw new Error("none");
-    return id;
-  };
-
-  try {
-    const found = await Promise.any(endpoints.map(probe));
-    agodaCache.set(key, found);
-    if (norm($("city").value).trim() === key) {
-      resolvedAgodaId = found;
+  var base = P + "://agoda.com";
+  var path = "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=";
+  var target = base + path + encodeURIComponent(city);
+  var u1 = P + "corsproxy.io/?url=" + encodeURIComponent(target);
+  fetch(u1).then(function(res) {
+    return res.text();
+  }).then(function(txt) {
+    var id = extractAgodaId(txt);
+    agodaCache[key] = id || "";
+    if (id && norm($("city").value).trim() === key) {
+      resolvedAgodaId = id;
       upd();
     }
-  } catch (e) {
-    agodaCache.set(key, "");
-  }
+  }).catch(function() {
+    agodaCache[key] = "";
+  });
 }
 
 function buildExpediaUrl(city, ci, co, px, rm, st) {
-  const p = new URLSearchParams();
+  var p = new URLSearchParams();
   p.set("destination", city);
   p.set("startDate", ci);
   p.set("endDate", co);
@@ -469,7 +433,7 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
 }
 
 function buildAgodaUrl(city, ci, n, px, rm, st) {
-  const p = new URLSearchParams();
+  var p = new URLSearchParams();
   if (resolvedAgodaId) {
     p.set("city", resolvedAgodaId);
   } else {
@@ -487,9 +451,9 @@ function buildAgodaUrl(city, ci, n, px, rm, st) {
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
-  const q = encodeURIComponent(city);
-  const dt1 = ci.replace(/-/g, "");
-  const dt2 = co.replace(/-/g, "");
+  var q = encodeURIComponent(city);
+  var dt1 = ci.replace(/-/g, "");
+  var dt2 = co.replace(/-/g, "");
   return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
     "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
     "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
@@ -501,11 +465,11 @@ function renderSuggestions(inp, box, list) {
     box.style.display = "none";
     return;
   }
-  list.forEach(item => {
-    const d = document.createElement("div");
-    const sub = item.country ? " (" + item.country + ")" : "";
+  list.forEach(function(item) {
+    var d = document.createElement("div");
+    var sub = item.country ? " (" + item.country + ")" : "";
     d.textContent = item.name + sub;
-    d.onmousedown = ev => {
+    d.onmousedown = function(ev) {
       ev.preventDefault();
       inp.value = item.name;
       lastCountryCode = (item.cc || "de").toLowerCase();
@@ -520,64 +484,99 @@ function renderSuggestions(inp, box, list) {
 }
 
 function filterLocalCities(q) {
-  const k = norm(q).trim();
+  var k = norm(q).trim();
   if (!k) return knownCities.slice(0, 12);
-  const out = new Array();
-  knownCities.forEach(item => {
+  var out = new Array();
+  knownCities.forEach(function(item) {
     if (norm(item.name).indexOf(k) !== -1) out.push(item);
   });
   return out;
 }
 
-async function fetchCitySuggestions(q) {
-  try {
-    const api = P + "://open-meteo.com";
-    const opt = "&count=7&language=de&format=json";
-    const r = await fetch(api + encodeURIComponent(q) + opt);
-    const j = await r.json();
+function fetchCitySuggestions(q, cb) {
+  var api = P + "://open-meteo.com";
+  var opt = "&count=7&language=de&format=json";
+  fetch(api + encodeURIComponent(q) + opt).then(function(r) {
+    return r.json();
+  }).then(function(j) {
     if (j && j.results && j.results.length > 0) {
-      return j.results.map(it => ({
-        name: it.name,
-        country: it.country || "",
-        cc: (it.country_code || "de").toLowerCase(),
-        aid: ""
-      }));
-    }
-  } catch (e) {}
-  try {
-    const ph = P + "photon.komoot.io/api/?q=" +
-      encodeURIComponent(q) + "&lang=de&limit=6";
-    const r2 = await fetch(ph);
-    const j2 = await r2.json();
-    if (j2 && j2.features && j2.features.length > 0) {
-      return j2.features.map(f => {
-        const pr = f.properties || {};
+      cb(j.results.map(function(it) {
         return {
-          name: pr.name || pr.city || q,
-          country: pr.country || "",
-          cc: (pr.countrycode || "de").toLowerCase(),
+          name: it.name,
+          country: it.country || "",
+          cc: (it.country_code || "de").toLowerCase(),
           aid: ""
         };
-      });
+      }));
+    } else {
+      cb(new Array());
     }
-  } catch (e) {}
-  return new Array();
+  }).catch(function() {
+    cb(new Array());
+  });
 }
 
 function liveAc(inp, box) {
-  inp.addEventListener("input", () => {
-    const known = findKnownCity(inp.value);
+  inp.addEventListener("input", function() {
+    var known = findKnownCity(inp.value);
     resolvedAgodaId = known ? known.aid : "";
     if (known) lastCountryCode = known.cc;
     upd();
     clearTimeout(acTimer);
     clearTimeout(bgTimer);
-    const q = inp.value.trim();
-    const localHits = filterLocalCities(q);
+    var q = inp.value.trim();
+    var localHits = filterLocalCities(q);
     if (localHits.length > 0) renderSuggestions(inp, box, localHits);
     if (q.length < 2) return;
-    bgTimer = setTimeout(() => resolveAgodaInBg(q), 250);
-    acTimer = setTimeout(async () => {
-      const remoteHits = await fetchCitySuggestions(q);
-      if (inp.value.trim() !== q) return;
-      if (remoteHits.length > 0) {
+    bgTimer = setTimeout(function() { resolveAgodaInBg(q); }, 250);
+    acTimer = setTimeout(function() {
+      fetchCitySuggestions(q, function(remoteHits) {
+        if (inp.value.trim() !== q) return;
+        if (remoteHits.length > 0) {
+          renderSuggestions(inp, box, remoteHits);
+        } else if (localHits.length === 0) {
+          box.style.display = "none";
+        }
+      });
+    }, 220);
+  });
+  inp.addEventListener("focus", function() {
+    var localHits = filterLocalCities(inp.value.trim());
+    if (localHits.length > 0) renderSuggestions(inp, box, localHits);
+  });
+  document.addEventListener("click", function(e) {
+    if (!box.contains(e.target) && e.target !== inp) {
+      box.style.display = "none";
+    }
+  });
+}
+
+function forceCheckoutSync() {
+  var t = todayIso();
+  var ci = $("ci").value;
+  if (ci && ci.length === 10 && ci >= t) {
+    var nextDay = addDaysIso(ci, 1);
+    $("co").min = nextDay;
+    if (!$("co").value || $("co").value <= ci) {
+      $("co").value = nextDay;
+    }
+  } else {
+    $("co").min = t;
+  }
+}
+
+function upd() {
+  tickClock();
+  var dtEl = $("dt");
+  var t = todayIso();
+  var idx = cidx++ % cols.length;
+  var col = cols.slice(idx, idx + 1).join("") || "#0284c7";
+  dtEl.style.setProperty("background-color", col, "important");
+
+  forceCheckoutSync();
+
+  var city = $("city").value.trim();
+  var ci = $("ci").value;
+  var co = $("co").value;
+  var px = +$("px").value || 2;
+  var rm = +$("rm").value || 1;
