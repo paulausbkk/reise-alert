@@ -182,7 +182,87 @@ function upd(){
     $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
     $("b_px").value = px; $("b_rm").value = rm;
     $("b_flt").disabled = !flt; $("b_flt").value = flt;
+function showAc(list){
+  var box = $("lc");
+  box.innerHTML = "";
+  if(!list || list.length === 0){ box.style.display = "none"; return; }
+  list.forEach(function(it){
+    var d = document.createElement("div");
+    var sub = it.country ? " (" + it.country + ")" : "";
+    d.textContent = it.name + sub;
+    d.onmousedown = function(e){
+      e.preventDefault();
+      $("city").value = it.name;
+      cc = (it.country_code || "de").toLowerCase();
+      box.style.display = "none";
+      upd();
+    };
+    box.appendChild(d);
+  });
+  box.style.display = "block";
+}
 
+function searchWorldCities(q, done){
+  var u1 = P + "://open-meteo.com" +
+    encodeURIComponent(q) + "&count=8&language=de&format=json";
+  fetch(u1).then(function(r){ return r.json(); }).then(function(j){
+    if(j && j.results && j.results.length > 0){
+      done(j.results);
+    } else {
+      var u2 = P + "photon.komoot.io/api/?q=" +
+        encodeURIComponent(q) + "&lang=de&limit=8";
+      fetch(u2).then(function(r2){ return r2.json(); }).then(function(j2){
+        if(j2 && j2.features && j2.features.length > 0){
+          done(j2.features.map(function(f){
+            var pr = f.properties || {};
+            return {
+              name: pr.name || pr.city || q,
+              country: pr.country || "",
+              country_code: (pr.countrycode || "de").toLowerCase()
+            };
+          }));
+        } else {
+          done(new Array());
+        }
+      }).catch(function(){ done(new Array()); });
+    }
+  }).catch(function(){
+    var u2 = P + "photon.komoot.io/api/?q=" +
+      encodeURIComponent(q) + "&lang=de&limit=8";
+    fetch(u2).then(function(r2){ return r2.json(); }).then(function(j2){
+      if(j2 && j2.features && j2.features.length > 0){
+        done(j2.features.map(function(f){
+          var pr = f.properties || {};
+          return {
+            name: pr.name || pr.city || q,
+            country: pr.country || "",
+            country_code: (pr.countrycode || "de").toLowerCase()
+          };
+        }));
+      } else {
+        done(new Array());
+      }
+    }).catch(function(){ done(new Array()); });
+  });
+}
+
+$("city").addEventListener("input", function(){
+  upd(); clearTimeout(acT);
+  var q = $("city").value.trim(), box = $("lc");
+  if(q.length < 2){ box.style.display = "none"; return; }
+  acT = setTimeout(function(){
+    searchWorldCities(q, function(res){
+      if($("city").value.trim() !== q) return;
+      showAc(res);
+    });
+  }, 200);
+});
+
+document.addEventListener("click", function(e){
+  if(!$("lc").contains(e.target) && e.target !== $("city")){
+    $("lc").style.display = "none";
+  }
+});
     var ag = P + "://agoda.com" + ci +
       "&los=" + n2 + "&adults=" + px + "&children=0&rooms=" + rm +
       "&currency=EUR&locale=de-de" +
