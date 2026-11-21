@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v88</title>
+<title>🏨 Meine Hotelsuche PRO v89</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v88</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v89</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -77,7 +77,23 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
     <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <a id="h4" href="https://booking.com" target="_blank" class="btn b4 htl">Booking.com</a>
+    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
+      <input type="hidden" name="ss" id="b_ss">
+      <input type="hidden" name="checkin" id="b_ci">
+      <input type="hidden" name="checkout" id="b_co">
+      <input type="hidden" name="checkin_year" id="b_ciy">
+      <input type="hidden" name="checkin_month" id="b_cim">
+      <input type="hidden" name="checkin_monthday" id="b_cid">
+      <input type="hidden" name="checkout_year" id="b_coy">
+      <input type="hidden" name="checkout_month" id="b_com">
+      <input type="hidden" name="checkout_monthday" id="b_cod">
+      <input type="hidden" name="group_adults" id="b_px">
+      <input type="hidden" name="no_rooms" id="b_rm">
+      <input type="hidden" name="nflt" id="b_flt" disabled>
+      <input type="hidden" name="lang" value="de">
+      <input type="hidden" name="selected_currency" value="EUR">
+      <button type="submit" class="btn b4">Booking.com</button>
+    </form>
     <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
     <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
@@ -87,39 +103,24 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
-var acT = null, cc = "", aid = "";
+var acT = null, cc = "de", aid = "";
 var quickIds = (
-  "bangkok:9395:th:bangkok;mailand:4894:it:milan;milan:4894:it:milan;" +
-  "palermo:16011:it:palermo;berlin:16154:de:berlin;hamburg:15727:de:hamburg;" +
-  "wien:14756:at:vienna;paris:15470:fr:paris;london:233:gb:london;" +
-  "rom:16582:it:rome;barcelona:14563:es:barcelona;madrid:16583:es:madrid;" +
-  "dubai:2994:ae:dubai;istanbul:14932:tr:istanbul;amsterdam:13868:nl:amsterdam;" +
-  "prag:16578:cz:prague;lissabon:14558:pt:lisbon;phuket:16056:th:phuket;" +
-  "pattaya:8584:th:pattaya;bali:17193:id:bali;manila:1622:ph:manila;" +
-  "cebu:4001:ph:cebu;pagadian:89122:ph:pagadian;davao:14875:ph:davao;" +
-  "boracay:15903:ph:boracay;palawan:16714:ph:palawan;leipzig:15960:de:leipzig"
+  "bangkok:9395;mailand:4894;milan:4894;palermo:16011;" +
+  "berlin:16154;hamburg:15727;wien:14756;paris:15470;" +
+  "london:233;rom:16582;barcelona:14563;madrid:16583;" +
+  "dubai:2994;istanbul:14932;amsterdam:13868;prag:16578;" +
+  "lissabon:14558;phuket:16056;pattaya:8584;bali:17193;" +
+  "manila:1622;cebu:4001;pagadian:89122;davao:14875;" +
+  "boracay:15903;palawan:16714;leipzig:15960"
 ).split(";");
 
-function getCityMeta(city){
+function getAid(city){
   var k = city.toLowerCase().trim();
   for(var i = 0; i < quickIds.length; i++){
     var p = quickIds.slice(i, i + 1).join("").split(":");
-    if(p.slice(0, 1).join("") === k){
-      return {
-        aid: p.slice(1, 2).join(""),
-        cc: p.slice(2, 3).join(""),
-        slug: p.slice(3, 4).join("")
-      };
-    }
+    if(p.slice(0, 1).join("") === k) return p.slice(1, 2).join("");
   }
-  return null;
-}
-
-function makeSlug(s){
-  return s.toLowerCase().trim()
-    .replace(/\u00fc/g, "ue").replace(/\u00f6/g, "oe")
-    .replace(/\u00e4/g, "ae").replace(/\u00df/g, "ss")
-    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return "";
 }
 
 function iso(d){
@@ -137,9 +138,7 @@ function upd(){
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
-  var meta = getCityMeta(city);
-  aid = meta ? meta.aid : "";
-  if(meta && meta.cc) cc = meta.cc;
+  aid = getAid(city);
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -166,11 +165,11 @@ function upd(){
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
       "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.";
   }
-    if(city && ci && co && !bad){
+  if(city && ci && co && !bad){
     var q = encodeURIComponent(city);
     var n2 = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    var flt = st > 0 ? "&nflt=class%3D" + st : "";
-    var bSlug = meta ? meta.slug : makeSlug(city);
+    var c1 = ci.split("-"), c2 = co.split("-");
+    var flt = st > 0 ? "class=" + st : "";
 
     $("h1").href = P + "www.kayak.de" + "/hotels/" + q + "/" +
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
@@ -181,17 +180,15 @@ function upd(){
     $("h3").href = P + "www.momondo.de" + "/hotels/" + q + "/" +
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
-    if(cc && bSlug){
-      $("h4").href = P + "://booking.com" + "/city/" + cc + "/" +
-        bSlug + ".de.html?checkin=" + ci + "&checkout=" + co +
-        "&group_adults=" + px + "&no_rooms=" + rm +
-        "&selected_currency=EUR" + flt;
-    } else {
-      $("h4").href = P + "://booking.com" + "/searchresults.de.html?ss=" +
-        q + "&checkin=" + ci + "&checkout=" + co +
-        "&group_adults=" + px + "&no_rooms=" + rm +
-        "&lang=de&selected_currency=EUR" + flt;
-    }
+    $("b_ss").value = city; $("b_ci").value = ci; $("b_co").value = co;
+    $("b_ciy").value = c1.slice(0, 1).join("");
+    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
+    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
+    $("b_coy").value = c2.slice(0, 1).join("");
+    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
+    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
+    $("b_px").value = px; $("b_rm").value = rm;
+    $("b_flt").disabled = !flt; $("b_flt").value = flt;
 
     var ag = P + "://agoda.com" + "/de-de/search?checkIn=" + ci +
       "&los=" + n2 + "&adults=" + px + "&children=0&rooms=" + rm +
@@ -228,7 +225,7 @@ function showAc(list, msg){
     d.onmousedown = function(e){
       e.preventDefault();
       $("city").value = it.name;
-      cc = (it.country_code || "").toLowerCase();
+      cc = (it.country_code || "de").toLowerCase();
       box.style.display = "none";
       upd();
     };
@@ -254,7 +251,7 @@ function searchWorldCities(q, done){
           return {
             name: parts.slice(0, 1).join("").trim(),
             country: parts.slice(-1).join("").trim(),
-            country_code: ""
+            country_code: "de"
           };
         }), "");
       } else {
@@ -273,7 +270,7 @@ function searchWorldCities(q, done){
           return {
             name: pr.name || pr.city || q,
             country: pr.country || "",
-            country_code: (pr.countrycode || "").toLowerCase()
+            country_code: (pr.countrycode || "de").toLowerCase()
           };
         }), "");
       } else {
@@ -292,7 +289,7 @@ function searchWorldCities(q, done){
 }
 
 $("city").addEventListener("input", function(){
-  cc = ""; upd(); clearTimeout(acT);
+  upd(); clearTimeout(acT);
   var q = $("city").value.trim(), box = $("lc");
   if(q.length < 2){ box.style.display = "none"; return; }
   showAc(null, "\ud83d\udd0d Suche weltweit...");
@@ -314,9 +311,10 @@ document.addEventListener("click", function(e){
   $(id).addEventListener("input", upd);
   $(id).addEventListener("change", upd);
 });
-"h1;h2;h3;h4;h5;h6;h8".split(";").forEach(function(id){
+"h1;h2;h3;h5;h6;h8".split(";").forEach(function(id){
   $(id).addEventListener("click", upd);
 });
+$("f4").addEventListener("submit", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
 </script>
