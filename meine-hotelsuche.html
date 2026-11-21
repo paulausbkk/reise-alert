@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v70</title>
+<title>🏨 Meine Hotelsuche PRO v71</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -121,7 +121,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v70</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v71</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -137,10 +137,9 @@ input:focus,select:focus{
     <div class="ct">📍 Zielort & Reisedaten</div>
     <div class="f">
       <label>Reiseziel (beliebige Stadt weltweit)</label>
-      <input type="text" id="city" list="citiesList"
+      <input type="text" id="city"
         placeholder="z.B. Mailand, Pagadian, Bangkok"
         autocomplete="off">
-      <datalist id="citiesList"></datalist>
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
@@ -288,18 +287,6 @@ const knownCities = rawCities.split(";").map(row => {
     aid: parts.slice(3, 4).join("")
   };
 });
-
-function initDatalist() {
-  const dl = $("citiesList");
-  if (!dl) return;
-  dl.innerHTML = "";
-  knownCities.forEach(item => {
-    const opt = document.createElement("option");
-    opt.value = item.name;
-    opt.label = item.name + " (" + item.country + ")";
-    dl.appendChild(opt);
-  });
-}
 
 function todayIso() {
   const d = new Date();
@@ -515,3 +502,13 @@ async function fetchCitySuggestions(q) {
   try {
     const api = P + "://open-meteo.com";
     const opt = "&count=7&language=de&format=json";
+    const r = await fetch(api + encodeURIComponent(q) + opt);
+    const j = await r.json();
+    if (j && j.results && j.results.length > 0) {
+      return j.results.map(it => ({
+        name: it.name,
+        country: it.country || "",
+        cc: (it.country_code || "de").toLowerCase(),
+        aid: ""
+      }));
+    }
