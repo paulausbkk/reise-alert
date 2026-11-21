@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v101</title>
+<title>🏨 Meine Hotelsuche PRO v102</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v101</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v102</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -77,31 +77,12 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
     <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl">
-      <input type="hidden" name="ss" id="b_ss">
-      <input type="hidden" name="sb" value="1">
-      <input type="hidden" name="src" value="index">
-      <input type="hidden" name="dest_type" value="city">
-      <input type="hidden" name="checkin" id="b_ci">
-      <input type="hidden" name="checkout" id="b_co">
-      <input type="hidden" name="checkin_year" id="b_ciy">
-      <input type="hidden" name="checkin_month" id="b_cim">
-      <input type="hidden" name="checkin_monthday" id="b_cid">
-      <input type="hidden" name="checkout_year" id="b_coy">
-      <input type="hidden" name="checkout_month" id="b_com">
-      <input type="hidden" name="checkout_monthday" id="b_cod">
-      <input type="hidden" name="group_adults" id="b_px">
-      <input type="hidden" name="no_rooms" id="b_rm">
-      <input type="hidden" name="nflt" id="b_flt" disabled>
-      <input type="hidden" name="lang" value="de">
-      <input type="hidden" name="selected_currency" value="EUR">
-      <button type="submit" class="btn b4">Booking.com</button>
-    </form>
+    <a id="h4" href="https://booking.com" target="_blank" class="btn b4 htl">Booking.com</a>
     <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
     <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
-  <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>, <b>Frühstück</b>) sowie bei <b>Booking.com</b> (Stadt) und <b>Trivago</b> (Datum & Personen) müssen bei Bedarf auf der Anbieterseite bestätigt werden.</div>
+  <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>, <b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.</div>
 </div>
 <script>
 var $ = function(id){ return document.getElementById(id); };
@@ -171,8 +152,7 @@ function upd(){
       " \u2022 " + px + " Pers. \u2022 " + rm + " Zi.";
 
     var q = encodeURIComponent(city);
-    var c1 = ci.split("-"), c2 = co.split("-");
-    var flt = st > 0 ? "class=" + st : "";
+    var flt = st > 0 ? "&nflt=class%3D" + st : "";
 
     $("h1").href = P + "www.kayak.de" + "/hotels/" + q + "/" +
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
@@ -183,15 +163,10 @@ function upd(){
     $("h3").href = P + "www.momondo.de" + "/hotels/" + q + "/" +
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
-    $("b_ss").value = city; $("b_ci").value = ci; $("b_co").value = co;
-    $("b_ciy").value = c1.slice(0, 1).join("");
-    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
-    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
-    $("b_coy").value = c2.slice(0, 1).join("");
-    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
-    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
-    $("b_px").value = px; $("b_rm").value = rm;
-    $("b_flt").disabled = !flt; $("b_flt").value = flt;
+    $("h4").href = P + "://booking.com" + "/searchresults.de.html?ss=" +
+      q + "&checkin=" + ci + "&checkout=" + co +
+      "&group_adults=" + px + "&no_rooms=" + rm +
+      "&lang=de&selected_currency=EUR" + flt;
 
     var ag = P + "://agoda.com" + "/de-de/search?checkIn=" + ci +
       "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
@@ -334,7 +309,6 @@ try {
   $(id).addEventListener("input", upd);
   $(id).addEventListener("change", upd);
 });
-$("f4").addEventListener("submit", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
 </script>
