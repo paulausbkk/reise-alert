@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v97</title>
+<title>🏨 Meine Hotelsuche PRO v98</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v97</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v98</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -100,6 +100,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
   </div>
   <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>, <b>Frühstück</b>) sowie bei <b>Booking.com</b> (Stadt) und <b>Trivago</b> (Datum & Personen) müssen bei Bedarf auf der Anbieterseite bestätigt werden.</div>
 </div>
+<script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
 var acT = null, cc = "de", aid = "";
@@ -150,7 +151,6 @@ function getAgodaId(city){
   if(k === "dresden") return "14912";
   return "";
 }
-
 function upd(){
   var now = new Date(), t = iso(now);
   $("dt").textContent = now.toLocaleDateString("de-DE") +
@@ -186,6 +186,7 @@ function upd(){
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
       "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.";
   }
+
   if(city && ci && co && !bad){
     var q = encodeURIComponent(city);
     var n2 = Math.round((new Date(co) - new Date(ci)) / 86400000);
@@ -234,9 +235,7 @@ function upd(){
       city: $("city").value, ci: ci, co: co, px: px, rm: rm, st: st, ab: ab, cc: cc
     }));
   } catch(e){}
-}
-
-function showAc(list, msg){
+  function showAc(list, msg){
   var box = $("lc");
   box.innerHTML = "";
   if(msg){
