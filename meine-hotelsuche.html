@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v67</title>
+<title>🏨 Meine Hotelsuche PRO v69</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -121,7 +121,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v67</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v69</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -199,7 +199,7 @@ input:focus,select:focus{
     <a id="h2" href="https://expedia.de" target="_blank"
       class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank"
-    class="btn b3 htl">Momondo</a>
+     class="btn b3 htl">Momondo</a>
     <form id="f4" method="get" target="_blank" class="htl"
       action="https://booking.com">
       <input type="hidden" name="ss" id="b_ss">
@@ -247,7 +247,7 @@ let bgTimer = null;
 let lastCountryCode = "de";
 let resolvedAgodaId = "";
 
-const knownCities = (
+const rawCities =
   "Bangkok|Thailand|th|9395;" +
   "Mailand|Italien|it|4894;" +
   "Berlin|Deutschland|de|16154;" +
@@ -276,8 +276,9 @@ const knownCities = (
   "Pagadian|Philippinen|ph|89122;" +
   "Davao|Philippinen|ph|14875;" +
   "Boracay|Philippinen|ph|15903;" +
-  "Palawan|Philippinen|ph|16714"
-).split(";").map(row => {
+  "Palawan|Philippinen|ph|16714";
+
+const knownCities = rawCities.split(";").map(row => {
   const parts = row.split("|");
   return {
     name: parts.slice(0, 1).join(""),
@@ -327,10 +328,6 @@ function saveMemory(obj) {
   try { localStorage.setItem("rk_hotel_mem", raw); } catch (e) {}
   try { sessionStorage.setItem("rk_hotel_mem", raw); } catch (e) {}
   try { window.name = "RK_MEM:" + raw; } catch (e) {}
-  try {
-    document.cookie = "rk_hotel_mem=" + encodeURIComponent(raw) +
-      ";path=/;max-age=2592000;SameSite=Lax";
-  } catch (e) {}
 }
 
 function loadMemory() {
@@ -347,10 +344,6 @@ function loadMemory() {
       return JSON.parse(window.name.slice(7));
     }
   } catch (e) {}
-  try {
-    const m = document.cookie.match(/(?:^|;\s*)rk_hotel_mem=([^;]+)/);
-    if (m) return JSON.parse(decodeURIComponent(m.slice(1, 2).join("")));
-  } catch (e) {}
   return null;
 }
 
@@ -358,13 +351,16 @@ function clearMemory() {
   try { localStorage.removeItem("rk_hotel_mem"); } catch (e) {}
   try { sessionStorage.removeItem("rk_hotel_mem"); } catch (e) {}
   try { window.name = ""; } catch (e) {}
-  try {
-    document.cookie = "rk_hotel_mem=;path=/;max-age=0";
-  } catch (e) {}
 }
 
 function extractAgodaId(txt) {
-  const tags = '"ObjectId":;"CityId":;"cityId":;"Id":'.split(";");
+  const q = String.fromCharCode(34);
+  const tags = (
+    q + "ObjectId" + q + ":;" +
+    q + "CityId" + q + ":;" +
+    q + "cityId" + q + ":;" +
+    q + "Id" + q + ":"
+  ).split(";");
   for (let i = 0; i < tags.length; i++) {
     const tag = tags.slice(i, i + 1).join("");
     const pos = txt.indexOf(tag);
@@ -399,12 +395,10 @@ async function resolveAgodaInBg(city) {
   const base = P + "://agoda.com";
   const path = "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=";
   const target = base + path + encodeURIComponent(city);
-  const endpoints = (
-    P + "corsproxy.io/?url=" + encodeURIComponent(target) + ";" +
-    P + "://codetabs.com" +
-      encodeURIComponent(target) + ";" +
-    P + "api.allorigins.win/raw?url=" + encodeURIComponent(target)
-  ).split(";");
+  const u1 = P + "corsproxy.io/?url=" + encodeURIComponent(target);
+  const u2 = P + "://codetabs.com" +
+    encodeURIComponent(target);
+  const endpoints = (u1 + ";" + u2).split(";");
 
   const probe = async url => {
     const ctrl = new AbortController();
@@ -508,3 +502,15 @@ async function fetchCitySuggestions(q) {
   try {
     const api = P + "://open-meteo.com";
     const opt = "&count=7&language=de&format=json";
+    const r = await fetch(api + encodeURIComponent(q) + opt);
+    const j = await r.json();
+    if (j && j.results && j.results.length > 0) {
+      return j.results.map(it => ({
+        name: it.name,
+        country: it.country || "",
+        cc: (it.country_code || "de").toLowerCase(),
+        aid: ""
+      }));
+    }
+  } catch (e) {}
+  try {
