@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v66</title>
+<title>🏨 Meine Hotelsuche PRO v67</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v66</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v67</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -99,7 +99,7 @@ const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let cidx = 0, acTimer = null, lastCountryCode = "de", resolvedAgodaId = "";
 
 const quickAgoda = new Map();
-"bangkok:9395;mailand:4894;milan:4894;palermo:16011;berlin:16154;muenchen:14552;hamburg:15727;wien:14756;paris:15470;london:233;rom:16582;rome:16582;barcelona:14563;madrid:16583;new york:318;tokio:5085;tokyo:5085;singapur:4064;singapore:4064;dubai:2994;istanbul:14932;amsterdam:13868;prag:16578;prague:16578;lissabon:14558;lisbon:14558;phuket:16056;pattaya:8584;chiang mai:7401;bali:17193;manila:1622;cebu:4001;pagadian:89122;davao:14875;boracay:15903;palawan:16714"
+"bangkok:9395;mailand:4894;milan:4894;palermo:16011;berlin:16154;muenchen:14552;münchen:14552;hamburg:15727;wien:14756;paris:15470;london:233;rom:16582;rome:16582;barcelona:14563;madrid:16583;new york:318;tokio:5085;tokyo:5085;singapur:4064;singapore:4064;dubai:2994;istanbul:14932;amsterdam:13868;prag:16578;prague:16578;lissabon:14558;lisbon:14558;phuket:16056;pattaya:8584;chiang mai:7401;bali:17193;manila:1622;cebu:4001;pagadian:89122;davao:14875;boracay:15903;palawan:16714;leipzig:15960;dresden:14912;koeln:15636;köln:15636;frankfurt:15226"
   .split(";").forEach(pair => {
     const kv = pair.split(":");
     if (kv.length === 2) quickAgoda.set(kv.slice(0, 1).join(""), kv.slice(1, 2).join(""));
@@ -124,11 +124,19 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
 
 function buildAgodaUrl(city, ci, n, px, rm, st) {
   const p = new URLSearchParams();
-  if (resolvedAgodaId) p.set("city", resolvedAgodaId);
-  else p.set("textToSearch", city);
-  p.set("checkIn", ci); p.set("los", String(n)); p.set("adults", String(px));
-  p.set("children", "0"); p.set("rooms", String(rm)); p.set("currency", "EUR"); p.set("locale", "de-de");
+  p.set("checkIn", ci);
+  p.set("los", String(n));
+  p.set("adults", String(px));
+  p.set("children", "0");
+  p.set("rooms", String(rm));
+  p.set("currency", "EUR");
   if (st > 0) p.set("hotelStarRating", String(st));
+  if (resolvedAgodaId) {
+    p.set("city", resolvedAgodaId);
+    p.set("locale", "de-de");
+    return P + "://agoda.com?" + p.toString();
+  }
+  p.set("textToSearch", city);
   return P + "://agoda.com?" + p.toString();
 }
 
@@ -141,7 +149,8 @@ function buildTrivagoUrl(city, ci, co, px, rm) {
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
-    resolvedAgodaId = quickAgoda.get(norm(inp.value).trim()) || "";
+    const rawK = inp.value.trim().toLowerCase();
+    resolvedAgodaId = quickAgoda.get(rawK) || quickAgoda.get(norm(rawK)) || "";
     upd();
     clearTimeout(acTimer);
     const q = inp.value.trim();
@@ -181,7 +190,8 @@ function upd() {
 
   const city = $("city").value.trim(), ci = $("ci").value, co = $("co").value;
   const px = +$("px").value || 2, rm = +$("rm").value || 1, st = +$("st").value || 0, ab = $("ab").checked;
-  resolvedAgodaId = quickAgoda.get(norm(city)) || "";
+  const rawK = city.toLowerCase();
+  resolvedAgodaId = quickAgoda.get(rawK) || quickAgoda.get(norm(rawK)) || "";
 
   document.querySelectorAll(".htl").forEach(el => el.classList.toggle("off", ab));
   $("h8").classList.toggle("off", !ab);
