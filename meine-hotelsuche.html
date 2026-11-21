@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v71</title>
+<title>🏨 Meine Hotelsuche PRO v72</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -121,7 +121,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v71</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v72</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -199,7 +199,7 @@ input:focus,select:focus{
     <a id="h2" href="https://expedia.de" target="_blank"
       class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank"
-    class="btn b3 htl">Momondo</a>
+      class="btn b3 htl">Momondo</a>
     <form id="f4" method="get" target="_blank" class="htl"
       action="https://booking.com">
       <input type="hidden" name="ss" id="b_ss">
@@ -250,6 +250,7 @@ let resolvedAgodaId = "";
 const rawCities =
   "Bangkok|Thailand|th|9395;" +
   "Mailand|Italien|it|4894;" +
+  "Palermo|Italien|it|16011;" +
   "Berlin|Deutschland|de|16154;" +
   "München|Deutschland|de|14552;" +
   "Hamburg|Deutschland|de|15727;" +
@@ -310,7 +311,9 @@ function addDaysIso(iso, days) {
 
 function norm(s) {
   return s.toLowerCase()
-    .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
+    .replace(/ü/g, "ue")
+    .replace(/ö/g, "oe")
+    .replace(/ä/g, "ae");
 }
 
 function findKnownCity(q) {
@@ -355,12 +358,11 @@ function clearMemory() {
 
 function extractAgodaId(txt) {
   const q = String.fromCharCode(34);
-  const tags = (
-    q + "ObjectId" + q + ":;" +
-    q + "CityId" + q + ":;" +
-    q + "cityId" + q + ":;" +
-    q + "Id" + q + ":"
-  ).split(";");
+  const t1 = q + "ObjectId" + q + ":";
+  const t2 = q + "CityId" + q + ":";
+  const t3 = q + "cityId" + q + ":";
+  const t4 = q + "Id" + q + ":";
+  const tags = (t1 + ";" + t2 + ";" + t3 + ";" + t4).split(";");
   for (let i = 0; i < tags.length; i++) {
     const tag = tags.slice(i, i + 1).join("");
     const pos = txt.indexOf(tag);
@@ -369,8 +371,11 @@ function extractAgodaId(txt) {
       let num = "";
       for (let j = 0; j < rest.length; j++) {
         const ch = rest.charAt(j);
-        if (ch >= "0" && ch <= "9") num += ch;
-        else if (num.length > 0) break;
+        if (ch >= "0" && ch <= "9") {
+          num += ch;
+        } else if (num.length > 0) {
+          break;
+        }
       }
       if (num.length > 0 && num !== "0") return num;
     }
@@ -396,8 +401,7 @@ async function resolveAgodaInBg(city) {
   const path = "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=";
   const target = base + path + encodeURIComponent(city);
   const u1 = P + "corsproxy.io/?url=" + encodeURIComponent(target);
-  const u2 = P + "://codetabs.com" +
-    encodeURIComponent(target);
+  const u2 = P + "://codetabs.com" + encodeURIComponent(target);
   const endpoints = (u1 + ";" + u2).split(";");
 
   const probe = async url => {
@@ -490,8 +494,8 @@ function renderSuggestions(inp, box, list) {
 
 function filterLocalCities(q) {
   const k = norm(q).trim();
-  const out = new Array();
   if (!k) return knownCities.slice(0, 12);
+  const out = [];
   knownCities.forEach(item => {
     if (norm(item.name).indexOf(k) !== -1) out.push(item);
   });
@@ -512,3 +516,57 @@ async function fetchCitySuggestions(q) {
         aid: ""
       }));
     }
+  } catch (e) {}
+  try {
+    const ph = P + "photon.komoot.io/api/?q=" +
+      encodeURIComponent(q) + "&lang=de&limit=6";
+    const r2 = await fetch(ph);
+    const j2 = await r2.json();
+    if (j2 && j2.features && j2.features.length > 0) {
+      return j2.features.map(f => {
+        const pr = f.properties || {};
+        return {
+          name: pr.name || pr.city || q,
+          country: pr.country || "",
+          cc: (pr.countrycode || "de").toLowerCase(),
+          aid: ""
+        };
+      });
+    }
+  } catch (e) {}
+  return [];
+}
+
+function liveAc(inp, box) {
+  inp.addEventListener("input", () => {
+    const known = findKnownCity(inp.value);
+    resolvedAgodaId = known ? known.aid : "";
+    if (known) lastCountryCode = known.cc;
+    upd();
+    clearTimeout(acTimer);
+    clearTimeout(bgTimer);
+    const q = inp.value.trim();
+    const localHits = filterLocalCities(q);
+    if (localHits.length > 0) renderSuggestions(inp, box, localHits);
+    if (q.length < 2) return;
+    bgTimer = setTimeout(() => resolveAgodaInBg(q), 250);
+    acTimer = setTimeout(async () => {
+      const remoteHits = await fetchCitySuggestions(q);
+      if (inp.value.trim() !== q) return;
+      if (remoteHits.length > 0) {
+        renderSuggestions(inp, box, remoteHits);
+      } else if (localHits.length === 0) {
+        box.style.display = "none";
+      }
+    }, 220);
+  });
+  inp.addEventListener("focus", () => {
+    const localHits = filterLocalCities(inp.value.trim());
+    if (localHits.length > 0) renderSuggestions(inp, box, localHits);
+  });
+  document.addEventListener("click", e => {
+    if (!box.contains(e.target) && e.target !== inp) {
+      box.style.display = "none";
+    }
+  });
+}
