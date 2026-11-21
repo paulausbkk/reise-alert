@@ -122,7 +122,7 @@ input:focus,select:focus{
 <div class="hdr">
   <h1 class="tit">🏨 Meine Hotelsuche PRO v65</h1>
   <div class="cp">
-    <div class="seg" id="dt">20.11.2026</div>
+    <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
     <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg">
@@ -197,7 +197,7 @@ input:focus,select:focus{
     <a id="h2" href="https://expedia.de" target="_blank"
       class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank"
-class="btn b3 htl">Momondo</a>
+  class="btn b3 htl">Momondo</a>
     <form id="f4" method="get" target="_blank" class="htl"
       action="https://booking.com">
       <input type="hidden" name="ss" id="b_ss">
@@ -245,13 +245,6 @@ let bgTimer = null;
 let lastCountryCode = "de";
 let resolvedAgodaId = "";
 
-const agodaIds = new Map();
-"bangkok:9395;mailand:4894;milan:4894;palermo:16011;berlin:16154;muenchen:14552;hamburg:15727;wien:14756;paris:15470;london:233;rom:16582;rome:16582;barcelona:14563;madrid:16583;new york:318;tokio:5085;tokyo:5085;singapur:4064;singapore:4064;dubai:2994;istanbul:14932;amsterdam:13868;prag:16578;prague:16578;lissabon:14558;lisbon:14558;phuket:16056;pattaya:8584;chiang mai:7401;bali:17193;manila:1622;cebu:4001;pagadian:89122;davao:14875;boracay:15903;palawan:16714;leipzig:15960;dresden:14912;koeln:15636;frankfurt:15226"
-  .split(";").forEach(pair => {
-    const kv = pair.split(":");
-    if (kv.length === 2) agodaIds.set(kv.slice(0, 1).join(""), kv.slice(1, 2).join(""));
-  });
-
 function todayIso() {
   const d = new Date();
   const y = d.getFullYear();
@@ -272,7 +265,11 @@ function slug(s) {
 
 function extractAgodaId(txt) {
   const q = String.fromCharCode(34);
-  const tags = (q + "ObjectId" + q + ":;" + q + "CityId" + q + ":;" + q + "Id" + q + ":").split(";");
+  const tags = (
+    q + "ObjectId" + q + ":;" +
+    q + "CityId" + q + ":;" +
+    q + "Id" + q + ":"
+  ).split(";");
   for (let i = 0; i < tags.length; i++) {
     const tag = tags.slice(i, i + 1).join("");
     const pos = txt.indexOf(tag);
@@ -293,11 +290,6 @@ function extractAgodaId(txt) {
 async function resolveAgodaInBg(city) {
   const key = norm(city).trim();
   if (!key) { resolvedAgodaId = ""; upd(); return; }
-  if (agodaIds.has(key)) {
-    resolvedAgodaId = agodaIds.get(key);
-    upd();
-    return;
-  }
   if (agodaCache.has(key)) {
     resolvedAgodaId = agodaCache.get(key) || "";
     upd();
@@ -351,10 +343,9 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
 }
 
 function buildAgodaUrl(city, cc, ci, n, px, rm) {
-  const id = resolvedAgodaId || agodaIds.get(norm(city).trim()) || "";
-  if (id) {
+  if (resolvedAgodaId) {
     const p = new URLSearchParams();
-    p.set("city", id);
+    p.set("city", resolvedAgodaId);
     p.set("checkIn", ci);
     p.set("los", String(n));
     p.set("adults", String(px));
@@ -379,7 +370,7 @@ function buildTrivagoUrl(city, ci, co, px, rm) {
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
-    resolvedAgodaId = agodaIds.get(norm(inp.value).trim()) || "";
+    resolvedAgodaId = "";
     upd();
     clearTimeout(acTimer);
     clearTimeout(bgTimer);
@@ -467,3 +458,24 @@ function upd() {
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
     $("info").textContent =
+      "Bitte Reiseziel, Check-in und Check-out wählen.";
+  }
+
+  if (city && ci && co && !pastCi && !badCo) {
+    const q = encodeURIComponent(city);
+    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    const c1 = ci.split("-");
+    const c2 = co.split("-");
+    const bFilt = st > 0 ? "class=" + st : "";
+
+    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci +
+      "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
+
+    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci +
+      "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("b_ss").value = city;
+    $("b_ci").value = ci;
+    $("b_co").value = co;
+    $("b_ciy").value = c1.slice(0, 1).join("");
+    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
