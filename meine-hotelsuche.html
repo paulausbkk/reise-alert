@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v65</title>
+<title>🏨 Meine Hotelsuche PRO v66</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -120,7 +120,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v65</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v66</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -197,7 +197,7 @@ input:focus,select:focus{
     <a id="h2" href="https://expedia.de" target="_blank"
       class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank"
-     class="btn b3 htl">Momondo</a>
+    class="btn b3 htl">Momondo</a>
     <form id="f4" method="get" target="_blank" class="htl"
       action="https://booking.com">
       <input type="hidden" name="ss" id="b_ss">
@@ -245,6 +245,13 @@ let bgTimer = null;
 let lastCountryCode = "de";
 let resolvedAgodaId = "";
 
+const knownAgoda = new Map();
+"bangkok:9395;mailand:4894;milan:4894;berlin:16154;muenchen:14552;hamburg:15727;wien:14756;paris:15470;london:233;rom:16582;rome:16582;barcelona:14563;madrid:16583;new york:318;tokio:5085;tokyo:5085;singapur:4064;singapore:4064;dubai:2994;istanbul:14932;amsterdam:13868;prag:16578;prague:16578;lissabon:14558;lisbon:14558;phuket:16056;pattaya:8584;chiang mai:7401;bali:17193;manila:1622;cebu:4001;pagadian:89122;davao:14875;boracay:15903;palawan:16714"
+  .split(";").forEach(pair => {
+    const kv = pair.split(":");
+    if (kv.length === 2) knownAgoda.set(kv.slice(0, 1).join(""), kv.slice(1, 2).join(""));
+  });
+
 function todayIso() {
   const d = new Date();
   const y = d.getFullYear();
@@ -258,13 +265,8 @@ function norm(s) {
     .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
 }
 
-function slug(s) {
-  return norm(s).replace(/ß/g,"ss")
-    .replace(/\W+/g,"-").replace(/^-|-$/g,"");
-}
-
 function extractAgodaId(txt) {
-  const tags = '"ObjectId":;"CityId":;"Id":'.split(";");
+  const tags = '"ObjectId":;"CityId":;"cityId":;"Id":'.split(";");
   for (let i = 0; i < tags.length; i++) {
     const tag = tags.slice(i, i + 1).join("");
     const pos = txt.indexOf(tag);
@@ -285,6 +287,11 @@ function extractAgodaId(txt) {
 async function resolveAgodaInBg(city) {
   const key = norm(city).trim();
   if (!key) { resolvedAgodaId = ""; upd(); return; }
+  if (knownAgoda.has(key)) {
+    resolvedAgodaId = knownAgoda.get(key);
+    upd();
+    return;
+  }
   if (agodaCache.has(key)) {
     resolvedAgodaId = agodaCache.get(key) || "";
     upd();
@@ -337,21 +344,22 @@ function buildExpediaUrl(city, ci, co, px, rm, st) {
   return P + "www.expedia.de/Hotel-Search?" + p.toString();
 }
 
-function buildAgodaUrl(city, cc, ci, n, px, rm) {
+function buildAgodaUrl(city, ci, n, px, rm, st) {
+  const p = new URLSearchParams();
   if (resolvedAgodaId) {
-    const p = new URLSearchParams();
     p.set("city", resolvedAgodaId);
-    p.set("checkIn", ci);
-    p.set("los", String(n));
-    p.set("adults", String(px));
-    p.set("children", "0");
-    p.set("rooms", String(rm));
-    p.set("currency", "EUR");
-    return P + "://agoda.com?" + p.toString();
+  } else {
+    p.set("textToSearch", city);
   }
-  const sl = slug(city);
-  const ctry = (cc || "de").toLowerCase();
-  return P + "://agoda.com" + sl + "-" + ctry + ".html";
+  p.set("checkIn", ci);
+  p.set("los", String(n));
+  p.set("adults", String(px));
+  p.set("children", "0");
+  p.set("rooms", String(rm));
+  p.set("currency", "EUR");
+  p.set("locale", "de-de");
+  if (st > 0) p.set("hotelStarRating", String(st));
+  return P + "://agoda.com?" + p.toString();
 }
 
 function buildTrivagoUrl(city, ci, co, px, rm) {
@@ -365,13 +373,14 @@ function buildTrivagoUrl(city, ci, co, px, rm) {
 
 function liveAc(inp, box) {
   inp.addEventListener("input", () => {
-    resolvedAgodaId = "";
+    const k = norm(inp.value).trim();
+    resolvedAgodaId = knownAgoda.get(k) || "";
     upd();
     clearTimeout(acTimer);
     clearTimeout(bgTimer);
     const q = inp.value.trim();
     if (q.length < 2) { box.style.display = "none"; return; }
-    bgTimer = setTimeout(() => resolveAgodaInBg(q), 300);
+    bgTimer = setTimeout(() => resolveAgodaInBg(q), 250);
     acTimer = setTimeout(async () => {
       try {
         const api = P + "://open-meteo.com";
@@ -461,19 +470,3 @@ function upd() {
     const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
     const c1 = ci.split("-");
     const c2 = co.split("-");
-    const bFilt = st > 0 ? "class=" + st : "";
-
-    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci +
-      "/" + co + "/" + px + "adults/" + rm + "rooms";
-    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
-
-    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci +
-      "/" + co + "/" + px + "adults/" + rm + "rooms";
-    $("b_ss").value = city;
-    $("b_ci").value = ci;
-    $("b_co").value = co;
-    $("b_ciy").value = c1.slice(0, 1).join("");
-    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
-    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
-    $("b_coy").value = c2.slice(0, 1).join("");
-    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
