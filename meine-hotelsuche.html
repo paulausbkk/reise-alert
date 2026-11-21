@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v69</title>
+<title>🏨 Meine Hotelsuche PRO v70</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -58,9 +58,9 @@ input:focus,select:focus{
 }
 .ac{
   position:absolute;top:68px;left:0;right:0;background:#fff;
-  border:1px solid #0284c7;border-radius:8px;z-index:99;
-  max-height:200px;overflow-y:auto;display:none;
-  box-shadow:0 8px 20px rgba(12,74,110,.18)
+  border:2px solid #0284c7;border-radius:8px;z-index:9999;
+  max-height:220px;overflow-y:auto;display:none;
+  box-shadow:0 10px 24px rgba(12,74,110,.25)
 }
 .ac div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9}
 .ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
@@ -121,7 +121,7 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v69</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v70</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -137,9 +137,10 @@ input:focus,select:focus{
     <div class="ct">📍 Zielort & Reisedaten</div>
     <div class="f">
       <label>Reiseziel (beliebige Stadt weltweit)</label>
-      <input type="text" id="city"
+      <input type="text" id="city" list="citiesList"
         placeholder="z.B. Mailand, Pagadian, Bangkok"
         autocomplete="off">
+      <datalist id="citiesList"></datalist>
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
@@ -199,7 +200,7 @@ input:focus,select:focus{
     <a id="h2" href="https://expedia.de" target="_blank"
       class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank"
-     class="btn b3 htl">Momondo</a>
+    class="btn b3 htl">Momondo</a>
     <form id="f4" method="get" target="_blank" class="htl"
       action="https://booking.com">
       <input type="hidden" name="ss" id="b_ss">
@@ -287,6 +288,18 @@ const knownCities = rawCities.split(";").map(row => {
     aid: parts.slice(3, 4).join("")
   };
 });
+
+function initDatalist() {
+  const dl = $("citiesList");
+  if (!dl) return;
+  dl.innerHTML = "";
+  knownCities.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item.name;
+    opt.label = item.name + " (" + item.country + ")";
+    dl.appendChild(opt);
+  });
+}
 
 function todayIso() {
   const d = new Date();
@@ -491,7 +504,7 @@ function renderSuggestions(inp, box, list) {
 function filterLocalCities(q) {
   const k = norm(q).trim();
   const out = new Array();
-  if (!k) return out;
+  if (!k) return knownCities.slice(0, 12);
   knownCities.forEach(item => {
     if (norm(item.name).indexOf(k) !== -1) out.push(item);
   });
@@ -502,15 +515,3 @@ async function fetchCitySuggestions(q) {
   try {
     const api = P + "://open-meteo.com";
     const opt = "&count=7&language=de&format=json";
-    const r = await fetch(api + encodeURIComponent(q) + opt);
-    const j = await r.json();
-    if (j && j.results && j.results.length > 0) {
-      return j.results.map(it => ({
-        name: it.name,
-        country: it.country || "",
-        cc: (it.country_code || "de").toLowerCase(),
-        aid: ""
-      }));
-    }
-  } catch (e) {}
-  try {
