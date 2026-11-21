@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v94</title>
+<title>🏨 Meine Hotelsuche PRO v95</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v94</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v95</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -104,7 +104,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
 var acT = null, bgT = null, cc = "de", aid = "";
-var agCache = {};
+var agCache = new Map();
 var quickIds = (
   "bangkok:9395:th:bangkok;mailand:4894:it:milan;milan:4894:it:milan;" +
   "palermo:16011:it:palermo;berlin:16154:de:berlin;hamburg:15727:de:hamburg;" +
@@ -167,7 +167,7 @@ function extractNumId(txt){
 function findAgodaIdBg(city){
   var k = city.toLowerCase().trim();
   if(!k || getMeta(k)) return;
-  if(agCache[k]){ aid = agCache[k]; upd(); return; }
+  if(agCache.has(k)){ aid = agCache.get(k); upd(); return; }
   var target = P + "://agoda.com" +
     "/api/cronos/search/GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=" +
     encodeURIComponent(city);
@@ -175,7 +175,7 @@ function findAgodaIdBg(city){
   fetch(p1).then(function(r){ return r.text(); }).then(function(txt){
     var found = extractNumId(txt);
     if(found){
-      agCache[k] = found;
+      agCache.set(k, found);
       if($("city").value.toLowerCase().trim() === k){
         aid = found; upd();
       }
@@ -199,7 +199,7 @@ function upd(){
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
   var meta = getMeta(city);
-  aid = meta ? meta.id : (agCache[city.toLowerCase()] || "");
+  aid = meta ? meta.id : (agCache.get(city.toLowerCase().trim()) || "");
   if(meta && meta.cc) cc = meta.cc;
 
   document.querySelectorAll(".htl").forEach(function(el){
