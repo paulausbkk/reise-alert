@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v95</title>
+<title>🏨 Meine Hotelsuche PRO v96</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v95</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v96</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -103,39 +103,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
-var acT = null, bgT = null, cc = "de", aid = "";
-var agCache = new Map();
-var quickIds = (
-  "bangkok:9395:th:bangkok;mailand:4894:it:milan;milan:4894:it:milan;" +
-  "palermo:16011:it:palermo;berlin:16154:de:berlin;hamburg:15727:de:hamburg;" +
-  "muenchen:14552:de:munich;münchen:14552:de:munich;wien:14756:at:vienna;" +
-  "paris:15470:fr:paris;london:233:gb:london;rom:16582:it:rome;" +
-  "barcelona:14563:es:barcelona;madrid:16583:es:madrid;dubai:2994:ae:dubai;" +
-  "istanbul:14932:tr:istanbul;amsterdam:13868:nl:amsterdam;prag:16578:cz:prague;" +
-  "warschau:16107:pl:warsaw;warsaw:16107:pl:warsaw;lissabon:14558:pt:lisbon;" +
-  "phuket:16056:th:phuket;pattaya:8584:th:pattaya;bali:17193:id:bali;" +
-  "manila:1622:ph:manila;cebu:4001:ph:cebu;pagadian:89122:ph:pagadian;" +
-  "davao:14875:ph:davao;boracay:15903:ph:boracay;palawan:16714:ph:palawan;" +
-  "leipzig:15960:de:leipzig;dresden:14912:de:dresden;koeln:15636:de:cologne;" +
-  "köln:15636:de:cologne;frankfurt:15226:de:frankfurt-am-main;" +
-  "new york:318:us:new-york-ny;tokio:5085:jp:tokyo;singapur:4064:sg:singapore;" +
-  "zuerich:15262:ch:zurich;zürich:15262:ch:zurich;athen:15463:gr:athens"
-).split(";");
-
-function getMeta(city){
-  var k = city.toLowerCase().trim();
-  for(var i = 0; i < quickIds.length; i++){
-    var p = quickIds.slice(i, i + 1).join("").split(":");
-    if(p.slice(0, 1).join("") === k){
-      return {
-        id: p.slice(1, 2).join(""),
-        cc: p.slice(2, 3).join(""),
-        sl: p.slice(3, 4).join("")
-      };
-    }
-  }
-  return null;
-}
+var acT = null, cc = "de", aid = "";
 
 function makeSlug(s){
   return s.toLowerCase().trim()
@@ -144,50 +112,44 @@ function makeSlug(s){
     .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
-function extractNumId(txt){
-  var q = String.fromCharCode(34);
-  var tags = (q + "ObjectId" + q + ":;" + q + "CityId" + q + ":").split(";");
-  for(var i = 0; i < tags.length; i++){
-    var tag = tags.slice(i, i + 1).join("");
-    var pos = txt.indexOf(tag);
-    if(pos !== -1){
-      var rest = txt.slice(pos + tag.length).trim();
-      var num = "";
-      for(var j = 0; j < rest.length; j++){
-        var ch = rest.charAt(j);
-        if(ch >= "0" && ch <= "9") num += ch;
-        else if(num.length > 0) break;
-      }
-      if(num.length > 0 && num !== "0") return num;
-    }
-  }
-  return "";
-}
-
-function findAgodaIdBg(city){
-  var k = city.toLowerCase().trim();
-  if(!k || getMeta(k)) return;
-  if(agCache.has(k)){ aid = agCache.get(k); upd(); return; }
-  var target = P + "://agoda.com" +
-    "/api/cronos/search/GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=" +
-    encodeURIComponent(city);
-  var p1 = P + "api.allorigins.win" + "/raw?url=" + encodeURIComponent(target);
-  fetch(p1).then(function(r){ return r.text(); }).then(function(txt){
-    var found = extractNumId(txt);
-    if(found){
-      agCache.set(k, found);
-      if($("city").value.toLowerCase().trim() === k){
-        aid = found; upd();
-      }
-    }
-  }).catch(function(){});
-}
-
 function iso(d){
   var m = String(d.getMonth() + 1), t = String(d.getDate());
   if(m.length < 2) m = "0" + m;
   if(t.length < 2) t = "0" + t;
   return d.getFullYear() + "-" + m + "-" + t;
+}
+
+function getAgodaId(city){
+  var k = city.toLowerCase().trim();
+  if(k === "bangkok") return "9395";
+  if(k === "mailand" || k === "milan") return "4894";
+  if(k === "palermo") return "16011";
+  if(k === "berlin") return "16154";
+  if(k === "hamburg") return "15727";
+  if(k === "wien") return "14756";
+  if(k === "paris") return "15470";
+  if(k === "london") return "233";
+  if(k === "rom" || k === "rome") return "16582";
+  if(k === "barcelona") return "14563";
+  if(k === "madrid") return "16583";
+  if(k === "dubai") return "2994";
+  if(k === "istanbul") return "14932";
+  if(k === "amsterdam") return "13868";
+  if(k === "prag" || k === "prague") return "16578";
+  if(k === "warschau" || k === "warsaw") return "16107";
+  if(k === "lissabon" || k === "lisbon") return "14558";
+  if(k === "phuket") return "16056";
+  if(k === "pattaya") return "8584";
+  if(k === "bali") return "17193";
+  if(k === "manila") return "1622";
+  if(k === "cebu") return "4001";
+  if(k === "pagadian") return "89122";
+  if(k === "davao") return "14875";
+  if(k === "boracay") return "15903";
+  if(k === "palawan") return "16714";
+  if(k === "leipzig") return "15960";
+  if(k === "dresden") return "14912";
+  return "";
 }
 
 function upd(){
@@ -198,9 +160,7 @@ function upd(){
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
-  var meta = getMeta(city);
-  aid = meta ? meta.id : (agCache.get(city.toLowerCase().trim()) || "");
-  if(meta && meta.cc) cc = meta.cc;
+  aid = getAgodaId(city);
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -259,7 +219,7 @@ function upd(){
       $("h5").href = P + "://agoda.com" + "/de-de/search" +
         agQ + "&city=" + aid;
     } else {
-      var aSlug = meta ? meta.sl : makeSlug(city);
+      var aSlug = makeSlug(city);
       var aCc = (cc || "de").toLowerCase();
       $("h5").href = P + "://agoda.com" + "/de-de/city/" +
         aSlug + "-" + aCc + ".html" + agQ;
@@ -298,7 +258,6 @@ function showAc(list, msg){
       $("city").value = it.name;
       cc = (it.country_code || "de").toLowerCase();
       box.style.display = "none";
-      findAgodaIdBg(it.name);
       upd();
     };
     box.appendChild(d);
@@ -361,10 +320,9 @@ function searchWorldCities(q, done){
 }
 
 $("city").addEventListener("input", function(){
-  upd(); clearTimeout(acT); clearTimeout(bgT);
+  upd(); clearTimeout(acT);
   var q = $("city").value.trim(), box = $("lc");
   if(q.length < 2){ box.style.display = "none"; return; }
-  bgT = setTimeout(function(){ findAgodaIdBg(q); }, 350);
   showAc(null, "\ud83d\udd0d Suche weltweit...");
   acT = setTimeout(function(){
     searchWorldCities(q, function(res, errMsg){
@@ -404,7 +362,6 @@ try {
 $("f4").addEventListener("submit", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
-if($("city").value.trim()) findAgodaIdBg($("city").value.trim());
 </script>
 </body>
 </html>
