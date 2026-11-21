@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v64</title>
+<title>🏨 Meine Hotelsuche PRO v65</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
@@ -120,9 +120,9 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v64</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v65</h1>
   <div class="cp">
-    <div class="seg" id="dt">20.11.2026</div>
+    <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
     <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg">
@@ -197,7 +197,7 @@ input:focus,select:focus{
     <a id="h2" href="https://expedia.de" target="_blank"
       class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank"
-      class="btn b3 htl">Momondo</a>
+     class="btn b3 htl">Momondo</a>
     <form id="f4" method="get" target="_blank" class="htl"
       action="https://booking.com">
       <input type="hidden" name="ss" id="b_ss">
@@ -294,7 +294,7 @@ async function resolveAgodaInBg(city) {
   const path = "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=";
   const target = base + path + encodeURIComponent(city);
   const endpoints = (
-    P + "corsproxy.io/?" + encodeURIComponent(target) + ";" +
+    P + "corsproxy.io/?url=" + encodeURIComponent(target) + ";" +
     P + "://codetabs.com" +
       encodeURIComponent(target) + ";" +
     P + "api.allorigins.win/raw?url=" + encodeURIComponent(target)
@@ -477,60 +477,3 @@ function upd() {
     $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
     $("b_coy").value = c2.slice(0, 1).join("");
     $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
-    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
-    $("b_px").value = px;
-    $("b_rm").value = rm;
-    $("b_flt").disabled = !bFilt;
-    $("b_flt").value = bFilt;
-
-    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, n, px, rm);
-    $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
-    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" +
-      ci + "&checkout=" + co + "&adults=" + px;
-  }
-
-  try {
-    localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
-    }));
-  } catch (e) {}
-}
-
-(function() {
-  const t = todayIso();
-  $("ci").min = t;
-  $("co").min = t;
-  try {
-    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
-    if (d) {
-      if (d.city) $("city").value = d.city;
-      if (d.ci) $("ci").value = d.ci;
-      if (d.co) $("co").value = d.co;
-      if (d.px) $("px").value = d.px;
-      if (d.rm) $("rm").value = d.rm;
-      if (d.st) $("st").value = d.st;
-      if (d.ab !== undefined) $("ab").checked = d.ab;
-      if (d.cc) lastCountryCode = d.cc;
-    }
-    const u = new URLSearchParams(window.location.search);
-    if (u.get("city")) $("city").value = u.get("city");
-    if (u.get("ci")) $("ci").value = u.get("ci");
-    if (u.get("co")) $("co").value = u.get("co");
-    if (u.get("px")) $("px").value = u.get("px");
-  } catch (e) {}
-
-  liveAc($("city"), $("lc"));
-  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
-    $(id).addEventListener("input", upd);
-    $(id).addEventListener("change", upd);
-  });
-  "h1;h2;h3;h5;h6;h8".split(";").forEach(id => {
-    $(id).addEventListener("click", upd);
-  });
-  $("f4").addEventListener("submit", upd);
-  upd();
-  if ($("city").value.trim()) resolveAgodaInBg($("city").value.trim());
-})();
-</script>
-</body>
-</html>
