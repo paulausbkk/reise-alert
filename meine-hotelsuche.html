@@ -3,51 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v80</title>
+<title>🏨 Meine Hotelsuche PRO v64</title>
 <style>
-:root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
-html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
-.hdr{display:flex;justify-content:space-between;align-items:center;background:#0f2942;padding:14px 18px;border-radius:12px;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+:root{
+  --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
+  --t:#0f172a;--b:#bae6fd;--v:#0284c7;--lg:#0ea5e9
+}
+html,body{
+  margin:0;padding:16px;min-height:100vh;
+  background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
+  font-family:sans-serif;color:var(--t);box-sizing:border-box
+}
+.hdr{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#0f2942;padding:14px 18px;border-radius:12px;
+  margin-bottom:20px;flex-wrap:wrap;gap:10px;
+  box-shadow:0 4px 14px rgba(15,41,66,.18)
+}
 .tit{font-weight:bold;color:#fff;font-size:1.25rem;margin:0}
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.seg{font-size:.78rem;padding:6px 12px;border-radius:6px;font-weight:bold;color:#fff;text-transform:uppercase;background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
+.seg{
+  font-size:.78rem;padding:6px 12px;border-radius:6px;
+  font-weight:bold;color:#fff;text-transform:uppercase;
+  background:#0284c7;text-decoration:none;border:1px solid #38bdf8
+}
 .seg.nav{background:#1e40af;font-size:.88rem;padding:8px 14px}
 .seg.upg{background:#0369a1;font-size:.88rem;padding:8px 14px}
-.seg.rst{background:#991b1b;border-color:#fca5a5;cursor:pointer}
 .row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
-.card{flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;padding:20px;background:#fff;box-sizing:border-box}
-.ct{font-weight:bold;font-size:1.08rem;color:var(--d);border-bottom:2px solid #e0f2fe;padding-bottom:8px;margin-bottom:16px}
+.card{
+  flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
+  padding:20px;background:#fff;box-sizing:border-box;
+  box-shadow:0 4px 12px rgba(3,105,161,.08)
+}
+.ct{
+  font-weight:bold;font-size:1.08rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
+  margin-bottom:16px
+}
 .f{margin-bottom:14px;display:flex;flex-direction:column;position:relative}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#1e3a8a}
-input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8px;box-sizing:border-box;font-size:.98rem;background:#f8fafc;color:var(--t);width:100%}
-.ac{position:absolute;top:68px;left:0;right:0;background:#fff;border:2px solid #0284c7;border-radius:8px;z-index:9999;max-height:220px;overflow-y:auto;display:none;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+input,select{
+  height:42px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.98rem;
+  background:#f8fafc;color:var(--t);width:100%;transition:.2s
+}
+input:focus,select:focus{
+  outline:none;border-color:#0284c7;background:#fff;
+  box-shadow:0 0 0 3px rgba(2,132,199,.15)
+}
+.ac{
+  position:absolute;top:68px;left:0;right:0;background:#fff;
+  border:1px solid #0284c7;border-radius:8px;z-index:99;
+  max-height:180px;overflow-y:auto;display:none;
+  box-shadow:0 8px 20px rgba(12,74,110,.18)
+}
 .ac div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9}
-.ac div:hover{background:#e0f2fe;font-weight:bold}
-.bn{background:#eff6ff;border:1px solid #93c5fd;border-left:5px solid #0284c7;border-radius:8px;padding:10px 14px;color:#1e3a8a;font-weight:bold;font-size:.9rem}
-.bb{border:1px solid #93c5fd;background:#fff;border-radius:12px;padding:18px}
-.bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
-.btn{display:flex;align-items:center;justify-content:center;height:48px;color:#fff;font-weight:bold;border-radius:8px;font-size:.84rem;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;width:100%}
-.b1{background:#0284c7}.b2{background:#1d4ed8}.b3{background:#0369a1}.b4{background:#1e3a8a}.b5{background:#2563eb}.b6{background:#0077b6}.b8{background:#0ea5e9}
+.ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
+.bn{
+  background:#eff6ff;border:1px solid #93c5fd;
+  border-left:5px solid #0284c7;border-radius:8px;
+  padding:10px 14px;color:#1e3a8a;font-weight:bold;font-size:.9rem
+}
+.bb{
+  border:1px solid #93c5fd;background:#fff;border-radius:12px;
+  padding:18px;box-shadow:0 4px 12px rgba(3,105,161,.08)
+}
+.bf{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+  gap:10px
+}
+.btn{
+  display:flex;align-items:center;justify-content:center;
+  height:48px;color:#fff;font-weight:bold;border-radius:8px;
+  font-size:.84rem;text-transform:uppercase;text-decoration:none;
+  text-align:center;padding:0 6px;border:none;cursor:pointer;width:100%
+}
+.b1{background:#0284c7}.b2{background:#1d4ed8}.b3{background:#0369a1}
+.b4{background:#1e3a8a}.b5{background:#2563eb}.b6{background:#0077b6}
+.b8{background:#0ea5e9}
 .off{opacity:.28;pointer-events:none;filter:grayscale(80%)}
 .err{opacity:.4}
-.swc{display:flex;align-items:center;justify-content:space-between;background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;border-radius:8px;min-height:42px}
+.err input{background:#e2e8f0!important;border-color:#94a3b8!important}
+.swc{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
+  border-radius:8px;min-height:42px;gap:8px
+}
 .sw{position:relative;display:inline-block;width:42px;height:24px}
 .sw input{opacity:0;width:0;height:0}
-.sl{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:20px;transition:.3s}
-.sl:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.sl{
+  position:absolute;cursor:pointer;inset:0;
+  background:#cbd5e1;border-radius:20px;transition:.3s
+}
+.sl:before{
+  position:absolute;content:"";height:18px;width:18px;
+  left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s
+}
 .sw input:checked+.sl{background:#0284c7!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
-.hint{margin-top:16px;background:#0f2942;color:#fff;border:3px solid #991b1b;border-left:7px solid #991b1b;border-radius:8px;padding:12px 15px;font-size:.88rem;line-height:1.45}
+@keyframes pulseHint{
+  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
+  50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
+}
+.hint{
+  margin-top:16px;background:#0f2942;color:#fff;
+  border:3px solid #991b1b;border-left:7px solid #991b1b;
+  border-radius:8px;padding:12px 15px;font-size:.88rem;line-height:1.45;
+  animation:pulseHint 2.2s infinite ease-in-out
+}
 </style>
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v80</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v64</h1>
   <div class="cp">
-    <div class="seg" id="dt">LADE UHR...</div>
+    <div class="seg" id="dt">20.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
-    <button type="button" id="rstBtn" class="seg rst">🗑️ Reset</button>
     <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg">✈️ Flugbuchungen ➡️</a>
   </div>
@@ -60,138 +132,366 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
       <input type="text" id="city" placeholder="z.B. Mailand, Pagadian, Bangkok" autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
-    <div class="f" id="cib"><label>Check-in (Anreise)</label><input type="date" id="ci"></div>
-    <div class="f" id="cob"><label>Check-out (Abreise)</label><input type="date" id="co"></div>
+    <div class="f" id="cib">
+      <label>Check-in (Anreise)</label>
+      <input type="date" id="ci">
+    </div>
+    <div class="f" id="cob">
+      <label>Check-out (Abreise)</label>
+      <input type="date" id="co">
+    </div>
   </div>
   <div class="card">
     <div class="ct">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
-      <div class="f" style="margin:0"><label for="px">Personenzahl</label><select id="px"><option value="1">1 Erwachsener</option><option value="2" selected>2 Erwachsene</option><option value="3">3 Erwachsene</option><option value="4">4 Erwachsene</option></select></div>
-      <div class="f" style="margin:0"><label for="rm">Zimmer</label><select id="rm"><option value="1" selected>1 Zimmer</option><option value="2">2 Zimmer</option><option value="3">3 Zimmer</option></select></div>
+      <div class="f" style="margin:0">
+        <label for="px">Personenzahl</label>
+        <select id="px">
+          <option value="1">1 Erwachsener</option>
+          <option value="2" selected>2 Erwachsene</option>
+          <option value="3">3 Erwachsene</option>
+          <option value="4">4 Erwachsene</option>
+        </select>
+      </div>
+      <div class="f" style="margin:0">
+        <label for="rm">Zimmer</label>
+        <select id="rm">
+          <option value="1" selected>1 Zimmer</option>
+          <option value="2">2 Zimmer</option>
+          <option value="3">3 Zimmer</option>
+        </select>
+      </div>
     </div>
-    <div class="f"><label for="st">Mindest-Sterne</label><select id="st"><option value="0">Alle Kategorien</option><option value="3">Ab 3 Sterne ⭐⭐⭐</option><option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option><option value="5">5 Sterne ⭐⭐⭐⭐⭐</option></select></div>
-    <div class="f"><div class="swc"><label for="ab" style="margin:0;cursor:pointer">Nur Airbnb</label><label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label></div></div>
+    <div class="f">
+      <label for="st">Mindest-Sterne</label>
+      <select id="st">
+        <option value="0">Alle Kategorien</option>
+        <option value="3">Ab 3 Sterne ⭐⭐⭐</option>
+        <option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option>
+        <option value="5">5 Sterne ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+    <div class="f">
+      <div class="swc">
+        <label for="ab" style="margin:0;cursor:pointer">Nur Airbnb</label>
+        <label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label>
+      </div>
+    </div>
     <div class="bn" id="info">Bitte Reiseziel und Daten wählen.</div>
   </div>
 </div>
 <div class="bb">
   <div class="bf">
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <a id="h2" href="https://www.expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" method="get" target="_blank" class="htl" action="https://booking.com">
-      <input type="hidden" name="ss" id="b_ss"><input type="hidden" name="sb" value="1"><input type="hidden" name="src" value="index"><input type="hidden" name="dest_type" value="city">
-      <input type="hidden" name="checkin" id="b_ci"><input type="hidden" name="checkout" id="b_co">
-      <input type="hidden" name="checkin_year" id="b_ciy"><input type="hidden" name="checkin_month" id="b_cim"><input type="hidden" name="checkin_monthday" id="b_cid">
-      <input type="hidden" name="checkout_year" id="b_coy"><input type="hidden" name="checkout_month" id="b_com"><input type="hidden" name="checkout_monthday" id="b_cod">
-      <input type="hidden" name="group_adults" id="b_px"><input type="hidden" name="no_rooms" id="b_rm"><input type="hidden" name="nflt" id="b_flt" disabled>
-      <input type="hidden" name="lang" value="de"><input type="hidden" name="selected_currency" value="EUR">
+    <form id="f4" action="https://www.booking.com/searchresults.de.html" method="get" target="_blank" class="htl">
+      <input type="hidden" name="ss" id="b_ss">
+      <input type="hidden" name="checkin" id="b_ci">
+      <input type="hidden" name="checkout" id="b_co">
+      <input type="hidden" name="checkin_year" id="b_ciy">
+      <input type="hidden" name="checkin_month" id="b_cim">
+      <input type="hidden" name="checkin_monthday" id="b_cid">
+      <input type="hidden" name="checkout_year" id="b_coy">
+      <input type="hidden" name="checkout_month" id="b_com">
+      <input type="hidden" name="checkout_monthday" id="b_cod">
+      <input type="hidden" name="group_adults" id="b_px">
+      <input type="hidden" name="no_rooms" id="b_rm">
+      <input type="hidden" name="nflt" id="b_flt" disabled>
+      <input type="hidden" name="lang" value="de">
+      <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
-    <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+    <a id="h5" href="https://www.agoda.com/de-de/" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://www.trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
-  <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie <b>Hotel am Strand</b>, <b>Terrasse</b> oder <b>Frühstück</b> müssen auf der Anbieterseite gewählt werden.</div>
+  <div class="hint">
+    ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
+    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> (falls ein
+    kleiner Ort keine direkte Kalender-ID hat) das <b>Datum & Gäste</b> –
+    müssen auf der Anbieterseite direkt gewählt werden.
+  </div>
 </div>
 <script>
-function $(id){return document.getElementById(id);}
-function pad2(n){var s=String(n);return s.length<2?"0"+s:s;}
-function tickClock(){var d=new Date(),e=$("dt");if(e)e.textContent=pad2(d.getDate())+"."+pad2(d.getMonth()+1)+"."+d.getFullYear()+" • "+pad2(d.getHours())+":"+pad2(d.getMinutes())+":"+pad2(d.getSeconds());}
-tickClock();setInterval(tickClock,1000);
+const $ = id => document.getElementById(id);
+const P = "https://";
+const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
+const agodaCache = new Map();
+let cidx = 0;
+let acTimer = null;
+let bgTimer = null;
+let lastCountryCode = "de";
+let resolvedAgodaId = "";
 
-var P="https://",aid="",lastCc="de",acTimer=null;
-var cities="Bangkok|Thailand|th|9395;Mailand|Italien|it|4894;Palermo|Italien|it|16011;Berlin|Deutschland|de|16154;München|Deutschland|de|14552;Hamburg|Deutschland|de|15727;Wien|Österreich|at|14756;Paris|Frankreich|fr|15470;London|Großbritannien|gb|233;Rom|Italien|it|16582;Barcelona|Spanien|es|14563;Madrid|Spanien|es|16583;New York|USA|us|318;Tokio|Japan|jp|5085;Singapur|Singapur|sg|4064;Dubai|VAE|ae|2994;Istanbul|Türkei|tr|14932;Amsterdam|Niederlande|nl|13868;Prag|Tschechien|cz|16578;Lissabon|Portugal|pt|14558;Phuket|Thailand|th|16056;Pattaya|Thailand|th|8584;Chiang Mai|Thailand|th|7401;Bali|Indonesien|id|17193;Manila|Philippinen|ph|1622;Cebu|Philippinen|ph|4001;Pagadian|Philippinen|ph|89122;Davao|Philippinen|ph|14875;Boracay|Philippinen|ph|15903;Palawan|Philippinen|ph|16714".split(";").map(function(r){var p=r.split("|");return{n:p.slice(0,1).join(""),c:p.slice(1,2).join(""),cc:p.slice(2,3).join(""),id:p.slice(3,4).join("")};});
-
-function todayIso(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());}
-function addDaysIso(iso,days){var p=iso.split("-"),dt=new Date(+(p.slice(0,1).join("")||2026),+(p.slice(1,2).join("")||1)-1,+(p.slice(2,3).join("")||1)+days);return dt.getFullYear()+"-"+pad2(dt.getMonth()+1)+"-"+pad2(dt.getDate());}
-function norm(s){return String(s||"").toLowerCase().replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");}
-
-function findCity(q){var k=norm(q).trim();if(!k)return null;for(var i=0;i<cities.length;i++){var it=cities.slice(i,i+1).pop();if(norm(it.n)===k)return it;}return null;}
-
-function saveMem(o){try{localStorage.setItem("rk_h_mem",JSON.stringify(o));}catch(e){}}
-function loadMem(){try{var s=localStorage.getItem("rk_h_mem");return s?JSON.parse(s):null;}catch(e){return null;}}
-
-function syncCo(){
-  var t=todayIso(),ci=$("ci").value;
-  if(ci&&ci.length===10&&ci>=t){var nd=addDaysIso(ci,1);$("co").min=nd;if(!$("co").value||$("co").value<=ci)$("co").value=nd;}
-  else{$("co").min=t;}
+function todayIso() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return y + "-" + m + "-" + day;
 }
 
-function upd(){
-  syncCo();
-  var t=todayIso(),city=$("city").value.trim(),ci=$("ci").value,co=$("co").value,px=+$("px").value||2,rm=+$("rm").value||1,st=+$("st").value||0,ab=$("ab").checked;
-  var hit=findCity(city);if(hit){if(hit.id)aid=hit.id;if(hit.cc)lastCc=hit.cc;}
-  document.querySelectorAll(".htl").forEach(function(el){el.classList.toggle("off",ab);});
-  $("h8").classList.toggle("off",!ab);
-  var pastCi=Boolean(ci&&ci<t),badCo=Boolean((co&&co<=t)||(ci&&co&&co<=ci));
-  $("cib").classList.toggle("err",pastCi);$("cob").classList.toggle("err",badCo);
-  if(ci&&co&&!pastCi&&!badCo){
-    var n=Math.round((new Date(co)-new Date(ci))/86400000);
-    $("nt").textContent=n+(n===1?" NACHT":" NÄCHTE");
-    $("info").style.background="#eff6ff";$("info").style.color="#1e3a8a";
-    $("info").textContent="💾 Gespeichert: "+(city||"Ziel offen")+" • "+n+(n===1?" Nacht":" Nächte")+" • "+px+" Pers. • "+rm+" Zi.";
-  }else if(pastCi||badCo){
-    $("nt").textContent="DATUM PRÜFEN";$("info").style.background="#fee2e2";$("info").style.color="#991b1b";
-    $("info").textContent="Datum liegt in der Vergangenheit oder Check-out vor Check-in.";
-  }else{
-    $("nt").textContent="ZEITRAUM WÄHLEN";$("info").style.background="#eff6ff";$("info").style.color="#1e3a8a";
-    $("info").textContent="Bitte Reiseziel, Check-in und Check-out wählen.";
-  }
-  if(city&&ci&&co&&!pastCi&&!badCo){
-    var q=encodeURIComponent(city),n2=Math.round((new Date(co)-new Date(ci))/86400000),c1=ci.split("-"),c2=co.split("-"),bFilt=st>0?"class="+st:"";
-    $("h1").href=P+"www.kayak.de/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
-    $("h2").href=P+"www.expedia.de/Hotel-Search?destination="+q+"&startDate="+ci+"&endDate="+co+"&d1="+ci+"&d2="+co+"&adults="+px+"&rooms="+rm+(st>0?"&star="+(st*10):"");
-    $("h3").href=P+"www.momondo.de/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
-    $("b_ss").value=city;$("b_ci").value=ci;$("b_co").value=co;
-    $("b_ciy").value=c1.slice(0,1).join("");$("b_cim").value=String(+(c1.slice(1,2).join("")||0));$("b_cid").value=String(+(c1.slice(2,3).join("")||0));
-    $("b_coy").value=c2.slice(0,1).join("");$("b_com").value=String(+(c2.slice(1,2).join("")||0));$("b_cod").value=String(+(c2.slice(2,3).join("")||0));
-    $("b_px").value=px;$("b_rm").value=rm;$("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
-    $("h5").href=P+"://agoda.com?"+(aid?"city="+aid:"textToSearch="+q)+"&checkIn="+ci+"&los="+n2+"&adults="+px+"&children=0&rooms="+rm+"&currency=EUR&locale=de-de"+(st>0?"&hotelStarRating="+st:"");
-    $("h6").href=P+"www.trivago.de/de/srl?query="+q+"&sQuery="+q+"&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+"&search=dr-"+ci.replace(/-/g,"")+"-"+co.replace(/-/g,"")+";rc-"+rm+"-"+px;
-    $("h8").href=P+"www.airbnb.de/s/"+q+"/homes?checkin="+ci+"&checkout="+co+"&adults="+px;
-  }
-  saveMem({city:$("city").value,ci:ci,co:co,px:px,rm:rm,st:st,ab:ab,cc:lastCc});
+function norm(s) {
+  return s.toLowerCase()
+    .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
 }
 
-function liveAc(inp,box){
-  inp.addEventListener("input",function(){
-    aid="";upd();clearTimeout(acTimer);
-    var q=inp.value.trim();
-    if(q.length<2){box.style.display="none";return;}
-    acTimer=setTimeout(function(){
-      var api=P+"://open-meteo.com";
-      var opt="&count=6&language=de&format=json";
-      fetch(api+encodeURIComponent(q)+opt).then(function(r){return r.json();}).then(function(j){
-        box.innerHTML="";
-        if(!j||!j.results){box.style.display="none";return;}
-        j.results.forEach(function(item){
-          var d=document.createElement("div");
-          var sub=item.country?" ("+item.country+")":"";
-          d.textContent=item.name+sub;
-          d.onclick=function(){
-            inp.value=item.name;
-            lastCc=(item.country_code||"de").toLowerCase();
-            box.style.display="none";
+function slug(s) {
+  return norm(s).replace(/ß/g,"ss")
+    .replace(/\W+/g,"-").replace(/^-|-$/g,"");
+}
+
+function extractAgodaId(txt) {
+  const m1 = txt.match(/"ObjectId"\s*:\s*(\d+)/i);
+  if (m1) return m1.slice(1, 2).join("");
+  const m2 = txt.match(/"CityId"\s*:\s*(\d+)/i);
+  if (m2) return m2.slice(1, 2).join("");
+  const m3 = txt.match(/"Id"\s*:\s*(\d+)/i);
+  if (m3) return m3.slice(1, 2).join("");
+  return "";
+}
+
+async function resolveAgodaInBg(city) {
+  const key = norm(city);
+  if (!key) { resolvedAgodaId = ""; upd(); return; }
+  if (agodaCache.has(key)) {
+    resolvedAgodaId = agodaCache.get(key) || "";
+    upd();
+    return;
+  }
+  const target = P + "www.agoda.com/api/cronos/search/" +
+    "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=" +
+    encodeURIComponent(city);
+  const endpoints = (
+    P + "corsproxy.io/?" + encodeURIComponent(target) + ";" +
+    P + "api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(target) + ";" +
+    P + "api.allorigins.win/raw?url=" + encodeURIComponent(target)
+  ).split(";");
+
+  const probe = async url => {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 3500);
+    const res = await fetch(url, { signal: ctrl.signal });
+    clearTimeout(tid);
+    if (!res.ok) throw new Error("fail");
+    const txt = await res.text();
+    const id = extractAgodaId(txt);
+    if (!id || id === "0") throw new Error("none");
+    return id;
+  };
+
+  try {
+    const found = await Promise.any(endpoints.map(probe));
+    agodaCache.set(key, found);
+    if (norm($("city").value.trim()) === key) {
+      resolvedAgodaId = found;
+      upd();
+    }
+  } catch (e) {
+    agodaCache.set(key, "");
+  }
+}
+
+function buildExpediaUrl(city, ci, co, px, rm, st) {
+  const p = new URLSearchParams();
+  p.set("destination", city);
+  p.set("startDate", ci);
+  p.set("endDate", co);
+  p.set("d1", ci);
+  p.set("d2", co);
+  p.set("adults", String(px));
+  p.set("rooms", String(rm));
+  if (st > 0) p.set("star", String(st * 10));
+  return P + "www.expedia.de/Hotel-Search?" + p.toString();
+}
+
+function buildAgodaUrl(city, cc, ci, n, px, rm) {
+  if (resolvedAgodaId) {
+    const p = new URLSearchParams();
+    p.set("city", resolvedAgodaId);
+    p.set("checkIn", ci);
+    p.set("los", String(n));
+    p.set("adults", String(px));
+    p.set("children", "0");
+    p.set("rooms", String(rm));
+    p.set("currency", "EUR");
+    return P + "www.agoda.com/de-de/search?" + p.toString();
+  }
+  const sl = slug(city);
+  const ctry = (cc || "de").toLowerCase();
+  return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry + ".html";
+}
+
+function buildTrivagoUrl(city, ci, co, px, rm) {
+  const q = encodeURIComponent(city);
+  const dt1 = ci.replace(/-/g, "");
+  const dt2 = co.replace(/-/g, "");
+  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
+    "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
+    "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+}
+
+function liveAc(inp, box) {
+  inp.addEventListener("input", () => {
+    resolvedAgodaId = "";
+    upd();
+    clearTimeout(acTimer);
+    clearTimeout(bgTimer);
+    const q = inp.value.trim();
+    if (q.length < 2) { box.style.display = "none"; return; }
+    bgTimer = setTimeout(() => resolveAgodaInBg(q), 300);
+    acTimer = setTimeout(async () => {
+      try {
+        const u = P + "geocoding-api.open-meteo.com/v1/search?name=" +
+          encodeURIComponent(q) + "&count=6&language=de&format=json";
+        const r = await fetch(u);
+        const j = await r.json();
+        box.innerHTML = "";
+        if (!j || !j.results) { box.style.display = "none"; return; }
+        j.results.forEach(item => {
+          const d = document.createElement("div");
+          const sub = item.country ? " (" + item.country + ")" : "";
+          d.textContent = item.name + sub;
+          d.onclick = () => {
+            inp.value = item.name;
+            lastCountryCode = (item.country_code || "de").toLowerCase();
+            box.style.display = "none";
+            resolveAgodaInBg(item.name);
             upd();
           };
           box.appendChild(d);
         });
-        box.style.display="block";
-      }).catch(function(){box.style.display="none";});
-    },200);
+        box.style.display = "block";
+      } catch (e) {
+        box.style.display = "none";
+      }
+    }, 200);
   });
-  document.addEventListener("click",function(e){if(!box.contains(e.target)&&e.target!==inp)box.style.display="none";});
+  document.addEventListener("click", e => {
+    if (!box.contains(e.target) && e.target !== inp) box.style.display = "none";
+  });
 }
 
-(function(){
-  var t=todayIso();$("ci").min=t;$("co").min=t;
-  var d=loadMem();
-  if(d){if(d.city)$("city").value=d.city;if(d.ci)$("ci").value=d.ci;if(d.co)$("co").value=d.co;if(d.px)$("px").value=d.px;if(d.rm)$("rm").value=d.rm;if(d.st)$("st").value=d.st;if(d.ab!==undefined)$("ab").checked=d.ab;if(d.cc)lastCc=d.cc;}
-  liveAc($("city"),$("lc"));
-  "city;ci;co;px;rm;st;ab".split(";").forEach(function(id){$(id).addEventListener("input",upd);$(id).addEventListener("change",upd);$(id).addEventListener("blur",upd);});
-  $("rstBtn").addEventListener("click",function(){try{localStorage.removeItem("rk_h_mem");}catch(e){}$("city").value="";$("ci").value="";$("co").value="";$("px").value="2";$("rm").value="1";$("st").value="0";$("ab").checked=false;$("co").min=todayIso();aid="";upd();});
+function upd() {
+  const now = new Date(), dtEl = $("dt");
+  const t = todayIso();
+  dtEl.textContent = now.toLocaleDateString("de-DE") + " • " +
+    now.toLocaleTimeString("de-DE");
+  const idx = cidx++ % cols.length;
+  const col = cols.slice(idx, idx + 1).join("") || "#0284c7";
+  dtEl.style.setProperty("background-color", col, "important");
+
+  const city = $("city").value.trim();
+  const ci = $("ci").value;
+  const co = $("co").value;
+  const px = +$("px").value || 2;
+  const rm = +$("rm").value || 1;
+  const st = +$("st").value || 0;
+  const ab = $("ab").checked;
+
+  document.querySelectorAll(".htl").forEach(el => el.classList.toggle("off", ab));
+  $("h8").classList.toggle("off", !ab);
+
+  const pastCi = Boolean(ci && ci < t);
+  const badCo = Boolean((co && co <= t) || (ci && co && co <= ci));
+  $("cib").classList.toggle("err", pastCi);
+  $("cob").classList.toggle("err", badCo);
+
+  if (ci && co && !pastCi && !badCo) {
+    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
+    $("info").style.background = "#eff6ff";
+    $("info").style.color = "#1e3a8a";
+    $("info").textContent = (ab ? "(AIRBNB) " : "") +
+      "Auswahl: " + (city || "Ziel offen") + " • " + n +
+      (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi.";
+  } else if (pastCi || badCo) {
+    $("nt").textContent = "DATUM PRÜFEN";
+    $("info").style.background = "#fee2e2";
+    $("info").style.color = "#991b1b";
+    $("info").textContent = "Datum liegt in der Vergangenheit oder Check-out vor Check-in.";
+  } else {
+    $("nt").textContent = "ZEITRAUM WÄHLEN";
+    $("info").style.background = "#eff6ff";
+    $("info").style.color = "#1e3a8a";
+    $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
+  }
+
+  if (city && ci && co && !pastCi && !badCo) {
+    const q = encodeURIComponent(city);
+    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    const c1 = ci.split("-");
+    const c2 = co.split("-");
+    const bFilt = st > 0 ? "class=" + st : "";
+
+    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
+      "/" + px + "adults/" + rm + "rooms";
+    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
+
+    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
+      "/" + px + "adults/" + rm + "rooms";
+    $("b_ss").value = city;
+    $("b_ci").value = ci;
+    $("b_co").value = co;
+    $("b_ciy").value = c1 || "";
+    $("b_cim").value = String(+(c1 || 0));
+    $("b_cid").value = String(+(c1 || 0));
+    $("b_coy").value = c2 || "";
+    $("b_com").value = String(+(c2 || 0));
+    $("b_cod").value = String(+(c2 || 0));
+    $("b_px").value = px;
+    $("b_rm").value = rm;
+    $("b_flt").disabled = !bFilt;
+    $("b_flt").value = bFilt;
+
+    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, n, px, rm);
+    $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
+    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
+      "&checkout=" + co + "&adults=" + px;
+  }
+
+  try {
+    localStorage.setItem("rk_hotel", JSON.stringify({
+      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
+    }));
+  } catch (e) {}
+}
+
+(function() {
+  const t = todayIso();
+  $("ci").min = t;
+  $("co").min = t;
+  try {
+    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
+    if (d) {
+      if (d.city) $("city").value = d.city;
+      if (d.ci) $("ci").value = d.ci;
+      if (d.co) $("co").value = d.co;
+      if (d.px) $("px").value = d.px;
+      if (d.rm) $("rm").value = d.rm;
+      if (d.st) $("st").value = d.st;
+      if (d.ab !== undefined) $("ab").checked = d.ab;
+      if (d.cc) lastCountryCode = d.cc;
+    }
+    const u = new URLSearchParams(window.location.search);
+    if (u.get("city")) $("city").value = u.get("city");
+    if (u.get("ci")) $("ci").value = u.get("ci");
+    if (u.get("co")) $("co").value = u.get("co");
+    if (u.get("px")) $("px").value = u.get("px");
+  } catch (e) {}
+
+  liveAc($("city"), $("lc"));
+  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
+    $(id).addEventListener("input", upd);
+    $(id).addEventListener("change", upd);
+  });
+  "h1;h2;h3;h5;h6;h8".split(";").forEach(id => {
+    $(id).addEventListener("click", upd);
+  });
+  $("f4").addEventListener("submit", upd);
   upd();
+  if ($("city").value.trim()) resolveAgodaInBg($("city").value.trim());
 })();
 </script>
 </body>
