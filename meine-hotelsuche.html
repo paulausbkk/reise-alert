@@ -94,7 +94,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h5" href="https://agoda.com" target="_blank" rel="noopener noreferrer" class="btn b5 htl">Agoda</a>
     <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
@@ -110,13 +110,6 @@ function iso(d){
   if(m.length < 2) m = "0" + m;
   if(t.length < 2) t = "0" + t;
   return d.getFullYear() + "-" + m + "-" + t;
-}
-
-function agSlug(s){
-  return s.toLowerCase().trim()
-    .replace(/\u00fc/g, "ue").replace(/\u00f6/g, "oe")
-    .replace(/\u00e4/g, "ae").replace(/\u00df/g, "ss")
-    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
 function getAid(city){
@@ -226,15 +219,11 @@ function upd(){
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    var agQ = "?checkIn=" + ci + "&los=" + n + "&adults=" + px +
-      "&children=0&rooms=" + rm + "&currency=EUR&locale=de-de" +
+    var ag = P + "://agoda.com" + "/de-de/search?checkIn=" + ci +
+      "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
+      "&currency=EUR&locale=de-de" +
       (st > 0 ? "&hotelStarRating=" + st : "");
-    if(aid){
-      $("h5").href = P + "://agoda.com" + agQ + "&city=" + aid;
-    } else {
-      $("h5").href = P + "://agoda.com" +
-        agSlug(city) + "-" + (cc || "de") + ".html" + agQ;
-    }
+    $("h5").href = ag + (aid ? "&city=" + aid : "&searchText=" + q);
 
     var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
     $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
@@ -246,7 +235,7 @@ function upd(){
       "/homes?tab_id=home_tab&checkin=" + ci +
       "&checkout=" + co + "&adults=" + px;
   } else {
-  $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+   $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
