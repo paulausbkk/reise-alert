@@ -77,18 +77,18 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
     <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
+    <form id="f4" action="https://www.booking.com/searchresults.html" method="get" target="_blank" class="htl" style="margin:0">
       <input type="hidden" name="ss" id="b_ss">
+      <input type="hidden" name="ssne" id="b_ssne">
+      <input type="hidden" name="ssne_untouched" id="b_ssu">
+      <input type="hidden" name="dest_id" id="b_did" disabled>
+      <input type="hidden" name="dest_type" id="b_dty" disabled>
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
-      <input type="hidden" name="checkin_year" id="b_ciy">
-      <input type="hidden" name="checkin_month" id="b_cim">
-      <input type="hidden" name="checkin_monthday" id="b_cid">
-      <input type="hidden" name="checkout_year" id="b_coy">
-      <input type="hidden" name="checkout_month" id="b_com">
-      <input type="hidden" name="checkout_monthday" id="b_cod">
       <input type="hidden" name="group_adults" id="b_px">
+      <input type="hidden" name="group_children" value="0">
       <input type="hidden" name="no_rooms" id="b_rm">
+      <input type="hidden" name="efdco" value="1">
       <input type="hidden" name="nflt" id="b_flt" disabled>
       <input type="hidden" name="lang" value="de">
       <input type="hidden" name="selected_currency" value="EUR">
@@ -138,6 +138,32 @@ function getAid(city){
   return "";
 }
 
+function getBid(city){
+  var k = city.toLowerCase().trim();
+  if(k === "bangkok") return "-3414440";
+  if(k === "mailand" || k === "milan") return "-121726";
+  if(k === "palermo") return "-123798";
+  if(k === "berlin") return "-1746443";
+  if(k === "hamburg") return "-1785434";
+  if(k === "muenchen" || k === "m\u00fcnchen" || k === "munich") return "-1829149";
+  if(k === "wien" || k === "vienna") return "-1995499";
+  if(k === "paris") return "-1456928";
+  if(k === "london") return "-2601889";
+  if(k === "rom" || k === "rome") return "-126693";
+  if(k === "barcelona") return "-372490";
+  if(k === "madrid") return "-390625";
+  if(k === "dubai") return "-782831";
+  if(k === "istanbul") return "-755070";
+  if(k === "amsterdam") return "-2140479";
+  if(k === "prag" || k === "prague") return "-553173";
+  if(k === "warschau" || k === "warsaw") return "-534433";
+  if(k === "phuket") return "-3250083";
+  if(k === "manila") return "-2437894";
+  if(k === "cebu") return "-2421265";
+  if(k === "pagadian") return "-2443809";
+  return "";
+}
+
 function upd(){
   var now = new Date(), t = iso(now);
   $("dt").textContent = now.toLocaleDateString("de-DE") +
@@ -146,7 +172,7 @@ function upd(){
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
-  var aid = getAid(city);
+  var aid = getAid(city), bid = getBid(city);
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -168,8 +194,6 @@ function upd(){
       " \u2022 " + px + " Pers. \u2022 " + rm + " Zi.";
 
     var q = encodeURIComponent(city);
-    var c1 = ci.split("-");
-    var c2 = co.split("-");
     var bFilt = st > 0 ? "class=" + st : "";
 
     $("h1").href = P + "www.kayak.de" + "/hotels/" + q + "/" +
@@ -182,14 +206,14 @@ function upd(){
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
     $("b_ss").value = city;
+    $("b_ssne").value = city;
+    $("b_ssu").value = city;
+    $("b_did").disabled = !bid;
+    $("b_did").value = bid;
+    $("b_dty").disabled = !bid;
+    $("b_dty").value = bid ? "city" : "";
     $("b_ci").value = ci;
     $("b_co").value = co;
-    $("b_ciy").value = c1.slice(0, 1).join("");
-    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
-    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
-    $("b_coy").value = c2.slice(0, 1).join("");
-    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
-    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
     $("b_px").value = px;
     $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
@@ -201,9 +225,15 @@ function upd(){
       (st > 0 ? "&hotelStarRating=" + st : "");
     $("h5").href = ag + (aid ? "&city=" + aid : "&textToSearch=" + q);
 
-    $("h6").href = P + "www.trivago.de" + "/de/lm?sQuery=" + q;
+    var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
+    $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
+      "&sQuery=" + q + "&aDateRange%5Barr%5D=" + ci +
+      "&aDateRange%5Bdep%5D=" + co +
+      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
+
     $("h8").href = P + "www.airbnb.de" + "/s/" + q +
-      "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
+      "/homes?tab_id=home_tab&checkin=" + ci +
+      "&checkout=" + co + "&adults=" + px;
   } else {
   $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
