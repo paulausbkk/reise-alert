@@ -155,15 +155,11 @@ body:has(#ow:checked) .st{
 </style>
 </head>
 <body>
-<audio id="bgm" src="https://github.io"
-  loop preload="auto"></audio>
-
 <div class="hdr">
   <h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
   <div class="cp">
-    <button type="button" class="mbtn" id="mbtn">
-      🎵 Musik An
-    </button>
+    <button type="button" class="mbtn" id="mbtn"
+      onclick="toggleFlightBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">19.11.2026</div>
     <div class="seg st" id="st">HIN & RÜCK</div>
     <a href="meine-hotelsuche.html" class="seg upg htl">
@@ -339,32 +335,26 @@ body:has(#ow:checked) .st{
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
+var bgmPlayer = null;
+var bgmRunning = false;
 
-function syncBgm(){
-  var a = $("bgm"), b = $("mbtn");
-  if(!a || !b) return;
-  var playing = !a.paused;
-  b.classList.toggle("on", playing);
-  b.textContent = playing ? "\ud83d\udd07 Musik Aus" : "\ud83c\udfb5 Musik An";
-}
-
-function handleBgm(){
-  var a = $("bgm");
-  if(!a) return;
-  if(a.paused){
-    a.volume = 0.45;
-    a.play().then(syncBgm).catch(syncBgm);
-  } else {
-    a.pause();
-    syncBgm();
+function toggleFlightBgm(){
+  var b = $("mbtn");
+  if(!bgmPlayer){
+    bgmPlayer = new Audio(P + "paulausbkk.github.io/musik.mp3");
+    bgmPlayer.loop = true;
+    bgmPlayer.volume = 0.45;
   }
-}
-
-var mb = $("mbtn"), au = $("bgm");
-if(mb) mb.addEventListener("click", handleBgm);
-if(au){
-  au.addEventListener("play", syncBgm);
-  au.addEventListener("pause", syncBgm);
+  bgmRunning = !bgmRunning;
+  if(b){
+    b.classList.toggle("on", bgmRunning);
+    b.textContent = bgmRunning ? "🔇 Musik Aus" : "🎵 Musik An";
+  }
+  if(bgmRunning){
+    bgmPlayer.play().catch(function(){});
+  } else {
+    bgmPlayer.pause();
+  }
 }
 
 function iata(val){
@@ -440,3 +430,5 @@ $("od").min = iso(new Date());
 $("rd").min = iso(new Date());
 upd();
 </script>
+</body>
+</html>
