@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v108</title>
+<title>🏨 Meine Hotelsuche PRO v109</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v108</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v109</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -81,8 +81,6 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="ssne" id="b_ssne">
       <input type="hidden" name="ssne_untouched" id="b_ssu">
-      <input type="hidden" name="dest_id" id="b_did" disabled>
-      <input type="hidden" name="dest_type" id="b_dty" disabled>
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
       <input type="hidden" name="group_adults" id="b_px">
@@ -103,7 +101,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
-var acT = null, cc = "de";
+var acT = null, cc = "de", autoCountry = "";
 
 function iso(d){
   var m = String(d.getMonth() + 1), t = String(d.getDate());
@@ -138,33 +136,6 @@ function getAid(city){
   if(k === "pagadian") return "89122";
   return "";
 }
-
-function getBid(city){
-  var k = city.toLowerCase().trim();
-  if(k === "bangkok") return "-3414440";
-  if(k === "mailand" || k === "milan") return "-121726";
-  if(k === "palermo") return "-123798";
-  if(k === "berlin") return "-1746443";
-  if(k === "hamburg") return "-1785434";
-  if(k === "hannover" || k === "hanover") return "-1785560";
-  if(k === "muenchen" || k === "m\u00fcnchen" || k === "munich") return "-1829149";
-  if(k === "wien" || k === "vienna") return "-1995499";
-  if(k === "paris") return "-1456928";
-  if(k === "london") return "-2601889";
-  if(k === "rom" || k === "rome") return "-126693";
-  if(k === "barcelona") return "-372490";
-  if(k === "madrid") return "-390625";
-  if(k === "dubai") return "-782831";
-  if(k === "istanbul") return "-755070";
-  if(k === "amsterdam") return "-2140479";
-  if(k === "prag" || k === "prague") return "-553173";
-  if(k === "warschau" || k === "warsaw") return "-534433";
-  if(k === "phuket") return "-3250083";
-  if(k === "manila") return "-2437894";
-  if(k === "cebu") return "-2421265";
-  if(k === "pagadian") return "-2443809";
-  return "";
-}
 function upd(){
   var now = new Date(), t = iso(now);
   $("dt").textContent = now.toLocaleDateString("de-DE") +
@@ -173,7 +144,8 @@ function upd(){
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
-  var aid = getAid(city), bid = getBid(city);
+  var aid = getAid(city);
+  var bkSearch = (city && autoCountry) ? (city + ", " + autoCountry) : city;
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -206,13 +178,9 @@ function upd(){
     $("h3").href = P + "www.momondo.de" + "/hotels/" + q + "/" +
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
-    $("b_ss").value = city;
-    $("b_ssne").value = city;
-    $("b_ssu").value = city;
-    $("b_did").disabled = !bid;
-    $("b_did").value = bid;
-    $("b_dty").disabled = !bid;
-    $("b_dty").value = bid ? "city" : "";
+    $("b_ss").value = bkSearch;
+    $("b_ssne").value = bkSearch;
+    $("b_ssu").value = bkSearch;
     $("b_ci").value = ci;
     $("b_co").value = co;
     $("b_px").value = px;
@@ -270,6 +238,7 @@ function showAc(list, msg){
     d.onmousedown = function(e){
       e.preventDefault();
       $("city").value = it.name;
+      autoCountry = it.country || "";
       cc = (it.country_code || "de").toLowerCase();
       box.style.display = "none";
       upd();
@@ -334,6 +303,7 @@ function searchWorldCities(q, done){
 }
 
 $("city").addEventListener("input", function(){
+  autoCountry = "";
   upd(); clearTimeout(acT);
   var q = $("city").value.trim(), box = $("lc");
   if(q.length < 2){ box.style.display = "none"; return; }
@@ -341,6 +311,9 @@ $("city").addEventListener("input", function(){
   acT = setTimeout(function(){
     searchWorldCities(q, function(res, errMsg){
       if($("city").value.trim() !== q) return;
+      var first = res && res.slice(0, 1).shift();
+      if(first && first.country) autoCountry = first.country;
+      upd();
       showAc(res, errMsg);
     });
   }, 200);
