@@ -212,24 +212,26 @@ details p{
 <audio id="bgAudio" src="musik.mp3" loop preload="none"></audio>
 
 <script>
-var musicOn = false;
 var mb = document.getElementById("musicBtn");
 var au = document.getElementById("bgAudio");
 
-function updMusicBtn(){
-  if(!mb) return;
-  mb.textContent = musicOn ? "🔊 Musik aus" : "🔇 Musik an";
-  mb.classList.toggle("on", musicOn);
+function syncMusicBtn(){
+  if(!mb || !au) return;
+  var playing = !au.paused;
+  mb.textContent = playing ? "🔊 Musik aus" : "🔇 Musik an";
+  mb.classList.toggle("on", playing);
 }
 
 function toggleMusic(){
-  musicOn = !musicOn;
-  updMusicBtn();
   if(!au) return;
-  if(musicOn){
-    au.play().catch(function(){});
+  if(au.paused){
+    au.play().then(syncMusicBtn).catch(function(){
+      mb.textContent = "🔊 Musik aus";
+      mb.classList.add("on");
+    });
   } else {
     au.pause();
+    syncMusicBtn();
   }
 }
 
@@ -243,10 +245,12 @@ if(eb){
   eb.addEventListener("pointerdown", enterSite);
   eb.addEventListener("click", enterSite);
 }
-if(mb){
-  mb.addEventListener("click", toggleMusic);
+if(mb) mb.addEventListener("click", toggleMusic);
+if(au){
+  au.addEventListener("play", syncMusicBtn);
+  au.addEventListener("pause", syncMusicBtn);
 }
-updMusicBtn();
+syncMusicBtn();
 </script>
 </body>
 </html>
