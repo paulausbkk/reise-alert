@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v119</title>
+<title>🏨 Meine Hotelsuche PRO v120</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
@@ -118,7 +118,7 @@ input,select{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v119</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v120</h1>
   <div class="cp">
     <div class="seg" id="dt">22.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -362,8 +362,7 @@ function upd(){
       rc += (i > 0 ? "-" : "") + (perRm + (i < rem ? 1 : 0));
     }
     $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
-      "&sQuery=" + q + "&aDateRange%5Barr%5D=" + ci +
-      "&aDateRange%5Bdep%5D=" + co +
+      "&q=" + q + "&checkin=" + ci + "&checkout=" + co +
       "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rc;
 
     $("h8").href = P + "www.airbnb.de" + "/s/" + q +
