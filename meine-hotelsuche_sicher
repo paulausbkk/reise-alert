@@ -3,122 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v64</title>
+<title>🏨 Meine Hotelsuche PRO v102</title>
 <style>
-:root{
-  --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;
-  --t:#0f172a;--b:#bae6fd;--v:#0284c7;--lg:#0ea5e9
-}
-html,body{
-  margin:0;padding:16px;min-height:100vh;
-  background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  font-family:sans-serif;color:var(--t);box-sizing:border-box
-}
-.hdr{
-  display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:14px 18px;border-radius:12px;
-  margin-bottom:20px;flex-wrap:wrap;gap:10px;
-  box-shadow:0 4px 14px rgba(15,41,66,.18)
-}
+:root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
+html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
+.hdr{display:flex;justify-content:space-between;align-items:center;background:#0f2942;padding:14px 18px;border-radius:12px;margin-bottom:20px;flex-wrap:wrap;gap:10px}
 .tit{font-weight:bold;color:#fff;font-size:1.25rem;margin:0}
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.seg{
-  font-size:.78rem;padding:6px 12px;border-radius:6px;
-  font-weight:bold;color:#fff;text-transform:uppercase;
-  background:#0284c7;text-decoration:none;border:1px solid #38bdf8
-}
+.seg{font-size:.78rem;padding:6px 12px;border-radius:6px;font-weight:bold;color:#fff;text-transform:uppercase;background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
 .seg.nav{background:#1e40af;font-size:.88rem;padding:8px 14px}
 .seg.upg{background:#0369a1;font-size:.88rem;padding:8px 14px}
 .row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
-.card{
-  flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:20px;background:#fff;box-sizing:border-box;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
-}
-.ct{
-  font-weight:bold;font-size:1.08rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
-  margin-bottom:16px
-}
+.card{flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;padding:20px;background:#fff;box-sizing:border-box}
+.ct{font-weight:bold;font-size:1.08rem;color:var(--d);border-bottom:2px solid #e0f2fe;padding-bottom:8px;margin-bottom:16px}
 .f{margin-bottom:14px;display:flex;flex-direction:column;position:relative}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 label{font-weight:bold;font-size:.85rem;margin-bottom:5px;color:#1e3a8a}
-input,select{
-  height:42px;padding:0 12px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.98rem;
-  background:#f8fafc;color:var(--t);width:100%;transition:.2s
-}
-input:focus,select:focus{
-  outline:none;border-color:#0284c7;background:#fff;
-  box-shadow:0 0 0 3px rgba(2,132,199,.15)
-}
-.ac{
-  position:absolute;top:68px;left:0;right:0;background:#fff;
-  border:1px solid #0284c7;border-radius:8px;z-index:99;
-  max-height:180px;overflow-y:auto;display:none;
-  box-shadow:0 8px 20px rgba(12,74,110,.18)
-}
+input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8px;box-sizing:border-box;font-size:.98rem;background:#f8fafc;color:var(--t);width:100%}
+.ac{position:absolute;top:68px;left:0;right:0;background:#fff;border:1px solid #0284c7;border-radius:8px;z-index:99;max-height:180px;overflow-y:auto;display:none;box-shadow:0 8px 20px rgba(12,74,110,.18)}
 .ac div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9}
 .ac div:hover{background:#e0f2fe;font-weight:bold;color:var(--d)}
-.bn{
-  background:#eff6ff;border:1px solid #93c5fd;
-  border-left:5px solid #0284c7;border-radius:8px;
-  padding:10px 14px;color:#1e3a8a;font-weight:bold;font-size:.9rem
-}
-.bb{
-  border:1px solid #93c5fd;background:#fff;border-radius:12px;
-  padding:18px;box-shadow:0 4px 12px rgba(3,105,161,.08)
-}
-.bf{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
-  gap:10px
-}
-.btn{
-  display:flex;align-items:center;justify-content:center;
-  height:48px;color:#fff;font-weight:bold;border-radius:8px;
-  font-size:.84rem;text-transform:uppercase;text-decoration:none;
-  text-align:center;padding:0 6px;border:none;cursor:pointer;width:100%
-}
-.b1{background:#0284c7}.b2{background:#1d4ed8}.b3{background:#0369a1}
-.b4{background:#1e3a8a}.b5{background:#2563eb}.b6{background:#0077b6}
-.b8{background:#0ea5e9}
+.bn{background:#eff6ff;border:1px solid #93c5fd;border-left:5px solid #0284c7;border-radius:8px;padding:10px 14px;color:#1e3a8a;font-weight:bold;font-size:.9rem}
+.bb{border:1px solid #93c5fd;background:#fff;border-radius:12px;padding:18px}
+.bf{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;height:48px;color:#fff;font-weight:bold;border-radius:8px;font-size:.84rem;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;width:100%}
+.b1{background:#0284c7}.b2{background:#1d4ed8}.b3{background:#0369a1}.b4{background:#1e3a8a}.b5{background:#2563eb}.b6{background:#0077b6}.b8{background:#0ea5e9}
 .off{opacity:.28;pointer-events:none;filter:grayscale(80%)}
 .err{opacity:.4}
-.err input{background:#e2e8f0!important;border-color:#94a3b8!important}
-.swc{
-  display:flex;align-items:center;justify-content:space-between;
-  background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-  border-radius:8px;min-height:42px;gap:8px
-}
+.swc{display:flex;align-items:center;justify-content:space-between;background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;border-radius:8px;min-height:42px}
 .sw{position:relative;display:inline-block;width:42px;height:24px}
 .sw input{opacity:0;width:0;height:0}
-.sl{
-  position:absolute;cursor:pointer;inset:0;
-  background:#cbd5e1;border-radius:20px;transition:.3s
-}
-.sl:before{
-  position:absolute;content:"";height:18px;width:18px;
-  left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s
-}
+.sl{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:20px;transition:.3s}
+.sl:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 .sw input:checked+.sl{background:#0284c7!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
-@keyframes pulseHint{
-  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
-  50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
-}
-.hint{
-  margin-top:16px;background:#0f2942;color:#fff;
-  border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:12px 15px;font-size:.88rem;line-height:1.45;
-  animation:pulseHint 2.2s infinite ease-in-out
-}
+.hint{margin-top:16px;background:#0f2942;color:#fff;border:3px solid #991b1b;border-left:7px solid #991b1b;border-radius:8px;padding:12px 15px;font-size:.88rem;line-height:1.45}
 </style>
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v64</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v102</h1>
   <div class="cp">
-    <div class="seg" id="dt">20.11.2026</div>
+    <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
     <a href="index.html" class="seg nav">⬅️ Zurück zur Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg">✈️ Flugbuchungen ➡️</a>
@@ -132,60 +58,26 @@ input:focus,select:focus{
       <input type="text" id="city" placeholder="z.B. Mailand, Pagadian, Bangkok" autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
-    <div class="f" id="cib">
-      <label>Check-in (Anreise)</label>
-      <input type="date" id="ci">
-    </div>
-    <div class="f" id="cob">
-      <label>Check-out (Abreise)</label>
-      <input type="date" id="co">
-    </div>
+    <div class="f" id="cib"><label>Check-in (Anreise)</label><input type="date" id="ci"></div>
+    <div class="f" id="cob"><label>Check-out (Abreise)</label><input type="date" id="co"></div>
   </div>
   <div class="card">
     <div class="ct">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
-      <div class="f" style="margin:0">
-        <label for="px">Personenzahl</label>
-        <select id="px">
-          <option value="1">1 Erwachsener</option>
-          <option value="2" selected>2 Erwachsene</option>
-          <option value="3">3 Erwachsene</option>
-          <option value="4">4 Erwachsene</option>
-        </select>
-      </div>
-      <div class="f" style="margin:0">
-        <label for="rm">Zimmer</label>
-        <select id="rm">
-          <option value="1" selected>1 Zimmer</option>
-          <option value="2">2 Zimmer</option>
-          <option value="3">3 Zimmer</option>
-        </select>
-      </div>
+      <div class="f" style="margin:0"><label for="px">Personenzahl</label><select id="px"><option value="1">1 Erwachsener</option><option value="2" selected>2 Erwachsene</option><option value="3">3 Erwachsene</option><option value="4">4 Erwachsene</option></select></div>
+      <div class="f" style="margin:0"><label for="rm">Zimmer</label><select id="rm"><option value="1" selected>1 Zimmer</option><option value="2">2 Zimmer</option><option value="3">3 Zimmer</option></select></div>
     </div>
-    <div class="f">
-      <label for="st">Mindest-Sterne</label>
-      <select id="st">
-        <option value="0">Alle Kategorien</option>
-        <option value="3">Ab 3 Sterne ⭐⭐⭐</option>
-        <option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option>
-        <option value="5">5 Sterne ⭐⭐⭐⭐⭐</option>
-      </select>
-    </div>
-    <div class="f">
-      <div class="swc">
-        <label for="ab" style="margin:0;cursor:pointer">Nur Airbnb</label>
-        <label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label>
-      </div>
-    </div>
+    <div class="f"><label for="st">Mindest-Sterne</label><select id="st"><option value="0">Alle Kategorien</option><option value="3">Ab 3 Sterne ⭐⭐⭐</option><option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option><option value="5">5 Sterne ⭐⭐⭐⭐⭐</option></select></div>
+    <div class="f"><div class="swc"><label for="ab" style="margin:0;cursor:pointer">Nur Airbnb</label><label class="sw"><input type="checkbox" id="ab"><span class="sl"></span></label></div></div>
     <div class="bn" id="info">Bitte Reiseziel und Daten wählen.</div>
   </div>
 </div>
 <div class="bb">
   <div class="bf">
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="https://www.expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
+    <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://www.booking.com/searchresults.de.html" method="get" target="_blank" class="htl">
+    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="checkin" id="b_ci">
       <input type="hidden" name="checkout" id="b_co">
@@ -202,297 +94,252 @@ input:focus,select:focus{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="https://www.agoda.com/de-de/" target="_blank" class="btn b5 htl">Agoda</a>
-    <a id="h6" href="https://www.trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
+    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
-  <div class="hint">
-    ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter wie z. B. <b>Hotel am Strand</b>,
-    <b>Terrasse</b> oder <b>Frühstück</b> – sowie bei <b>Agoda</b> (falls ein
-    kleiner Ort keine direkte Kalender-ID hat) das <b>Datum & Gäste</b> –
-    müssen auf der Anbieterseite direkt gewählt werden.
-  </div>
+  <div class="hint">ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>, <b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.</div>
 </div>
 <script>
-const $ = id => document.getElementById(id);
-const P = "https://";
-const cols = "#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-const agodaCache = new Map();
-let cidx = 0;
-let acTimer = null;
-let bgTimer = null;
-let lastCountryCode = "de";
-let resolvedAgodaId = "";
+var $ = function(id){ return document.getElementById(id); };
+var P = "https:" + String.fromCharCode(47, 47);
+var acT = null, cc = "de";
 
-function todayIso() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return y + "-" + m + "-" + day;
+function iso(d){
+  var m = String(d.getMonth() + 1), t = String(d.getDate());
+  if(m.length < 2) m = "0" + m;
+  if(t.length < 2) t = "0" + t;
+  return d.getFullYear() + "-" + m + "-" + t;
 }
 
-function norm(s) {
-  return s.toLowerCase()
-    .replace(/ü/g,"ue").replace(/ö/g,"oe").replace(/ä/g,"ae");
-}
-
-function slug(s) {
-  return norm(s).replace(/ß/g,"ss")
-    .replace(/\W+/g,"-").replace(/^-|-$/g,"");
-}
-
-function extractAgodaId(txt) {
-  const m1 = txt.match(/"ObjectId"\s*:\s*(\d+)/i);
-  if (m1) return m1.slice(1, 2).join("");
-  const m2 = txt.match(/"CityId"\s*:\s*(\d+)/i);
-  if (m2) return m2.slice(1, 2).join("");
-  const m3 = txt.match(/"Id"\s*:\s*(\d+)/i);
-  if (m3) return m3.slice(1, 2).join("");
+function getAid(city){
+  var k = city.toLowerCase().trim();
+  if(k === "bangkok") return "9395";
+  if(k === "mailand" || k === "milan") return "4894";
+  if(k === "palermo") return "16011";
+  if(k === "berlin") return "16154";
+  if(k === "hamburg") return "15727";
+  if(k === "wien") return "14756";
+  if(k === "paris") return "15470";
+  if(k === "london") return "233";
+  if(k === "rom" || k === "rome") return "16582";
+  if(k === "barcelona") return "14563";
+  if(k === "madrid") return "16583";
+  if(k === "dubai") return "2994";
+  if(k === "istanbul") return "14932";
+  if(k === "amsterdam") return "13868";
+  if(k === "prag" || k === "prague") return "16578";
+  if(k === "warschau" || k === "warsaw") return "16107";
+  if(k === "phuket") return "16056";
+  if(k === "bali") return "17193";
+  if(k === "manila") return "1622";
+  if(k === "cebu") return "4001";
+  if(k === "pagadian") return "89122";
   return "";
 }
 
-async function resolveAgodaInBg(city) {
-  const key = norm(city);
-  if (!key) { resolvedAgodaId = ""; upd(); return; }
-  if (agodaCache.has(key)) {
-    resolvedAgodaId = agodaCache.get(key) || "";
-    upd();
-    return;
-  }
-  const target = P + "www.agoda.com/api/cronos/search/" +
-    "GetUnifiedSuggestResult/3/1/1/0/de-de/?searchText=" +
-    encodeURIComponent(city);
-  const endpoints = (
-    P + "corsproxy.io/?" + encodeURIComponent(target) + ";" +
-    P + "api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(target) + ";" +
-    P + "api.allorigins.win/raw?url=" + encodeURIComponent(target)
-  ).split(";");
+function upd(){
+  var now = new Date(), t = iso(now);
+  $("dt").textContent = now.toLocaleDateString("de-DE") +
+    " \u2022 " + now.toLocaleTimeString("de-DE");
+  var city = $("city").value.trim();
+  var ci = $("ci").value, co = $("co").value;
+  var px = +$("px").value || 2, rm = +$("rm").value || 1;
+  var st = +$("st").value || 0, ab = $("ab").checked;
+  var aid = getAid(city);
 
-  const probe = async url => {
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), 3500);
-    const res = await fetch(url, { signal: ctrl.signal });
-    clearTimeout(tid);
-    if (!res.ok) throw new Error("fail");
-    const txt = await res.text();
-    const id = extractAgodaId(txt);
-    if (!id || id === "0") throw new Error("none");
-    return id;
-  };
-
-  try {
-    const found = await Promise.any(endpoints.map(probe));
-    agodaCache.set(key, found);
-    if (norm($("city").value.trim()) === key) {
-      resolvedAgodaId = found;
-      upd();
-    }
-  } catch (e) {
-    agodaCache.set(key, "");
-  }
-}
-
-function buildExpediaUrl(city, ci, co, px, rm, st) {
-  const p = new URLSearchParams();
-  p.set("destination", city);
-  p.set("startDate", ci);
-  p.set("endDate", co);
-  p.set("d1", ci);
-  p.set("d2", co);
-  p.set("adults", String(px));
-  p.set("rooms", String(rm));
-  if (st > 0) p.set("star", String(st * 10));
-  return P + "www.expedia.de/Hotel-Search?" + p.toString();
-}
-
-function buildAgodaUrl(city, cc, ci, n, px, rm) {
-  if (resolvedAgodaId) {
-    const p = new URLSearchParams();
-    p.set("city", resolvedAgodaId);
-    p.set("checkIn", ci);
-    p.set("los", String(n));
-    p.set("adults", String(px));
-    p.set("children", "0");
-    p.set("rooms", String(rm));
-    p.set("currency", "EUR");
-    return P + "www.agoda.com/de-de/search?" + p.toString();
-  }
-  const sl = slug(city);
-  const ctry = (cc || "de").toLowerCase();
-  return P + "www.agoda.com/de-de/city/" + sl + "-" + ctry + ".html";
-}
-
-function buildTrivagoUrl(city, ci, co, px, rm) {
-  const q = encodeURIComponent(city);
-  const dt1 = ci.replace(/-/g, "");
-  const dt2 = co.replace(/-/g, "");
-  return P + "www.trivago.de/de/srl?query=" + q + "&sQuery=" + q +
-    "&aDateRange%5Barr%5D=" + ci + "&aDateRange%5Bdep%5D=" + co +
-    "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rm + "-" + px;
-}
-
-function liveAc(inp, box) {
-  inp.addEventListener("input", () => {
-    resolvedAgodaId = "";
-    upd();
-    clearTimeout(acTimer);
-    clearTimeout(bgTimer);
-    const q = inp.value.trim();
-    if (q.length < 2) { box.style.display = "none"; return; }
-    bgTimer = setTimeout(() => resolveAgodaInBg(q), 300);
-    acTimer = setTimeout(async () => {
-      try {
-        const u = P + "geocoding-api.open-meteo.com/v1/search?name=" +
-          encodeURIComponent(q) + "&count=6&language=de&format=json";
-        const r = await fetch(u);
-        const j = await r.json();
-        box.innerHTML = "";
-        if (!j || !j.results) { box.style.display = "none"; return; }
-        j.results.forEach(item => {
-          const d = document.createElement("div");
-          const sub = item.country ? " (" + item.country + ")" : "";
-          d.textContent = item.name + sub;
-          d.onclick = () => {
-            inp.value = item.name;
-            lastCountryCode = (item.country_code || "de").toLowerCase();
-            box.style.display = "none";
-            resolveAgodaInBg(item.name);
-            upd();
-          };
-          box.appendChild(d);
-        });
-        box.style.display = "block";
-      } catch (e) {
-        box.style.display = "none";
-      }
-    }, 200);
+  document.querySelectorAll(".htl").forEach(function(el){
+    el.classList.toggle("off", ab);
   });
-  document.addEventListener("click", e => {
-    if (!box.contains(e.target) && e.target !== inp) box.style.display = "none";
-  });
-}
-
-function upd() {
-  const now = new Date(), dtEl = $("dt");
-  const t = todayIso();
-  dtEl.textContent = now.toLocaleDateString("de-DE") + " • " +
-    now.toLocaleTimeString("de-DE");
-  const idx = cidx++ % cols.length;
-  const col = cols.slice(idx, idx + 1).join("") || "#0284c7";
-  dtEl.style.setProperty("background-color", col, "important");
-
-  const city = $("city").value.trim();
-  const ci = $("ci").value;
-  const co = $("co").value;
-  const px = +$("px").value || 2;
-  const rm = +$("rm").value || 1;
-  const st = +$("st").value || 0;
-  const ab = $("ab").checked;
-
-  document.querySelectorAll(".htl").forEach(el => el.classList.toggle("off", ab));
   $("h8").classList.toggle("off", !ab);
 
-  const pastCi = Boolean(ci && ci < t);
-  const badCo = Boolean((co && co <= t) || (ci && co && co <= ci));
-  $("cib").classList.toggle("err", pastCi);
-  $("cob").classList.toggle("err", badCo);
+  var bad = (ci && ci < t) || (co && co <= t) ||
+    (ci && co && co <= ci);
+  $("cib").classList.toggle("err", Boolean(ci && ci < t));
+  $("cob").classList.toggle("err", Boolean(bad));
 
-  if (ci && co && !pastCi && !badCo) {
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    $("nt").textContent = n + (n === 1 ? " NACHT" : " NÄCHTE");
+  if(ci && co && !bad){
+    var n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    $("nt").textContent = n + (n === 1 ? " NACHT" : " N\u00c4CHTE");
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
-    $("info").textContent = (ab ? "(AIRBNB) " : "") +
-      "Auswahl: " + (city || "Ziel offen") + " • " + n +
-      (n === 1 ? " Nacht" : " Nächte") + " • " + px + " Pers. • " + rm + " Zi.";
-  } else if (pastCi || badCo) {
-    $("nt").textContent = "DATUM PRÜFEN";
-    $("info").style.background = "#fee2e2";
-    $("info").style.color = "#991b1b";
-    $("info").textContent = "Datum liegt in der Vergangenheit oder Check-out vor Check-in.";
-  } else {
-    $("nt").textContent = "ZEITRAUM WÄHLEN";
-    $("info").style.background = "#eff6ff";
-    $("info").style.color = "#1e3a8a";
-    $("info").textContent = "Bitte Reiseziel, Check-in und Check-out wählen.";
-  }
+    $("info").textContent = "Auswahl: " + (city || "Ziel") +
+      " \u2022 " + n + (n === 1 ? " Nacht" : " N\u00e4chte") +
+      " \u2022 " + px + " Pers. \u2022 " + rm + " Zi.";
 
-  if (city && ci && co && !pastCi && !badCo) {
-    const q = encodeURIComponent(city);
-    const n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    const c1 = ci.split("-");
-    const c2 = co.split("-");
-    const bFilt = st > 0 ? "class=" + st : "";
+    var q = encodeURIComponent(city);
+    var c1 = ci.split("-");
+    var c2 = co.split("-");
+    var bFilt = st > 0 ? "class=" + st : "";
 
-    $("h1").href = P + "www.kayak.de/hotels/" + q + "/" + ci + "/" + co +
-      "/" + px + "adults/" + rm + "rooms";
-    $("h2").href = buildExpediaUrl(city, ci, co, px, rm, st);
+    $("h1").href = P + "www.kayak.de" + "/hotels/" + q + "/" +
+      ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("h2").href = P + "www.expedia.de" + "/Hotel-Search?destination=" +
+      q + "&startDate=" + ci + "&endDate=" + co +
+      "&adults=" + px + "&rooms=" + rm +
+      (st > 0 ? "&star=" + (st * 10) : "");
+    $("h3").href = P + "www.momondo.de" + "/hotels/" + q + "/" +
+      ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
-    $("h3").href = P + "www.momondo.de/hotels/" + q + "/" + ci + "/" + co +
-      "/" + px + "adults/" + rm + "rooms";
     $("b_ss").value = city;
     $("b_ci").value = ci;
     $("b_co").value = co;
-    $("b_ciy").value = c1 || "";
-    $("b_cim").value = String(+(c1 || 0));
-    $("b_cid").value = String(+(c1 || 0));
-    $("b_coy").value = c2 || "";
-    $("b_com").value = String(+(c2 || 0));
-    $("b_cod").value = String(+(c2 || 0));
+    $("b_ciy").value = c1.slice(0, 1).join("");
+    $("b_cim").value = String(+(c1.slice(1, 2).join("") || 0));
+    $("b_cid").value = String(+(c1.slice(2, 3).join("") || 0));
+    $("b_coy").value = c2.slice(0, 1).join("");
+    $("b_com").value = String(+(c2.slice(1, 2).join("") || 0));
+    $("b_cod").value = String(+(c2.slice(2, 3).join("") || 0));
     $("b_px").value = px;
     $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaUrl(city, lastCountryCode, ci, n, px, rm);
-    $("h6").href = buildTrivagoUrl(city, ci, co, px, rm);
-    $("h8").href = P + "www.airbnb.de/s/" + q + "/homes?checkin=" + ci +
-      "&checkout=" + co + "&adults=" + px;
+    var ag = P + "://agoda.com" + "/de-de/search?checkIn=" + ci +
+      "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
+      "&currency=EUR&locale=de-de" +
+      (st > 0 ? "&hotelStarRating=" + st : "");
+    $("h5").href = ag + (aid ? "&city=" + aid : "&textToSearch=" + q);
+
+    $("h6").href = P + "www.trivago.de" + "/de/lm?sQuery=" + q;
+    $("h8").href = P + "www.airbnb.de" + "/s/" + q +
+      "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
+  } else {
+  $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+    $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
+    $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
+    $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
+      "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.";
   }
 
   try {
     localStorage.setItem("rk_hotel", JSON.stringify({
-      city: $("city").value, ci, co, px, rm, st, ab, cc: lastCountryCode
+      city: $("city").value, ci: ci, co: co, px: px, rm: rm, st: st, ab: ab
     }));
-  } catch (e) {}
+  } catch(e){}
 }
 
-(function() {
-  const t = todayIso();
-  $("ci").min = t;
-  $("co").min = t;
-  try {
-    const d = JSON.parse(localStorage.getItem("rk_hotel") || "null");
-    if (d) {
-      if (d.city) $("city").value = d.city;
-      if (d.ci) $("ci").value = d.ci;
-      if (d.co) $("co").value = d.co;
-      if (d.px) $("px").value = d.px;
-      if (d.rm) $("rm").value = d.rm;
-      if (d.st) $("st").value = d.st;
-      if (d.ab !== undefined) $("ab").checked = d.ab;
-      if (d.cc) lastCountryCode = d.cc;
-    }
-    const u = new URLSearchParams(window.location.search);
-    if (u.get("city")) $("city").value = u.get("city");
-    if (u.get("ci")) $("ci").value = u.get("ci");
-    if (u.get("co")) $("co").value = u.get("co");
-    if (u.get("px")) $("px").value = u.get("px");
-  } catch (e) {}
+function showAc(list, msg){
+  var box = $("lc");
+  box.innerHTML = "";
+  if(msg){
+    var m = document.createElement("div");
+    m.textContent = msg;
+    m.style.color = "#64748b";
+    box.appendChild(m);
+    box.style.display = "block";
+    return;
+  }
+  if(!list || list.length === 0){ box.style.display = "none"; return; }
+  list.forEach(function(it){
+    var d = document.createElement("div");
+    var sub = it.country ? " (" + it.country + ")" : "";
+    d.textContent = it.name + sub;
+    d.onmousedown = function(e){
+      e.preventDefault();
+      $("city").value = it.name;
+      cc = (it.country_code || "de").toLowerCase();
+      box.style.display = "none";
+      upd();
+    };
+    box.appendChild(d);
+  });
+  box.style.display = "block";
+}
 
-  liveAc($("city"), $("lc"));
-  "city;ci;co;px;rm;st;ab".split(";").forEach(id => {
-    $(id).addEventListener("input", upd);
-    $(id).addEventListener("change", upd);
-  });
-  "h1;h2;h3;h5;h6;h8".split(";").forEach(id => {
-    $(id).addEventListener("click", upd);
-  });
-  $("f4").addEventListener("submit", upd);
-  upd();
-  if ($("city").value.trim()) resolveAgodaInBg($("city").value.trim());
-})();
+function searchWorldCities(q, done){
+  var u1 = P + "://open-meteo.com" + "/v1/search?name=" +
+    encodeURIComponent(q) + "&count=8&language=de&format=json";
+  var u2 = P + "photon.komoot.io" + "/api/?q=" +
+    encodeURIComponent(q) + "&lang=de&limit=8";
+  var u3 = P + "nominatim.openstreetmap.org" +
+    "/search?format=json&accept-language=de&limit=8&q=" +
+    encodeURIComponent(q);
+
+  function tryNominatim(){
+    fetch(u3).then(function(r){ return r.json(); }).then(function(j){
+      if(j && j.length > 0){
+        done(j.map(function(x){
+          var parts = String(x.display_name || q).split(",");
+          return {
+            name: parts.slice(0, 1).join("").trim(),
+            country: parts.slice(-1).join("").trim(),
+            country_code: "de"
+          };
+        }), "");
+      } else {
+        done(new Array(), "Kein Ort gefunden");
+      }
+    }).catch(function(){
+      done(new Array(), "Kein Ort gefunden");
+    });
+  }
+
+  function tryPhoton(){
+    fetch(u2).then(function(r){ return r.json(); }).then(function(j){
+      if(j && j.features && j.features.length > 0){
+        done(j.features.map(function(f){
+          var pr = f.properties || {};
+          return {
+            name: pr.name || pr.city || q,
+            country: pr.country || "",
+            country_code: (pr.countrycode || "de").toLowerCase()
+          };
+        }), "");
+      } else {
+        tryNominatim();
+      }
+    }).catch(tryNominatim);
+  }
+
+  fetch(u1).then(function(r){ return r.json(); }).then(function(j){
+    if(j && j.results && j.results.length > 0){
+      done(j.results, "");
+    } else {
+      tryPhoton();
+    }
+  }).catch(tryPhoton);
+}
+
+$("city").addEventListener("input", function(){
+  upd(); clearTimeout(acT);
+  var q = $("city").value.trim(), box = $("lc");
+  if(q.length < 2){ box.style.display = "none"; return; }
+  showAc(null, "\ud83d\udd0d Suche weltweit...");
+  acT = setTimeout(function(){
+    searchWorldCities(q, function(res, errMsg){
+      if($("city").value.trim() !== q) return;
+      showAc(res, errMsg);
+    });
+  }, 200);
+});
+
+document.addEventListener("click", function(e){
+  if(!$("lc").contains(e.target) && e.target !== $("city")){
+    $("lc").style.display = "none";
+  }
+});
+
+try {
+  var saved = JSON.parse(localStorage.getItem("rk_hotel") || "null");
+  if(saved){
+    if(saved.city) $("city").value = saved.city;
+    if(saved.ci) $("ci").value = saved.ci;
+    if(saved.co) $("co").value = saved.co;
+    if(saved.px) $("px").value = saved.px;
+    if(saved.rm) $("rm").value = saved.rm;
+    if(saved.st) $("st").value = saved.st;
+    if(saved.ab !== undefined) $("ab").checked = saved.ab;
+  }
+} catch(e){}
+
+"city;ci;co;px;rm;st;ab".split(";").forEach(function(id){
+  $(id).addEventListener("input", upd);
+  $(id).addEventListener("change", upd);
+});
+$("f4").addEventListener("submit", upd);
+$("ci").min = iso(new Date()); $("co").min = iso(new Date());
+upd();
 </script>
 </body>
 </html>
