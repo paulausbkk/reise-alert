@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v113</title>
+<title>🏨 Meine Hotelsuche PRO v114</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v113</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v114</h1>
   <div class="cp">
     <div class="seg" id="dt">22.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -229,9 +229,12 @@ function upd(){
     for(var i = 0; i < rm; i++){
       rc += (i > 0 ? "-" : "") + (perRm + (i < rem ? 1 : 0));
     }
-    $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
-      "&sQuery=" + q + "&checkin=" + ci + "&checkout=" + co +
-      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rc;
+    var tv = city.toLowerCase().trim()
+      .split("\u00fc").join("ue").split("\u00f6").join("oe")
+      .split("\u00e4").join("ae").split("\u00df").join("ss")
+      .split(" ").join("-");
+    $("h6").href = P + "www.trivago.de" + "/de/srl/hotels-" + tv +
+      "?search=dr-" + dt1 + "-" + dt2 + ";rc-" + rc;
 
     $("h8").href = P + "www.airbnb.de" + "/s/" + q +
       "/homes?tab_id=home_tab&checkin=" + ci +
