@@ -3,577 +3,456 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🌴 Suche mit paulausbkk dein Hotel und dein Flug weltweit</title>
+<title>✈️ Reisekonfiguration PRO v30</title>
 <style>
-:root{--d:#0c4a6e;--t:#0f172a;--b:#bae6fd;--v:#0284c7}
+:root{
+  --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;
+  --b:#bae6fd;--g:#0ea5e9;--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe
+}
 html,body{
-  margin:0;padding:8px;
+  margin:0;padding:14px;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  height:100vh;min-height:100vh;font-family:sans-serif;
-  color:var(--t);box-sizing:border-box;display:flex;
-  flex-direction:column;overflow-x:hidden
+  min-height:100vh;font-family:sans-serif;color:var(--t);
+  box-sizing:border-box
 }
-.state-inp{position:fixed;opacity:0;pointer-events:none}
-#enter-chk:checked ~ .welcome{display:none}
-.en-txt{display:none}
-#lang-en:checked ~ .hdr .de-txt,
-#lang-en:checked ~ .bento .de-txt,
-#lang-en:checked ~ .lb .de-txt{display:none}
-#lang-en:checked ~ .hdr .en-txt,
-#lang-en:checked ~ .bento .en-txt,
-#lang-en:checked ~ .lb .en-txt{display:inline}
-#lang-de:checked ~ .hdr .flg-de,
-#lang-en:checked ~ .hdr .flg-en{
-  background:#0284c7;border-color:#7dd3fc;
-  box-shadow:0 0 8px rgba(125,211,252,.5)
-}
-.welcome{
-  position:fixed;inset:0;background:rgba(15,41,66,.88);
-  display:flex;align-items:center;justify-content:center;
-  z-index:2000;padding:20px
-}
-.w-card{
-  background:#fff;border:2px solid #7dd3fc;border-radius:16px;
-  padding:26px 24px;text-align:center;max-width:400px;width:100%;
-  box-shadow:0 12px 32px rgba(0,0,0,.45)
-}
-.w-card h2{margin:0 0 10px 0;color:#0f2942;font-size:1.35rem}
-.w-card p{
-  margin:0 0 18px 0;color:#334155;font-size:.92rem;
-  line-height:1.45
-}
-.w-btn{
-  display:flex;align-items:center;justify-content:center;
-  width:100%;max-width:290px;margin:0 auto;box-sizing:border-box;
-  background:#0284c7;color:#fff;border:none;
-  border-radius:12px;padding:16px 20px;font-size:1.08rem;
-  font-weight:bold;cursor:pointer;text-align:center;
-  touch-action:manipulation;user-select:none;
-  -webkit-tap-highlight-color:transparent
-}
-.w-btn:active{background:#0369a1}
-.w-btn span{pointer-events:none}
 .hdr{
-  display:flex;flex-direction:column;gap:8px;
-  background:linear-gradient(180deg,#0f2942 0%,#0c2238 100%);
-  padding:9px 16px;border-radius:12px;margin-bottom:8px;
-  flex-shrink:0;border:1px solid #1e3a8a;
-  box-shadow:0 4px 14px rgba(15,41,66,.22)
+  display:flex;justify-content:space-between;align-items:center;
+  background:#0f2942;padding:13px 18px;border-radius:12px;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px;
+  box-shadow:0 4px 14px rgba(15,41,66,.18)
 }
 .tit{
-  font-weight:800;color:#f0f9ff;margin:0;width:100%;
-  display:flex;justify-content:center;align-items:center;
-  gap:28px;font-size:clamp(1.05rem,2.15vw,1.62rem);
-  line-height:1.15;letter-spacing:.04em;padding-bottom:6px;
-  border-bottom:1px solid rgba(125,211,252,.22);
-  text-shadow:0 2px 10px rgba(56,189,248,.35)
+  font-weight:bold;color:#fff;font-size:1.22rem;margin:0;
+  letter-spacing:.3px
 }
-.tit-brand{
-  color:#38bdf8;text-shadow:0 0 12px rgba(56,189,248,.5)
+.cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{
+  font-size:.78rem;padding:6px 12px;border-radius:6px;
+  font-weight:bold;color:#fff;text-transform:uppercase;
+  background:#0284c7;text-decoration:none;border:1px solid #38bdf8
 }
-@media(max-width:860px){
-  .tit{
-    flex-wrap:wrap;justify-content:center;text-align:center;
-    gap:8px;letter-spacing:.01em
-  }
+.seg.upg{
+  background:#1e40af;font-size:.86rem;padding:8px 14px;
+  border-color:#60a5fa
 }
-.hdr-bot{
-  display:flex;align-items:center;justify-content:center;
-  gap:8px;flex-wrap:wrap;width:100%
-}
-.hdr-tools{
-  display:flex;align-items:center;gap:5px;flex-shrink:0
-}
+.seg.htl{background:#0369a1;border-color:#7dd3fc}
 .mbtn{
   background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
-  border-radius:6px;padding:4px 8px;font-size:.72rem;
-  font-weight:bold;cursor:pointer;white-space:nowrap
+  border-radius:6px;padding:7px 12px;font-size:.82rem;
+  font-weight:bold;cursor:pointer;white-space:nowrap;
+  touch-action:manipulation;user-select:none
 }
 .mbtn.on{
   background:#0284c7;border-color:#7dd3fc;
   box-shadow:0 0 8px rgba(125,211,252,.5)
 }
-.langs{display:flex;gap:4px;align-items:center}
-.flg{
-  background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
-  border-radius:6px;padding:4px 8px;font-size:.75rem;
-  font-weight:bold;cursor:pointer;white-space:nowrap;
-  user-select:none
-}
-.cp{
-  display:flex;gap:6px;align-items:center;flex-wrap:wrap;
-  justify-content:center
-}
-.seg{
-  font-size:.74rem;padding:5px 10px;border-radius:6px;
-  font-weight:bold;color:#fff;text-transform:uppercase;
-  background:#0284c7;text-decoration:none;
-  border:1px solid #38bdf8;white-space:nowrap
-}
-.locked{opacity:.55;cursor:not-allowed}
-body.unlocked .lock-ico{display:none}
-.bento{
-  display:grid;grid-template-columns:1fr 1fr;
-  grid-template-rows:auto 1fr;gap:10px;flex:1;min-height:0
-}
-.box{
-  background:#fff;border:1px solid #93c5fd;border-radius:12px;
-  padding:10px;box-shadow:0 4px 12px rgba(3,105,161,.08);
-  display:flex;flex-direction:column;height:100%;
-  box-sizing:border-box;min-height:0
-}
-.box.wide{grid-column:span 2}
-@media(max-width:740px){
-  html,body{height:auto}
-  .bento{grid-template-columns:1fr;grid-template-rows:auto}
-  .box.wide{grid-column:span 1}
-}
-.pic{
-  position:relative;border-radius:10px;overflow:hidden;
-  min-height:135px;display:flex;align-items:stretch;
-  padding:12px 14px;background-color:#0f2942;
-  background-image:url("Flügel.jpg");
-  background-position:center 22%;background-size:118%;
-  background-repeat:no-repeat
-}
-.pic::before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(15,41,66,.72) 0%,
-    rgba(15,41,66,.18) 50%,rgba(15,41,66,.75) 100%)
-}
-.ptxt{
-  position:relative;z-index:2;color:#fff;width:100%;
-  display:flex;flex-direction:column;
-  justify-content:space-between;align-items:flex-start;gap:4px
-}
-.ptxt h2{
-  margin:0;font-size:clamp(1.2rem,2.3vw,1.8rem);
-  font-weight:800;letter-spacing:.05em;line-height:1.15;
-  text-shadow:0 2px 8px rgba(0,0,0,.55)
-}
-.fly-wide{
-  display:inline-block;transform:scaleX(1.12);
-  transform-origin:left center
-}
-.fly-arrow{
-  font-size:1.55rem;line-height:1;margin:2px 0 2px 175px;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))
-}
-@media(max-width:740px){
-  .fly-wide{transform:none}
-  .fly-arrow{margin-left:135px}
-}
-.cta{
-  display:inline-block;background:#0284c7;color:#fff;
-  font-weight:bold;text-decoration:none;padding:8px 16px;
-  border-radius:8px;font-size:.88rem;border:1px solid #7dd3fc
+.row{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px}
+.card{
+  flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
+  padding:18px 20px;background:#ffffff;box-sizing:border-box;
+  box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
 .ct{
-  font-weight:bold;font-size:.96rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:4px;
-  margin-bottom:6px;flex-shrink:0
+  font-weight:bold;font-size:1.06rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:7px;
+  margin-bottom:14px
 }
-.ct-sub{
-  font-size:.52em;font-weight:normal;color:#475569;
-  margin-left:5px
+.f{
+  margin-bottom:13px;display:flex;
+  flex-direction:column;position:relative
 }
-.gal-grid{
-  display:grid;grid-template-columns:1.25fr 1fr;
-  grid-template-rows:repeat(3,1fr);gap:7px;flex:1;min-height:0
+.f2{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;margin-bottom:13px
 }
-.gitem{
-  position:relative;border-radius:8px;overflow:hidden;
-  border:1px solid #bae6fd;min-height:0;background:#e0f2fe;
-  display:block;text-decoration:none;cursor:zoom-in
+label{
+  font-weight:bold;font-size:.84rem;
+  margin-bottom:4px;color:#1e3a8a
 }
-.gitem.tall{grid-row:span 3}
-.gitem img{
-  width:100%;height:100%;object-fit:cover;
-  object-position:center;display:block
+.inp,.dat,select{
+  height:41px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.96rem;
+  background:#f8fafc;color:var(--t);width:100%;transition:.2s
 }
-.gitem.tall img{object-position:center 15%}
-.gnum{
-  position:absolute;top:5px;left:5px;z-index:2;
-  background:rgba(15,41,66,.85);color:#fff;font-weight:bold;
-  font-size:.75rem;padding:2px 7px;border-radius:5px;
-  border:1px solid #7dd3fc
+.inp:focus,.dat:focus,select:focus{
+  outline:none;border-color:#0284c7;background:#fff;
+  box-shadow:0 0 0 3px rgba(2,132,199,.15)
 }
 @keyframes pulseHint{
   0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
   50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
 }
-.user-alert{
-  flex:1;display:flex;flex-direction:column;
-  border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:10px;padding:8px 11px;margin-bottom:6px;
-  background:#f0f9ff;animation:pulseHint 2.2s infinite ease-in-out
-}
-.user-ct{
-  font-weight:bold;font-size:.94rem;color:var(--d);
-  border-bottom:1px solid #bae6fd;padding-bottom:3px;
-  margin-bottom:5px;flex-shrink:0
-}
-.note-space{
-  flex:1;min-height:36px;color:#0f172a;font-size:.83rem;
-  font-weight:bold;line-height:1.35
-}
-.pw-row{
-  display:flex;justify-content:flex-end;align-items:center;
-  gap:6px;margin-top:5px;flex-shrink:0;flex-wrap:wrap
-}
-.pw-msg{font-size:.74rem;font-weight:bold;color:#991b1b}
-.pw-inp{
-  height:28px;padding:0 8px;border:1px solid #0284c7;
-  border-radius:6px;font-size:.8rem;background:#fff;width:130px
-}
-.pw-btn{
-  height:28px;padding:0 10px;background:#0284c7;color:#fff;
-  border:none;border-radius:6px;font-weight:bold;font-size:.76rem;
-  cursor:pointer
-}
 .bn{
-  background:#0f2942;border:2px solid #0284c7;
-  border-left:6px solid #0284c7;border-radius:8px;
-  padding:6px 10px;color:#fff;font-weight:bold;
-  font-size:.75rem;line-height:1.3;margin-bottom:6px;
-  flex-shrink:0
+  background:#0f2942;border:3px solid #991b1b;
+  border-left:7px solid #991b1b;border-radius:8px;
+  padding:11px 14px;color:#fff;font-weight:bold;
+  font-size:.88rem;line-height:1.4;
+  animation:pulseHint 2.2s infinite ease-in-out
 }
-.bottom-block{margin-top:auto;flex-shrink:0}
-.sub-ct{
-  font-weight:bold;font-size:.86rem;color:var(--d);
-  margin:0 0 4px 0
+.bb{
+  border:1px solid #93c5fd;background:#ffffff;
+  border-radius:12px;padding:16px 20px;
+  box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
-details{
-  background:#f0f9ff;border:1px solid #bae6fd;
-  border-radius:8px;padding:5px 9px;margin-bottom:4px
+.bf{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+  gap:10px
 }
-details:last-child{margin-bottom:0}
-summary{
-  font-weight:bold;cursor:pointer;color:var(--d);font-size:.8rem
+.btn{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;height:46px;color:#fff;font-weight:bold;
+  border-radius:8px;font-size:.84rem;text-transform:uppercase;
+  text-decoration:none;text-align:center;line-height:1.15;
+  padding:0 6px;box-shadow:0 2px 6px rgba(15,41,66,.15)
 }
-details p{
-  margin:3px 0 0 0;font-size:.77rem;line-height:1.3;
-  color:#1e293b
+.btn .sub{
+  font-size:.64rem;font-weight:bold;text-transform:none;
+  opacity:1;margin-top:2px;color:#e0f2fe
 }
-.lb{
-  position:fixed;inset:0;background:rgba(15,23,42,.92);
-  display:none;align-items:center;justify-content:center;
-  z-index:999;padding:20px
+.b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
+.b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
+.rng{width:100%;height:41px;accent-color:#0284c7;cursor:pointer}
+body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
+body:has(#ow:checked) #rb input{background:#e2e8f0!important}
+body:has(#ow:checked) .st{
+  background:#0369a1!important;color:#fff;border-color:#7dd3fc
 }
-.lb:target{display:flex}
-.lb img{
-  max-width:94vw;max-height:88vh;border-radius:10px;
-  border:2px solid #7dd3fc;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);object-fit:contain
+.swc{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
+  border-radius:8px;min-height:41px;gap:8px
 }
-.lb-bg{position:absolute;inset:0;cursor:zoom-out}
-.lb-x{
-  position:fixed;top:16px;right:20px;z-index:1001;
-  background:#0284c7;color:#fff;text-decoration:none;
-  font-weight:bold;padding:8px 14px;border-radius:8px;
-  border:1px solid #7dd3fc;font-size:.9rem
+.swc.yl{background:#e0f2fe;border:1px solid #7dd3fc}
+.swc.split{
+  flex-direction:column;justify-content:center;
+  align-items:stretch;padding:0;gap:0;overflow:hidden
 }
+.swh{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:4px 10px;gap:6px;min-height:28px
+}
+.swh:first-child{border-bottom:1px solid #7dd3fc}
+.sw{
+  position:relative;display:inline-block;
+  width:42px;height:24px;flex-shrink:0
+}
+.sw.sm{width:34px;height:18px}
+.sw input{opacity:0;width:0;height:0}
+.sl{
+  position:absolute;cursor:pointer;inset:0;
+  background:#cbd5e1;border-radius:20px;transition:.3s
+}
+.sl:before{
+  position:absolute;content:"";height:18px;width:18px;
+  left:3px;bottom:3px;background:#fff;
+  border-radius:50%;transition:.3s
+}
+.sw.sm .sl:before{height:14px;width:14px;left:2px;bottom:2px}
+.sw input:checked+.sl{background:#0284c7!important}
+.sw input:checked+.sl:before{transform:translateX(18px)}
+.sw.sm input:checked+.sl:before{transform:translateX(16px)}
 </style>
 </head>
 <body>
-<input type="checkbox" id="enter-chk" class="state-inp">
-<input type="radio" name="lang" id="lang-de" class="state-inp" checked>
-<input type="radio" name="lang" id="lang-en" class="state-inp">
-
-<div class="welcome" id="wOverlay">
-  <div class="w-card">
-    <h2>🌴 Willkommen bei paulausbkk</h2>
-    <p>Deinem weltweiten Reiseportal für Flüge und Hotels.</p>
-    <button type="button" class="w-btn" id="wEnterBtn">
-      <span>Eintreten / Entry ➡️</span>
-    </button>
-  </div>
-</div>
-
-<audio id="bgm" src="musik.mp3" loop preload="auto"></audio>
-
 <div class="hdr">
-  <h1 class="tit">
-    <span>
-      🌴 <span class="de-txt">Suche mit</span>
-      <span class="en-txt">Search with</span>
-      <span class="tit-brand">paulausbkk</span>
-    </span>
-    <span>
-      <span class="de-txt">dein Hotel und dein Flug weltweit ✈️</span>
-      <span class="en-txt">your hotel and flight worldwide ✈️</span>
-    </span>
-  </h1>
-  <div class="hdr-bot">
-    <div class="hdr-tools">
-      <button type="button" class="mbtn" id="mbtn"
-        onclick="toggleBgm()">🔇 Musik Aus</button>
-      <div class="langs">
-        <label for="lang-de" class="flg flg-de"
-          onclick="setTimeout(updBgmLabel,10)">🇩🇪</label>
-        <label for="lang-en" class="flg flg-en"
-          onclick="setTimeout(updBgmLabel,10)">🇬🇧</label>
+  <h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
+  <div class="cp">
+    <button type="button" class="mbtn on" id="mbtn"
+      onclick="toggleFlightBgm()">🔇 Musik Aus</button>
+    <div class="seg" id="dt">19.11.2026</div>
+    <div class="seg st" id="st">HIN & RÜCK</div>
+    <a href="meine-hotelsuche.html" class="seg upg htl">
+      🏨 Meine Hotelsuche ➡️
+    </a>
+    <a href="meine-flugbuchungen.html" class="seg upg">
+      ✈️ Meine Flugbuchungen ➡️
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
+    <div class="f2" style="margin-bottom:14px">
+      <div class="f" style="margin:0">
+        <label for="i1">Abflug (IATA oder Stadt)</label>
+        <input type="text" class="inp" id="i1"
+          list="airports" placeholder="z.B. BER, FRA, MUC">
+      </div>
+      <div class="f" style="margin:0">
+        <label for="i2">Ziel (IATA oder Stadt)</label>
+        <input type="text" class="inp" id="i2"
+          list="airports" placeholder="z.B. BKK, DAD, CEB">
       </div>
     </div>
-     <div class="cp">
-      <a id="b1" href="/reise-alert/meine-hotelsuche.html"
-        class="seg locked">
-        <span class="lock-ico">🔒 </span>
-        <span class="de-txt">🏨 Hotelsuche</span>
-        <span class="en-txt">🏨 Hotels</span>
-      </a>
-      <a id="b2" href="/reise-alert/meine-flugbuchungen.html"
-        class="seg locked">
-        <span class="lock-ico">🔒 </span>
-        <span class="de-txt">📋 Flugbuchungen</span>
-        <span class="en-txt">📋 Bookings</span>
-      </a>
-      <a id="b3" href="/reise-alert/index.html"
-        class="seg locked">
-        <span class="lock-ico">🔒 </span>
-        <span class="de-txt">✈️ Zur Flugsuche ➡️</span>
-        <span class="en-txt">✈️ Flight Search ➡️</span>
-      </a>
+    <datalist id="airports">
+      <option value="Berlin Brandenburg (BER)">
+      <option value="Frankfurt am Main (FRA)">
+      <option value="München (MUC)">
+      <option value="Leipzig/Halle (LEJ)">
+      <option value="Düsseldorf (DUS)">
+      <option value="Hamburg (HAM)">
+      <option value="Köln/Bonn (CGN)">
+      <option value="Stuttgart (STR)">
+      <option value="Hannover (HAJ)">
+      <option value="Nürnberg (NUE)">
+      <option value="Wien (VIE)">
+      <option value="Zürich (ZRH)">
+      <option value="Bangkok Suvarnabhumi (BKK)">
+      <option value="Bangkok Don Mueang (DMK)">
+      <option value="Phuket (HKT)">
+      <option value="Chiang Mai (CNX)">
+      <option value="Koh Samui (USM)">
+      <option value="Krabi (KBV)">
+      <option value="Da Nang (DAD)">
+      <option value="Quy Nhon (UIH)">
+      <option value="Ho-Chi-Minh-Stadt (SGN)">
+      <option value="Hanoi (HAN)">
+      <option value="Manila (MNL)">
+      <option value="Cebu (CEB)">
+      <option value="Dumaguete (DGT)">
+      <option value="Pagadian (PAG)">
+      <option value="Singapur (SIN)">
+      <option value="Kuala Lumpur (KUL)">
+      <option value="Denpasar Bali (DPS)">
+      <option value="Dubai (DXB)">
+      <option value="Doha (DOH)">
+      <option value="Istanbul (IST)">
+      <option value="Tokio (TYO)">
+      <option value="Faro (FAO)">
+      <option value="Christchurch (CHC)">
+    </datalist>
+    <div class="f2" style="margin-bottom:0">
+      <div class="f" style="margin:0">
+        <label for="od">Hinflug</label>
+        <input type="date" class="dat" id="od" min="2026-11-19">
+      </div>
+      <div class="f" id="rb" style="margin:0">
+        <label for="rd">Rückflug</label>
+        <input type="date" class="dat" id="rd" min="2026-11-19">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">⚙️ Filter & Flug-Parameter</div>
+    <div class="f2" style="align-items:end">
+      <div class="swc">
+        <label for="ow"
+          style="margin:0;cursor:pointer;font-size:.82rem">
+          Nur Hinflug (One-Way)
+        </label>
+        <label class="sw">
+          <input type="checkbox" id="ow"><span class="sl"></span>
+        </label>
+      </div>
+      <div class="f" style="margin:0">
+        <label for="px">Personenzahl</label>
+        <select id="px">
+          <option value="1">1 Person</option>
+          <option value="2">2 Personen</option>
+          <option value="3">3 Personen</option>
+          <option value="4">4 Personen</option>
+        </select>
+      </div>
+    </div>
+    <div class="f">
+      <label for="hr" id="hrl">Max. Reisezeit (1 – 36 Std.)</label>
+      <input type="range" class="rng" id="hr"
+        min="1" max="36" value="14">
+    </div>
+    <div class="f2">
+      <div class="swc yl">
+        <label for="ns"
+          style="margin:0;cursor:pointer;font-size:.82rem">
+          Nur Direktflüge (Non-Stop)
+        </label>
+        <label class="sw">
+          <input type="radio" name="stops" id="ns">
+          <span class="sl"></span>
+        </label>
+      </div>
+      <div class="swc yl split">
+        <div class="swh">
+          <label for="s1"
+            style="margin:0;cursor:pointer;font-size:.8rem">
+            Max. 1 Stop
+          </label>
+          <label class="sw sm">
+            <input type="radio" name="stops" id="s1">
+            <span class="sl"></span>
+          </label>
+        </div>
+        <div class="swh">
+          <label for="s2"
+            style="margin:0;cursor:pointer;font-size:.8rem">
+            Max. 2 Stopps
+          </label>
+          <label class="sw sm">
+            <input type="radio" name="stops" id="s2">
+            <span class="sl"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="f" style="margin-bottom:12px">
+      <div class="swc">
+        <label for="lc"
+          style="margin:0;cursor:pointer;font-size:.82rem">
+          Inkl. Low-Cost Airlines (zusätzlich)
+        </label>
+        <label class="sw">
+          <input type="checkbox" id="lc"><span class="sl"></span>
+        </label>
+      </div>
+    </div>
+    <div class="bn">
+      ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend
+      angeklickten Website beim Anbieter ausgewählt werden.
     </div>
   </div>
 </div>
 
-<div class="bento">
-  <div class="box wide">
-    <div class="pic">
-      <div class="ptxt">
-        <h2>
-          <span class="de-txt">
-            <span class="fly-wide">Du willst fliegen? Dann klicke hier</span>
-          </span>
-          <span class="en-txt">
-            <span class="fly-wide">Want to fly? Click here</span>
-          </span>
-        </h2>
-        <div class="fly-arrow">↙️</div>
-        <a id="b4" href="/reise-alert/index.html"
-          class="cta locked">
-          <span class="lock-ico">🔒 </span>
-          <span class="de-txt">✈️ Flugkonfiguration öffnen ➡️</span>
-          <span class="en-txt">✈️ Open Flight Search ➡️</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="box">
-    <div class="ct">
-      <span>
-        <span class="de-txt">🌟 Unsere Reiseempfehlung die Philippinen</span>
-        <span class="en-txt">🌟 Our Travel Recommendation: The Philippines</span>
-      </span>
-      <span class="ct-sub">
-        <span class="de-txt">(Klicken zum Vergrößern)</span>
-        <span class="en-txt">(Click to enlarge)</span>
-      </span>
-    </div>
-    <div class="gal-grid">
-      <a href="#f1" class="gitem tall"><span class="gnum">1</span>
-        <img src="LiS.jpg" alt="Empfehlung 1"></a>
-      <a href="#f2" class="gitem sm"><span class="gnum">2</span>
-        <img src="Strand.jpg" alt="Empfehlung 2"></a>
-      <a href="#f3" class="gitem sm"><span class="gnum">3</span>
-        <img src="Strand2.jpg" alt="Empfehlung 3"></a>
-      <a href="#f4" class="gitem sm"><span class="gnum">4</span>
-        <img src="20250205_181003.jpg" alt="Empfehlung 4"></a>
-    </div>
-  </div>
-
-  <div class="box">
-    <div class="user-alert">
-      <div class="user-ct">
-        <span class="de-txt">⚠️ Wichtige Hinweise für Nutzer dieser Seite</span>
-        <span class="en-txt">⚠️ Important Notes for Users of this Site</span>
-      </div>
-      <div class="note-space">
-        <span class="de-txt">Immer wenn Sie auf den nachfolgenden Seiten einen solchen roten blinkenden Rahmen sehen, dann lesen Sie den Text darin bitte dringend, weil er wichtige Hinweise enthält.</span>
-        <span class="en-txt">Whenever you see a red blinking border like this on the following pages, please read the text inside urgently as it contains important information.</span>
-      </div>
-      <div class="pw-row">
-        <span class="pw-msg" id="pm"></span>
-        <input type="password" class="pw-inp" id="pi"
-          placeholder="Passwort..."
-          onkeydown="if(event.key==='Enter')checkPw()">
-        <button type="button" class="pw-btn" id="pb"
-          onclick="checkPw()">
-          <span class="de-txt">🔓 Freischalten</span>
-          <span class="en-txt">🔓 Unlock</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="bottom-block">
-      <div class="bn">
-        <span class="de-txt">ℹ️ Diese Seite dient als direkter Start- und Konfigurationspunkt. Alle Buchungen, Preise sowie Gepäck- und Tarifauswahlen erfolgen direkt auf den jeweils verlinkten Anbieterseiten.</span>
-        <span class="en-txt">ℹ️ This page serves as a direct starting and configuration point. All bookings, prices, baggage and fare selections take place directly on the linked provider websites.</span>
-      </div>
-      <div class="sub-ct">
-        <span class="de-txt">ℹ️ Wichtige Reise-Hinweise (Klicken)</span>
-        <span class="en-txt">ℹ️ Important Travel Tips (Click)</span>
-      </div>
-      <details>
-        <summary>
-          <span class="de-txt">🛂 Einreise & Dokumente weltweit</span>
-          <span class="en-txt">🛂 Entry & Documents Worldwide</span>
-        </summary>
-        <p>
-          <span class="de-txt">Reisepass auf Gültigkeit prüfen (oft mindestens 6 Monate) und eventuelle Einreise-Registrierungen rechtzeitig vor Abflug online ausfüllen.</span>
-          <span class="en-txt">Check passport validity (often at least 6 months) and complete any required online travel registrations before departure.</span>
-        </p>
-      </details>
-      <details>
-        <summary>
-          <span class="de-txt">🧳 Flüge & Gepäckregeln</span>
-          <span class="en-txt">🧳 Flights & Baggage Rules</span>
-        </summary>
-        <p>
-          <span class="de-txt">Günstige Basistarife sind oft ohne Aufgabegepäck – bitte direkt auf der gewählten Anbieterseite beim Buchen hinzufügen.</span>
-          <span class="en-txt">Low basic fares often exclude checked luggage – please add baggage directly on the provider website during booking.</span>
-        </p>
-      </details>
-      <details>
-        <summary>
-          <span class="de-txt">🏨 Hotelbuchung & Stornierung</span>
-          <span class="en-txt">🏨 Hotel Booking & Cancellation</span>
-        </summary>
-        <p>
-          <span class="de-txt">Bei weltweiten Hotelbuchungen auf kostenlose Stornierungsfristen und lokale Steuern vor Ort achten.</span>
-          <span class="en-txt">When booking hotels worldwide, pay attention to free cancellation deadlines and local taxes on site.</span>
-        </p>
-      </details>
-    </div>
+<div class="bb">
+  <div class="bf">
+    <a id="u1" href="https://skyscanner.de"
+      target="_blank" class="btn b2">Skyscanner</a>
+    <a id="u2" href="https://kayak.de"
+      target="_blank" class="btn b3">Kayak</a>
+    <a id="u3" href="https://momondo.de"
+      target="_blank" class="btn b4">Momondo</a>
+    <a id="u4" href="https://expedia.de"
+      target="_blank" class="btn b5">
+      Expedia<span class="sub">Stopps auf Website wählen</span>
+    </a>
+    <a id="u5" href="https://kiwi.com"
+      target="_blank" class="btn b6">Kiwi.com</a>
+    <a id="u6" href="https://trip.com"
+      target="_blank" class="btn b7">Trip.com</a>
   </div>
 </div>
-
-<div id="f1" class="lb"><a href="#_" class="lb-bg"></a>
-<a href="#_" class="lb-x"><span class="de-txt">✖ Schließen</span><span class="en-txt">✖ Close</span></a>
-<img src="LiS.jpg" alt="1"></div>
-<div id="f2" class="lb"><a href="#_" class="lb-bg"></a>
-<a href="#_" class="lb-x"><span class="de-txt">✖ Schließen</span><span class="en-txt">✖ Close</span></a>
-<img src="Strand.jpg" alt="2"></div>
-<div id="f3" class="lb"><a href="#_" class="lb-bg"></a>
-<a href="#_" class="lb-x"><span class="de-txt">✖ Schließen</span><span class="en-txt">✖ Close</span></a>
-<img src="Strand2.jpg" alt="3"></div>
-<div id="f4" class="lb"><a href="#_" class="lb-bg"></a>
-<a href="#_" class="lb-x"><span class="de-txt">✖ Schließen</span><span class="en-txt">✖ Close</span></a>
-<img src="20250205_181003.jpg" alt="4"></div>
-
 <script>
-const PASS="paul2026";
-let ok=false;
-let bgmOn=false;
+var $ = function(id){ return document.getElementById(id); };
+var P = "https:" + String.fromCharCode(47, 47);
+var bgmPlayer = new Audio(P + "paulausbkk.github.io/musik.mp3");
+bgmPlayer.loop = true;
+bgmPlayer.volume = 0.45;
+var bgmRunning = false;
+var userStopped = false;
 
-function isEn(){
-  const r=document.getElementById("lang-en");
-  return r&&r.checked;
+function renderFlightBgm(){
+  var b = $("mbtn");
+  if(!b) return;
+  b.classList.toggle("on", bgmRunning);
+  b.textContent = bgmRunning ? "🔇 Musik Aus" : "🎵 Musik An";
 }
 
-function updBgmLabel(){
-  const b=document.getElementById("mbtn");
-  if(!b)return;
-  b.classList.toggle("on",bgmOn);
-  if(bgmOn){
-    b.textContent=isEn()?"🔇 Music Off":"🔇 Musik Aus";
-  }else{
-    b.textContent=isEn()?"🎵 Music On":"🎵 Musik An";
-  }
-}
-
-function startBgm(){
-  bgmOn=true;
-  updBgmLabel();
-  const a=document.getElementById("bgm");
-  if(a){
-    a.volume=0.45;
-    a.play().catch(function(){});
-  }
-}
-
-function stopBgm(){
-  bgmOn=false;
-  updBgmLabel();
-  const a=document.getElementById("bgm");
-  if(a)a.pause();
-}
-
-function toggleBgm(){
-  if(bgmOn){
-    stopBgm();
-  }else{
-    startBgm();
-  }
-}
-
-document.addEventListener("visibilitychange",function(){
-  if(document.hidden&&bgmOn)stopBgm();
-});
-window.addEventListener("pagehide",function(){
-  if(bgmOn)stopBgm();
-});
-
-function enterPortal(){
-  const w=document.getElementById("wOverlay");
-  const c=document.getElementById("enter-chk");
-  if(w)w.style.display="none";
-  if(c)c.checked=true;
-  startBgm();
-}
-
-const wb=document.getElementById("wEnterBtn");
-if(wb){
-  wb.addEventListener("pointerdown",enterPortal);
-  wb.addEventListener("click",enterPortal);
-}
-
-function unlock(){
-  ok=true;
-  document.body.classList.add("unlocked");
-  ["b1","b2","b3","b4"].forEach(function(id){
-    document.getElementById(id).classList.remove("locked");
+function startFlightBgm(){
+  bgmRunning = true;
+  renderFlightBgm();
+  bgmPlayer.play().catch(function(){
+    bgmRunning = false;
+    renderFlightBgm();
   });
-  const pm=document.getElementById("pm");
-  pm.style.color="#15803d";
-  pm.textContent=isEn()?"✅ Unlocked":"✅ Freigeschaltet";
-  document.getElementById("pi").style.display="none";
-  document.getElementById("pb").style.display="none";
-  try{sessionStorage.setItem("pab_ok","1");}catch(e){}
 }
 
-function checkPw(){
-  const val=(document.getElementById("pi").value||"").trim();
-  if(val===PASS){
-    unlock();
-  }else{
-    const pm=document.getElementById("pm");
-    pm.style.color="#991b1b";
-    pm.textContent=isEn()?"❌ Wrong password":"❌ Falsches Passwort";
+function stopFlightBgm(){
+  bgmRunning = false;
+  userStopped = true;
+  renderFlightBgm();
+  bgmPlayer.pause();
+}
+
+function toggleFlightBgm(){
+  if(bgmRunning){
+    stopFlightBgm();
+  } else {
+    userStopped = false;
+    startFlightBgm();
   }
 }
 
-["b1","b2","b3","b4"].forEach(function(id){
-  document.getElementById(id).addEventListener("click",function(e){
-    if(!ok){
-      e.preventDefault();
-      const pm=document.getElementById("pm");
-      pm.style.color="#991b1b";
-      pm.textContent=isEn()
-        ?"🔒 Please enter password below first"
-        :"🔒 Bitte erst unten Passwort eingeben";
-      document.getElementById("pi").focus();
-    }else if(bgmOn){
-      stopBgm();
-    }
-  });
+document.addEventListener("click", function(e){
+  if(e.target && e.target.id === "mbtn") return;
+  if(!bgmRunning && !userStopped){
+    startFlightBgm();
+  }
 });
+startFlightBgm();
 
-try{
-  if(sessionStorage.getItem("pab_ok")==="1")unlock();
-}catch(e){}
+function iata(val){
+  var s = String(val || "").trim().toUpperCase();
+  var p1 = s.indexOf("("), p2 = s.indexOf(")");
+  if(p1 >= 0 && p2 > p1) return s.slice(p1 + 1, p2).trim();
+  return s.slice(0, 3);
+}
+
+function iso(d){
+  var m = String(d.getMonth() + 1), t = String(d.getDate());
+  if(m.length < 2) m = "0" + m;
+  if(t.length < 2) t = "0" + t;
+  return d.getFullYear() + "-" + m + "-" + t;
+}
+
+function upd(){
+  var now = new Date(), today = iso(now);
+  $("dt").textContent = now.toLocaleDateString("de-DE");
+  var ow = $("ow").checked;
+  $("st").textContent = ow ? "NUR HINFLUG" : "HIN & R\u00dcCK";
+  var hr = $("hr").value;
+  $("hrl").textContent = "Max. Reisezeit (" + hr + " Std.)";
+
+  var o = iata($("i1").value) || "BER";
+  var d = iata($("i2").value) || "BKK";
+  var od = $("od").value || today;
+  var rd = $("rd").value || od;
+  var px = $("px").value || "1";
+  var sOd = od.replace(/-/g, "").slice(2);
+  var sRd = rd.replace(/-/g, "").slice(2);
+
+  var stopK = $("ns").checked ? "?fs=stops=0" :
+    ($("s1").checked ? "?fs=stops=-2" : "");
+
+  $("u1").href = P + "www.skyscanner.de" +
+    "/transport/fluge/" + o.toLowerCase() + "/" +
+    d.toLowerCase() + "/" + sOd +
+    (ow ? "/" : "/" + sRd + "/") + "?adults=" + px;
+
+  $("u2").href = P + "www.kayak.de" + "/flights/" +
+    o + "-" + d + "/" + od +
+    (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
+
+  $("u3").href = P + "www.momondo.de" + "/flight-search/" +
+    o + "-" + d + "/" + od +
+    (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
+
+  $("u4").href = P + "www.expedia.de" +
+    "/Flights-Search?trip=" + (ow ? "oneway" : "roundtrip") +
+    "&leg1=from:" + o + ",to:" + d + ",departure:" + od + "TANYT" +
+    (ow ? "" : "&leg2=from:" + d + ",to:" + o +
+      ",departure:" + rd + "TANYT") +
+    "&passengers=adults:" + px + "&mode=search";
+
+  $("u5").href = P + "://kiwi.com" + "/de/search/results/" +
+    o.toLowerCase() + "/" + d.toLowerCase() + "/" + od + "/" +
+    (ow ? "no-return" : rd) + "?adults=" + px;
+
+  $("u6").href = P + "://trip.com" + "/flights/" +
+    o.toLowerCase() + "-to-" + d.toLowerCase() +
+    "/tickets-" + o.toLowerCase() + "-" + d.toLowerCase() +
+    "?dcity=" + o + "&acity=" + d + "&ddate=" + od +
+    (ow ? "&flighttype=ow" : "&rdate=" + rd + "&flighttype=rt") +
+    "&adult=" + px;
+}
+
+"i1;i2;od;rd;ow;px;hr;ns;s1;s2;lc".split(";").forEach(function(id){
+  $(id).addEventListener("input", upd);
+  $(id).addEventListener("change", upd);
+});
+$("od").min = iso(new Date());
+$("rd").min = iso(new Date());
+upd();
 </script>
 </body>
 </html>
