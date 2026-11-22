@@ -55,7 +55,7 @@ padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
 .pic{position:relative;border-radius:10px;overflow:hidden;
 min-height:300px;display:flex;align-items:flex-end;padding:20px;
 background-color:#0f2942;
-background-image:url("fluegel.jpg");
+background-image:url("Fl%C3%BCgel.jpg");
 background-size:cover;
 background-position:center center;
 background-repeat:no-repeat;
@@ -75,15 +75,13 @@ rgba(15,41,66,.12) 100%)}
 .ptxt{position:relative;z-index:4;color:#fff}
 .ptxt h2{margin:0 0 6px 0;font-size:1.45rem}
 .ptxt p{margin:0 0 12px 0;font-size:.94rem;color:#e0f2fe}
-.cta-wrap{position:relative;display:inline-block}
 .cta{display:inline-flex;align-items:center;background:#0284c7;color:#fff;
 font-weight:bold;text-decoration:none;padding:11px 18px;
 border-radius:8px;font-size:.94rem;border:1px solid #7dd3fc}
 .cta:hover{background:#0369a1}
-.cta-arrow{display:block;font-size:4.2rem;line-height:1;
-margin-left:335px;margin-top:6px;margin-bottom:-14px;
-transform:rotate(-18deg);
-filter:drop-shadow(0 4px 8px rgba(0,0,0,.65))}
+.cta-arrow{display:inline-block;margin-left:16px;font-size:1.45rem;
+line-height:1;transform:rotate(180deg);color:#fde047;
+text-shadow:0 1px 3px rgba(0,0,0,.45)}
 .ct{font-weight:bold;font-size:1.05rem;color:var(--d);
 border-bottom:2px solid #e0f2fe;padding-bottom:6px;margin-bottom:10px}
 details{background:#f0f9ff;border:1px solid #bae6fd;
@@ -95,88 +93,115 @@ color:#1e293b}
 .gal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .gal img{width:100%;height:110px;object-fit:cover;
 object-position:center;border-radius:8px;border:1px solid #bae6fd}
-.modal-bg{position:fixed;inset:0;z-index:999;
-background:rgba(15,23,42,.75);backdrop-filter:blur(4px);
-display:flex;align-items:center;justify-content:center;padding:16px}
-.modal-box{background:#fff;border:3px solid #7dd3fc;border-radius:18px;
-max-width:440px;width:100%;padding:26px 22px;text-align:center;
-box-shadow:0 18px 40px rgba(0,0,0,.35)}
-.modal-box h2{margin:0 0 4px 0;font-size:1.45rem;color:#0f2942}
-.modal-box .sub-en{margin:0 0 12px 0;font-size:1.05rem;font-weight:bold;color:#0369a1}
-.modal-box p{margin:0 0 4px 0;font-size:.95rem;color:#334155}
-.modal-box .p-en{margin:0 0 18px 0;font-size:.86rem;color:#64748b}
-.enter-btn{display:inline-flex;flex-direction:column;align-items:center;
-justify-content:center;background:#0284c7;color:#fff;font-weight:bold;
-border:none;border-radius:12px;padding:12px 26px;cursor:pointer;
-box-shadow:0 4px 12px rgba(2,132,199,.35);transition:.2s}
-.enter-btn:hover{background:#0369a1;transform:translateY(-1px)}
-.enter-btn .de-t{font-size:1.02rem}
-.enter-btn .en-t{font-size:.84rem;color:#e0f2fe;margin-top:2px}
 </style>
 </head>
 <body>
-<div class="modal-bg" id="welcomeModal">
-  <div class="modal-box">
-    <h2>🌴 Willkommen bei paulausbkk</h2>
-    <div class="sub-en">Welcome to paulausbkk</div>
-    <p>Deinem weltweiten Reiseportal für Flüge und Hotels.</p>
-    <div class="p-en">Your worldwide travel portal for flights and hotels.</div>
-    <button type="button" class="enter-btn" onclick="enterSite()">
-      <span class="de-t">Seite betreten</span>
-      <span class="en-t">Enter site</span>
-    </button>
-  </div>
+<div class="hdr"><h1 class="tit" id="p_tit">🌴 Philippinen & Asien Reiseportal</h1>
+<div class="cp">
+<button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">🇬🇧 EN</button>
+<a href="meine-hotelsuche.html" id="nav_htl" class="seg">🏨 Hotelsuche</a>
+<a href="meine-flugbuchungen.html" id="nav_bk" class="seg">📋 Flugbuchungen</a>
+<a href="index.html" id="nav_fl" class="seg upg">✈️ Zur Flugsuche ➡️</a>
 </div>
-
-<div class="hdr">
-  <h1 class="tit">🌴 paulausbkk – Philippinen & Asien Reiseportal</h1>
-  <div class="cp">
-    <a href="#fluege" class="seg">✈️ Flüge</a>
-    <a href="#hotels" class="seg upg">🏨 Hotels</a>
-    <button type="button" class="lang-btn">DE / EN</button>
-  </div>
 </div>
-
 <div class="bento">
-  <div class="box wide">
-    <div class="pic">
-      <div class="pic-fade"></div>
-      <div class="sun-glow"></div>
-      <div class="ptxt">
-        <h2>Du willst fliegen? Dann klicke hier</h2>
-        <div class="cta-wrap">
-          <span class="cta-arrow">↙️</span>
-          <a href="#angebote" class="cta">🔒 ✈️ Flugkonfiguration öffnen ➡️</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="box">
-    <div class="ct">📸 Impressionen & Inseln</div>
-    <div class="gal">
-      <img src="cebu.jpg" alt="Cebu">
-      <img src="bohol.jpg" alt="Bohol">
-      <img src="palawan.jpg" alt="Palawan">
-      <img src="strand.jpg" alt="Strand">
-    </div>
-  </div>
-
-  <div class="box">
-    <div class="ct">ℹ️ Wichtige Reise-Hinweise (Klicken)</div>
-    <details open>
-      <summary>🛂 Einreise & eTravel-Pflicht</summary>
-      <p>Reisepass mindestens 6 Monate gültig. Die kostenlose eTravel-Registrierung spätestens 72 Stunden vor Abflug online ausfüllen und QR-Code speichern.</p>
-    </details>
-    <details>
-      <summary>🧳 Inlandsflüge & Gepäckregeln</summary>
-      <p>Bei Cebu Pacific oder Philippine Airlines sind günstige Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung hinzufügen.</p>
-    </details>
-    <details>
-      <summary>☀️ Beste Reisezeit Visayas & Palawan</summary>
-      <p>Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter für Inselhopping, Tauchen und Badeurlaub.</p>
-    </details>
-  </div>
+<div class="box wide">
+<div class="pic">
+<div class="pic-fade"></div>
+<div class="sun-glow"></div>
+<div class="ptxt">
+<h2 id="h_tit">Dein Startpunkt für die Philippinen</h2>
+<p id="h_sub">Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian –
+plane deine Route und vergleiche alle Flüge direkt.</p>
+<a href="index.html" class="cta"><span id="h_cta">✈️ Flugkonfiguration öffnen</span><span class="cta-arrow">➤</span></a>
 </div>
+</div>
+</div>
+<div class="box">
+<div class="ct" id="g_tit">📸 Impressionen & Inseln</div>
+<div class="gal">
+<img src="cebu.jpg" alt="Cebu">
+<img src="bohol.jpg" alt="Bohol">
+<img src="palawan.jpg" alt="Palawan">
+<img src="strand.jpg" alt="Strand">
+</div>
+</div>
+<div class="box">
+<div class="ct" id="i_tit">ℹ️ Wichtige Reise-Hinweise (Klicken)</div>
+<details open>
+<summary id="s1">🛂 Einreise & eTravel-Pflicht</summary>
+<p id="p1">Reisepass mindestens 6 Monate gültig. Die kostenlose
+eTravel-Registrierung spätestens 72 Stunden vor Abflug online
+ausfüllen und QR-Code speichern.</p>
+</details>
+<details>
+<summary id="s2">🧳 Inlandsflüge & Gepäckregeln</summary>
+<p id="p2">Bei Cebu Pacific oder Philippine Airlines sind günstige
+Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung
+hinzufügen.</p>
+</details>
+<details>
+<summary id="s3">☀️ Beste Reisezeit Visayas & Palawan</summary>
+<p id="p3">Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter
+für Inselhopping, Tauchen und Badeurlaub.</p>
+</details>
+</div>
+</div>
+<script>
+const T = {
+  de: {
+    btn: "🇬🇧 EN",
+    p_tit: "🌴 Philippinen & Asien Reiseportal",
+    nav_htl: "🏨 Hotelsuche",
+    nav_bk: "📋 Flugbuchungen",
+    nav_fl: "✈️ Zur Flugsuche ➡️",
+    h_tit: "Dein Startpunkt für die Philippinen",
+    h_sub: "Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian – plane deine Route und vergleiche alle Flüge direkt.",
+    h_cta: "✈️ Flugkonfiguration öffnen",
+    g_tit: "📸 Impressionen & Inseln",
+    i_tit: "ℹ️ Wichtige Reise-Hinweise (Klicken)",
+    s1: "🛂 Einreise & eTravel-Pflicht",
+    p1: "Reisepass mindestens 6 Monate gültig. Die kostenlose eTravel-Registrierung spätestens 72 Stunden vor Abflug online ausfüllen und QR-Code speichern.",
+    s2: "🧳 Inlandsflüge & Gepäckregeln",
+    p2: "Bei Cebu Pacific oder Philippine Airlines sind günstige Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung hinzufügen.",
+    s3: "☀️ Beste Reisezeit Visayas & Palawan",
+    p3: "Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter für Inselhopping, Tauchen und Badeurlaub."
+  },
+  en: {
+    btn: "🇩🇪 DE",
+    p_tit: "🌴 Philippines & Asia Travel Portal",
+    nav_htl: "🏨 Hotel Search",
+    nav_bk: "📋 Flight Bookings",
+    nav_fl: "✈️ Flight Search ➡️",
+    h_tit: "Your Gateway to the Philippines",
+    h_sub: "From Germany to Manila, Cebu, Dumaguete or Pagadian – plan your route and compare all flights directly.",
+    h_cta: "✈️ Open Flight Configurator",
+    g_tit: "📸 Impressions & Islands",
+    i_tit: "ℹ️ Important Travel Notes (Click)",
+    s1: "🛂 Entry & eTravel Requirement",
+    p1: "Passport valid for at least 6 months. Complete the free eTravel registration online at least 72 hours before departure and save the QR code.",
+    s2: "🧳 Domestic Flights & Baggage Rules",
+    p2: "With Cebu Pacific or Philippine Airlines, basic fares often exclude checked baggage – add it directly during booking.",
+    s3: "☀️ Best Travel Season Visayas & Palawan",
+    p3: "From December to May is dry season with ideal weather for island hopping, diving and beach holidays."
+  }
+};
+let curLang = "de";
+try { curLang = localStorage.getItem("rk_lang") || "de"; } catch(e) {}
+function applyLang(l) {
+  curLang = l === "en" ? "en" : "de";
+  try { localStorage.setItem("rk_lang", curLang); } catch(e) {}
+  document.documentElement.lang = curLang;
+  const d = T[curLang];
+  document.getElementById("langBtn").textContent = d.btn;
+  Object.keys(d).forEach(k => {
+    if (k !== "btn" && document.getElementById(k)) {
+      document.getElementById(k).textContent = d[k];
+    }
+  });
+}
+function toggleLang() { applyLang(curLang === "de" ? "en" : "de"); }
+applyLang(curLang);
+</script>
 </body>
 </html>
