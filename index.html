@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Reisekonfiguration PRO v30</title>
+<title>✈️ Reisekonfiguration PRO v30 – Flugsuche</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;
@@ -32,10 +32,17 @@ html,body{
   background:#0284c7;text-decoration:none;border:1px solid #38bdf8
 }
 .seg.upg{
-  background:#1e40af;font-size:.86rem;padding:8px 14px;
-  border-color:#60a5fa
+  background:#1e3a8a;font-size:.84rem;padding:8px 13px;
+  border-color:#60a5fa;opacity:.88
 }
-.seg.htl{background:#0369a1;border-color:#7dd3fc}
+.seg.upg:hover{opacity:1}
+.seg.act{
+  background:linear-gradient(180deg,#0ea5e9 0%,#0284c7 100%);
+  font-size:.86rem;padding:8px 15px;color:#fff;
+  border:2px solid #e0f2fe;
+  box-shadow:0 0 12px rgba(56,189,248,.65);
+  cursor:default
+}
 .mbtn{
   background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
   border-radius:6px;padding:7px 12px;font-size:.82rem;
@@ -156,13 +163,14 @@ body:has(#ow:checked) .st{
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
+  <h1 class="tit">✈️ Reisekonfiguration PRO v30 – Flugsuche</h1>
   <div class="cp">
     <button type="button" class="mbtn" id="mbtn"
       onclick="toggleFlightBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">19.11.2026</div>
     <div class="seg st" id="st">HIN & RÜCK</div>
-    <a href="meine-hotelsuche.html" class="seg upg htl">
+    <span class="seg act">✈️ Zur Flugsuche (Aktiv)</span>
+    <a href="meine-hotelsuche.html" class="seg upg">
       🏨 Meine Hotelsuche ➡️
     </a>
     <a href="meine-flugbuchungen.html" class="seg upg">
