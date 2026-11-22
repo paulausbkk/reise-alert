@@ -3,205 +3,403 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🌴 Philippinen & Asien Reiseportal</title>
+<title>✈️ Reisekonfiguration PRO v30</title>
 <style>
-:root{--d:#0c4a6e;--t:#0f172a;--b:#bae6fd;--v:#0284c7}
-html,body{margin:0;padding:14px;
-background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-min-height:100vh;font-family:sans-serif;color:var(--t);
-box-sizing:border-box}
-.hdr{display:flex;justify-content:space-between;align-items:center;
-background:#0f2942;padding:13px 18px;border-radius:12px;
-margin-bottom:16px;flex-wrap:wrap;gap:10px;
-box-shadow:0 4px 14px rgba(15,41,66,.18)}
-.tit{font-weight:bold;color:#fff;font-size:1.22rem;margin:0}
+:root{
+  --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;
+  --b:#bae6fd;--g:#0ea5e9;--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe
+}
+html,body{
+  margin:0;padding:14px;
+  background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
+  min-height:100vh;font-family:sans-serif;color:var(--t);
+  box-sizing:border-box
+}
+.hdr{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#0f2942;padding:13px 18px;border-radius:12px;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px;
+  box-shadow:0 4px 14px rgba(15,41,66,.18)
+}
+.tit{
+  font-weight:bold;color:#fff;font-size:1.22rem;margin:0;
+  letter-spacing:.3px
+}
 .cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.seg{font-size:.82rem;padding:8px 14px;border-radius:6px;
-font-weight:bold;color:#fff;text-transform:uppercase;
-background:#0284c7;text-decoration:none;border:1px solid #38bdf8}
-.seg.upg{background:#1e40af;border-color:#60a5fa}
-.lang-btn{font-size:.82rem;padding:8px 12px;border-radius:6px;
-font-weight:bold;color:#fff;background:#0f766e;
-border:1px solid #5eead4;cursor:pointer}
-.lang-btn:hover{filter:brightness(1.12)}
-.bento{display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:16px;margin-bottom:16px}
-.box{background:#fff;border:1px solid #93c5fd;border-radius:12px;
-padding:16px;box-shadow:0 4px 12px rgba(3,105,161,.08)}
-.box.wide{grid-column:span 2}
-@media(max-width:720px){.box.wide{grid-column:span 1}}
-@keyframes dayBase{
-0%,28%{filter:brightness(1.12) saturate(1.15) hue-rotate(0deg)}
-45%,75%{filter:brightness(0.65) saturate(1.3) hue-rotate(-10deg)}
-92%,100%{filter:brightness(1.12) saturate(1.15) hue-rotate(0deg)}
+.seg{
+  font-size:.78rem;padding:6px 12px;border-radius:6px;
+  font-weight:bold;color:#fff;text-transform:uppercase;
+  background:#0284c7;text-decoration:none;border:1px solid #38bdf8
 }
-@keyframes sunCycle{
-0%,25%{opacity:0;filter:brightness(1.1) sepia(0.1) saturate(1.2) hue-rotate(0deg)}
-35%{opacity:1;filter:brightness(1.05) sepia(0.35) saturate(1.6) hue-rotate(-10deg)}
-48%{opacity:1;filter:brightness(0.82) sepia(0.55) saturate(2.1) hue-rotate(-22deg)}
-60%{opacity:1;filter:brightness(0.45) sepia(0.35) saturate(1.4) hue-rotate(195deg)}
-72%{opacity:1;filter:brightness(0.78) sepia(0.5) saturate(1.9) hue-rotate(-18deg)}
-84%{opacity:1;filter:brightness(1.15) sepia(0.3) saturate(1.5) hue-rotate(-5deg)}
-94%,100%{opacity:0;filter:brightness(1.1) sepia(0.1) saturate(1.2) hue-rotate(0deg)}
+.seg.upg{
+  background:#1e40af;font-size:.86rem;padding:8px 14px;
+  border-color:#60a5fa
 }
-@keyframes skyTint{
-0%,28%{opacity:0}
-42%{opacity:1;background:linear-gradient(180deg,rgba(251,146,60,.25) 0%,rgba(220,38,38,.45) 65%,rgba(124,45,18,.6) 100%)}
-60%{opacity:1;background:linear-gradient(180deg,rgba(15,23,42,.55) 0%,rgba(30,58,138,.45) 65%,rgba(15,23,42,.7) 100%)}
-78%{opacity:1;background:linear-gradient(180deg,rgba(253,224,71,.22) 0%,rgba(249,115,22,.42) 60%,rgba(154,52,18,.5) 100%)}
-92%,100%{opacity:0}
+.seg.htl{background:#0369a1;border-color:#7dd3fc}
+.aud{height:30px;border-radius:6px;accent-color:#0284c7}
+.row{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px}
+.card{
+  flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
+  padding:18px 20px;background:#ffffff;box-sizing:border-box;
+  box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
-.pic{position:relative;border-radius:10px;overflow:hidden;
-min-height:300px;display:flex;align-items:flex-end;padding:20px;
-background-color:#0f2942;
-background-image:url("Fl%C3%BCgel.jpg");
-background-size:cover;
-background-position:center center;
-background-repeat:no-repeat;
-animation:dayBase 18s infinite ease-in-out}
-.pic-fade{position:absolute;inset:0;z-index:1;
-background-image:url("LiS.jpg");
-background-size:cover;
-background-position:center center;
-background-repeat:no-repeat;
-animation:sunCycle 18s infinite ease-in-out}
-.sun-glow{position:absolute;inset:0;z-index:2;pointer-events:none;
-mix-blend-mode:multiply;
-animation:skyTint 18s infinite ease-in-out}
-.pic::after{content:"";position:absolute;inset:0;z-index:3;
-background:linear-gradient(0deg,rgba(15,23,42,.86) 12%,
-rgba(15,41,66,.12) 100%)}
-.ptxt{position:relative;z-index:4;color:#fff}
-.ptxt h2{margin:0 0 6px 0;font-size:1.45rem}
-.ptxt p{margin:0 0 12px 0;font-size:.94rem;color:#e0f2fe}
-.cta{display:inline-flex;align-items:center;background:#0284c7;color:#fff;
-font-weight:bold;text-decoration:none;padding:11px 18px;
-border-radius:8px;font-size:.94rem;border:1px solid #7dd3fc}
-.cta:hover{background:#0369a1}
-.cta-arrow{display:inline-block;margin-left:16px;font-size:1.45rem;
-line-height:1;transform:rotate(180deg);color:#fde047;
-text-shadow:0 1px 3px rgba(0,0,0,.45)}
-.ct{font-weight:bold;font-size:1.05rem;color:var(--d);
-border-bottom:2px solid #e0f2fe;padding-bottom:6px;margin-bottom:10px}
-details{background:#f0f9ff;border:1px solid #bae6fd;
-border-radius:8px;padding:8px 12px;margin-bottom:8px}
-summary{font-weight:bold;cursor:pointer;color:var(--d);
-font-size:.92rem}
-details p{margin:8px 0 0 0;font-size:.88rem;line-height:1.45;
-color:#1e293b}
-.gal{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.gal img{width:100%;height:110px;object-fit:cover;
-object-position:center;border-radius:8px;border:1px solid #bae6fd}
+.ct{
+  font-weight:bold;font-size:1.06rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:7px;
+  margin-bottom:14px
+}
+.f{
+  margin-bottom:13px;display:flex;
+  flex-direction:column;position:relative
+}
+.f2{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;margin-bottom:13px
+}
+label{
+  font-weight:bold;font-size:.84rem;
+  margin-bottom:4px;color:#1e3a8a
+}
+.inp,.dat,select{
+  height:41px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.96rem;
+  background:#f8fafc;color:var(--t);width:100%;transition:.2s
+}
+.inp:focus,.dat:focus,select:focus{
+  outline:none;border-color:#0284c7;background:#fff;
+  box-shadow:0 0 0 3px rgba(2,132,199,.15)
+}
+@keyframes pulseHint{
+  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
+  50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
+}
+.bn{
+  background:#0f2942;border:3px solid #991b1b;
+  border-left:7px solid #991b1b;border-radius:8px;
+  padding:11px 14px;color:#fff;font-weight:bold;
+  font-size:.88rem;line-height:1.4;
+  animation:pulseHint 2.2s infinite ease-in-out
+}
+.bb{
+  border:1px solid #93c5fd;background:#ffffff;
+  border-radius:12px;padding:16px 20px;
+  box-shadow:0 4px 12px rgba(3,105,161,.08)
+}
+.bf{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+  gap:10px
+}
+.btn{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;height:46px;color:#fff;font-weight:bold;
+  border-radius:8px;font-size:.84rem;text-transform:uppercase;
+  text-decoration:none;text-align:center;line-height:1.15;
+  padding:0 6px;box-shadow:0 2px 6px rgba(15,41,66,.15)
+}
+.btn .sub{
+  font-size:.64rem;font-weight:bold;text-transform:none;
+  opacity:1;margin-top:2px;color:#e0f2fe
+}
+.b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
+.b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
+.rng{width:100%;height:41px;accent-color:#0284c7;cursor:pointer}
+body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
+body:has(#ow:checked) #rb input{background:#e2e8f0!important}
+body:has(#ow:checked) .st{
+  background:#0369a1!important;color:#fff;border-color:#7dd3fc
+}
+.swc{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
+  border-radius:8px;min-height:41px;gap:8px
+}
+.swc.yl{background:#e0f2fe;border:1px solid #7dd3fc}
+.swc.split{
+  flex-direction:column;justify-content:center;
+  align-items:stretch;padding:0;gap:0;overflow:hidden
+}
+.swh{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:4px 10px;gap:6px;min-height:28px
+}
+.swh:first-child{border-bottom:1px solid #7dd3fc}
+.sw{
+  position:relative;display:inline-block;
+  width:42px;height:24px;flex-shrink:0
+}
+.sw.sm{width:34px;height:18px}
+.sw input{opacity:0;width:0;height:0}
+.sl{
+  position:absolute;cursor:pointer;inset:0;
+  background:#cbd5e1;border-radius:20px;transition:.3s
+}
+.sl:before{
+  position:absolute;content:"";height:18px;width:18px;
+  left:3px;bottom:3px;background:#fff;
+  border-radius:50%;transition:.3s
+}
+.sw.sm .sl:before{height:14px;width:14px;left:2px;bottom:2px}
+.sw input:checked+.sl{background:#0284c7!important}
+.sw input:checked+.sl:before{transform:translateX(18px)}
+.sw.sm input:checked+.sl:before{transform:translateX(16px)}
 </style>
 </head>
 <body>
-<div class="hdr"><h1 class="tit" id="p_tit">🌴 Philippinen & Asien Reiseportal</h1>
-<div class="cp">
-<button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">🇬🇧 EN</button>
-<a href="meine-hotelsuche.html" id="nav_htl" class="seg">🏨 Hotelsuche</a>
-<a href="meine-flugbuchungen.html" id="nav_bk" class="seg">📋 Flugbuchungen</a>
-<a href="index.html" id="nav_fl" class="seg upg">✈️ Zur Flugsuche ➡️</a>
+<div class="hdr">
+  <h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
+  <div class="cp">
+    <audio class="aud" controls loop preload="none">
+      <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+    <div class="seg" id="dt">19.11.2026</div>
+    <div class="seg st" id="st">HIN & RÜCK</div>
+    <a href="meine-hotelsuche.html" class="seg upg htl">
+      🏨 Meine Hotelsuche ➡️
+    </a>
+    <a href="meine-flugbuchungen.html" class="seg upg">
+      ✈️ Meine Flugbuchungen ➡️
+    </a>
+  </div>
 </div>
+
+<div class="row">
+  <div class="card">
+    <div class="ct">📋 Kern-Reisedaten (Direkt-Absprung)</div>
+    <div class="f2" style="margin-bottom:14px">
+      <div class="f" style="margin:0">
+        <label for="i1">Abflug (IATA oder Stadt)</label>
+        <input type="text" class="inp" id="i1"
+          list="airports" placeholder="z.B. BER, FRA, MUC">
+      </div>
+      <div class="f" style="margin:0">
+        <label for="i2">Ziel (IATA oder Stadt)</label>
+        <input type="text" class="inp" id="i2"
+          list="airports" placeholder="z.B. BKK, DAD, CEB">
+      </div>
+    </div>
+    <datalist id="airports">
+      <option value="Berlin Brandenburg (BER)">
+      <option value="Frankfurt am Main (FRA)">
+      <option value="München (MUC)">
+      <option value="Leipzig/Halle (LEJ)">
+      <option value="Düsseldorf (DUS)">
+      <option value="Hamburg (HAM)">
+      <option value="Köln/Bonn (CGN)">
+      <option value="Stuttgart (STR)">
+      <option value="Hannover (HAJ)">
+      <option value="Nürnberg (NUE)">
+      <option value="Wien (VIE)">
+      <option value="Zürich (ZRH)">
+      <option value="Bangkok Suvarnabhumi (BKK)">
+      <option value="Bangkok Don Mueang (DMK)">
+      <option value="Phuket (HKT)">
+      <option value="Chiang Mai (CNX)">
+      <option value="Koh Samui (USM)">
+      <option value="Krabi (KBV)">
+      <option value="Da Nang (DAD)">
+      <option value="Quy Nhon (UIH)">
+      <option value="Ho-Chi-Minh-Stadt (SGN)">
+      <option value="Hanoi (HAN)">
+      <option value="Manila (MNL)">
+      <option value="Cebu (CEB)">
+      <option value="Dumaguete (DGT)">
+      <option value="Pagadian (PAG)">
+      <option value="Singapur (SIN)">
+      <option value="Kuala Lumpur (KUL)">
+      <option value="Denpasar Bali (DPS)">
+      <option value="Dubai (DXB)">
+      <option value="Doha (DOH)">
+      <option value="Istanbul (IST)">
+      <option value="Tokio (TYO)">
+      <option value="Faro (FAO)">
+      <option value="Christchurch (CHC)">
+    </datalist>
+    <div class="f2" style="margin-bottom:0">
+      <div class="f" style="margin:0">
+        <label for="od">Hinflug</label>
+        <input type="date" class="dat" id="od" min="2026-11-19">
+      </div>
+      <div class="f" id="rb" style="margin:0">
+        <label for="rd">Rückflug</label>
+        <input type="date" class="dat" id="rd" min="2026-11-19">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">⚙️ Filter & Flug-Parameter</div>
+    <div class="f2" style="align-items:end">
+      <div class="swc">
+        <label for="ow"
+          style="margin:0;cursor:pointer;font-size:.82rem">
+          Nur Hinflug (One-Way)
+        </label>
+        <label class="sw">
+          <input type="checkbox" id="ow"><span class="sl"></span>
+        </label>
+      </div>
+      <div class="f" style="margin:0">
+        <label for="px">Personenzahl</label>
+        <select id="px">
+          <option value="1">1 Person</option>
+          <option value="2">2 Personen</option>
+          <option value="3">3 Personen</option>
+          <option value="4">4 Personen</option>
+        </select>
+      </div>
+    </div>
+    <div class="f">
+      <label for="hr" id="hrl">Max. Reisezeit (1 – 36 Std.)</label>
+      <input type="range" class="rng" id="hr"
+        min="1" max="36" value="14">
+    </div>
+    <div class="f2">
+      <div class="swc yl">
+        <label for="ns"
+          style="margin:0;cursor:pointer;font-size:.82rem">
+          Nur Direktflüge (Non-Stop)
+        </label>
+        <label class="sw">
+          <input type="radio" name="stops" id="ns">
+          <span class="sl"></span>
+        </label>
+      </div>
+      <div class="swc yl split">
+        <div class="swh">
+          <label for="s1"
+            style="margin:0;cursor:pointer;font-size:.8rem">
+            Max. 1 Stop
+          </label>
+          <label class="sw sm">
+            <input type="radio" name="stops" id="s1">
+            <span class="sl"></span>
+          </label>
+        </div>
+        <div class="swh">
+          <label for="s2"
+            style="margin:0;cursor:pointer;font-size:.8rem">
+            Max. 2 Stopps
+          </label>
+          <label class="sw sm">
+            <input type="radio" name="stops" id="s2">
+            <span class="sl"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="f" style="margin-bottom:12px">
+      <div class="swc">
+        <label for="lc"
+          style="margin:0;cursor:pointer;font-size:.82rem">
+          Inkl. Low-Cost Airlines (zusätzlich)
+        </label>
+        <label class="sw">
+          <input type="checkbox" id="lc"><span class="sl"></span>
+        </label>
+      </div>
+    </div>
+    <div class="bn">
+      ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend
+      angeklickten Website beim Anbieter ausgewählt werden.
+    </div>
+  </div>
 </div>
-<div class="bento">
-<div class="box wide">
-<div class="pic">
-<div class="pic-fade"></div>
-<div class="sun-glow"></div>
-<div class="ptxt">
-<h2 id="h_tit">Dein Startpunkt für die Philippinen</h2>
-<p id="h_sub">Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian –
-plane deine Route und vergleiche alle Flüge direkt.</p>
-<a href="index.html" class="cta"><span id="h_cta">✈️ Flugkonfiguration öffnen</span><span class="cta-arrow">➤</span></a>
-</div>
-</div>
-</div>
-<div class="box">
-<div class="ct" id="g_tit">📸 Impressionen & Inseln</div>
-<div class="gal">
-<img src="cebu.jpg" alt="Cebu">
-<img src="bohol.jpg" alt="Bohol">
-<img src="palawan.jpg" alt="Palawan">
-<img src="strand.jpg" alt="Strand">
-</div>
-</div>
-<div class="box">
-<div class="ct" id="i_tit">ℹ️ Wichtige Reise-Hinweise (Klicken)</div>
-<details open>
-<summary id="s1">🛂 Einreise & eTravel-Pflicht</summary>
-<p id="p1">Reisepass mindestens 6 Monate gültig. Die kostenlose
-eTravel-Registrierung spätestens 72 Stunden vor Abflug online
-ausfüllen und QR-Code speichern.</p>
-</details>
-<details>
-<summary id="s2">🧳 Inlandsflüge & Gepäckregeln</summary>
-<p id="p2">Bei Cebu Pacific oder Philippine Airlines sind günstige
-Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung
-hinzufügen.</p>
-</details>
-<details>
-<summary id="s3">☀️ Beste Reisezeit Visayas & Palawan</summary>
-<p id="p3">Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter
-für Inselhopping, Tauchen und Badeurlaub.</p>
-</details>
-</div>
+
+<div class="bb">
+  <div class="bf">
+    <a id="u1" href="https://skyscanner.de"
+      target="_blank" class="btn b2">Skyscanner</a>
+    <a id="u2" href="https://kayak.de"
+      target="_blank" class="btn b3">Kayak</a>
+    <a id="u3" href="https://momondo.de"
+      target="_blank" class="btn b4">Momondo</a>
+    <a id="u4" href="https://expedia.de"
+      target="_blank" class="btn b5">
+      Expedia<span class="sub">Stopps auf Website wählen</span>
+    </a>
+    <a id="u5" href="https://kiwi.com"
+      target="_blank" class="btn b6">Kiwi.com</a>
+    <a id="u6" href="https://trip.com"
+      target="_blank" class="btn b7">Trip.com</a>
+  </div>
 </div>
 <script>
-const T = {
-  de: {
-    btn: "🇬🇧 EN",
-    p_tit: "🌴 Philippinen & Asien Reiseportal",
-    nav_htl: "🏨 Hotelsuche",
-    nav_bk: "📋 Flugbuchungen",
-    nav_fl: "✈️ Zur Flugsuche ➡️",
-    h_tit: "Dein Startpunkt für die Philippinen",
-    h_sub: "Von Deutschland nach Manila, Cebu, Dumaguete oder Pagadian – plane deine Route und vergleiche alle Flüge direkt.",
-    h_cta: "✈️ Flugkonfiguration öffnen",
-    g_tit: "📸 Impressionen & Inseln",
-    i_tit: "ℹ️ Wichtige Reise-Hinweise (Klicken)",
-    s1: "🛂 Einreise & eTravel-Pflicht",
-    p1: "Reisepass mindestens 6 Monate gültig. Die kostenlose eTravel-Registrierung spätestens 72 Stunden vor Abflug online ausfüllen und QR-Code speichern.",
-    s2: "🧳 Inlandsflüge & Gepäckregeln",
-    p2: "Bei Cebu Pacific oder Philippine Airlines sind günstige Basistarife oft ohne Aufgabegepäck – dieses direkt bei der Buchung hinzufügen.",
-    s3: "☀️ Beste Reisezeit Visayas & Palawan",
-    p3: "Von Dezember bis Mai herrscht Trockenzeit mit idealem Wetter für Inselhopping, Tauchen und Badeurlaub."
-  },
-  en: {
-    btn: "🇩🇪 DE",
-    p_tit: "🌴 Philippines & Asia Travel Portal",
-    nav_htl: "🏨 Hotel Search",
-    nav_bk: "📋 Flight Bookings",
-    nav_fl: "✈️ Flight Search ➡️",
-    h_tit: "Your Gateway to the Philippines",
-    h_sub: "From Germany to Manila, Cebu, Dumaguete or Pagadian – plan your route and compare all flights directly.",
-    h_cta: "✈️ Open Flight Configurator",
-    g_tit: "📸 Impressions & Islands",
-    i_tit: "ℹ️ Important Travel Notes (Click)",
-    s1: "🛂 Entry & eTravel Requirement",
-    p1: "Passport valid for at least 6 months. Complete the free eTravel registration online at least 72 hours before departure and save the QR code.",
-    s2: "🧳 Domestic Flights & Baggage Rules",
-    p2: "With Cebu Pacific or Philippine Airlines, basic fares often exclude checked baggage – add it directly during booking.",
-    s3: "☀️ Best Travel Season Visayas & Palawan",
-    p3: "From December to May is dry season with ideal weather for island hopping, diving and beach holidays."
-  }
-};
-let curLang = "de";
-try { curLang = localStorage.getItem("rk_lang") || "de"; } catch(e) {}
-function applyLang(l) {
-  curLang = l === "en" ? "en" : "de";
-  try { localStorage.setItem("rk_lang", curLang); } catch(e) {}
-  document.documentElement.lang = curLang;
-  const d = T[curLang];
-  document.getElementById("langBtn").textContent = d.btn;
-  Object.keys(d).forEach(k => {
-    if (k !== "btn" && document.getElementById(k)) {
-      document.getElementById(k).textContent = d[k];
-    }
-  });
+var $ = function(id){ return document.getElementById(id); };
+var P = "https:" + String.fromCharCode(47, 47);
+
+function iata(val){
+  var s = String(val || "").trim().toUpperCase();
+  var p1 = s.indexOf("("), p2 = s.indexOf(")");
+  if(p1 >= 0 && p2 > p1) return s.slice(p1 + 1, p2).trim();
+  return s.slice(0, 3);
 }
-function toggleLang() { applyLang(curLang === "de" ? "en" : "de"); }
-applyLang(curLang);
+
+function iso(d){
+  var m = String(d.getMonth() + 1), t = String(d.getDate());
+  if(m.length < 2) m = "0" + m;
+  if(t.length < 2) t = "0" + t;
+  return d.getFullYear() + "-" + m + "-" + t;
+}
+
+function upd(){
+  var now = new Date(), today = iso(now);
+  $("dt").textContent = now.toLocaleDateString("de-DE");
+  var ow = $("ow").checked;
+  $("st").textContent = ow ? "NUR HINFLUG" : "HIN & R\u00dcCK";
+  var hr = $("hr").value;
+  $("hrl").textContent = "Max. Reisezeit (" + hr + " Std.)";
+
+  var o = iata($("i1").value) || "BER";
+  var d = iata($("i2").value) || "BKK";
+  var od = $("od").value || today;
+  var rd = $("rd").value || od;
+  var px = $("px").value || "1";
+  var sOd = od.replace(/-/g, "").slice(2);
+  var sRd = rd.replace(/-/g, "").slice(2);
+
+  var stopK = $("ns").checked ? "?fs=stops=0" :
+    ($("s1").checked ? "?fs=stops=-2" : "");
+
+  $("u1").href = P + "www.skyscanner.de" +
+    "/transport/fluge/" + o.toLowerCase() + "/" +
+    d.toLowerCase() + "/" + sOd +
+    (ow ? "/" : "/" + sRd + "/") + "?adults=" + px;
+
+  $("u2").href = P + "www.kayak.de" + "/flights/" +
+    o + "-" + d + "/" + od +
+    (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
+
+  $("u3").href = P + "www.momondo.de" + "/flight-search/" +
+    o + "-" + d + "/" + od +
+    (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
+
+  $("u4").href = P + "www.expedia.de" +
+    "/Flights-Search?trip=" + (ow ? "oneway" : "roundtrip") +
+    "&leg1=from:" + o + ",to:" + d + ",departure:" + od + "TANYT" +
+    (ow ? "" : "&leg2=from:" + d + ",to:" + o +
+      ",departure:" + rd + "TANYT") +
+    "&passengers=adults:" + px + "&mode=search";
+
+  $("u5").href = P + "www.kiwi.com" + "/de/search/results/" +
+    o.toLowerCase() + "/" + d.toLowerCase() + "/" + od + "/" +
+    (ow ? "no-return" : rd) + "?adults=" + px;
+
+  $("u6").href = P + "de.trip.com" + "/flights/" +
+    o.toLowerCase() + "-to-" + d.toLowerCase() +
+    "/tickets-" + o.toLowerCase() + "-" + d.toLowerCase() +
+    "?dcity=" + o + "&acity=" + d + "&ddate=" + od +
+    (ow ? "&flighttype=ow" : "&rdate=" + rd + "&flighttype=rt") +
+    "&adult=" + px;
+}
+
+"i1;i2;od;rd;ow;px;hr;ns;s1;s2;lc".split(";").forEach(function(id){
+  $(id).addEventListener("input", upd);
+  $(id).addEventListener("change", upd);
+});
+$("od").min = iso(new Date());
+$("rd").min = iso(new Date());
+upd();
 </script>
 </body>
 </html>
