@@ -94,7 +94,20 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
+    <form id="f5" action="https://agoda.com" method="get" target="_blank" class="htl" style="margin:0">
+      <input type="hidden" name="city" id="a_cid" value="0">
+      <input type="hidden" name="searchrequest" id="a_req">
+      <input type="hidden" name="checkIn" id="a_ci">
+      <input type="hidden" name="checkOut" id="a_co">
+      <input type="hidden" name="los" id="a_los">
+      <input type="hidden" name="adults" id="a_px">
+      <input type="hidden" name="children" value="0">
+      <input type="hidden" name="rooms" id="a_rm">
+      <input type="hidden" name="hotelStarRating" id="a_st" disabled>
+      <input type="hidden" name="currency" value="EUR">
+      <input type="hidden" name="locale" value="de-de">
+      <button type="submit" class="btn b5">Agoda</button>
+    </form>
     <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
@@ -164,17 +177,6 @@ function getBid(city){
   return "";
 }
 
-function buildAgodaHref(city, ci, co, n, px, rm, st){
-  var aid = getAid(city);
-  var q = encodeURIComponent(city);
-  var target = aid ? "&city=" + aid : "&textToSearch=" + q;
-  return P + "://agoda.com" + target +
-    (ci ? "&checkIn=" + ci + "&checkOut=" + co + "&los=" + n : "") +
-    "&adults=" + px + "&children=0&rooms=" + rm +
-    "&currency=EUR&locale=de-de" +
-    (st > 0 ? "&hotelStarRating=" + st : "");
-}
-
 function upd(){
   var now = new Date(), t = iso(now);
   $("dt").textContent = now.toLocaleDateString("de-DE") +
@@ -183,7 +185,7 @@ function upd(){
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
-  var bid = getBid(city);
+  var aid = getAid(city), bid = getBid(city);
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -230,7 +232,19 @@ function upd(){
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("h5").href = buildAgodaHref(city, ci, co, n, px, rm, st);
+    $("f5").action = aid ?
+      P + "://agoda.com" :
+      P + "://agoda.com";
+    $("a_cid").value = aid || "0";
+    $("a_req").disabled = Boolean(aid);
+    $("a_req").value = city;
+    $("a_ci").value = ci;
+    $("a_co").value = co;
+    $("a_los").value = n;
+    $("a_px").value = px;
+    $("a_rm").value = rm;
+    $("a_st").disabled = !(st > 0);
+    $("a_st").value = st > 0 ? st : "";
 
     var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
     $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
@@ -242,7 +256,7 @@ function upd(){
       "/homes?tab_id=home_tab&checkin=" + ci +
       "&checkout=" + co + "&adults=" + px;
   } else {
-    $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+  $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
@@ -375,7 +389,7 @@ try {
   $(id).addEventListener("change", upd);
 });
 $("f4").addEventListener("submit", upd);
-$("h5").addEventListener("click", upd);
+$("f5").addEventListener("submit", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
 </script>
