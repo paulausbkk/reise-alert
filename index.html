@@ -39,7 +39,8 @@ html,body{
 .mbtn{
   background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
   border-radius:6px;padding:7px 12px;font-size:.82rem;
-  font-weight:bold;cursor:pointer;white-space:nowrap
+  font-weight:bold;cursor:pointer;white-space:nowrap;
+  touch-action:manipulation;user-select:none
 }
 .mbtn.on{
   background:#0284c7;border-color:#7dd3fc;
@@ -154,16 +155,14 @@ body:has(#ow:checked) .st{
 </style>
 </head>
 <body>
-<audio id="bgm" loop preload="none">
-  <source src="https://github.io"
-    type="audio/mpeg">
-</audio>
+<audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 
 <div class="hdr">
   <h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
   <div class="cp">
-    <button type="button" class="mbtn" id="mbtn"
-      onclick="toggleBgm()">🎵 Musik An</button>
+    <button type="button" class="mbtn" id="mbtn">
+      🎵 Musik An
+    </button>
     <div class="seg" id="dt">19.11.2026</div>
     <div class="seg st" id="st">HIN & RÜCK</div>
     <a href="meine-hotelsuche.html" class="seg upg htl">
@@ -341,7 +340,7 @@ var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
 var bgmOn = false;
 
-function toggleBgm(){
+function handleBgm(){
   var a = $("bgm"), b = $("mbtn");
   bgmOn = !bgmOn;
   if(b){
@@ -351,10 +350,18 @@ function toggleBgm(){
   if(!a) return;
   if(bgmOn){
     a.volume = 0.45;
-    a.play().catch(function(){});
+    a.play().catch(function(){
+      a.src = "musik.mp3";
+      a.play().catch(function(){});
+    });
   } else {
     a.pause();
   }
+}
+
+var mb = $("mbtn");
+if(mb){
+  mb.addEventListener("click", handleBgm);
 }
 
 function iata(val){
