@@ -158,8 +158,8 @@ body:has(#ow:checked) .st{
 <div class="hdr">
   <h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
   <div class="cp">
-    <button type="button" class="mbtn on" id="mbtn"
-      onclick="toggleFlightBgm()">🔇 Musik Aus</button>
+    <button type="button" class="mbtn" id="mbtn"
+      onclick="toggleFlightBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">19.11.2026</div>
     <div class="seg st" id="st">HIN & RÜCK</div>
     <a href="meine-hotelsuche.html" class="seg upg htl">
@@ -349,9 +349,10 @@ function renderFlightBgm(){
 }
 
 function startFlightBgm(){
-  bgmRunning = true;
-  renderFlightBgm();
-  bgmPlayer.play().catch(function(){
+  bgmPlayer.play().then(function(){
+    bgmRunning = true;
+    renderFlightBgm();
+  }).catch(function(){
     bgmRunning = false;
     renderFlightBgm();
   });
@@ -373,11 +374,15 @@ function toggleFlightBgm(){
   }
 }
 
-document.addEventListener("click", function(e){
+function firstTouchPlay(e){
   if(e.target && e.target.id === "mbtn") return;
   if(!bgmRunning && !userStopped){
     startFlightBgm();
   }
+}
+
+["pointerdown", "touchstart", "keydown"].forEach(function(ev){
+  document.addEventListener(ev, firstTouchPlay, { passive: true });
 });
 startFlightBgm();
 
