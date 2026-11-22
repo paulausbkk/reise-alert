@@ -94,7 +94,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <button type="button" id="h5" class="btn b5 htl">Agoda</button>
+    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
     <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
@@ -164,21 +164,15 @@ function getBid(city){
   return "";
 }
 
-function openAgoda(){
-  var city = $("city").value.trim();
-  var ci = $("ci").value, co = $("co").value;
-  var px = +$("px").value || 2, rm = +$("rm").value || 1;
-  var st = +$("st").value || 0;
-  var n = (ci && co) ? Math.max(1, Math.round((new Date(co) - new Date(ci)) / 86400000)) : 1;
+function buildAgodaHref(city, ci, co, n, px, rm, st){
   var aid = getAid(city);
   var q = encodeURIComponent(city);
-  var path = aid ? "/de-de/search?city=" + aid : "/de-de/results?searchText=" + q;
-  var url = P + "://agoda.com" + path +
+  var base = aid ? "/de-de/search?city=" + aid : "/de-de/results?searchText=" + q;
+  return P + "://agoda.com" + base +
     (ci ? "&checkIn=" + ci + "&los=" + n : "") +
     "&adults=" + px + "&children=0&rooms=" + rm +
     "&currency=EUR&locale=de-de" +
     (st > 0 ? "&hotelStarRating=" + st : "");
-  window.open(url, "_blank");
 }
 
 function upd(){
@@ -236,6 +230,8 @@ function upd(){
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
+    $("h5").href = buildAgodaHref(city, ci, co, n, px, rm, st);
+
     var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
     $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
       "&sQuery=" + q + "&aDateRange%5Barr%5D=" + ci +
@@ -246,7 +242,7 @@ function upd(){
       "/homes?tab_id=home_tab&checkin=" + ci +
       "&checkout=" + co + "&adults=" + px;
   } else {
-  $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+   $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
@@ -379,7 +375,7 @@ try {
   $(id).addEventListener("change", upd);
 });
 $("f4").addEventListener("submit", upd);
-$("h5").addEventListener("click", openAgoda);
+$("h5").addEventListener("click", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
 </script>
