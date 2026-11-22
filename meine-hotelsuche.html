@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v105</title>
+<title>🏨 Meine Hotelsuche PRO v107</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v105</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v107</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -78,6 +78,9 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
     <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
     <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
+      <input type="hidden" name="sb" value="1">
+      <input type="hidden" name="src" value="index">
+      <input type="hidden" name="src_elem" value="sb">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="ssne" id="b_ssne">
       <input type="hidden" name="ssne_untouched" id="b_ssu">
@@ -103,7 +106,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
-var acT = null, cc = "de";
+var acT = null, cc = "de", fullLoc = "", bkBusy = false;
 
 function iso(d){
   var m = String(d.getMonth() + 1), t = String(d.getDate());
@@ -120,13 +123,6 @@ function getAid(city){
   if(k === "berlin") return "16154";
   if(k === "hamburg") return "15727";
   if(k === "hannover" || k === "hanover") return "16158";
-  if(k === "muenchen" || k === "m\u00fcnchen" || k === "munich") return "16159";
-  if(k === "frankfurt") return "16156";
-  if(k === "koeln" || k === "k\u00f6ln" || k === "cologne") return "16155";
-  if(k === "duesseldorf" || k === "d\u00fcsseldorf") return "16157";
-  if(k === "stuttgart") return "16160";
-  if(k === "dresden") return "16153";
-  if(k === "leipzig") return "16161";
   if(k === "wien") return "14756";
   if(k === "paris") return "15470";
   if(k === "london") return "233";
@@ -153,6 +149,7 @@ function getBid(city){
   if(k === "palermo") return "-123798";
   if(k === "berlin") return "-1746443";
   if(k === "hamburg") return "-1785434";
+  if(k === "hannover" || k === "hanover") return "-1785560";
   if(k === "muenchen" || k === "m\u00fcnchen" || k === "munich") return "-1829149";
   if(k === "wien" || k === "vienna") return "-1995499";
   if(k === "paris") return "-1456928";
@@ -171,7 +168,6 @@ function getBid(city){
   if(k === "pagadian") return "-2443809";
   return "";
 }
-
 function upd(){
   var now = new Date(), t = iso(now);
   $("dt").textContent = now.toLocaleDateString("de-DE") +
@@ -181,6 +177,7 @@ function upd(){
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
   var aid = getAid(city), bid = getBid(city);
+  var bkPlace = fullLoc || city;
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -213,9 +210,9 @@ function upd(){
     $("h3").href = P + "www.momondo.de" + "/hotels/" + q + "/" +
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
-    $("b_ss").value = city;
-    $("b_ssne").value = city;
-    $("b_ssu").value = city;
+    $("b_ss").value = bkPlace;
+    $("b_ssne").value = bkPlace;
+    $("b_ssu").value = bkPlace;
     $("b_did").disabled = !bid;
     $("b_did").value = bid;
     $("b_dty").disabled = !bid;
@@ -227,13 +224,13 @@ function upd(){
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    var sl = city.toLowerCase().trim().split(" ").join("-");
-    var agQ = "?checkIn=" + ci + "&los=" + n + "&adults=" + px +
-      "&children=0&rooms=" + rm + "&currency=EUR&locale=de-de" +
-      (st > 0 ? "&hotelStarRating=" + st : "");
-    $("h5").href = aid ?
-      P + "://agoda.com" + agQ + "&city=" + aid :
-      P + "://agoda.com" + sl + "-" + (cc || "de") + ".html" + agQ;
+    if($("h5")){
+      var ag = P + "://agoda.com" + "/de-de/search?checkIn=" + ci +
+        "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
+        "&currency=EUR&locale=de-de" +
+        (st > 0 ? "&hotelStarRating=" + st : "");
+      $("h5").href = ag + (aid ? "&city=" + aid : "&textToSearch=" + q);
+    }
 
     var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
     $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
@@ -245,7 +242,7 @@ function upd(){
       "/homes?tab_id=home_tab&checkin=" + ci +
       "&checkout=" + co + "&adults=" + px;
   } else {
-  $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+    $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
@@ -258,7 +255,6 @@ function upd(){
     }));
   } catch(e){}
 }
-
 function showAc(list, msg){
   var box = $("lc");
   box.innerHTML = "";
@@ -278,6 +274,7 @@ function showAc(list, msg){
     d.onmousedown = function(e){
       e.preventDefault();
       $("city").value = it.name;
+      fullLoc = it.country ? (it.name + ", " + it.country) : it.name;
       cc = (it.country_code || "de").toLowerCase();
       box.style.display = "none";
       upd();
@@ -342,6 +339,7 @@ function searchWorldCities(q, done){
 }
 
 $("city").addEventListener("input", function(){
+  fullLoc = "";
   upd(); clearTimeout(acT);
   var q = $("city").value.trim(), box = $("lc");
   if(q.length < 2){ box.style.display = "none"; return; }
@@ -358,6 +356,30 @@ document.addEventListener("click", function(e){
   if(!$("lc").contains(e.target) && e.target !== $("city")){
     $("lc").style.display = "none";
   }
+});
+
+$("f4").addEventListener("submit", function(e){
+  upd();
+  var q = $("city").value.trim();
+  if(!q || fullLoc || bkBusy) return;
+  e.preventDefault();
+  bkBusy = true;
+  var sent = false;
+  var go = function(){
+    if(sent) return;
+    sent = true;
+    bkBusy = false;
+    upd();
+    $("f4").submit();
+  };
+  setTimeout(go, 650);
+  searchWorldCities(q, function(res){
+    var first = res && res.slice(0, 1).shift();
+    if(first && first.name){
+      fullLoc = first.country ? (first.name + ", " + first.country) : first.name;
+    }
+    go();
+  });
 });
 
 try {
@@ -377,7 +399,6 @@ try {
   $(id).addEventListener("input", upd);
   $(id).addEventListener("change", upd);
 });
-$("f4").addEventListener("submit", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
 </script>
