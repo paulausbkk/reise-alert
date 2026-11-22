@@ -51,7 +51,7 @@ html,body{
 .pic{
   position:relative;border-radius:10px;overflow:hidden;
   min-height:300px;display:flex;align-items:flex-end;padding:20px;
-  background-color:#0f2942;background-image:url("fluegel.jpg");
+  background-color:#0f2942;background-image:url("Flügel.jpg");
   background-size:cover;background-position:center center;
   background-repeat:no-repeat
 }
@@ -174,10 +174,10 @@ details p{
   <div class="box">
     <div class="ct">📸 Impressionen & Inseln</div>
     <div class="gal">
-      <img src="cebu.jpg" alt="Cebu">
-      <img src="bohol.jpg" alt="Bohol">
-      <img src="palawan.jpg" alt="Palawan">
-      <img src="strand.jpg" alt="Strand">
+      <img src="Strand.jpg" alt="Strand">
+      <img src="Strand2.jpg" alt="Strand 2">
+      <img src="20250205_181003.jpg" alt="Impression">
+      <img src="LiS.jpg" alt="Sonnenuntergang">
     </div>
   </div>
 
@@ -214,24 +214,22 @@ details p{
 <script>
 var mb = document.getElementById("musicBtn");
 var au = document.getElementById("bgAudio");
+var isPlaying = false;
 
-function syncMusicBtn(){
-  if(!mb || !au) return;
-  var playing = !au.paused;
-  mb.textContent = playing ? "🔊 Musik aus" : "🔇 Musik an";
-  mb.classList.toggle("on", playing);
+function renderMusicBtn(){
+  if(!mb) return;
+  mb.textContent = isPlaying ? "🔊 Musik aus" : "🔇 Musik an";
+  mb.classList.toggle("on", isPlaying);
 }
 
 function toggleMusic(){
+  isPlaying = !isPlaying;
+  renderMusicBtn();
   if(!au) return;
-  if(au.paused){
-    au.play().then(syncMusicBtn).catch(function(){
-      mb.textContent = "🔊 Musik aus";
-      mb.classList.add("on");
-    });
+  if(isPlaying){
+    au.play().catch(function(){});
   } else {
     au.pause();
-    syncMusicBtn();
   }
 }
 
@@ -245,12 +243,10 @@ if(eb){
   eb.addEventListener("pointerdown", enterSite);
   eb.addEventListener("click", enterSite);
 }
-if(mb) mb.addEventListener("click", toggleMusic);
-if(au){
-  au.addEventListener("play", syncMusicBtn);
-  au.addEventListener("pause", syncMusicBtn);
+if(mb){
+  mb.addEventListener("click", toggleMusic);
 }
-syncMusicBtn();
+renderMusicBtn();
 </script>
 </body>
 </html>
