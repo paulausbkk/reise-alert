@@ -167,9 +167,9 @@ function getBid(city){
 function buildAgodaHref(city, ci, co, n, px, rm, st){
   var aid = getAid(city);
   var q = encodeURIComponent(city);
-  var base = aid ? "/de-de/search?city=" + aid : "/de-de/results?searchText=" + q;
-  return P + "://agoda.com" + base +
-    (ci ? "&checkIn=" + ci + "&los=" + n : "") +
+  var target = aid ? "&city=" + aid : "&textToSearch=" + q;
+  return P + "://agoda.com" + target +
+    (ci ? "&checkIn=" + ci + "&checkOut=" + co + "&los=" + n : "") +
     "&adults=" + px + "&children=0&rooms=" + rm +
     "&currency=EUR&locale=de-de" +
     (st > 0 ? "&hotelStarRating=" + st : "");
@@ -242,7 +242,7 @@ function upd(){
       "/homes?tab_id=home_tab&checkin=" + ci +
       "&checkout=" + co + "&adults=" + px;
   } else {
-   $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+    $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
