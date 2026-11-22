@@ -77,7 +77,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
     <a id="h1" href="https://kayak.de" target="_blank" class="btn b1 htl">Kayak Hotels</a>
     <a id="h2" href="https://expedia.de" target="_blank" class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank" class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://www.booking.com/searchresults.html" method="get" target="_blank" class="htl" style="margin:0">
+    <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="ssne" id="b_ssne">
       <input type="hidden" name="ssne_untouched" id="b_ssu">
@@ -235,7 +235,7 @@ function upd(){
       "/homes?tab_id=home_tab&checkin=" + ci +
       "&checkout=" + co + "&adults=" + px;
   } else {
-  $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+   $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
