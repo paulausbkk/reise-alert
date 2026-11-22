@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v102</title>
+<title>🏨 Meine Hotelsuche PRO v104</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{margin:0;padding:16px;min-height:100vh;background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);font-family:sans-serif;color:var(--t);box-sizing:border-box}
@@ -42,7 +42,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v102</h1>
+  <h1 class="tit">🏨 Meine Hotelsuche PRO v104</h1>
   <div class="cp">
     <div class="seg" id="dt">21.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
@@ -94,18 +94,18 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <form id="f5" action="https://agoda.com" method="get" target="_blank" class="htl" style="margin:0">
-      <input type="hidden" name="city" id="a_cid" value="0">
-      <input type="hidden" name="searchrequest" id="a_req">
-      <input type="hidden" name="checkIn" id="a_ci">
-      <input type="hidden" name="checkOut" id="a_co">
-      <input type="hidden" name="los" id="a_los">
-      <input type="hidden" name="adults" id="a_px">
-      <input type="hidden" name="children" value="0">
-      <input type="hidden" name="rooms" id="a_rm">
+    <form id="f5" action="https://google.com" method="get" target="_blank" class="htl" style="margin:0">
+      <input type="hidden" name="btnI" id="a_btni" value="1">
+      <input type="hidden" name="q" id="a_gq">
+      <input type="hidden" name="city" id="a_cid" disabled>
+      <input type="hidden" name="checkIn" id="a_ci" disabled>
+      <input type="hidden" name="los" id="a_los" disabled>
+      <input type="hidden" name="adults" id="a_px" disabled>
+      <input type="hidden" name="children" id="a_ch" value="0" disabled>
+      <input type="hidden" name="rooms" id="a_rm" disabled>
       <input type="hidden" name="hotelStarRating" id="a_st" disabled>
-      <input type="hidden" name="currency" value="EUR">
-      <input type="hidden" name="locale" value="de-de">
+      <input type="hidden" name="currency" id="a_cur" value="EUR" disabled>
+      <input type="hidden" name="locale" id="a_loc" value="de-de" disabled>
       <button type="submit" class="btn b5">Agoda</button>
     </form>
     <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
@@ -232,19 +232,28 @@ function upd(){
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("f5").action = aid ?
+    var hasId = Boolean(aid);
+    $("f5").action = hasId ?
       P + "://agoda.com" :
-      P + "://agoda.com";
-    $("a_cid").value = aid || "0";
-    $("a_req").disabled = Boolean(aid);
-    $("a_req").value = city;
+      P + "://google.com";
+    $("a_btni").disabled = hasId;
+    $("a_gq").disabled = hasId;
+    $("a_gq").value = "site:://agoda.com " + city;
+    $("a_cid").disabled = !hasId;
+    $("a_cid").value = aid;
+    $("a_ci").disabled = !hasId;
     $("a_ci").value = ci;
-    $("a_co").value = co;
+    $("a_los").disabled = !hasId;
     $("a_los").value = n;
+    $("a_px").disabled = !hasId;
     $("a_px").value = px;
+    $("a_ch").disabled = !hasId;
+    $("a_rm").disabled = !hasId;
     $("a_rm").value = rm;
-    $("a_st").disabled = !(st > 0);
+    $("a_st").disabled = !(hasId && st > 0);
     $("a_st").value = st > 0 ? st : "";
+    $("a_cur").disabled = !hasId;
+    $("a_loc").disabled = !hasId;
 
     var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
     $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
@@ -256,7 +265,7 @@ function upd(){
       "/homes?tab_id=home_tab&checkin=" + ci +
       "&checkout=" + co + "&adults=" + px;
   } else {
-  $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+   $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
@@ -395,3 +404,4 @@ upd();
 </script>
 </body>
 </html>
+    
