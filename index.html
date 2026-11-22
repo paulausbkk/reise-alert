@@ -158,8 +158,8 @@ body:has(#ow:checked) .st{
 <div class="hdr">
   <h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
   <div class="cp">
-    <button type="button" class="mbtn on" id="mbtn"
-      onclick="toggleFlightBgm()">🔇 Musik Aus</button>
+    <button type="button" class="mbtn" id="mbtn"
+      onclick="toggleFlightBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">19.11.2026</div>
     <div class="seg st" id="st">HIN & RÜCK</div>
     <a href="meine-hotelsuche.html" class="seg upg htl">
@@ -335,9 +335,7 @@ body:has(#ow:checked) .st{
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
-var bgmPlayer = new Audio(P + "paulausbkk.github.io/musik.mp3");
-bgmPlayer.loop = true;
-bgmPlayer.volume = 0.45;
+var bgmPlayer = null;
 var bgmRunning = false;
 
 function renderFlightBgm(){
@@ -347,39 +345,30 @@ function renderFlightBgm(){
   b.textContent = bgmRunning ? "🔇 Musik Aus" : "🎵 Musik An";
 }
 
-function startFlightBgm(){
-  bgmRunning = true;
-  renderFlightBgm();
-  bgmPlayer.play().catch(function(){
+function toggleFlightBgm(){
+  if(!bgmPlayer){
+    bgmPlayer = new Audio(P + "paulausbkk.github.io/musik.mp3");
+    bgmPlayer.loop = true;
+    bgmPlayer.volume = 0.45;
+  }
+  if(bgmRunning){
     bgmRunning = false;
     renderFlightBgm();
-  });
-}
-
-function stopFlightBgm(){
-  bgmRunning = false;
-  renderFlightBgm();
-  bgmPlayer.pause();
-}
-
-function toggleFlightBgm(){
-  if(bgmRunning){
-    stopFlightBgm();
+    bgmPlayer.pause();
   } else {
-    startFlightBgm();
+    bgmRunning = true;
+    renderFlightBgm();
+    bgmPlayer.play().catch(function(){});
   }
 }
 
 document.addEventListener("visibilitychange", function(){
-  if(document.hidden && bgmRunning) stopFlightBgm();
+  if(document.hidden && bgmRunning){
+    bgmRunning = false;
+    renderFlightBgm();
+    if(bgmPlayer) bgmPlayer.pause();
+  }
 });
-
-function autoResume(){
-  if(!bgmRunning) startFlightBgm();
-  document.removeEventListener("pointerdown", autoResume);
-}
-document.addEventListener("pointerdown", autoResume);
-startFlightBgm();
 
 function iata(val){
   var s = String(val || "").trim().toUpperCase();
