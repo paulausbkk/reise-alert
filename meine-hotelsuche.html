@@ -94,21 +94,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <form id="f5" action="https://agoda.com" method="get" target="_blank" class="htl" style="margin:0">
-      <input type="hidden" name="cid" value="-1">
-      <input type="hidden" name="city" id="a_cid" disabled>
-      <input type="hidden" name="textToSearch" id="a_txt" disabled>
-      <input type="hidden" name="checkIn" id="a_ci">
-      <input type="hidden" name="checkOut" id="a_co">
-      <input type="hidden" name="los" id="a_los">
-      <input type="hidden" name="adults" id="a_px">
-      <input type="hidden" name="children" value="0">
-      <input type="hidden" name="rooms" id="a_rm">
-      <input type="hidden" name="hotelStarRating" id="a_st" disabled>
-      <input type="hidden" name="currency" value="EUR">
-      <input type="hidden" name="locale" value="de-de">
-      <button type="submit" class="btn b5">Agoda</button>
-    </form>
+    <a id="h5" href="https://agoda.com" target="_blank" class="btn b5 htl">Agoda</a>
     <a id="h6" href="https://trivago.de" target="_blank" class="btn b6 htl">Trivago</a>
     <a id="h8" href="https://airbnb.de" target="_blank" class="btn b8 off">Airbnb</a>
   </div>
@@ -124,6 +110,13 @@ function iso(d){
   if(m.length < 2) m = "0" + m;
   if(t.length < 2) t = "0" + t;
   return d.getFullYear() + "-" + m + "-" + t;
+}
+
+function agSlug(s){
+  return s.toLowerCase().trim()
+    .replace(/\u00fc/g, "ue").replace(/\u00f6/g, "oe")
+    .replace(/\u00e4/g, "ae").replace(/\u00df/g, "ss")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
 function getAid(city){
@@ -233,17 +226,15 @@ function upd(){
     $("b_flt").disabled = !bFilt;
     $("b_flt").value = bFilt;
 
-    $("a_cid").disabled = !aid;
-    $("a_cid").value = aid;
-    $("a_txt").disabled = Boolean(aid);
-    $("a_txt").value = city;
-    $("a_ci").value = ci;
-    $("a_co").value = co;
-    $("a_los").value = n;
-    $("a_px").value = px;
-    $("a_rm").value = rm;
-    $("a_st").disabled = !(st > 0);
-    $("a_st").value = st > 0 ? st : "";
+    var agQ = "?checkIn=" + ci + "&los=" + n + "&adults=" + px +
+      "&children=0&rooms=" + rm + "&currency=EUR&locale=de-de" +
+      (st > 0 ? "&hotelStarRating=" + st : "");
+    if(aid){
+      $("h5").href = P + "://agoda.com" + agQ + "&city=" + aid;
+    } else {
+      $("h5").href = P + "://agoda.com" +
+        agSlug(city) + "-" + (cc || "de") + ".html" + agQ;
+    }
 
     var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
     $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
@@ -388,7 +379,6 @@ try {
   $(id).addEventListener("change", upd);
 });
 $("f4").addEventListener("submit", upd);
-$("f5").addEventListener("submit", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
 </script>
