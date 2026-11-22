@@ -1,157 +1,14 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Reisekonfiguration PRO v30</title>
-<style>
-:root{
-  --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;
-  --b:#bae6fd;--g:#0ea5e9;--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe
-}
-html,body{
-  margin:0;padding:14px;
-  background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  min-height:100vh;font-family:sans-serif;color:var(--t);
-  box-sizing:border-box
-}
-.hdr{
-  display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:13px 18px;border-radius:12px;
-  margin-bottom:16px;flex-wrap:wrap;gap:10px;
-  box-shadow:0 4px 14px rgba(15,41,66,.18)
-}
-.tit{
-  font-weight:bold;color:#fff;font-size:1.22rem;margin:0;
-  letter-spacing:.3px
-}
-.cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.seg{
-  font-size:.78rem;padding:6px 12px;border-radius:6px;
-  font-weight:bold;color:#fff;text-transform:uppercase;
-  background:#0284c7;text-decoration:none;border:1px solid #38bdf8
-}
-.seg.upg{
-  background:#1e40af;font-size:.86rem;padding:8px 14px;
-  border-color:#60a5fa
-}
-.seg.htl{background:#0369a1;border-color:#7dd3fc}
-.aud{height:30px;border-radius:6px;accent-color:#0284c7}
-.row{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px}
-.card{
-  flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:18px 20px;background:#ffffff;box-sizing:border-box;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
-}
-.ct{
-  font-weight:bold;font-size:1.06rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:7px;
-  margin-bottom:14px
-}
-.f{
-  margin-bottom:13px;display:flex;
-  flex-direction:column;position:relative
-}
-.f2{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:13px
-}
-label{
-  font-weight:bold;font-size:.84rem;
-  margin-bottom:4px;color:#1e3a8a
-}
-.inp,.dat,select{
-  height:41px;padding:0 12px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.96rem;
-  background:#f8fafc;color:var(--t);width:100%;transition:.2s
-}
-.inp:focus,.dat:focus,select:focus{
-  outline:none;border-color:#0284c7;background:#fff;
-  box-shadow:0 0 0 3px rgba(2,132,199,.15)
-}
-@keyframes pulseHint{
-  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
-  50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
-}
-.bn{
-  background:#0f2942;border:3px solid #991b1b;
-  border-left:7px solid #991b1b;border-radius:8px;
-  padding:11px 14px;color:#fff;font-weight:bold;
-  font-size:.88rem;line-height:1.4;
-  animation:pulseHint 2.2s infinite ease-in-out
-}
-.bb{
-  border:1px solid #93c5fd;background:#ffffff;
-  border-radius:12px;padding:16px 20px;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
-}
-.bf{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
-  gap:10px
-}
-.btn{
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;height:46px;color:#fff;font-weight:bold;
-  border-radius:8px;font-size:.84rem;text-transform:uppercase;
-  text-decoration:none;text-align:center;line-height:1.15;
-  padding:0 6px;box-shadow:0 2px 6px rgba(15,41,66,.15)
-}
-.btn .sub{
-  font-size:.64rem;font-weight:bold;text-transform:none;
-  opacity:1;margin-top:2px;color:#e0f2fe
-}
-.b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
-.b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
-.rng{width:100%;height:41px;accent-color:#0284c7;cursor:pointer}
-body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
-body:has(#ow:checked) #rb input{background:#e2e8f0!important}
-body:has(#ow:checked) .st{
-  background:#0369a1!important;color:#fff;border-color:#7dd3fc
-}
-.swc{
-  display:flex;align-items:center;justify-content:space-between;
-  background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-  border-radius:8px;min-height:41px;gap:8px
-}
-.swc.yl{background:#e0f2fe;border:1px solid #7dd3fc}
-.swc.split{
-  flex-direction:column;justify-content:center;
-  align-items:stretch;padding:0;gap:0;overflow:hidden
-}
-.swh{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:4px 10px;gap:6px;min-height:28px
-}
-.swh:first-child{border-bottom:1px solid #7dd3fc}
-.sw{
-  position:relative;display:inline-block;
-  width:42px;height:24px;flex-shrink:0
-}
-.sw.sm{width:34px;height:18px}
-.sw input{opacity:0;width:0;height:0}
-.sl{
-  position:absolute;cursor:pointer;inset:0;
-  background:#cbd5e1;border-radius:20px;transition:.3s
-}
-.sl:before{
-  position:absolute;content:"";height:18px;width:18px;
-  left:3px;bottom:3px;background:#fff;
-  border-radius:50%;transition:.3s
-}
-.sw.sm .sl:before{height:14px;width:14px;left:2px;bottom:2px}
-.sw input:checked+.sl{background:#0284c7!important}
-.sw input:checked+.sl:before{transform:translateX(18px)}
-.sw.sm input:checked+.sl:before{transform:translateX(16px)}
-</style>
-</head>
 <body>
+<audio id="bgm" loop preload="none">
+  <source src="https://github.io"
+    type="audio/mpeg">
+</audio>
+
 <div class="hdr">
   <h1 class="tit">✈️ Reisekonfiguration PRO v30</h1>
   <div class="cp">
-    <audio class="aud" controls loop preload="none">
-      <source src="musik.mp3" type="audio/mpeg">
-    </audio>
+    <button type="button" class="mbtn" id="mbtn"
+      onclick="toggleBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">19.11.2026</div>
     <div class="seg st" id="st">HIN & RÜCK</div>
     <a href="meine-hotelsuche.html" class="seg upg htl">
@@ -327,6 +184,23 @@ body:has(#ow:checked) .st{
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
+var bgmOn = false;
+
+function toggleBgm(){
+  var a = $("bgm"), b = $("mbtn");
+  bgmOn = !bgmOn;
+  if(b){
+    b.classList.toggle("on", bgmOn);
+    b.textContent = bgmOn ? "\ud83d\udd07 Musik Aus" : "\ud83c\udfb5 Musik An";
+  }
+  if(!a) return;
+  if(bgmOn){
+    a.volume = 0.45;
+    a.play().catch(function(){});
+  } else {
+    a.pause();
+  }
+}
 
 function iata(val){
   var s = String(val || "").trim().toUpperCase();
@@ -381,11 +255,11 @@ function upd(){
       ",departure:" + rd + "TANYT") +
     "&passengers=adults:" + px + "&mode=search";
 
-  $("u5").href = P + "www.kiwi.com" + "/de/search/results/" +
+  $("u5").href = P + "://kiwi.com" + "/de/search/results/" +
     o.toLowerCase() + "/" + d.toLowerCase() + "/" + od + "/" +
     (ow ? "no-return" : rd) + "?adults=" + px;
 
-  $("u6").href = P + "de.trip.com" + "/flights/" +
+  $("u6").href = P + "://trip.com" + "/flights/" +
     o.toLowerCase() + "-to-" + d.toLowerCase() +
     "/tickets-" + o.toLowerCase() + "-" + d.toLowerCase() +
     "?dcity=" + o + "&acity=" + d + "&ddate=" + od +
