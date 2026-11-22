@@ -80,6 +80,8 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
     <form id="f4" action="https://booking.com" method="get" target="_blank" class="htl" style="margin:0">
       <input type="hidden" name="sb" value="1">
       <input type="hidden" name="src" value="index">
+      <input type="hidden" name="dest_id" id="b_did" disabled>
+      <input type="hidden" name="dest_type" id="b_dty" disabled>
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="ssne" id="b_ssne">
       <input type="hidden" name="ssne_untouched" id="b_ssu">
@@ -108,6 +110,7 @@ input,select{height:42px;padding:0 12px;border:1px solid #93c5fd;border-radius:8
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
 var acT = null, cc = "de";
+var bkCache = {}, bkDid = "", bkDty = "", bkT = null;
 
 function iso(d){
   var m = String(d.getMonth() + 1), t = String(d.getDate());
@@ -185,6 +188,10 @@ function upd(){
     $("h3").href = P + "www.momondo.de" + "/hotels/" + q + "/" +
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
+    $("b_did").disabled = !bkDid;
+    $("b_did").value = bkDid;
+    $("b_dty").disabled = !bkDty;
+    $("b_dty").value = bkDty;
     $("b_ss").value = city;
     $("b_ssne").value = city;
     $("b_ssu").value = city;
@@ -211,7 +218,7 @@ function upd(){
     $("h8").href = P + "www.airbnb.de" + "/s/" + q +
       "/homes?checkin=" + ci + "&checkout=" + co + "&adults=" + px;
   } else {
-   $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+  $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
     $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
@@ -306,11 +313,43 @@ function searchWorldCities(q, done){
     }
   }).catch(tryPhoton);
 }
+function resolveBookingId(city){
+  var k = city.toLowerCase().trim();
+  if(!k){ bkDid = ""; bkDty = ""; upd(); return; }
+  if(bkCache.hasOwnProperty(k)){
+    var c = bkCache.get(k);
+    bkDid = c ? c.id : "";
+    bkDty = c ? c.ty : "";
+    upd();
+    return;
+  }
+  var target = P + "://booking.com" +
+    encodeURIComponent(city) + "&lang=de&limit=1";
+  var proxy = P + "://codetabs.com" +
+    encodeURIComponent(target);
+  fetch(proxy).then(function(r){ return r.json(); }).then(function(j){
+    var hit = j && j.city && j.city.slice(0, 1).shift();
+    if(!hit && j && j.all && j.all.slice(0, 1).shift()){
+      hit = j.all.slice(0, 1).shift();
+    }
+    if(hit && hit.dest_id){
+      var res = { id: String(hit.dest_id), ty: String(hit.dest_type || "city") };
+      bkCache.set(k, res);
+      if($("city").value.trim().toLowerCase() === k){
+        bkDid = res.id;
+        bkDty = res.ty;
+        upd();
+      }
+    }
+  }).catch(function(){});
+}
 
 $("city").addEventListener("input", function(){
-  upd(); clearTimeout(acT);
+  bkDid = ""; bkDty = "";
+  upd(); clearTimeout(acT); clearTimeout(bkT);
   var q = $("city").value.trim(), box = $("lc");
   if(q.length < 2){ box.style.display = "none"; return; }
+  bkT = setTimeout(function(){ resolveBookingId(q); }, 350);
   showAc(null, "\ud83d\udd0d Suche weltweit...");
   acT = setTimeout(function(){
     searchWorldCities(q, function(res, errMsg){
@@ -343,9 +382,14 @@ try {
   $(id).addEventListener("input", upd);
   $(id).addEventListener("change", upd);
 });
-$("f4").addEventListener("submit", upd);
+$("f4").addEventListener("submit", function(){
+  var q = $("city").value.trim();
+  if(q && !bkDid) resolveBookingId(q);
+  upd();
+});
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
+if($("city").value.trim()) resolveBookingId($("city").value.trim());
 </script>
 </body>
 </html>
