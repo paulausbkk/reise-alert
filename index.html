@@ -149,8 +149,8 @@ details p{
   <div class="cp">
     <a href="#fluege" class="seg">✈️ Flüge</a>
     <a href="#hotels" class="seg upg">🏨 Hotels</a>
-    <button type="button" class="music-btn" id="musicBtn">
-      🔇 Musik an
+    <button type="button" class="music-btn on" id="musicBtn">
+      🔊 Musik aus
     </button>
     <button type="button" class="lang-btn">DE / EN</button>
   </div>
@@ -209,12 +209,13 @@ details p{
   </div>
 </div>
 
-<audio id="bgAudio" src="musik.mp3" loop preload="none"></audio>
+<audio id="bgAudio" src="musik.mp3" loop preload="auto"></audio>
 
 <script>
 var mb = document.getElementById("musicBtn");
 var au = document.getElementById("bgAudio");
 var isPlaying = false;
+var entered = false;
 
 function renderMusicBtn(){
   if(!mb) return;
@@ -222,20 +223,30 @@ function renderMusicBtn(){
   mb.classList.toggle("on", isPlaying);
 }
 
-function toggleMusic(){
-  isPlaying = !isPlaying;
+function startMusic(){
+  isPlaying = true;
   renderMusicBtn();
-  if(!au) return;
-  if(isPlaying){
+  if(au){
     au.play().catch(function(){});
+  }
+}
+
+function toggleMusic(){
+  if(isPlaying){
+    isPlaying = false;
+    renderMusicBtn();
+    if(au) au.pause();
   } else {
-    au.pause();
+    startMusic();
   }
 }
 
 function enterSite(){
+  if(entered) return;
+  entered = true;
   var m = document.getElementById("welcomeModal");
   if(m) m.style.display = "none";
+  startMusic();
 }
 
 var eb = document.getElementById("enterBtn");
