@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title id="pgTit">🏨 Meine Hotelsuche PRO v124</title>
+<title id="pgTit">🏨 Meine Hotelsuche PRO v125</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
@@ -170,11 +170,11 @@ input,select{
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v124</h1>
+  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v125</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">22.11.2026</div>
+    <div class="seg" id="dt">23.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
     <span class="seg act" id="navAct">🏨 HOTELSUCHE (AKTIV)</span>
     <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
@@ -298,8 +298,8 @@ try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
 function isEn(){return lang==="en";}
 function applyLang(){
   var e=isEn();document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v124":"🏨 Meine Hotelsuche PRO v124";
-  $("hTit").textContent=e?"🏨 My Hotel Search PRO v124":"🏨 Meine Hotelsuche PRO v124";
+  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v125":"🏨 Meine Hotelsuche PRO v125";
+  $("hTit").textContent=e?"🏨 My Hotel Search PRO v125":"🏨 Meine Hotelsuche PRO v125";
   $("navAct").textContent=e?"🏨 HOTELS (ACTIVE)":"🏨 HOTELSUCHE (AKTIV)";
   $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
   $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
@@ -416,7 +416,8 @@ function upd(){
   $("cib").classList.toggle("err",Boolean(ci&&ci<t));
   $("cob").classList.toggle("err",Boolean(bad));
   if(ci&&co&&!bad){
-    var n=Math.round((new Date(co)-new Date(ci))/86400000);
+    var dA=new Date(ci+"T12:00:00"),dB=new Date(co+"T12:00:00");
+    var n=Math.max(1,Math.round((dB-dA)/86400000));
     $("nt").textContent=e
       ?n+(n===1?" NIGHT":" NIGHTS")
       :n+(n===1?" NACHT":" N\u00c4CHTE");
@@ -449,7 +450,7 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-us":"de-de";
-    var ag=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
+    var ag=P+H_AG+"/search?checkIn="+ci+
       "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
       "&currency=EUR&locale="+agLoc+
       (st>0?"&hotelStarRating="+st:"");
@@ -582,12 +583,16 @@ try{
     if(saved.ab!==undefined)$("ab").checked=saved.ab;
   }
 }catch(err){}
+var d1=new Date(),d2=new Date();
+d1.setDate(d1.getDate()+1);d2.setDate(d2.getDate()+2);
+$("ci").min=iso(new Date());$("co").min=iso(new Date());
+if(!$("ci").value)$("ci").value=iso(d1);
+if(!$("co").value)$("co").value=iso(d2);
 "city;ci;co;px;rm;st;ab".split(";").forEach(function(id){
   $(id).addEventListener("input",upd);
   $(id).addEventListener("change",upd);
 });
 $("f4").addEventListener("submit",upd);
-$("ci").min=iso(new Date());$("co").min=iso(new Date());
 applyLang();upd();
 </script>
 </body>
