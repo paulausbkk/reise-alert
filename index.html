@@ -3,49 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title id="pgTit">✈️ Meine aktuellen Buchungen PRO</title>
+<title id="pgTit">🌴 paulausbkk • Weltweites Reiseportal</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
-  margin:0;padding:12px 16px;min-height:100vh;
-  background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
+  margin:0;padding:14px 16px;min-height:100vh;
+  background:linear-gradient(180deg,#0f2942 0%,#1e3a8a 45%,#0284c7 100%);
   font-family:sans-serif;color:var(--t);box-sizing:border-box
 }
 .welcome{
-  position:fixed;inset:0;background:rgba(15,41,66,.9);
+  position:fixed;inset:0;background:rgba(15,41,66,.92);
   display:flex;align-items:center;justify-content:center;
-  z-index:2000;padding:20px;backdrop-filter:blur(4px)
+  z-index:2000;padding:20px;backdrop-filter:blur(5px)
 }
 .w-card{
   position:relative;overflow:hidden;
   background:linear-gradient(180deg,#ffffff 0%,#f0f9ff 100%);
-  border:2px solid #38bdf8;border-radius:18px;
-  padding:28px 24px;text-align:center;max-width:460px;width:100%;
-  box-shadow:0 16px 40px rgba(0,0,0,.5)
+  border:3px solid #38bdf8;border-radius:20px;
+  padding:30px 26px;text-align:center;max-width:480px;width:100%;
+  box-shadow:0 18px 44px rgba(0,0,0,.55)
 }
 @keyframes flyA{
-  0%{transform:translate(-18px,8px) rotate(-12deg);opacity:.35}
-  50%{transform:translate(18px,-10px) rotate(10deg);opacity:.75}
-  100%{transform:translate(-18px,8px) rotate(-12deg);opacity:.35}
+  0%{transform:translate(-22px,10px) rotate(-14deg);opacity:.4}
+  50%{transform:translate(22px,-12px) rotate(12deg);opacity:.85}
+  100%{transform:translate(-22px,10px) rotate(-14deg);opacity:.4}
 }
 @keyframes flyB{
-  0%{transform:translate(16px,-6px) rotate(8deg);opacity:.4}
-  50%{transform:translate(-16px,10px) rotate(-14deg);opacity:.7}
-  100%{transform:translate(16px,-6px) rotate(8deg);opacity:.4}
+  0%{transform:translate(20px,-8px) rotate(10deg);opacity:.45}
+  50%{transform:translate(-20px,12px) rotate(-15deg);opacity:.8}
+  100%{transform:translate(20px,-8px) rotate(10deg);opacity:.45}
 }
-.sky-p1,.sky-p2{
+@keyframes flyC{
+  0%{transform:translate(-12px,-10px) rotate(-6deg);opacity:.3}
+  50%{transform:translate(14px,8px) rotate(8deg);opacity:.7}
+  100%{transform:translate(-12px,-10px) rotate(-6deg);opacity:.3}
+}
+.sky-p1,.sky-p2,.sky-p3{
   position:absolute;font-size:1.35rem;pointer-events:none;
   user-select:none
 }
-.sky-p1{top:12px;left:22px;animation:flyA 5.5s infinite ease-in-out}
-.sky-p2{bottom:12px;right:24px;animation:flyB 6.2s infinite ease-in-out}
+.sky-p1{top:14px;left:22px;animation:flyA 5.4s infinite ease-in-out}
+.sky-p2{bottom:14px;right:24px;animation:flyB 6.1s infinite ease-in-out}
+.sky-p3{top:16px;right:26px;font-size:1.1rem;animation:flyC 4.8s infinite ease-in-out}
 .w-card h2{
-  position:relative;margin:0 0 18px 0;color:#0f2942;
-  font-size:1.35rem;line-height:1.25
+  position:relative;margin:0 0 10px 0;color:#0f2942;
+  font-size:1.42rem;line-height:1.25
 }
-.w-sub-tit{
-  display:block;font-size:.98rem;font-weight:bold;
-  color:#0369a1;margin-top:4px
+.w-tit-en{
+  display:block;font-size:1.05rem;font-weight:bold;
+  color:#0369a1;margin-top:3px
+}
+.w-desc{
+  position:relative;margin:0 0 18px 0;font-size:.94rem;
+  color:#1e293b;line-height:1.4
+}
+.w-desc-en{
+  display:block;font-size:.86rem;color:#475569;margin-top:4px
 }
 @keyframes iconFloat{
   0%,100%{transform:translateY(0) rotate(-4deg)}
@@ -53,130 +66,89 @@ html,body{
 }
 .w-btn{
   position:relative;display:flex;align-items:center;
-  justify-content:center;gap:12px;width:100%;max-width:390px;
+  justify-content:center;gap:12px;width:100%;max-width:340px;
   margin:0 auto;box-sizing:border-box;
   background:linear-gradient(135deg,#0284c7 0%,#1d4ed8 100%);
   color:#fff;border:2px solid #7dd3fc;border-radius:14px;
-  padding:13px 16px;font-size:.98rem;font-weight:bold;
-  cursor:pointer;text-align:left;line-height:1.28;
-  box-shadow:0 8px 20px rgba(2,132,199,.45);
+  padding:13px 18px;font-size:1.05rem;font-weight:bold;
+  cursor:pointer;line-height:1.25;
+  box-shadow:0 8px 22px rgba(2,132,199,.48);
   transition:transform .15s,box-shadow .15s;
   touch-action:manipulation;user-select:none
 }
 .w-btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 12px 24px rgba(29,78,216,.55)
+  box-shadow:0 12px 26px rgba(29,78,216,.6)
 }
 .w-btn:active{transform:scale(.98)}
 .w-icon{
   display:flex;align-items:center;justify-content:center;
-  width:42px;height:42px;border-radius:11px;flex-shrink:0;
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
   background:rgba(255,255,255,.18);border:1px solid #bae6fd;
-  font-size:1.45rem;animation:iconFloat 2.4s infinite ease-in-out
+  font-size:1.38rem;animation:iconFloat 2.4s infinite ease-in-out
 }
-.w-txt{display:flex;flex-direction:column}
-.w-line{white-space:nowrap}
-.w-btn-en{
-  display:block;font-size:.82rem;font-weight:bold;
-  color:#bae6fd;margin-top:3px;white-space:nowrap
-}
+.wrap{max-width:1160px;margin:0 auto}
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:9px 14px;border-radius:12px;
-  margin-bottom:14px;flex-wrap:wrap;gap:6px
+  background:rgba(15,41,66,.92);border:1px solid #38bdf8;
+  padding:10px 16px;border-radius:14px;margin-bottom:14px;
+  flex-wrap:wrap;gap:8px
 }
-.tit{font-weight:bold;color:#fff;font-size:1.08rem;margin:0}
-.cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.brand h1{margin:0;color:#fff;font-size:1.2rem}
+.cp{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.69rem;padding:4px 8px;border-radius:6px;
-  font-weight:bold;color:#fff;text-transform:uppercase;
-  background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
-  white-space:nowrap
-}
-.seg.nav{background:#1e40af;padding:4px 8px}
-.seg.upg{background:#0369a1;padding:4px 8px}
-.seg.act{
-  background:linear-gradient(180deg,#38bdf8 0%,#0284c7 100%);
-  border:2px solid #e0f2fe;padding:3px 9px;cursor:default
+  font-size:.72rem;padding:5px 9px;border-radius:7px;
+  font-weight:bold;color:#fff;background:#0284c7;
+  border:1px solid #38bdf8;white-space:nowrap
 }
 .mbtn{
   background:#0284c7;color:#fff;border:1px solid #7dd3fc;
-  border-radius:6px;padding:4px 8px;font-size:.69rem;
+  border-radius:7px;padding:5px 9px;font-size:.72rem;
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
-.row{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;
-  margin-bottom:14px
+.lbtn{
+  background:#1e40af;color:#fff;border:1px solid #93c5fd;
+  border-radius:7px;padding:5px 9px;font-size:.72rem;
+  font-weight:bold;cursor:pointer;white-space:nowrap
 }
-@media(max-width:780px){.row{grid-template-columns:1fr}}
+.hero{
+  background:linear-gradient(135deg,#ffffff 0%,#e0f2fe 100%);
+  border:2px solid #7dd3fc;border-radius:16px;
+  padding:18px 22px;margin-bottom:14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.22)
+}
+.hero h2{margin:0 0 6px 0;color:#0f2942;font-size:1.35rem}
+.hero p{margin:0;color:#1e3a8a;font-size:.95rem;line-height:1.4}
+.grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:14px;margin-bottom:14px
+}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
 .card{
-  box-sizing:border-box;border:1px solid #93c5fd;
-  border-radius:12px;padding:15px 18px;background:#fff;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
+  background:#fff;border:2px solid #93c5fd;border-radius:14px;
+  padding:18px;display:flex;flex-direction:column;
+  justify-content:space-between;
+  box-shadow:0 6px 18px rgba(0,0,0,.18)
 }
-.ct{
-  font-weight:bold;font-size:1.02rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:6px;
-  margin-bottom:12px
+.card h3{margin:0 0 8px 0;color:#0c4a6e;font-size:1.12rem}
+.card p{
+  margin:0 0 14px 0;color:#334155;font-size:.9rem;line-height:1.4
 }
-.f{margin-bottom:11px;display:flex;flex-direction:column}
-.f:last-child{margin-bottom:0}
-.f.off{display:none}
-label{
-  font-weight:bold;font-size:.82rem;
-  margin-bottom:4px;color:#1e3a8a
-}
-.inrow{display:flex;gap:6px;align-items:center}
-input,select{
-  height:38px;padding:0 10px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.94rem;
-  background:#f8fafc;color:var(--t);width:100%
-}
-.cpbtn{
-  height:38px;padding:0 11px;background:#e0f2fe;color:#0369a1;
-  border:1px solid #7dd3fc;border-radius:8px;font-weight:bold;
-  cursor:pointer;white-space:nowrap;font-size:.8rem
-}
-.cpbtn:hover{background:#bae6fd}
-.bn{
-  background:#eff6ff;border:1px solid #93c5fd;
-  border-left:5px solid #0284c7;border-radius:8px;
-  padding:9px 12px;color:#1e3a8a;font-weight:bold;
-  font-size:.86rem;margin-top:4px
-}
-@keyframes pulseHint{
-  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
-  50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
-}
-.bb{
-  width:100%;box-sizing:border-box;
-  border:1px solid #93c5fd;background:#fff;
-  border-radius:12px;padding:14px 18px;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
-}
-.acts{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px
-}
-.abtn{
+.go{
   display:flex;align-items:center;justify-content:center;
-  height:44px;border-radius:8px;font-weight:bold;font-size:.9rem;
-  text-decoration:none;border:none;cursor:pointer;color:#fff;
-  text-align:center;padding:0 10px
+  height:44px;border-radius:9px;font-weight:bold;font-size:.92rem;
+  text-decoration:none;color:#fff;
+  background:linear-gradient(135deg,#0284c7 0%,#1d4ed8 100%)
 }
-.abtn.note{background:#0369a1}
-.abtn.go{background:#1d4ed8}
-#ts{
-  display:none;margin-top:10px;padding:8px 12px;
-  background:#dcfce7;border:1px solid #86efac;color:#166534;
-  border-radius:8px;font-weight:bold;font-size:.84rem
-}
-.hintbox{
-  margin-top:12px;background:#0f2942;color:#fff;
-  border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:10px 14px;font-weight:bold;
-  font-size:.85rem;line-height:1.4;
-  animation:pulseHint 2.2s infinite ease-in-out
+.go.htl{background:linear-gradient(135deg,#0369a1 0%,#0284c7 100%)}
+.go.bkg{background:linear-gradient(135deg,#1e40af 0%,#1d4ed8 100%)}
+.bar{
+  background:rgba(15,41,66,.92);border:1px solid #38bdf8;
+  border-radius:12px;padding:11px 16px;color:#e0f2fe;
+  font-size:.86rem;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:8px
 }
 </style>
 </head>
@@ -185,202 +157,159 @@ input,select{
   <div class="w-card">
     <span class="sky-p1">✈️</span>
     <span class="sky-p2">✈️</span>
+    <span class="sky-p3">✈️</span>
     <h2>
-      ✈️ Meine aktuellen Buchungen
-      <span class="w-sub-tit">My Current Bookings</span>
+      🌴 Willkommen bei paulausbkk
+      <span class="w-tit-en">Welcome to paulausbkk</span>
     </h2>
-    <button type="button" class="w-btn" id="entryBtn"
-      onclick="enterBookings()">
-      <span class="w-icon">✈️</span>
-      <span class="w-txt">
-        <span class="w-line">Aktuelle Buchungen aktivieren ➡️</span>
-        <span class="w-btn-en">Activate Current Bookings ➡️</span>
+    <p class="w-desc">
+      Dein weltweites Reiseportal für Flüge und Hotels.
+      <span class="w-desc-en">
+        Your worldwide travel portal for flights and hotels.
       </span>
+    </p>
+    <button type="button" class="w-btn" onclick="enterPortal()">
+      <span class="w-icon">✈️</span>
+      <span>Eintreten / Entry ➡️</span>
     </button>
   </div>
 </div>
-<audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
-<div class="hdr">
-  <h1 class="tit" id="hTit">✈️ Meine aktuellen Buchungen PRO</h1>
-  <div class="cp">
-    <button type="button" class="mbtn off" id="mbtn"
-      onclick="toggleBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">23.11.2026 • 20:25:00</div>
-    <span class="seg act" id="navAct">
-      ✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)
+<audio id="bgm" src="musik.mp3" loop preload="auto"></audio>
+<div class="wrap">
+  <div class="hdr">
+    <div class="brand">
+      <h1 id="hTit">🌴 paulausbkk • Reiseportal</h1>
+    </div>
+    <div class="cp">
+      <button type="button" class="mbtn off" id="mbtn"
+        onclick="toggleBgm()">🎵 Musik An</button>
+      <button type="button" class="lbtn" id="lbtn"
+        onclick="toggleLang()">🌐 DE / EN</button>
+      <div class="seg" id="clkDE">DE: --:--</div>
+      <div class="seg" id="clkBKK">BKK: --:--</div>
+    </div>
+  </div>
+  <div class="hero">
+    <h2 id="heroTit">
+      ✈️ Weltweite Flug- & Hotelsuche auf einen Blick
+    </h2>
+    <p id="heroSub">
+      Vergleiche sekundenschnell Flüge, Hotels und verwalte deine
+      aktuellen Flugbuchungen mit praktischem Spickzettel.
+    </p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div>
+        <h3 id="c1Tit">✈️ Meine Flugsuche</h3>
+        <p id="c1Txt">
+          Direkter Preisvergleich für Hin- & Rückflüge oder One-Way
+          bei Kayak, Momondo, Skyscanner, Google Flights, Trip.com,
+          Kiwi.com und Expedia.
+        </p>
+      </div>
+      <a href="reise-alert/index.html" class="go" id="c1Btn">
+        Flugsuche öffnen ➡️
+      </a>
+    </div>
+    <div class="card">
+      <div>
+        <h3 id="c2Tit">🏨 Meine Hotelsuche</h3>
+        <p id="c2Txt">
+          Weltweite Hotelsuche für jede Stadt – inklusive Direktlinks
+          zu Booking.com, Agoda, Expedia, Kayak, Momondo, Trivago
+          und Airbnb.
+        </p>
+      </div>
+      <a href="reise-alert/meine-hotelsuche.html" class="go htl"
+        id="c2Btn">
+        Hotelsuche öffnen ➡️
+      </a>
+    </div>
+    <div class="card">
+      <div>
+        <h3 id="c3Tit">🎫 Meine aktuellen Buchungen</h3>
+        <p id="c3Txt">
+          Buchungscode (PNR), Pass- & Ticketdaten sicher speichern,
+          als schwebenden Spickzettel öffnen und direkt zur Airline
+          springen.
+        </p>
+      </div>
+      <a href="reise-alert/meine-flugbuchungen.html" class="go bkg"
+        id="c3Btn">
+        Aktuelle Buchungen öffnen ➡️
+      </a>
+    </div>
+  </div>
+  <div class="bar">
+    <span id="footL">
+      🌴 paulausbkk.github.io • Dein persönlicher Reise-Assistent
     </span>
-    <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
-    <a href="meine-hotelsuche.html" class="seg upg" id="navHtl">
-      🏨 Meine Hotelsuche ➡️
-    </a>
-    <a href="../index.html" class="seg nav" id="navHome">
-      🏠 Zurück zur Startseite
-    </a>
-  </div>
-</div>
-<div class="row">
-  <div class="card">
-    <div class="ct" id="cTit">🎫 Airline & Buchungsdaten</div>
-    <div class="f">
-      <label for="u5" id="lblPort">Airline oder Buchungsportal wählen</label>
-      <select id="u5">
-        <option value="tk|pnr_ln|https://turkishairlines.com">Turkish Airlines</option>
-        <option value="lh|pnr_ln|https://lufthansa.com">Lufthansa</option>
-        <option value="qr|pnr_ln|https://qatarairways.com">Qatar Airways</option>
-        <option value="ek|pnr_ln|https://emirates.com">Emirates</option>
-        <option value="sq|pnr_ln|https://singaporeair.com">Singapore Airlines</option>
-        <option value="tg|pnr_ln|https://thaiairways.com">Thai Airways</option>
-        <option value="cx|pnr_ln|https://cathaypacific.com">Cathay Pacific</option>
-        <option value="pr|pnr_ln|https://philippineairlines.com">Philippine Airlines</option>
-        <option value="5j|pnr_ln|https://cebupacificair.com">Cebu Pacific</option>
-        <option value="tr|pnr_ln|https://flyscoot.com">Scoot</option>
-        <option value="pg|pnr_ln|https://bangkokair.com">Bangkok Airways</option>
-        <option value="vj|pnr_fn_ln|https://vietjetair.com">VietJet Air</option>
-        <option value="ak|mail_pnr|https://airasia.com">AirAsia</option>
-        <option value="gtg|mail_pnr|https://gotogate.de">Gotogate</option>
-        <option value="exp|mail_only|https://expedia.de">Expedia</option>
-        <option value="trp|mail_pnr|https://trip.com">Trip.com</option>
-        <option value="kwi|mail_only|https://kiwi.com">Kiwi.com</option>
-        <option value="sky|mail_only|https://skyscanner.de">Skyscanner</option>
-        <option value="kyk|mail_only|https://kayak.de">Kayak</option>
-        <option value="mom|mail_only|https://momondo.de">Momondo</option>
-        <option value="opo|mail_pnr|https://opodo.de">Opodo</option>
-      </select>
-    </div>
-    <div class="f" id="f_pnr">
-      <label for="u3" id="lblPnr">Buchungscode (PNR)</label>
-      <div class="inrow">
-        <input type="text" id="u3" placeholder="z.B. ABC123">
-        <button type="button" class="cpbtn" id="cpPnr"
-          onclick="cp('u3','PNR')">📋 Kopieren</button>
-      </div>
-    </div>
-    <div class="f off" id="f_fn">
-      <label for="u_fn" id="lblFn">Vorname (wie im Pass)</label>
-      <div class="inrow">
-        <input type="text" id="u_fn" placeholder="z.B. MAX">
-        <button type="button" class="cpbtn" id="cpFn"
-          onclick="cp('u_fn','Vorname')">📋 Kopieren</button>
-      </div>
-    </div>
-    <div class="f" id="f_ln">
-      <label for="u6" id="lblLn">Nachname (wie im Pass)</label>
-      <div class="inrow">
-        <input type="text" id="u6" placeholder="z.B. MUSTERMANN">
-        <button type="button" class="cpbtn" id="cpLn"
-          onclick="cp('u6','Nachname')">📋 Kopieren</button>
-      </div>
-    </div>
-    <div class="f off" id="f_mail">
-      <label for="u4" id="lblMail">Buchungs-E-Mail</label>
-      <div class="inrow">
-        <input type="email" id="u4" placeholder="name@beispiel.de">
-        <button type="button" class="cpbtn" id="cpMail"
-          onclick="cp('u4','E-Mail')">📋 Kopieren</button>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="ct" id="cTit2">🛂 Reisedokumente & Status</div>
-    <div class="f">
-      <label for="u_tknr" id="lblTk">Ticketnummer (freiwillig)</label>
-      <div class="inrow">
-        <input type="text" id="u_tknr" placeholder="z.B. 235-1234567890">
-        <button type="button" class="cpbtn" id="cpTk"
-          onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
-      </div>
-    </div>
-    <div class="f">
-      <label for="u_pp" id="lblPp">Reisepassnummer (freiwillig)</label>
-      <div class="inrow">
-        <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
-        <button type="button" class="cpbtn" id="cpPp"
-          onclick="cp('u_pp','Pass-Nr.')">📋 Kopieren</button>
-      </div>
-    </div>
-    <div class="bn" id="hint">Benötigt: Buchungscode (PNR) + Nachname</div>
-  </div>
-</div>
-<div class="bb">
-  <div class="acts">
-    <button type="button" class="abtn note" id="btnNote"
-      onclick="openNote()">1️⃣ Spickzettel öffnen</button>
-    <a id="go" href="#" target="_blank"
-      class="abtn go">2️⃣ Airline-Seite öffnen ➡️</a>
-  </div>
-  <div id="ts"></div>
-  <div class="hintbox" id="hintBox">
-    ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie
-    <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
-    erscheinen diese nachher auf Ihrem Notizzettel,
-    wenn Sie die Seite Ihrer Airline aufrufen.
+    <span id="footR">
+      Alle Daten bleiben lokal auf deinem Gerät gespeichert.
+    </span>
   </div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
 const P="https:"+String.fromCharCode(47,47);
-const keys="u5;u3;u_fn;u6;u4;u_tknr;u_pp".split(";");
-const upKeys="u3;u_fn;u6;u_pp".split(";");
-const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-let ci=0,bgmOn=false,lang="de";
+let bgmOn=false,lang="de";
 try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
 function isEn(){return lang==="en";}
-
-const guides={
-  tk:"1. 'Buchung verwalten' wählen.|2. PNR eingeben.|3. Nachname eingeben.",
-  lh:"1. 'Meine Buchungen' öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
-  qr:"1. 'Buchung verwalten' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  ek:"1. 'Buchung verwalten' klicken.|2. Nachname eingeben.|3. Buchungsreferenz eingeben.",
-  sq:"1. 'Buchung verwalten' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  tg:"1. 'Meine Buchung' öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
-  cx:"1. 'Buchung verwalten' öffnen.|2. Vor- & Nachname eingeben.|3. Buchungsreferenz eingeben.",
-  pr:"1. 'Manage Booking' öffnen.|2. PNR eingeben.|3. Nachname eingeben.",
-  "5j":"1. 'Manage Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  tr:"1. 'Manage My Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname oder E-Mail eingeben.",
-  pg:"1. 'Manage Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  vj:"1. 'My Booking' öffnen.|2. Buchungscode eingeben.|3. Nachname & Vorname eingeben.",
-  ak:"1. 'Purchases' öffnen.|2. Mit Buchungs-E-Mail einloggen oder PNR verknüpfen.",
-  gtg:"1. 'Meine Buchungen' öffnen.|2. Buchungs-E-Mail eingeben.|3. Bestellnummer / PNR eingeben.",
-  exp:"1. 'Meine Reisen' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  trp:"1. 'Buchungen suchen' öffnen.|2. Buchungs-E-Mail eingeben.|3. Buchungsnummer eingeben.",
-  kwi:"1. 'Buchungen verwalten' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  sky:"1. 'Anmelden' wählen.|2. Mit Buchungs-E-Mail einloggen.",
-  kyk:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  mom:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  opo:"1. 'Meine Reisen' öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
-};
 
 function applyLang(){
   const e=isEn();
   document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"✈️ My Current Bookings PRO":"✈️ Meine aktuellen Buchungen PRO";
-  $("hTit").textContent=e?"✈️ My Current Bookings PRO":"✈️ Meine aktuellen Buchungen PRO";
-  $("navAct").textContent=e?"✈️ MY CURRENT BOOKINGS (ACTIVE)":"✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)";
-  $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
-  $("navHtl").textContent=e?"🏨 My Hotel Search ➡️":"🏨 Meine Hotelsuche ➡️";
-  $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
-  $("cTit").textContent=e?"🎫 Airline & Booking Data":"🎫 Airline & Buchungsdaten";
-  $("cTit2").textContent=e?"🛂 Travel Documents & Status":"🛂 Reisedokumente & Status";
-  $("lblPort").textContent=e?"Select Airline or Booking Portal":"Airline oder Buchungsportal wählen";
-  $("lblPnr").textContent=e?"Booking Code (PNR)":"Buchungscode (PNR)";
-  $("lblFn").textContent=e?"First Name (as in passport)":"Vorname (wie im Pass)";
-  $("lblLn").textContent=e?"Last Name (as in passport)":"Nachname (wie im Pass)";
-  $("lblMail").textContent=e?"Booking Email":"Buchungs-E-Mail";
-  $("lblTk").textContent=e?"Ticket Number (optional)":"Ticketnummer (freiwillig)";
-  $("lblPp").textContent=e?"Passport Number (optional)":"Reisepassnummer (freiwillig)";
-  const cpTxt=e?"📋 Copy":"📋 Kopieren";
-  ["cpPnr","cpFn","cpLn","cpMail","cpTk","cpPp"].forEach(id=>$(id).textContent=cpTxt);
-  $("btnNote").textContent=e?"1️⃣ Open Sticky Note":"1️⃣ Spickzettel öffnen";
-  $("go").textContent=e?"2️⃣ Open Airline Site ➡️":"2️⃣ Airline-Seite öffnen ➡️";
-  $("hintBox").innerHTML=e
-    ?"ℹ️ <b>Note:</b> If you enter optional details such as <b>Ticket Number</b> or <b>Passport Number</b> here, they will appear on your sticky note when opening your airline's website."
-    :"ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen, erscheinen diese nachher auf Ihrem Notizzettel, wenn Sie die Seite Ihrer Airline aufrufen.";
+  $("pgTit").textContent=e
+    ?"🌴 paulausbkk • Worldwide Travel Portal"
+    :"🌴 paulausbkk • Weltweites Reiseportal";
+  $("hTit").textContent=e
+    ?"🌴 paulausbkk • Travel Portal"
+    :"🌴 paulausbkk • Reiseportal";
+  $("lbtn").textContent=e?"🌐 EN (Switch to DE)":"🌐 DE (Switch to EN)";
+  $("heroTit").textContent=e
+    ?"✈️ Worldwide Flight & Hotel Search at a Glance"
+    :"✈️ Weltweite Flug- & Hotelsuche auf einen Blick";
+  $("heroSub").textContent=e
+    ?"Compare flights and hotels in seconds and manage your current flight bookings with a handy floating sticky note."
+    :"Vergleiche sekundenschnell Flüge, Hotels und verwalte deine aktuellen Flugbuchungen mit praktischem Spickzettel.";
+  $("c1Tit").textContent=e?"✈️ My Flight Search":"✈️ Meine Flugsuche";
+  $("c1Txt").textContent=e
+    ?"Instant price comparison for round-trip or one-way flights on Kayak, Momondo, Skyscanner, Google Flights, Trip.com, Kiwi.com and Expedia."
+    :"Direkter Preisvergleich für Hin- & Rückflüge oder One-Way bei Kayak, Momondo, Skyscanner, Google Flights, Trip.com, Kiwi.com und Expedia.";
+  $("c1Btn").textContent=e?"Open Flight Search ➡️":"Flugsuche öffnen ➡️";
+  $("c2Tit").textContent=e?"🏨 My Hotel Search":"🏨 Meine Hotelsuche";
+  $("c2Txt").textContent=e
+    ?"Worldwide hotel search for any city – including direct links to Booking.com, Agoda, Expedia, Kayak, Momondo, Trivago and Airbnb."
+    :"Weltweite Hotelsuche für jede Stadt – inklusive Direktlinks zu Booking.com, Agoda, Expedia, Kayak, Momondo, Trivago und Airbnb.";
+  $("c2Btn").textContent=e?"Open Hotel Search ➡️":"Hotelsuche öffnen ➡️";
+  $("c3Tit").textContent=e
+    ?"🎫 My Current Bookings"
+    :"🎫 Meine aktuellen Buchungen";
+  $("c3Txt").textContent=e
+    ?"Save your booking code (PNR), passport & ticket details locally, open a floating sticky note and jump straight to your airline."
+    :"Buchungscode (PNR), Pass- & Ticketdaten sicher speichern, als schwebenden Spickzettel öffnen und direkt zur Airline springen.";
+  $("c3Btn").textContent=e
+    ?"Open Current Bookings ➡️"
+    :"Aktuelle Buchungen öffnen ➡️";
+  $("footL").textContent=e
+    ?"🌴 paulausbkk.github.io • Your Personal Travel Assistant"
+    :"🌴 paulausbkk.github.io • Dein persönlicher Reise-Assistent";
+  $("footR").textContent=e
+    ?"All data stays stored locally on your device."
+    :"Alle Daten bleiben lokal auf deinem Gerät gespeichert.";
   updBgmBtn();
 }
-
+function toggleLang(){
+  lang=isEn()?"de":"en";
+  try{localStorage.setItem("pab_lang",lang);}catch(e){}
+  applyLang();
+}
 function updBgmBtn(){
   const b=$("mbtn");if(!b)return;
-  b.textContent=bgmOn?(isEn()?"🔇 Music Off":"🔇 Musik Aus"):(isEn()?"🎵 Music On":"🎵 Musik An");
+  b.textContent=bgmOn
+    ?(isEn()?"🔇 Music Off":"🔇 Musik Aus")
+    :(isEn()?"🎵 Music On":"🎵 Musik An");
   b.classList.toggle("off",!bgmOn);
 }
 function playBgm(){
@@ -395,160 +324,24 @@ function toggleBgm(){
   const a=$("bgm");if(!a)return;
   if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}else{playBgm();}
 }
-function enterBookings(){
+function enterPortal(){
   const w=$("wOverlay");if(w)w.style.display="none";
   playBgm();
 }
-function normCaps(){
-  upKeys.forEach(k=>{
-    const el=$(k);
-    if(el&&el.value){
-      const up=el.value.toUpperCase();
-      if(el.value!==up)el.value=up;
-    }
-  });
-}
-function cp(id,label){
-  normCaps();
-  const el=$(id);
-  const val=el.value.trim();
-  if(!val){
-    $("ts").textContent=isEn()
-      ?"⚠️ Please enter "+label+" first!"
-      :"⚠️ Bitte zuerst "+label+" eintragen!";
-    $("ts").style.display="block";
-    return;
-  }
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(val).catch(()=>{});
-  }else{
-    el.select();try{document.execCommand("copy")}catch(e){}
-  }
-  $("ts").textContent=isEn()
-    ?"✅ "+label+" ("+val+") copied!"
-    :"✅ "+label+" ("+val+") kopiert!";
-  $("ts").style.display="block";
-}
-async function openNote(){
-  sv();
-  const parts=$("u5").value.split("|");
-  const code=parts.shift();
-  const airlineName=$("u5").options.item($("u5").selectedIndex).text;
-  const stepTxt=Object.getOwnPropertyDescriptor(guides,code);
-  const stepList=(stepTxt?stepTxt.value:"").split("|");
-  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
-  let clipAll="";
-  items.forEach(it=>{
-    const p=it.split("|");const lbl=p.shift();const id=p.join("");
-    let val=$(id).value.trim();
-    if(upKeys.includes(id))val=val.toUpperCase();
-    if(val)clipAll+=lbl+": "+val+" | ";
-  });
-  if(clipAll){
-    try{
-      navigator.clipboard.writeText(clipAll);
-      $("ts").textContent=isEn()
-        ?"✅ Sticky note started! Now click button 2."
-        :"✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
-      $("ts").style.display="block";
-    }catch(e){}
-  }
-  if("documentPictureInPicture" in window){
-    try{
-      const pip=await window.documentPictureInPicture.requestWindow({width:300,height:400});
-      const b=pip.document.body;
-      b.style.margin="0";b.style.padding="7px";
-      b.style.background="#f0f9ff";b.style.fontFamily="sans-serif";
-      const h=pip.document.createElement("div");
-      h.textContent="📌 "+airlineName;
-      h.style.fontWeight="bold";h.style.color="#0c4a6e";
-      h.style.fontSize="14px";h.style.marginBottom="6px";
-      h.style.borderBottom="2px solid #0284c7";h.style.paddingBottom="4px";
-      b.appendChild(h);
-      if(stepList.length&&stepList.join("")){
-        const box=pip.document.createElement("div");
-        box.style.background="#fef2f2";box.style.border="2px solid #991b1b";
-        box.style.borderRadius="6px";box.style.padding="7px 9px";
-        box.style.marginBottom="7px";box.style.fontSize="13.5px";
-        box.style.fontWeight="bold";box.style.color="#991b1b";
-        box.style.lineHeight="1.38";
-        const gTitle=isEn()?"🧭 Guide:":"🧭 Anleitung:";
-        box.innerHTML="<div style='font-size:14.5px;font-weight:bold;color:#7f1d1d;margin-bottom:3px'>"+gTitle+"</div>"+stepList.join("<br>");
-        b.appendChild(box);
-      }
-      items.forEach(it=>{
-        const p=it.split("|");const lbl=p.shift();const id=p.join("");
-        let val=$(id).value.trim();
-        if(upKeys.includes(id))val=val.toUpperCase();
-        if(val){
-          const row=pip.document.createElement("div");
-          row.style.display="flex";row.style.justifyContent="space-between";
-          row.style.alignItems="center";row.style.background="#fff";
-          row.style.border="1px solid #93c5fd";row.style.padding="4px 6px";
-          row.style.borderRadius="4px";row.style.marginBottom="4px";
-          const txt=pip.document.createElement("div");
-          txt.innerHTML="<div style='font-size:9px;color:#475569;font-weight:bold;line-height:1.1'>"+lbl+"</div><div style='font-size:14px;font-weight:bold;color:#0f172a;line-height:1.2'>"+val+"</div>";
-          const btn=pip.document.createElement("button");
-          btn.textContent="📋";btn.style.background="#0284c7";
-          btn.style.color="#fff";btn.style.border="none";
-          btn.style.borderRadius="4px";btn.style.padding="4px 8px";
-          btn.style.cursor="pointer";btn.style.fontSize="12px";
-          btn.onclick=()=>{navigator.clipboard.writeText(val);btn.textContent="✅";};
-          row.appendChild(txt);row.appendChild(btn);b.appendChild(row);
-        }
-      });
-      return;
-    }catch(e){}
-  }
-}
-function updClock(){
-  const e=isEn(),loc=e?"en-GB":"de-DE";
+function updClocks(){
   const now=new Date();
-  const dtEl=$("dt");
-  if(!dtEl)return;
-  dtEl.textContent=now.toLocaleDateString(loc)+" • "+now.toLocaleTimeString(loc);
-  const idx=ci++%cols.length;
-  dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
+  const tDE=now.toLocaleTimeString("de-DE",{
+    timeZone:"Europe/Berlin",hour:"2-digit",minute:"2-digit",second:"2-digit"
+  });
+  const tBKK=now.toLocaleTimeString("de-DE",{
+    timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit",second:"2-digit"
+  });
+  $("clkDE").textContent="🇩🇪 DE: "+tDE;
+  $("clkBKK").textContent="🇹🇭 BKK: "+tBKK;
 }
-function sv(){
-  normCaps();
-  updClock();
-  const e=isEn();
-  const parts=$("u5").value.split("|");
-  parts.shift();
-  const mode=parts.shift();
-  $("go").href=parts.join("|");
-  $("f_pnr").classList.toggle("off",mode==="mail_only");
-  $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
-  $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
-  $("f_mail").classList.toggle("off",mode!=="mail_pnr"&&mode!=="mail_only");
-  if(mode==="pnr_ln")$("hint").textContent=e?"Required: Booking Code (PNR) + Last Name":"Benötigt: Buchungscode (PNR) + Nachname";
-  if(mode==="pnr_fn_ln")$("hint").textContent=e?"Required (VietJet Air): Booking Code (PNR) + First Name + Last Name":"Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
-  if(mode==="mail_pnr")$("hint").textContent=e?"Required: Booking Email + Booking Code (PNR)":"Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
-  if(mode==="mail_only")$("hint").textContent=e?"Required: Log in with your booking email on the portal":"Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
-  const d={};
-  keys.forEach(k=>Object.defineProperty(d,k,{value:$(k).value,enumerable:true}));
-  try{localStorage.setItem("rk_upg",JSON.stringify(d))}catch(err){}
-}
-(function ld(){
-  try{
-    const raw=localStorage.getItem("rk_upg");
-    if(raw){
-      const d=JSON.parse(raw);
-      keys.forEach(k=>{
-        const desc=Object.getOwnPropertyDescriptor(d,k);
-        if(desc&&desc.value!==undefined)$(k).value=desc.value;
-      });
-    }
-  }catch(e){}
-  applyLang();
-  sv();
-  setInterval(updClock,1000);
-})();
-keys.forEach(k=>{
-  $(k).addEventListener("input",sv);
-  $(k).addEventListener("change",sv);
-});
+applyLang();
+updClocks();
+setInterval(updClocks,1000);
 </script>
 </body>
 </html>
