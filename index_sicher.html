@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -46,27 +44,28 @@ html,body{
   font-weight:bold;color:#fff;font-size:1.22rem;margin:0;
   letter-spacing:.3px
 }
-.cp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cp{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.78rem;padding:6px 12px;border-radius:6px;
+  font-size:.75rem;padding:6px 10px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
-  background:#0284c7;text-decoration:none;border:1px solid #38bdf8
+  background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
+  white-space:nowrap
 }
 .seg.upg{
-  background:#1e3a8a;font-size:.84rem;padding:8px 13px;
-  border-color:#60a5fa;opacity:.88
+  background:#1e3a8a;font-size:.8rem;padding:7px 11px;
+  border-color:#60a5fa;opacity:.92
 }
 .seg.upg:hover{opacity:1}
 .seg.act{
   background:linear-gradient(180deg,#0ea5e9 0%,#0284c7 100%);
-  font-size:.86rem;padding:8px 15px;color:#fff;
+  font-size:.82rem;padding:7px 13px;color:#fff;
   border:2px solid #e0f2fe;
   box-shadow:0 0 12px rgba(56,189,248,.65);
   cursor:default
 }
 .mbtn{
   background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
-  border-radius:6px;padding:7px 12px;font-size:.82rem;
+  border-radius:6px;padding:6px 11px;font-size:.78rem;
   font-weight:bold;cursor:pointer;white-space:nowrap;
   touch-action:manipulation;user-select:none
 }
@@ -197,9 +196,10 @@ body:has(#ow:checked) .st{
   <div class="cp">
     <button type="button" class="mbtn" id="mbtn"
       onclick="toggleFlightBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">19.11.2026</div>
+    <div class="seg" id="dt">23.11.2026 • 10:57:00</div>
     <div class="seg st" id="st">HIN & RÜCK</div>
-    <span class="seg act">✈️ Zur Flugsuche (Aktiv)</span>
+    <span class="seg act">✈️ Flugsuche (Aktiv)</span>
+    <a href="../index.html" class="seg upg">🏠 Zurück zur Startseite</a>
     <a href="meine-hotelsuche.html" class="seg upg">
       🏨 Meine Hotelsuche ➡️
     </a>
@@ -272,7 +272,6 @@ body:has(#ow:checked) .st{
       </div>
     </div>
   </div>
-
   <div class="card">
     <div class="ct">⚙️ Filter & Flug-Parameter</div>
     <div class="f2" style="align-items:end">
@@ -431,9 +430,18 @@ function iso(d){
   return d.getFullYear() + "-" + m + "-" + t;
 }
 
+function updClock(){
+  var now = new Date();
+  var dtEl = $("dt");
+  if(dtEl){
+    dtEl.textContent = now.toLocaleDateString("de-DE") +
+      " \u2022 " + now.toLocaleTimeString("de-DE");
+  }
+}
+
 function upd(){
   var now = new Date(), today = iso(now);
-  $("dt").textContent = now.toLocaleDateString("de-DE");
+  updClock();
   var ow = $("ow").checked;
   $("st").textContent = ow ? "NUR HINFLUG" : "HIN & R\u00dcCK";
   var hr = $("hr").value;
@@ -489,6 +497,7 @@ function upd(){
 $("od").min = iso(new Date());
 $("rd").min = iso(new Date());
 upd();
+setInterval(updClock, 1000);
 </script>
 </body>
 </html>
