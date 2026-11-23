@@ -3,596 +3,479 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title id="pgTit">✈️ Reisekonfiguration PRO v30 – Flugsuche</title>
+<title>✈️ Flugcockpit – Meine Flugbuchungen</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;
-  --b:#bae6fd;--g:#0ea5e9;--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe
+  --b:#bae6fd;--v:#0284c7;--red:#dc2626
 }
 html,body{
-  margin:0;padding:14px;
+  margin:0;padding:12px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  min-height:100vh;font-family:sans-serif;color:var(--t);
-  box-sizing:border-box
-}
-.f-modal{
-  position:fixed;inset:0;background:rgba(15,41,66,.88);
-  display:flex;align-items:center;justify-content:center;
-  z-index:2000;padding:20px
-}
-.f-card{
-  background:#fff;border:2px solid #7dd3fc;border-radius:16px;
-  padding:26px 24px;text-align:center;max-width:400px;width:100%;
-  box-shadow:0 12px 32px rgba(0,0,0,.45)
-}
-.f-card h3{
-  margin:0 0 18px 0;color:#0f2942;font-size:1.35rem;
-  line-height:1.25
-}
-.w-sub-tit{
-  display:block;font-size:.98rem;font-weight:bold;
-  color:#0369a1;margin-top:4px
-}
-.f-btn{
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;width:100%;max-width:300px;
-  margin:0 auto;box-sizing:border-box;background:#0284c7;
-  color:#fff;border:none;border-radius:12px;padding:14px 18px;
-  font-size:1.06rem;font-weight:bold;cursor:pointer;
-  text-align:center;line-height:1.25;
-  touch-action:manipulation;user-select:none;
-  -webkit-tap-highlight-color:transparent
-}
-.f-btn:active{background:#0369a1}
-.f-btn span{pointer-events:none}
-.w-btn-en{
-  display:block;font-size:.84rem;font-weight:bold;
-  color:#e0f2fe;margin-top:3px
+  font-family:sans-serif;color:var(--t);box-sizing:border-box
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:10px 14px;border-radius:12px;
-  margin-bottom:16px;flex-wrap:wrap;gap:8px;
-  box-shadow:0 4px 14px rgba(15,41,66,.18)
+  background:#0f2942;padding:10px 16px;border-radius:12px;
+  margin-bottom:12px;flex-wrap:wrap;gap:10px;
+  box-shadow:0 4px 12px rgba(15,41,66,.18)
 }
 .tit{
-  font-weight:bold;color:#fff;font-size:1.12rem;margin:0;
-  letter-spacing:.2px
+  font-weight:bold;color:#fff;font-size:1.18rem;
+  margin:0;letter-spacing:.3px
 }
-.cp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.cp{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.68rem;padding:4px 7px;border-radius:5px;
+  font-size:.75rem;padding:6px 10px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
-  background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
-  white-space:nowrap
+  background:#0284c7;text-decoration:none;
+  border:1px solid #38bdf8;white-space:nowrap
 }
-.seg.upg{
-  background:#1e3a8a;font-size:.68rem;padding:4px 8px;
-  border-color:#60a5fa;opacity:.95
+.bk{
+  background:#1e40af;font-size:.78rem;
+  padding:6px 11px;border-color:#60a5fa
 }
-.seg.upg:hover{opacity:1}
-.seg.act{
-  background:linear-gradient(180deg,#0ea5e9 0%,#0284c7 100%);
-  font-size:.68rem;padding:3px 8px;color:#fff;
-  border:2px solid #e0f2fe;
-  box-shadow:0 0 10px rgba(56,189,248,.65);
-  cursor:default
+.act{
+  background:linear-gradient(180deg,#38bdf8 0%,#0284c7 100%);
+  border:2px solid #e0f2fe;font-size:.78rem;padding:5px 12px;
+  box-shadow:0 0 12px rgba(125,211,252,.65);cursor:default
 }
-.mbtn{
-  background:#1e3a8a;color:#fff;border:1px solid #60a5fa;
-  border-radius:5px;padding:4px 8px;font-size:.68rem;
-  font-weight:bold;cursor:pointer;white-space:nowrap;
-  touch-action:manipulation;user-select:none
-}
-.mbtn.on{
-  background:#0284c7;border-color:#7dd3fc;
-  box-shadow:0 0 8px rgba(125,211,252,.5)
-}
-.row{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px}
 .card{
-  flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:18px 20px;background:#ffffff;box-sizing:border-box;
+  max-width:740px;margin:0 auto 12px auto;
+  border:1px solid #93c5fd;border-radius:12px;
+  padding:14px 18px;background:#fff;box-sizing:border-box;
   box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
 .ct{
-  font-weight:bold;font-size:1.06rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:7px;
-  margin-bottom:14px
+  font-weight:bold;font-size:1.02rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:6px;
+  margin-bottom:11px
 }
 .f{
-  margin-bottom:13px;display:flex;
-  flex-direction:column;position:relative
+  margin-bottom:10px;display:flex;
+  flex-direction:column;transition:.2s
 }
 .f2{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:13px
+  gap:10px;margin-bottom:10px
+}
+.f.off{opacity:.35;pointer-events:none}
+.f.off input{
+  background:#e2e8f0!important;border-color:#94a3b8!important
+}
+.f.off label{color:#64748b!important}
+.f.off input::placeholder{
+  color:#64748b!important;font-weight:normal
 }
 label{
-  font-weight:bold;font-size:.84rem;
-  margin-bottom:4px;color:#1e3a8a
+  font-weight:bold;font-size:.82rem;
+  margin-bottom:3px;color:#0369a1
 }
-.inp,.dat,select{
-  height:41px;padding:0 12px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.96rem;
-  background:#f8fafc;color:var(--t);width:100%;transition:.2s
+label.req{color:var(--red)}
+label.opt{color:#475569}
+input,select{
+  height:37px;padding:0 11px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.94rem;
+  background:#f8fafc;width:100%;color:var(--t);transition:.2s
 }
-.inp:focus,.dat:focus,select:focus{
+input:focus,select:focus{
   outline:none;border-color:#0284c7;background:#fff;
   box-shadow:0 0 0 3px rgba(2,132,199,.15)
+}
+input::placeholder{
+  color:var(--red);font-weight:bold;opacity:1;font-size:.85rem
+}
+input.opt::placeholder{color:#94a3b8;font-weight:normal}
+.cpb{display:flex;gap:6px}
+.cpb button{
+  width:42px;height:37px;border:1px solid #93c5fd;
+  background:#f0f9ff;border-radius:8px;cursor:pointer;
+  font-size:1.05rem;flex-shrink:0;transition:.2s;padding:0
+}
+.cpb button:hover{background:#e0f2fe}
+.bb{
+  max-width:740px;margin:0 auto;border:1px solid #93c5fd;
+  background:#fff;border-radius:12px;padding:13px 18px;
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  box-shadow:0 4px 12px rgba(3,105,161,.08)
+}
+.btn{
+  display:flex;align-items:center;justify-content:center;
+  height:44px;background:#0284c7;color:#fff;font-weight:bold;
+  border-radius:8px;font-size:.88rem;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;border:none;
+  box-shadow:0 2px 6px rgba(15,41,66,.15);transition:.2s;
+  text-align:center;padding:0 8px
+}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.note{background:#1e3a8a;font-size:.84rem}
+.hinweis{
+  background:#eff6ff;border:1px solid #93c5fd;
+  border-left:5px solid var(--red);color:var(--red);
+  padding:7px 12px;border-radius:8px;font-size:.85rem;
+  margin-bottom:10px;font-weight:bold
+}
+#ts{
+  display:none;grid-column:1 / -1;background:#e0f2fe;
+  border:1px solid #38bdf8;color:#0c4a6e;padding:8px 12px;
+  border-radius:8px;font-weight:bold;font-size:.85rem;
+  text-align:center
 }
 @keyframes pulseHint{
   0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
   50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
 }
-.bn{
-  background:#0f2942;border:3px solid #991b1b;
-  border-left:7px solid #991b1b;border-radius:8px;
-  padding:11px 14px;color:#fff;font-weight:bold;
-  font-size:.88rem;line-height:1.4;
-  animation:pulseHint 2.2s infinite ease-in-out
+.hintbox{
+  grid-column:1 / -1;background:#0f2942;color:#fff;
+  border:3px solid #991b1b;border-left:7px solid #991b1b;
+  border-radius:8px;padding:10px 14px;font-size:.85rem;
+  line-height:1.4;animation:pulseHint 2.2s infinite ease-in-out
 }
-.bb{
-  border:1px solid #93c5fd;background:#ffffff;
-  border-radius:12px;padding:16px 20px;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
-}
-.bf{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
-  gap:10px
-}
-.btn{
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;height:46px;color:#fff;font-weight:bold;
-  border-radius:8px;font-size:.84rem;text-transform:uppercase;
-  text-decoration:none;text-align:center;line-height:1.15;
-  padding:0 6px;box-shadow:0 2px 6px rgba(15,41,66,.15)
-}
-.btn .sub{
-  font-size:.64rem;font-weight:bold;text-transform:none;
-  opacity:1;margin-top:2px;color:#e0f2fe
-}
-.b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
-.b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
-.rng{width:100%;height:41px;accent-color:#0284c7;cursor:pointer}
-body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
-body:has(#ow:checked) #rb input{background:#e2e8f0!important}
-body:has(#ow:checked) .st{
-  background:#0369a1!important;color:#fff;border-color:#7dd3fc
-}
-.swc{
-  display:flex;align-items:center;justify-content:space-between;
-  background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-  border-radius:8px;min-height:41px;gap:8px
-}
-.swc.yl{background:#e0f2fe;border:1px solid #7dd3fc}
-.swc.split{
-  flex-direction:column;justify-content:center;
-  align-items:stretch;padding:0;gap:0;overflow:hidden
-}
-.swh{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:4px 10px;gap:6px;min-height:28px
-}
-.swh:first-child{border-bottom:1px solid #7dd3fc}
-.sw{
-  position:relative;display:inline-block;
-  width:42px;height:24px;flex-shrink:0
-}
-.sw.sm{width:34px;height:18px}
-.sw input{opacity:0;width:0;height:0}
-.sl{
-  position:absolute;cursor:pointer;inset:0;
-  background:#cbd5e1;border-radius:20px;transition:.3s
-}
-.sl:before{
-  position:absolute;content:"";height:18px;width:18px;
-  left:3px;bottom:3px;background:#fff;
-  border-radius:50%;transition:.3s
-}
-.sw.sm .sl:before{height:14px;width:14px;left:2px;bottom:2px}
-.sw input:checked+.sl{background:#0284c7!important}
-.sw input:checked+.sl:before{transform:translateX(18px)}
-.sw.sm input:checked+.sl:before{transform:translateX(16px)}
 </style>
 </head>
 <body>
-<div class="f-modal" id="fModal">
-  <div class="f-card">
-    <h3>
-      ✈️ Flugsuche
-      <span class="w-sub-tit">Flight Search</span>
-    </h3>
-    <button type="button" class="f-btn" id="fActBtn">
-      <span>Flugsuche aktivieren ➡️</span>
-      <span class="w-btn-en">Activate Flight Search ➡️</span>
-    </button>
-  </div>
-</div>
-
 <div class="hdr">
-  <h1 class="tit" id="hTit">✈️ Reisekonfiguration PRO v30 – Flugsuche</h1>
+  <h1 class="tit">✈️ Flugcockpit – Meine Buchungen</h1>
   <div class="cp">
-    <button type="button" class="mbtn" id="mbtn"
-      onclick="toggleFlightBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">23.11.2026 • 10:57:00</div>
-    <div class="seg st" id="st">HIN & RÜCK</div>
-    <span class="seg act" id="navAct">✈️ Flugsuche (Aktiv)</span>
-    <a href="meine-hotelsuche.html" class="seg upg" id="navHtl">
-      🏨 Meine Hotelsuche ➡️
+    <span class="seg act">✈️ MEINE FLUGBUCHUNGEN (AKTIV)</span>
+    <a href="../index.html" class="seg bk">🏠 Zurück zur Startseite</a>
+    <a href="index.html" class="seg bk">✈️ Flugsuche</a>
+    <a href="meine-hotelsuche.html" class="seg bk">
+      🏨 Meine Hotelsuche
     </a>
-    <a href="meine-flugbuchungen.html" class="seg upg" id="navBkg">
-      ✈️ Meine Flugbuchungen ➡️
-    </a>
-    <a href="../index.html" class="seg upg" id="navHome">
-      🏠 Zurück zur Startseite
-    </a>
+    <div class="seg" id="dt">23.11.2026 • 10:20:08</div>
   </div>
 </div>
+<div class="card">
+  <div class="ct">1️⃣ Airline / Veranstalter & Reisedaten</div>
+  <div class="f">
+    <label>Airline / Reiseveranstalter</label>
+    <select id="u5">
+      <optgroup label="✈️ Airlines">
+        <option value="tk|pnr_ln|https://turkishairlines.com">
+          Turkish Airlines
+        </option>
+        <option value="lh|pnr_ln|https://lufthansa.com">
+          Lufthansa
+        </option>
+        <option value="qr|pnr_ln|https://qatarairways.com">
+          Qatar Airways
+        </option>
+        <option value="ek|pnr_ln|https://emirates.com">
+          Emirates
+        </option>
+        <option value="sq|pnr_ln|https://singaporeair.com">
+          Singapore Airlines
+        </option>
+        <option value="tg|pnr_ln|https://thaiairways.com">
+          Thai Airways
+        </option>
+        <option value="cx|pnr_ln|https://cathaypacific.com">
+          Cathay Pacific
+        </option>
+        <option value="pr|pnr_ln|https://philippineairlines.com">
+          Philippine Airlines
+        </option>
+        <option value="5j|pnr_ln|https://cebupacificair.com">
+          Cebu Pacific (Low-Cost Asien)
+        </option>
+        <option value="tr|pnr_ln|https://flyscoot.com">
+          Scoot (Low-Cost Asien)
+        </option>
+        <option value="pg|pnr_ln|https://bangkokair.com">
+          Bangkok Airways
+        </option>
+        <option value="vj|pnr_fn_ln|https://vietjetair.com">
+          VietJet Air (Low-Cost Asien)
+        </option>
+        <option value="ak|mail_pnr|https://airasia.com">
+          AirAsia (Low-Cost Asien)
+        </option>
+      </optgroup>
+      <optgroup label="🧳 Reisevermittler & Portale">
+        <option value="gtg|mail_pnr|https://gotogate.de">
+          Gotogate (Meine Buchungen)
+        </option>
+        <option value="exp|mail_only|https://expedia.de">
+          Expedia (Reiseplan)
+        </option>
+        <option value="trp|mail_pnr|https://trip.com?">
+          Trip.com (Buchungen)
+        </option>
+        <option value="kwi|mail_only|https://kiwi.com">
+          Kiwi.com (Buchungen)
+        </option>
+        <option value="sky|mail_only|https://skyscanner.de">
+          Skyscanner (Mein Konto)
+        </option>
+        <option value="kyk|mail_only|https://kayak.de">
+          Kayak (Trips)
+        </option>
+        <option value="mom|mail_only|https://momondo.de">
+          Momondo (Trips)
+        </option>
+        <option value="opo|mail_pnr|https://opodo.de">
+          Opodo (Meine Reisen)
+        </option>
+      </optgroup>
+    </select>
+  </div>
+  <div id="hint" class="hinweis">
+    Benötigt: Buchungscode (PNR) + Nachname
+  </div>
 
-<div class="row">
-  <div class="card">
-    <div class="ct" id="c1Tit">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-    <div class="f2" style="margin-bottom:14px">
-      <div class="f" style="margin:0">
-        <label for="i1" id="lblOrig">Abflug (IATA oder Stadt)</label>
-        <input type="text" class="inp" id="i1"
-          list="airports" placeholder="z.B. BER, FRA, MUC">
-      </div>
-      <div class="f" style="margin:0">
-        <label for="i2" id="lblDest">Ziel (IATA oder Stadt)</label>
-        <input type="text" class="inp" id="i2"
-          list="airports" placeholder="z.B. BKK, DAD, CEB">
+  <div class="f2" style="margin-bottom:0">
+    <div id="f_pnr" class="f">
+      <label class="req">Buchungscode (PNR)</label>
+      <div class="cpb">
+        <input type="text" id="u3" autocomplete="off"
+          placeholder="PFLICHT: z.B. TW8ZRK"
+          style="text-transform:uppercase">
+        <button type="button"
+          onclick="cp('u3','Buchungscode')">📋</button>
       </div>
     </div>
-    <datalist id="airports">
-      <option value="Berlin Brandenburg (BER)">
-      <option value="Frankfurt am Main (FRA)">
-      <option value="München (MUC)">
-      <option value="Leipzig/Halle (LEJ)">
-      <option value="Düsseldorf (DUS)">
-      <option value="Hamburg (HAM)">
-      <option value="Köln/Bonn (CGN)">
-      <option value="Stuttgart (STR)">
-      <option value="Hannover (HAJ)">
-      <option value="Nürnberg (NUE)">
-      <option value="Wien (VIE)">
-      <option value="Zürich (ZRH)">
-      <option value="Bangkok Suvarnabhumi (BKK)">
-      <option value="Bangkok Don Mueang (DMK)">
-      <option value="Phuket (HKT)">
-      <option value="Chiang Mai (CNX)">
-      <option value="Koh Samui (USM)">
-      <option value="Krabi (KBV)">
-      <option value="Da Nang (DAD)">
-      <option value="Quy Nhon (UIH)">
-      <option value="Ho-Chi-Minh-Stadt (SGN)">
-      <option value="Hanoi (HAN)">
-      <option value="Manila (MNL)">
-      <option value="Cebu (CEB)">
-      <option value="Dumaguete (DGT)">
-      <option value="Pagadian (PAG)">
-      <option value="Singapur (SIN)">
-      <option value="Kuala Lumpur (KUL)">
-      <option value="Denpasar Bali (DPS)">
-      <option value="Dubai (DXB)">
-      <option value="Doha (DOH)">
-      <option value="Istanbul (IST)">
-      <option value="Tokio (TYO)">
-      <option value="Faro (FAO)">
-      <option value="Christchurch (CHC)">
-    </datalist>
-    <div class="f2" style="margin-bottom:0">
-      <div class="f" style="margin:0">
-        <label for="od" id="lblOd">Hinflug</label>
-        <input type="date" class="dat" id="od" min="2026-11-19">
-      </div>
-      <div class="f" id="rb" style="margin:0">
-        <label for="rd" id="lblRd">Rückflug</label>
-        <input type="date" class="dat" id="rd" min="2026-11-19">
+    <div id="f_mail" class="f">
+      <label class="req">Buchungs-E-Mail / Login</label>
+      <div class="cpb">
+        <input type="email" id="u4" autocomplete="off"
+          placeholder="PFLICHT: E-Mail der Buchung">
+        <button type="button"
+          onclick="cp('u4','E-Mail')">📋</button>
       </div>
     </div>
   </div>
-  <div class="card">
-    <div class="ct" id="c2Tit">⚙️ Filter & Flug-Parameter</div>
-    <div class="f2" style="align-items:end">
-      <div class="swc">
-        <label for="ow" id="lblOw"
-          style="margin:0;cursor:pointer;font-size:.82rem">
-          Nur Hinflug (One-Way)
-        </label>
-        <label class="sw">
-          <input type="checkbox" id="ow"><span class="sl"></span>
-        </label>
-      </div>
-      <div class="f" style="margin:0">
-        <label for="px" id="lblPx">Personenzahl</label>
-        <select id="px">
-          <option value="1" id="px1">1 Person</option>
-          <option value="2" id="px2">2 Personen</option>
-          <option value="3" id="px3">3 Personen</option>
-          <option value="4" id="px4">4 Personen</option>
-        </select>
+
+  <div class="f2" style="margin-bottom:0">
+    <div id="f_fn" class="f">
+      <label class="req">Vorname (Reisepass)</label>
+      <div class="cpb">
+        <input type="text" id="u_fn" autocomplete="off"
+          placeholder="PFLICHT: z.B. MAX"
+          style="text-transform:uppercase">
+        <button type="button"
+          onclick="cp('u_fn','Vorname')">📋</button>
       </div>
     </div>
-    <div class="f">
-      <label for="hr" id="hrl">Max. Reisezeit (1 – 36 Std.)</label>
-      <input type="range" class="rng" id="hr"
-        min="1" max="36" value="14">
-    </div>
-    <div class="f2">
-      <div class="swc yl">
-        <label for="ns" id="lblNs"
-          style="margin:0;cursor:pointer;font-size:.82rem">
-          Nur Direktflüge (Non-Stop)
-        </label>
-        <label class="sw">
-          <input type="radio" name="stops" id="ns">
-          <span class="sl"></span>
-        </label>
-      </div>
-      <div class="swc yl split">
-        <div class="swh">
-          <label for="s1" id="lblS1"
-            style="margin:0;cursor:pointer;font-size:.8rem">
-            Max. 1 Stop
-          </label>
-          <label class="sw sm">
-            <input type="radio" name="stops" id="s1">
-            <span class="sl"></span>
-          </label>
-        </div>
-        <div class="swh">
-          <label for="s2" id="lblS2"
-            style="margin:0;cursor:pointer;font-size:.8rem">
-            Max. 2 Stopps
-          </label>
-          <label class="sw sm">
-            <input type="radio" name="stops" id="s2">
-            <span class="sl"></span>
-          </label>
-        </div>
+    <div id="f_ln" class="f">
+      <label class="req">Nachname (ohne Vornamen!)</label>
+      <div class="cpb">
+        <input type="text" id="u6" autocomplete="off"
+          placeholder="PFLICHT: z.B. MUSTERMANN"
+          style="text-transform:uppercase">
+        <button type="button"
+          onclick="cp('u6','Nachname')">📋</button>
       </div>
     </div>
-    <div class="f" style="margin-bottom:12px">
-      <div class="swc">
-        <label for="lc" id="lblLc"
-          style="margin:0;cursor:pointer;font-size:.82rem">
-          Inkl. Low-Cost Airlines (zusätzlich)
-        </label>
-        <label class="sw">
-          <input type="checkbox" id="lc"><span class="sl"></span>
-        </label>
+  </div>
+
+  <div class="f2" style="margin-bottom:0">
+    <div>
+      <label class="opt">Ticketnummer (Notizzettel)</label>
+      <div class="cpb">
+        <input type="text" id="u_tknr" class="opt"
+          autocomplete="off" placeholder="z.B. 2354817365876">
+        <button type="button"
+          onclick="cp('u_tknr','Ticketnummer')">📋</button>
       </div>
     </div>
-    <div class="bn" id="hintBox">
-      ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend
-      angeklickten Website beim Anbieter ausgewählt werden.
+    <div>
+      <label class="opt">Reisepassnummer (Notizzettel)</label>
+      <div class="cpb">
+        <input type="text" id="u_pp" class="opt"
+          autocomplete="off" placeholder="z.B. C01X00T47"
+          style="text-transform:uppercase">
+        <button type="button"
+          onclick="cp('u_pp','Reisepass')">📋</button>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="bb">
-  <div class="bf">
-    <a id="u1" href="#" onclick="upd()"
-      target="_blank" class="btn b2">Skyscanner</a>
-    <a id="u2" href="#" onclick="upd()"
-      target="_blank" class="btn b3">Kayak</a>
-    <a id="u3" href="#" onclick="upd()"
-      target="_blank" class="btn b4">Momondo</a>
-    <a id="u4" href="#" onclick="upd()"
-      target="_blank" class="btn b5">
-      Expedia<span class="sub" id="expSub">Stopps auf Website wählen</span>
-    </a>
-    <a id="u5" href="#" onclick="upd()"
-      target="_blank" class="btn b6">Kiwi.com</a>
-    <a id="u6" href="#" onclick="upd()"
-      target="_blank" class="btn b7">Trip.com</a>
+  <button type="button" onclick="openNote()" class="btn note">
+    📌 1. Schwebenden Spickzettel starten
+  </button>
+  <a id="go" href="https://turkishairlines.com"
+    target="_blank" class="btn">🚀 2. Airline-Seite öffnen</a>
+  <div id="ts"></div>
+  <div class="hintbox">
+    ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie:
+    <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
+    erscheinen diese nachher auf Ihrem Notizzettel,
+    wenn Sie die Seite Ihrer Airline aufrufen.
   </div>
 </div>
 <script>
-var $ = function(id){ return document.getElementById(id); };
-var P = "https:" + String.fromCharCode(47, 47);
-var H_KW = "www." + String.fromCharCode(107,105,119,105) + ".com";
-var H_TR = "www." + String.fromCharCode(116,114,105,112) + ".com";
-var bgmPlayer = new Audio(P + "paulausbkk.github.io/musik.mp3");
-bgmPlayer.loop = true;
-bgmPlayer.volume = 0.45;
-var bgmRunning = false;
-var lang = "de";
-
-try {
-  if(localStorage.getItem("pab_lang") === "en") lang = "en";
-} catch(e){}
-
-function isEn(){ return lang === "en"; }
-
-function applyLang(){
-  var e = isEn();
-  document.documentElement.lang = e ? "en" : "de";
-  $("pgTit").textContent = e
-    ? "✈️ Travel Config PRO v30 – Flight Search"
-    : "✈️ Reisekonfiguration PRO v30 – Flugsuche";
-  $("hTit").textContent = e
-    ? "✈️ Travel Config PRO v30 – Flight Search"
-    : "✈️ Reisekonfiguration PRO v30 – Flugsuche";
-  $("navAct").textContent = e
-    ? "✈️ Flight Search (Active)" : "✈️ Flugsuche (Aktiv)";
-  $("navHtl").textContent = e
-    ? "🏨 My Hotel Search ➡️" : "🏨 Meine Hotelsuche ➡️";
-  $("navBkg").textContent = e
-    ? "✈️ My Flight Bookings ➡️" : "✈️ Meine Flugbuchungen ➡️";
-  $("navHome").textContent = e
-    ? "🏠 Back to Home" : "🏠 Zurück zur Startseite";
-  $("c1Tit").textContent = e
-    ? "📋 Core Travel Data (Direct Jump)"
-    : "📋 Kern-Reisedaten (Direkt-Absprung)";
-  $("lblOrig").textContent = e
-    ? "Departure (IATA or City)" : "Abflug (IATA oder Stadt)";
-  $("i1").placeholder = e ? "e.g. BER, FRA, MUC" : "z.B. BER, FRA, MUC";
-  $("lblDest").textContent = e
-    ? "Destination (IATA or City)" : "Ziel (IATA oder Stadt)";
-  $("i2").placeholder = e ? "e.g. BKK, DAD, CEB" : "z.B. BKK, DAD, CEB";
-  $("lblOd").textContent = e ? "Outbound Flight" : "Hinflug";
-  $("lblRd").textContent = e ? "Return Flight" : "Rückflug";
-  $("c2Tit").textContent = e
-    ? "⚙️ Filters & Flight Parameters" : "⚙️ Filter & Flug-Parameter";
-  $("lblOw").textContent = e ? "One-Way Only" : "Nur Hinflug (One-Way)";
-  $("lblPx").textContent = e ? "Passengers" : "Personenzahl";
-  $("px1").textContent = e ? "1 Person" : "1 Person";
-  $("px2").textContent = e ? "2 Persons" : "2 Personen";
-  $("px3").textContent = e ? "3 Persons" : "3 Personen";
-  $("px4").textContent = e ? "4 Persons" : "4 Personen";
-  $("lblNs").textContent = e
-    ? "Direct Flights Only (Non-Stop)" : "Nur Direktflüge (Non-Stop)";
-  $("lblS1").textContent = e ? "Max. 1 Stop" : "Max. 1 Stop";
-  $("lblS2").textContent = e ? "Max. 2 Stops" : "Max. 2 Stopps";
-  $("lblLc").textContent = e
-    ? "Incl. Low-Cost Airlines (extra)"
-    : "Inkl. Low-Cost Airlines (zusätzlich)";
-  $("hintBox").innerHTML = e
-    ? "ℹ️ <b>Note:</b> Baggage must be selected on the " +
-      "respective provider website you click."
-    : "ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend " +
-      "angeklickten Website beim Anbieter ausgewählt werden.";
-  $("expSub").textContent = e
-    ? "Select stops on website" : "Stopps auf Website wählen";
-  renderFlightBgm();
+const $=id=>document.getElementById(id);
+const keys="u5;u3;u_fn;u6;u4;u_tknr;u_pp".split(";");
+const upKeys="u3;u_fn;u6;u_pp".split(";");
+const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
+let ci=0;
+const guides={
+  tk:"1. 'Buchung verwalten' wählen.|2. PNR eingeben.|3. Nachname eingeben.",
+  lh:"1. 'Meine Buchungen' öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
+  qr:"1. 'Buchung verwalten' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
+  ek:"1. 'Buchung verwalten' klicken.|2. Nachname eingeben.|3. Buchungsreferenz eingeben.",
+  sq:"1. 'Buchung verwalten' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
+  tg:"1. 'Meine Buchung' öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
+  cx:"1. 'Buchung verwalten' öffnen.|2. Vor- & Nachname eingeben.|3. Buchungsreferenz eingeben.",
+  pr:"1. 'Manage Booking' öffnen.|2. PNR eingeben.|3. Nachname eingeben.",
+  "5j":"1. 'Manage Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
+  tr:"1. 'Manage My Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname oder E-Mail eingeben.",
+  pg:"1. 'Manage Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
+  vj:"1. 'My Booking' öffnen.|2. Buchungscode eingeben.|3. Nachname & Vorname eingeben.",
+  ak:"1. 'Purchases' öffnen.|2. Mit Buchungs-E-Mail einloggen oder PNR verknüpfen.",
+  gtg:"1. 'Meine Buchungen' öffnen.|2. Buchungs-E-Mail eingeben.|3. Bestellnummer / PNR eingeben.",
+  exp:"1. 'Meine Reisen' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
+  trp:"1. 'Buchungen suchen' öffnen.|2. Buchungs-E-Mail eingeben.|3. Buchungsnummer eingeben.",
+  kwi:"1. 'Buchungen verwalten' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
+  sky:"1. 'Anmelden' wählen.|2. Mit Buchungs-E-Mail einloggen.",
+  kyk:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
+  mom:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
+  opo:"1. 'Meine Reisen' öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
+};
+function normCaps(){
+  upKeys.forEach(k=>{
+    const el=$(k);
+    if(el&&el.value){
+      const up=el.value.toUpperCase();
+      if(el.value!==up)el.value=up;
+    }
+  });
 }
-function renderFlightBgm(){
-  var b = $("mbtn");
-  if(!b) return;
-  b.classList.toggle("on", bgmRunning);
-  if(bgmRunning){
-    b.textContent = isEn() ? "🔇 Music Off" : "🔇 Musik Aus";
-  } else {
-    b.textContent = isEn() ? "🎵 Music On" : "🎵 Musik An";
+function cp(id,label){
+  normCaps();
+  const el=$(id);
+  const val=el.value.trim();
+  if(!val){
+    $("ts").textContent="⚠️ Bitte zuerst "+label+" eintragen!";
+    $("ts").style.display="block";
+    return;
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(val).catch(()=>{});
+  }else{
+    el.select();try{document.execCommand("copy")}catch(e){}
+  }
+  $("ts").textContent="✅ "+label+" ("+val+") kopiert!";
+  $("ts").style.display="block";
+}
+async function openNote(){
+  sv();
+  const parts=$("u5").value.split("|");
+  const code=parts.shift();
+  const airlineName=$("u5").options.item($("u5").selectedIndex).text;
+  const steps=(guides.hasOwnProperty(code)?guides.valueOf():null);
+  const stepTxt=Object.getOwnPropertyDescriptor(guides,code);
+  const stepList=(stepTxt?stepTxt.value:"").split("|");
+  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
+  let clipAll="";
+  items.forEach(it=>{
+    const p=it.split("|");const lbl=p.shift();const id=p.join("");
+    let val=$(id).value.trim();
+    if(upKeys.includes(id))val=val.toUpperCase();
+    if(val)clipAll+=lbl+": "+val+" | ";
+  });
+  if(clipAll){
+    try{
+      navigator.clipboard.writeText(clipAll);
+      $("ts").textContent="✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
+      $("ts").style.display="block";
+    }catch(e){}
+  }
+  if("documentPictureInPicture" in window){
+    try{
+      const pip=await window.documentPictureInPicture.requestWindow({width:300,height:400});
+      const b=pip.document.body;
+      b.style.margin="0";b.style.padding="7px";
+      b.style.background="#f0f9ff";b.style.fontFamily="sans-serif";
+      const h=pip.document.createElement("div");
+      h.textContent="📌 "+airlineName;
+      h.style.fontWeight="bold";h.style.color="#0c4a6e";
+      h.style.fontSize="14px";h.style.marginBottom="6px";
+      h.style.borderBottom="2px solid #0284c7";h.style.paddingBottom="4px";
+      b.appendChild(h);
+      if(stepList.length&&stepList.join("")){
+        const box=pip.document.createElement("div");
+        box.style.background="#fef2f2";box.style.border="2px solid #991b1b";
+        box.style.borderRadius="6px";box.style.padding="7px 9px";
+        box.style.marginBottom="7px";box.style.fontSize="13.5px";
+        box.style.fontWeight="bold";box.style.color="#991b1b";
+        box.style.lineHeight="1.38";
+        box.innerHTML="<div style='font-size:14.5px;font-weight:bold;color:#7f1d1d;margin-bottom:3px'>🧭 Anleitung:</div>"+stepList.join("<br>");
+        b.appendChild(box);
+      }
+      items.forEach(it=>{
+        const p=it.split("|");const lbl=p.shift();const id=p.join("");
+        let val=$(id).value.trim();
+        if(upKeys.includes(id))val=val.toUpperCase();
+        if(val){
+          const row=pip.document.createElement("div");
+          row.style.display="flex";row.style.justifyContent="space-between";
+          row.style.alignItems="center";row.style.background="#fff";
+          row.style.border="1px solid #93c5fd";row.style.padding="4px 6px";
+          row.style.borderRadius="4px";row.style.marginBottom="4px";
+          const txt=pip.document.createElement("div");
+          txt.innerHTML="<div style='font-size:9px;color:#475569;font-weight:bold;line-height:1.1'>"+lbl+"</div><div style='font-size:14px;font-weight:bold;color:#0f172a;line-height:1.2'>"+val+"</div>";
+          const btn=pip.document.createElement("button");
+          btn.textContent="📋";btn.style.background="#0284c7";
+          btn.style.color="#fff";btn.style.border="none";
+          btn.style.borderRadius="4px";btn.style.padding="4px 8px";
+          btn.style.cursor="pointer";btn.style.fontSize="12px";
+          btn.onclick=()=>{navigator.clipboard.writeText(val);btn.textContent="✅";};
+          row.appendChild(txt);row.appendChild(btn);b.appendChild(row);
+        }
+      });
+      return;
+    }catch(e){}
   }
 }
-
-function startFlightBgm(){
-  bgmRunning = true;
-  renderFlightBgm();
-  bgmPlayer.play().catch(function(){});
-}
-
-function stopFlightBgm(){
-  bgmRunning = false;
-  renderFlightBgm();
-  bgmPlayer.pause();
-}
-
-function toggleFlightBgm(){
-  if(bgmRunning){
-    stopFlightBgm();
-  } else {
-    startFlightBgm();
-  }
-}
-
-function activateFlightPage(){
-  var m = $("fModal");
-  if(m) m.style.display = "none";
-  startFlightBgm();
-}
-
-var fb = $("fActBtn");
-if(fb){
-  fb.addEventListener("pointerdown", activateFlightPage);
-  fb.addEventListener("click", activateFlightPage);
-}
-
-function iata(val){
-  var s = String(val || "").trim().toUpperCase();
-  var p1 = s.indexOf("("), p2 = s.indexOf(")");
-  if(p1 >= 0 && p2 > p1) return s.slice(p1 + 1, p2).trim();
-  return s.slice(0, 3);
-}
-
-function iso(d){
-  var m = String(d.getMonth() + 1), t = String(d.getDate());
-  if(m.length < 2) m = "0" + m;
-  if(t.length < 2) t = "0" + t;
-  return d.getFullYear() + "-" + m + "-" + t;
-}
-
 function updClock(){
-  var e = isEn();
-  var now = new Date();
-  var dtEl = $("dt");
-  if(dtEl){
-    var loc = e ? "en-GB" : "de-DE";
-    dtEl.textContent = now.toLocaleDateString(loc) +
-      " \u2022 " + now.toLocaleTimeString(loc);
-  }
+  const now=new Date();
+  const dtEl=$("dt");
+  if(!dtEl)return;
+  dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
+  const idx=ci++%cols.length;
+  dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
 }
-
-function upd(){
-  var e = isEn();
-  var now = new Date(), today = iso(now);
+function sv(){
+  normCaps();
   updClock();
-  var ow = $("ow").checked;
-  $("st").textContent = ow
-    ? (e ? "ONE-WAY" : "NUR HINFLUG")
-    : (e ? "ROUND-TRIP" : "HIN & R\u00dcCK");
-  var hr = $("hr").value;
-  $("hrl").textContent = e
-    ? "Max. Travel Time (" + hr + " hrs)"
-    : "Max. Reisezeit (" + hr + " Std.)";
-
-  var o = iata($("i1").value) || "BER";
-  var d = iata($("i2").value) || "BKK";
-  var od = $("od").value || today;
-  var rd = $("rd").value || od;
-  var px = $("px").value || "1";
-  var sOd = od.replace(/-/g, "").slice(2);
-  var sRd = rd.replace(/-/g, "").slice(2);
-
-  var stopK = $("ns").checked ? "?fs=stops=0" :
-    ($("s1").checked ? "?fs=stops=-2" : "");
-
-  $("u1").href = P + "www.skyscanner.de" +
-    "/transport/fluge/" + o.toLowerCase() + "/" +
-    d.toLowerCase() + "/" + sOd +
-    (ow ? "/" : "/" + sRd + "/") + "?adults=" + px;
-
-  $("u2").href = P + "www.kayak.de" + "/flights/" +
-    o + "-" + d + "/" + od +
-    (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
-
-  $("u3").href = P + "www.momondo.de" + "/flight-search/" +
-    o + "-" + d + "/" + od +
-    (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
-
-  $("u4").href = P + "www.expedia.de" +
-    "/Flights-Search?trip=" + (ow ? "oneway" : "roundtrip") +
-    "&leg1=from:" + o + ",to:" + d + ",departure:" + od + "TANYT" +
-    (ow ? "" : "&leg2=from:" + d + ",to:" + o +
-      ",departure:" + rd + "TANYT") +
-    "&passengers=adults:" + px + "&mode=search";
-
-  $("u5").href = P + H_KW + "/de/search/results/" +
-    o.toLowerCase() + "/" + d.toLowerCase() + "/" + od + "/" +
-    (ow ? "no-return" : rd) + "?adults=" + px;
-
-  var trLang = e ? "/en" : "/de";
-  $("u6").href = P + H_TR + trLang + "/flights/" +
-    o.toLowerCase() + "-to-" + d.toLowerCase() +
-    "/tickets-" + o.toLowerCase() + "-" + d.toLowerCase() +
-    "?dcity=" + o + "&acity=" + d + "&ddate=" + od +
-    (ow ? "&flighttype=ow" : "&rdate=" + rd + "&flighttype=rt") +
-    "&adult=" + px + "&curr=EUR";
+  const parts=$("u5").value.split("|");
+  parts.shift();
+  const mode=parts.shift();
+  $("go").href=parts.join("|");
+  $("f_pnr").classList.toggle("off",mode==="mail_only");
+  $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
+  $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
+  $("f_mail").classList.toggle("off",mode!=="mail_pnr"&&mode!=="mail_only");
+  if(mode==="pnr_ln")$("hint").textContent="Benötigt: Buchungscode (PNR) + Nachname";
+  if(mode==="pnr_fn_ln")$("hint").textContent="Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
+  if(mode==="mail_pnr")$("hint").textContent="Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
+  if(mode==="mail_only")$("hint").textContent="Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
+  const d={};
+  keys.forEach(k=>Object.defineProperty(d,k,{value:$(k).value,enumerable:true}));
+  try{localStorage.setItem("rk_upg",JSON.stringify(d))}catch(e){}
 }
-
-"i1;i2;od;rd;ow;px;hr;ns;s1;s2;lc".split(";").forEach(function(id){
-  $(id).addEventListener("input", upd);
-  $(id).addEventListener("change", upd);
+(function ld(){
+  try{
+    const raw=localStorage.getItem("rk_upg");
+    if(raw){
+      const d=JSON.parse(raw);
+      keys.forEach(k=>{
+        const desc=Object.getOwnPropertyDescriptor(d,k);
+        if(desc&&desc.value!==undefined)$(k).value=desc.value;
+      });
+    }
+  }catch(e){}
+  sv();
+  setInterval(updClock,1000);
+})();
+keys.forEach(k=>{
+  $(k).addEventListener("input",sv);
+  $(k).addEventListener("change",sv);
 });
-$("od").min = iso(new Date());
-$("rd").min = iso(new Date());
-applyLang();
-upd();
-setInterval(updClock, 1000);
 </script>
 </body>
 </html>
