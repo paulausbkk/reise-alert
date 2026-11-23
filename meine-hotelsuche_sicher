@@ -159,8 +159,6 @@ input,select{
   border-radius:8px;padding:12px 15px;
   font-size:.88rem;line-height:1.45
 }
-</style>
-</head>
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
@@ -523,9 +521,10 @@ function upd(){
     for(var i = 0; i < rm; i++){
       rc += (i > 0 ? "-" : "") + (perRm + (i < rem ? 1 : 0));
     }
-    $("h6").href = P + H_TR + "/de/srl?query=" + q +
-      "&q=" + q + "&checkin=" + ci + "&checkout=" + co +
-      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rc;
+    var trPath = e ? "/en-GB/srl" : "/de/srl";
+    $("h6").href = P + H_TR + trPath + "?query=" + q +
+      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rc +
+      (st > 0 ? ";st-" + st : "");
 
     $("h8").href = P + "www.airbnb.de" + "/s/" + q +
       "/homes?tab_id=home_tab&checkin=" + ci +
@@ -662,3 +661,5 @@ upd();
 </script>
 </body>
 </html>
+</style>
+</head>
