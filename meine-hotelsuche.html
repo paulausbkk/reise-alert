@@ -147,8 +147,6 @@ input,select{
   border-radius:8px;padding:12px 15px;
   font-size:.88rem;line-height:1.45
 }
-</style>
-</head>
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
@@ -163,9 +161,9 @@ input,select{
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">22.11.2026</div>
+    <div class="seg" id="dt">23.11.2026 • 11:29:00</div>
     <div class="seg" id="nt">1 NACHT</div>
-    <span class="seg act">🏨 MEINE HOTELSUCHE (AKTIV)</span>
+    <span class="seg act">🏨 HOTELSUCHE (AKTIV)</span>
     <a href="../index.html" class="seg nav">🏠 Zurück zur Startseite</a>
     <a href="index.html" class="seg nav">✈️ Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg">
@@ -369,10 +367,18 @@ function getBid(city){
   if(k === "pagadian") return "-2443809";
   return "";
 }
+function updClock(){
+  var now = new Date();
+  var dtEl = $("dt");
+  if(dtEl){
+    dtEl.textContent = now.toLocaleDateString("de-DE") +
+      " \u2022 " + now.toLocaleTimeString("de-DE");
+  }
+}
+
 function upd(){
   var now = new Date(), t = iso(now);
-  $("dt").textContent = now.toLocaleDateString("de-DE") +
-    " \u2022 " + now.toLocaleTimeString("de-DE");
+  updClock();
   var city = $("city").value.trim();
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
@@ -589,6 +595,9 @@ try {
 $("f4").addEventListener("submit", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
 upd();
+setInterval(updClock, 1000);
 </script>
 </body>
 </html>
+</style>
+</head>
