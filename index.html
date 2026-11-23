@@ -16,26 +16,39 @@ html,body{
   box-sizing:border-box
 }
 .f-modal{
-  position:fixed;inset:0;background:rgba(15,41,66,.65);
+  position:fixed;inset:0;background:rgba(15,41,66,.88);
   display:flex;align-items:center;justify-content:center;
-  z-index:2000;padding:16px
+  z-index:2000;padding:20px
 }
 .f-card{
-  background:#fff;border:2px solid #7dd3fc;border-radius:14px;
-  padding:18px 20px;text-align:center;max-width:300px;width:100%;
-  box-shadow:0 10px 26px rgba(0,0,0,.35)
+  background:#fff;border:2px solid #7dd3fc;border-radius:16px;
+  padding:26px 24px;text-align:center;max-width:400px;width:100%;
+  box-shadow:0 12px 32px rgba(0,0,0,.45)
 }
-.f-card h3{margin:0 0 12px 0;color:#0f2942;font-size:1.1rem}
+.f-card h3{
+  margin:0 0 18px 0;color:#0f2942;font-size:1.35rem;
+  line-height:1.25
+}
+.w-sub-tit{
+  display:block;font-size:.98rem;font-weight:bold;
+  color:#0369a1;margin-top:4px
+}
 .f-btn{
-  display:flex;align-items:center;justify-content:center;
-  width:100%;box-sizing:border-box;background:#0284c7;
-  color:#fff;border:none;border-radius:10px;padding:13px 16px;
-  font-size:.98rem;font-weight:bold;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;width:100%;max-width:300px;
+  margin:0 auto;box-sizing:border-box;background:#0284c7;
+  color:#fff;border:none;border-radius:12px;padding:14px 18px;
+  font-size:1.06rem;font-weight:bold;cursor:pointer;
+  text-align:center;line-height:1.25;
   touch-action:manipulation;user-select:none;
   -webkit-tap-highlight-color:transparent
 }
 .f-btn:active{background:#0369a1}
 .f-btn span{pointer-events:none}
+.w-btn-en{
+  display:block;font-size:.84rem;font-weight:bold;
+  color:#e0f2fe;margin-top:3px
+}
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
   background:#0f2942;padding:10px 14px;border-radius:12px;
@@ -186,9 +199,13 @@ body:has(#ow:checked) .st{
 <body>
 <div class="f-modal" id="fModal">
   <div class="f-card">
-    <h3 id="wTit">✈️ Flugsuche</h3>
+    <h3>
+      ✈️ Flugsuche
+      <span class="w-sub-tit">Flight Search</span>
+    </h3>
     <button type="button" class="f-btn" id="fActBtn">
-      <span id="wBtnTxt">Flugsuche aktivieren ➡️</span>
+      <span>Flugsuche aktivieren ➡️</span>
+      <span class="w-btn-en">Activate Flight Search ➡️</span>
     </button>
   </div>
 </div>
@@ -357,25 +374,27 @@ body:has(#ow:checked) .st{
 
 <div class="bb">
   <div class="bf">
-    <a id="u1" href="https://skyscanner.de"
+    <a id="u1" href="#" onclick="upd()"
       target="_blank" class="btn b2">Skyscanner</a>
-    <a id="u2" href="https://kayak.de"
+    <a id="u2" href="#" onclick="upd()"
       target="_blank" class="btn b3">Kayak</a>
-    <a id="u3" href="https://momondo.de"
+    <a id="u3" href="#" onclick="upd()"
       target="_blank" class="btn b4">Momondo</a>
-    <a id="u4" href="https://expedia.de"
+    <a id="u4" href="#" onclick="upd()"
       target="_blank" class="btn b5">
       Expedia<span class="sub" id="expSub">Stopps auf Website wählen</span>
     </a>
-    <a id="u5" href="https://kiwi.com"
+    <a id="u5" href="#" onclick="upd()"
       target="_blank" class="btn b6">Kiwi.com</a>
-    <a id="u6" href="https://trip.com"
+    <a id="u6" href="#" onclick="upd()"
       target="_blank" class="btn b7">Trip.com</a>
   </div>
 </div>
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
+var H_KW = "www." + String.fromCharCode(107,105,119,105) + ".com";
+var H_TR = "www." + String.fromCharCode(116,114,105,112) + ".com";
 var bgmPlayer = new Audio(P + "paulausbkk.github.io/musik.mp3");
 bgmPlayer.loop = true;
 bgmPlayer.volume = 0.45;
@@ -394,9 +413,6 @@ function applyLang(){
   $("pgTit").textContent = e
     ? "✈️ Travel Config PRO v30 – Flight Search"
     : "✈️ Reisekonfiguration PRO v30 – Flugsuche";
-  $("wTit").textContent = e ? "✈️ Flight Search" : "✈️ Flugsuche";
-  $("wBtnTxt").textContent = e
-    ? "Activate Flight Search ➡️" : "Flugsuche aktivieren ➡️";
   $("hTit").textContent = e
     ? "✈️ Travel Config PRO v30 – Flight Search"
     : "✈️ Reisekonfiguration PRO v30 – Flugsuche";
@@ -443,7 +459,6 @@ function applyLang(){
     ? "Select stops on website" : "Stopps auf Website wählen";
   renderFlightBgm();
 }
-
 function renderFlightBgm(){
   var b = $("mbtn");
   if(!b) return;
@@ -556,16 +571,17 @@ function upd(){
       ",departure:" + rd + "TANYT") +
     "&passengers=adults:" + px + "&mode=search";
 
-  $("u5").href = P + "://kiwi.com" + "/de/search/results/" +
+  $("u5").href = P + H_KW + "/de/search/results/" +
     o.toLowerCase() + "/" + d.toLowerCase() + "/" + od + "/" +
     (ow ? "no-return" : rd) + "?adults=" + px;
 
-  $("u6").href = P + "://trip.com" + "/flights/" +
+  var trLang = e ? "/en" : "/de";
+  $("u6").href = P + H_TR + trLang + "/flights/" +
     o.toLowerCase() + "-to-" + d.toLowerCase() +
     "/tickets-" + o.toLowerCase() + "-" + d.toLowerCase() +
     "?dcity=" + o + "&acity=" + d + "&ddate=" + od +
     (ow ? "&flighttype=ow" : "&rdate=" + rd + "&flighttype=rt") +
-    "&adult=" + px;
+    "&adult=" + px + "&curr=EUR";
 }
 
 "i1;i2;od;rd;ow;px;hr;ns;s1;s2;lc".split(";").forEach(function(id){
