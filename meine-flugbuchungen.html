@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title id="pgTit">✈️ Flugcockpit – Meine Flugbuchungen</title>
+<title id="pgTit">🏨 Meine Hotelsuche PRO v121</title>
 <style>
-:root{
-  --r:#0369a1;--d:#0c4a6e;--t:#0f172a;--red:#dc2626
-}
+:root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
-  margin:0;padding:14px;min-height:100vh;
+  margin:0;padding:16px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
   font-family:sans-serif;color:var(--t);box-sizing:border-box
 }
@@ -48,111 +46,118 @@ html,body{
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:10px 12px;border-radius:12px;
-  margin-bottom:16px;flex-wrap:wrap;gap:6px
+  background:#0f2942;padding:10px 14px;border-radius:12px;
+  margin-bottom:18px;flex-wrap:wrap;gap:6px
 }
-.tit{font-weight:bold;color:#fff;font-size:1.08rem;margin:0}
-.cp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
+.cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.68rem;padding:4px 7px;border-radius:5px;
+  font-size:.69rem;padding:5px 8px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
   background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
   white-space:nowrap
 }
-.seg.nav{background:#1e40af;font-size:.68rem;padding:4px 8px}
-.seg.upg{background:#0369a1;font-size:.68rem;padding:4px 8px}
+.seg.nav{background:#1e40af;font-size:.69rem;padding:5px 8px}
+.seg.upg{background:#0369a1;font-size:.69rem;padding:5px 8px}
 .seg.act{
   background:linear-gradient(180deg,#38bdf8 0%,#0284c7 100%);
-  border:2px solid #e0f2fe;font-size:.68rem;padding:3px 8px;
-  box-shadow:0 0 10px rgba(125,211,252,.65);cursor:default
+  border:2px solid #e0f2fe;font-size:.69rem;padding:4px 9px;
+  box-shadow:0 0 12px rgba(125,211,252,.65);cursor:default
 }
 .mbtn{
   background:#0284c7;color:#fff;border:1px solid #7dd3fc;
-  border-radius:5px;padding:4px 8px;font-size:.68rem;
+  border-radius:6px;padding:5px 8px;font-size:.69rem;
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
-.row{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+.row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:16px;background:#fff;box-sizing:border-box
+  padding:20px;background:#fff;box-sizing:border-box
 }
 .ct{
-  font-weight:bold;font-size:1.02rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:6px;
-  margin-bottom:12px
+  font-weight:bold;font-size:1.08rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
+  margin-bottom:16px
 }
 .f{
-  margin-bottom:11px;display:flex;
-  flex-direction:column;position:relative;transition:.2s
+  margin-bottom:14px;display:flex;
+  flex-direction:column;position:relative
 }
 .f2{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:11px
+  gap:10px;margin-bottom:14px
 }
-.f.off{opacity:.35;pointer-events:none}
-.f.off input{
-  background:#e2e8f0!important;border-color:#94a3b8!important
-}
-.f.off label{color:#64748b!important}
 label{
-  font-weight:bold;font-size:.82rem;
-  margin-bottom:4px;color:#1e3a8a
+  font-weight:bold;font-size:.85rem;
+  margin-bottom:5px;color:#1e3a8a
 }
-label.req{color:var(--red)}
-label.opt{color:#475569}
 input,select{
-  height:38px;padding:0 11px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.94rem;
+  height:42px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.98rem;
   background:#f8fafc;color:var(--t);width:100%
 }
-input:focus,select:focus{
-  outline:none;border-color:#0284c7;background:#fff;
-  box-shadow:0 0 0 3px rgba(2,132,199,.15)
+.ac{
+  position:absolute;top:68px;left:0;right:0;background:#fff;
+  border:1px solid #0284c7;border-radius:8px;z-index:99;
+  max-height:180px;overflow-y:auto;display:none;
+  box-shadow:0 8px 20px rgba(12,74,110,.18)
 }
-input::placeholder{
-  color:var(--red);font-weight:bold;opacity:1;font-size:.84rem
+.ac div{
+  padding:10px 12px;cursor:pointer;
+  border-bottom:1px solid #f1f5f9
 }
-input.opt::placeholder{color:#94a3b8;font-weight:normal}
-.cpb{display:flex;gap:6px}
-.cpb button{
-  width:42px;height:38px;border:1px solid #93c5fd;
-  background:#f0f9ff;border-radius:8px;cursor:pointer;
-  font-size:1rem;flex-shrink:0;transition:.2s;padding:0
+.ac div:hover{
+  background:#e0f2fe;font-weight:bold;color:var(--d)
 }
-.cpb button:hover{background:#e0f2fe}
-.hinweis{
+.bn{
   background:#eff6ff;border:1px solid #93c5fd;
-  border-left:5px solid var(--red);border-radius:8px;
-  padding:9px 12px;color:var(--red);font-weight:bold;
-  font-size:.88rem;margin-top:6px
+  border-left:5px solid #0284c7;border-radius:8px;
+  padding:10px 14px;color:#1e3a8a;font-weight:bold;font-size:.9rem
 }
 .bb{
   border:1px solid #93c5fd;background:#fff;
-  border-radius:12px;padding:14px 16px
+  border-radius:12px;padding:18px
 }
 .bf{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+  gap:10px
 }
 .btn{
   display:flex;align-items:center;justify-content:center;
-  height:44px;color:#fff;font-weight:bold;border-radius:8px;
-  font-size:.86rem;text-transform:uppercase;text-decoration:none;
-  border:none;cursor:pointer;width:100%;background:#0284c7
+  height:48px;color:#fff;font-weight:bold;border-radius:8px;
+  font-size:.84rem;text-transform:uppercase;text-decoration:none;
+  border:none;cursor:pointer;width:100%
 }
-.btn.note{background:#1e3a8a}
-.btn:hover{filter:brightness(1.08)}
-#ts{
-  display:none;margin-top:10px;background:#e0f2fe;
-  border:1px solid #38bdf8;color:#0c4a6e;padding:8px 12px;
-  border-radius:8px;font-weight:bold;font-size:.86rem;
-  text-align:center
+.b1{background:#0284c7}.b2{background:#1d4ed8}
+.b3{background:#0369a1}.b4{background:#1e3a8a}
+.b5{background:#2563eb}.b6{background:#0077b6}.b8{background:#0ea5e9}
+.off{opacity:.28;pointer-events:none;filter:grayscale(80%)}
+.err{opacity:.4}
+.swc{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
+  border-radius:8px;min-height:42px
 }
+.sw{position:relative;display:inline-block;width:42px;height:24px}
+.sw input{opacity:0;width:0;height:0}
+.sl{
+  position:absolute;cursor:pointer;inset:0;
+  background:#cbd5e1;border-radius:20px;transition:.3s
+}
+.sl:before{
+  position:absolute;content:"";height:18px;width:18px;
+  left:3px;bottom:3px;background:#fff;
+  border-radius:50%;transition:.3s
+}
+.sw input:checked+.sl{background:#0284c7!important}
+.sw input:checked+.sl:before{transform:translateX(18px)}
 .hint{
-  margin-top:12px;background:#0f2942;color:#fff;
+  margin-top:16px;background:#0f2942;color:#fff;
   border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:10px 14px;
-  font-size:.85rem;line-height:1.4
+  border-radius:8px;padding:12px 15px;
+  font-size:.88rem;line-height:1.45
 }
 </style>
 </head>
@@ -160,514 +165,500 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
 <div class="welcome" id="wOverlay">
   <div class="w-card">
     <h2>
-      ✈️ Flugbuchungen
-      <span class="w-sub-tit">Flight Bookings</span>
+      🏨 Hotelsuche
+      <span class="w-sub-tit">Hotel Search</span>
     </h2>
     <button type="button" class="w-btn" id="wBtn"
-      onclick="enterBookings()">
-      <span>Flugbuchungen aktivieren ➡️</span>
-      <span class="w-btn-en">Activate Flight Bookings ➡️</span>
+      onclick="enterHotel()">
+      <span>Hotelsuche aktivieren ➡️</span>
+      <span class="w-btn-en">Activate Hotel Search ➡️</span>
     </button>
   </div>
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit" id="hTit">✈️ Flugcockpit – Meine Flugbuchungen</h1>
+  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v121</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">23.11.2026 • 14:18:29</div>
-    <span class="seg act" id="navAct">✈️ FLUGBUCHUNGEN (AKTIV)</span>
+    <div class="seg" id="dt">22.11.2026</div>
+    <div class="seg" id="nt">1 NACHT</div>
+    <span class="seg act" id="navAct">🏨 HOTELSUCHE (AKTIV)</span>
     <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
-    <a href="meine-hotelsuche.html" class="seg upg" id="navHtl">
-      🏨 Meine Hotelsuche ➡️
+    <a href="meine-flugbuchungen.html" class="seg upg" id="navBkg">
+      ✈️ Meine Flugbuchungen ➡️
     </a>
     <a href="../index.html" class="seg nav" id="navHome">
       🏠 Zurück zur Startseite
     </a>
   </div>
 </div>
-
 <div class="row">
   <div class="card">
-    <div class="ct" id="c1Tit">1️⃣ Airline / Veranstalter & Check-in Info</div>
+    <div class="ct" id="c1Tit">📍 Zielort & Reisedaten</div>
     <div class="f">
-      <label for="u5" id="lblAir">Airline / Reiseveranstalter wählen</label>
-      <select id="u5">
-        <optgroup label="✈️ Airlines" id="ogAir">
-          <option value="tk|pnr_ln|https://turkishairlines.com">
-            Turkish Airlines
-          </option>
-          <option value="lh|pnr_ln|https://lufthansa.com">
-            Lufthansa
-          </option>
-          <option value="qr|pnr_ln|https://qatarairways.com">
-            Qatar Airways
-          </option>
-          <option value="ek|pnr_ln|https://emirates.com">
-            Emirates
-          </option>
-          <option value="sq|pnr_ln|https://singaporeair.com">
-            Singapore Airlines
-          </option>
-          <option value="tg|pnr_ln|https://thaiairways.com">
-            Thai Airways
-          </option>
-          <option value="cx|pnr_ln|https://cathaypacific.com">
-            Cathay Pacific
-          </option>
-          <option value="pr|pnr_ln|https://philippineairlines.com">
-            Philippine Airlines
-          </option>
-          <option value="5j|pnr_ln|https://cebupacificair.com">
-            Cebu Pacific (Low-Cost Asien)
-          </option>
-          <option value="tr|pnr_ln|https://flyscoot.com">
-            Scoot (Low-Cost Asien)
-          </option>
-          <option value="pg|pnr_ln|https://bangkokair.com">
-            Bangkok Airways
-          </option>
-          <option value="vj|pnr_fn_ln|https://vietjetair.com">
-            VietJet Air (Low-Cost Asien)
-          </option>
-          <option value="ak|mail_pnr|https://airasia.com">
-            AirAsia (Low-Cost Asien)
-          </option>
-        </optgroup>
-        <optgroup label="🧳 Reisevermittler & Portale" id="ogOta">
-          <option value="gtg|mail_pnr|https://gotogate.de">
-            Gotogate (Meine Buchungen)
-          </option>
-          <option value="exp|mail_only|https://expedia.de">
-            Expedia (Reiseplan)
-          </option>
-          <option value="trp|mail_pnr|https://trip.com">
-            Trip.com (Buchungen)
-          </option>
-          <option value="kwi|mail_only|https://kiwi.com">
-            Kiwi.com (Buchungen)
-          </option>
-          <option value="sky|mail_only|https://skyscanner.de">
-            Skyscanner (Mein Konto)
-          </option>
-          <option value="kyk|mail_only|https://kayak.de">
-            Kayak (Trips)
-          </option>
-          <option value="mom|mail_only|https://momondo.de">
-            Momondo (Trips)
-          </option>
-          <option value="opo|mail_pnr|https://opodo.de">
-            Opodo (Meine Reisen)
-          </option>
-        </optgroup>
-      </select>
+      <label id="lblCity">Reiseziel (beliebige Stadt weltweit)</label>
+      <input type="text" id="city"
+        placeholder="z.B. Mailand, Pagadian, Bangkok"
+        autocomplete="off">
+      <div id="lc" class="ac"></div>
     </div>
-    <div id="hint" class="hinweis">
-      Benötigt: Buchungscode (PNR) + Nachname
+    <div class="f" id="cib">
+      <label id="lblCi">Check-in (Anreise)</label>
+      <input type="date" id="ci">
+    </div>
+    <div class="f" id="cob">
+      <label id="lblCo">Check-out (Abreise)</label>
+      <input type="date" id="co">
     </div>
   </div>
   <div class="card">
-    <div class="ct" id="c2Tit">2️⃣ Buchungsdaten & Notizzettel-Angaben</div>
+    <div class="ct" id="c2Tit">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
-      <div id="f_pnr" class="f" style="margin:0">
-        <label class="req" id="lblPnr">Buchungscode (PNR)</label>
-        <div class="cpb">
-          <input type="text" id="u3" autocomplete="off"
-            placeholder="PFLICHT: z.B. TW8ZRK"
-            style="text-transform:uppercase">
-          <button type="button"
-            onclick="cp('u3','PNR')">📋</button>
-        </div>
+      <div class="f" style="margin:0">
+        <label for="px" id="lblPx">Personenzahl</label>
+        <select id="px">
+          <option value="1" id="px1">1 Erwachsener</option>
+          <option value="2" id="px2" selected>2 Erwachsene</option>
+          <option value="3" id="px3">3 Erwachsene</option>
+          <option value="4" id="px4">4 Erwachsene</option>
+        </select>
       </div>
-      <div id="f_mail" class="f" style="margin:0">
-        <label class="req" id="lblMail">Buchungs-E-Mail / Login</label>
-        <div class="cpb">
-          <input type="email" id="u4" autocomplete="off"
-            placeholder="PFLICHT: E-Mail der Buchung">
-          <button type="button"
-            onclick="cp('u4','E-Mail')">📋</button>
-        </div>
+      <div class="f" style="margin:0">
+        <label for="rm" id="lblRm">Zimmer</label>
+        <select id="rm">
+          <option value="1" id="rm1" selected>1 Zimmer</option>
+          <option value="2" id="rm2">2 Zimmer</option>
+          <option value="3" id="rm3">3 Zimmer</option>
+        </select>
       </div>
     </div>
-
-    <div class="f2">
-      <div id="f_fn" class="f" style="margin:0">
-        <label class="req" id="lblFn">Vorname (Reisepass)</label>
-        <div class="cpb">
-          <input type="text" id="u_fn" autocomplete="off"
-            placeholder="PFLICHT: z.B. MAX"
-            style="text-transform:uppercase">
-          <button type="button"
-            onclick="cp('u_fn','First Name')">📋</button>
-        </div>
-      </div>
-      <div id="f_ln" class="f" style="margin:0">
-        <label class="req" id="lblLn">Nachname (ohne Vornamen!)</label>
-        <div class="cpb">
-          <input type="text" id="u6" autocomplete="off"
-            placeholder="PFLICHT: z.B. MUSTERMANN"
-            style="text-transform:uppercase">
-          <button type="button"
-            onclick="cp('u6','Last Name')">📋</button>
-        </div>
+    <div class="f">
+      <label for="st" id="lblSt">Mindest-Sterne</label>
+      <select id="st">
+        <option value="0" id="st0">Alle Kategorien</option>
+        <option value="3" id="st3">Ab 3 Sterne ⭐⭐⭐</option>
+        <option value="4" id="st4">Ab 4 Sterne ⭐⭐⭐⭐</option>
+        <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+    <div class="f">
+      <div class="swc">
+        <label for="ab" id="lblAb" style="margin:0;cursor:pointer">
+          Nur Airbnb
+        </label>
+        <label class="sw">
+          <input type="checkbox" id="ab">
+          <span class="sl"></span>
+        </label>
       </div>
     </div>
-
-    <div class="f2" style="margin-bottom:0">
-      <div>
-        <label class="opt" id="lblTk">Ticketnummer (Notizzettel)</label>
-        <div class="cpb">
-          <input type="text" id="u_tknr" class="opt"
-            autocomplete="off" placeholder="z.B. 2354817365876">
-          <button type="button"
-            onclick="cp('u_tknr','Ticket No.')">📋</button>
-        </div>
-      </div>
-      <div>
-        <label class="opt" id="lblPp">Reisepassnummer (Notizzettel)</label>
-        <div class="cpb">
-          <input type="text" id="u_pp" class="opt"
-            autocomplete="off" placeholder="z.B. C01X00T47"
-            style="text-transform:uppercase">
-          <button type="button"
-            onclick="cp('u_pp','Passport')">📋</button>
-        </div>
-      </div>
-    </div>
+    <div class="bn" id="info">Bitte Reiseziel und Daten wählen.</div>
   </div>
 </div>
-
 <div class="bb">
   <div class="bf">
-    <button type="button" onclick="openNote()" class="btn note" id="btnNote">
-      📌 1. Schwebenden Spickzettel starten
-    </button>
-    <a id="go" href="https://turkishairlines.com"
-      target="_blank" class="btn">🚀 2. Airline-Seite öffnen</a>
+    <a id="h1" href="https://kayak.de" target="_blank"
+      class="btn b1 htl">Kayak Hotels</a>
+    <a id="h2" href="https://expedia.de" target="_blank"
+      class="btn b2 htl">Expedia Hotels</a>
+    <a id="h3" href="https://momondo.de" target="_blank"
+      class="btn b3 htl">Momondo</a>
+    <form id="f4" action="#"
+      method="get" target="_blank" class="htl" style="margin:0">
+      <input type="hidden" name="ss" id="b_ss">
+      <input type="hidden" name="ssne" id="b_ssne">
+      <input type="hidden" name="ssne_untouched" id="b_ssu">
+      <input type="hidden" name="dest_id" id="b_did" disabled>
+      <input type="hidden" name="dest_type" id="b_dty" disabled>
+      <input type="hidden" name="checkin" id="b_ci">
+      <input type="hidden" name="checkout" id="b_co">
+      <input type="hidden" name="group_adults" id="b_px">
+      <input type="hidden" name="group_children" value="0">
+      <input type="hidden" name="no_rooms" id="b_rm">
+      <input type="hidden" name="efdco" value="1">
+      <input type="hidden" name="nflt" id="b_flt" disabled>
+      <input type="hidden" name="lang" id="b_lng" value="de">
+      <input type="hidden" name="selected_currency" value="EUR">
+      <button type="submit" class="btn b4">Booking.com</button>
+    </form>
+    <a id="h5" href="https://agoda.com" target="_blank"
+      class="btn b5 htl">Agoda</a>
+    <a id="h6" href="https://trivago.de" target="_blank"
+      class="btn b6 htl">Trivago</a>
+    <a id="h8" href="https://airbnb.de" target="_blank"
+      class="btn b8 off">Airbnb</a>
   </div>
-  <div id="ts"></div>
   <div class="hint" id="hintBox">
-    ℹ️ <b>Wichtiger Hinweis:</b> Wenn Sie freiwillige Angaben wie
-    <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
-    erscheinen diese nachher auf Ihrem Notizzettel,
-    wenn Sie die Seite Ihrer Airline aufrufen.
+    ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>,
+    <b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.
   </div>
 </div>
 <script>
-var $=function(id){return document.getElementById(id);};
-var keys="u5;u3;u_fn;u6;u4;u_tknr;u_pp".split(";");
-var upKeys="u3;u_fn;u6;u_pp".split(";");
-var cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-var ci=0,bgmOn=false,lang="de";
+var $ = function(id){ return document.getElementById(id); };
+var P = "https:" + String.fromCharCode(47, 47);
+var H_AG = "www" + ".agoda" + ".com";
+var H_BK = "www" + ".booking" + ".com";
+var H_OM = "geocoding-api" + ".open-meteo" + ".com";
+var acT = null, cc = "de", bgmOn = false, lang = "de";
 
-try{
-  if(localStorage.getItem("pab_lang")==="en")lang="en";
-}catch(e){}
+try {
+  if(localStorage.getItem("pab_lang") === "en") lang = "en";
+} catch(e){}
 
-function isEn(){return lang==="en";}
-
-var guidesDe={
-  tk:"1. Buchung verwalten wählen.|2. PNR eingeben.|3. Nachname eingeben.",
-  lh:"1. Meine Buchungen öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
-  qr:"1. Buchung verwalten öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  ek:"1. Buchung verwalten klicken.|2. Nachname eingeben.|3. Buchungsreferenz eingeben.",
-  sq:"1. Buchung verwalten öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  tg:"1. Meine Buchung öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
-  cx:"1. Buchung verwalten öffnen.|2. Vor- & Nachname eingeben.|3. Buchungsreferenz eingeben.",
-  pr:"1. Manage Booking öffnen.|2. PNR eingeben.|3. Nachname eingeben.",
-  "5j":"1. Manage Booking öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  tr:"1. Manage My Booking öffnen.|2. Buchungsreferenz eingeben.|3. Nachname oder E-Mail eingeben.",
-  pg:"1. Manage Booking öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  vj:"1. My Booking öffnen.|2. Buchungscode eingeben.|3. Nachname & Vorname eingeben.",
-  ak:"1. Purchases öffnen.|2. Mit Buchungs-E-Mail einloggen oder PNR verknüpfen.",
-  gtg:"1. Meine Buchungen öffnen.|2. Buchungs-E-Mail eingeben.|3. Bestellnummer / PNR eingeben.",
-  exp:"1. Meine Reisen öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  trp:"1. Buchungen suchen öffnen.|2. Buchungs-E-Mail eingeben.|3. Buchungsnummer eingeben.",
-  kwi:"1. Buchungen verwalten öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  sky:"1. Anmelden wählen.|2. Mit Buchungs-E-Mail einloggen.",
-  kyk:"1. Trips öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  mom:"1. Trips öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  opo:"1. Meine Reisen öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
-};
-
-var guidesEn={
-  tk:"1. Select Manage Booking.|2. Enter PNR.|3. Enter Last Name.",
-  lh:"1. Open My Bookings.|2. Enter Booking Code.|3. Enter Last Name.",
-  qr:"1. Open Manage Booking.|2. Enter Booking Reference.|3. Enter Last Name.",
-  ek:"1. Click Manage Booking.|2. Enter Last Name.|3. Enter Booking Reference.",
-  sq:"1. Open Manage Booking.|2. Enter Booking Reference.|3. Enter Last Name.",
-  tg:"1. Open My Booking.|2. Enter Booking Code.|3. Enter Last Name.",
-  cx:"1. Open Manage Booking.|2. Enter First & Last Name.|3. Enter Booking Reference.",
-  pr:"1. Open Manage Booking.|2. Enter PNR.|3. Enter Last Name.",
-  "5j":"1. Open Manage Booking.|2. Enter Booking Reference.|3. Enter Last Name.",
-  tr:"1. Open Manage My Booking.|2. Enter Booking Reference.|3. Enter Last Name or Email.",
-  pg:"1. Open Manage Booking.|2. Enter Booking Reference.|3. Enter Last Name.",
-  vj:"1. Open My Booking.|2. Enter Booking Code.|3. Enter Last & First Name.",
-  ak:"1. Open Purchases.|2. Log in with booking email or link PNR.",
-  gtg:"1. Open My Bookings.|2. Enter booking email.|3. Enter order number / PNR.",
-  exp:"1. Open My Trips.|2. Log in with booking email.",
-  trp:"1. Open Find Bookings.|2. Enter booking email.|3. Enter booking number.",
-  kwi:"1. Open Manage Bookings.|2. Log in with booking email.",
-  sky:"1. Select Sign In.|2. Log in with booking email.",
-  kyk:"1. Open Trips.|2. Log in with booking email.",
-  mom:"1. Open Trips.|2. Log in with booking email.",
-  opo:"1. Open My Trips.|2. Enter booking email & booking number."
-};
+function isEn(){ return lang === "en"; }
 
 function applyLang(){
-  var e=isEn();
-  document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e
-    ?"✈️ Flight Cockpit – My Flight Bookings"
-    :"✈️ Flugcockpit – Meine Flugbuchungen";
-  $("hTit").textContent=e
-    ?"✈️ Flight Cockpit – My Flight Bookings"
-    :"✈️ Flugcockpit – Meine Flugbuchungen";
-  $("navAct").textContent=e
-    ?"✈️ FLIGHT BOOKINGS (ACTIVE)":"✈️ FLUGBUCHUNGEN (AKTIV)";
-  $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
-  $("navHtl").textContent=e
-    ?"🏨 My Hotel Search ➡️":"🏨 Meine Hotelsuche ➡️";
-  $("navHome").textContent=e
-    ?"🏠 Back to Home":"🏠 Zurück zur Startseite";
-  $("c1Tit").textContent=e
-    ?"1️⃣ Airline / Provider & Check-in Info"
-    :"1️⃣ Airline / Veranstalter & Check-in Info";
-  $("lblAir").textContent=e
-    ?"Select Airline / Travel Provider"
-    :"Airline / Reiseveranstalter wählen";
-  $("ogOta").label=e
-    ?"🧳 Travel Agencies & Portals"
-    :"🧳 Reisevermittler & Portale";
-  $("c2Tit").textContent=e
-    ?"2️⃣ Booking Data & Cheat Sheet Details"
-    :"2️⃣ Buchungsdaten & Notizzettel-Angaben";
-  $("lblPnr").textContent=e?"Booking Code (PNR)":"Buchungscode (PNR)";
-  $("u3").placeholder=e?"REQUIRED: e.g. TW8ZRK":"PFLICHT: z.B. TW8ZRK";
-  $("lblMail").textContent=e?"Booking Email / Login":"Buchungs-E-Mail / Login";
-  $("u4").placeholder=e
-    ?"REQUIRED: Booking email":"PFLICHT: E-Mail der Buchung";
-  $("lblFn").textContent=e?"First Name (Passport)":"Vorname (Reisepass)";
-  $("u_fn").placeholder=e?"REQUIRED: e.g. MAX":"PFLICHT: z.B. MAX";
-  $("lblLn").textContent=e
-    ?"Last Name (no first name!)":"Nachname (ohne Vornamen!)";
-  $("u6").placeholder=e
-    ?"REQUIRED: e.g. MUSTERMANN":"PFLICHT: z.B. MUSTERMANN";
-  $("lblTk").textContent=e
-    ?"Ticket Number (Cheat Sheet)":"Ticketnummer (Notizzettel)";
-  $("u_tknr").placeholder=e?"e.g. 2354817365876":"z.B. 2354817365876";
-  $("lblPp").textContent=e
-    ?"Passport Number (Cheat Sheet)":"Reisepassnummer (Notizzettel)";
-  $("u_pp").placeholder=e?"e.g. C01X00T47":"z.B. C01X00T47";
-  $("btnNote").textContent=e
-    ?"📌 1. Start Floating Cheat Sheet"
-    :"📌 1. Schwebenden Spickzettel starten";
-  $("go").textContent=e
-    ?"🚀 2. Open Airline Website":"🚀 2. Airline-Seite öffnen";
-  $("hintBox").innerHTML=e
-    ?"ℹ️ <b>Important Note:</b> If you enter optional details like " +
-     "<b>Ticket Number</b> or <b>Passport Number</b> here, " +
-     "they will appear on your floating cheat sheet when you open your airline's website."
-    :"ℹ️ <b>Wichtiger Hinweis:</b> Wenn Sie freiwillige Angaben wie " +
-     "<b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen, " +
-     "erscheinen diese nachher auf Ihrem Notizzettel, " +
-     "wenn Sie die Seite Ihrer Airline aufrufen.";
+  var e = isEn();
+  document.documentElement.lang = e ? "en" : "de";
+  $("pgTit").textContent = e
+    ? "🏨 My Hotel Search PRO v121" : "🏨 Meine Hotelsuche PRO v121";
+  $("hTit").textContent = e
+    ? "🏨 My Hotel Search PRO v121" : "🏨 Meine Hotelsuche PRO v121";
+  $("navAct").textContent = e
+    ? "🏨 HOTELS (ACTIVE)" : "🏨 HOTELSUCHE (AKTIV)";
+  $("navHome").textContent = e
+    ? "🏠 Back to Home" : "🏠 Zurück zur Startseite";
+  $("navFlt").textContent = e ? "✈️ Flight Search" : "✈️ Flugsuche";
+  $("navBkg").textContent = e
+    ? "✈️ My Flight Bookings ➡️" : "✈️ Meine Flugbuchungen ➡️";
+  $("c1Tit").textContent = e
+    ? "📍 Destination & Travel Dates" : "📍 Zielort & Reisedaten";
+  $("lblCity").textContent = e
+    ? "Destination (any city worldwide)"
+    : "Reiseziel (beliebige Stadt weltweit)";
+  $("city").placeholder = e
+    ? "e.g. Milan, Pagadian, Bangkok" : "z.B. Mailand, Pagadian, Bangkok";
+  $("lblCi").textContent = e ? "Check-in (Arrival)" : "Check-in (Anreise)";
+  $("lblCo").textContent = e
+    ? "Check-out (Departure)" : "Check-out (Abreise)";
+  $("c2Tit").textContent = e
+    ? "🛏️ Guests, Rooms & Hotel Filters"
+    : "🛏️ Gäste, Zimmer & Hotel-Filter";
+  $("lblPx").textContent = e ? "Guests" : "Personenzahl";
+  $("px1").textContent = e ? "1 Adult" : "1 Erwachsener";
+  $("px2").textContent = e ? "2 Adults" : "2 Erwachsene";
+  $("px3").textContent = e ? "3 Adults" : "3 Erwachsene";
+  $("px4").textContent = e ? "4 Adults" : "4 Erwachsene";
+  $("lblRm").textContent = e ? "Rooms" : "Zimmer";
+  $("rm1").textContent = e ? "1 Room" : "1 Zimmer";
+  $("rm2").textContent = e ? "2 Rooms" : "2 Zimmer";
+  $("rm3").textContent = e ? "3 Rooms" : "3 Zimmer";
+  $("lblSt").textContent = e ? "Minimum Stars" : "Mindest-Sterne";
+  $("st0").textContent = e ? "All Categories" : "Alle Kategorien";
+  $("st3").textContent = e ? "3+ Stars ⭐⭐⭐" : "Ab 3 Sterne ⭐⭐⭐";
+  $("st4").textContent = e ? "4+ Stars ⭐⭐⭐⭐" : "Ab 4 Sterne ⭐⭐⭐⭐";
+  $("st5").textContent = e ? "5 Stars ⭐⭐⭐⭐⭐" : "5 Sterne ⭐⭐⭐⭐⭐";
+  $("lblAb").textContent = e ? "Airbnb Only" : "Nur Airbnb";
+  $("b_lng").value = e ? "en-gb" : "de";
+  $("hintBox").innerHTML = e
+    ? "ℹ️ <b>Important Note:</b> Detailed filters (e.g. <b>Beach</b>, " +
+      "<b>Breakfast</b>) must be selected on the provider website."
+    : "ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>, " +
+      "<b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.";
   updBgmBtn();
 }
-
 function updBgmBtn(){
-  var b=$("mbtn");
-  if(!b)return;
+  var b = $("mbtn");
+  if(!b) return;
   if(bgmOn){
-    b.textContent=isEn()?"🔇 Music Off":"🔇 Musik Aus";
+    b.textContent = isEn() ? "🔇 Music Off" : "🔇 Musik Aus";
     b.classList.remove("off");
-  }else{
-    b.textContent=isEn()?"🎵 Music On":"🎵 Musik An";
+  } else {
+    b.textContent = isEn() ? "🎵 Music On" : "🎵 Musik An";
     b.classList.add("off");
   }
 }
+
 function playBgm(){
-  var a=$("bgm");
-  if(!a)return;
-  a.volume=1.0;
-  a.play().then(function(){bgmOn=true;updBgmBtn();})
-    .catch(function(){bgmOn=false;updBgmBtn();});
+  var a = $("bgm");
+  if(!a) return;
+  a.volume = 1.0;
+  a.play().then(function(){ bgmOn = true; updBgmBtn(); })
+    .catch(function(){ bgmOn = false; updBgmBtn(); });
 }
+
 function toggleBgm(){
-  var a=$("bgm");
-  if(!a)return;
-  if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}
-  else{playBgm();}
+  var a = $("bgm");
+  if(!a) return;
+  if(bgmOn){ a.pause(); bgmOn = false; updBgmBtn(); } else { playBgm(); }
 }
-function enterBookings(){
-  var w=$("wOverlay");
-  if(w)w.style.display="none";
+
+function enterHotel(){
+  var w = $("wOverlay");
+  if(w) w.style.display = "none";
   playBgm();
 }
-function normCaps(){
-  upKeys.forEach(function(k){
-    var el=$(k);
-    if(el&&el.value){
-      var up=el.value.toUpperCase();
-      if(el.value!==up)el.value=up;
-    }
+
+function iso(d){
+  var m = String(d.getMonth() + 1), t = String(d.getDate());
+  if(m.length < 2) m = "0" + m;
+  if(t.length < 2) t = "0" + t;
+  return d.getFullYear() + "-" + m + "-" + t;
+}
+
+function getAid(city){
+  var k = city.toLowerCase().trim();
+  if(k === "bangkok") return "9395";
+  if(k === "mailand" || k === "milan") return "4894";
+  if(k === "palermo") return "16011";
+  if(k === "berlin") return "16154";
+  if(k === "hamburg") return "15727";
+  if(k === "wien" || k === "vienna") return "14756";
+  if(k === "paris") return "15470";
+  if(k === "london") return "233";
+  if(k === "rom" || k === "rome") return "16582";
+  if(k === "barcelona") return "14563";
+  if(k === "madrid") return "16583";
+  if(k === "dubai") return "2994";
+  if(k === "istanbul") return "14932";
+  if(k === "amsterdam") return "13868";
+  if(k === "prag" || k === "prague") return "16578";
+  if(k === "warschau" || k === "warsaw") return "16107";
+  if(k === "phuket") return "16056";
+  if(k === "bali") return "17193";
+  if(k === "manila") return "1622";
+  if(k === "cebu") return "4001";
+  if(k === "pagadian") return "89122";
+  return "";
+}
+
+function getBid(city){
+  var k = city.toLowerCase().trim();
+  if(k === "bangkok") return "-3414440";
+  if(k === "mailand" || k === "milan") return "-121726";
+  if(k === "palermo") return "-123798";
+  if(k === "berlin") return "-1746443";
+  if(k === "hamburg") return "-1785434";
+  if(k === "muenchen" || k === "m\u00fcnchen") return "-1829149";
+  if(k === "munich") return "-1829149";
+  if(k === "wien" || k === "vienna") return "-1995499";
+  if(k === "paris") return "-1456928";
+  if(k === "london") return "-2601889";
+  if(k === "rom" || k === "rome") return "-126693";
+  if(k === "barcelona") return "-372490";
+  if(k === "madrid") return "-390625";
+  if(k === "dubai") return "-782831";
+  if(k === "istanbul") return "-755070";
+  if(k === "amsterdam") return "-2140479";
+  if(k === "prag" || k === "prague") return "-553173";
+  if(k === "warschau" || k === "warsaw") return "-534433";
+  if(k === "phuket") return "-3250083";
+  if(k === "manila") return "-2437894";
+  if(k === "cebu") return "-2421265";
+  if(k === "pagadian") return "-2443809";
+  return "";
+}
+
+function upd(){
+  var e = isEn(), loc = e ? "en-GB" : "de-DE";
+  var now = new Date(), t = iso(now);
+  $("dt").textContent = now.toLocaleDateString(loc) +
+    " \u2022 " + now.toLocaleTimeString(loc);
+  var city = $("city").value.trim();
+  var ci = $("ci").value, co = $("co").value;
+  var px = +$("px").value || 2, rm = +$("rm").value || 1;
+  var st = +$("st").value || 0, ab = $("ab").checked;
+  var aid = getAid(city), bid = getBid(city);
+
+  $("f4").action = P + H_BK + "/searchresults.html";
+
+  document.querySelectorAll(".htl").forEach(function(el){
+    el.classList.toggle("off", ab);
   });
-}
-function cp(id,label){
-  normCaps();
-  var el=$(id);
-  var val=el.value.trim();
-  if(!val){
-    $("ts").textContent=isEn()
-      ?"⚠️ Please enter "+label+" first!"
-      :"⚠️ Bitte zuerst "+label+" eintragen!";
-    $("ts").style.display="block";
-    return;
-  }
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(val).catch(function(){});
-  }else{
-    el.select();try{document.execCommand("copy");}catch(e){}
-  }
-  $("ts").textContent=isEn()
-    ?"✅ "+label+" ("+val+") copied!"
-    :"✅ "+label+" ("+val+") kopiert!";
-  $("ts").style.display="block";
-}
-async function openNote(){
-  sv();
-  var e=isEn();
-  var parts=$("u5").value.split("|");
-  var code=parts.shift();
-  var airlineName=$("u5").options.item($("u5").selectedIndex).text;
-  var gSrc=e?guidesEn:guidesDe;
-  var stepTxt=Object.getOwnPropertyDescriptor(gSrc,code);
-  var stepList=(stepTxt?stepTxt.value:"").split("|");
-  var items=e
-    ?"PNR|u3;First Name|u_fn;Last Name|u6;Email|u4;Ticket No.|u_tknr;Passport|u_pp".split(";")
-    :"PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
-  var clipAll="";
-  items.forEach(function(it){
-    var p=it.split("|");var lbl=p.shift();var id=p.join("");
-    var val=$(id).value.trim();
-    if(upKeys.includes(id))val=val.toUpperCase();
-    if(val)clipAll+=lbl+": "+val+" | ";
-  });
-  if(clipAll){
-    try{
-      navigator.clipboard.writeText(clipAll);
-      $("ts").textContent=e
-        ?"✅ Cheat sheet started! Now click Button 2."
-        :"✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
-      $("ts").style.display="block";
-    }catch(err){}
-  }
-  if("documentPictureInPicture" in window){
-    try{
-      var pip=await window.documentPictureInPicture.requestWindow({width:300,height:400});
-      var b=pip.document.body;
-      b.style.margin="0";b.style.padding="7px";
-      b.style.background="#f0f9ff";b.style.fontFamily="sans-serif";
-      var h=pip.document.createElement("div");
-      h.textContent="📌 "+airlineName;
-      h.style.fontWeight="bold";h.style.color="#0c4a6e";
-      h.style.fontSize="14px";h.style.marginBottom="6px";
-      h.style.borderBottom="2px solid #0284c7";h.style.paddingBottom="4px";
-      b.appendChild(h);
-      if(stepList.length&&stepList.join("")){
-        var box=pip.document.createElement("div");
-        box.style.background="#fef2f2";box.style.border="2px solid #991b1b";
-        box.style.borderRadius="6px";box.style.padding="7px 9px";
-        box.style.marginBottom="7px";box.style.fontSize="13.5px";
-        box.style.fontWeight="bold";box.style.color="#991b1b";
-        box.style.lineHeight="1.38";
-        var guideTitle=e?"🧭 Guide:":"🧭 Anleitung:";
-        box.innerHTML="<div style='font-size:14.5px;font-weight:bold;color:#7f1d1d;margin-bottom:3px'>"+guideTitle+"</div>"+stepList.join("<br>");
-        b.appendChild(box);
-      }
-      items.forEach(function(it){
-        var p=it.split("|");var lbl=p.shift();var id=p.join("");
-        var val=$(id).value.trim();
-        if(upKeys.includes(id))val=val.toUpperCase();
-        if(val){
-          var row=pip.document.createElement("div");
-          row.style.display="flex";row.style.justifyContent="space-between";
-          row.style.alignItems="center";row.style.background="#fff";
-          row.style.border="1px solid #93c5fd";row.style.padding="4px 6px";
-          row.style.borderRadius="4px";row.style.marginBottom="4px";
-          var txt=pip.document.createElement("div");
-          txt.innerHTML="<div style='font-size:9px;color:#475569;font-weight:bold;line-height:1.1'>"+lbl+"</div><div style='font-size:14px;font-weight:bold;color:#0f172a;line-height:1.2'>"+val+"</div>";
-          var btn=pip.document.createElement("button");
-          btn.textContent="📋";btn.style.background="#0284c7";
-          btn.style.color="#fff";btn.style.border="none";
-          btn.style.borderRadius="4px";btn.style.padding="4px 8px";
-          btn.style.cursor="pointer";btn.style.fontSize="12px";
-          btn.onclick=function(){navigator.clipboard.writeText(val);btn.textContent="✅";};
-          row.appendChild(txt);row.appendChild(btn);b.appendChild(row);
-        }
-      });
-      return;
-    }catch(err){}
-  }
-}
-function updClock(){
-  var e=isEn();
-  var now=new Date();
-  var dtEl=$("dt");
-  if(!dtEl)return;
-  var loc=e?"en-GB":"de-DE";
-  dtEl.textContent=now.toLocaleDateString(loc)+" • "+now.toLocaleTimeString(loc);
-  var idx=ci++%cols.length;
-  dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
-}
-function sv(){
-  var e=isEn();
-  normCaps();
-  updClock();
-  var parts=$("u5").value.split("|");
-  parts.shift();
-  var mode=parts.shift();
-  $("go").href=parts.join("|");
-  $("f_pnr").classList.toggle("off",mode==="mail_only");
-  $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
-  $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
-  $("f_mail").classList.toggle("off",mode!=="mail_pnr"&&mode!=="mail_only");
-  if(mode==="pnr_ln")$("hint").textContent=e
-    ?"Required: Booking Code (PNR) + Last Name"
-    :"Benötigt: Buchungscode (PNR) + Nachname";
-  if(mode==="pnr_fn_ln")$("hint").textContent=e
-    ?"Required (VietJet Air): Booking Code (PNR) + First Name + Last Name"
-    :"Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
-  if(mode==="mail_pnr")$("hint").textContent=e
-    ?"Required: Booking Email + Booking Code (PNR)"
-    :"Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
-  if(mode==="mail_only")$("hint").textContent=e
-    ?"Required: Login with your booking email on the portal"
-    :"Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
-  var d={};
-  keys.forEach(function(k){Object.defineProperty(d,k,{value:$(k).value,enumerable:true});});
-  try{localStorage.setItem("rk_upg",JSON.stringify(d));}catch(err){}
-}
-(function ld(){
-  try{
-    var raw=localStorage.getItem("rk_upg");
-    if(raw){
-      var d=JSON.parse(raw);
-      keys.forEach(function(k){
-        var desc=Object.getOwnPropertyDescriptor(d,k);
-        if(desc&&desc.value!==undefined)$(k).value=desc.value;
-      });
+  $("h8").classList.toggle("off", !ab);
+
+  var bad = (ci && ci < t) || (co && co <= t) ||
+    (ci && co && co <= ci);
+  $("cib").classList.toggle("err", Boolean(ci && ci < t));
+  $("cob").classList.toggle("err", Boolean(bad));
+
+  if(ci && co && !bad){
+    var n = Math.round((new Date(co) - new Date(ci)) / 86400000);
+    $("nt").textContent = e
+      ? n + (n === 1 ? " NIGHT" : " NIGHTS")
+      : n + (n === 1 ? " NACHT" : " N\u00c4CHTE");
+    $("info").style.background = "#eff6ff";
+    $("info").style.color = "#1e3a8a";
+    $("info").textContent = e
+      ? "Selection: " + (city || "Destination") + " \u2022 " + n +
+        (n === 1 ? " Night" : " Nights") + " \u2022 " + px +
+        " Guests \u2022 " + rm + " Rm."
+      : "Auswahl: " + (city || "Ziel") + " \u2022 " + n +
+        (n === 1 ? " Nacht" : " N\u00e4chte") + " \u2022 " + px +
+        " Pers. \u2022 " + rm + " Zi.";
+
+    var q = encodeURIComponent(city);
+    var bFilt = st > 0 ? "class=" + st : "";
+
+    $("h1").href = P + "www.kayak.de" + "/hotels/" + q + "/" +
+      ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+    $("h2").href = P + "www.expedia.de" +
+      "/Hotel-Search?destination=" + q +
+      "&startDate=" + ci + "&endDate=" + co +
+      "&adults=" + px + "&rooms=" + rm +
+      (st > 0 ? "&star=" + (st * 10) : "");
+    $("h3").href = P + "www.momondo.de" + "/hotels/" + q + "/" +
+      ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
+
+    $("b_ss").value = city; $("b_ssne").value = city;
+    $("b_ssu").value = city; $("b_did").disabled = !bid;
+    $("b_did").value = bid; $("b_dty").disabled = !bid;
+    $("b_dty").value = bid ? "city" : "";
+    $("b_ci").value = ci; $("b_co").value = co;
+    $("b_px").value = px; $("b_rm").value = rm;
+    $("b_flt").disabled = !bFilt; $("b_flt").value = bFilt;
+
+    var agLoc = e ? "en-us" : "de-de";
+    var ag = P + H_AG + "/" + agLoc + "/search?checkIn=" + ci +
+      "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
+      "&currency=EUR&locale=" + agLoc +
+      (st > 0 ? "&hotelStarRating=" + st : "");
+    $("h5").href = ag + (aid ? "&city=" + aid : "&textToSearch=" + q);
+
+    var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
+    var perRm = Math.max(1, Math.floor(px / rm));
+    var rem = px % rm, rc = "";
+    for(var i = 0; i < rm; i++){
+      rc += (i > 0 ? "-" : "") + (perRm + (i < rem ? 1 : 0));
     }
-  }catch(err){}
-  applyLang();
-  sv();
-  setInterval(updClock,1000);
-})();
-keys.forEach(function(k){
-  $(k).addEventListener("input",sv);
-  $(k).addEventListener("change",sv);
+    $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
+      "&sQuery=" + q + "&aDateRange%5Barr%5D=" + ci +
+      "&aDateRange%5Bdep%5D=" + co +
+      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rc;
+
+    $("h8").href = P + "www.airbnb.de" + "/s/" + q +
+      "/homes?tab_id=home_tab&checkin=" + ci +
+      "&checkout=" + co + "&adults=" + px;
+  } else {
+    $("nt").textContent = e
+      ? (bad ? "CHECK DATES" : "DATES")
+      : (bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM");
+    $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
+    $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
+    $("info").textContent = e
+      ? (bad ? "Please check dates."
+        : "Please select destination, check-in and check-out.")
+      : (bad ? "Bitte Datum pr\u00fcfen."
+        : "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.");
+  }
+
+  try {
+    localStorage.setItem("rk_hotel", JSON.stringify({
+      city: $("city").value, ci: ci, co: co,
+      px: px, rm: rm, st: st, ab: ab
+    }));
+  } catch(err){}
+}
+function showAc(list, msg){
+  var box = $("lc");
+  box.innerHTML = "";
+  if(msg){
+    var m = document.createElement("div");
+    m.textContent = msg; m.style.color = "#64748b";
+    box.appendChild(m); box.style.display = "block"; return;
+  }
+  if(!list || list.length === 0){ box.style.display = "none"; return; }
+  list.forEach(function(it){
+    var d = document.createElement("div");
+    d.textContent = it.name + (it.country ? " (" + it.country + ")" : "");
+    d.onmousedown = function(ev){
+      ev.preventDefault(); $("city").value = it.name;
+      cc = (it.country_code || "de").toLowerCase();
+      box.style.display = "none"; upd();
+    };
+    box.appendChild(d);
+  });
+  box.style.display = "block";
+}
+
+function searchWorldCities(q, done){
+  var l = isEn() ? "en" : "de";
+  var noRes = isEn() ? "No location found" : "Kein Ort gefunden";
+  var u1 = P + H_OM + "/v1/search?name=" +
+    encodeURIComponent(q) + "&count=8&language=" + l + "&format=json";
+  var u2 = P + "photon.komoot.io" + "/api/?q=" +
+    encodeURIComponent(q) + "&lang=" + l + "&limit=8";
+  var u3 = P + "nominatim.openstreetmap.org" +
+    "/search?format=json&accept-language=" + l + "&limit=8&q=" +
+    encodeURIComponent(q);
+
+  function tryNominatim(){
+    fetch(u3).then(function(r){ return r.json(); }).then(function(j){
+      if(j && j.length > 0){
+        done(j.map(function(x){
+          var p = String(x.display_name || q).split(",");
+          return {
+            name: p.slice(0, 1).join("").trim(),
+            country: p.slice(-1).join("").trim(),
+            country_code: l
+          };
+        }), "");
+      } else { done(new Array(), noRes); }
+    }).catch(function(){ done(new Array(), noRes); });
+  }
+
+  function tryPhoton(){
+    fetch(u2).then(function(r){ return r.json(); }).then(function(j){
+      if(j && j.features && j.features.length > 0){
+        done(j.features.map(function(f){
+          var pr = f.properties || {};
+          return {
+            name: pr.name || pr.city || q,
+            country: pr.country || "",
+            country_code: (pr.countrycode || l).toLowerCase()
+          };
+        }), "");
+      } else { tryNominatim(); }
+    }).catch(tryNominatim);
+  }
+
+  fetch(u1).then(function(r){ return r.json(); }).then(function(j){
+    if(j && j.results && j.results.length > 0){ done(j.results, ""); }
+    else { tryPhoton(); }
+  }).catch(tryPhoton);
+}
+
+$("city").addEventListener("input", function(){
+  upd(); clearTimeout(acT);
+  var q = $("city").value.trim(), box = $("lc");
+  if(q.length < 2){ box.style.display = "none"; return; }
+  showAc(null, isEn() ? "🔍 Searching worldwide..." : "🔍 Suche weltweit...");
+  acT = setTimeout(function(){
+    searchWorldCities(q, function(res, errMsg){
+      if($("city").value.trim() !== q) return;
+      showAc(res, errMsg);
+    });
+  }, 200);
 });
+
+document.addEventListener("click", function(ev){
+  if(!$("lc").contains(ev.target) && ev.target !== $("city")){
+    $("lc").style.display = "none";
+  }
+});
+
+try {
+  var saved = JSON.parse(localStorage.getItem("rk_hotel") || "null");
+  if(saved){
+    if(saved.city) $("city").value = saved.city;
+    if(saved.ci) $("ci").value = saved.ci;
+    if(saved.co) $("co").value = saved.co;
+    if(saved.px) $("px").value = saved.px;
+    if(saved.rm) $("rm").value = saved.rm;
+    if(saved.st) $("st").value = saved.st;
+    if(saved.ab !== undefined) $("ab").checked = saved.ab;
+  }
+} catch(err){}
+
+"city;ci;co;px;rm;st;ab".split(";").forEach(function(id){
+  $(id).addEventListener("input", upd);
+  $(id).addEventListener("change", upd);
+});
+$("f4").addEventListener("submit", upd);
+$("ci").min = iso(new Date()); $("co").min = iso(new Date());
+applyLang();
+upd();
 </script>
 </body>
 </html>
