@@ -7,7 +7,7 @@
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
-  margin:0;padding:16px;min-height:100vh;
+  margin:0;padding:12px 16px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
   font-family:sans-serif;color:var(--t);box-sizing:border-box
 }
@@ -19,7 +19,7 @@ html,body{
 .w-card{
   background:linear-gradient(180deg,#ffffff 0%,#f0f9ff 100%);
   border:2px solid #38bdf8;border-radius:18px;
-  padding:28px 24px;text-align:center;max-width:430px;width:100%;
+  padding:26px 24px;text-align:center;max-width:450px;width:100%;
   box-shadow:0 16px 40px rgba(0,0,0,.5)
 }
 .w-card h2{
@@ -27,20 +27,20 @@ html,body{
   line-height:1.25
 }
 .w-sub-tit{
-  display:block;font-size:1rem;font-weight:bold;
+  display:block;font-size:.98rem;font-weight:bold;
   color:#0369a1;margin-top:4px
 }
-@keyframes planeFloat{
+@keyframes iconFloat{
   0%,100%{transform:translateY(0) rotate(-4deg)}
   50%{transform:translateY(-3px) rotate(4deg)}
 }
 .w-btn{
   display:flex;align-items:center;justify-content:center;gap:12px;
-  width:100%;max-width:350px;margin:0 auto;box-sizing:border-box;
+  width:100%;max-width:390px;margin:0 auto;box-sizing:border-box;
   background:linear-gradient(135deg,#0284c7 0%,#1d4ed8 100%);
   color:#fff;border:2px solid #7dd3fc;border-radius:14px;
-  padding:14px 18px;font-size:1.02rem;font-weight:bold;
-  cursor:pointer;text-align:left;line-height:1.25;
+  padding:13px 16px;font-size:.98rem;font-weight:bold;
+  cursor:pointer;text-align:left;line-height:1.28;
   box-shadow:0 8px 20px rgba(2,132,199,.45);
   transition:transform .15s,box-shadow .15s;
   touch-action:manipulation;user-select:none
@@ -50,92 +50,97 @@ html,body{
   box-shadow:0 12px 24px rgba(29,78,216,.55)
 }
 .w-btn:active{transform:scale(.98)}
-.w-plane{
+.w-icon{
   display:flex;align-items:center;justify-content:center;
   width:42px;height:42px;border-radius:11px;flex-shrink:0;
   background:rgba(255,255,255,.18);border:1px solid #bae6fd;
-  font-size:1.45rem;animation:planeFloat 2.4s infinite ease-in-out
+  font-size:1.45rem;animation:iconFloat 2.4s infinite ease-in-out
 }
 .w-txt{display:flex;flex-direction:column}
+.w-line{white-space:nowrap}
 .w-btn-en{
   display:block;font-size:.82rem;font-weight:bold;
-  color:#bae6fd;margin-top:3px
+  color:#bae6fd;margin-top:3px;white-space:nowrap
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:10px 14px;border-radius:12px;
-  margin-bottom:18px;flex-wrap:wrap;gap:6px
+  background:#0f2942;padding:8px 14px;border-radius:11px;
+  margin-bottom:12px;flex-wrap:wrap;gap:6px
 }
-.tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
+.tit{font-weight:bold;color:#fff;font-size:1.06rem;margin:0}
 .cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.69rem;padding:5px 8px;border-radius:6px;
+  font-size:.68rem;padding:4px 8px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
   background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
   white-space:nowrap
 }
-.seg.nav{background:#1e40af;padding:5px 8px}
-.seg.upg{background:#0369a1;padding:5px 8px}
+.seg.nav{background:#1e40af;padding:4px 8px}
+.seg.upg{background:#0369a1;padding:4px 8px}
 .seg.act{
   background:linear-gradient(180deg,#38bdf8 0%,#0284c7 100%);
-  border:2px solid #e0f2fe;padding:4px 9px;cursor:default
+  border:2px solid #e0f2fe;padding:3px 9px;cursor:default
 }
 .mbtn{
   background:#0284c7;color:#fff;border:1px solid #7dd3fc;
-  border-radius:6px;padding:5px 8px;font-size:.69rem;
+  border-radius:6px;padding:4px 8px;font-size:.68rem;
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
 .card{
   width:100%;box-sizing:border-box;border:1px solid #93c5fd;
-  border-radius:12px;padding:22px;background:#fff;
-  margin-bottom:18px;box-shadow:0 4px 14px rgba(3,105,161,.08)
+  border-radius:12px;padding:14px 18px;background:#fff;
+  margin-bottom:12px;box-shadow:0 4px 14px rgba(3,105,161,.08)
 }
 .ct{
-  font-weight:bold;font-size:1.1rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
-  margin-bottom:16px
+  font-weight:bold;font-size:1rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:6px;
+  margin-bottom:10px
 }
-.f{margin-bottom:14px;display:flex;flex-direction:column}
+.grid2{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px 14px
+}
+.f{margin-bottom:10px;display:flex;flex-direction:column}
+.grid2 .f{margin-bottom:0}
 .f.off{display:none}
 label{
-  font-weight:bold;font-size:.85rem;
-  margin-bottom:5px;color:#1e3a8a
+  font-weight:bold;font-size:.8rem;
+  margin-bottom:4px;color:#1e3a8a
 }
-.inrow{display:flex;gap:8px;align-items:center}
+.inrow{display:flex;gap:6px;align-items:center}
 input,select{
-  height:42px;padding:0 12px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.98rem;
+  height:36px;padding:0 10px;border:1px solid #93c5fd;
+  border-radius:7px;box-sizing:border-box;font-size:.92rem;
   background:#f8fafc;color:var(--t);width:100%
 }
 .cpbtn{
-  height:42px;padding:0 14px;background:#e0f2fe;color:#0369a1;
-  border:1px solid #7dd3fc;border-radius:8px;font-weight:bold;
-  cursor:pointer;white-space:nowrap;font-size:.82rem
+  height:36px;padding:0 10px;background:#e0f2fe;color:#0369a1;
+  border:1px solid #7dd3fc;border-radius:7px;font-weight:bold;
+  cursor:pointer;white-space:nowrap;font-size:.78rem
 }
 .cpbtn:hover{background:#bae6fd}
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
-  border-left:5px solid #0284c7;border-radius:8px;
-  padding:10px 14px;color:#1e3a8a;font-weight:bold;
-  font-size:.88rem;margin-bottom:16px
+  border-left:5px solid #0284c7;border-radius:7px;
+  padding:7px 12px;color:#1e3a8a;font-weight:bold;
+  font-size:.84rem;margin-bottom:10px
 }
 .acts{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:12px;margin-top:8px
+  gap:12px;margin-top:12px
 }
 .abtn{
   display:flex;align-items:center;justify-content:center;
-  height:50px;border-radius:9px;font-weight:bold;font-size:.92rem;
+  height:42px;border-radius:8px;font-weight:bold;font-size:.88rem;
   text-decoration:none;border:none;cursor:pointer;color:#fff;
   text-align:center;padding:0 10px
 }
 .abtn.note{background:#0369a1}
 .abtn.go{background:#1d4ed8}
 #ts{
-  display:none;margin-top:12px;padding:10px 12px;
+  display:none;margin-top:8px;padding:7px 10px;
   background:#dcfce7;border:1px solid #86efac;color:#166534;
-  border-radius:8px;font-weight:bold;font-size:.88rem
+  border-radius:7px;font-weight:bold;font-size:.82rem
 }
 @keyframes pulseHint{
   0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
@@ -144,14 +149,14 @@ input,select{
 .bb{
   width:100%;box-sizing:border-box;
   border:1px solid #93c5fd;background:#fff;
-  border-radius:12px;padding:16px 20px;
+  border-radius:12px;padding:12px 16px;
   box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
 .hintbox{
   background:#0f2942;color:#fff;
   border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:12px 15px;font-weight:bold;
-  font-size:.88rem;line-height:1.45;
+  border-radius:8px;padding:10px 14px;font-weight:bold;
+  font-size:.84rem;line-height:1.38;
   animation:pulseHint 2.2s infinite ease-in-out
 }
 </style>
@@ -165,9 +170,9 @@ input,select{
     </h2>
     <button type="button" class="w-btn" id="entryBtn"
       onclick="enterBookings()">
-      <span class="w-plane">✈️</span>
+      <span class="w-icon">✈️</span>
       <span class="w-txt">
-        <span>Aktuelle Buchungen aktivieren ➡️</span>
+        <span class="w-line">Aktuelle Buchungen aktivieren ➡️</span>
         <span class="w-btn-en">Activate Current Bookings ➡️</span>
       </span>
     </button>
@@ -179,7 +184,7 @@ input,select{
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">23.11.2026 • 19:45:00</div>
+    <div class="seg" id="dt">23.11.2026 • 20:00:00</div>
     <span class="seg act" id="navAct">
       ✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)
     </span>
@@ -221,52 +226,54 @@ input,select{
     </select>
   </div>
   <div class="bn" id="hint">Benötigt: Buchungscode (PNR) + Nachname</div>
-  <div class="f" id="f_pnr">
-    <label for="u3" id="lblPnr">Buchungscode (PNR)</label>
-    <div class="inrow">
-      <input type="text" id="u3" placeholder="z.B. ABC123">
-      <button type="button" class="cpbtn" id="cpPnr"
-        onclick="cp('u3','PNR')">📋 Kopieren</button>
+  <div class="grid2">
+    <div class="f" id="f_pnr">
+      <label for="u3" id="lblPnr">Buchungscode (PNR)</label>
+      <div class="inrow">
+        <input type="text" id="u3" placeholder="z.B. ABC123">
+        <button type="button" class="cpbtn" id="cpPnr"
+          onclick="cp('u3','PNR')">📋 Kopieren</button>
+      </div>
     </div>
-  </div>
-  <div class="f off" id="f_fn">
-    <label for="u_fn" id="lblFn">Vorname (wie im Pass)</label>
-    <div class="inrow">
-      <input type="text" id="u_fn" placeholder="z.B. MAX">
-      <button type="button" class="cpbtn" id="cpFn"
-        onclick="cp('u_fn','Vorname')">📋 Kopieren</button>
+    <div class="f off" id="f_fn">
+      <label for="u_fn" id="lblFn">Vorname (wie im Pass)</label>
+      <div class="inrow">
+        <input type="text" id="u_fn" placeholder="z.B. MAX">
+        <button type="button" class="cpbtn" id="cpFn"
+          onclick="cp('u_fn','Vorname')">📋 Kopieren</button>
+      </div>
     </div>
-  </div>
-  <div class="f" id="f_ln">
-    <label for="u6" id="lblLn">Nachname (wie im Pass)</label>
-    <div class="inrow">
-      <input type="text" id="u6" placeholder="z.B. MUSTERMANN">
-      <button type="button" class="cpbtn" id="cpLn"
-        onclick="cp('u6','Nachname')">📋 Kopieren</button>
+    <div class="f" id="f_ln">
+      <label for="u6" id="lblLn">Nachname (wie im Pass)</label>
+      <div class="inrow">
+        <input type="text" id="u6" placeholder="z.B. MUSTERMANN">
+        <button type="button" class="cpbtn" id="cpLn"
+          onclick="cp('u6','Nachname')">📋 Kopieren</button>
+      </div>
     </div>
-  </div>
-  <div class="f off" id="f_mail">
-    <label for="u4" id="lblMail">Buchungs-E-Mail</label>
-    <div class="inrow">
-      <input type="email" id="u4" placeholder="name@beispiel.de">
-      <button type="button" class="cpbtn" id="cpMail"
-        onclick="cp('u4','E-Mail')">📋 Kopieren</button>
+    <div class="f off" id="f_mail">
+      <label for="u4" id="lblMail">Buchungs-E-Mail</label>
+      <div class="inrow">
+        <input type="email" id="u4" placeholder="name@beispiel.de">
+        <button type="button" class="cpbtn" id="cpMail"
+          onclick="cp('u4','E-Mail')">📋 Kopieren</button>
+      </div>
     </div>
-  </div>
-  <div class="f">
-    <label for="u_tknr" id="lblTk">Ticketnummer (freiwillig)</label>
-    <div class="inrow">
-      <input type="text" id="u_tknr" placeholder="z.B. 235-1234567890">
-      <button type="button" class="cpbtn" id="cpTk"
-        onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
+    <div class="f">
+      <label for="u_tknr" id="lblTk">Ticketnummer (freiwillig)</label>
+      <div class="inrow">
+        <input type="text" id="u_tknr" placeholder="z.B. 235-1234567890">
+        <button type="button" class="cpbtn" id="cpTk"
+          onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
+      </div>
     </div>
-  </div>
-  <div class="f">
-    <label for="u_pp" id="lblPp">Reisepassnummer (freiwillig)</label>
-    <div class="inrow">
-      <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
-      <button type="button" class="cpbtn" id="cpPp"
-        onclick="cp('u_pp','Pass-Nr.')">📋 Kopieren</button>
+    <div class="f">
+      <label for="u_pp" id="lblPp">Reisepassnummer (freiwillig)</label>
+      <div class="inrow">
+        <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
+        <button type="button" class="cpbtn" id="cpPp"
+          onclick="cp('u_pp','Pass-Nr.')">📋 Kopieren</button>
+      </div>
     </div>
   </div>
   <div class="acts">
