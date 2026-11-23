@@ -6,11 +6,10 @@
 <title>✈️ Flugcockpit – Meine Flugbuchungen</title>
 <style>
 :root{
-  --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;
-  --b:#bae6fd;--v:#0284c7;--red:#dc2626
+  --r:#0369a1;--d:#0c4a6e;--t:#0f172a;--red:#dc2626
 }
 html,body{
-  margin:0;padding:10px;min-height:100vh;
+  margin:0;padding:16px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
   font-family:sans-serif;color:var(--t);box-sizing:border-box
 }
@@ -37,54 +36,47 @@ html,body{
 .w-btn:active{background:#0369a1}
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:8px 12px;border-radius:10px;
-  margin-bottom:10px;flex-wrap:wrap;gap:6px;
-  box-shadow:0 3px 10px rgba(15,41,66,.18)
+  background:#0f2942;padding:12px 14px;border-radius:12px;
+  margin-bottom:20px;flex-wrap:wrap;gap:8px
 }
-.tit{
-  font-weight:bold;color:#fff;font-size:1.05rem;
-  margin:0;letter-spacing:.2px
-}
-.cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.tit{font-weight:bold;color:#fff;font-size:1.15rem;margin:0}
+.cp{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.7rem;padding:5px 8px;border-radius:6px;
+  font-size:.74rem;padding:6px 9px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
-  background:#0284c7;text-decoration:none;
-  border:1px solid #38bdf8;white-space:nowrap
+  background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
+  white-space:nowrap
 }
-.bk{
-  background:#1e40af;font-size:.7rem;
-  padding:5px 9px;border-color:#60a5fa
-}
-.act{
+.seg.nav{background:#1e40af;font-size:.76rem;padding:6px 10px}
+.seg.upg{background:#0369a1;font-size:.76rem;padding:6px 10px}
+.seg.act{
   background:linear-gradient(180deg,#38bdf8 0%,#0284c7 100%);
-  border:2px solid #e0f2fe;font-size:.7rem;padding:4px 9px;
-  box-shadow:0 0 10px rgba(125,211,252,.65);cursor:default
+  border:2px solid #e0f2fe;font-size:.76rem;padding:5px 11px;
+  box-shadow:0 0 12px rgba(125,211,252,.65);cursor:default
 }
 .mbtn{
   background:#0284c7;color:#fff;border:1px solid #7dd3fc;
-  border-radius:6px;padding:5px 9px;font-size:.7rem;
+  border-radius:6px;padding:6px 10px;font-size:.76rem;
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
+.row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
 .card{
-  max-width:960px;margin:0 auto 10px auto;
-  border:1px solid #93c5fd;border-radius:10px;
-  padding:11px 16px;background:#fff;box-sizing:border-box;
-  box-shadow:0 3px 10px rgba(3,105,161,.08)
+  flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
+  padding:20px;background:#fff;box-sizing:border-box
 }
 .ct{
-  font-weight:bold;font-size:.96rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:5px;
-  margin-bottom:8px
+  font-weight:bold;font-size:1.08rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
+  margin-bottom:16px
 }
 .f{
-  margin-bottom:7px;display:flex;
-  flex-direction:column;transition:.2s
+  margin-bottom:14px;display:flex;
+  flex-direction:column;position:relative;transition:.2s
 }
 .f2{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:7px
+  gap:10px;margin-bottom:14px
 }
 .f.off{opacity:.35;pointer-events:none}
 .f.off input{
@@ -95,71 +87,64 @@ html,body{
   color:#64748b!important;font-weight:normal
 }
 label{
-  font-weight:bold;font-size:.78rem;
-  margin-bottom:3px;color:#0369a1
+  font-weight:bold;font-size:.85rem;
+  margin-bottom:5px;color:#1e3a8a
 }
 label.req{color:var(--red)}
 label.opt{color:#475569}
 input,select{
-  height:33px;padding:0 10px;border:1px solid #93c5fd;
-  border-radius:7px;box-sizing:border-box;font-size:.88rem;
-  background:#f8fafc;width:100%;color:var(--t);transition:.2s
+  height:42px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.98rem;
+  background:#f8fafc;color:var(--t);width:100%
 }
 input:focus,select:focus{
   outline:none;border-color:#0284c7;background:#fff;
-  box-shadow:0 0 0 2px rgba(2,132,199,.15)
+  box-shadow:0 0 0 3px rgba(2,132,199,.15)
 }
 input::placeholder{
-  color:var(--red);font-weight:bold;opacity:1;font-size:.8rem
+  color:var(--red);font-weight:bold;opacity:1;font-size:.86rem
 }
 input.opt::placeholder{color:#94a3b8;font-weight:normal}
-.cpb{display:flex;gap:5px}
+.cpb{display:flex;gap:6px}
 .cpb button{
-  width:36px;height:33px;border:1px solid #93c5fd;
-  background:#f0f9ff;border-radius:7px;cursor:pointer;
-  font-size:.95rem;flex-shrink:0;transition:.2s;padding:0
+  width:44px;height:42px;border:1px solid #93c5fd;
+  background:#f0f9ff;border-radius:8px;cursor:pointer;
+  font-size:1.05rem;flex-shrink:0;transition:.2s;padding:0
 }
 .cpb button:hover{background:#e0f2fe}
+.hinweis{
+  background:#eff6ff;border:1px solid #93c5fd;
+  border-left:5px solid var(--red);border-radius:8px;
+  padding:10px 14px;color:var(--red);font-weight:bold;
+  font-size:.9rem;margin-top:6px
+}
 .bb{
-  max-width:960px;margin:0 auto;border:1px solid #93c5fd;
-  background:#fff;border-radius:10px;padding:10px 16px;
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-  box-shadow:0 3px 10px rgba(3,105,161,.08);box-sizing:border-box
+  border:1px solid #93c5fd;background:#fff;
+  border-radius:12px;padding:18px
+}
+.bf{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px
 }
 .btn{
   display:flex;align-items:center;justify-content:center;
-  height:38px;background:#0284c7;color:#fff;font-weight:bold;
-  border-radius:7px;font-size:.82rem;text-transform:uppercase;
-  text-decoration:none;cursor:pointer;border:none;
-  box-shadow:0 2px 5px rgba(15,41,66,.15);transition:.2s;
-  text-align:center;padding:0 8px
+  height:48px;color:#fff;font-weight:bold;border-radius:8px;
+  font-size:.88rem;text-transform:uppercase;text-decoration:none;
+  border:none;cursor:pointer;width:100%;background:#0284c7
 }
-.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.btn.note{background:#1e3a8a;font-size:.8rem}
-.hinweis{
-  background:#eff6ff;border:1px solid #93c5fd;
-  border-left:5px solid var(--red);color:var(--red);
-  padding:5px 10px;border-radius:7px;font-size:.8rem;
-  margin-bottom:8px;font-weight:bold
-}
+.btn.note{background:#1e3a8a}
+.btn:hover{filter:brightness(1.08)}
 #ts{
-  display:none;grid-column:1 / -1;background:#e0f2fe;
-  border:1px solid #38bdf8;color:#0c4a6e;padding:6px 10px;
-  border-radius:7px;font-weight:bold;font-size:.8rem;
+  display:none;margin-top:12px;background:#e0f2fe;
+  border:1px solid #38bdf8;color:#0c4a6e;padding:9px 14px;
+  border-radius:8px;font-weight:bold;font-size:.88rem;
   text-align:center
 }
-@keyframes pulseHint{
-  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
-  50%{border-color:#dc2626;box-shadow:0 0 12px rgba(185,28,28,.7)}
+.hint{
+  margin-top:16px;background:#0f2942;color:#fff;
+  border:3px solid #991b1b;border-left:7px solid #991b1b;
+  border-radius:8px;padding:12px 15px;
+  font-size:.88rem;line-height:1.45
 }
-.hintbox{
-  grid-column:1 / -1;background:#0f2942;color:#fff;
-  border:2px solid #991b1b;border-left:6px solid #991b1b;
-  border-radius:7px;padding:7px 12px;font-size:.78rem;
-  line-height:1.35;animation:pulseHint 2.2s infinite ease-in-out
-}
-</style>
-</head>
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
@@ -170,174 +155,182 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
 </div>
 <audio id="bgm" src="musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit">✈️ Meine Flugbuchungen</h1>
+  <h1 class="tit">✈️ Flugcockpit – Meine Flugbuchungen</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
+    <div class="seg" id="dt">23.11.2026 • 14:18:29</div>
     <span class="seg act">✈️ FLUGBUCHUNGEN (AKTIV)</span>
-    <a href="index.html" class="seg bk">🏠 Startseite</a>
-    <a href="index.html" class="seg bk">✈️ Flugsuche</a>
-    <a href="meine-hotelsuche.html" class="seg bk">
-      🏨 Hotelsuche
+    <a href="index.html" class="seg nav">🏠 Zurück zur Startseite</a>
+    <a href="index.html" class="seg nav">✈️ Flugsuche</a>
+    <a href="meine-hotelsuche.html" class="seg upg">
+      🏨 Meine Hotelsuche ➡️
     </a>
-    <div class="seg" id="dt">23.11.2026 • 10:20:08</div>
   </div>
 </div>
-<div class="card">
-  <div class="ct">1️⃣ Airline / Veranstalter & Reisedaten</div>
-  <div class="f">
-    <label>Airline / Reiseveranstalter</label>
-    <select id="u5">
-      <optgroup label="✈️ Airlines">
-        <option value="tk|pnr_ln|https://turkishairlines.com">
-          Turkish Airlines
-        </option>
-        <option value="lh|pnr_ln|https://lufthansa.com">
-          Lufthansa
-        </option>
-        <option value="qr|pnr_ln|https://qatarairways.com">
-          Qatar Airways
-        </option>
-        <option value="ek|pnr_ln|https://emirates.com">
-          Emirates
-        </option>
-        <option value="sq|pnr_ln|https://singaporeair.com">
-          Singapore Airlines
-        </option>
-        <option value="tg|pnr_ln|https://thaiairways.com">
-          Thai Airways
-        </option>
-        <option value="cx|pnr_ln|https://cathaypacific.com">
-          Cathay Pacific
-        </option>
-        <option value="pr|pnr_ln|https://philippineairlines.com">
-          Philippine Airlines
-        </option>
-        <option value="5j|pnr_ln|https://cebupacificair.com">
-          Cebu Pacific (Low-Cost Asien)
-        </option>
-        <option value="tr|pnr_ln|https://flyscoot.com">
-          Scoot (Low-Cost Asien)
-        </option>
-        <option value="pg|pnr_ln|https://bangkokair.com">
-          Bangkok Airways
-        </option>
-        <option value="vj|pnr_fn_ln|https://vietjetair.com">
-          VietJet Air (Low-Cost Asien)
-        </option>
-        <option value="ak|mail_pnr|https://airasia.com">
-          AirAsia (Low-Cost Asien)
-        </option>
-      </optgroup>
-      <optgroup label="🧳 Reisevermittler & Portale">
-        <option value="gtg|mail_pnr|https://gotogate.de">
-          Gotogate (Meine Buchungen)
-        </option>
-        <option value="exp|mail_only|https://expedia.de">
-          Expedia (Reiseplan)
-        </option>
-        <option value="trp|mail_pnr|https://trip.com?">
-          Trip.com (Buchungen)
-        </option>
-        <option value="kwi|mail_only|https://kiwi.com">
-          Kiwi.com (Buchungen)
-        </option>
-        <option value="sky|mail_only|https://skyscanner.de">
-          Skyscanner (Mein Konto)
-        </option>
-        <option value="kyk|mail_only|https://kayak.de">
-          Kayak (Trips)
-        </option>
-        <option value="mom|mail_only|https://momondo.de">
-          Momondo (Trips)
-        </option>
-        <option value="opo|mail_pnr|https://opodo.de">
-          Opodo (Meine Reisen)
-        </option>
-      </optgroup>
-    </select>
-  </div>
-  <div id="hint" class="hinweis">
-    Benötigt: Buchungscode (PNR) + Nachname
-  </div>
 
-  <div class="f2" style="margin-bottom:0">
-    <div id="f_pnr" class="f">
-      <label class="req">Buchungscode (PNR)</label>
-      <div class="cpb">
-        <input type="text" id="u3" autocomplete="off"
-          placeholder="PFLICHT: z.B. TW8ZRK"
-          style="text-transform:uppercase">
-        <button type="button"
-          onclick="cp('u3','Buchungscode')">📋</button>
-      </div>
+<div class="row">
+  <div class="card">
+    <div class="ct">1️⃣ Airline / Veranstalter & Check-in Info</div>
+    <div class="f">
+      <label for="u5">Airline / Reiseveranstalter wählen</label>
+      <select id="u5">
+        <optgroup label="✈️ Airlines">
+          <option value="tk|pnr_ln|https://turkishairlines.com">
+            Turkish Airlines
+          </option>
+          <option value="lh|pnr_ln|https://lufthansa.com">
+            Lufthansa
+          </option>
+          <option value="qr|pnr_ln|https://qatarairways.com">
+            Qatar Airways
+          </option>
+          <option value="ek|pnr_ln|https://emirates.com">
+            Emirates
+          </option>
+          <option value="sq|pnr_ln|https://singaporeair.com">
+            Singapore Airlines
+          </option>
+          <option value="tg|pnr_ln|https://thaiairways.com">
+            Thai Airways
+          </option>
+          <option value="cx|pnr_ln|https://cathaypacific.com">
+            Cathay Pacific
+          </option>
+          <option value="pr|pnr_ln|https://philippineairlines.com">
+            Philippine Airlines
+          </option>
+          <option value="5j|pnr_ln|https://cebupacificair.com">
+            Cebu Pacific (Low-Cost Asien)
+          </option>
+          <option value="tr|pnr_ln|https://flyscoot.com">
+            Scoot (Low-Cost Asien)
+          </option>
+          <option value="pg|pnr_ln|https://bangkokair.com">
+            Bangkok Airways
+          </option>
+          <option value="vj|pnr_fn_ln|https://vietjetair.com">
+            VietJet Air (Low-Cost Asien)
+          </option>
+          <option value="ak|mail_pnr|https://airasia.com">
+            AirAsia (Low-Cost Asien)
+          </option>
+        </optgroup>
+        <optgroup label="🧳 Reisevermittler & Portale">
+          <option value="gtg|mail_pnr|https://gotogate.de">
+            Gotogate (Meine Buchungen)
+          </option>
+          <option value="exp|mail_only|https://expedia.de">
+            Expedia (Reiseplan)
+          </option>
+          <option value="trp|mail_pnr|https://trip.com?">
+            Trip.com (Buchungen)
+          </option>
+          <option value="kwi|mail_only|https://kiwi.com">
+            Kiwi.com (Buchungen)
+          </option>
+          <option value="sky|mail_only|https://skyscanner.de">
+            Skyscanner (Mein Konto)
+          </option>
+          <option value="kyk|mail_only|https://kayak.de">
+            Kayak (Trips)
+          </option>
+          <option value="mom|mail_only|https://momondo.de">
+            Momondo (Trips)
+          </option>
+          <option value="opo|mail_pnr|https://opodo.de">
+            Opodo (Meine Reisen)
+          </option>
+        </optgroup>
+      </select>
     </div>
-    <div id="f_mail" class="f">
-      <label class="req">Buchungs-E-Mail / Login</label>
-      <div class="cpb">
-        <input type="email" id="u4" autocomplete="off"
-          placeholder="PFLICHT: E-Mail der Buchung">
-        <button type="button"
-          onclick="cp('u4','E-Mail')">📋</button>
-      </div>
+    <div id="hint" class="hinweis">
+      Benötigt: Buchungscode (PNR) + Nachname
     </div>
   </div>
 
-  <div class="f2" style="margin-bottom:0">
-    <div id="f_fn" class="f">
-      <label class="req">Vorname (Reisepass)</label>
-      <div class="cpb">
-        <input type="text" id="u_fn" autocomplete="off"
-          placeholder="PFLICHT: z.B. MAX"
-          style="text-transform:uppercase">
-        <button type="button"
-          onclick="cp('u_fn','Vorname')">📋</button>
+  <div class="card">
+    <div class="ct">2️⃣ Buchungsdaten & Notizzettel-Angaben</div>
+    <div class="f2">
+      <div id="f_pnr" class="f" style="margin:0">
+        <label class="req">Buchungscode (PNR)</label>
+        <div class="cpb">
+          <input type="text" id="u3" autocomplete="off"
+            placeholder="PFLICHT: z.B. TW8ZRK"
+            style="text-transform:uppercase">
+          <button type="button"
+            onclick="cp('u3','Buchungscode')">📋</button>
+        </div>
+      </div>
+      <div id="f_mail" class="f" style="margin:0">
+        <label class="req">Buchungs-E-Mail / Login</label>
+        <div class="cpb">
+          <input type="email" id="u4" autocomplete="off"
+            placeholder="PFLICHT: E-Mail der Buchung">
+          <button type="button"
+            onclick="cp('u4','E-Mail')">📋</button>
+        </div>
       </div>
     </div>
-    <div id="f_ln" class="f">
-      <label class="req">Nachname (ohne Vornamen!)</label>
-      <div class="cpb">
-        <input type="text" id="u6" autocomplete="off"
-          placeholder="PFLICHT: z.B. MUSTERMANN"
-          style="text-transform:uppercase">
-        <button type="button"
-          onclick="cp('u6','Nachname')">📋</button>
-      </div>
-    </div>
-  </div>
 
-  <div class="f2" style="margin-bottom:0">
-    <div>
-      <label class="opt">Ticketnummer (Notizzettel)</label>
-      <div class="cpb">
-        <input type="text" id="u_tknr" class="opt"
-          autocomplete="off" placeholder="z.B. 2354817365876">
-        <button type="button"
-          onclick="cp('u_tknr','Ticketnummer')">📋</button>
+    <div class="f2">
+      <div id="f_fn" class="f" style="margin:0">
+        <label class="req">Vorname (Reisepass)</label>
+        <div class="cpb">
+          <input type="text" id="u_fn" autocomplete="off"
+            placeholder="PFLICHT: z.B. MAX"
+            style="text-transform:uppercase">
+          <button type="button"
+            onclick="cp('u_fn','Vorname')">📋</button>
+        </div>
+      </div>
+      <div id="f_ln" class="f" style="margin:0">
+        <label class="req">Nachname (ohne Vornamen!)</label>
+        <div class="cpb">
+          <input type="text" id="u6" autocomplete="off"
+            placeholder="PFLICHT: z.B. MUSTERMANN"
+            style="text-transform:uppercase">
+          <button type="button"
+            onclick="cp('u6','Nachname')">📋</button>
+        </div>
       </div>
     </div>
-    <div>
-      <label class="opt">Reisepassnummer (Notizzettel)</label>
-      <div class="cpb">
-        <input type="text" id="u_pp" class="opt"
-          autocomplete="off" placeholder="z.B. C01X00T47"
-          style="text-transform:uppercase">
-        <button type="button"
-          onclick="cp('u_pp','Reisepass')">📋</button>
+
+    <div class="f2" style="margin-bottom:0">
+      <div>
+        <label class="opt">Ticketnummer (Notizzettel)</label>
+        <div class="cpb">
+          <input type="text" id="u_tknr" class="opt"
+            autocomplete="off" placeholder="z.B. 2354817365876">
+          <button type="button"
+            onclick="cp('u_tknr','Ticketnummer')">📋</button>
+        </div>
+      </div>
+      <div>
+        <label class="opt">Reisepassnummer (Notizzettel)</label>
+        <div class="cpb">
+          <input type="text" id="u_pp" class="opt"
+            autocomplete="off" placeholder="z.B. C01X00T47"
+            style="text-transform:uppercase">
+          <button type="button"
+            onclick="cp('u_pp','Reisepass')">📋</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="bb">
-  <button type="button" onclick="openNote()" class="btn note">
-    📌 1. Schwebenden Spickzettel starten
-  </button>
-  <a id="go" href="https://turkishairlines.com"
-    target="_blank" class="btn">🚀 2. Airline-Seite öffnen</a>
+  <div class="bf">
+    <button type="button" onclick="openNote()" class="btn note">
+      📌 1. Schwebenden Spickzettel starten
+    </button>
+    <a id="go" href="https://turkishairlines.com"
+      target="_blank" class="btn">🚀 2. Airline-Seite öffnen</a>
+  </div>
   <div id="ts"></div>
-  <div class="hintbox">
-    ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie:
+  <div class="hint">
+    ℹ️ <b>Wichtiger Hinweis:</b> Wenn Sie freiwillige Angaben wie
     <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
     erscheinen diese nachher auf Ihrem Notizzettel,
     wenn Sie die Seite Ihrer Airline aufrufen.
@@ -544,3 +537,5 @@ keys.forEach(k=>{
 </script>
 </body>
 </html>
+</style>
+</head>
