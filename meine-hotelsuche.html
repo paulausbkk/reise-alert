@@ -299,6 +299,7 @@ var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
 var H_AG = "www." + String.fromCharCode(97,103,111,100,97) + ".com";
 var H_BK = "www." + String.fromCharCode(98,111,111,107,105,110,103) + ".com";
+var H_TR = "www." + String.fromCharCode(116,114,105,118,97,103,111) + ".de";
 var H_OM = "geocoding-api." + String.fromCharCode(111,112,101,110,45,109,101,116,101,111) + ".com";
 var acT = null, cc = "de", bgmOn = false, lang = "de";
 
@@ -450,6 +451,30 @@ function getBid(city){
   return "";
 }
 
+function getTid(city){
+  var k = city.toLowerCase().trim();
+  if(k === "berlin") return "200-3848";
+  if(k === "hamburg") return "200-9644";
+  if(k === "muenchen" || k === "m\u00fcnchen" || k === "munich") return "200-2855";
+  if(k === "bangkok") return "200-31654";
+  if(k === "mailand" || k === "milan") return "200-45017";
+  if(k === "palermo") return "200-45979";
+  if(k === "wien" || k === "vienna") return "200-2390";
+  if(k === "paris") return "200-15475";
+  if(k === "london") return "200-26259";
+  if(k === "rom" || k === "rome") return "200-44337";
+  if(k === "barcelona") return "200-29132";
+  if(k === "madrid") return "200-29963";
+  if(k === "dubai") return "200-69036";
+  if(k === "istanbul") return "200-31932";
+  if(k === "amsterdam") return "200-17523";
+  if(k === "prag" || k === "prague") return "200-40533";
+  if(k === "warschau" || k === "warsaw") return "200-48673";
+  if(k === "phuket") return "200-31687";
+  if(k === "manila") return "200-24599";
+  return "";
+}
+
 function upd(){
   var e = isEn(), loc = e ? "en-GB" : "de-DE";
   var now = new Date(), t = iso(now);
@@ -459,7 +484,7 @@ function upd(){
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
-  var aid = getAid(city), bid = getBid(city);
+  var aid = getAid(city), bid = getBid(city), tid = getTid(city);
 
   $("f4").action = P + H_BK + "/searchresults.html";
 
@@ -522,10 +547,12 @@ function upd(){
     for(var i = 0; i < rm; i++){
       rc += (i > 0 ? "-" : "") + (perRm + (i < rem ? 1 : 0));
     }
-    $("h6").href = P + "www.trivago.de" + "/de/srl?query=" + q +
-      "&sQuery=" + q + "&aDateRange%5Barr%5D=" + ci +
-      "&aDateRange%5Bdep%5D=" + co +
-      "&search=dr-" + dt1 + "-" + dt2 + ";rc-" + rc;
+    var trBase = e ? "/en-GB" : "/de";
+    var trSrch = (tid ? tid + ";" : "") + "dr-" + dt1 + "-" + dt2 +
+      ";rc-" + rc + (st > 0 ? ";st-" + st : "");
+    $("h6").href = tid
+      ? P + H_TR + trBase + "/odr/hotels?search=" + trSrch
+      : P + H_TR + trBase + "/srl?query=" + q + "&search=" + trSrch;
 
     $("h8").href = P + "www.airbnb.de" + "/s/" + q +
       "/homes?tab_id=home_tab&checkin=" + ci +
