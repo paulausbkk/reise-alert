@@ -165,7 +165,7 @@ input,select{
       onclick="toggleBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">22.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
-    <span class="seg act">🏨 MEINE HOTELSUCHE (AKTIV)</span>
+    <span class="seg act">🏨 HOTELSUCHE (AKTIV)</span>
     <a href="../index.html" class="seg nav">🏠 Zurück zur Startseite</a>
     <a href="index.html" class="seg nav">✈️ Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg">
@@ -316,7 +316,6 @@ function iso(d){
   if(t.length < 2) t = "0" + t;
   return d.getFullYear() + "-" + m + "-" + t;
 }
-
 function getAid(city){
   var k = city.toLowerCase().trim();
   if(k === "bangkok") return "9395";
@@ -369,6 +368,7 @@ function getBid(city){
   if(k === "pagadian") return "-2443809";
   return "";
 }
+
 function upd(){
   var now = new Date(), t = iso(now);
   $("dt").textContent = now.toLocaleDateString("de-DE") +
