@@ -355,7 +355,6 @@ function applyLang(){
       "<b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.";
   updBgmBtn();
 }
-
 function updBgmBtn(){
   var b = $("mbtn");
   if(!b) return;
@@ -394,6 +393,7 @@ function iso(d){
   if(t.length < 2) t = "0" + t;
   return d.getFullYear() + "-" + m + "-" + t;
 }
+
 function getAid(city){
   var k = city.toLowerCase().trim();
   if(k === "bangkok") return "9395";
@@ -544,7 +544,6 @@ function upd(){
     }));
   } catch(err){}
 }
-
 function showAc(list, msg){
   var box = $("lc");
   box.innerHTML = "";
