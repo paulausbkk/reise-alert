@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏨 Meine Hotelsuche PRO v121</title>
+<title id="pgTit">🏨 Meine Hotelsuche PRO v121</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
@@ -21,40 +21,52 @@ html,body{
   padding:26px 24px;text-align:center;max-width:400px;width:100%;
   box-shadow:0 12px 32px rgba(0,0,0,.45)
 }
-.w-card h2{margin:0 0 18px 0;color:#0f2942;font-size:1.35rem}
+.w-card h2{
+  margin:0 0 18px 0;color:#0f2942;font-size:1.35rem;
+  line-height:1.25
+}
+.w-sub-tit{
+  display:block;font-size:.98rem;font-weight:bold;
+  color:#0369a1;margin-top:4px
+}
 .w-btn{
-  display:flex;align-items:center;justify-content:center;
-  width:100%;max-width:290px;margin:0 auto;box-sizing:border-box;
-  background:#0284c7;color:#fff;border:none;
-  border-radius:12px;padding:16px 20px;font-size:1.08rem;
-  font-weight:bold;cursor:pointer;text-align:center;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;width:100%;max-width:300px;
+  margin:0 auto;box-sizing:border-box;background:#0284c7;
+  color:#fff;border:none;border-radius:12px;padding:14px 18px;
+  font-size:1.06rem;font-weight:bold;cursor:pointer;
+  text-align:center;line-height:1.25;
   touch-action:manipulation;user-select:none;
   -webkit-tap-highlight-color:transparent
 }
 .w-btn:active{background:#0369a1}
+.w-btn-en{
+  display:block;font-size:.84rem;font-weight:bold;
+  color:#e0f2fe;margin-top:3px
+}
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:12px 14px;border-radius:12px;
-  margin-bottom:20px;flex-wrap:wrap;gap:8px
+  background:#0f2942;padding:10px 14px;border-radius:12px;
+  margin-bottom:18px;flex-wrap:wrap;gap:6px
 }
-.tit{font-weight:bold;color:#fff;font-size:1.15rem;margin:0}
-.cp{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
+.cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.74rem;padding:6px 9px;border-radius:6px;
+  font-size:.69rem;padding:5px 8px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
   background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
   white-space:nowrap
 }
-.seg.nav{background:#1e40af;font-size:.76rem;padding:6px 10px}
-.seg.upg{background:#0369a1;font-size:.76rem;padding:6px 10px}
+.seg.nav{background:#1e40af;font-size:.69rem;padding:5px 8px}
+.seg.upg{background:#0369a1;font-size:.69rem;padding:5px 8px}
 .seg.act{
   background:linear-gradient(180deg,#38bdf8 0%,#0284c7 100%);
-  border:2px solid #e0f2fe;font-size:.76rem;padding:5px 11px;
+  border:2px solid #e0f2fe;font-size:.69rem;padding:4px 9px;
   box-shadow:0 0 12px rgba(125,211,252,.65);cursor:default
 }
 .mbtn{
   background:#0284c7;color:#fff;border:1px solid #7dd3fc;
-  border-radius:6px;padding:6px 10px;font-size:.76rem;
+  border-radius:6px;padding:5px 8px;font-size:.69rem;
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
@@ -152,79 +164,87 @@ input,select{
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
-    <h2>🏨 Hotelsuche</h2>
-    <button type="button" class="w-btn"
-      onclick="enterHotel()">Hotelsuche aktivieren ➡️</button>
+    <h2>
+      🏨 Hotelsuche
+      <span class="w-sub-tit">Hotel Search</span>
+    </h2>
+    <button type="button" class="w-btn" id="wBtn"
+      onclick="enterHotel()">
+      <span>Hotelsuche aktivieren ➡️</span>
+      <span class="w-btn-en">Activate Hotel Search ➡️</span>
+    </button>
   </div>
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit">🏨 Meine Hotelsuche PRO v121</h1>
+  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v121</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">22.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
-    <span class="seg act">🏨 HOTELSUCHE (AKTIV)</span>
-    <a href="../index.html" class="seg nav">🏠 Zurück zur Startseite</a>
-    <a href="index.html" class="seg nav">✈️ Flugsuche</a>
-    <a href="meine-flugbuchungen.html" class="seg upg">
+    <span class="seg act" id="navAct">🏨 HOTELSUCHE (AKTIV)</span>
+    <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
+    <a href="meine-flugbuchungen.html" class="seg upg" id="navBkg">
       ✈️ Meine Flugbuchungen ➡️
+    </a>
+    <a href="../index.html" class="seg nav" id="navHome">
+      🏠 Zurück zur Startseite
     </a>
   </div>
 </div>
 <div class="row">
   <div class="card">
-    <div class="ct">📍 Zielort & Reisedaten</div>
+    <div class="ct" id="c1Tit">📍 Zielort & Reisedaten</div>
     <div class="f">
-      <label>Reiseziel (beliebige Stadt weltweit)</label>
+      <label id="lblCity">Reiseziel (beliebige Stadt weltweit)</label>
       <input type="text" id="city"
         placeholder="z.B. Mailand, Pagadian, Bangkok"
         autocomplete="off">
       <div id="lc" class="ac"></div>
     </div>
     <div class="f" id="cib">
-      <label>Check-in (Anreise)</label>
+      <label id="lblCi">Check-in (Anreise)</label>
       <input type="date" id="ci">
     </div>
     <div class="f" id="cob">
-      <label>Check-out (Abreise)</label>
+      <label id="lblCo">Check-out (Abreise)</label>
       <input type="date" id="co">
     </div>
   </div>
   <div class="card">
-    <div class="ct">🛏️ Gäste, Zimmer & Hotel-Filter</div>
+    <div class="ct" id="c2Tit">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
       <div class="f" style="margin:0">
-        <label for="px">Personenzahl</label>
+        <label for="px" id="lblPx">Personenzahl</label>
         <select id="px">
-          <option value="1">1 Erwachsener</option>
-          <option value="2" selected>2 Erwachsene</option>
-          <option value="3">3 Erwachsene</option>
-          <option value="4">4 Erwachsene</option>
+          <option value="1" id="px1">1 Erwachsener</option>
+          <option value="2" id="px2" selected>2 Erwachsene</option>
+          <option value="3" id="px3">3 Erwachsene</option>
+          <option value="4" id="px4">4 Erwachsene</option>
         </select>
       </div>
       <div class="f" style="margin:0">
-        <label for="rm">Zimmer</label>
+        <label for="rm" id="lblRm">Zimmer</label>
         <select id="rm">
-          <option value="1" selected>1 Zimmer</option>
-          <option value="2">2 Zimmer</option>
-          <option value="3">3 Zimmer</option>
+          <option value="1" id="rm1" selected>1 Zimmer</option>
+          <option value="2" id="rm2">2 Zimmer</option>
+          <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
     <div class="f">
-      <label for="st">Mindest-Sterne</label>
+      <label for="st" id="lblSt">Mindest-Sterne</label>
       <select id="st">
-        <option value="0">Alle Kategorien</option>
-        <option value="3">Ab 3 Sterne ⭐⭐⭐</option>
-        <option value="4">Ab 4 Sterne ⭐⭐⭐⭐</option>
-        <option value="5">5 Sterne ⭐⭐⭐⭐⭐</option>
+        <option value="0" id="st0">Alle Kategorien</option>
+        <option value="3" id="st3">Ab 3 Sterne ⭐⭐⭐</option>
+        <option value="4" id="st4">Ab 4 Sterne ⭐⭐⭐⭐</option>
+        <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
       </select>
     </div>
     <div class="f">
       <div class="swc">
-        <label for="ab" style="margin:0;cursor:pointer">
+        <label for="ab" id="lblAb" style="margin:0;cursor:pointer">
           Nur Airbnb
         </label>
         <label class="sw">
@@ -244,7 +264,7 @@ input,select{
       class="btn b2 htl">Expedia Hotels</a>
     <a id="h3" href="https://momondo.de" target="_blank"
       class="btn b3 htl">Momondo</a>
-    <form id="f4" action="https://booking.com"
+    <form id="f4" action="#"
       method="get" target="_blank" class="htl" style="margin:0">
       <input type="hidden" name="ss" id="b_ss">
       <input type="hidden" name="ssne" id="b_ssne">
@@ -258,7 +278,7 @@ input,select{
       <input type="hidden" name="no_rooms" id="b_rm">
       <input type="hidden" name="efdco" value="1">
       <input type="hidden" name="nflt" id="b_flt" disabled>
-      <input type="hidden" name="lang" value="de">
+      <input type="hidden" name="lang" id="b_lng" value="de">
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
@@ -269,7 +289,7 @@ input,select{
     <a id="h8" href="https://airbnb.de" target="_blank"
       class="btn b8 off">Airbnb</a>
   </div>
-  <div class="hint">
+  <div class="hint" id="hintBox">
     ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>,
     <b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.
   </div>
@@ -277,31 +297,88 @@ input,select{
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
-var acT = null, cc = "de", bgmOn = false;
+var acT = null, cc = "de", bgmOn = false, lang = "de";
+
+try {
+  if(localStorage.getItem("pab_lang") === "en") lang = "en";
+} catch(e){}
+
+function isEn(){ return lang === "en"; }
+
+function applyLang(){
+  var e = isEn();
+  document.documentElement.lang = e ? "en" : "de";
+  $("pgTit").textContent = e
+    ? "🏨 My Hotel Search PRO v121" : "🏨 Meine Hotelsuche PRO v121";
+  $("hTit").textContent = e
+    ? "🏨 My Hotel Search PRO v121" : "🏨 Meine Hotelsuche PRO v121";
+  $("navAct").textContent = e
+    ? "🏨 HOTELS (ACTIVE)" : "🏨 HOTELSUCHE (AKTIV)";
+  $("navHome").textContent = e
+    ? "🏠 Back to Home" : "🏠 Zurück zur Startseite";
+  $("navFlt").textContent = e ? "✈️ Flight Search" : "✈️ Flugsuche";
+  $("navBkg").textContent = e
+    ? "✈️ My Flight Bookings ➡️" : "✈️ Meine Flugbuchungen ➡️";
+  $("c1Tit").textContent = e
+    ? "📍 Destination & Travel Dates" : "📍 Zielort & Reisedaten";
+  $("lblCity").textContent = e
+    ? "Destination (any city worldwide)"
+    : "Reiseziel (beliebige Stadt weltweit)";
+  $("city").placeholder = e
+    ? "e.g. Milan, Pagadian, Bangkok" : "z.B. Mailand, Pagadian, Bangkok";
+  $("lblCi").textContent = e ? "Check-in (Arrival)" : "Check-in (Anreise)";
+  $("lblCo").textContent = e
+    ? "Check-out (Departure)" : "Check-out (Abreise)";
+  $("c2Tit").textContent = e
+    ? "🛏️ Guests, Rooms & Hotel Filters"
+    : "🛏️ Gäste, Zimmer & Hotel-Filter";
+  $("lblPx").textContent = e ? "Guests" : "Personenzahl";
+  $("px1").textContent = e ? "1 Adult" : "1 Erwachsener";
+  $("px2").textContent = e ? "2 Adults" : "2 Erwachsene";
+  $("px3").textContent = e ? "3 Adults" : "3 Erwachsene";
+  $("px4").textContent = e ? "4 Adults" : "4 Erwachsene";
+  $("lblRm").textContent = e ? "Rooms" : "Zimmer";
+  $("rm1").textContent = e ? "1 Room" : "1 Zimmer";
+  $("rm2").textContent = e ? "2 Rooms" : "2 Zimmer";
+  $("rm3").textContent = e ? "3 Rooms" : "3 Zimmer";
+  $("lblSt").textContent = e ? "Minimum Stars" : "Mindest-Sterne";
+  $("st0").textContent = e ? "All Categories" : "Alle Kategorien";
+  $("st3").textContent = e ? "3+ Stars ⭐⭐⭐" : "Ab 3 Sterne ⭐⭐⭐";
+  $("st4").textContent = e ? "4+ Stars ⭐⭐⭐⭐" : "Ab 4 Sterne ⭐⭐⭐⭐";
+  $("st5").textContent = e ? "5 Stars ⭐⭐⭐⭐⭐" : "5 Sterne ⭐⭐⭐⭐⭐";
+  $("lblAb").textContent = e ? "Airbnb Only" : "Nur Airbnb";
+  $("b_lng").value = e ? "en-gb" : "de";
+  $("hintBox").innerHTML = e
+    ? "ℹ️ <b>Important Note:</b> Detailed filters (e.g. <b>Beach</b>, " +
+      "<b>Breakfast</b>) must be selected on the provider website."
+    : "ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>, " +
+      "<b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.";
+  updBgmBtn();
+}
+function updBgmBtn(){
+  var b = $("mbtn");
+  if(!b) return;
+  if(bgmOn){
+    b.textContent = isEn() ? "🔇 Music Off" : "🔇 Musik Aus";
+    b.classList.remove("off");
+  } else {
+    b.textContent = isEn() ? "🎵 Music On" : "🎵 Musik An";
+    b.classList.add("off");
+  }
+}
 
 function playBgm(){
-  var a = $("bgm"), b = $("mbtn");
+  var a = $("bgm");
   if(!a) return;
   a.volume = 1.0;
-  a.play().then(function(){
-    bgmOn = true;
-    if(b){ b.textContent = "🔇 Musik Aus"; b.classList.remove("off"); }
-  }).catch(function(){
-    bgmOn = false;
-    if(b){ b.textContent = "🎵 Musik An"; b.classList.add("off"); }
-  });
+  a.play().then(function(){ bgmOn = true; updBgmBtn(); })
+    .catch(function(){ bgmOn = false; updBgmBtn(); });
 }
 
 function toggleBgm(){
-  var a = $("bgm"), b = $("mbtn");
+  var a = $("bgm");
   if(!a) return;
-  if(bgmOn){
-    a.pause();
-    bgmOn = false;
-    if(b){ b.textContent = "🎵 Musik An"; b.classList.add("off"); }
-  } else {
-    playBgm();
-  }
+  if(bgmOn){ a.pause(); bgmOn = false; updBgmBtn(); } else { playBgm(); }
 }
 
 function enterHotel(){
@@ -316,6 +393,7 @@ function iso(d){
   if(t.length < 2) t = "0" + t;
   return d.getFullYear() + "-" + m + "-" + t;
 }
+
 function getAid(city){
   var k = city.toLowerCase().trim();
   if(k === "bangkok") return "9395";
@@ -323,7 +401,7 @@ function getAid(city){
   if(k === "palermo") return "16011";
   if(k === "berlin") return "16154";
   if(k === "hamburg") return "15727";
-  if(k === "wien") return "14756";
+  if(k === "wien" || k === "vienna") return "14756";
   if(k === "paris") return "15470";
   if(k === "london") return "233";
   if(k === "rom" || k === "rome") return "16582";
@@ -370,14 +448,17 @@ function getBid(city){
 }
 
 function upd(){
+  var e = isEn(), loc = e ? "en-GB" : "de-DE";
   var now = new Date(), t = iso(now);
-  $("dt").textContent = now.toLocaleDateString("de-DE") +
-    " \u2022 " + now.toLocaleTimeString("de-DE");
+  $("dt").textContent = now.toLocaleDateString(loc) +
+    " \u2022 " + now.toLocaleTimeString(loc);
   var city = $("city").value.trim();
   var ci = $("ci").value, co = $("co").value;
   var px = +$("px").value || 2, rm = +$("rm").value || 1;
   var st = +$("st").value || 0, ab = $("ab").checked;
   var aid = getAid(city), bid = getBid(city);
+
+  $("f4").action = P + "://booking.com" + "/searchresults.html";
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -391,12 +472,18 @@ function upd(){
 
   if(ci && co && !bad){
     var n = Math.round((new Date(co) - new Date(ci)) / 86400000);
-    $("nt").textContent = n + (n === 1 ? " NACHT" : " N\u00c4CHTE");
+    $("nt").textContent = e
+      ? n + (n === 1 ? " NIGHT" : " NIGHTS")
+      : n + (n === 1 ? " NACHT" : " N\u00c4CHTE");
     $("info").style.background = "#eff6ff";
     $("info").style.color = "#1e3a8a";
-    $("info").textContent = "Auswahl: " + (city || "Ziel") +
-      " \u2022 " + n + (n === 1 ? " Nacht" : " N\u00e4chte") +
-      " \u2022 " + px + " Pers. \u2022 " + rm + " Zi.";
+    $("info").textContent = e
+      ? "Selection: " + (city || "Destination") + " \u2022 " + n +
+        (n === 1 ? " Night" : " Nights") + " \u2022 " + px +
+        " Guests \u2022 " + rm + " Rm."
+      : "Auswahl: " + (city || "Ziel") + " \u2022 " + n +
+        (n === 1 ? " Nacht" : " N\u00e4chte") + " \u2022 " + px +
+        " Pers. \u2022 " + rm + " Zi.";
 
     var q = encodeURIComponent(city);
     var bFilt = st > 0 ? "class=" + st : "";
@@ -411,23 +498,18 @@ function upd(){
     $("h3").href = P + "www.momondo.de" + "/hotels/" + q + "/" +
       ci + "/" + co + "/" + px + "adults/" + rm + "rooms";
 
-    $("b_ss").value = city;
-    $("b_ssne").value = city;
-    $("b_ssu").value = city;
-    $("b_did").disabled = !bid;
-    $("b_did").value = bid;
-    $("b_dty").disabled = !bid;
+    $("b_ss").value = city; $("b_ssne").value = city;
+    $("b_ssu").value = city; $("b_did").disabled = !bid;
+    $("b_did").value = bid; $("b_dty").disabled = !bid;
     $("b_dty").value = bid ? "city" : "";
-    $("b_ci").value = ci;
-    $("b_co").value = co;
-    $("b_px").value = px;
-    $("b_rm").value = rm;
-    $("b_flt").disabled = !bFilt;
-    $("b_flt").value = bFilt;
+    $("b_ci").value = ci; $("b_co").value = co;
+    $("b_px").value = px; $("b_rm").value = rm;
+    $("b_flt").disabled = !bFilt; $("b_flt").value = bFilt;
 
-    var ag = P + "://agoda.com" + "/de-de/search?checkIn=" + ci +
+    var agLoc = e ? "en-us" : "de-de";
+    var ag = P + "://agoda.com" + "/" + agLoc + "/search?checkIn=" + ci +
       "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
-      "&currency=EUR&locale=de-de" +
+      "&currency=EUR&locale=" + agLoc +
       (st > 0 ? "&hotelStarRating=" + st : "");
     $("h5").href = ag + (aid ? "&city=" + aid : "&textToSearch=" + q);
 
@@ -446,11 +528,16 @@ function upd(){
       "/homes?tab_id=home_tab&checkin=" + ci +
       "&checkout=" + co + "&adults=" + px;
   } else {
-    $("nt").textContent = bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM";
+    $("nt").textContent = e
+      ? (bad ? "CHECK DATES" : "DATES")
+      : (bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM");
     $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
     $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
-    $("info").textContent = bad ? "Bitte Datum pr\u00fcfen." :
-      "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.";
+    $("info").textContent = e
+      ? (bad ? "Please check dates."
+        : "Please select destination, check-in and check-out.")
+      : (bad ? "Bitte Datum pr\u00fcfen."
+        : "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.");
   }
 
   try {
@@ -458,33 +545,24 @@ function upd(){
       city: $("city").value, ci: ci, co: co,
       px: px, rm: rm, st: st, ab: ab
     }));
-  } catch(e){}
+  } catch(err){}
 }
-
 function showAc(list, msg){
   var box = $("lc");
   box.innerHTML = "";
   if(msg){
     var m = document.createElement("div");
-    m.textContent = msg;
-    m.style.color = "#64748b";
-    box.appendChild(m);
-    box.style.display = "block";
-    return;
+    m.textContent = msg; m.style.color = "#64748b";
+    box.appendChild(m); box.style.display = "block"; return;
   }
-  if(!list || list.length === 0){
-    box.style.display = "none"; return;
-  }
+  if(!list || list.length === 0){ box.style.display = "none"; return; }
   list.forEach(function(it){
     var d = document.createElement("div");
-    var sub = it.country ? " (" + it.country + ")" : "";
-    d.textContent = it.name + sub;
-    d.onmousedown = function(e){
-      e.preventDefault();
-      $("city").value = it.name;
+    d.textContent = it.name + (it.country ? " (" + it.country + ")" : "");
+    d.onmousedown = function(ev){
+      ev.preventDefault(); $("city").value = it.name;
       cc = (it.country_code || "de").toLowerCase();
-      box.style.display = "none";
-      upd();
+      box.style.display = "none"; upd();
     };
     box.appendChild(d);
   });
@@ -492,59 +570,49 @@ function showAc(list, msg){
 }
 
 function searchWorldCities(q, done){
-  var u1 = P + "://open-meteo.com" + "/v1/search?name=" +
-    encodeURIComponent(q) + "&count=8&language=de&format=json";
+  var l = isEn() ? "en" : "de";
+  var noRes = isEn() ? "No location found" : "Kein Ort gefunden";
+  var u1 = P + "geocoding-api.open-meteo.com" + "/v1/search?name=" +
+    encodeURIComponent(q) + "&count=8&language=" + l + "&format=json";
   var u2 = P + "photon.komoot.io" + "/api/?q=" +
-    encodeURIComponent(q) + "&lang=de&limit=8";
+    encodeURIComponent(q) + "&lang=" + l + "&limit=8";
   var u3 = P + "nominatim.openstreetmap.org" +
-    "/search?format=json&accept-language=de&limit=8&q=" +
+    "/search?format=json&accept-language=" + l + "&limit=8&q=" +
     encodeURIComponent(q);
 
   function tryNominatim(){
-    fetch(u3).then(function(r){ return r.json(); })
-    .then(function(j){
+    fetch(u3).then(function(r){ return r.json(); }).then(function(j){
       if(j && j.length > 0){
         done(j.map(function(x){
-          var parts = String(x.display_name || q).split(",");
+          var p = String(x.display_name || q).split(",");
           return {
-            name: parts.slice(0, 1).join("").trim(),
-            country: parts.slice(-1).join("").trim(),
-            country_code: "de"
+            name: p.slice(0, 1).join("").trim(),
+            country: p.slice(-1).join("").trim(),
+            country_code: l
           };
         }), "");
-      } else {
-        done(new Array(), "Kein Ort gefunden");
-      }
-    }).catch(function(){
-      done(new Array(), "Kein Ort gefunden");
-    });
+      } else { done(new Array(), noRes); }
+    }).catch(function(){ done(new Array(), noRes); });
   }
 
   function tryPhoton(){
-    fetch(u2).then(function(r){ return r.json(); })
-    .then(function(j){
+    fetch(u2).then(function(r){ return r.json(); }).then(function(j){
       if(j && j.features && j.features.length > 0){
         done(j.features.map(function(f){
           var pr = f.properties || {};
           return {
             name: pr.name || pr.city || q,
             country: pr.country || "",
-            country_code: (pr.countrycode || "de").toLowerCase()
+            country_code: (pr.countrycode || l).toLowerCase()
           };
         }), "");
-      } else {
-        tryNominatim();
-      }
+      } else { tryNominatim(); }
     }).catch(tryNominatim);
   }
 
-  fetch(u1).then(function(r){ return r.json(); })
-  .then(function(j){
-    if(j && j.results && j.results.length > 0){
-      done(j.results, "");
-    } else {
-      tryPhoton();
-    }
+  fetch(u1).then(function(r){ return r.json(); }).then(function(j){
+    if(j && j.results && j.results.length > 0){ done(j.results, ""); }
+    else { tryPhoton(); }
   }).catch(tryPhoton);
 }
 
@@ -552,7 +620,7 @@ $("city").addEventListener("input", function(){
   upd(); clearTimeout(acT);
   var q = $("city").value.trim(), box = $("lc");
   if(q.length < 2){ box.style.display = "none"; return; }
-  showAc(null, "\ud83d\udd0d Suche weltweit...");
+  showAc(null, isEn() ? "🔍 Searching worldwide..." : "🔍 Suche weltweit...");
   acT = setTimeout(function(){
     searchWorldCities(q, function(res, errMsg){
       if($("city").value.trim() !== q) return;
@@ -561,16 +629,14 @@ $("city").addEventListener("input", function(){
   }, 200);
 });
 
-document.addEventListener("click", function(e){
-  if(!$("lc").contains(e.target) && e.target !== $("city")){
+document.addEventListener("click", function(ev){
+  if(!$("lc").contains(ev.target) && ev.target !== $("city")){
     $("lc").style.display = "none";
   }
 });
 
 try {
-  var saved = JSON.parse(
-    localStorage.getItem("rk_hotel") || "null"
-  );
+  var saved = JSON.parse(localStorage.getItem("rk_hotel") || "null");
   if(saved){
     if(saved.city) $("city").value = saved.city;
     if(saved.ci) $("ci").value = saved.ci;
@@ -580,7 +646,7 @@ try {
     if(saved.st) $("st").value = saved.st;
     if(saved.ab !== undefined) $("ab").checked = saved.ab;
   }
-} catch(e){}
+} catch(err){}
 
 "city;ci;co;px;rm;st;ab".split(";").forEach(function(id){
   $(id).addEventListener("input", upd);
@@ -588,6 +654,7 @@ try {
 });
 $("f4").addEventListener("submit", upd);
 $("ci").min = iso(new Date()); $("co").min = iso(new Date());
+applyLang();
 upd();
 </script>
 </body>
