@@ -159,8 +159,6 @@ input,select{
   border-radius:8px;padding:12px 15px;
   font-size:.88rem;line-height:1.45
 }
-</style>
-</head>
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
@@ -359,7 +357,7 @@ function applyLang(){
       "<b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.";
   updBgmBtn();
 }
-  function updBgmBtn(){
+function updBgmBtn(){
   var b = $("mbtn");
   if(!b) return;
   if(bgmOn){
@@ -514,7 +512,6 @@ function getTid(city){
   if(k === "manila") return "200-24599";
   return "";
 }
-
 function upd(){
   var e = isEn(), loc = e ? "en-GB" : "de-DE";
   var now = new Date(), t = iso(now);
@@ -573,48 +570,6 @@ function upd(){
     $("b_did").value = bid; $("b_dty").disabled = !bid;
     $("b_dty").value = bid ? "city" : "";
     $("b_ci").value = ci; $("b_co").value = co;
-    $("b_px").value = px; $("b_rm").value = rm;
-    $("b_flt").disabled = !bFilt; $("b_flt").value = bFilt;
-
-    var agLoc = e ? "en-us" : "de-de";
-    var ag = P + H_AG + "/" + agLoc + "/search?checkIn=" + ci +
-      "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
-      "&currency=EUR&locale=" + agLoc +
-      (st > 0 ? "&hotelStarRating=" + st : "");
-    $("h5").href = ag + (aid ? "&city=" + aid : "&textToSearch=" + qFull);
-
-    var dt1 = ci.replace(/-/g, ""), dt2 = co.replace(/-/g, "");
-    var perRm = Math.max(1, Math.floor(px / rm));
-    var rem = px % rm, rc = "";
-    for(var i = 0; i < rm; i++){
-      rc += (i > 0 ? "-" : "") + (perRm + (i < rem ? 1 : 0));
-    }
-    var trBase = e ? "/en-GB" : "/de";
-    var trSrch = (tid ? tid + ";" : "") + "dr-" + dt1 + "-" + dt2 +
-      ";rc-" + rc + (st > 0 ? ";st-" + st : "");
-    $("h6").href = tid
-      ? P + H_TR + trBase + "/odr/hotels?search=" + trSrch
-      : P + H_TR + trBase + "/srl?query=" + qFull + "&search=" + trSrch;
-
-    $("h8").href = P + "www.airbnb.de" + "/s/" + qFull +
-      "/homes?tab_id=home_tab&checkin=" + ci +
-      "&checkout=" + co + "&adults=" + px;
-  } else {
-    $("nt").textContent = e
-      ? (bad ? "CHECK DATES" : "DATES")
-      : (bad ? "DATUM PR\u00dcFEN" : "ZEITRAUM");
-    $("info").style.background = bad ? "#fee2e2" : "#eff6ff";
-    $("info").style.color = bad ? "#991b1b" : "#1e3a8a";
-    $("info").textContent = e
-      ? (bad ? "Please check dates."
-        : "Please select destination, check-in and check-out.")
-      : (bad ? "Bitte Datum pr\u00fcfen."
-        : "Bitte Reiseziel, Check-in und Check-out w\u00e4hlen.");
-  }
-
-  try {
-    localStorage.setItem("rk_hotel", JSON.stringify({
-  $("b_ci").value = ci; $("b_co").value = co;
     $("b_px").value = px; $("b_rm").value = rm;
     $("b_flt").disabled = !bFilt; $("b_flt").value = bFilt;
 
@@ -777,3 +732,5 @@ upd();
 </script>
 </body>
 </html>
+</style>
+</head>
