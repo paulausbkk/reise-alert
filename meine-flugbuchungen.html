@@ -7,9 +7,10 @@
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
-  margin:0;padding:12px 16px;min-height:100vh;
+  margin:0;padding:16px 20px;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:space-between;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  font-family:sans-serif;color:var(--t);box-sizing:border-box
+  font-family:sans-serif;color:var(--t);box-sizing:border-box;gap:16px
 }
 .welcome{
   position:fixed;inset:0;background:rgba(15,41,66,.9);
@@ -82,100 +83,101 @@ html,body{
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:9px 14px;border-radius:12px;
-  margin-bottom:14px;flex-wrap:wrap;gap:6px
+  background:#0f2942;padding:11px 16px;border-radius:12px;
+  flex-wrap:wrap;gap:6px;flex-shrink:0
 }
-.tit{font-weight:bold;color:#fff;font-size:1.08rem;margin:0}
+.tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
 .cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.69rem;padding:4px 8px;border-radius:6px;
+  font-size:.7rem;padding:5px 9px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
   background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
   white-space:nowrap
 }
-.seg.nav{background:#1e40af;padding:4px 8px}
-.seg.upg{background:#0369a1;padding:4px 8px}
+.seg.nav{background:#1e40af;padding:5px 9px}
+.seg.upg{background:#0369a1;padding:5px 9px}
 .seg.act{
   background:linear-gradient(180deg,#38bdf8 0%,#0284c7 100%);
-  border:2px solid #e0f2fe;padding:3px 9px;cursor:default
+  border:2px solid #e0f2fe;padding:4px 10px;cursor:default
 }
 .mbtn{
   background:#0284c7;color:#fff;border:1px solid #7dd3fc;
-  border-radius:6px;padding:4px 8px;font-size:.69rem;
+  border-radius:6px;padding:5px 9px;font-size:.7rem;
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
 .row{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;
-  margin-bottom:14px
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  flex:1;align-items:stretch
 }
 @media(max-width:780px){.row{grid-template-columns:1fr}}
 .card{
   box-sizing:border-box;border:1px solid #93c5fd;
-  border-radius:12px;padding:15px 18px;background:#fff;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
+  border-radius:12px;padding:20px 22px;background:#fff;
+  box-shadow:0 4px 12px rgba(3,105,161,.08);
+  display:flex;flex-direction:column;justify-content:space-between
 }
 .ct{
-  font-weight:bold;font-size:1.02rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:6px;
-  margin-bottom:12px
+  font-weight:bold;font-size:1.08rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
+  margin-bottom:14px
 }
-.f{margin-bottom:11px;display:flex;flex-direction:column}
+.f{margin-bottom:14px;display:flex;flex-direction:column}
 .f:last-child{margin-bottom:0}
 .f.off{display:none}
 label{
-  font-weight:bold;font-size:.82rem;
-  margin-bottom:4px;color:#1e3a8a
+  font-weight:bold;font-size:.86rem;
+  margin-bottom:6px;color:#1e3a8a
 }
-.inrow{display:flex;gap:6px;align-items:center}
+.inrow{display:flex;gap:8px;align-items:center}
 input,select{
-  height:38px;padding:0 10px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.94rem;
+  height:44px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.98rem;
   background:#f8fafc;color:var(--t);width:100%
 }
 .cpbtn{
-  height:38px;padding:0 11px;background:#e0f2fe;color:#0369a1;
+  height:44px;padding:0 13px;background:#e0f2fe;color:#0369a1;
   border:1px solid #7dd3fc;border-radius:8px;font-weight:bold;
-  cursor:pointer;white-space:nowrap;font-size:.8rem
+  cursor:pointer;white-space:nowrap;font-size:.84rem
 }
 .cpbtn:hover{background:#bae6fd}
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
   border-left:5px solid #0284c7;border-radius:8px;
-  padding:9px 12px;color:#1e3a8a;font-weight:bold;
-  font-size:.86rem;margin-top:4px
+  padding:12px 14px;color:#1e3a8a;font-weight:bold;
+  font-size:.9rem;margin-top:auto
 }
 @keyframes pulseHint{
   0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
   50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
 }
 .bb{
-  width:100%;box-sizing:border-box;
+  width:100%;box-sizing:border-box;flex-shrink:0;
   border:1px solid #93c5fd;background:#fff;
-  border-radius:12px;padding:14px 18px;
+  border-radius:12px;padding:18px 20px;
   box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
 .acts{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px
+  display:grid;grid-template-columns:1fr 1fr;gap:14px
 }
 .abtn{
   display:flex;align-items:center;justify-content:center;
-  height:44px;border-radius:8px;font-weight:bold;font-size:.9rem;
+  height:50px;border-radius:9px;font-weight:bold;font-size:.94rem;
   text-decoration:none;border:none;cursor:pointer;color:#fff;
-  text-align:center;padding:0 10px
+  text-align:center;padding:0 12px
 }
 .abtn.note{background:#0369a1}
 .abtn.go{background:#1d4ed8}
 #ts{
-  display:none;margin-top:10px;padding:8px 12px;
+  display:none;margin-top:12px;padding:9px 14px;
   background:#dcfce7;border:1px solid #86efac;color:#166534;
-  border-radius:8px;font-weight:bold;font-size:.84rem
+  border-radius:8px;font-weight:bold;font-size:.88rem
 }
 .hintbox{
-  margin-top:12px;background:#0f2942;color:#fff;
+  margin-top:14px;background:#0f2942;color:#fff;
   border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:10px 14px;font-weight:bold;
-  font-size:.85rem;line-height:1.4;
+  border-radius:8px;padding:12px 16px;font-weight:bold;
+  font-size:.88rem;line-height:1.45;
   animation:pulseHint 2.2s infinite ease-in-out
 }
 </style>
@@ -205,7 +207,7 @@ input,select{
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">23.11.2026 • 20:55:00</div>
+    <div class="seg" id="dt">23.11.2026 • 21:16:00</div>
     <span class="seg act" id="navAct">
       ✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)
     </span>
@@ -220,82 +222,86 @@ input,select{
 </div>
 <div class="row">
   <div class="card">
-    <div class="ct" id="cTit">🎫 Airline & Buchungsdaten</div>
-    <div class="f">
-      <label for="u5" id="lblPort">Airline oder Buchungsportal wählen</label>
-      <select id="u5">
-        <option value="tk|pnr_ln|https://turkishairlines.com">Turkish Airlines</option>
-        <option value="lh|pnr_ln|https://lufthansa.com">Lufthansa</option>
-        <option value="qr|pnr_ln|https://qatarairways.com">Qatar Airways</option>
-        <option value="ek|pnr_ln|https://emirates.com">Emirates</option>
-        <option value="sq|pnr_ln|https://singaporeair.com">Singapore Airlines</option>
-        <option value="tg|pnr_ln|https://thaiairways.com">Thai Airways</option>
-        <option value="cx|pnr_ln|https://cathaypacific.com">Cathay Pacific</option>
-        <option value="pr|pnr_ln|https://philippineairlines.com">Philippine Airlines</option>
-        <option value="5j|pnr_ln|https://cebupacificair.com">Cebu Pacific</option>
-        <option value="tr|pnr_ln|https://flyscoot.com">Scoot</option>
-        <option value="pg|pnr_ln|https://bangkokair.com">Bangkok Airways</option>
-        <option value="vj|pnr_fn_ln|https://vietjetair.com">VietJet Air</option>
-        <option value="ak|mail_pnr|https://airasia.com">AirAsia</option>
-        <option value="gtg|mail_pnr|https://gotogate.de">Gotogate</option>
-        <option value="exp|mail_only|https://expedia.de">Expedia</option>
-        <option value="trp|mail_pnr|https://trip.com">Trip.com</option>
-        <option value="kwi|mail_only|https://kiwi.com">Kiwi.com</option>
-        <option value="sky|mail_only|https://skyscanner.de">Skyscanner</option>
-        <option value="kyk|mail_only|https://kayak.de">Kayak</option>
-        <option value="mom|mail_only|https://momondo.de">Momondo</option>
-        <option value="opo|mail_pnr|https://opodo.de">Opodo</option>
-      </select>
-    </div>
-    <div class="f" id="f_pnr">
-      <label for="u3" id="lblPnr">Buchungscode (PNR)</label>
-      <div class="inrow">
-        <input type="text" id="u3" placeholder="z.B. ABC123">
-        <button type="button" class="cpbtn" id="cpPnr"
-          onclick="cp('u3','PNR')">📋 Kopieren</button>
+    <div>
+      <div class="ct" id="cTit">🎫 Airline & Buchungsdaten</div>
+      <div class="f">
+        <label for="u5" id="lblPort">Airline oder Buchungsportal wählen</label>
+        <select id="u5">
+          <option value="tk|pnr_ln|https://turkishairlines.com">Turkish Airlines</option>
+          <option value="lh|pnr_ln|https://lufthansa.com">Lufthansa</option>
+          <option value="qr|pnr_ln|https://qatarairways.com">Qatar Airways</option>
+          <option value="ek|pnr_ln|https://emirates.com">Emirates</option>
+          <option value="sq|pnr_ln|https://singaporeair.com">Singapore Airlines</option>
+          <option value="tg|pnr_ln|https://thaiairways.com">Thai Airways</option>
+          <option value="cx|pnr_ln|https://cathaypacific.com">Cathay Pacific</option>
+          <option value="pr|pnr_ln|https://philippineairlines.com">Philippine Airlines</option>
+          <option value="5j|pnr_ln|https://cebupacificair.com">Cebu Pacific</option>
+          <option value="tr|pnr_ln|https://flyscoot.com">Scoot</option>
+          <option value="pg|pnr_ln|https://bangkokair.com">Bangkok Airways</option>
+          <option value="vj|pnr_fn_ln|https://vietjetair.com">VietJet Air</option>
+          <option value="ak|mail_pnr|https://airasia.com">AirAsia</option>
+          <option value="gtg|mail_pnr|https://gotogate.de">Gotogate</option>
+          <option value="exp|mail_only|https://expedia.de">Expedia</option>
+          <option value="trp|mail_pnr|https://trip.com">Trip.com</option>
+          <option value="kwi|mail_only|https://kiwi.com">Kiwi.com</option>
+          <option value="sky|mail_only|https://skyscanner.de">Skyscanner</option>
+          <option value="kyk|mail_only|https://kayak.de">Kayak</option>
+          <option value="mom|mail_only|https://momondo.de">Momondo</option>
+          <option value="opo|mail_pnr|https://opodo.de">Opodo</option>
+        </select>
       </div>
-    </div>
-    <div class="f off" id="f_fn">
-      <label for="u_fn" id="lblFn">Vorname (wie im Pass)</label>
-      <div class="inrow">
-        <input type="text" id="u_fn" placeholder="z.B. MAX">
-        <button type="button" class="cpbtn" id="cpFn"
-          onclick="cp('u_fn','Vorname')">📋 Kopieren</button>
+      <div class="f" id="f_pnr">
+        <label for="u3" id="lblPnr">Buchungscode (PNR)</label>
+        <div class="inrow">
+          <input type="text" id="u3" placeholder="z.B. ABC123">
+          <button type="button" class="cpbtn" id="cpPnr"
+            onclick="cp('u3','PNR')">📋 Kopieren</button>
+        </div>
       </div>
-    </div>
-    <div class="f" id="f_ln">
-      <label for="u6" id="lblLn">Nachname (wie im Pass)</label>
-      <div class="inrow">
-        <input type="text" id="u6" placeholder="z.B. MUSTERMANN">
-        <button type="button" class="cpbtn" id="cpLn"
-          onclick="cp('u6','Nachname')">📋 Kopieren</button>
+      <div class="f off" id="f_fn">
+        <label for="u_fn" id="lblFn">Vorname (wie im Pass)</label>
+        <div class="inrow">
+          <input type="text" id="u_fn" placeholder="z.B. MAX">
+          <button type="button" class="cpbtn" id="cpFn"
+            onclick="cp('u_fn','Vorname')">📋 Kopieren</button>
+        </div>
       </div>
-    </div>
-    <div class="f off" id="f_mail">
-      <label for="u4" id="lblMail">Buchungs-E-Mail</label>
-      <div class="inrow">
-        <input type="email" id="u4" placeholder="name@beispiel.de">
-        <button type="button" class="cpbtn" id="cpMail"
-          onclick="cp('u4','E-Mail')">📋 Kopieren</button>
+      <div class="f" id="f_ln">
+        <label for="u6" id="lblLn">Nachname (wie im Pass)</label>
+        <div class="inrow">
+          <input type="text" id="u6" placeholder="z.B. MUSTERMANN">
+          <button type="button" class="cpbtn" id="cpLn"
+            onclick="cp('u6','Nachname')">📋 Kopieren</button>
+        </div>
+      </div>
+      <div class="f off" id="f_mail">
+        <label for="u4" id="lblMail">Buchungs-E-Mail</label>
+        <div class="inrow">
+          <input type="email" id="u4" placeholder="name@beispiel.de">
+          <button type="button" class="cpbtn" id="cpMail"
+            onclick="cp('u4','E-Mail')">📋 Kopieren</button>
+        </div>
       </div>
     </div>
   </div>
   <div class="card">
-    <div class="ct" id="cTit2">🛂 Reisedokumente & Status</div>
-    <div class="f">
-      <label for="u_tknr" id="lblTk">Ticketnummer (freiwillig)</label>
-      <div class="inrow">
-        <input type="text" id="u_tknr" placeholder="z.B. 235-1234567890">
-        <button type="button" class="cpbtn" id="cpTk"
-          onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
+    <div>
+      <div class="ct" id="cTit2">🛂 Reisedokumente & Status</div>
+      <div class="f">
+        <label for="u_tknr" id="lblTk">Ticketnummer (freiwillig)</label>
+        <div class="inrow">
+          <input type="text" id="u_tknr" placeholder="z.B. 235-1234567890">
+          <button type="button" class="cpbtn" id="cpTk"
+            onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
+        </div>
       </div>
-    </div>
-    <div class="f">
-      <label for="u_pp" id="lblPp">Reisepassnummer (freiwillig)</label>
-      <div class="inrow">
-        <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
-        <button type="button" class="cpbtn" id="cpPp"
-          onclick="cp('u_pp','Pass-Nr.')">📋 Kopieren</button>
+      <div class="f">
+        <label for="u_pp" id="lblPp">Reisepassnummer (freiwillig)</label>
+        <div class="inrow">
+          <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
+          <button type="button" class="cpbtn" id="cpPp"
+            onclick="cp('u_pp','Pass-Nr.')">📋 Kopieren</button>
+        </div>
       </div>
     </div>
     <div class="bn" id="hint">Benötigt: Buchungscode (PNR) + Nachname</div>
