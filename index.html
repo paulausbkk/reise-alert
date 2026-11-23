@@ -509,6 +509,46 @@ function iata(val){
   return s.slice(0, 3);
 }
 
+function kiwiSlug(code, rawVal){
+  var c = String(code || "").toUpperCase();
+  if(c === "BER") return "berlin-deutschland";
+  if(c === "FRA") return "frankfurt-am-main-deutschland";
+  if(c === "MUC") return "munchen-deutschland";
+  if(c === "LEJ") return "leipzig-deutschland";
+  if(c === "DUS") return "dusseldorf-deutschland";
+  if(c === "HAM") return "hamburg-deutschland";
+  if(c === "CGN") return "koln-deutschland";
+  if(c === "STR") return "stuttgart-deutschland";
+  if(c === "HAJ") return "hannover-deutschland";
+  if(c === "NUE") return "nurnberg-deutschland";
+  if(c === "VIE") return "wien-osterreich";
+  if(c === "ZRH") return "zurich-schweiz";
+  if(c === "BKK" || c === "DMK") return "bangkok-thailand";
+  if(c === "HKT") return "phuket-thailand";
+  if(c === "CNX") return "chiang-mai-thailand";
+  if(c === "USM") return "ko-samui-thailand";
+  if(c === "KBV") return "krabi-thailand";
+  if(c === "DAD") return "da-nang-vietnam";
+  if(c === "UIH") return "quy-nhon-vietnam";
+  if(c === "SGN") return "ho-chi-minh-stadt-vietnam";
+  if(c === "HAN") return "hanoi-vietnam";
+  if(c === "MNL") return "manila-philippinen";
+  if(c === "CEB") return "cebu-philippinen";
+  if(c === "DGT") return "dumaguete-philippinen";
+  if(c === "PAG") return "pagadian-philippinen";
+  if(c === "SIN") return "singapur-singapur";
+  if(c === "KUL") return "kuala-lumpur-malaysia";
+  if(c === "DPS") return "denpasar-indonesien";
+  if(c === "DXB") return "dubai-vereinigte-arabische-emirate";
+  if(c === "DOH") return "doha-katar";
+  if(c === "IST") return "istanbul-turkei";
+  if(c === "TYO") return "tokio-japan";
+  if(c === "FAO") return "faro-portugal";
+  if(c === "CHC") return "christchurch-neuseeland";
+  var clean = String(rawVal || c).split("(").shift().trim().toLowerCase();
+  return clean.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || c.toLowerCase();
+}
+
 function iso(d){
   var m = String(d.getMonth() + 1), t = String(d.getDate());
   if(m.length < 2) m = "0" + m;
@@ -540,8 +580,9 @@ function upd(){
     ? "Max. Travel Time (" + hr + " hrs)"
     : "Max. Reisezeit (" + hr + " Std.)";
 
-  var o = iata($("i1").value) || "BER";
-  var d = iata($("i2").value) || "BKK";
+  var raw1 = $("i1").value, raw2 = $("i2").value;
+  var o = iata(raw1) || "BER";
+  var d = iata(raw2) || "BKK";
   var od = $("od").value || today;
   var rd = $("rd").value || od;
   var px = $("px").value || "1";
@@ -571,17 +612,22 @@ function upd(){
       ",departure:" + rd + "TANYT") +
     "&passengers=adults:" + px + "&mode=search";
 
+  var kwFrom = kiwiSlug(o, raw1), kwTo = kiwiSlug(d, raw2);
+  var kwStop = $("ns").checked ? "&stopNumber=0" :
+    ($("s1").checked ? "&stopNumber=1" : ($("s2").checked ? "&stopNumber=2" : ""));
   $("u5").href = P + H_KW + "/de/search/results/" +
-    o.toLowerCase() + "/" + d.toLowerCase() + "/" + od + "/" +
-    (ow ? "no-return" : rd) + "?adults=" + px;
+    kwFrom + "/" + kwTo + "/" + od + "/" +
+    (ow ? "no-return" : rd) + "?adults=" + px + kwStop;
 
-  var trLang = e ? "/en" : "/de";
-  $("u6").href = P + H_TR + trLang + "/flights/" +
-    o.toLowerCase() + "-to-" + d.toLowerCase() +
-    "/tickets-" + o.toLowerCase() + "-" + d.toLowerCase() +
-    "?dcity=" + o + "&acity=" + d + "&ddate=" + od +
-    (ow ? "&flighttype=ow" : "&rdate=" + rd + "&flighttype=rt") +
-    "&adult=" + px + "&curr=EUR";
+  var trLoc = e ? "en-XX" : "de-DE";
+  var trNonstop = $("ns").checked ? "&nonstop=true" : "";
+  $("u6").href = P + H_TR + "/flights/showfarefirst" +
+    "?dcity=" + o.toLowerCase() + "&acity=" + d.toLowerCase() +
+    "&ddate=" + od +
+    (ow ? "&triptype=ow" : "&rdate=" + rd + "&triptype=rt") +
+    "&class=y&lowpricesource=searchform&quantity=" + px +
+    "&searchboxarg=t" + trNonstop +
+    "&locale=" + trLoc + "&curr=EUR";
 }
 
 "i1;i2;od;rd;ow;px;hr;ns;s1;s2;lc".split(";").forEach(function(id){
