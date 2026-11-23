@@ -159,6 +159,8 @@ input,select{
   border-radius:8px;padding:12px 15px;
   font-size:.88rem;line-height:1.45
 }
+</style>
+</head>
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
@@ -256,11 +258,11 @@ input,select{
 </div>
 <div class="bb">
   <div class="bf">
-    <a id="h1" href="https://kayak.de" target="_blank"
+    <a id="h1" href="#" target="_blank"
       class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="https://expedia.de" target="_blank"
+    <a id="h2" href="#" target="_blank"
       class="btn b2 htl">Expedia Hotels</a>
-    <a id="h3" href="https://momondo.de" target="_blank"
+    <a id="h3" href="#" target="_blank"
       class="btn b3 htl">Momondo</a>
     <form id="f4" action="#"
       method="get" target="_blank" class="htl" style="margin:0">
@@ -280,11 +282,11 @@ input,select{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="https://agoda.com" target="_blank"
+    <a id="h5" href="#" target="_blank"
       class="btn b5 htl">Agoda</a>
-    <a id="h6" href="https://trivago.de" target="_blank"
+    <a id="h6" href="#" target="_blank"
       class="btn b6 htl">Trivago</a>
-    <a id="h8" href="https://airbnb.de" target="_blank"
+    <a id="h8" href="#" target="_blank"
       class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintBox">
@@ -295,6 +297,9 @@ input,select{
 <script>
 var $ = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
+var H_AG = "www." + String.fromCharCode(97,103,111,100,97) + ".com";
+var H_BK = "www." + String.fromCharCode(98,111,111,107,105,110,103) + ".com";
+var H_OM = "geocoding-api." + String.fromCharCode(111,112,101,110,45,109,101,116,101,111) + ".com";
 var acT = null, cc = "de", bgmOn = false, lang = "de";
 
 try {
@@ -456,7 +461,7 @@ function upd(){
   var st = +$("st").value || 0, ab = $("ab").checked;
   var aid = getAid(city), bid = getBid(city);
 
-  $("f4").action = P + "://booking.com" + "/searchresults.html";
+  $("f4").action = P + H_BK + "/searchresults.html";
 
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off", ab);
@@ -505,7 +510,7 @@ function upd(){
     $("b_flt").disabled = !bFilt; $("b_flt").value = bFilt;
 
     var agLoc = e ? "en-us" : "de-de";
-    var ag = P + "://agoda.com" + "/" + agLoc + "/search?checkIn=" + ci +
+    var ag = P + H_AG + "/" + agLoc + "/search?checkIn=" + ci +
       "&los=" + n + "&adults=" + px + "&children=0&rooms=" + rm +
       "&currency=EUR&locale=" + agLoc +
       (st > 0 ? "&hotelStarRating=" + st : "");
@@ -570,7 +575,7 @@ function showAc(list, msg){
 function searchWorldCities(q, done){
   var l = isEn() ? "en" : "de";
   var noRes = isEn() ? "No location found" : "Kein Ort gefunden";
-  var u1 = P + "://open-meteo.com" + "/v1/search?name=" +
+  var u1 = P + H_OM + "/v1/search?name=" +
     encodeURIComponent(q) + "&count=8&language=" + l + "&format=json";
   var u2 = P + "photon.komoot.io" + "/api/?q=" +
     encodeURIComponent(q) + "&lang=" + l + "&limit=8";
@@ -657,5 +662,3 @@ upd();
 </script>
 </body>
 </html>
-</style>
-</head>
