@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title id="pgTit">✈️ Meine Flugbuchungen PRO</title>
+<title id="pgTit">✈️ Meine aktuellen Buchungen PRO</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
@@ -19,11 +19,11 @@ html,body{
 .w-card{
   background:linear-gradient(180deg,#ffffff 0%,#f0f9ff 100%);
   border:2px solid #38bdf8;border-radius:18px;
-  padding:28px 24px;text-align:center;max-width:420px;width:100%;
+  padding:28px 24px;text-align:center;max-width:430px;width:100%;
   box-shadow:0 16px 40px rgba(0,0,0,.5)
 }
 .w-card h2{
-  margin:0 0 18px 0;color:#0f2942;font-size:1.38rem;
+  margin:0 0 18px 0;color:#0f2942;font-size:1.35rem;
   line-height:1.25
 }
 .w-sub-tit{
@@ -36,10 +36,10 @@ html,body{
 }
 .w-btn{
   display:flex;align-items:center;justify-content:center;gap:12px;
-  width:100%;max-width:340px;margin:0 auto;box-sizing:border-box;
+  width:100%;max-width:350px;margin:0 auto;box-sizing:border-box;
   background:linear-gradient(135deg,#0284c7 0%,#1d4ed8 100%);
   color:#fff;border:2px solid #7dd3fc;border-radius:14px;
-  padding:14px 18px;font-size:1.05rem;font-weight:bold;
+  padding:14px 18px;font-size:1.02rem;font-weight:bold;
   cursor:pointer;text-align:left;line-height:1.25;
   box-shadow:0 8px 20px rgba(2,132,199,.45);
   transition:transform .15s,box-shadow .15s;
@@ -58,7 +58,7 @@ html,body{
 }
 .w-txt{display:flex;flex-direction:column}
 .w-btn-en{
-  display:block;font-size:.84rem;font-weight:bold;
+  display:block;font-size:.82rem;font-weight:bold;
   color:#bae6fd;margin-top:3px
 }
 .hdr{
@@ -87,9 +87,9 @@ html,body{
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
 .card{
-  max-width:680px;margin:0 auto;border:1px solid #93c5fd;
+  width:100%;box-sizing:border-box;border:1px solid #93c5fd;
   border-radius:12px;padding:22px;background:#fff;
-  box-shadow:0 4px 14px rgba(3,105,161,.08)
+  margin-bottom:18px;box-shadow:0 4px 14px rgba(3,105,161,.08)
 }
 .ct{
   font-weight:bold;font-size:1.1rem;color:var(--d);
@@ -109,7 +109,7 @@ input,select{
   background:#f8fafc;color:var(--t);width:100%
 }
 .cpbtn{
-  height:42px;padding:0 12px;background:#e0f2fe;color:#0369a1;
+  height:42px;padding:0 14px;background:#e0f2fe;color:#0369a1;
   border:1px solid #7dd3fc;border-radius:8px;font-weight:bold;
   cursor:pointer;white-space:nowrap;font-size:.82rem
 }
@@ -126,7 +126,7 @@ input,select{
 }
 .abtn{
   display:flex;align-items:center;justify-content:center;
-  height:50px;border-radius:9px;font-weight:bold;font-size:.9rem;
+  height:50px;border-radius:9px;font-weight:bold;font-size:.92rem;
   text-decoration:none;border:none;cursor:pointer;color:#fff;
   text-align:center;padding:0 10px
 }
@@ -137,11 +137,22 @@ input,select{
   background:#dcfce7;border:1px solid #86efac;color:#166534;
   border-radius:8px;font-weight:bold;font-size:.88rem
 }
+@keyframes pulseHint{
+  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
+  50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
+}
+.bb{
+  width:100%;box-sizing:border-box;
+  border:1px solid #93c5fd;background:#fff;
+  border-radius:12px;padding:16px 20px;
+  box-shadow:0 4px 12px rgba(3,105,161,.08)
+}
 .hintbox{
-  margin-top:16px;background:#0f2942;color:#fff;
+  background:#0f2942;color:#fff;
   border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:12px 15px;
-  font-size:.86rem;line-height:1.45
+  border-radius:8px;padding:12px 15px;font-weight:bold;
+  font-size:.88rem;line-height:1.45;
+  animation:pulseHint 2.2s infinite ease-in-out
 }
 </style>
 </head>
@@ -149,27 +160,29 @@ input,select{
 <div class="welcome" id="wOverlay">
   <div class="w-card">
     <h2>
-      ✈️ Meine Flugbuchungen
-      <span class="w-sub-tit">My Flight Bookings</span>
+      ✈️ Meine aktuellen Buchungen
+      <span class="w-sub-tit">My Current Bookings</span>
     </h2>
     <button type="button" class="w-btn" id="entryBtn"
       onclick="enterBookings()">
       <span class="w-plane">✈️</span>
       <span class="w-txt">
-        <span>Flugbuchungen aktivieren ➡️</span>
-        <span class="w-btn-en">Activate Flight Bookings ➡️</span>
+        <span>Aktuelle Buchungen aktivieren ➡️</span>
+        <span class="w-btn-en">Activate Current Bookings ➡️</span>
       </span>
     </button>
   </div>
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit" id="hTit">✈️ Meine Flugbuchungen PRO</h1>
+  <h1 class="tit" id="hTit">✈️ Meine aktuellen Buchungen PRO</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
-    <div class="seg" id="dt">23.11.2026 • 19:30:00</div>
-    <span class="seg act" id="navAct">✈️ BUCHUNGEN (AKTIV)</span>
+    <div class="seg" id="dt">23.11.2026 • 19:45:00</div>
+    <span class="seg act" id="navAct">
+      ✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)
+    </span>
     <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
     <a href="meine-hotelsuche.html" class="seg upg" id="navHtl">
       🏨 Meine Hotelsuche ➡️
@@ -263,6 +276,8 @@ input,select{
       class="abtn go">2️⃣ Airline-Seite öffnen ➡️</a>
   </div>
   <div id="ts"></div>
+</div>
+<div class="bb">
   <div class="hintbox" id="hintBox">
     ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie
     <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
@@ -307,9 +322,9 @@ const guides={
 function applyLang(){
   const e=isEn();
   document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"✈️ My Flight Bookings PRO":"✈️ Meine Flugbuchungen PRO";
-  $("hTit").textContent=e?"✈️ My Flight Bookings PRO":"✈️ Meine Flugbuchungen PRO";
-  $("navAct").textContent=e?"✈️ BOOKINGS (ACTIVE)":"✈️ BUCHUNGEN (AKTIV)";
+  $("pgTit").textContent=e?"✈️ My Current Bookings PRO":"✈️ Meine aktuellen Buchungen PRO";
+  $("hTit").textContent=e?"✈️ My Current Bookings PRO":"✈️ Meine aktuellen Buchungen PRO";
+  $("navAct").textContent=e?"✈️ MY CURRENT BOOKINGS (ACTIVE)":"✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)";
   $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
   $("navHtl").textContent=e?"🏨 My Hotel Search ➡️":"🏨 Meine Hotelsuche ➡️";
   $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
