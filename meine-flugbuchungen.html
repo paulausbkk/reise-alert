@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Flugcockpit – Meine Flugbuchungen</title>
+<title id="pgTit">✈️ Flugcockpit – Meine Flugbuchungen</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--bg:#e8f1f8;--t:#0f172a;
@@ -135,23 +135,27 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
 </head>
 <body>
 <div class="hdr">
-  <h1 class="tit">✈️ Flugcockpit – Meine Buchungen</h1>
+  <h1 class="tit" id="hTit">✈️ Flugcockpit – Meine Buchungen</h1>
   <div class="cp">
-    <span class="seg act">✈️ MEINE FLUGBUCHUNGEN (AKTIV)</span>
-    <a href="../index.html" class="seg bk">🏠 Zurück zur Startseite</a>
-    <a href="index.html" class="seg bk">✈️ Flugsuche</a>
-    <a href="meine-hotelsuche.html" class="seg bk">
-      🏨 Meine Hotelsuche
+    <span class="seg act" id="navAct">
+      ✈️ MEINE FLUGBUCHUNGEN (AKTIV)
+    </span>
+    <a href="../index.html" class="seg bk" id="navHome">
+      🏠 Zurück zur Startseite
+    </a>
+    <a href="index.html" class="seg bk" id="navFlt">✈️ Flugsuche</a>
+    <a href="meine-hotelsuche.html" class="seg bk" id="navHtl">
+      🏨 Hotelsuche
     </a>
     <div class="seg" id="dt">23.11.2026 • 10:20:08</div>
   </div>
 </div>
 <div class="card">
-  <div class="ct">1️⃣ Airline / Veranstalter & Reisedaten</div>
+  <div class="ct" id="c1Tit">1️⃣ Airline / Veranstalter & Reisedaten</div>
   <div class="f">
-    <label>Airline / Reiseveranstalter</label>
+    <label id="lblAir">Airline / Reiseveranstalter</label>
     <select id="u5">
-      <optgroup label="✈️ Airlines">
+      <optgroup label="✈️ Airlines" id="ogAir">
         <option value="tk|pnr_ln|https://turkishairlines.com">
           Turkish Airlines
         </option>
@@ -192,14 +196,14 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
           AirAsia (Low-Cost Asien)
         </option>
       </optgroup>
-      <optgroup label="🧳 Reisevermittler & Portale">
+      <optgroup label="🧳 Reisevermittler & Portale" id="ogOta">
         <option value="gtg|mail_pnr|https://gotogate.de">
           Gotogate (Meine Buchungen)
         </option>
         <option value="exp|mail_only|https://expedia.de">
           Expedia (Reiseplan)
         </option>
-        <option value="trp|mail_pnr|https://trip.com?">
+        <option value="trp|mail_pnr|https://trip.com">
           Trip.com (Buchungen)
         </option>
         <option value="kwi|mail_only|https://kiwi.com">
@@ -226,80 +230,80 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
 
   <div class="f2" style="margin-bottom:0">
     <div id="f_pnr" class="f">
-      <label class="req">Buchungscode (PNR)</label>
+      <label class="req" id="lblPnr">Buchungscode (PNR)</label>
       <div class="cpb">
         <input type="text" id="u3" autocomplete="off"
           placeholder="PFLICHT: z.B. TW8ZRK"
           style="text-transform:uppercase">
         <button type="button"
-          onclick="cp('u3','Buchungscode')">📋</button>
+          onclick="cp('u3','pnr')">📋</button>
       </div>
     </div>
     <div id="f_mail" class="f">
-      <label class="req">Buchungs-E-Mail / Login</label>
+      <label class="req" id="lblMail">Buchungs-E-Mail / Login</label>
       <div class="cpb">
         <input type="email" id="u4" autocomplete="off"
           placeholder="PFLICHT: E-Mail der Buchung">
         <button type="button"
-          onclick="cp('u4','E-Mail')">📋</button>
+          onclick="cp('u4','mail')">📋</button>
       </div>
     </div>
   </div>
 
   <div class="f2" style="margin-bottom:0">
     <div id="f_fn" class="f">
-      <label class="req">Vorname (Reisepass)</label>
+      <label class="req" id="lblFn">Vorname (Reisepass)</label>
       <div class="cpb">
         <input type="text" id="u_fn" autocomplete="off"
           placeholder="PFLICHT: z.B. MAX"
           style="text-transform:uppercase">
         <button type="button"
-          onclick="cp('u_fn','Vorname')">📋</button>
+          onclick="cp('u_fn','fn')">📋</button>
       </div>
     </div>
     <div id="f_ln" class="f">
-      <label class="req">Nachname (ohne Vornamen!)</label>
+      <label class="req" id="lblLn">Nachname (ohne Vornamen!)</label>
       <div class="cpb">
         <input type="text" id="u6" autocomplete="off"
           placeholder="PFLICHT: z.B. MUSTERMANN"
           style="text-transform:uppercase">
         <button type="button"
-          onclick="cp('u6','Nachname')">📋</button>
+          onclick="cp('u6','ln')">📋</button>
       </div>
     </div>
   </div>
 
   <div class="f2" style="margin-bottom:0">
     <div>
-      <label class="opt">Ticketnummer (Notizzettel)</label>
+      <label class="opt" id="lblTk">Ticketnummer (Notizzettel)</label>
       <div class="cpb">
         <input type="text" id="u_tknr" class="opt"
           autocomplete="off" placeholder="z.B. 2354817365876">
         <button type="button"
-          onclick="cp('u_tknr','Ticketnummer')">📋</button>
+          onclick="cp('u_tknr','tk')">📋</button>
       </div>
     </div>
     <div>
-      <label class="opt">Reisepassnummer (Notizzettel)</label>
+      <label class="opt" id="lblPp">Reisepassnummer (Notizzettel)</label>
       <div class="cpb">
         <input type="text" id="u_pp" class="opt"
           autocomplete="off" placeholder="z.B. C01X00T47"
           style="text-transform:uppercase">
         <button type="button"
-          onclick="cp('u_pp','Reisepass')">📋</button>
+          onclick="cp('u_pp','pp')">📋</button>
       </div>
     </div>
   </div>
 </div>
 
 <div class="bb">
-  <button type="button" onclick="openNote()" class="btn note">
+  <button type="button" onclick="openNote()" class="btn note" id="btnNote">
     📌 1. Schwebenden Spickzettel starten
   </button>
   <a id="go" href="https://turkishairlines.com"
     target="_blank" class="btn">🚀 2. Airline-Seite öffnen</a>
   <div id="ts"></div>
-  <div class="hintbox">
+  <div class="hintbox" id="hintBox">
     ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie:
     <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
     erscheinen diese nachher auf Ihrem Notizzettel,
@@ -312,7 +316,13 @@ const keys="u5;u3;u_fn;u6;u4;u_tknr;u_pp".split(";");
 const upKeys="u3;u_fn;u6;u_pp".split(";");
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let ci=0;
-const guides={
+let lang="de";
+try{
+  if(localStorage.getItem("pab_lang")==="en")lang="en";
+}catch(e){}
+function isEn(){return lang==="en";}
+
+const guidesDe={
   tk:"1. 'Buchung verwalten' wählen.|2. PNR eingeben.|3. Nachname eingeben.",
   lh:"1. 'Meine Buchungen' öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
   qr:"1. 'Buchung verwalten' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
@@ -335,6 +345,86 @@ const guides={
   mom:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
   opo:"1. 'Meine Reisen' öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
 };
+
+const guidesEn={
+  tk:"1. Select 'Manage Booking'.|2. Enter PNR.|3. Enter Last Name.",
+  lh:"1. Open 'My Bookings'.|2. Enter Booking Code.|3. Enter Last Name.",
+  qr:"1. Open 'Manage Booking'.|2. Enter Booking Reference.|3. Enter Last Name.",
+  ek:"1. Click 'Manage Booking'.|2. Enter Last Name.|3. Enter Booking Reference.",
+  sq:"1. Open 'Manage Booking'.|2. Enter Booking Reference.|3. Enter Last Name.",
+  tg:"1. Open 'My Booking'.|2. Enter Booking Code.|3. Enter Last Name.",
+  cx:"1. Open 'Manage Booking'.|2. Enter First & Last Name.|3. Enter Booking Reference.",
+  pr:"1. Open 'Manage Booking'.|2. Enter PNR.|3. Enter Last Name.",
+  "5j":"1. Open 'Manage Booking'.|2. Enter Booking Reference.|3. Enter Last Name.",
+  tr:"1. Open 'Manage My Booking'.|2. Enter Booking Reference.|3. Enter Last Name or Email.",
+  pg:"1. Open 'Manage Booking'.|2. Enter Booking Reference.|3. Enter Last Name.",
+  vj:"1. Open 'My Booking'.|2. Enter Booking Code.|3. Enter Last & First Name.",
+  ak:"1. Open 'Purchases'.|2. Log in with Booking Email or link PNR.",
+  gtg:"1. Open 'My Bookings'.|2. Enter Booking Email.|3. Enter Order ID / PNR.",
+  exp:"1. Open 'My Trips'.|2. Log in with Booking Email.",
+  trp:"1. Open 'Find Bookings'.|2. Enter Booking Email.|3. Enter Booking ID.",
+  kwi:"1. Open 'Manage Bookings'.|2. Log in with Booking Email.",
+  sky:"1. Select 'Sign In'.|2. Log in with Booking Email.",
+  kyk:"1. Open 'Trips'.|2. Log in with Booking Email.",
+  mom:"1. Open 'Trips'.|2. Log in with Booking Email.",
+  opo:"1. Open 'My Trips'.|2. Enter Booking Email & Booking Number."
+};
+
+function applyLang(){
+  const e=isEn();
+  document.documentElement.lang=e?"en":"de";
+  $("pgTit").textContent=e
+    ?"✈️ Flight Cockpit – My Flight Bookings"
+    :"✈️ Flugcockpit – Meine Flugbuchungen";
+  $("hTit").textContent=e
+    ?"✈️ Flight Cockpit – My Bookings"
+    :"✈️ Flugcockpit – Meine Buchungen";
+  $("navAct").textContent=e
+    ?"✈️ MY FLIGHT BOOKINGS (ACTIVE)"
+    :"✈️ MEINE FLUGBUCHUNGEN (AKTIV)";
+  $("navHome").textContent=e
+    ?"🏠 Back to Home":"🏠 Zurück zur Startseite";
+  $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
+  $("navHtl").textContent=e?"🏨 Hotel Search":"🏨 Hotelsuche";
+  $("c1Tit").textContent=e
+    ?"1️⃣ Airline / Provider & Travel Data"
+    :"1️⃣ Airline / Veranstalter & Reisedaten";
+  $("lblAir").textContent=e
+    ?"Airline / Travel Provider":"Airline / Reiseveranstalter";
+  $("ogOta").label=e
+    ?"🧳 Travel Agencies & Portals":"🧳 Reisevermittler & Portale";
+  $("lblPnr").textContent=e?"Booking Code (PNR)":"Buchungscode (PNR)";
+  $("u3").placeholder=e?"REQUIRED: e.g. TW8ZRK":"PFLICHT: z.B. TW8ZRK";
+  $("lblMail").textContent=e
+    ?"Booking Email / Login":"Buchungs-E-Mail / Login";
+  $("u4").placeholder=e
+    ?"REQUIRED: Booking Email":"PFLICHT: E-Mail der Buchung";
+  $("lblFn").textContent=e?"First Name (Passport)":"Vorname (Reisepass)";
+  $("u_fn").placeholder=e?"REQUIRED: e.g. JOHN":"PFLICHT: z.B. MAX";
+  $("lblLn").textContent=e
+    ?"Last Name (no first name!)":"Nachname (ohne Vornamen!)";
+  $("u6").placeholder=e?"REQUIRED: e.g. DOE":"PFLICHT: z.B. MUSTERMANN";
+  $("lblTk").textContent=e
+    ?"Ticket Number (Cheat Sheet)":"Ticketnummer (Notizzettel)";
+  $("u_tknr").placeholder=e?"e.g. 2354817365876":"z.B. 2354817365876";
+  $("lblPp").textContent=e
+    ?"Passport Number (Cheat Sheet)":"Reisepassnummer (Notizzettel)";
+  $("u_pp").placeholder=e?"e.g. C01X00T47":"z.B. C01X00T47";
+  $("btnNote").textContent=e
+    ?"📌 1. Start Floating Cheat Sheet"
+    :"📌 1. Schwebenden Spickzettel starten";
+  $("go").textContent=e
+    ?"🚀 2. Open Airline Website":"🚀 2. Airline-Seite öffnen";
+  $("hintBox").innerHTML=e
+    ?"ℹ️ <b>Note:</b> If you enter optional details like <b>Ticket Number</b> " +
+      "or <b>Passport Number</b> here, they will appear on your cheat sheet " +
+      "when you open the airline website."
+    :"ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie: " +
+      "<b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen, " +
+      "erscheinen diese nachher auf Ihrem Notizzettel, " +
+      "wenn Sie die Seite Ihrer Airline aufrufen.";
+}
+
 function normCaps(){
   upKeys.forEach(k=>{
     const el=$(k);
@@ -344,32 +434,44 @@ function normCaps(){
     }
   });
 }
-function cp(id,label){
+
+function cp(id,key){
   normCaps();
+  const e=isEn();
+  const mapDe={pnr:"Buchungscode",mail:"E-Mail",fn:"Vorname",ln:"Nachname",tk:"Ticketnummer",pp:"Reisepass"};
+  const mapEn={pnr:"Booking Code",mail:"Email",fn:"First Name",ln:"Last Name",tk:"Ticket Number",pp:"Passport"};
+  const label=(e?mapEn:mapDe)[key]||key;
   const el=$(id);
   const val=el.value.trim();
   if(!val){
-    $("ts").textContent="⚠️ Bitte zuerst "+label+" eintragen!";
+    $("ts").textContent=e
+      ?"⚠️ Please enter "+label+" first!"
+      :"⚠️ Bitte zuerst "+label+" eintragen!";
     $("ts").style.display="block";
     return;
   }
   if(navigator.clipboard&&navigator.clipboard.writeText){
     navigator.clipboard.writeText(val).catch(()=>{});
   }else{
-    el.select();try{document.execCommand("copy")}catch(e){}
+    el.select();try{document.execCommand("copy")}catch(err){}
   }
-  $("ts").textContent="✅ "+label+" ("+val+") kopiert!";
+  $("ts").textContent=e
+    ?"✅ "+label+" ("+val+") copied!"
+    :"✅ "+label+" ("+val+") kopiert!";
   $("ts").style.display="block";
 }
 async function openNote(){
   sv();
+  const e=isEn();
   const parts=$("u5").value.split("|");
   const code=parts.shift();
   const airlineName=$("u5").options.item($("u5").selectedIndex).text;
-  const steps=(guides.hasOwnProperty(code)?guides.valueOf():null);
-  const stepTxt=Object.getOwnPropertyDescriptor(guides,code);
+  const gObj=e?guidesEn:guidesDe;
+  const stepTxt=Object.getOwnPropertyDescriptor(gObj,code);
   const stepList=(stepTxt?stepTxt.value:"").split("|");
-  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
+  const items=e
+    ?"PNR|u3;First Name|u_fn;Last Name|u6;Email|u4;Ticket No.|u_tknr;Passport No.|u_pp".split(";")
+    :"PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
   let clipAll="";
   items.forEach(it=>{
     const p=it.split("|");const lbl=p.shift();const id=p.join("");
@@ -380,9 +482,11 @@ async function openNote(){
   if(clipAll){
     try{
       navigator.clipboard.writeText(clipAll);
-      $("ts").textContent="✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
+      $("ts").textContent=e
+        ?"✅ Cheat sheet started! Now click Button 2."
+        :"✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
       $("ts").style.display="block";
-    }catch(e){}
+    }catch(err){}
   }
   if("documentPictureInPicture" in window){
     try{
@@ -403,7 +507,8 @@ async function openNote(){
         box.style.marginBottom="7px";box.style.fontSize="13.5px";
         box.style.fontWeight="bold";box.style.color="#991b1b";
         box.style.lineHeight="1.38";
-        box.innerHTML="<div style='font-size:14.5px;font-weight:bold;color:#7f1d1d;margin-bottom:3px'>🧭 Anleitung:</div>"+stepList.join("<br>");
+        const gTitle=e?"🧭 Guide:":"🧭 Anleitung:";
+        box.innerHTML="<div style='font-size:14.5px;font-weight:bold;color:#7f1d1d;margin-bottom:3px'>"+gTitle+"</div>"+stepList.join("<br>");
         b.appendChild(box);
       }
       items.forEach(it=>{
@@ -428,20 +533,23 @@ async function openNote(){
         }
       });
       return;
-    }catch(e){}
+    }catch(err){}
   }
 }
+
 function updClock(){
-  const now=new Date();
+  const now=new Date(),loc=isEn()?"en-GB":"de-DE";
   const dtEl=$("dt");
   if(!dtEl)return;
-  dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
+  dtEl.textContent=now.toLocaleDateString(loc)+" • "+now.toLocaleTimeString(loc);
   const idx=ci++%cols.length;
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
 }
+
 function sv(){
   normCaps();
   updClock();
+  const e=isEn();
   const parts=$("u5").value.split("|");
   parts.shift();
   const mode=parts.shift();
@@ -450,14 +558,15 @@ function sv(){
   $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
   $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
   $("f_mail").classList.toggle("off",mode!=="mail_pnr"&&mode!=="mail_only");
-  if(mode==="pnr_ln")$("hint").textContent="Benötigt: Buchungscode (PNR) + Nachname";
-  if(mode==="pnr_fn_ln")$("hint").textContent="Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
-  if(mode==="mail_pnr")$("hint").textContent="Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
-  if(mode==="mail_only")$("hint").textContent="Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
+  if(mode==="pnr_ln")$("hint").textContent=e?"Required: Booking Code (PNR) + Last Name":"Benötigt: Buchungscode (PNR) + Nachname";
+  if(mode==="pnr_fn_ln")$("hint").textContent=e?"Required (VietJet Air): Booking Code (PNR) + First Name + Last Name":"Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
+  if(mode==="mail_pnr")$("hint").textContent=e?"Required: Booking Email + Booking Code (PNR)":"Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
+  if(mode==="mail_only")$("hint").textContent=e?"Required: Login with your Booking Email on the portal":"Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
   const d={};
   keys.forEach(k=>Object.defineProperty(d,k,{value:$(k).value,enumerable:true}));
-  try{localStorage.setItem("rk_upg",JSON.stringify(d))}catch(e){}
+  try{localStorage.setItem("rk_upg",JSON.stringify(d))}catch(err){}
 }
+
 (function ld(){
   try{
     const raw=localStorage.getItem("rk_upg");
@@ -468,10 +577,12 @@ function sv(){
         if(desc&&desc.value!==undefined)$(k).value=desc.value;
       });
     }
-  }catch(e){}
+  }catch(err){}
+  applyLang();
   sv();
   setInterval(updClock,1000);
 })();
+
 keys.forEach(k=>{
   $(k).addEventListener("input",sv);
   $(k).addEventListener("change",sv);
