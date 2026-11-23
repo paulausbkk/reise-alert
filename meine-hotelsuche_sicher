@@ -159,8 +159,6 @@ input,select{
   border-radius:8px;padding:12px 15px;
   font-size:.88rem;line-height:1.45
 }
-</style>
-</head>
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
@@ -572,7 +570,7 @@ function showAc(list, msg){
 function searchWorldCities(q, done){
   var l = isEn() ? "en" : "de";
   var noRes = isEn() ? "No location found" : "Kein Ort gefunden";
-  var u1 = P + "geocoding-api.open-meteo.com" + "/v1/search?name=" +
+  var u1 = P + "://open-meteo.com" + "/v1/search?name=" +
     encodeURIComponent(q) + "&count=8&language=" + l + "&format=json";
   var u2 = P + "photon.komoot.io" + "/api/?q=" +
     encodeURIComponent(q) + "&lang=" + l + "&limit=8";
@@ -659,3 +657,5 @@ upd();
 </script>
 </body>
 </html>
+</style>
+</head>
