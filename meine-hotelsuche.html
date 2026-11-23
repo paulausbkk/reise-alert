@@ -21,40 +21,52 @@ html,body{
   padding:26px 24px;text-align:center;max-width:400px;width:100%;
   box-shadow:0 12px 32px rgba(0,0,0,.45)
 }
-.w-card h2{margin:0 0 18px 0;color:#0f2942;font-size:1.35rem}
+.w-card h2{
+  margin:0 0 18px 0;color:#0f2942;font-size:1.35rem;
+  line-height:1.25
+}
+.w-sub-tit{
+  display:block;font-size:.98rem;font-weight:bold;
+  color:#0369a1;margin-top:4px
+}
 .w-btn{
-  display:flex;align-items:center;justify-content:center;
-  width:100%;max-width:290px;margin:0 auto;box-sizing:border-box;
-  background:#0284c7;color:#fff;border:none;
-  border-radius:12px;padding:16px 20px;font-size:1.08rem;
-  font-weight:bold;cursor:pointer;text-align:center;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;width:100%;max-width:300px;
+  margin:0 auto;box-sizing:border-box;background:#0284c7;
+  color:#fff;border:none;border-radius:12px;padding:14px 18px;
+  font-size:1.06rem;font-weight:bold;cursor:pointer;
+  text-align:center;line-height:1.25;
   touch-action:manipulation;user-select:none;
   -webkit-tap-highlight-color:transparent
 }
 .w-btn:active{background:#0369a1}
+.w-btn-en{
+  display:block;font-size:.84rem;font-weight:bold;
+  color:#e0f2fe;margin-top:3px
+}
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:12px 14px;border-radius:12px;
-  margin-bottom:20px;flex-wrap:wrap;gap:8px
+  background:#0f2942;padding:10px 14px;border-radius:12px;
+  margin-bottom:18px;flex-wrap:wrap;gap:6px
 }
-.tit{font-weight:bold;color:#fff;font-size:1.15rem;margin:0}
-.cp{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
+.cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
 .seg{
-  font-size:.74rem;padding:6px 9px;border-radius:6px;
+  font-size:.69rem;padding:5px 8px;border-radius:6px;
   font-weight:bold;color:#fff;text-transform:uppercase;
   background:#0284c7;text-decoration:none;border:1px solid #38bdf8;
   white-space:nowrap
 }
-.seg.nav{background:#1e40af;font-size:.76rem;padding:6px 10px}
-.seg.upg{background:#0369a1;font-size:.76rem;padding:6px 10px}
+.seg.nav{background:#1e40af;font-size:.69rem;padding:5px 8px}
+.seg.upg{background:#0369a1;font-size:.69rem;padding:5px 8px}
 .seg.act{
   background:linear-gradient(180deg,#38bdf8 0%,#0284c7 100%);
-  border:2px solid #e0f2fe;font-size:.76rem;padding:5px 11px;
+  border:2px solid #e0f2fe;font-size:.69rem;padding:4px 9px;
   box-shadow:0 0 12px rgba(125,211,252,.65);cursor:default
 }
 .mbtn{
   background:#0284c7;color:#fff;border:1px solid #7dd3fc;
-  border-radius:6px;padding:6px 10px;font-size:.76rem;
+  border-radius:6px;padding:5px 8px;font-size:.69rem;
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
@@ -152,9 +164,15 @@ input,select{
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
-    <h2 id="wTit">🏨 Hotelsuche</h2>
+    <h2>
+      🏨 Hotelsuche
+      <span class="w-sub-tit">Hotel Search</span>
+    </h2>
     <button type="button" class="w-btn" id="wBtn"
-      onclick="enterHotel()">Hotelsuche aktivieren ➡️</button>
+      onclick="enterHotel()">
+      <span>Hotelsuche aktivieren ➡️</span>
+      <span class="w-btn-en">Activate Hotel Search ➡️</span>
+    </button>
   </div>
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
@@ -166,12 +184,12 @@ input,select{
     <div class="seg" id="dt">22.11.2026</div>
     <div class="seg" id="nt">1 NACHT</div>
     <span class="seg act" id="navAct">🏨 HOTELSUCHE (AKTIV)</span>
-    <a href="../index.html" class="seg nav" id="navHome">
-      🏠 Zurück zur Startseite
-    </a>
     <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg" id="navBkg">
       ✈️ Meine Flugbuchungen ➡️
+    </a>
+    <a href="../index.html" class="seg nav" id="navHome">
+      🏠 Zurück zur Startseite
     </a>
   </div>
 </div>
@@ -292,9 +310,6 @@ function applyLang(){
   document.documentElement.lang = e ? "en" : "de";
   $("pgTit").textContent = e
     ? "🏨 My Hotel Search PRO v121" : "🏨 Meine Hotelsuche PRO v121";
-  $("wTit").textContent = e ? "🏨 Hotel Search" : "🏨 Hotelsuche";
-  $("wBtn").textContent = e
-    ? "Activate Hotel Search ➡️" : "Hotelsuche aktivieren ➡️";
   $("hTit").textContent = e
     ? "🏨 My Hotel Search PRO v121" : "🏨 Meine Hotelsuche PRO v121";
   $("navAct").textContent = e
@@ -379,7 +394,6 @@ function iso(d){
   if(t.length < 2) t = "0" + t;
   return d.getFullYear() + "-" + m + "-" + t;
 }
-
 function getAid(city){
   var k = city.toLowerCase().trim();
   if(k === "bangkok") return "9395";
@@ -432,6 +446,7 @@ function getBid(city){
   if(k === "pagadian") return "-2443809";
   return "";
 }
+
 function upd(){
   var e = isEn(), loc = e ? "en-GB" : "de-DE";
   var now = new Date(), t = iso(now);
