@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>✈️ Flugcockpit – Meine Flugbuchungen</title>
+<title id="pgTit">✈️ Flugcockpit – Meine Flugbuchungen</title>
 <style>
 :root{
   --r:#0369a1;--d:#0c4a6e;--t:#0f172a;--red:#dc2626
@@ -23,15 +23,29 @@ html,body{
   padding:26px 24px;text-align:center;max-width:400px;width:100%;
   box-shadow:0 12px 32px rgba(0,0,0,.45)
 }
-.w-card h2{margin:0 0 18px 0;color:#0f2942;font-size:1.35rem}
+.w-card h2{
+  margin:0 0 18px 0;color:#0f2942;font-size:1.35rem;
+  line-height:1.25
+}
+.w-sub-tit{
+  display:block;font-size:.98rem;font-weight:bold;
+  color:#0369a1;margin-top:4px
+}
 .w-btn{
-  display:flex;align-items:center;justify-content:center;
-  width:100%;max-width:290px;margin:0 auto;box-sizing:border-box;
-  background:#0284c7;color:#fff;border:none;
-  border-radius:12px;padding:16px 20px;font-size:1.08rem;
-  font-weight:bold;cursor:pointer;text-align:center
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;width:100%;max-width:300px;
+  margin:0 auto;box-sizing:border-box;background:#0284c7;
+  color:#fff;border:none;border-radius:12px;padding:14px 18px;
+  font-size:1.06rem;font-weight:bold;cursor:pointer;
+  text-align:center;line-height:1.25;
+  touch-action:manipulation;user-select:none;
+  -webkit-tap-highlight-color:transparent
 }
 .w-btn:active{background:#0369a1}
+.w-btn-en{
+  display:block;font-size:.84rem;font-weight:bold;
+  color:#e0f2fe;margin-top:3px
+}
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
   background:#0f2942;padding:10px 12px;border-radius:12px;
@@ -145,34 +159,42 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
-    <h2 id="wTit">✈️ Flugbuchungen</h2>
+    <h2>
+      ✈️ Flugbuchungen
+      <span class="w-sub-tit">Flight Bookings</span>
+    </h2>
     <button type="button" class="w-btn" id="wBtn"
-      onclick="enterBookings()">Flugbuchungen aktivieren ➡️</button>
+      onclick="enterBookings()">
+      <span>Flugbuchungen aktivieren ➡️</span>
+      <span class="w-btn-en">Activate Flight Bookings ➡️</span>
+    </button>
   </div>
 </div>
-<audio id="bgm" src="musik.mp3" loop preload="auto"></audio>
+<audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit">✈️ Flugcockpit – Meine Flugbuchungen</h1>
+  <h1 class="tit" id="hTit">✈️ Flugcockpit – Meine Flugbuchungen</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">23.11.2026 • 14:18:29</div>
-    <span class="seg act">✈️ FLUGBUCHUNGEN (AKTIV)</span>
-    <a href="index.html" class="seg nav">✈️ Flugsuche</a>
-    <a href="meine-hotelsuche.html" class="seg upg">
+    <span class="seg act" id="navAct">✈️ FLUGBUCHUNGEN (AKTIV)</span>
+    <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
+    <a href="meine-hotelsuche.html" class="seg upg" id="navHtl">
       🏨 Meine Hotelsuche ➡️
     </a>
-    <a href="index.html" class="seg nav">🏠 Zurück zur Startseite</a>
+    <a href="../index.html" class="seg nav" id="navHome">
+      🏠 Zurück zur Startseite
+    </a>
   </div>
 </div>
 
 <div class="row">
   <div class="card">
-    <div class="ct">1️⃣ Airline / Veranstalter & Check-in Info</div>
+    <div class="ct" id="c1Tit">1️⃣ Airline / Veranstalter & Check-in Info</div>
     <div class="f">
-      <label for="u5">Airline / Reiseveranstalter wählen</label>
+      <label for="u5" id="lblAir">Airline / Reiseveranstalter wählen</label>
       <select id="u5">
-        <optgroup label="✈️ Airlines">
+        <optgroup label="✈️ Airlines" id="ogAir">
           <option value="tk|pnr_ln|https://turkishairlines.com">
             Turkish Airlines
           </option>
@@ -213,7 +235,7 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
             AirAsia (Low-Cost Asien)
           </option>
         </optgroup>
-        <optgroup label="🧳 Reisevermittler & Portale">
+        <optgroup label="🧳 Reisevermittler & Portale" id="ogOta">
           <option value="gtg|mail_pnr|https://gotogate.de">
             Gotogate (Meine Buchungen)
           </option>
@@ -246,20 +268,20 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
     </div>
   </div>
   <div class="card">
-    <div class="ct">2️⃣ Buchungsdaten & Notizzettel-Angaben</div>
+    <div class="ct" id="c2Tit">2️⃣ Buchungsdaten & Notizzettel-Angaben</div>
     <div class="f2">
       <div id="f_pnr" class="f" style="margin:0">
-        <label class="req">Buchungscode (PNR)</label>
+        <label class="req" id="lblPnr">Buchungscode (PNR)</label>
         <div class="cpb">
           <input type="text" id="u3" autocomplete="off"
             placeholder="PFLICHT: z.B. TW8ZRK"
             style="text-transform:uppercase">
           <button type="button"
-            onclick="cp('u3','Buchungscode')">📋</button>
+            onclick="cp('u3','PNR')">📋</button>
         </div>
       </div>
       <div id="f_mail" class="f" style="margin:0">
-        <label class="req">Buchungs-E-Mail / Login</label>
+        <label class="req" id="lblMail">Buchungs-E-Mail / Login</label>
         <div class="cpb">
           <input type="email" id="u4" autocomplete="off"
             placeholder="PFLICHT: E-Mail der Buchung">
@@ -271,45 +293,45 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
 
     <div class="f2">
       <div id="f_fn" class="f" style="margin:0">
-        <label class="req">Vorname (Reisepass)</label>
+        <label class="req" id="lblFn">Vorname (Reisepass)</label>
         <div class="cpb">
           <input type="text" id="u_fn" autocomplete="off"
             placeholder="PFLICHT: z.B. MAX"
             style="text-transform:uppercase">
           <button type="button"
-            onclick="cp('u_fn','Vorname')">📋</button>
+            onclick="cp('u_fn','First Name')">📋</button>
         </div>
       </div>
       <div id="f_ln" class="f" style="margin:0">
-        <label class="req">Nachname (ohne Vornamen!)</label>
+        <label class="req" id="lblLn">Nachname (ohne Vornamen!)</label>
         <div class="cpb">
           <input type="text" id="u6" autocomplete="off"
             placeholder="PFLICHT: z.B. MUSTERMANN"
             style="text-transform:uppercase">
           <button type="button"
-            onclick="cp('u6','Nachname')">📋</button>
+            onclick="cp('u6','Last Name')">📋</button>
         </div>
       </div>
     </div>
 
     <div class="f2" style="margin-bottom:0">
       <div>
-        <label class="opt">Ticketnummer (Notizzettel)</label>
+        <label class="opt" id="lblTk">Ticketnummer (Notizzettel)</label>
         <div class="cpb">
           <input type="text" id="u_tknr" class="opt"
             autocomplete="off" placeholder="z.B. 2354817365876">
           <button type="button"
-            onclick="cp('u_tknr','Ticketnummer')">📋</button>
+            onclick="cp('u_tknr','Ticket No.')">📋</button>
         </div>
       </div>
       <div>
-        <label class="opt">Reisepassnummer (Notizzettel)</label>
+        <label class="opt" id="lblPp">Reisepassnummer (Notizzettel)</label>
         <div class="cpb">
           <input type="text" id="u_pp" class="opt"
             autocomplete="off" placeholder="z.B. C01X00T47"
             style="text-transform:uppercase">
           <button type="button"
-            onclick="cp('u_pp','Reisepass')">📋</button>
+            onclick="cp('u_pp','Passport')">📋</button>
         </div>
       </div>
     </div>
@@ -318,14 +340,14 @@ input.opt::placeholder{color:#94a3b8;font-weight:normal}
 
 <div class="bb">
   <div class="bf">
-    <button type="button" onclick="openNote()" class="btn note">
+    <button type="button" onclick="openNote()" class="btn note" id="btnNote">
       📌 1. Schwebenden Spickzettel starten
     </button>
     <a id="go" href="https://turkishairlines.com"
       target="_blank" class="btn">🚀 2. Airline-Seite öffnen</a>
   </div>
   <div id="ts"></div>
-  <div class="hint">
+  <div class="hint" id="hintBox">
     ℹ️ <b>Wichtiger Hinweis:</b> Wenn Sie freiwillige Angaben wie
     <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
     erscheinen diese nachher auf Ihrem Notizzettel,
@@ -337,8 +359,15 @@ var $=function(id){return document.getElementById(id);};
 var keys="u5;u3;u_fn;u6;u4;u_tknr;u_pp".split(";");
 var upKeys="u3;u_fn;u6;u_pp".split(";");
 var cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
-var ci=0,bgmOn=false;
-var guides={
+var ci=0,bgmOn=false,lang="de";
+
+try{
+  if(localStorage.getItem("pab_lang")==="en")lang="en";
+}catch(e){}
+
+function isEn(){return lang==="en";}
+
+var guidesDe={
   tk:"1. Buchung verwalten wählen.|2. PNR eingeben.|3. Nachname eingeben.",
   lh:"1. Meine Buchungen öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
   qr:"1. Buchung verwalten öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
@@ -361,14 +390,100 @@ var guides={
   mom:"1. Trips öffnen.|2. Mit Buchungs-E-Mail einloggen.",
   opo:"1. Meine Reisen öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
 };
+
+var guidesEn={
+  tk:"1. Select Manage Booking.|2. Enter PNR.|3. Enter Last Name.",
+  lh:"1. Open My Bookings.|2. Enter Booking Code.|3. Enter Last Name.",
+  qr:"1. Open Manage Booking.|2. Enter Booking Reference.|3. Enter Last Name.",
+  ek:"1. Click Manage Booking.|2. Enter Last Name.|3. Enter Booking Reference.",
+  sq:"1. Open Manage Booking.|2. Enter Booking Reference.|3. Enter Last Name.",
+  tg:"1. Open My Booking.|2. Enter Booking Code.|3. Enter Last Name.",
+  cx:"1. Open Manage Booking.|2. Enter First & Last Name.|3. Enter Booking Reference.",
+  pr:"1. Open Manage Booking.|2. Enter PNR.|3. Enter Last Name.",
+  "5j":"1. Open Manage Booking.|2. Enter Booking Reference.|3. Enter Last Name.",
+  tr:"1. Open Manage My Booking.|2. Enter Booking Reference.|3. Enter Last Name or Email.",
+  pg:"1. Open Manage Booking.|2. Enter Booking Reference.|3. Enter Last Name.",
+  vj:"1. Open My Booking.|2. Enter Booking Code.|3. Enter Last & First Name.",
+  ak:"1. Open Purchases.|2. Log in with booking email or link PNR.",
+  gtg:"1. Open My Bookings.|2. Enter booking email.|3. Enter order number / PNR.",
+  exp:"1. Open My Trips.|2. Log in with booking email.",
+  trp:"1. Open Find Bookings.|2. Enter booking email.|3. Enter booking number.",
+  kwi:"1. Open Manage Bookings.|2. Log in with booking email.",
+  sky:"1. Select Sign In.|2. Log in with booking email.",
+  kyk:"1. Open Trips.|2. Log in with booking email.",
+  mom:"1. Open Trips.|2. Log in with booking email.",
+  opo:"1. Open My Trips.|2. Enter booking email & booking number."
+};
+
+function applyLang(){
+  var e=isEn();
+  document.documentElement.lang=e?"en":"de";
+  $("pgTit").textContent=e
+    ?"✈️ Flight Cockpit – My Flight Bookings"
+    :"✈️ Flugcockpit – Meine Flugbuchungen";
+  $("hTit").textContent=e
+    ?"✈️ Flight Cockpit – My Flight Bookings"
+    :"✈️ Flugcockpit – Meine Flugbuchungen";
+  $("navAct").textContent=e
+    ?"✈️ FLIGHT BOOKINGS (ACTIVE)":"✈️ FLUGBUCHUNGEN (AKTIV)";
+  $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
+  $("navHtl").textContent=e
+    ?"🏨 My Hotel Search ➡️":"🏨 Meine Hotelsuche ➡️";
+  $("navHome").textContent=e
+    ?"🏠 Back to Home":"🏠 Zurück zur Startseite";
+  $("c1Tit").textContent=e
+    ?"1️⃣ Airline / Provider & Check-in Info"
+    :"1️⃣ Airline / Veranstalter & Check-in Info";
+  $("lblAir").textContent=e
+    ?"Select Airline / Travel Provider"
+    :"Airline / Reiseveranstalter wählen";
+  $("ogOta").label=e
+    ?"🧳 Travel Agencies & Portals"
+    :"🧳 Reisevermittler & Portale";
+  $("c2Tit").textContent=e
+    ?"2️⃣ Booking Data & Cheat Sheet Details"
+    :"2️⃣ Buchungsdaten & Notizzettel-Angaben";
+  $("lblPnr").textContent=e?"Booking Code (PNR)":"Buchungscode (PNR)";
+  $("u3").placeholder=e?"REQUIRED: e.g. TW8ZRK":"PFLICHT: z.B. TW8ZRK";
+  $("lblMail").textContent=e?"Booking Email / Login":"Buchungs-E-Mail / Login";
+  $("u4").placeholder=e
+    ?"REQUIRED: Booking email":"PFLICHT: E-Mail der Buchung";
+  $("lblFn").textContent=e?"First Name (Passport)":"Vorname (Reisepass)";
+  $("u_fn").placeholder=e?"REQUIRED: e.g. MAX":"PFLICHT: z.B. MAX";
+  $("lblLn").textContent=e
+    ?"Last Name (no first name!)":"Nachname (ohne Vornamen!)";
+  $("u6").placeholder=e
+    ?"REQUIRED: e.g. MUSTERMANN":"PFLICHT: z.B. MUSTERMANN";
+  $("lblTk").textContent=e
+    ?"Ticket Number (Cheat Sheet)":"Ticketnummer (Notizzettel)";
+  $("u_tknr").placeholder=e?"e.g. 2354817365876":"z.B. 2354817365876";
+  $("lblPp").textContent=e
+    ?"Passport Number (Cheat Sheet)":"Reisepassnummer (Notizzettel)";
+  $("u_pp").placeholder=e?"e.g. C01X00T47":"z.B. C01X00T47";
+  $("btnNote").textContent=e
+    ?"📌 1. Start Floating Cheat Sheet"
+    :"📌 1. Schwebenden Spickzettel starten";
+  $("go").textContent=e
+    ?"🚀 2. Open Airline Website":"🚀 2. Airline-Seite öffnen";
+  $("hintBox").innerHTML=e
+    ?"ℹ️ <b>Important Note:</b> If you enter optional details like " +
+     "<b>Ticket Number</b> or <b>Passport Number</b> here, " +
+     "they will appear on your floating cheat sheet when you open your airline's website."
+    :"ℹ️ <b>Wichtiger Hinweis:</b> Wenn Sie freiwillige Angaben wie " +
+     "<b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen, " +
+     "erscheinen diese nachher auf Ihrem Notizzettel, " +
+     "wenn Sie die Seite Ihrer Airline aufrufen.";
+  updBgmBtn();
+}
+
 function updBgmBtn(){
   var b=$("mbtn");
   if(!b)return;
   if(bgmOn){
-    b.textContent="🔇 Musik Aus";
+    b.textContent=isEn()?"🔇 Music Off":"🔇 Musik Aus";
     b.classList.remove("off");
   }else{
-    b.textContent="🎵 Musik An";
+    b.textContent=isEn()?"🎵 Music On":"🎵 Musik An";
     b.classList.add("off");
   }
 }
@@ -404,7 +519,9 @@ function cp(id,label){
   var el=$(id);
   var val=el.value.trim();
   if(!val){
-    $("ts").textContent="⚠️ Bitte zuerst "+label+" eintragen!";
+    $("ts").textContent=isEn()
+      ?"⚠️ Please enter "+label+" first!"
+      :"⚠️ Bitte zuerst "+label+" eintragen!";
     $("ts").style.display="block";
     return;
   }
@@ -413,17 +530,23 @@ function cp(id,label){
   }else{
     el.select();try{document.execCommand("copy");}catch(e){}
   }
-  $("ts").textContent="✅ "+label+" ("+val+") kopiert!";
+  $("ts").textContent=isEn()
+    ?"✅ "+label+" ("+val+") copied!"
+    :"✅ "+label+" ("+val+") kopiert!";
   $("ts").style.display="block";
 }
 async function openNote(){
   sv();
+  var e=isEn();
   var parts=$("u5").value.split("|");
   var code=parts.shift();
   var airlineName=$("u5").options.item($("u5").selectedIndex).text;
-  var stepTxt=Object.getOwnPropertyDescriptor(guides,code);
+  var gSrc=e?guidesEn:guidesDe;
+  var stepTxt=Object.getOwnPropertyDescriptor(gSrc,code);
   var stepList=(stepTxt?stepTxt.value:"").split("|");
-  var items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
+  var items=e
+    ?"PNR|u3;First Name|u_fn;Last Name|u6;Email|u4;Ticket No.|u_tknr;Passport|u_pp".split(";")
+    :"PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
   var clipAll="";
   items.forEach(function(it){
     var p=it.split("|");var lbl=p.shift();var id=p.join("");
@@ -434,9 +557,11 @@ async function openNote(){
   if(clipAll){
     try{
       navigator.clipboard.writeText(clipAll);
-      $("ts").textContent="✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
+      $("ts").textContent=e
+        ?"✅ Cheat sheet started! Now click Button 2."
+        :"✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
       $("ts").style.display="block";
-    }catch(e){}
+    }catch(err){}
   }
   if("documentPictureInPicture" in window){
     try{
@@ -457,7 +582,8 @@ async function openNote(){
         box.style.marginBottom="7px";box.style.fontSize="13.5px";
         box.style.fontWeight="bold";box.style.color="#991b1b";
         box.style.lineHeight="1.38";
-        box.innerHTML="<div style='font-size:14.5px;font-weight:bold;color:#7f1d1d;margin-bottom:3px'>🧭 Anleitung:</div>"+stepList.join("<br>");
+        var guideTitle=e?"🧭 Guide:":"🧭 Anleitung:";
+        box.innerHTML="<div style='font-size:14.5px;font-weight:bold;color:#7f1d1d;margin-bottom:3px'>"+guideTitle+"</div>"+stepList.join("<br>");
         b.appendChild(box);
       }
       items.forEach(function(it){
@@ -482,18 +608,21 @@ async function openNote(){
         }
       });
       return;
-    }catch(e){}
+    }catch(err){}
   }
 }
 function updClock(){
+  var e=isEn();
   var now=new Date();
   var dtEl=$("dt");
   if(!dtEl)return;
-  dtEl.textContent=now.toLocaleDateString("de-DE")+" • "+now.toLocaleTimeString("de-DE");
+  var loc=e?"en-GB":"de-DE";
+  dtEl.textContent=now.toLocaleDateString(loc)+" • "+now.toLocaleTimeString(loc);
   var idx=ci++%cols.length;
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
 }
 function sv(){
+  var e=isEn();
   normCaps();
   updClock();
   var parts=$("u5").value.split("|");
@@ -504,13 +633,21 @@ function sv(){
   $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
   $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
   $("f_mail").classList.toggle("off",mode!=="mail_pnr"&&mode!=="mail_only");
-  if(mode==="pnr_ln")$("hint").textContent="Benötigt: Buchungscode (PNR) + Nachname";
-  if(mode==="pnr_fn_ln")$("hint").textContent="Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
-  if(mode==="mail_pnr")$("hint").textContent="Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
-  if(mode==="mail_only")$("hint").textContent="Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
+  if(mode==="pnr_ln")$("hint").textContent=e
+    ?"Required: Booking Code (PNR) + Last Name"
+    :"Benötigt: Buchungscode (PNR) + Nachname";
+  if(mode==="pnr_fn_ln")$("hint").textContent=e
+    ?"Required (VietJet Air): Booking Code (PNR) + First Name + Last Name"
+    :"Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
+  if(mode==="mail_pnr")$("hint").textContent=e
+    ?"Required: Booking Email + Booking Code (PNR)"
+    :"Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
+  if(mode==="mail_only")$("hint").textContent=e
+    ?"Required: Login with your booking email on the portal"
+    :"Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
   var d={};
   keys.forEach(function(k){Object.defineProperty(d,k,{value:$(k).value,enumerable:true});});
-  try{localStorage.setItem("rk_upg",JSON.stringify(d));}catch(e){}
+  try{localStorage.setItem("rk_upg",JSON.stringify(d));}catch(err){}
 }
 (function ld(){
   try{
@@ -522,7 +659,8 @@ function sv(){
         if(desc&&desc.value!==undefined)$(k).value=desc.value;
       });
     }
-  }catch(e){}
+  }catch(err){}
+  applyLang();
   sv();
   setInterval(updClock,1000);
 })();
