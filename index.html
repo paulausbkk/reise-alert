@@ -719,6 +719,20 @@ function upd(){
     "&locale=" + trLoc + "&curr=EUR";
 }
 
+var lastStop = "";
+"ns;s1;s2".split(";").forEach(function(id){
+  var el = $(id);
+  el.addEventListener("click", function(){
+    if(lastStop === id){
+      el.checked = false;
+      lastStop = "";
+    } else {
+      lastStop = id;
+    }
+    upd();
+  });
+});
+
 "i1;i2;od;rd;ow;px;hr;ns;s1;s2;lc".split(";").forEach(function(id){
   $(id).addEventListener("input", upd);
   $(id).addEventListener("change", upd);
