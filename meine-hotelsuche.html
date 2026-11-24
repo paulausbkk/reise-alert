@@ -489,8 +489,8 @@ function upd(){
       "&currency=EUR&locale="+agLoc+
       (st>0?"&hotelStarRating="+st:"");
     $("h5").href=aid
-      ?(ag+"&city="+aid)
-      :(ag+"&textToSearch="+q+"&searchText="+qFull);
+      ?(ag+"&city="+aid+"&searchText="+q)
+      :(ag+"&searchText="+q);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
