@@ -98,7 +98,7 @@ html,body{
   margin-bottom:16px
 }
 .f{
- margin-bottom:14px;display:flex;
+margin-bottom:14px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
-<option value="3" id="rm3">3 Zimmer</option>
+  <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -378,9 +378,6 @@ function normCity(s){
     .replace(/\u00e4/g,"ae").replace(/\u00f6/g,"oe")
     .replace(/\u00fc/g,"ue").replace(/\u00df/g,"ss");
 }
-function slugCity(s){
-  return normCity(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
-}
 function getAid(city){
   var k=normCity(city);
   if(k==="bangkok")return"9395";if(k==="mailand"||k==="milan")return"4894";if(k==="palermo")return"16011";
@@ -393,7 +390,7 @@ function getAid(city){
   if(k==="rom"||k==="rome")return"16582";if(k==="barcelona")return"14563";if(k==="madrid")return"16583";
   if(k==="lissabon"||k==="lisbon")return"15192";if(k==="dubai")return"2994";if(k==="istanbul")return"14932";
   if(k==="amsterdam")return"13868";if(k==="prag"||k==="prague")return"16578";if(k==="warschau"||k==="warsaw")return"16107";
-  if(k==="budapest")return"15129";if(k==="athen"||k==="athens")return"16575";if(k==="mailand")return"4894";
+  if(k==="budapest")return"15129";if(k==="athen"||k==="athens")return"16575";
   if(k==="venedig"||k==="venice")return"16585";if(k==="florenz"||k==="florence")return"16581";
   if(k==="neapel"||k==="naples")return"16584";if(k==="bruessel"||k==="brussels")return"14672";
   if(k==="kopenhagen"||k==="copenhagen")return"14830";if(k==="stockholm")return"16143";
@@ -447,8 +444,8 @@ function getTid(city){
   if(k==="manila")return"200-74077";if(k==="cebu"||k==="cebu city")return"200-74046";
   if(k==="dumaguete")return"200-74054";
   return"";
-  }
-  function upd(){
+}
+function upd(){
   var e=isEn(),loc=e?"en-GB":"de-DE";
   var now=new Date(),t=iso(now);
   $("dt").textContent=now.toLocaleDateString(loc)+
@@ -505,12 +502,9 @@ function getTid(city){
     var agQ="checkIn="+ci+"&los="+n+"&adults="+px+
       "&children=0&rooms="+rm+"&currency=EUR&locale="+agLoc+
       (st>0?"&hotelStarRating="+st:"");
-    var cSlug=slugCity(city),cCode=(cc||"de").toLowerCase();
     $("h5").href=aid
       ?(P+H_AG+"/"+agLoc+"/search?cid=1844104&city="+aid+"&"+agQ)
-      :(cSlug
-        ?(P+H_AG+"/"+agLoc+"/city/"+cSlug+"-"+cCode+".html?"+agQ)
-        :(P+H_AG+"/"+agLoc+"/search?cid=1844104&"+agQ));
+      :(P+H_AG+"/"+agLoc+"/search?cid=1844104&textToSearch="+q+"&"+agQ);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
