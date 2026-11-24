@@ -309,8 +309,10 @@ input,select{
       class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintBox">
-    ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>,
-    <b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.
+    ℹ️ <b>Wichtiger Hinweis!</b> Bitte kontrollieren Sie alle Filter
+    und setzen Sie diese neu. Auch wenn Sie hier z.B. Fünf Sterne für
+    das Hotel eingeben ist es nicht garantiert das die entsprechend
+    ausgewählte Suchseite diese Suche übernimmt. Sorry
   </div>
 </div>
 <script>
@@ -352,6 +354,9 @@ function applyLang(){
   $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
   $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
+  $("hintBox").innerHTML=e
+    ?"ℹ️ <b>Important Notice!</b> Please check all filters and set them again. Even if you select e.g. five stars for the hotel here, it is not guaranteed that the selected search site will apply this filter. Sorry"
+    :"ℹ️ <b>Wichtiger Hinweis!</b> Bitte kontrollieren Sie alle Filter und setzen Sie diese neu. Auch wenn Sie hier z.B. Fünf Sterne für das Hotel eingeben ist es nicht garantiert das die entsprechend ausgewählte Suchseite diese Suche übernimmt. Sorry";
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
