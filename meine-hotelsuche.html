@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title id="pgTit">🏨 Meine Hotelsuche PRO v126</title>
+<title id="pgTit">🏨 Meine Hotelsuche PRO v127</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
@@ -197,7 +197,7 @@ input,select{
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v126</h1>
+  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v127</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
@@ -325,8 +325,8 @@ try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
 function isEn(){return lang==="en";}
 function applyLang(){
   var e=isEn();document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v126":"🏨 Meine Hotelsuche PRO v126";
-  $("hTit").textContent=e?"🏨 My Hotel Search PRO v126":"🏨 Meine Hotelsuche PRO v126";
+  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v127":"🏨 Meine Hotelsuche PRO v127";
+  $("hTit").textContent=e?"🏨 My Hotel Search PRO v127":"🏨 Meine Hotelsuche PRO v127";
   $("navAct").textContent=e?"🏨 HOTELS (ACTIVE)":"🏨 HOTELSUCHE (AKTIV)";
   $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
   $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
@@ -420,7 +420,7 @@ function getTid(city){
   if(k==="rom"||k==="rome")return"200-44337";if(k==="barcelona")return"200-29132";if(k==="madrid")return"200-29963";
   if(k==="dubai")return"200-69036";if(k==="istanbul")return"200-31932";if(k==="amsterdam")return"200-17523";
   if(k==="prag"||k==="prague")return"200-40533";if(k==="warschau"||k==="warsaw")return"200-48673";
-  if(k==="phuket")return"200-31687";if(k==="manila")return"200-24599";
+  if(k==="phuket")return"200-31687";if(k==="manila")return"200-74077";
   return"";
 }
 function upd(){
@@ -442,7 +442,7 @@ function upd(){
   var bad=(ci&&ci<t)||(co&&co<=t)||(ci&&co&&co<=ci);
   $("cib").classList.toggle("err",Boolean(ci&&ci<t));
   $("cob").classList.toggle("err",Boolean(bad));
-  if(ci&&co&&!bad){
+   if(ci&&co&&!bad){
     var dA=new Date(ci+"T12:00:00"),dB=new Date(co+"T12:00:00");
     var n=Math.max(1,Math.round((dB-dA)/86400000));
     $("nt").textContent=e
@@ -495,7 +495,7 @@ function upd(){
       ";rc-"+rc+(st>0?";st-"+st:"");
     $("h6").href=tid
       ?(P+H_TR+trBase+"/odr/hotels?search="+trSrch)
-      :(P+H_TR+trBase+"/srl?q="+qFull);
+      :(P+H_TR+trBase+"/odr/hotels?search="+trSrch+"&q="+qFull);
     $("h8").href=P+"www.airbnb.de"+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px;
