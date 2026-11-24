@@ -7,7 +7,7 @@
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
-  margin:0;padding:16px;min-height:100vh;
+  margin:0;padding:14px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
   font-family:sans-serif;color:var(--t);box-sizing:border-box
 }
@@ -64,8 +64,8 @@ html,body{
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:10px 14px;border-radius:12px;
-  margin-bottom:18px;flex-wrap:wrap;gap:6px
+  background:#0f2942;padding:9px 14px;border-radius:12px;
+  margin-bottom:14px;flex-wrap:wrap;gap:6px
 }
 .tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
 .cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
@@ -87,35 +87,35 @@ html,body{
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
-.row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
+.row{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px}
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:20px;background:#fff;box-sizing:border-box
+  padding:16px 18px;background:#fff;box-sizing:border-box
 }
 .ct{
-  font-weight:bold;font-size:1.08rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
-  margin-bottom:16px
+  font-weight:bold;font-size:1.05rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:6px;
+  margin-bottom:12px
 }
 .f{
-  margin-bottom:14px;display:flex;
+  margin-bottom:11px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:14px
+  gap:10px;margin-bottom:11px
 }
 label{
-  font-weight:bold;font-size:.85rem;
-  margin-bottom:5px;color:#1e3a8a
+  font-weight:bold;font-size:.83rem;
+  margin-bottom:4px;color:#1e3a8a
 }
 input,select{
-  height:42px;padding:0 12px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.98rem;
+  height:40px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.96rem;
   background:#f8fafc;color:var(--t);width:100%
 }
 .ac{
-  position:absolute;top:68px;left:0;right:0;background:#fff;
+  position:absolute;top:64px;left:0;right:0;background:#fff;
   border:1px solid #0284c7;border-radius:8px;z-index:99;
   max-height:180px;overflow-y:auto;display:none;
   box-shadow:0 8px 20px rgba(12,74,110,.18)
@@ -130,11 +130,11 @@ input,select{
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
   border-left:5px solid #0284c7;border-radius:8px;
-  padding:10px 14px;color:#1e3a8a;font-weight:bold;font-size:.9rem
+  padding:8px 12px;color:#1e3a8a;font-weight:bold;font-size:.88rem
 }
 .bb{
   border:1px solid #93c5fd;background:#fff;
-  border-radius:12px;padding:18px
+  border-radius:12px;padding:14px 16px
 }
 .bf{
   display:grid;
@@ -143,7 +143,7 @@ input,select{
 }
 .btn{
   display:flex;align-items:center;justify-content:center;
-  height:48px;color:#fff;font-weight:bold;border-radius:8px;
+  height:44px;color:#fff;font-weight:bold;border-radius:8px;
   font-size:.84rem;text-transform:uppercase;text-decoration:none;
   border:none;cursor:pointer;width:100%
 }
@@ -155,7 +155,7 @@ input,select{
 .swc{
   display:flex;align-items:center;justify-content:space-between;
   background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-  border-radius:8px;min-height:42px
+  border-radius:8px;min-height:40px
 }
 .sw{position:relative;display:inline-block;width:42px;height:24px}
 .sw input{opacity:0;width:0;height:0}
@@ -171,10 +171,10 @@ input,select{
 .sw input:checked+.sl{background:#0284c7!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
 .hint{
-  margin-top:16px;background:#0f2942;color:#fff;
-  border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:12px 15px;
-  font-size:.88rem;line-height:1.45
+  margin-top:11px;background:#0f2942;color:#fff;
+  border:2px solid #991b1b;border-left:6px solid #991b1b;
+  border-radius:8px;padding:8px 12px;
+  font-size:.78rem;line-height:1.3
 }
 </style>
 </head>
@@ -262,7 +262,7 @@ input,select{
         <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
       </select>
     </div>
-<div class="f">
+     <div class="f">
       <div class="swc">
         <label for="ab" id="lblAb" style="margin:0;cursor:pointer">
           Nur Airbnb
@@ -309,20 +309,13 @@ input,select{
       class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintBox">
-    ℹ️ <b>Wichtiger Hinweis zur Hotelsuche</b><br><br>
-    Bitte überprüfen Sie auf der weitergeleiteten Buchungsseite
-    unbedingt noch einmal alle Ihre Suchfilter und stellen Sie diese
-    bei Bedarf neu ein. Auch wenn Sie bei uns bereits Kriterien wie
-    eine 5-Sterne-Kategorie ausgewählt haben, übernehmen nicht alle
-    externen Portale diese Einstellungen automatisch.<br><br>
-    Zudem kann es vorkommen, dass kleinere Orte nicht direkt an das
-    jeweilige Buchungsportal übergeben werden. Da Ihre Reisedaten und
-    die Personenanzahl jedoch bereits hinterlegt sind, müssen Sie auf
-    der Zielseite lediglich noch Ihren gewünschten Zielort eintippen,
-    um die Suche zu starten.<br><br>
-    Wir bitten diese Einschränkung zu entschuldigen – leider lassen
-    die technischen Schnittstellen der externen Anbieter hier keine
-    vollständige Datenübernahme zu. Vielen Dank für Ihr Verständnis!
+    ℹ️ <b>Wichtiger Hinweis:</b> Bitte kontrollieren Sie auf der
+    Buchungsseite alle Filter (z. B. 5 Sterne) und stellen Sie diese
+    bei Bedarf neu ein, da nicht alle Portale sie automatisch
+    übernehmen. Kleinere Orte werden teils ebenfalls nicht direkt
+    übertragen – da Reisedaten und Personenanzahl bereits hinterlegt
+    sind, tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten
+    diese technische Einschränkung der Anbieter zu entschuldigen!
   </div>
 </div>
 <script>
@@ -377,7 +370,7 @@ function applyLang(){
   $("c2Tit").textContent=e
     ?"🛏️ Guests, Rooms & Hotel Filters"
     :"🛏️ Gäste, Zimmer & Hotel-Filter";
-$("lblPx").textContent=e?"Guests":"Personenzahl";
+   $("lblPx").textContent=e?"Guests":"Personenzahl";
   $("px1").textContent=e?"1 Adult":"1 Erwachsener";
   $("px2").textContent=e?"2 Adults":"2 Erwachsene";
   $("px3").textContent=e?"3 Adults":"3 Erwachsene";
@@ -393,36 +386,20 @@ $("lblPx").textContent=e?"Guests":"Personenzahl";
   $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
   $("hintBox").innerHTML=e
-    ?"ℹ️ <b>Important Notice on Hotel Search</b><br><br>"
-      +"Please make sure to check all your search filters again on "
-      +"the redirected booking page and adjust them if necessary. "
-      +"Even if you have already selected criteria such as a 5-star "
-      +"category on our site, not all external portals transfer "
-      +"these settings automatically.<br><br>"
-      +"In addition, smaller towns may not be passed directly to "
-      +"the respective booking portal. However, since your travel "
-      +"dates and number of guests are already pre-filled, you only "
-      +"need to type in your desired destination on the target page "
-      +"to start the search.<br><br>"
-      +"We apologize for this limitation – unfortunately, the "
-      +"technical interfaces of the external providers do not allow "
-      +"complete data transfer here. Thank you for your understanding!"
-    :"ℹ️ <b>Wichtiger Hinweis zur Hotelsuche</b><br><br>"
-      +"Bitte überprüfen Sie auf der weitergeleiteten Buchungsseite "
-      +"unbedingt noch einmal alle Ihre Suchfilter und stellen Sie "
-      +"diese bei Bedarf neu ein. Auch wenn Sie bei uns bereits "
-      +"Kriterien wie eine 5-Sterne-Kategorie ausgewählt haben, "
-      +"übernehmen nicht alle externen Portale diese Einstellungen "
-      +"automatisch.<br><br>"
-      +"Zudem kann es vorkommen, dass kleinere Orte nicht direkt an "
-      +"das jeweilige Buchungsportal übergeben werden. Da Ihre "
-      +"Reisedaten und die Personenanzahl jedoch bereits hinterlegt "
-      +"sind, müssen Sie auf der Zielseite lediglich noch Ihren "
-      +"gewünschten Zielort eintippen, um die Suche zu starten.<br><br>"
-      +"Wir bitten diese Einschränkung zu entschuldigen – leider "
-      +"lassen die technischen Schnittstellen der externen Anbieter "
-      +"hier keine vollständige Datenübernahme zu. Vielen Dank für "
-      +"Ihr Verständnis!";
+    ?"ℹ️ <b>Important Notice:</b> Please check all filters (e.g. "
+      +"5 stars) on the booking page and re-apply them if needed, "
+      +"as not all portals transfer them automatically. Smaller towns "
+      +"may also not be passed directly – since your dates and guest "
+      +"count are already filled in, simply type your destination "
+      +"there to start. We apologize for this technical limitation!"
+    :"ℹ️ <b>Wichtiger Hinweis:</b> Bitte kontrollieren Sie auf der "
+      +"Buchungsseite alle Filter (z. B. 5 Sterne) und stellen Sie "
+      +"diese bei Bedarf neu ein, da nicht alle Portale sie "
+      +"automatisch übernehmen. Kleinere Orte werden teils ebenfalls "
+      +"nicht direkt übertragen – da Reisedaten und Personenanzahl "
+      +"bereits hinterlegt sind, tippen Sie dort einfach noch Ihren "
+      +"Zielort ein. Wir bitten diese technische Einschränkung der "
+      +"Anbieter zu entschuldigen!";
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
@@ -498,7 +475,7 @@ function getAid(city){
   if(k==="oslo")return"15987";
   if(k==="helsinki")return"15283";
   if(k==="dublin")return"14916";
-if(k==="new york")return"318";
+   if(k==="new york")return"318";
   if(k==="los angeles")return"12772";
   if(k==="miami")return"12840";
   if(k==="las vegas")return"17072";
