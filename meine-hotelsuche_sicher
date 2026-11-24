@@ -98,7 +98,7 @@ html,body{
   margin-bottom:16px
 }
 .f{
- margin-bottom:14px;display:flex;
+  margin-bottom:14px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
-<option value="3" id="rm3">3 Zimmer</option>
+ <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -309,8 +309,10 @@ input,select{
       class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintBox">
-    ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>,
-    <b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.
+    ℹ️ <b>Wichtiger Hinweis!</b> Bitte kontrollieren Sie alle Filter
+    und setzen Sie diese neu. Auch wenn Sie hier z.B. Fünf Sterne für
+    das Hotel eingeben ist es nicht garantiert das die entsprechend
+    ausgewählte Suchseite diese Suche übernimmt. Sorry
   </div>
 </div>
 <script>
@@ -318,12 +320,16 @@ var $=function(id){return document.getElementById(id);};
 var P="https:"+String.fromCharCode(47,47);
 var H_AG="www."+String.fromCharCode(97,103,111,100,97)+".com";
 var H_BK="www."+String.fromCharCode(98,111,111,107,105,110,103)+".com";
-var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111)+".de";
+var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111);
 var H_OM="geocoding-api."+String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
-try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
+function readLang(){
+  try{lang=(localStorage.getItem("pab_lang")==="en")?"en":"de";}catch(e){}
+}
+readLang();
 function isEn(){return lang==="en";}
 function applyLang(){
+  readLang();
   var e=isEn();document.documentElement.lang=e?"en":"de";
   $("pgTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
   $("hTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
@@ -352,6 +358,9 @@ function applyLang(){
   $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
   $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
+  $("hintBox").innerHTML=e
+    ?"ℹ️ <b>Important Notice!</b> Please check all filters and set them again. Even if you select e.g. five stars for the hotel here, it is not guaranteed that the selected search site will apply this filter. Sorry"
+    :"ℹ️ <b>Wichtiger Hinweis!</b> Bitte kontrollieren Sie alle Filter und setzen Sie diese neu. Auch wenn Sie hier z.B. Fünf Sterne für das Hotel eingeben ist es nicht garantiert das die entsprechend ausgewählte Suchseite diese Suche übernimmt. Sorry";
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
@@ -431,13 +440,18 @@ function getTid(city){
   var k=normCity(city);
   if(k==="berlin")return"200-3848";if(k==="hamburg")return"200-9644";if(k==="muenchen"||k==="munich")return"200-2855";
   if(k==="frankfurt"||k==="frankfurt am main")return"200-7155";if(k==="koeln"||k==="cologne")return"200-9661";
-  if(k==="duesseldorf")return"200-9648";if(k==="stuttgart")return"200-2860";
-  if(k==="bangkok")return"200-31654";if(k==="mailand"||k==="milan")return"200-45017";if(k==="palermo")return"200-45979";
+  if(k==="duesseldorf")return"200-9648";if(k==="stuttgart")return"200-2860";if(k==="jena")return"200-12168";
+  if(k==="leipzig")return"200-11268";if(k==="dresden")return"200-11258";if(k==="hannover")return"200-8666";
+  if(k==="nuernberg"||k==="nuremberg")return"200-2857";if(k==="bremen")return"200-4271";
+  if(k==="essen")return"200-9649";if(k==="dortmund")return"200-9646";
+  if(k==="mailand"||k==="milan")return"200-45017";if(k==="palermo")return"200-45979";
   if(k==="wien"||k==="vienna")return"200-2390";if(k==="zuerich"||k==="zurich")return"200-31231";
   if(k==="paris")return"200-15475";if(k==="london")return"200-26259";
   if(k==="rom"||k==="rome")return"200-44337";if(k==="barcelona")return"200-29132";if(k==="madrid")return"200-29963";
   if(k==="lissabon"||k==="lisbon")return"200-27651";if(k==="dubai")return"200-69036";if(k==="istanbul")return"200-31932";
   if(k==="amsterdam")return"200-17523";if(k==="prag"||k==="prague")return"200-40533";if(k==="warschau"||k==="warsaw")return"200-48673";
+  if(k==="mallorca"||k==="palma de mallorca")return"200-28499";if(k==="antalya")return"200-31926";
+  if(k==="hurghada")return"200-66858";if(k==="punta cana")return"200-191521";if(k==="puerto plata")return"200-68723";
   if(k==="phuket")return"200-31687";if(k==="chiang mai")return"200-31661";if(k==="koh samui"||k==="ko samui")return"200-31693";
   if(k==="krabi")return"200-31673";if(k==="singapur"||k==="singapore")return"200-31591";
   if(k==="kuala lumpur")return"200-25824";if(k==="tokio"||k==="tokyo")return"200-27358";
@@ -445,7 +459,11 @@ function getTid(city){
   if(k==="dumaguete")return"200-74054";
   return"";
 }
+function slugify(s){
+  return normCity(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+}
 function upd(){
+  readLang();
   var e=isEn(),loc=e?"en-GB":"de-DE";
   var now=new Date(),t=iso(now);
   $("dt").textContent=now.toLocaleDateString(loc)+
@@ -453,6 +471,18 @@ function upd(){
   var city=$("city").value.trim();
   var fullCity=(city&&selCountry)?(city+", "+selCountry):city;
   var ci=$("ci").value,co=$("co").value;
+  if(ci){
+    var dMin=new Date(ci+"T12:00:00");
+    dMin.setDate(dMin.getDate()+1);
+    var nextDay=iso(dMin);
+    $("co").min=nextDay;
+    if(!co||co<=ci){
+      co=nextDay;
+      $("co").value=nextDay;
+    }
+  }else{
+    $("co").min=t;
+  }
   var px=+$("px").value||2,rm=+$("rm").value||1;
   var st=+$("st").value||0,ab=$("ab").checked;
   var aid=getAid(city),bid=getBid(city),tid=getTid(city);
@@ -482,15 +512,16 @@ function upd(){
     var q=encodeURIComponent(city);
     var qFull=encodeURIComponent(fullCity);
     var bFilt=st>0?"class="+st:"";
-    $("h1").href=P+"www.kayak.de"+"/hotels/"+q+"/"+
-      ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
-    $("h2").href=P+"www.expedia.de"+
+    var dom=e?".com":".de";
+    var hPath="/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
+    $("h1").href=P+"www.kayak"+dom+hPath+(e?"?lang=en":"");
+    $("h2").href=P+"www.expedia"+dom+
       "/Hotel-Search?destination="+qFull+
       "&startDate="+ci+"&endDate="+co+
       "&adults="+px+"&rooms="+rm+
+      (e?"&langid=1033":"")+
       (st>0?"&star="+(st*10):"");
-    $("h3").href=P+"www.momondo.de"+"/hotels/"+q+"/"+
-      ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
+    $("h3").href=P+"www.momondo"+dom+hPath+(e?"?lang=en":"");
     $("b_ss").value=fullCity;$("b_ssne").value=fullCity;
     $("b_ssu").value=fullCity;$("b_did").disabled=!bid;
     $("b_did").value=bid;$("b_dty").disabled=!bid;
@@ -498,30 +529,35 @@ function upd(){
     $("b_ci").value=ci;$("b_co").value=co;
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
-    var agLoc=e?"en-us":"de-de";
-    var agQ="checkIn="+ci+"&los="+n+"&adults="+px+
-      "&children=0&rooms="+rm+"&currency=EUR&locale="+agLoc+
+    var agLoc=e?"en-gb":"de-de";
+    var ag=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
+      "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
+      "&currency=EUR&locale="+agLoc+"&hl="+agLoc+"&language="+agLoc+
+      (e?"&cid=1844104":"")+
       (st>0?"&hotelStarRating="+st:"");
     $("h5").href=aid
-      ?(P+H_AG+"/"+agLoc+"/search?cid=1844104&city="+aid+"&textToSearch="+q+"&"+agQ)
-      :(P+H_AG+"/"+agLoc+"/search?cid=1844104&textToSearch="+q+"&"+agQ);
+      ?(ag+"&city="+aid)
+      :(ag+"&textToSearch="+q+"&searchText="+qFull);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
     for(var i=0;i<rm;i++){
       rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
     }
-    var trBase=e?"/en-GB":"/de";
+    var trHost=H_TR+(e?".com":".de");
+    var trBase=e?"/en-US":"/de";
+    var trSlug=slugify(city);
     var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
       ";rc-"+rc+(st>0?";st-"+st:"");
     $("h6").href=tid
-      ?P+H_TR+trBase+"/odr/hotels?search="+trSrch
-      :P+H_TR+trBase+"/srl?query="+q+"&sQuery="+q+
+      ?(P+trHost+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
+      :(P+trHost+trBase+"/srl?query="+qFull+"&sQuery="+qFull+
         "&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+
-        "&search="+trSrch;
-    $("h8").href=P+"www.airbnb.de"+"/s/"+qFull+
+        "&search="+trSrch);
+    $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
-      "&checkout="+co+"&adults="+px;
+      "&checkout="+co+"&adults="+px+
+      (e?"&locale=en":"&locale=de");
   }else{
     $("nt").textContent=e
       ?(bad?"CHECK DATES":"DATES")
@@ -622,30 +658,35 @@ document.addEventListener("click",function(ev){
     $("lc").style.display="none";
   }
 });
+var todayStr=iso(new Date());
 try{
   var saved=JSON.parse(localStorage.getItem("rk_hotel")||"null");
   if(saved){
     if(saved.city)$("city").value=saved.city;
     if(saved.country)selCountry=saved.country;
     if(saved.cc)cc=saved.cc;
-    if(saved.ci)$("ci").value=saved.ci;
-    if(saved.co)$("co").value=saved.co;
+    if(saved.ci&&saved.ci>=todayStr)$("ci").value=saved.ci;
+    if(saved.co&&saved.co>todayStr)$("co").value=saved.co;
     if(saved.px)$("px").value=saved.px;
     if(saved.rm)$("rm").value=saved.rm;
     if(saved.st)$("st").value=saved.st;
     if(saved.ab!==undefined)$("ab").checked=saved.ab;
   }
 }catch(err){}
-var d1=new Date(),d2=new Date();
-d1.setDate(d1.getDate()+1);d2.setDate(d2.getDate()+2);
-$("ci").min=iso(new Date());$("co").min=iso(new Date());
+var d1=new Date();
+d1.setDate(d1.getDate()+1);
+$("ci").min=todayStr;
 if(!$("ci").value)$("ci").value=iso(d1);
-if(!$("co").value)$("co").value=iso(d2);
+var d2=new Date($("ci").value+"T12:00:00");
+d2.setDate(d2.getDate()+1);
+$("co").min=iso(d2);
+if(!$("co").value||$("co").value<=$("ci").value)$("co").value=iso(d2);
 "city;ci;co;px;rm;st;ab".split(";").forEach(function(id){
   $(id).addEventListener("input",upd);
   $(id).addEventListener("change",upd);
 });
 $("f4").addEventListener("submit",upd);
+window.addEventListener("pageshow",function(){applyLang();upd();});
 applyLang();upd();
 </script>
 </body>
