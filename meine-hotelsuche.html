@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
-option value="3" id="rm3">3 Zimmer</option>
+   <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -502,7 +502,9 @@ function upd(){
       ";rc-"+rc+(st>0?";st-"+st:"");
     $("h6").href=tid
       ?P+H_TR+trBase+"/odr/hotels?search="+trSrch
-      :P+H_TR+trBase+"/srl?query="+qFull+"&search="+trSrch;
+      :P+H_TR+trBase+"/srl?query="+q+"&sQuery="+q+
+        "&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+
+        "&search="+trSrch;
     $("h8").href=P+"www.airbnb.de"+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px;
