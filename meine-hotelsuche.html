@@ -378,6 +378,9 @@ function normCity(s){
     .replace(/\u00e4/g,"ae").replace(/\u00f6/g,"oe")
     .replace(/\u00fc/g,"ue").replace(/\u00df/g,"ss");
 }
+function slugCity(s){
+  return normCity(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+}
 function getAid(city){
   var k=normCity(city);
   if(k==="bangkok")return"9395";if(k==="mailand"||k==="milan")return"4894";if(k==="palermo")return"16011";
@@ -486,13 +489,15 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-us":"de-de";
-    var ag=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
-      "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
-      "&currency=EUR&locale="+agLoc+
+    var agQ="checkIn="+ci+"&los="+n+"&adults="+px+
+      "&children=0&rooms="+rm+"&currency=EUR&locale="+agLoc+
       (st>0?"&hotelStarRating="+st:"");
+    var cSlug=slugCity(city),cCode=(cc||"de").toLowerCase();
     $("h5").href=aid
-      ?(ag+"&city="+aid)
-      :(ag+"&textToSearch="+qFull);
+      ?(P+H_AG+"/"+agLoc+"/search?cid=1844104&city="+aid+"&"+agQ)
+      :(cSlug
+        ?(P+H_AG+"/"+agLoc+"/city/"+cSlug+"-"+cCode+".html?"+agQ)
+        :(P+H_AG+"/"+agLoc+"/search?cid=1844104&"+agQ));
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
@@ -524,7 +529,7 @@ function upd(){
   }
   try{
     localStorage.setItem("rk_hotel",JSON.stringify({
-      city:$("city").value,country:selCountry,ci:ci,co:co,
+      city:$("city").value,country:selCountry,cc:cc,ci:ci,co:co,
       px:px,rm:rm,st:st,ab:ab
     }));
   }catch(err){}
@@ -615,6 +620,7 @@ try{
   if(saved){
     if(saved.city)$("city").value=saved.city;
     if(saved.country)selCountry=saved.country;
+    if(saved.cc)cc=saved.cc;
     if(saved.ci)$("ci").value=saved.ci;
     if(saved.co)$("co").value=saved.co;
     if(saved.px)$("px").value=saved.px;
