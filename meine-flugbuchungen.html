@@ -39,23 +39,23 @@ html,body{
 @keyframes orbitBtn{
   0%{
     transform:translate(-165px,0px) rotate(-45deg);
-    opacity:.75
+    opacity:.7
   }
   25%{
     transform:translate(0px,-25px) rotate(45deg);
-    opacity:1
+    opacity:.95
   }
   50%{
     transform:translate(165px,0px) rotate(135deg);
-    opacity:.75
+    opacity:.7
   }
   75%{
     transform:translate(0px,25px) rotate(225deg);
-    opacity:1
+    opacity:.95
   }
   100%{
     transform:translate(-165px,0px) rotate(315deg);
-    opacity:.75
+    opacity:.7
   }
 }
 .w-btn{
@@ -80,12 +80,12 @@ html,body{
   position:absolute;top:50%;left:50%;
   margin-top:-9px;margin-left:-9px;
   font-size:1rem;pointer-events:none;user-select:none;
-  animation:orbitBtn 7s infinite linear;z-index:1
+  animation:orbitBtn 22s infinite linear;z-index:1
 }
 .btn-p.p1{animation-delay:0s}
-.btn-p.p2{animation-delay:-1.75s}
-.btn-p.p3{animation-delay:-3.5s}
-.btn-p.p4{animation-delay:-5.25s}
+.btn-p.p2{animation-delay:-5.5s}
+.btn-p.p3{animation-delay:-11s}
+.btn-p.p4{animation-delay:-16.5s}
 .w-icon{
   position:relative;z-index:2;
   display:flex;align-items:center;justify-content:center;
@@ -621,4 +621,4 @@ keys.forEach(k=>{
 });
 </script>
 </body>
-</html>  
+</html>
