@@ -7,9 +7,10 @@
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
-  margin:0;padding:16px;min-height:100vh;
+  margin:0;padding:12px 14px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  font-family:sans-serif;color:var(--t);box-sizing:border-box
+  font-family:sans-serif;color:var(--t);box-sizing:border-box;
+  display:flex;flex-direction:column
 }
 .welcome{
   position:fixed;inset:0;background:rgba(15,41,66,.9);
@@ -64,8 +65,8 @@ html,body{
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:10px 14px;border-radius:12px;
-  margin-bottom:18px;flex-wrap:wrap;gap:6px
+  background:#0f2942;padding:9px 14px;border-radius:12px;
+  margin-bottom:12px;flex-wrap:wrap;gap:6px;flex-shrink:0
 }
 .tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
 .cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
@@ -87,35 +88,38 @@ html,body{
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
-.row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:20px}
+.row{
+  display:flex;flex-wrap:wrap;gap:14px;
+  margin-bottom:12px;flex-shrink:0
+}
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:20px;background:#fff;box-sizing:border-box
+  padding:14px 18px;background:#fff;box-sizing:border-box
 }
 .ct{
-  font-weight:bold;font-size:1.08rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
-  margin-bottom:16px
+  font-weight:bold;font-size:1.05rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:6px;
+  margin-bottom:10px
 }
 .f{
-  margin-bottom:14px;display:flex;
+  margin-bottom:10px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:14px
+  gap:10px;margin-bottom:10px
 }
 label{
-  font-weight:bold;font-size:.85rem;
-  margin-bottom:5px;color:#1e3a8a
+  font-weight:bold;font-size:.83rem;
+  margin-bottom:4px;color:#1e3a8a
 }
 input,select{
-  height:42px;padding:0 12px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.98rem;
+  height:39px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.96rem;
   background:#f8fafc;color:var(--t);width:100%
 }
 .ac{
-  position:absolute;top:68px;left:0;right:0;background:#fff;
+  position:absolute;top:63px;left:0;right:0;background:#fff;
   border:1px solid #0284c7;border-radius:8px;z-index:99;
   max-height:180px;overflow-y:auto;display:none;
   box-shadow:0 8px 20px rgba(12,74,110,.18)
@@ -130,20 +134,21 @@ input,select{
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
   border-left:5px solid #0284c7;border-radius:8px;
-  padding:10px 14px;color:#1e3a8a;font-weight:bold;font-size:.9rem
+  padding:8px 12px;color:#1e3a8a;font-weight:bold;font-size:.88rem
 }
 .bb{
   border:1px solid #93c5fd;background:#fff;
-  border-radius:12px;padding:18px
+  border-radius:12px;padding:14px 16px;
+  flex:1;display:flex;flex-direction:column
 }
 .bf{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
-  gap:10px
+  gap:10px;flex-shrink:0
 }
 .btn{
   display:flex;align-items:center;justify-content:center;
-  height:48px;color:#fff;font-weight:bold;border-radius:8px;
+  height:44px;color:#fff;font-weight:bold;border-radius:8px;
   font-size:.84rem;text-transform:uppercase;text-decoration:none;
   border:none;cursor:pointer;width:100%
 }
@@ -155,7 +160,7 @@ input,select{
 .swc{
   display:flex;align-items:center;justify-content:space-between;
   background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-  border-radius:8px;min-height:42px
+  border-radius:8px;min-height:39px
 }
 .sw{position:relative;display:inline-block;width:42px;height:24px}
 .sw input{opacity:0;width:0;height:0}
@@ -171,10 +176,11 @@ input,select{
 .sw input:checked+.sl{background:#0284c7!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
 .hint{
-  margin-top:16px;background:#0f2942;color:#fff;
+  margin-top:12px;background:#0f2942;color:#fff;
   border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:12px 15px;
-  font-size:.88rem;line-height:1.45
+  border-radius:8px;padding:12px 16px;
+  font-size:.94rem;line-height:1.45;
+  flex:1;display:flex;flex-direction:column;justify-content:center
 }
 </style>
 </head>
@@ -249,7 +255,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
- <option value="3" id="rm3">3 Zimmer</option>
+          <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -262,7 +268,7 @@ input,select{
         <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
       </select>
     </div>
-    <div class="f">
+   <div class="f">
       <div class="swc">
         <label for="ab" id="lblAb" style="margin:0;cursor:pointer">
           Nur Airbnb
@@ -309,10 +315,16 @@ input,select{
       class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintBox">
-    ℹ️ <b>Wichtiger Hinweis!</b> Bitte kontrollieren Sie alle Filter
-    und setzen Sie diese neu. Auch wenn Sie hier z.B. Fünf Sterne für
-    das Hotel eingeben ist es nicht garantiert das die entsprechend
-    ausgewählte Suchseite diese Suche übernimmt. Sorry
+    <div>
+      ℹ️ <b>Wichtiger Hinweis zur Hotelsuche:</b> Bitte kontrollieren
+      Sie auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne)
+      und stellen Sie diese bei Bedarf neu ein, da nicht alle Portale
+      sie automatisch übernehmen. Kleinere Orte werden teils ebenfalls
+      nicht direkt übertragen – da Reisedaten und Personenanzahl
+      bereits hinterlegt sind, tippen Sie dort einfach noch Ihren
+      Zielort ein. Wir bitten diese technische Einschränkung der
+      Anbieter zu entschuldigen!
+    </div>
   </div>
 </div>
 <script>
@@ -331,18 +343,42 @@ function isEn(){return lang==="en";}
 function applyLang(){
   readLang();
   var e=isEn();document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
-  $("hTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
-  $("navAct").textContent=e?"🏨 HOTELS (ACTIVE)":"🏨 HOTELSUCHE (AKTIV)";
-  $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
-  $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
-  $("navBkg").textContent=e?"✈️ My Current Bookings ➡️":"✈️ Meine aktuellen Buchungen ➡️";
-  $("c1Tit").textContent=e?"📍 Destination & Travel Dates":"📍 Zielort & Reisedaten";
-  $("lblCity").textContent=e?"Destination (any city worldwide)":"Reiseziel (beliebige Stadt weltweit)";
-  $("city").placeholder=e?"e.g. Milan, Pagadian, Bangkok":"z.B. Mailand, Pagadian, Bangkok";
-  $("lblCi").textContent=e?"Check-in (Arrival)":"Check-in (Anreise)";
-  $("lblCo").textContent=e?"Check-out (Departure)":"Check-out (Abreise)";
-  $("c2Tit").textContent=e?"🛏️ Guests, Rooms & Hotel Filters":"🛏️ Gäste, Zimmer & Hotel-Filter";
+  $("pgTit").textContent=e
+    ?"🏨 My Hotel Search PRO v128"
+    :"🏨 Meine Hotelsuche PRO v128";
+  $("hTit").textContent=e
+    ?"🏨 My Hotel Search PRO v128"
+    :"🏨 Meine Hotelsuche PRO v128";
+  $("navAct").textContent=e
+    ?"🏨 HOTELS (ACTIVE)"
+    :"🏨 HOTELSUCHE (AKTIV)";
+  $("navHome").textContent=e
+    ?"🏠 Back to Home"
+    :"🏠 Zurück zur Startseite";
+  $("navFlt").textContent=e
+    ?"✈️ Flight Search"
+    :"✈️ Flugsuche";
+  $("navBkg").textContent=e
+    ?"✈️ My Current Bookings ➡️"
+    :"✈️ Meine aktuellen Buchungen ➡️";
+  $("c1Tit").textContent=e
+    ?"📍 Destination & Travel Dates"
+    :"📍 Zielort & Reisedaten";
+  $("lblCity").textContent=e
+    ?"Destination (any city worldwide)"
+    :"Reiseziel (beliebige Stadt weltweit)";
+  $("city").placeholder=e
+    ?"e.g. Milan, Pagadian, Bangkok"
+    :"z.B. Mailand, Pagadian, Bangkok";
+  $("lblCi").textContent=e
+    ?"Check-in (Arrival)"
+    :"Check-in (Anreise)";
+  $("lblCo").textContent=e
+    ?"Check-out (Departure)"
+    :"Check-out (Abreise)";
+  $("c2Tit").textContent=e
+    ?"🛏️ Guests, Rooms & Hotel Filters"
+    :"🛏️ Gäste, Zimmer & Hotel-Filter";
   $("lblPx").textContent=e?"Guests":"Personenzahl";
   $("px1").textContent=e?"1 Adult":"1 Erwachsener";
   $("px2").textContent=e?"2 Adults":"2 Erwachsene";
@@ -359,24 +395,46 @@ function applyLang(){
   $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
   $("hintBox").innerHTML=e
-    ?"ℹ️ <b>Important Notice!</b> Please check all filters and set them again. Even if you select e.g. five stars for the hotel here, it is not guaranteed that the selected search site will apply this filter. Sorry"
-    :"ℹ️ <b>Wichtiger Hinweis!</b> Bitte kontrollieren Sie alle Filter und setzen Sie diese neu. Auch wenn Sie hier z.B. Fünf Sterne für das Hotel eingeben ist es nicht garantiert das die entsprechend ausgewählte Suchseite diese Suche übernimmt. Sorry";
+    ?"<div>ℹ️ <b>Important Notice on Hotel Search:</b> Please "
+      +"make sure to check all filters (e.g. 5 stars) on the booking "
+      +"page and re-apply them if needed, as not all portals "
+      +"transfer them automatically. Smaller towns may also not be "
+      +"passed directly – since your dates and guest count are "
+      +"already filled in, simply type your destination there to "
+      +"start. We apologize for this technical limitation!</div>"
+    :"<div>ℹ️ <b>Wichtiger Hinweis zur Hotelsuche:</b> Bitte "
+      +"kontrollieren Sie auf der Buchungsseite unbedingt alle "
+      +"Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf "
+      +"neu ein, da nicht alle Portale sie automatisch übernehmen. "
+      +"Kleinere Orte werden teils ebenfalls nicht direkt übertragen "
+      +"– da Reisedaten und Personenanzahl bereits hinterlegt sind, "
+      +"tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten "
+      +"diese technische Einschränkung der Anbieter zu "
+      +"entschuldigen!</div>";
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
   var b=$("mbtn");if(!b)return;
-  b.textContent=bgmOn?(isEn()?"🔇 Music Off":"🔇 Musik Aus"):(isEn()?"🎵 Music On":"🎵 Musik An");
+  b.textContent=bgmOn
+    ?(isEn()?"🔇 Music Off":"🔇 Musik Aus")
+    :(isEn()?"🎵 Music On":"🎵 Musik An");
   b.classList.toggle("off",!bgmOn);
 }
 function playBgm(){
   var a=$("bgm");if(!a)return;a.volume=1.0;
-  a.play().then(function(){bgmOn=true;updBgmBtn();}).catch(function(){bgmOn=false;updBgmBtn();});
+  a.play()
+    .then(function(){bgmOn=true;updBgmBtn();})
+    .catch(function(){bgmOn=false;updBgmBtn();});
 }
 function toggleBgm(){
   var a=$("bgm");if(!a)return;
   if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}else{playBgm();}
 }
-function enterHotel(){var w=$("wOverlay");if(w)w.style.display="none";playBgm();}
+function enterHotel(){
+  var w=$("wOverlay");
+  if(w)w.style.display="none";
+  playBgm();
+}
 function iso(d){
   var m=String(d.getMonth()+1),t=String(d.getDate());
   if(m.length<2)m="0"+m;if(t.length<2)t="0"+t;
@@ -389,78 +447,163 @@ function normCity(s){
 }
 function getAid(city){
   var k=normCity(city);
-  if(k==="bangkok")return"9395";if(k==="mailand"||k==="milan")return"4894";if(k==="palermo")return"16011";
-  if(k==="berlin")return"16154";if(k==="hamburg")return"15727";if(k==="muenchen"||k==="munich")return"15836";
-  if(k==="frankfurt"||k==="frankfurt am main")return"15778";if(k==="koeln"||k==="cologne")return"15722";
-  if(k==="duesseldorf")return"15737";if(k==="stuttgart")return"15791";if(k==="wien"||k==="vienna")return"14756";
-  if(k==="hannover")return"15751";if(k==="leipzig")return"15760";if(k==="dresden")return"15740";
-  if(k==="nuernberg"||k==="nuremberg")return"15793";if(k==="bremen")return"15716";
-  if(k==="zuerich"||k==="zurich")return"16590";if(k==="paris")return"15470";if(k==="london")return"233";
-  if(k==="rom"||k==="rome")return"16582";if(k==="barcelona")return"14563";if(k==="madrid")return"16583";
-  if(k==="lissabon"||k==="lisbon")return"15192";if(k==="dubai")return"2994";if(k==="istanbul")return"14932";
-  if(k==="amsterdam")return"13868";if(k==="prag"||k==="prague")return"16578";if(k==="warschau"||k==="warsaw")return"16107";
-  if(k==="budapest")return"15129";if(k==="athen"||k==="athens")return"16575";
-  if(k==="venedig"||k==="venice")return"16585";if(k==="florenz"||k==="florence")return"16581";
-  if(k==="neapel"||k==="naples")return"16584";if(k==="bruessel"||k==="brussels")return"14672";
-  if(k==="kopenhagen"||k==="copenhagen")return"14830";if(k==="stockholm")return"16143";
-  if(k==="oslo")return"15987";if(k==="helsinki")return"15283";if(k==="dublin")return"14916";
-  if(k==="new york")return"318";if(k==="los angeles")return"12772";if(k==="miami")return"12840";
-  if(k==="las vegas")return"17072";if(k==="toronto")return"16254";if(k==="sydney")return"14370";
-  if(k==="melbourne")return"14367";if(k==="auckland")return"14453";if(k==="kairo"||k==="cairo")return"14708";
-  if(k==="hurghada")return"15342";if(k==="marrakesch"||k==="marrakech")return"15654";
-  if(k==="kapstadt"||k==="cape town")return"14722";if(k==="seoul")return"14690";
-  if(k==="hongkong"||k==="hong kong")return"16808";if(k==="taipeh"||k==="taipei")return"4951";
-  if(k==="pattaya")return"8584";if(k==="hua hin")return"17019";if(k==="khao lak")return"15443";
-  if(k==="phuket")return"16056";if(k==="chiang mai")return"7401";if(k==="koh samui"||k==="ko samui")return"16573";
-  if(k==="krabi")return"14865";if(k==="bali"||k==="denpasar")return"17193";if(k==="da nang"||k==="danang")return"16440";
-  if(k==="hoi an")return"16552";if(k==="ho-chi-minh-stadt"||k==="saigon")return"13170";if(k==="hanoi")return"2758";
-  if(k==="singapur"||k==="singapore")return"4064";if(k==="kuala lumpur")return"14524";if(k==="tokio"||k==="tokyo")return"5085";
-  if(k==="manila")return"1622";if(k==="cebu")return"4001";if(k==="dumaguete")return"16565";if(k==="pagadian")return"89122";
-  if(k==="boracay")return"15903";if(k==="palawan"||k==="puerto princesa")return"16069";
+  if(k==="bangkok")return"9395";
+  if(k==="mailand"||k==="milan")return"4894";
+  if(k==="palermo")return"16011";
+  if(k==="berlin")return"16154";
+  if(k==="hamburg")return"15727";
+  if(k==="muenchen"||k==="munich")return"15836";
+  if(k==="frankfurt"||k==="frankfurt am main")return"15778";
+  if(k==="koeln"||k==="cologne")return"15722";
+  if(k==="duesseldorf")return"15737";
+  if(k==="stuttgart")return"15791";
+  if(k==="wien"||k==="vienna")return"14756";
+  if(k==="hannover")return"15751";
+  if(k==="leipzig")return"15760";
+  if(k==="dresden")return"15740";
+  if(k==="nuernberg"||k==="nuremberg")return"15793";
+  if(k==="bremen")return"15716";
+  if(k==="zuerich"||k==="zurich")return"16590";
+  if(k==="paris")return"15470";
+  if(k==="london")return"233";
+  if(k==="rom"||k==="rome")return"16582";
+  if(k==="barcelona")return"14563";
+  if(k==="madrid")return"16583";
+  if(k==="lissabon"||k==="lisbon")return"15192";
+  if(k==="dubai")return"2994";
+  if(k==="istanbul")return"14932";
+  if(k==="amsterdam")return"13868";
+  if(k==="prag"||k==="prague")return"16578";
+  if(k==="warschau"||k==="warsaw")return"16107";
+  if(k==="budapest")return"15129";
+  if(k==="athen"||k==="athens")return"16575";
+  if(k==="venedig"||k==="venice")return"16585";
+  if(k==="florenz"||k==="florence")return"16581";
+  if(k==="neapel"||k==="naples")return"16584";
+  if(k==="bruessel"||k==="brussels")return"14672";
+  if(k==="kopenhagen"||k==="copenhagen")return"14830";
+  if(k==="stockholm")return"16143";
+  if(k==="oslo")return"15987";
+  if(k==="helsinki")return"15283";
+  if(k==="dublin")return"14916";
+  if(k==="new york")return"318";
+  if(k==="los angeles")return"12772";
+  if(k==="miami")return"12840";
+  if(k==="las vegas")return"17072";
+  if(k==="toronto")return"16254";
+  if(k==="sydney")return"14370";
+  if(k==="melbourne")return"14367";
+  if(k==="auckland")return"14453";
+  if(k==="kairo"||k==="cairo")return"14708";
+  if(k==="hurghada")return"15342";
+  if(k==="marrakesch"||k==="marrakech")return"15654";
+  if(k==="phuket")return"16056";
+  if(k==="chiang mai")return"7401";
+  if(k==="koh samui"||k==="ko samui")return"17198";
+  if(k==="krabi")return"14865";
+  if(k==="singapur"||k==="singapore")return"4064";
+  if(k==="kuala lumpur")return"14524";
+  if(k==="tokio"||k==="tokyo")return"5085";
+  if(k==="manila")return"15644";
+  if(k==="cebu"||k==="cebu city")return"4001";
+  if(k==="dumaguete")return"14925";
+  if(k==="pagadian")return"85509";
   return"";
 }
 function getBid(city){
   var k=normCity(city);
-  if(k==="bangkok")return"-3414440";if(k==="mailand"||k==="milan")return"-121726";if(k==="palermo")return"-123798";
-  if(k==="berlin")return"-1746443";if(k==="hamburg")return"-1785434";if(k==="muenchen"||k==="munich")return"-1829149";
-  if(k==="frankfurt"||k==="frankfurt am main")return"-1771148";if(k==="koeln"||k==="cologne")return"-1810561";
-  if(k==="duesseldorf")return"-1762467";if(k==="stuttgart")return"-1871728";if(k==="wien"||k==="vienna")return"-1995499";
-  if(k==="zuerich"||k==="zurich")return"-2554935";if(k==="paris")return"-1456928";if(k==="london")return"-2601889";
-  if(k==="rom"||k==="rome")return"-126693";if(k==="barcelona")return"-372490";if(k==="madrid")return"-390625";
-  if(k==="lissabon"||k==="lisbon")return"-2167973";if(k==="dubai")return"-782831";if(k==="istanbul")return"-755070";
-  if(k==="amsterdam")return"-2140479";if(k==="prag"||k==="prague")return"-553173";if(k==="warschau"||k==="warsaw")return"-534433";
-  if(k==="phuket")return"-3250083";if(k==="chiang mai")return"-3247138";if(k==="koh samui"||k==="ko samui")return"-3248292";
-  if(k==="krabi")return"-3248996";if(k==="da nang"||k==="danang")return"-3712045";if(k==="hoi an")return"-3715584";
-  if(k==="ho-chi-minh-stadt"||k==="saigon")return"-3730078";if(k==="hanoi")return"-3714993";if(k==="singapur"||k==="singapore")return"-73635";
-  if(k==="kuala lumpur")return"-2403010";if(k==="tokio"||k==="tokyo")return"-246227";if(k==="manila")return"-2437894";
-  if(k==="cebu")return"-2421265";if(k==="dumaguete")return"-2424739";if(k==="pagadian")return"-2443809";
+  if(k==="bangkok")return"-3414440";
+  if(k==="mailand"||k==="milan")return"-121726";
+  if(k==="palermo")return"-123798";
+  if(k==="berlin")return"-1746443";
+  if(k==="hamburg")return"-1785434";
+  if(k==="muenchen"||k==="munich")return"-1829149";
+  if(k==="frankfurt"||k==="frankfurt am main")return"-1771148";
+  if(k==="koeln"||k==="cologne")return"-1810561";
+  if(k==="duesseldorf")return"-1762467";
+  if(k==="stuttgart")return"-1871728";
+  if(k==="wien"||k==="vienna")return"-1995499";
+  if(k==="zuerich"||k==="zurich")return"-2554935";
+  if(k==="paris")return"-1456928";
+  if(k==="london")return"-2601889";
+  if(k==="rom"||k==="rome")return"-126693";
+  if(k==="barcelona")return"-372490";
+  if(k==="madrid")return"-390625";
+  if(k==="lissabon"||k==="lisbon")return"-2167973";
+  if(k==="dubai")return"-782831";
+  if(k==="istanbul")return"-755070";
+  if(k==="amsterdam")return"-2140479";
+  if(k==="prag"||k==="prague")return"-553173";
+  if(k==="warschau"||k==="warsaw")return"-534433";
+  if(k==="phuket")return"-3250083";
+  if(k==="chiang mai")return"-3247138";
+  if(k==="koh samui"||k==="ko samui")return"-3248292";
+  if(k==="krabi")return"-3248996";
+  if(k==="da nang"||k==="danang")return"-3712045";
+  if(k==="hoi an")return"-3715584";
+  if(k==="ho-chi-minh-stadt"||k==="saigon")return"-3730078";
+  if(k==="hanoi")return"-3714993";
+  if(k==="singapur"||k==="singapore")return"-73635";
+  if(k==="kuala lumpur")return"-2403010";
+  if(k==="tokio"||k==="tokyo")return"-246227";
+  if(k==="manila")return"-2437894";
+  if(k==="cebu")return"-2421265";
+  if(k==="dumaguete")return"-2424739";
+  if(k==="pagadian")return"-2443809";
   return"";
 }
 function getTid(city){
   var k=normCity(city);
-  if(k==="berlin")return"200-3848";if(k==="hamburg")return"200-9644";if(k==="muenchen"||k==="munich")return"200-2855";
-  if(k==="frankfurt"||k==="frankfurt am main")return"200-7155";if(k==="koeln"||k==="cologne")return"200-9661";
-  if(k==="duesseldorf")return"200-9648";if(k==="stuttgart")return"200-2860";if(k==="jena")return"200-12168";
-  if(k==="leipzig")return"200-11268";if(k==="dresden")return"200-11258";if(k==="hannover")return"200-8666";
-  if(k==="nuernberg"||k==="nuremberg")return"200-2857";if(k==="bremen")return"200-4271";
-  if(k==="essen")return"200-9649";if(k==="dortmund")return"200-9646";
-  if(k==="mailand"||k==="milan")return"200-45017";if(k==="palermo")return"200-45979";
-  if(k==="wien"||k==="vienna")return"200-2390";if(k==="zuerich"||k==="zurich")return"200-31231";
-  if(k==="paris")return"200-15475";if(k==="london")return"200-26259";
-  if(k==="rom"||k==="rome")return"200-44337";if(k==="barcelona")return"200-29132";if(k==="madrid")return"200-29963";
-  if(k==="lissabon"||k==="lisbon")return"200-27651";if(k==="dubai")return"200-69036";if(k==="istanbul")return"200-31932";
-  if(k==="amsterdam")return"200-17523";if(k==="prag"||k==="prague")return"200-40533";if(k==="warschau"||k==="warsaw")return"200-48673";
-  if(k==="mallorca"||k==="palma de mallorca")return"200-28499";if(k==="antalya")return"200-31926";
-  if(k==="hurghada")return"200-66858";if(k==="punta cana")return"200-191521";if(k==="puerto plata")return"200-68723";
-  if(k==="phuket")return"200-31687";if(k==="chiang mai")return"200-31661";if(k==="koh samui"||k==="ko samui")return"200-31693";
-  if(k==="krabi")return"200-31673";if(k==="singapur"||k==="singapore")return"200-31591";
-  if(k==="kuala lumpur")return"200-25824";if(k==="tokio"||k==="tokyo")return"200-27358";
-  if(k==="manila")return"200-74077";if(k==="cebu"||k==="cebu city")return"200-74046";
+  if(k==="berlin")return"200-3848";
+  if(k==="hamburg")return"200-9644";
+  if(k==="muenchen"||k==="munich")return"200-2855";
+  if(k==="frankfurt"||k==="frankfurt am main")return"200-7155";
+  if(k==="koeln"||k==="cologne")return"200-9661";
+  if(k==="duesseldorf")return"200-9648";
+  if(k==="stuttgart")return"200-2860";
+  if(k==="jena")return"200-12168";
+  if(k==="leipzig")return"200-11268";
+  if(k==="dresden")return"200-11258";
+  if(k==="hannover")return"200-8666";
+  if(k==="nuernberg"||k==="nuremberg")return"200-2857";
+  if(k==="bremen")return"200-4271";
+  if(k==="essen")return"200-9649";
+  if(k==="dortmund")return"200-9646";
+  if(k==="mailand"||k==="milan")return"200-45017";
+  if(k==="palermo")return"200-45979";
+  if(k==="wien"||k==="vienna")return"200-2390";
+  if(k==="zuerich"||k==="zurich")return"200-31231";
+  if(k==="paris")return"200-15475";
+  if(k==="london")return"200-26259";
+  if(k==="rom"||k==="rome")return"200-44337";
+  if(k==="barcelona")return"200-29132";
+  if(k==="madrid")return"200-29963";
+  if(k==="lissabon"||k==="lisbon")return"200-27651";
+  if(k==="dubai")return"200-69036";
+  if(k==="istanbul")return"200-31932";
+  if(k==="amsterdam")return"200-17523";
+  if(k==="prag"||k==="prague")return"200-40533";
+  if(k==="warschau"||k==="warsaw")return"200-48673";
+  if(k==="mallorca"||k==="palma de mallorca")return"200-28499";
+  if(k==="antalya")return"200-31926";
+  if(k==="hurghada")return"200-66858";
+  if(k==="punta cana")return"200-191521";
+  if(k==="puerto plata")return"200-68723";
+  if(k==="phuket")return"200-31687";
+  if(k==="chiang mai")return"200-31661";
+  if(k==="koh samui"||k==="ko samui")return"200-31693";
+  if(k==="krabi")return"200-31673";
+  if(k==="singapur"||k==="singapore")return"200-31591";
+  if(k==="kuala lumpur")return"200-25824";
+  if(k==="tokio"||k==="tokyo")return"200-27358";
+  if(k==="manila")return"200-74077";
+  if(k==="cebu"||k==="cebu city")return"200-74046";
   if(k==="dumaguete")return"200-74054";
   return"";
 }
 function slugify(s){
-  return normCity(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+  return normCity(s).replace(/^-+|-+$/g,"")
+    .split(" ").join("-").split(".").join("-");
 }
 function upd(){
   readLang();
@@ -691,3 +834,4 @@ applyLang();upd();
 </script>
 </body>
 </html>
+  
