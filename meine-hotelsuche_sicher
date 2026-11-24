@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title id="pgTit">🏨 Meine Hotelsuche PRO v125</title>
+<title id="pgTit">🏨 Meine Hotelsuche PRO v126</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
@@ -12,14 +12,15 @@ html,body{
   font-family:sans-serif;color:var(--t);box-sizing:border-box
 }
 .welcome{
-  position:fixed;inset:0;background:rgba(15,41,66,.88);
+  position:fixed;inset:0;background:rgba(15,41,66,.9);
   display:flex;align-items:center;justify-content:center;
-  z-index:2000;padding:20px
+  z-index:2000;padding:20px;backdrop-filter:blur(4px)
 }
 .w-card{
-  background:#fff;border:2px solid #7dd3fc;border-radius:16px;
-  padding:26px 24px;text-align:center;max-width:400px;width:100%;
-  box-shadow:0 12px 32px rgba(0,0,0,.45)
+  background:linear-gradient(180deg,#ffffff 0%,#f0f9ff 100%);
+  border:2px solid #38bdf8;border-radius:18px;
+  padding:28px 24px;text-align:center;max-width:450px;width:100%;
+  box-shadow:0 16px 40px rgba(0,0,0,.5)
 }
 .w-card h2{
   margin:0 0 18px 0;color:#0f2942;font-size:1.35rem;
@@ -29,17 +30,37 @@ html,body{
   display:block;font-size:.98rem;font-weight:bold;
   color:#0369a1;margin-top:4px
 }
-.w-btn{
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;width:100%;max-width:300px;
-  margin:0 auto;box-sizing:border-box;background:#0284c7;
-  color:#fff;border:none;border-radius:12px;padding:14px 18px;
-  font-size:1.06rem;font-weight:bold;cursor:pointer;
-  text-align:center;line-height:1.25
+@keyframes iconFloat{
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-3px) rotate(3deg)}
 }
+.w-btn{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;max-width:390px;margin:0 auto;box-sizing:border-box;
+  background:linear-gradient(135deg,#0284c7 0%,#1d4ed8 100%);
+  color:#fff;border:2px solid #7dd3fc;border-radius:14px;
+  padding:13px 16px;font-size:.98rem;font-weight:bold;
+  cursor:pointer;text-align:left;line-height:1.28;
+  box-shadow:0 8px 20px rgba(2,132,199,.45);
+  transition:transform .15s,box-shadow .15s;
+  touch-action:manipulation;user-select:none
+}
+.w-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(29,78,216,.55)
+}
+.w-btn:active{transform:scale(.98)}
+.w-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:11px;flex-shrink:0;
+  background:rgba(255,255,255,.18);border:1px solid #bae6fd;
+  font-size:1.45rem;animation:iconFloat 2.4s infinite ease-in-out
+}
+.w-txt{display:flex;flex-direction:column}
+.w-line{white-space:nowrap}
 .w-btn-en{
-  display:block;font-size:.84rem;font-weight:bold;
-  color:#e0f2fe;margin-top:3px
+  display:block;font-size:.82rem;font-weight:bold;
+  color:#bae6fd;margin-top:3px;white-space:nowrap
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
@@ -160,17 +181,23 @@ input,select{
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
-    <h2>🏨 Hotelsuche<span class="w-sub-tit">Hotel Search</span></h2>
+    <h2>
+      🏡 Meine Hotelsuche
+      <span class="w-sub-tit">My Hotel Search</span>
+    </h2>
     <button type="button" class="w-btn" id="wBtn"
       onclick="enterHotel()">
-      <span>Hotelsuche aktivieren ➡️</span>
-      <span class="w-btn-en">Activate Hotel Search ➡️</span>
+      <span class="w-icon">🏡</span>
+      <span class="w-txt">
+        <span class="w-line">Hotelsuche aktivieren ➡️</span>
+        <span class="w-btn-en">Activate Hotel Search ➡️</span>
+      </span>
     </button>
   </div>
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v125</h1>
+  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v126</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
@@ -179,7 +206,7 @@ input,select{
     <span class="seg act" id="navAct">🏨 HOTELSUCHE (AKTIV)</span>
     <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
     <a href="meine-flugbuchungen.html" class="seg upg" id="navBkg">
-      ✈️ Meine Flugbuchungen ➡️
+      ✈️ Meine aktuellen Buchungen ➡️
     </a>
     <a href="../index.html" class="seg nav" id="navHome">
       🏠 Zurück zur Startseite
@@ -298,12 +325,12 @@ try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
 function isEn(){return lang==="en";}
 function applyLang(){
   var e=isEn();document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v125":"🏨 Meine Hotelsuche PRO v125";
-  $("hTit").textContent=e?"🏨 My Hotel Search PRO v125":"🏨 Meine Hotelsuche PRO v125";
+  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v126":"🏨 Meine Hotelsuche PRO v126";
+  $("hTit").textContent=e?"🏨 My Hotel Search PRO v126":"🏨 Meine Hotelsuche PRO v126";
   $("navAct").textContent=e?"🏨 HOTELS (ACTIVE)":"🏨 HOTELSUCHE (AKTIV)";
   $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
   $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
-  $("navBkg").textContent=e?"✈️ My Flight Bookings ➡️":"✈️ Meine Flugbuchungen ➡️";
+  $("navBkg").textContent=e?"✈️ My Current Bookings ➡️":"✈️ Meine aktuellen Buchungen ➡️";
   $("c1Tit").textContent=e?"📍 Destination & Travel Dates":"📍 Zielort & Reisedaten";
   $("lblCity").textContent=e?"Destination (any city worldwide)":"Reiseziel (beliebige Stadt weltweit)";
   $("city").placeholder=e?"e.g. Milan, Pagadian, Bangkok":"z.B. Mailand, Pagadian, Bangkok";
@@ -450,11 +477,13 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-us":"de-de";
-    var ag=P+H_AG+"/search?checkIn="+ci+
+    var ag=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
       "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
       "&currency=EUR&locale="+agLoc+
       (st>0?"&hotelStarRating="+st:"");
-    $("h5").href=ag+(aid?"&city="+aid:"&textToSearch="+q);
+    $("h5").href=aid
+      ?(ag+"&city="+aid)
+      :(ag+"&textToSearch="+q+"&searchText="+qFull);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
@@ -466,7 +495,7 @@ function upd(){
       ";rc-"+rc+(st>0?";st-"+st:"");
     $("h6").href=tid
       ?(P+H_TR+trBase+"/odr/hotels?search="+trSrch)
-      :(P+H_TR+trBase+"/srl?query="+q+"&search="+trSrch);
+      :(P+H_TR+trBase+"/srl?q="+qFull);
     $("h8").href=P+"www.airbnb.de"+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px;
