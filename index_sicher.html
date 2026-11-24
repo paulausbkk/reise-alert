@@ -16,38 +16,111 @@ html,body{
   box-sizing:border-box
 }
 .f-modal{
-  position:fixed;inset:0;background:rgba(15,41,66,.88);
+  position:fixed;inset:0;background:rgba(15,41,66,.9);
   display:flex;align-items:center;justify-content:center;
-  z-index:2000;padding:20px
+  z-index:2000;padding:20px;backdrop-filter:blur(4px)
 }
 .f-card{
-  background:#fff;border:2px solid #7dd3fc;border-radius:16px;
-  padding:26px 24px;text-align:center;max-width:400px;width:100%;
-  box-shadow:0 12px 32px rgba(0,0,0,.45)
+  position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#ffffff 0%,#f0f9ff 100%);
+  border:2px solid #38bdf8;border-radius:18px;
+  padding:28px 24px;text-align:center;max-width:460px;width:100%;
+  box-shadow:0 16px 40px rgba(0,0,0,.5)
 }
 .f-card h3{
-  margin:0 0 18px 0;color:#0f2942;font-size:1.35rem;
-  line-height:1.25
+  position:relative;margin:0 0 18px 0;color:#0f2942;
+  font-size:1.35rem;line-height:1.25
 }
 .w-sub-tit{
   display:block;font-size:.98rem;font-weight:bold;
   color:#0369a1;margin-top:4px
 }
+@keyframes iconFloat{
+  0%,100%{transform:translateY(0) rotate(-4deg)}
+  50%{transform:translateY(-3px) rotate(4deg)}
+}
+@keyframes orbitBtn{
+  0%{
+    transform:translate(-165px,0px) rotate(-45deg);
+    opacity:.75
+  }
+  12%{
+    transform:translate(-115px,-22px) rotate(25deg);
+    opacity:.9
+  }
+  25%{
+    transform:translate(0px,-25px) rotate(45deg);
+    opacity:1
+  }
+  38%{
+    transform:translate(115px,-22px) rotate(65deg);
+    opacity:.9
+  }
+  50%{
+    transform:translate(165px,0px) rotate(135deg);
+    opacity:.75
+  }
+  62%{
+    transform:translate(115px,22px) rotate(205deg);
+    opacity:.9
+  }
+  75%{
+    transform:translate(0px,25px) rotate(225deg);
+    opacity:1
+  }
+  88%{
+    transform:translate(-115px,22px) rotate(245deg);
+    opacity:.9
+  }
+  100%{
+    transform:translate(-165px,0px) rotate(315deg);
+    opacity:.75
+  }
+}
 .f-btn{
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;width:100%;max-width:300px;
-  margin:0 auto;box-sizing:border-box;background:#0284c7;
-  color:#fff;border:none;border-radius:12px;padding:14px 18px;
-  font-size:1.06rem;font-weight:bold;cursor:pointer;
-  text-align:center;line-height:1.25;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;
+  justify-content:center;gap:12px;width:100%;max-width:390px;
+  margin:0 auto;box-sizing:border-box;
+  background:linear-gradient(135deg,#0284c7 0%,#1d4ed8 100%);
+  color:#fff;border:2px solid #7dd3fc;border-radius:14px;
+  padding:15px 18px;font-size:.98rem;font-weight:bold;
+  cursor:pointer;text-align:left;line-height:1.28;
+  box-shadow:0 8px 20px rgba(2,132,199,.45);
+  transition:transform .15s,box-shadow .15s;
   touch-action:manipulation;user-select:none;
   -webkit-tap-highlight-color:transparent
 }
-.f-btn:active{background:#0369a1}
-.f-btn span{pointer-events:none}
+.f-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(29,78,216,.55)
+}
+.f-btn:active{transform:scale(.98)}
+.btn-p{
+  position:absolute;top:50%;left:50%;
+  margin-top:-9px;margin-left:-9px;
+  font-size:1rem;pointer-events:none;user-select:none;
+  animation:orbitBtn 36s infinite linear;z-index:1
+}
+.btn-p.p1{animation-delay:0s}
+.btn-p.p2{animation-delay:-9s}
+.btn-p.p3{animation-delay:-18s}
+.btn-p.p4{animation-delay:-27s}
+.w-icon{
+  position:relative;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:11px;flex-shrink:0;
+  background:rgba(255,255,255,.18);border:1px solid #bae6fd;
+  font-size:1.45rem;animation:iconFloat 2.4s infinite ease-in-out
+}
+.w-txt{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column
+}
+.w-line{white-space:nowrap}
 .w-btn-en{
-  display:block;font-size:.84rem;font-weight:bold;
-  color:#e0f2fe;margin-top:3px
+  display:block;font-size:.82rem;font-weight:bold;
+  color:#bae6fd;margin-top:3px;white-space:nowrap
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
@@ -204,12 +277,18 @@ body:has(#ow:checked) .st{
       <span class="w-sub-tit">Flight Search</span>
     </h3>
     <button type="button" class="f-btn" id="fActBtn">
-      <span>Flugsuche aktivieren ➡️</span>
-      <span class="w-btn-en">Activate Flight Search ➡️</span>
+      <span class="btn-p p1">✈️</span>
+      <span class="btn-p p2">✈️</span>
+      <span class="btn-p p3">✈️</span>
+      <span class="btn-p p4">✈️</span>
+      <span class="w-icon">✈️</span>
+      <span class="w-txt">
+        <span class="w-line">Flugsuche aktivieren ➡️</span>
+        <span class="w-btn-en">Activate Flight Search ➡️</span>
+      </span>
     </button>
   </div>
 </div>
-
 <div class="hdr">
   <h1 class="tit" id="hTit">✈️ Reisekonfiguration PRO v30 – Flugsuche</h1>
   <div class="cp">
@@ -229,7 +308,6 @@ body:has(#ow:checked) .st{
     </a>
   </div>
 </div>
-
 <div class="row">
   <div class="card">
     <div class="ct" id="c1Tit">📋 Kern-Reisedaten (Direkt-Absprung)</div>
@@ -285,11 +363,11 @@ body:has(#ow:checked) .st{
     <div class="f2" style="margin-bottom:0">
       <div class="f" style="margin:0">
         <label for="od" id="lblOd">Hinflug</label>
-        <input type="date" class="dat" id="od" min="2026-11-19">
+        <input type="date" class="dat" id="od">
       </div>
       <div class="f" id="rb" style="margin:0">
         <label for="rd" id="lblRd">Rückflug</label>
-        <input type="date" class="dat" id="rd" min="2026-11-19">
+        <input type="date" class="dat" id="rd">
       </div>
     </div>
   </div>
@@ -387,7 +465,9 @@ body:has(#ow:checked) .st{
     <a id="u5" href="#" onclick="upd()"
       target="_blank" class="btn b6">Kiwi.com</a>
     <a id="u6" href="#" onclick="upd()"
-      target="_blank" class="btn b7">Trip.com</a>
+      target="_blank" class="btn b7">
+      Trip.com<span class="sub" id="trpSub">Stopps auf Website wählen</span>
+    </a>
   </div>
 </div>
 <script>
@@ -457,6 +537,8 @@ function applyLang(){
       "angeklickten Website beim Anbieter ausgewählt werden.";
   $("expSub").textContent = e
     ? "Select stops on website" : "Stopps auf Website wählen";
+  $("trpSub").textContent = e
+    ? "Select stops on website" : "Stopps auf Website wählen";
   renderFlightBgm();
 }
 function renderFlightBgm(){
@@ -508,7 +590,6 @@ function iata(val){
   if(p1 >= 0 && p2 > p1) return s.slice(p1 + 1, p2).trim();
   return s.slice(0, 3);
 }
-
 function kiwiSlug(code, rawVal){
   var c = String(code || "").toUpperCase();
   if(c === "BER") return "berlin-deutschland";
@@ -566,7 +647,6 @@ function updClock(){
       " \u2022 " + now.toLocaleTimeString(loc);
   }
 }
-
 function upd(){
   var e = isEn();
   var now = new Date(), today = iso(now);
@@ -583,7 +663,16 @@ function upd(){
   var raw1 = $("i1").value, raw2 = $("i2").value;
   var o = iata(raw1) || "BER";
   var d = iata(raw2) || "BKK";
-  var od = $("od").value || today;
+  var odVal = $("od").value;
+  if(odVal){
+    $("rd").min = odVal;
+    if(!$("rd").value || $("rd").value < odVal){
+      $("rd").value = odVal;
+    }
+  } else {
+    $("rd").min = today;
+  }
+  var od = odVal || today;
   var rd = $("rd").value || od;
   var px = $("px").value || "1";
   var sOd = od.replace(/-/g, "").slice(2);
@@ -630,12 +719,27 @@ function upd(){
     "&locale=" + trLoc + "&curr=EUR";
 }
 
+var lastStop = "";
+"ns;s1;s2".split(";").forEach(function(id){
+  var el = $(id);
+  el.addEventListener("click", function(){
+    if(lastStop === id){
+      el.checked = false;
+      lastStop = "";
+    } else {
+      lastStop = id;
+    }
+    upd();
+  });
+});
+
 "i1;i2;od;rd;ow;px;hr;ns;s1;s2;lc".split(";").forEach(function(id){
   $(id).addEventListener("input", upd);
   $(id).addEventListener("change", upd);
 });
-$("od").min = iso(new Date());
-$("rd").min = iso(new Date());
+var todayStr = iso(new Date());
+$("od").min = todayStr;
+$("rd").min = todayStr;
 applyLang();
 upd();
 setInterval(updClock, 1000);
