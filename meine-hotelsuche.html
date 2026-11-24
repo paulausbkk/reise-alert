@@ -98,7 +98,7 @@ html,body{
   margin-bottom:16px
 }
 .f{
-margin-bottom:14px;display:flex;
+ margin-bottom:14px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
@@ -249,125 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
-        <option value="3" id="rm3">3 Zimmer</option>
-        </select>
-      </div>
-    </div>
-    <div class="f">
-      <label for="st" id="lblSt">Mindest-Sterne</label>
-      <select id="st">
-        <option value="0" id="st0">Alle Kategorien</option>
-        <option value="3" id="st3">Ab 3 Sterne ⭐⭐⭐</option>
-        <option value="4" id="st4">Ab 4 Sterne ⭐⭐⭐⭐</option>
-        <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
-      </select>
-    </div>
-    <div class="f">
-      <div class="swc">
-        <label for="ab" id="lblAb" style="margin:0;cursor:pointer">
-          Nur Airbnb
-        </label>
-        <label class="sw">
-          <input type="checkbox" id="ab"><span class="sl"></span>
-        </label>
-      </div>
-    </div>
-    <div class="bn" id="info">Bitte Reiseziel und Daten wählen.</div>
-  </div>
-</div>
-<div class="bb">
-  <div class="bf">
-    <a id="h1" href="#" target="_blank"
-      class="btn b1 htl">Kayak Hotels</a>
-    <a id="h2" href="#" target="_blank"
-      class="btn b2 htl">Expedia Hotels</a>
-    <a id="h3" href="#" target="_blank"
-      class="btn b3 htl">Momondo</a>
-    <form id="f4" action="#"
-      method="get" target="_blank" class="htl" style="margin:0">
-      <input type="hidden" name="ss" id="b_ss">
-      <input type="hidden" name="ssne" id="b_ssne">
-      <input type="hidden" name="ssne_untouched" id="b_ssu">
-      <input type="hidden" name="dest_id" id="b_did" disabled>
-      <input type="hidden" name="dest_type" id="b_dty" disabled>
-      <input type="hidden" name="checkin" id="b_ci">
-      <input type="hidden" name="checkout" id="b_co">
-      <input type="hidden" name="group_adults" id="b_px">
-      <input type="hidden" name="group_children" value="0">
-      <input type="hidden" name="no_rooms" id="b_rm">
-      <input type="hidden" name="efdco" value="1">
-      <input type="hidden" name="nflt" id="b_flt" disabled>
-      <input type="hidden" name="lang" id="b_lng" value="de">
-      <input type="hidden" name="selected_currency" value="EUR">
-      <button type="submit" class="btn b4">Booking.com</button>
-    </form>
-    <a id="h5" href="#" target="_blank"
-      class="btn b5 htl">Agoda</a>
-    <a id="h6" href="#" target="_blank"
-      class="btn b6 htl">Trivago</a>
-    <a id="h8" href="#" target="_blank"
-      class="btn b8 off">Airbnb</a>
-  </div>
-  <div class="hint" id="hintBox">
-    ℹ️ <b>Wichtiger Hinweis:</b> Detailfilter (z. B. <b>Strand</b>,
-    <b>Frühstück</b>) müssen auf der Anbieterseite gewählt werden.
-  </div>
-</div>
-<script>
-var $=function(id){return document.getElementById(id);};
-var P="https:"+String.fromCharCode(47,47);
-var H_AG="www."+String.fromCharCode(97,103,111,100,97)+".com";
-var H_BK="www."+String.fromCharCode(98,111,111,107,105,110,103)+".com";
-var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111)+".de";
-var H_OM="geocoding-api."+String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
-var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
-try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
-function isEn(){return lang==="en";}
-function applyLang(){
-  var e=isEn();document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
-  $("hTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
-  $("navAct").textContent=e?"🏨 HOTELS (ACTIVE)":"🏨 HOTELSUCHE (AKTIV)";
-  $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
-  $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
-  $("navBkg").textContent=e?"✈️ My Current Bookings ➡️":"✈️ Meine aktuellen Buchungen ➡️";
-  $("c1Tit").textContent=e?"📍 Destination & Travel Dates":"📍 Zielort & Reisedaten";
-  $("lblCity").textContent=e?"Destination (any city worldwide)":"Reiseziel (beliebige Stadt weltweit)";
-  $("city").placeholder=e?"e.g. Milan, Pagadian, Bangkok":"z.B. Mailand, Pagadian, Bangkok";
-  $("lblCi").textContent=e?"Check-in (Arrival)":"Check-in (Anreise)";
-  $("lblCo").textContent=e?"Check-out (Departure)":"Check-out (Abreise)";
-  $("c2Tit").textContent=e?"🛏️ Guests, Rooms & Hotel Filters":"🛏️ Gäste, Zimmer & Hotel-Filter";
-  $("lblPx").textContent=e?"Guests":"Personenzahl";
-  $("px1").textContent=e?"1 Adult":"1 Erwachsener";
-  $("px2").textContent=e?"2 Adults":"2 Erwachsene";
-  $("px3").textContent=e?"3 Adults":"3 Erwachsene";
-  $("px4").textContent=e?"4 Adults":"4 Erwachsene";
-  $("lblRm").textContent=e?"Rooms":"Zimmer";
-  $("rm1").textContent=e?"1 Room":"1 Zimmer";
-  $("rm2").textContent=e?"2 Rooms":"2 Zimmer";
-  $("rm3").textContent=e?"3 Rooms":"3 Zimmer";
-  $("lblSt").textContent=e?"Minimum Stars":"Mindest-Sterne";
-  $("st0").textContent=e?"All Categories":"Alle Kategorien";
-  $("st3").textContent=e?"3+ Stars ⭐⭐⭐":"Ab 3 Sterne ⭐⭐⭐";
-  $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
-  $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
-  $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
-  $("b_lng").value=e?"en-gb":"de";updBgmBtn();
-}
-function updBgmBtn(){
-  var b=$("mbtn");if(!b)return;
-  b.textContent=bgmOn?(isEn()?"🔇 Music Off":"🔇 Musik Aus"):(isEn()?"🎵 Music On":"🎵 Musik An");
-  b.classList.toggle("off",!bgmOn);
-}
-function playBgm(){
-  var a=$("bgm");if(!a)return;a.volume=1.0;
-  a.play().then(function(){bgmOn=true;updBgmBtn();}).catch(function(){bgmOn=false;updBgmBtn();});
-}
-function toggleBgm(){
-  var a=$("bgm");if(!a)return;
-  if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}else{playBgm();}
-}
-      <option value="3" id="rm3">3 Zimmer</option>
+<option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
