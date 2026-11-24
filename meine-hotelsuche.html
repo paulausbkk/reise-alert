@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title id="pgTit">🏨 Meine Hotelsuche PRO v127</title>
+<title id="pgTit">🏨 Meine Hotelsuche PRO v128</title>
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
@@ -197,7 +197,7 @@ input,select{
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
 <div class="hdr">
-  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v127</h1>
+  <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v128</h1>
   <div class="cp">
     <button type="button" class="mbtn off" id="mbtn"
       onclick="toggleBgm()">🎵 Musik An</button>
@@ -325,8 +325,8 @@ try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
 function isEn(){return lang==="en";}
 function applyLang(){
   var e=isEn();document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v127":"🏨 Meine Hotelsuche PRO v127";
-  $("hTit").textContent=e?"🏨 My Hotel Search PRO v127":"🏨 Meine Hotelsuche PRO v127";
+  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
+  $("hTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
   $("navAct").textContent=e?"🏨 HOTELS (ACTIVE)":"🏨 HOTELSUCHE (AKTIV)";
   $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
   $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
@@ -346,7 +346,7 @@ function applyLang(){
   $("rm1").textContent=e?"1 Room":"1 Zimmer";
   $("rm2").textContent=e?"2 Rooms":"2 Zimmer";
   $("rm3").textContent=e?"3 Rooms":"3 Zimmer";
-  $("lblSt").textContent=e?"Minimum Stars":"Mindest-Sterne";
+   $("lblSt").textContent=e?"Minimum Stars":"Mindest-Sterne";
   $("st0").textContent=e?"All Categories":"Alle Kategorien";
   $("st3").textContent=e?"3+ Stars ⭐⭐⭐":"Ab 3 Sterne ⭐⭐⭐";
   $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
@@ -415,12 +415,19 @@ function getBid(city){
 function getTid(city){
   var k=normCity(city);
   if(k==="berlin")return"200-3848";if(k==="hamburg")return"200-9644";if(k==="muenchen"||k==="munich")return"200-2855";
+  if(k==="frankfurt"||k==="frankfurt am main")return"200-7155";if(k==="koeln"||k==="cologne")return"200-9661";
+  if(k==="duesseldorf")return"200-9648";if(k==="stuttgart")return"200-2860";
   if(k==="bangkok")return"200-31654";if(k==="mailand"||k==="milan")return"200-45017";if(k==="palermo")return"200-45979";
-  if(k==="wien"||k==="vienna")return"200-2390";if(k==="paris")return"200-15475";if(k==="london")return"200-26259";
+  if(k==="wien"||k==="vienna")return"200-2390";if(k==="zuerich"||k==="zurich")return"200-31231";
+  if(k==="paris")return"200-15475";if(k==="london")return"200-26259";
   if(k==="rom"||k==="rome")return"200-44337";if(k==="barcelona")return"200-29132";if(k==="madrid")return"200-29963";
-  if(k==="dubai")return"200-69036";if(k==="istanbul")return"200-31932";if(k==="amsterdam")return"200-17523";
-  if(k==="prag"||k==="prague")return"200-40533";if(k==="warschau"||k==="warsaw")return"200-48673";
-  if(k==="phuket")return"200-31687";if(k==="manila")return"200-74077";
+  if(k==="lissabon"||k==="lisbon")return"200-27651";if(k==="dubai")return"200-69036";if(k==="istanbul")return"200-31932";
+  if(k==="amsterdam")return"200-17523";if(k==="prag"||k==="prague")return"200-40533";if(k==="warschau"||k==="warsaw")return"200-48673";
+  if(k==="phuket")return"200-31687";if(k==="chiang mai")return"200-31661";if(k==="koh samui"||k==="ko samui")return"200-31693";
+  if(k==="krabi")return"200-31673";if(k==="singapur"||k==="singapore")return"200-31591";
+  if(k==="kuala lumpur")return"200-25824";if(k==="tokio"||k==="tokyo")return"200-27358";
+  if(k==="manila")return"200-74077";if(k==="cebu"||k==="cebu city")return"200-74046";
+  if(k==="dumaguete")return"200-74054";
   return"";
 }
 function upd(){
@@ -495,7 +502,7 @@ function upd(){
       ";rc-"+rc+(st>0?";st-"+st:"");
     $("h6").href=tid
       ?(P+H_TR+trBase+"/odr/hotels?search="+trSrch)
-      :(P+H_TR+trBase+"/odr/hotels?search="+trSrch+"&q="+qFull);
+      :(P+H_TR+trBase+"/srl?q="+qFull);
     $("h8").href=P+"www.airbnb.de"+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px;
