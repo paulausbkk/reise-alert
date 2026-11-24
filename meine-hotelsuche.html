@@ -98,7 +98,7 @@ html,body{
   margin-bottom:16px
 }
 .f{
-  margin-bottom:14px;display:flex;
+ margin-bottom:14px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
-          <option value="3" id="rm3">3 Zimmer</option>
+ <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -321,6 +321,7 @@ var H_BK="www."+String.fromCharCode(98,111,111,107,105,110,103)+".com";
 var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111)+".de";
 var H_OM="geocoding-api."+String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
+var trCache={};
 try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
 function isEn(){return lang==="en";}
 function applyLang(){
@@ -346,7 +347,7 @@ function applyLang(){
   $("rm1").textContent=e?"1 Room":"1 Zimmer";
   $("rm2").textContent=e?"2 Rooms":"2 Zimmer";
   $("rm3").textContent=e?"3 Rooms":"3 Zimmer";
-   $("lblSt").textContent=e?"Minimum Stars":"Mindest-Sterne";
+  $("lblSt").textContent=e?"Minimum Stars":"Mindest-Sterne";
   $("st0").textContent=e?"All Categories":"Alle Kategorien";
   $("st3").textContent=e?"3+ Stars ⭐⭐⭐":"Ab 3 Sterne ⭐⭐⭐";
   $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
@@ -430,6 +431,44 @@ function getTid(city){
   if(k==="dumaguete")return"200-74054";
   return"";
 }
+function slugify(s){
+  return normCity(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+}
+function buildTrUrl(tid,slug,ci,co,px,rm,st,qFull){
+  var e=isEn(),trBase=e?"/en-GB":"/de";
+  var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+  var perRm=Math.max(1,Math.floor(px/rm));
+  var rem=px%rm,rc="";
+  for(var i=0;i<rm;i++){
+    rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
+  }
+  if(!tid){
+    return P+H_TR+trBase+"/srl?q="+qFull+
+      "&search=dr-"+dt1+"-"+dt2+";rc-"+rc+(st>0?";st-"+st:"");
+  }
+  var path=slug?"/odr/hotels-"+slug:"/odr/hotels";
+  return P+H_TR+trBase+path+"?search="+tid+
+    ";dr-"+dt1+"-"+dt2+";rc-"+rc+(st>0?";st-"+st:"");
+}
+function fetchTrDest(query,done){
+  var key=normCity(query);
+  if(!key){done(null);return;}
+  if(trCache.hasOwnProperty(key)){done(trCache.valueOf()[key]);return;}
+  var e=isEn(),trBase=e?"/en-GB":"/de";
+  var api=P+H_TR+trBase+"/api/v1/geo/autocomplete?query="+
+    encodeURIComponent(query)+"&limit=5";
+  fetch(api).then(function(r){return r.json();}).then(function(j){
+    var items=(j&&(j.suggestions||j.results||j.items||j))||new Array();
+    var first=items&&items.at?items.at(0):null;
+    if(first){
+      var rawId=String(first.id||first.conceptId||first.pathId||"");
+      var tid=rawId.indexOf("-")>-1?rawId:(rawId?"200-"+rawId:"");
+      var slug=slugify(first.slug||first.name||query);
+      var res=tid?{tid:tid,slug:slug}:null;
+      trCache[key]=res;done(res);
+    }else{done(null);}
+  }).catch(function(){done(null);});
+}
 function upd(){
   var e=isEn(),loc=e?"en-GB":"de-DE";
   var now=new Date(),t=iso(now);
@@ -449,7 +488,7 @@ function upd(){
   var bad=(ci&&ci<t)||(co&&co<=t)||(ci&&co&&co<=ci);
   $("cib").classList.toggle("err",Boolean(ci&&ci<t));
   $("cob").classList.toggle("err",Boolean(bad));
-   if(ci&&co&&!bad){
+  if(ci&&co&&!bad){
     var dA=new Date(ci+"T12:00:00"),dB=new Date(co+"T12:00:00");
     var n=Math.max(1,Math.round((dB-dA)/86400000));
     $("nt").textContent=e
@@ -491,18 +530,8 @@ function upd(){
     $("h5").href=aid
       ?(ag+"&city="+aid)
       :(ag+"&textToSearch="+q+"&searchText="+qFull);
-    var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
-    var perRm=Math.max(1,Math.floor(px/rm));
-    var rem=px%rm,rc="";
-    for(var i=0;i<rm;i++){
-      rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
-    }
-    var trBase=e?"/en-GB":"/de";
-    var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
-      ";rc-"+rc+(st>0?";st-"+st:"");
-    $("h6").href=tid
-      ?(P+H_TR+trBase+"/odr/hotels?search="+trSrch)
-      :(P+H_TR+trBase+"/srl?q="+qFull);
+    var trSlug=slugify(fullCity||city);
+    $("h6").href=buildTrUrl(tid,trSlug,ci,co,px,rm,st,qFull);
     $("h8").href=P+"www.airbnb.de"+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px;
@@ -541,6 +570,8 @@ function showAc(list,msg){
       selCountry=it.country||"";
       cc=(it.country_code||"de").toLowerCase();
       box.style.display="none";upd();
+      var qFull=(it.name&&selCountry)?(it.name+", "+selCountry):it.name;
+      fetchTrDest(qFull,function(){upd();});
     };
     box.appendChild(d);
   });
@@ -600,6 +631,24 @@ $("city").addEventListener("input",function(){
       showAc(res,errMsg);
     });
   },200);
+});
+$("h6").addEventListener("click",function(ev){
+  var city=$("city").value.trim();
+  var ci=$("ci").value,co=$("co").value;
+  var px=+$("px").value||2,rm=+$("rm").value||1;
+  var st=+$("st").value||0;
+  var fullCity=(city&&selCountry)?(city+", "+selCountry):city;
+  var qFull=encodeURIComponent(fullCity);
+  var knownTid=getTid(city);
+  if(!city||!ci||!co||knownTid)return;
+  ev.preventDefault();
+  var win=window.open("about:blank","_blank");
+  fetchTrDest(fullCity||city,function(hit){
+    var url=hit
+      ?buildTrUrl(hit.tid,hit.slug,ci,co,px,rm,st,qFull)
+      :buildTrUrl("",slugify(fullCity||city),ci,co,px,rm,st,qFull);
+    if(win){win.location.href=url;}else{window.open(url,"_blank");}
+  });
 });
 document.addEventListener("click",function(ev){
   if(!$("lc").contains(ev.target)&&ev.target!==$("city")){
