@@ -268,7 +268,7 @@ input,select{
         <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
       </select>
     </div>
-  <div class="f">
+   <div class="f">
       <div class="swc">
         <label for="ab" id="lblAb" style="margin:0;cursor:pointer">
           Nur Airbnb
@@ -379,7 +379,7 @@ function applyLang(){
   $("c2Tit").textContent=e
     ?"🛏️ Guests, Rooms & Hotel Filters"
     :"🛏️ Gäste, Zimmer & Hotel-Filter";
-   $("lblPx").textContent=e?"Guests":"Personenzahl";
+  $("lblPx").textContent=e?"Guests":"Personenzahl";
   $("px1").textContent=e?"1 Adult":"1 Erwachsener";
   $("px2").textContent=e?"2 Adults":"2 Erwachsene";
   $("px3").textContent=e?"3 Adults":"3 Erwachsene";
@@ -719,6 +719,7 @@ function upd(){
       px:px,rm:rm,st:st,ab:ab
     }));
   }catch(err){}
+}
 function showAc(list,msg){
   var box=$("lc");box.innerHTML="";
   if(msg){
@@ -833,3 +834,4 @@ applyLang();upd();
 </script>
 </body>
 </html>
+  
