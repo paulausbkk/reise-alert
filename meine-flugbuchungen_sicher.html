@@ -7,10 +7,10 @@
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
-  margin:0;padding:16px 20px;min-height:100vh;
+  margin:0;padding:12px 16px;min-height:100vh;
   display:flex;flex-direction:column;justify-content:space-between;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  font-family:sans-serif;color:var(--t);box-sizing:border-box;gap:16px
+  font-family:sans-serif;color:var(--t);box-sizing:border-box;gap:12px
 }
 .welcome{
   position:fixed;inset:0;background:rgba(15,41,66,.9);
@@ -24,22 +24,6 @@ html,body{
   padding:28px 24px;text-align:center;max-width:460px;width:100%;
   box-shadow:0 16px 40px rgba(0,0,0,.5)
 }
-@keyframes flyA{
-  0%{transform:translate(-18px,8px) rotate(-12deg);opacity:.35}
-  50%{transform:translate(18px,-10px) rotate(10deg);opacity:.75}
-  100%{transform:translate(-18px,8px) rotate(-12deg);opacity:.35}
-}
-@keyframes flyB{
-  0%{transform:translate(16px,-6px) rotate(8deg);opacity:.4}
-  50%{transform:translate(-16px,10px) rotate(-14deg);opacity:.7}
-  100%{transform:translate(16px,-6px) rotate(8deg);opacity:.4}
-}
-.sky-p1,.sky-p2{
-  position:absolute;font-size:1.35rem;pointer-events:none;
-  user-select:none
-}
-.sky-p1{top:12px;left:22px;animation:flyA 5.5s infinite ease-in-out}
-.sky-p2{bottom:12px;right:24px;animation:flyB 6.2s infinite ease-in-out}
 .w-card h2{
   position:relative;margin:0 0 18px 0;color:#0f2942;
   font-size:1.35rem;line-height:1.25
@@ -52,13 +36,52 @@ html,body{
   0%,100%{transform:translateY(0) rotate(-4deg)}
   50%{transform:translateY(-3px) rotate(4deg)}
 }
+@keyframes orbitBtn{
+  0%{
+    transform:translate(-165px,0px) rotate(-45deg);
+    opacity:.75
+  }
+  12%{
+    transform:translate(-115px,-22px) rotate(25deg);
+    opacity:.9
+  }
+  25%{
+    transform:translate(0px,-25px) rotate(45deg);
+    opacity:1
+  }
+  38%{
+    transform:translate(115px,-22px) rotate(65deg);
+    opacity:.9
+  }
+  50%{
+    transform:translate(165px,0px) rotate(135deg);
+    opacity:.75
+  }
+  62%{
+    transform:translate(115px,22px) rotate(205deg);
+    opacity:.9
+  }
+  75%{
+    transform:translate(0px,25px) rotate(225deg);
+    opacity:1
+  }
+  88%{
+    transform:translate(-115px,22px) rotate(245deg);
+    opacity:.9
+  }
+  100%{
+    transform:translate(-165px,0px) rotate(315deg);
+    opacity:.75
+  }
+}
 .w-btn{
-  position:relative;display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;
   justify-content:center;gap:12px;width:100%;max-width:390px;
   margin:0 auto;box-sizing:border-box;
   background:linear-gradient(135deg,#0284c7 0%,#1d4ed8 100%);
   color:#fff;border:2px solid #7dd3fc;border-radius:14px;
-  padding:13px 16px;font-size:.98rem;font-weight:bold;
+  padding:15px 18px;font-size:.98rem;font-weight:bold;
   cursor:pointer;text-align:left;line-height:1.28;
   box-shadow:0 8px 20px rgba(2,132,199,.45);
   transition:transform .15s,box-shadow .15s;
@@ -69,13 +92,27 @@ html,body{
   box-shadow:0 12px 24px rgba(29,78,216,.55)
 }
 .w-btn:active{transform:scale(.98)}
+.btn-p{
+  position:absolute;top:50%;left:50%;
+  margin-top:-9px;margin-left:-9px;
+  font-size:1rem;pointer-events:none;user-select:none;
+  animation:orbitBtn 36s infinite linear;z-index:1
+}
+.btn-p.p1{animation-delay:0s}
+.btn-p.p2{animation-delay:-9s}
+.btn-p.p3{animation-delay:-18s}
+.btn-p.p4{animation-delay:-27s}
 .w-icon{
+  position:relative;z-index:2;
   display:flex;align-items:center;justify-content:center;
   width:42px;height:42px;border-radius:11px;flex-shrink:0;
   background:rgba(255,255,255,.18);border:1px solid #bae6fd;
   font-size:1.45rem;animation:iconFloat 2.4s infinite ease-in-out
 }
-.w-txt{display:flex;flex-direction:column}
+.w-txt{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column
+}
 .w-line{white-space:nowrap}
 .w-btn-en{
   display:block;font-size:.82rem;font-weight:bold;
@@ -83,7 +120,7 @@ html,body{
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:11px 16px;border-radius:12px;
+  background:#0f2942;padding:9px 14px;border-radius:12px;
   flex-wrap:wrap;gap:6px;flex-shrink:0
 }
 .tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
@@ -107,45 +144,45 @@ html,body{
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
 .row{
-  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
   flex:1;align-items:stretch
 }
 @media(max-width:780px){.row{grid-template-columns:1fr}}
 .card{
   box-sizing:border-box;border:1px solid #93c5fd;
-  border-radius:12px;padding:20px 22px;background:#fff;
+  border-radius:12px;padding:14px 18px;background:#fff;
   box-shadow:0 4px 12px rgba(3,105,161,.08);
   display:flex;flex-direction:column;justify-content:space-between
 }
 .ct{
-  font-weight:bold;font-size:1.08rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:8px;
-  margin-bottom:14px
+  font-weight:bold;font-size:1.04rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:6px;
+  margin-bottom:10px
 }
-.f{margin-bottom:14px;display:flex;flex-direction:column}
+.f{margin-bottom:10px;display:flex;flex-direction:column}
 .f:last-child{margin-bottom:0}
 .f.off{display:none}
 label{
-  font-weight:bold;font-size:.86rem;
-  margin-bottom:6px;color:#1e3a8a
+  font-weight:bold;font-size:.84rem;
+  margin-bottom:4px;color:#1e3a8a
 }
 .inrow{display:flex;gap:8px;align-items:center}
 input,select{
-  height:44px;padding:0 12px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.98rem;
+  height:39px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.96rem;
   background:#f8fafc;color:var(--t);width:100%
 }
 .cpbtn{
-  height:44px;padding:0 13px;background:#e0f2fe;color:#0369a1;
+  height:39px;padding:0 12px;background:#e0f2fe;color:#0369a1;
   border:1px solid #7dd3fc;border-radius:8px;font-weight:bold;
-  cursor:pointer;white-space:nowrap;font-size:.84rem
+  cursor:pointer;white-space:nowrap;font-size:.82rem
 }
 .cpbtn:hover{background:#bae6fd}
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
   border-left:5px solid #0284c7;border-radius:8px;
-  padding:12px 14px;color:#1e3a8a;font-weight:bold;
-  font-size:.9rem;margin-top:auto
+  padding:9px 12px;color:#1e3a8a;font-weight:bold;
+  font-size:.88rem;margin-top:auto
 }
 @keyframes pulseHint{
   0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
@@ -154,30 +191,30 @@ input,select{
 .bb{
   width:100%;box-sizing:border-box;flex-shrink:0;
   border:1px solid #93c5fd;background:#fff;
-  border-radius:12px;padding:18px 20px;
+  border-radius:12px;padding:13px 16px;
   box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
 .acts{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px
+  display:grid;grid-template-columns:1fr 1fr;gap:12px
 }
 .abtn{
   display:flex;align-items:center;justify-content:center;
-  height:50px;border-radius:9px;font-weight:bold;font-size:.94rem;
+  height:44px;border-radius:9px;font-weight:bold;font-size:.92rem;
   text-decoration:none;border:none;cursor:pointer;color:#fff;
   text-align:center;padding:0 12px
 }
 .abtn.note{background:#0369a1}
 .abtn.go{background:#1d4ed8}
 #ts{
-  display:none;margin-top:12px;padding:9px 14px;
+  display:none;margin-top:9px;padding:7px 12px;
   background:#dcfce7;border:1px solid #86efac;color:#166534;
-  border-radius:8px;font-weight:bold;font-size:.88rem
+  border-radius:8px;font-weight:bold;font-size:.85rem
 }
 .hintbox{
-  margin-top:14px;background:#0f2942;color:#fff;
+  margin-top:10px;background:#0f2942;color:#fff;
   border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:12px 16px;font-weight:bold;
-  font-size:.88rem;line-height:1.45;
+  border-radius:8px;padding:10px 14px;font-weight:bold;
+  font-size:.88rem;line-height:1.38;
   animation:pulseHint 2.2s infinite ease-in-out
 }
 </style>
@@ -185,14 +222,16 @@ input,select{
 <body>
 <div class="welcome" id="wOverlay">
   <div class="w-card">
-    <span class="sky-p1">✈️</span>
-    <span class="sky-p2">✈️</span>
     <h2>
       ✈️ Meine aktuellen Buchungen
       <span class="w-sub-tit">My Current Bookings</span>
     </h2>
     <button type="button" class="w-btn" id="entryBtn"
       onclick="enterBookings()">
+      <span class="btn-p p1">✈️</span>
+      <span class="btn-p p2">✈️</span>
+      <span class="btn-p p3">✈️</span>
+      <span class="btn-p p4">✈️</span>
       <span class="w-icon">✈️</span>
       <span class="w-txt">
         <span class="w-line">Aktuelle Buchungen aktivieren ➡️</span>
@@ -355,47 +394,88 @@ const guides={
   mom:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
   opo:"1. 'Meine Reisen' öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
 };
-
 function applyLang(){
   const e=isEn();
   document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"✈️ My Current Bookings PRO":"✈️ Meine aktuellen Buchungen PRO";
-  $("hTit").textContent=e?"✈️ My Current Bookings PRO":"✈️ Meine aktuellen Buchungen PRO";
-  $("navAct").textContent=e?"✈️ MY CURRENT BOOKINGS (ACTIVE)":"✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)";
+  $("pgTit").textContent=e
+    ?"✈️ My Current Bookings PRO"
+    :"✈️ Meine aktuellen Buchungen PRO";
+  $("hTit").textContent=e
+    ?"✈️ My Current Bookings PRO"
+    :"✈️ Meine aktuellen Buchungen PRO";
+  $("navAct").textContent=e
+    ?"✈️ MY CURRENT BOOKINGS (ACTIVE)"
+    :"✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)";
   $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
-  $("navHtl").textContent=e?"🏨 My Hotel Search ➡️":"🏨 Meine Hotelsuche ➡️";
-  $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
-  $("cTit").textContent=e?"🎫 Airline & Booking Data":"🎫 Airline & Buchungsdaten";
-  $("cTit2").textContent=e?"🛂 Travel Documents & Status":"🛂 Reisedokumente & Status";
-  $("lblPort").textContent=e?"Select Airline or Booking Portal":"Airline oder Buchungsportal wählen";
-  $("lblPnr").textContent=e?"Booking Code (PNR)":"Buchungscode (PNR)";
-  $("lblFn").textContent=e?"First Name (as in passport)":"Vorname (wie im Pass)";
-  $("lblLn").textContent=e?"Last Name (as in passport)":"Nachname (wie im Pass)";
-  $("lblMail").textContent=e?"Booking Email":"Buchungs-E-Mail";
-  $("lblTk").textContent=e?"Ticket Number (optional)":"Ticketnummer (freiwillig)";
-  $("lblPp").textContent=e?"Passport Number (optional)":"Reisepassnummer (freiwillig)";
+  $("navHtl").textContent=e
+    ?"🏨 My Hotel Search ➡️"
+    :"🏨 Meine Hotelsuche ➡️";
+  $("navHome").textContent=e
+    ?"🏠 Back to Home"
+    :"🏠 Zurück zur Startseite";
+  $("cTit").textContent=e
+    ?"🎫 Airline & Booking Details"
+    :"🎫 Airline & Buchungsdaten";
+  $("lblPort").textContent=e
+    ?"Select Airline or Booking Portal"
+    :"Airline oder Buchungsportal wählen";
+  $("lblPnr").textContent=e
+    ?"Booking Code (PNR)"
+    :"Buchungscode (PNR)";
+  $("lblFn").textContent=e
+    ?"First Name (as in passport)"
+    :"Vorname (wie im Pass)";
+  $("lblLn").textContent=e
+    ?"Last Name (as in passport)"
+    :"Nachname (wie im Pass)";
+  $("lblMail").textContent=e
+    ?"Booking Email"
+    :"Buchungs-E-Mail";
+  $("cTit2").textContent=e
+    ?"🛂 Travel Documents & Status"
+    :"🛂 Reisedokumente & Status";
+  $("lblTk").textContent=e
+    ?"Ticket Number (optional)"
+    :"Ticketnummer (freiwillig)";
+  $("lblPp").textContent=e
+    ?"Passport Number (optional)"
+    :"Reisepassnummer (freiwillig)";
   const cpTxt=e?"📋 Copy":"📋 Kopieren";
-  ["cpPnr","cpFn","cpLn","cpMail","cpTk","cpPp"].forEach(id=>$(id).textContent=cpTxt);
-  $("btnNote").textContent=e?"1️⃣ Open Sticky Note":"1️⃣ Spickzettel öffnen";
-  $("go").textContent=e?"2️⃣ Open Airline Site ➡️":"2️⃣ Airline-Seite öffnen ➡️";
+  $("cpPnr").textContent=cpTxt;
+  $("cpFn").textContent=cpTxt;
+  $("cpLn").textContent=cpTxt;
+  $("cpMail").textContent=cpTxt;
+  $("cpTk").textContent=cpTxt;
+  $("cpPp").textContent=cpTxt;
+  $("btnNote").textContent=e
+    ?"1️⃣ Open Sticky Note"
+    :"1️⃣ Spickzettel öffnen";
+  $("go").textContent=e
+    ?"2️⃣ Open Airline Website ➡️"
+    :"2️⃣ Airline-Seite öffnen ➡️";
   $("hintBox").innerHTML=e
-    ?"ℹ️ <b>Note:</b> If you enter optional details such as <b>Ticket Number</b> or <b>Passport Number</b> here, they will appear on your sticky note when opening your airline's website."
-    :"ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen, erscheinen diese nachher auf Ihrem Notizzettel, wenn Sie die Seite Ihrer Airline aufrufen.";
+    ?"ℹ️ <b>Note:</b> If you enter optional details such as "
+      +"<b>Ticket Number</b> or <b>Passport Number</b> here, "
+      +"they will appear on your sticky note when you open your "
+      +"airline's website."
+    :"ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie "
+      +"<b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier "
+      +"eintragen, erscheinen diese nachher auf Ihrem Notizzettel, "
+      +"wenn Sie die Seite Ihrer Airline aufrufen.";
   updBgmBtn();
 }
-
 function updBgmBtn(){
   const b=$("mbtn");if(!b)return;
-  b.textContent=bgmOn?(isEn()?"🔇 Music Off":"🔇 Musik Aus"):(isEn()?"🎵 Music On":"🎵 Musik An");
+  b.textContent=bgmOn
+    ?(isEn()?"🔇 Music Off":"🔇 Musik Aus")
+    :(isEn()?"🎵 Music On":"🎵 Musik An");
   b.classList.toggle("off",!bgmOn);
 }
 function playBgm(){
-  const a=$("bgm");if(!a)return;
-  a.volume=0.6;
-  a.play().then(()=>{bgmOn=true;updBgmBtn();}).catch(()=>{
-    a.src=P+"paulausbkk.github.io/musik.mp3";
-    a.play().then(()=>{bgmOn=true;updBgmBtn();}).catch(()=>{bgmOn=false;updBgmBtn();});
-  });
+  const a=$("bgm");if(!a)return;a.volume=1.0;
+  a.play()
+    .then(()=>{bgmOn=true;updBgmBtn();})
+    .catch(()=>{bgmOn=false;updBgmBtn();});
 }
 function toggleBgm(){
   const a=$("bgm");if(!a)return;
