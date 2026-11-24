@@ -420,7 +420,7 @@ body:has(#ow:checked) .st{
             <span class="sl"></span>
           </label>
         </div>
-         <div class="swh">
+        <div class="swh">
           <label for="s2" id="lblS2"
             style="margin:0;cursor:pointer;font-size:.8rem">
             Max. 2 Stopps
@@ -465,7 +465,9 @@ body:has(#ow:checked) .st{
     <a id="u5" href="#" onclick="upd()"
       target="_blank" class="btn b6">Kiwi.com</a>
     <a id="u6" href="#" onclick="upd()"
-      target="_blank" class="btn b7">Trip.com</a>
+      target="_blank" class="btn b7">
+      Trip.com<span class="sub" id="trpSub">Stopps auf Website wählen</span>
+    </a>
   </div>
 </div>
 <script>
@@ -534,6 +536,8 @@ function applyLang(){
     : "ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend " +
       "angeklickten Website beim Anbieter ausgewählt werden.";
   $("expSub").textContent = e
+    ? "Select stops on website" : "Stopps auf Website wählen";
+  $("trpSub").textContent = e
     ? "Select stops on website" : "Stopps auf Website wählen";
   renderFlightBgm();
 }
