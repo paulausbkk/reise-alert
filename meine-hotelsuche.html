@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
- <option value="3" id="rm3">3 Zimmer</option>
+          <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -262,7 +262,7 @@ input,select{
         <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
       </select>
     </div>
-    <div class="f">
+<div class="f">
       <div class="swc">
         <label for="ab" id="lblAb" style="margin:0;cursor:pointer">
           Nur Airbnb
@@ -309,10 +309,20 @@ input,select{
       class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintBox">
-    ℹ️ <b>Wichtiger Hinweis!</b> Bitte kontrollieren Sie alle Filter
-    und setzen Sie diese neu. Auch wenn Sie hier z.B. Fünf Sterne für
-    das Hotel eingeben ist es nicht garantiert das die entsprechend
-    ausgewählte Suchseite diese Suche übernimmt. Sorry
+    ℹ️ <b>Wichtiger Hinweis zur Hotelsuche</b><br><br>
+    Bitte überprüfen Sie auf der weitergeleiteten Buchungsseite
+    unbedingt noch einmal alle Ihre Suchfilter und stellen Sie diese
+    bei Bedarf neu ein. Auch wenn Sie bei uns bereits Kriterien wie
+    eine 5-Sterne-Kategorie ausgewählt haben, übernehmen nicht alle
+    externen Portale diese Einstellungen automatisch.<br><br>
+    Zudem kann es vorkommen, dass kleinere Orte nicht direkt an das
+    jeweilige Buchungsportal übergeben werden. Da Ihre Reisedaten und
+    die Personenanzahl jedoch bereits hinterlegt sind, müssen Sie auf
+    der Zielseite lediglich noch Ihren gewünschten Zielort eintippen,
+    um die Suche zu starten.<br><br>
+    Wir bitten diese Einschränkung zu entschuldigen – leider lassen
+    die technischen Schnittstellen der externen Anbieter hier keine
+    vollständige Datenübernahme zu. Vielen Dank für Ihr Verständnis!
   </div>
 </div>
 <script>
@@ -331,19 +341,43 @@ function isEn(){return lang==="en";}
 function applyLang(){
   readLang();
   var e=isEn();document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
-  $("hTit").textContent=e?"🏨 My Hotel Search PRO v128":"🏨 Meine Hotelsuche PRO v128";
-  $("navAct").textContent=e?"🏨 HOTELS (ACTIVE)":"🏨 HOTELSUCHE (AKTIV)";
-  $("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
-  $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
-  $("navBkg").textContent=e?"✈️ My Current Bookings ➡️":"✈️ Meine aktuellen Buchungen ➡️";
-  $("c1Tit").textContent=e?"📍 Destination & Travel Dates":"📍 Zielort & Reisedaten";
-  $("lblCity").textContent=e?"Destination (any city worldwide)":"Reiseziel (beliebige Stadt weltweit)";
-  $("city").placeholder=e?"e.g. Milan, Pagadian, Bangkok":"z.B. Mailand, Pagadian, Bangkok";
-  $("lblCi").textContent=e?"Check-in (Arrival)":"Check-in (Anreise)";
-  $("lblCo").textContent=e?"Check-out (Departure)":"Check-out (Abreise)";
-  $("c2Tit").textContent=e?"🛏️ Guests, Rooms & Hotel Filters":"🛏️ Gäste, Zimmer & Hotel-Filter";
-  $("lblPx").textContent=e?"Guests":"Personenzahl";
+  $("pgTit").textContent=e
+    ?"🏨 My Hotel Search PRO v128"
+    :"🏨 Meine Hotelsuche PRO v128";
+  $("hTit").textContent=e
+    ?"🏨 My Hotel Search PRO v128"
+    :"🏨 Meine Hotelsuche PRO v128";
+  $("navAct").textContent=e
+    ?"🏨 HOTELS (ACTIVE)"
+    :"🏨 HOTELSUCHE (AKTIV)";
+  $("navHome").textContent=e
+    ?"🏠 Back to Home"
+    :"🏠 Zurück zur Startseite";
+  $("navFlt").textContent=e
+    ?"✈️ Flight Search"
+    :"✈️ Flugsuche";
+  $("navBkg").textContent=e
+    ?"✈️ My Current Bookings ➡️"
+    :"✈️ Meine aktuellen Buchungen ➡️";
+  $("c1Tit").textContent=e
+    ?"📍 Destination & Travel Dates"
+    :"📍 Zielort & Reisedaten";
+  $("lblCity").textContent=e
+    ?"Destination (any city worldwide)"
+    :"Reiseziel (beliebige Stadt weltweit)";
+  $("city").placeholder=e
+    ?"e.g. Milan, Pagadian, Bangkok"
+    :"z.B. Mailand, Pagadian, Bangkok";
+  $("lblCi").textContent=e
+    ?"Check-in (Arrival)"
+    :"Check-in (Anreise)";
+  $("lblCo").textContent=e
+    ?"Check-out (Departure)"
+    :"Check-out (Abreise)";
+  $("c2Tit").textContent=e
+    ?"🛏️ Guests, Rooms & Hotel Filters"
+    :"🛏️ Gäste, Zimmer & Hotel-Filter";
+$("lblPx").textContent=e?"Guests":"Personenzahl";
   $("px1").textContent=e?"1 Adult":"1 Erwachsener";
   $("px2").textContent=e?"2 Adults":"2 Erwachsene";
   $("px3").textContent=e?"3 Adults":"3 Erwachsene";
@@ -359,24 +393,60 @@ function applyLang(){
   $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
   $("hintBox").innerHTML=e
-    ?"ℹ️ <b>Important Notice!</b> Please check all filters and set them again. Even if you select e.g. five stars for the hotel here, it is not guaranteed that the selected search site will apply this filter. Sorry"
-    :"ℹ️ <b>Wichtiger Hinweis!</b> Bitte kontrollieren Sie alle Filter und setzen Sie diese neu. Auch wenn Sie hier z.B. Fünf Sterne für das Hotel eingeben ist es nicht garantiert das die entsprechend ausgewählte Suchseite diese Suche übernimmt. Sorry";
+    ?"ℹ️ <b>Important Notice on Hotel Search</b><br><br>"
+      +"Please make sure to check all your search filters again on "
+      +"the redirected booking page and adjust them if necessary. "
+      +"Even if you have already selected criteria such as a 5-star "
+      +"category on our site, not all external portals transfer "
+      +"these settings automatically.<br><br>"
+      +"In addition, smaller towns may not be passed directly to "
+      +"the respective booking portal. However, since your travel "
+      +"dates and number of guests are already pre-filled, you only "
+      +"need to type in your desired destination on the target page "
+      +"to start the search.<br><br>"
+      +"We apologize for this limitation – unfortunately, the "
+      +"technical interfaces of the external providers do not allow "
+      +"complete data transfer here. Thank you for your understanding!"
+    :"ℹ️ <b>Wichtiger Hinweis zur Hotelsuche</b><br><br>"
+      +"Bitte überprüfen Sie auf der weitergeleiteten Buchungsseite "
+      +"unbedingt noch einmal alle Ihre Suchfilter und stellen Sie "
+      +"diese bei Bedarf neu ein. Auch wenn Sie bei uns bereits "
+      +"Kriterien wie eine 5-Sterne-Kategorie ausgewählt haben, "
+      +"übernehmen nicht alle externen Portale diese Einstellungen "
+      +"automatisch.<br><br>"
+      +"Zudem kann es vorkommen, dass kleinere Orte nicht direkt an "
+      +"das jeweilige Buchungsportal übergeben werden. Da Ihre "
+      +"Reisedaten und die Personenanzahl jedoch bereits hinterlegt "
+      +"sind, müssen Sie auf der Zielseite lediglich noch Ihren "
+      +"gewünschten Zielort eintippen, um die Suche zu starten.<br><br>"
+      +"Wir bitten diese Einschränkung zu entschuldigen – leider "
+      +"lassen die technischen Schnittstellen der externen Anbieter "
+      +"hier keine vollständige Datenübernahme zu. Vielen Dank für "
+      +"Ihr Verständnis!";
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
   var b=$("mbtn");if(!b)return;
-  b.textContent=bgmOn?(isEn()?"🔇 Music Off":"🔇 Musik Aus"):(isEn()?"🎵 Music On":"🎵 Musik An");
+  b.textContent=bgmOn
+    ?(isEn()?"🔇 Music Off":"🔇 Musik Aus")
+    :(isEn()?"🎵 Music On":"🎵 Musik An");
   b.classList.toggle("off",!bgmOn);
 }
 function playBgm(){
   var a=$("bgm");if(!a)return;a.volume=1.0;
-  a.play().then(function(){bgmOn=true;updBgmBtn();}).catch(function(){bgmOn=false;updBgmBtn();});
+  a.play()
+    .then(function(){bgmOn=true;updBgmBtn();})
+    .catch(function(){bgmOn=false;updBgmBtn();});
 }
 function toggleBgm(){
   var a=$("bgm");if(!a)return;
   if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}else{playBgm();}
 }
-function enterHotel(){var w=$("wOverlay");if(w)w.style.display="none";playBgm();}
+function enterHotel(){
+  var w=$("wOverlay");
+  if(w)w.style.display="none";
+  playBgm();
+}
 function iso(d){
   var m=String(d.getMonth()+1),t=String(d.getDate());
   if(m.length<2)m="0"+m;if(t.length<2)t="0"+t;
@@ -389,78 +459,163 @@ function normCity(s){
 }
 function getAid(city){
   var k=normCity(city);
-  if(k==="bangkok")return"9395";if(k==="mailand"||k==="milan")return"4894";if(k==="palermo")return"16011";
-  if(k==="berlin")return"16154";if(k==="hamburg")return"15727";if(k==="muenchen"||k==="munich")return"15836";
-  if(k==="frankfurt"||k==="frankfurt am main")return"15778";if(k==="koeln"||k==="cologne")return"15722";
-  if(k==="duesseldorf")return"15737";if(k==="stuttgart")return"15791";if(k==="wien"||k==="vienna")return"14756";
-  if(k==="hannover")return"15751";if(k==="leipzig")return"15760";if(k==="dresden")return"15740";
-  if(k==="nuernberg"||k==="nuremberg")return"15793";if(k==="bremen")return"15716";
-  if(k==="zuerich"||k==="zurich")return"16590";if(k==="paris")return"15470";if(k==="london")return"233";
-  if(k==="rom"||k==="rome")return"16582";if(k==="barcelona")return"14563";if(k==="madrid")return"16583";
-  if(k==="lissabon"||k==="lisbon")return"15192";if(k==="dubai")return"2994";if(k==="istanbul")return"14932";
-  if(k==="amsterdam")return"13868";if(k==="prag"||k==="prague")return"16578";if(k==="warschau"||k==="warsaw")return"16107";
-  if(k==="budapest")return"15129";if(k==="athen"||k==="athens")return"16575";
-  if(k==="venedig"||k==="venice")return"16585";if(k==="florenz"||k==="florence")return"16581";
-  if(k==="neapel"||k==="naples")return"16584";if(k==="bruessel"||k==="brussels")return"14672";
-  if(k==="kopenhagen"||k==="copenhagen")return"14830";if(k==="stockholm")return"16143";
-  if(k==="oslo")return"15987";if(k==="helsinki")return"15283";if(k==="dublin")return"14916";
-  if(k==="new york")return"318";if(k==="los angeles")return"12772";if(k==="miami")return"12840";
-  if(k==="las vegas")return"17072";if(k==="toronto")return"16254";if(k==="sydney")return"14370";
-  if(k==="melbourne")return"14367";if(k==="auckland")return"14453";if(k==="kairo"||k==="cairo")return"14708";
-  if(k==="hurghada")return"15342";if(k==="marrakesch"||k==="marrakech")return"15654";
-  if(k==="kapstadt"||k==="cape town")return"14722";if(k==="seoul")return"14690";
-  if(k==="hongkong"||k==="hong kong")return"16808";if(k==="taipeh"||k==="taipei")return"4951";
-  if(k==="pattaya")return"8584";if(k==="hua hin")return"17019";if(k==="khao lak")return"15443";
-  if(k==="phuket")return"16056";if(k==="chiang mai")return"7401";if(k==="koh samui"||k==="ko samui")return"16573";
-  if(k==="krabi")return"14865";if(k==="bali"||k==="denpasar")return"17193";if(k==="da nang"||k==="danang")return"16440";
-  if(k==="hoi an")return"16552";if(k==="ho-chi-minh-stadt"||k==="saigon")return"13170";if(k==="hanoi")return"2758";
-  if(k==="singapur"||k==="singapore")return"4064";if(k==="kuala lumpur")return"14524";if(k==="tokio"||k==="tokyo")return"5085";
-  if(k==="manila")return"1622";if(k==="cebu")return"4001";if(k==="dumaguete")return"16565";if(k==="pagadian")return"89122";
-  if(k==="boracay")return"15903";if(k==="palawan"||k==="puerto princesa")return"16069";
+  if(k==="bangkok")return"9395";
+  if(k==="mailand"||k==="milan")return"4894";
+  if(k==="palermo")return"16011";
+  if(k==="berlin")return"16154";
+  if(k==="hamburg")return"15727";
+  if(k==="muenchen"||k==="munich")return"15836";
+  if(k==="frankfurt"||k==="frankfurt am main")return"15778";
+  if(k==="koeln"||k==="cologne")return"15722";
+  if(k==="duesseldorf")return"15737";
+  if(k==="stuttgart")return"15791";
+  if(k==="wien"||k==="vienna")return"14756";
+  if(k==="hannover")return"15751";
+  if(k==="leipzig")return"15760";
+  if(k==="dresden")return"15740";
+  if(k==="nuernberg"||k==="nuremberg")return"15793";
+  if(k==="bremen")return"15716";
+  if(k==="zuerich"||k==="zurich")return"16590";
+  if(k==="paris")return"15470";
+  if(k==="london")return"233";
+  if(k==="rom"||k==="rome")return"16582";
+  if(k==="barcelona")return"14563";
+  if(k==="madrid")return"16583";
+  if(k==="lissabon"||k==="lisbon")return"15192";
+  if(k==="dubai")return"2994";
+  if(k==="istanbul")return"14932";
+  if(k==="amsterdam")return"13868";
+  if(k==="prag"||k==="prague")return"16578";
+  if(k==="warschau"||k==="warsaw")return"16107";
+  if(k==="budapest")return"15129";
+  if(k==="athen"||k==="athens")return"16575";
+  if(k==="venedig"||k==="venice")return"16585";
+  if(k==="florenz"||k==="florence")return"16581";
+  if(k==="neapel"||k==="naples")return"16584";
+  if(k==="bruessel"||k==="brussels")return"14672";
+  if(k==="kopenhagen"||k==="copenhagen")return"14830";
+  if(k==="stockholm")return"16143";
+  if(k==="oslo")return"15987";
+  if(k==="helsinki")return"15283";
+  if(k==="dublin")return"14916";
+if(k==="new york")return"318";
+  if(k==="los angeles")return"12772";
+  if(k==="miami")return"12840";
+  if(k==="las vegas")return"17072";
+  if(k==="toronto")return"16254";
+  if(k==="sydney")return"14370";
+  if(k==="melbourne")return"14367";
+  if(k==="auckland")return"14453";
+  if(k==="kairo"||k==="cairo")return"14708";
+  if(k==="hurghada")return"15342";
+  if(k==="marrakesch"||k==="marrakech")return"15654";
+  if(k==="phuket")return"16056";
+  if(k==="chiang mai")return"7401";
+  if(k==="koh samui"||k==="ko samui")return"17198";
+  if(k==="krabi")return"14865";
+  if(k==="singapur"||k==="singapore")return"4064";
+  if(k==="kuala lumpur")return"14524";
+  if(k==="tokio"||k==="tokyo")return"5085";
+  if(k==="manila")return"15644";
+  if(k==="cebu"||k==="cebu city")return"4001";
+  if(k==="dumaguete")return"14925";
+  if(k==="pagadian")return"85509";
   return"";
 }
 function getBid(city){
   var k=normCity(city);
-  if(k==="bangkok")return"-3414440";if(k==="mailand"||k==="milan")return"-121726";if(k==="palermo")return"-123798";
-  if(k==="berlin")return"-1746443";if(k==="hamburg")return"-1785434";if(k==="muenchen"||k==="munich")return"-1829149";
-  if(k==="frankfurt"||k==="frankfurt am main")return"-1771148";if(k==="koeln"||k==="cologne")return"-1810561";
-  if(k==="duesseldorf")return"-1762467";if(k==="stuttgart")return"-1871728";if(k==="wien"||k==="vienna")return"-1995499";
-  if(k==="zuerich"||k==="zurich")return"-2554935";if(k==="paris")return"-1456928";if(k==="london")return"-2601889";
-  if(k==="rom"||k==="rome")return"-126693";if(k==="barcelona")return"-372490";if(k==="madrid")return"-390625";
-  if(k==="lissabon"||k==="lisbon")return"-2167973";if(k==="dubai")return"-782831";if(k==="istanbul")return"-755070";
-  if(k==="amsterdam")return"-2140479";if(k==="prag"||k==="prague")return"-553173";if(k==="warschau"||k==="warsaw")return"-534433";
-  if(k==="phuket")return"-3250083";if(k==="chiang mai")return"-3247138";if(k==="koh samui"||k==="ko samui")return"-3248292";
-  if(k==="krabi")return"-3248996";if(k==="da nang"||k==="danang")return"-3712045";if(k==="hoi an")return"-3715584";
-  if(k==="ho-chi-minh-stadt"||k==="saigon")return"-3730078";if(k==="hanoi")return"-3714993";if(k==="singapur"||k==="singapore")return"-73635";
-  if(k==="kuala lumpur")return"-2403010";if(k==="tokio"||k==="tokyo")return"-246227";if(k==="manila")return"-2437894";
-  if(k==="cebu")return"-2421265";if(k==="dumaguete")return"-2424739";if(k==="pagadian")return"-2443809";
+  if(k==="bangkok")return"-3414440";
+  if(k==="mailand"||k==="milan")return"-121726";
+  if(k==="palermo")return"-123798";
+  if(k==="berlin")return"-1746443";
+  if(k==="hamburg")return"-1785434";
+  if(k==="muenchen"||k==="munich")return"-1829149";
+  if(k==="frankfurt"||k==="frankfurt am main")return"-1771148";
+  if(k==="koeln"||k==="cologne")return"-1810561";
+  if(k==="duesseldorf")return"-1762467";
+  if(k==="stuttgart")return"-1871728";
+  if(k==="wien"||k==="vienna")return"-1995499";
+  if(k==="zuerich"||k==="zurich")return"-2554935";
+  if(k==="paris")return"-1456928";
+  if(k==="london")return"-2601889";
+  if(k==="rom"||k==="rome")return"-126693";
+  if(k==="barcelona")return"-372490";
+  if(k==="madrid")return"-390625";
+  if(k==="lissabon"||k==="lisbon")return"-2167973";
+  if(k==="dubai")return"-782831";
+  if(k==="istanbul")return"-755070";
+  if(k==="amsterdam")return"-2140479";
+  if(k==="prag"||k==="prague")return"-553173";
+  if(k==="warschau"||k==="warsaw")return"-534433";
+  if(k==="phuket")return"-3250083";
+  if(k==="chiang mai")return"-3247138";
+  if(k==="koh samui"||k==="ko samui")return"-3248292";
+  if(k==="krabi")return"-3248996";
+  if(k==="da nang"||k==="danang")return"-3712045";
+  if(k==="hoi an")return"-3715584";
+  if(k==="ho-chi-minh-stadt"||k==="saigon")return"-3730078";
+  if(k==="hanoi")return"-3714993";
+  if(k==="singapur"||k==="singapore")return"-73635";
+  if(k==="kuala lumpur")return"-2403010";
+  if(k==="tokio"||k==="tokyo")return"-246227";
+  if(k==="manila")return"-2437894";
+  if(k==="cebu")return"-2421265";
+  if(k==="dumaguete")return"-2424739";
+  if(k==="pagadian")return"-2443809";
   return"";
 }
 function getTid(city){
   var k=normCity(city);
-  if(k==="berlin")return"200-3848";if(k==="hamburg")return"200-9644";if(k==="muenchen"||k==="munich")return"200-2855";
-  if(k==="frankfurt"||k==="frankfurt am main")return"200-7155";if(k==="koeln"||k==="cologne")return"200-9661";
-  if(k==="duesseldorf")return"200-9648";if(k==="stuttgart")return"200-2860";if(k==="jena")return"200-12168";
-  if(k==="leipzig")return"200-11268";if(k==="dresden")return"200-11258";if(k==="hannover")return"200-8666";
-  if(k==="nuernberg"||k==="nuremberg")return"200-2857";if(k==="bremen")return"200-4271";
-  if(k==="essen")return"200-9649";if(k==="dortmund")return"200-9646";
-  if(k==="mailand"||k==="milan")return"200-45017";if(k==="palermo")return"200-45979";
-  if(k==="wien"||k==="vienna")return"200-2390";if(k==="zuerich"||k==="zurich")return"200-31231";
-  if(k==="paris")return"200-15475";if(k==="london")return"200-26259";
-  if(k==="rom"||k==="rome")return"200-44337";if(k==="barcelona")return"200-29132";if(k==="madrid")return"200-29963";
-  if(k==="lissabon"||k==="lisbon")return"200-27651";if(k==="dubai")return"200-69036";if(k==="istanbul")return"200-31932";
-  if(k==="amsterdam")return"200-17523";if(k==="prag"||k==="prague")return"200-40533";if(k==="warschau"||k==="warsaw")return"200-48673";
-  if(k==="mallorca"||k==="palma de mallorca")return"200-28499";if(k==="antalya")return"200-31926";
-  if(k==="hurghada")return"200-66858";if(k==="punta cana")return"200-191521";if(k==="puerto plata")return"200-68723";
-  if(k==="phuket")return"200-31687";if(k==="chiang mai")return"200-31661";if(k==="koh samui"||k==="ko samui")return"200-31693";
-  if(k==="krabi")return"200-31673";if(k==="singapur"||k==="singapore")return"200-31591";
-  if(k==="kuala lumpur")return"200-25824";if(k==="tokio"||k==="tokyo")return"200-27358";
-  if(k==="manila")return"200-74077";if(k==="cebu"||k==="cebu city")return"200-74046";
+  if(k==="berlin")return"200-3848";
+  if(k==="hamburg")return"200-9644";
+  if(k==="muenchen"||k==="munich")return"200-2855";
+  if(k==="frankfurt"||k==="frankfurt am main")return"200-7155";
+  if(k==="koeln"||k==="cologne")return"200-9661";
+  if(k==="duesseldorf")return"200-9648";
+  if(k==="stuttgart")return"200-2860";
+  if(k==="jena")return"200-12168";
+  if(k==="leipzig")return"200-11268";
+  if(k==="dresden")return"200-11258";
+  if(k==="hannover")return"200-8666";
+  if(k==="nuernberg"||k==="nuremberg")return"200-2857";
+  if(k==="bremen")return"200-4271";
+  if(k==="essen")return"200-9649";
+  if(k==="dortmund")return"200-9646";
+  if(k==="mailand"||k==="milan")return"200-45017";
+  if(k==="palermo")return"200-45979";
+  if(k==="wien"||k==="vienna")return"200-2390";
+  if(k==="zuerich"||k==="zurich")return"200-31231";
+  if(k==="paris")return"200-15475";
+  if(k==="london")return"200-26259";
+  if(k==="rom"||k==="rome")return"200-44337";
+  if(k==="barcelona")return"200-29132";
+  if(k==="madrid")return"200-29963";
+  if(k==="lissabon"||k==="lisbon")return"200-27651";
+  if(k==="dubai")return"200-69036";
+  if(k==="istanbul")return"200-31932";
+  if(k==="amsterdam")return"200-17523";
+  if(k==="prag"||k==="prague")return"200-40533";
+  if(k==="warschau"||k==="warsaw")return"200-48673";
+  if(k==="mallorca"||k==="palma de mallorca")return"200-28499";
+  if(k==="antalya")return"200-31926";
+  if(k==="hurghada")return"200-66858";
+  if(k==="punta cana")return"200-191521";
+  if(k==="puerto plata")return"200-68723";
+  if(k==="phuket")return"200-31687";
+  if(k==="chiang mai")return"200-31661";
+  if(k==="koh samui"||k==="ko samui")return"200-31693";
+  if(k==="krabi")return"200-31673";
+  if(k==="singapur"||k==="singapore")return"200-31591";
+  if(k==="kuala lumpur")return"200-25824";
+  if(k==="tokio"||k==="tokyo")return"200-27358";
+  if(k==="manila")return"200-74077";
+  if(k==="cebu"||k==="cebu city")return"200-74046";
   if(k==="dumaguete")return"200-74054";
   return"";
 }
 function slugify(s){
-  return normCity(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+  return normCity(s).replace(/^-+|-+$/g,"")
+    .split(" ").join("-").split(".").join("-");
 }
 function upd(){
   readLang();
