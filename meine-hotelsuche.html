@@ -7,9 +7,10 @@
 <style>
 :root{--r:#0369a1;--d:#0c4a6e;--t:#0f172a}
 html,body{
-  margin:0;padding:14px;min-height:100vh;
+  margin:0;padding:12px 14px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  font-family:sans-serif;color:var(--t);box-sizing:border-box
+  font-family:sans-serif;color:var(--t);box-sizing:border-box;
+  display:flex;flex-direction:column
 }
 .welcome{
   position:fixed;inset:0;background:rgba(15,41,66,.9);
@@ -65,7 +66,7 @@ html,body{
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
   background:#0f2942;padding:9px 14px;border-radius:12px;
-  margin-bottom:14px;flex-wrap:wrap;gap:6px
+  margin-bottom:12px;flex-wrap:wrap;gap:6px;flex-shrink:0
 }
 .tit{font-weight:bold;color:#fff;font-size:1.12rem;margin:0}
 .cp{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
@@ -87,35 +88,38 @@ html,body{
   font-weight:bold;cursor:pointer;white-space:nowrap
 }
 .mbtn.off{background:#1e3a8a;border-color:#60a5fa}
-.row{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px}
+.row{
+  display:flex;flex-wrap:wrap;gap:14px;
+  margin-bottom:12px;flex-shrink:0
+}
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:16px 18px;background:#fff;box-sizing:border-box
+  padding:14px 18px;background:#fff;box-sizing:border-box
 }
 .ct{
   font-weight:bold;font-size:1.05rem;color:var(--d);
   border-bottom:2px solid #e0f2fe;padding-bottom:6px;
-  margin-bottom:12px
+  margin-bottom:10px
 }
 .f{
-  margin-bottom:11px;display:flex;
+  margin-bottom:10px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:11px
+  gap:10px;margin-bottom:10px
 }
 label{
   font-weight:bold;font-size:.83rem;
   margin-bottom:4px;color:#1e3a8a
 }
 input,select{
-  height:40px;padding:0 12px;border:1px solid #93c5fd;
+  height:39px;padding:0 12px;border:1px solid #93c5fd;
   border-radius:8px;box-sizing:border-box;font-size:.96rem;
   background:#f8fafc;color:var(--t);width:100%
 }
 .ac{
-  position:absolute;top:64px;left:0;right:0;background:#fff;
+  position:absolute;top:63px;left:0;right:0;background:#fff;
   border:1px solid #0284c7;border-radius:8px;z-index:99;
   max-height:180px;overflow-y:auto;display:none;
   box-shadow:0 8px 20px rgba(12,74,110,.18)
@@ -134,12 +138,13 @@ input,select{
 }
 .bb{
   border:1px solid #93c5fd;background:#fff;
-  border-radius:12px;padding:14px 16px
+  border-radius:12px;padding:14px 16px;
+  flex:1;display:flex;flex-direction:column
 }
 .bf{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
-  gap:10px
+  gap:10px;flex-shrink:0
 }
 .btn{
   display:flex;align-items:center;justify-content:center;
@@ -155,7 +160,7 @@ input,select{
 .swc{
   display:flex;align-items:center;justify-content:space-between;
   background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-  border-radius:8px;min-height:40px
+  border-radius:8px;min-height:39px
 }
 .sw{position:relative;display:inline-block;width:42px;height:24px}
 .sw input{opacity:0;width:0;height:0}
@@ -171,10 +176,11 @@ input,select{
 .sw input:checked+.sl{background:#0284c7!important}
 .sw input:checked+.sl:before{transform:translateX(18px)}
 .hint{
-  margin-top:11px;background:#0f2942;color:#fff;
-  border:2px solid #991b1b;border-left:6px solid #991b1b;
-  border-radius:8px;padding:8px 12px;
-  font-size:.78rem;line-height:1.3
+  margin-top:12px;background:#0f2942;color:#fff;
+  border:3px solid #991b1b;border-left:7px solid #991b1b;
+  border-radius:8px;padding:12px 16px;
+  font-size:.94rem;line-height:1.45;
+  flex:1;display:flex;flex-direction:column;justify-content:center
 }
 </style>
 </head>
@@ -262,7 +268,7 @@ input,select{
         <option value="5" id="st5">5 Sterne ⭐⭐⭐⭐⭐</option>
       </select>
     </div>
-     <div class="f">
+  <div class="f">
       <div class="swc">
         <label for="ab" id="lblAb" style="margin:0;cursor:pointer">
           Nur Airbnb
@@ -309,13 +315,16 @@ input,select{
       class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintBox">
-    ℹ️ <b>Wichtiger Hinweis:</b> Bitte kontrollieren Sie auf der
-    Buchungsseite alle Filter (z. B. 5 Sterne) und stellen Sie diese
-    bei Bedarf neu ein, da nicht alle Portale sie automatisch
-    übernehmen. Kleinere Orte werden teils ebenfalls nicht direkt
-    übertragen – da Reisedaten und Personenanzahl bereits hinterlegt
-    sind, tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten
-    diese technische Einschränkung der Anbieter zu entschuldigen!
+    <div>
+      ℹ️ <b>Wichtiger Hinweis zur Hotelsuche:</b> Bitte kontrollieren
+      Sie auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne)
+      und stellen Sie diese bei Bedarf neu ein, da nicht alle Portale
+      sie automatisch übernehmen. Kleinere Orte werden teils ebenfalls
+      nicht direkt übertragen – da Reisedaten und Personenanzahl
+      bereits hinterlegt sind, tippen Sie dort einfach noch Ihren
+      Zielort ein. Wir bitten diese technische Einschränkung der
+      Anbieter zu entschuldigen!
+    </div>
   </div>
 </div>
 <script>
@@ -386,20 +395,22 @@ function applyLang(){
   $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
   $("hintBox").innerHTML=e
-    ?"ℹ️ <b>Important Notice:</b> Please check all filters (e.g. "
-      +"5 stars) on the booking page and re-apply them if needed, "
-      +"as not all portals transfer them automatically. Smaller towns "
-      +"may also not be passed directly – since your dates and guest "
-      +"count are already filled in, simply type your destination "
-      +"there to start. We apologize for this technical limitation!"
-    :"ℹ️ <b>Wichtiger Hinweis:</b> Bitte kontrollieren Sie auf der "
-      +"Buchungsseite alle Filter (z. B. 5 Sterne) und stellen Sie "
-      +"diese bei Bedarf neu ein, da nicht alle Portale sie "
-      +"automatisch übernehmen. Kleinere Orte werden teils ebenfalls "
-      +"nicht direkt übertragen – da Reisedaten und Personenanzahl "
-      +"bereits hinterlegt sind, tippen Sie dort einfach noch Ihren "
-      +"Zielort ein. Wir bitten diese technische Einschränkung der "
-      +"Anbieter zu entschuldigen!";
+    ?"<div>ℹ️ <b>Important Notice on Hotel Search:</b> Please "
+      +"make sure to check all filters (e.g. 5 stars) on the booking "
+      +"page and re-apply them if needed, as not all portals "
+      +"transfer them automatically. Smaller towns may also not be "
+      +"passed directly – since your dates and guest count are "
+      +"already filled in, simply type your destination there to "
+      +"start. We apologize for this technical limitation!</div>"
+    :"<div>ℹ️ <b>Wichtiger Hinweis zur Hotelsuche:</b> Bitte "
+      +"kontrollieren Sie auf der Buchungsseite unbedingt alle "
+      +"Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf "
+      +"neu ein, da nicht alle Portale sie automatisch übernehmen. "
+      +"Kleinere Orte werden teils ebenfalls nicht direkt übertragen "
+      +"– da Reisedaten und Personenanzahl bereits hinterlegt sind, "
+      +"tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten "
+      +"diese technische Einschränkung der Anbieter zu "
+      +"entschuldigen!</div>";
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
@@ -475,7 +486,7 @@ function getAid(city){
   if(k==="oslo")return"15987";
   if(k==="helsinki")return"15283";
   if(k==="dublin")return"14916";
-   if(k==="new york")return"318";
+  if(k==="new york")return"318";
   if(k==="los angeles")return"12772";
   if(k==="miami")return"12840";
   if(k==="las vegas")return"17072";
@@ -708,7 +719,6 @@ function upd(){
       px:px,rm:rm,st:st,ab:ab
     }));
   }catch(err){}
-}
 function showAc(list,msg){
   var box=$("lc");box.innerHTML="";
   if(msg){
