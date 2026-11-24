@@ -229,7 +229,6 @@ body:has(#ow:checked) .st{
     </a>
   </div>
 </div>
-
 <div class="row">
   <div class="card">
     <div class="ct" id="c1Tit">📋 Kern-Reisedaten (Direkt-Absprung)</div>
@@ -285,11 +284,11 @@ body:has(#ow:checked) .st{
     <div class="f2" style="margin-bottom:0">
       <div class="f" style="margin:0">
         <label for="od" id="lblOd">Hinflug</label>
-        <input type="date" class="dat" id="od" min="2026-11-19">
+        <input type="date" class="dat" id="od">
       </div>
       <div class="f" id="rb" style="margin:0">
         <label for="rd" id="lblRd">Rückflug</label>
-        <input type="date" class="dat" id="rd" min="2026-11-19">
+        <input type="date" class="dat" id="rd">
       </div>
     </div>
   </div>
@@ -459,6 +458,7 @@ function applyLang(){
     ? "Select stops on website" : "Stopps auf Website wählen";
   renderFlightBgm();
 }
+
 function renderFlightBgm(){
   var b = $("mbtn");
   if(!b) return;
@@ -508,7 +508,6 @@ function iata(val){
   if(p1 >= 0 && p2 > p1) return s.slice(p1 + 1, p2).trim();
   return s.slice(0, 3);
 }
-
 function kiwiSlug(code, rawVal){
   var c = String(code || "").toUpperCase();
   if(c === "BER") return "berlin-deutschland";
@@ -583,7 +582,16 @@ function upd(){
   var raw1 = $("i1").value, raw2 = $("i2").value;
   var o = iata(raw1) || "BER";
   var d = iata(raw2) || "BKK";
-  var od = $("od").value || today;
+  var odVal = $("od").value;
+  if(odVal){
+    $("rd").min = odVal;
+    if(!$("rd").value || $("rd").value < odVal){
+      $("rd").value = odVal;
+    }
+  } else {
+    $("rd").min = today;
+  }
+  var od = odVal || today;
   var rd = $("rd").value || od;
   var px = $("px").value || "1";
   var sOd = od.replace(/-/g, "").slice(2);
@@ -634,8 +642,9 @@ function upd(){
   $(id).addEventListener("input", upd);
   $(id).addEventListener("change", upd);
 });
-$("od").min = iso(new Date());
-$("rd").min = iso(new Date());
+var todayStr = iso(new Date());
+$("od").min = todayStr;
+$("rd").min = todayStr;
 applyLang();
 upd();
 setInterval(updClock, 1000);
