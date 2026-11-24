@@ -98,7 +98,7 @@ html,body{
   margin-bottom:16px
 }
 .f{
-margin-bottom:14px;display:flex;
+ margin-bottom:14px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
-  <option value="3" id="rm3">3 Zimmer</option>
+ <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -384,6 +384,8 @@ function getAid(city){
   if(k==="berlin")return"16154";if(k==="hamburg")return"15727";if(k==="muenchen"||k==="munich")return"15836";
   if(k==="frankfurt"||k==="frankfurt am main")return"15778";if(k==="koeln"||k==="cologne")return"15722";
   if(k==="duesseldorf")return"15737";if(k==="stuttgart")return"15791";if(k==="wien"||k==="vienna")return"14756";
+  if(k==="heidelberg")return"15780";if(k==="leipzig")return"15760";if(k==="dresden")return"15740";
+  if(k==="hannover")return"15751";if(k==="nuernberg"||k==="nuremberg")return"15793";if(k==="bremen")return"15716";
   if(k==="zuerich"||k==="zurich")return"16590";if(k==="paris")return"15470";if(k==="london")return"233";
   if(k==="rom"||k==="rome")return"16582";if(k==="barcelona")return"14563";if(k==="madrid")return"16583";
   if(k==="lissabon"||k==="lisbon")return"15192";if(k==="dubai")return"2994";if(k==="istanbul")return"14932";
@@ -490,7 +492,7 @@ function upd(){
       (st>0?"&hotelStarRating="+st:"");
     $("h5").href=aid
       ?(ag+"&city="+aid)
-      :(ag+"&textToSearch="+q+"&searchText="+qFull);
+      :(ag+"&searchText="+q);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
