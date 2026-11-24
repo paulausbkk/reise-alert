@@ -98,7 +98,7 @@ html,body{
   margin-bottom:16px
 }
 .f{
-  margin-bottom:14px;display:flex;
+margin-bottom:14px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
-<option value="3" id="rm3">3 Zimmer</option>
+  <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -490,12 +490,7 @@ function upd(){
       (st>0?"&hotelStarRating="+st:"");
     $("h5").href=aid
       ?(ag+"&city="+aid)
-      :(P+H_AG+"/"+agLoc+
-        "/pages/agoda/default/DestinationSearchResult.aspx"+
-        "?checkin="+ci+"&checkout="+co+"&los="+n+
-        "&adults="+px+"&children=0&rooms="+rm+
-        "&currency=EUR&locale="+agLoc+
-        "&textToSearch="+q+(st>0?"&hotelStarRating="+st:""));
+      :(ag+"&textToSearch="+q+"&searchText="+qFull);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
