@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
- <option value="3" id="rm3">3 Zimmer</option>
+   <option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -321,7 +321,6 @@ var H_BK="www."+String.fromCharCode(98,111,111,107,105,110,103)+".com";
 var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111)+".de";
 var H_OM="geocoding-api."+String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
-var trCache={};
 try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
 function isEn(){return lang==="en";}
 function applyLang(){
@@ -417,13 +416,18 @@ function getTid(city){
   var k=normCity(city);
   if(k==="berlin")return"200-3848";if(k==="hamburg")return"200-9644";if(k==="muenchen"||k==="munich")return"200-2855";
   if(k==="frankfurt"||k==="frankfurt am main")return"200-7155";if(k==="koeln"||k==="cologne")return"200-9661";
-  if(k==="duesseldorf")return"200-9648";if(k==="stuttgart")return"200-2860";
+  if(k==="duesseldorf")return"200-9648";if(k==="stuttgart")return"200-2860";if(k==="jena")return"200-12168";
+  if(k==="leipzig")return"200-11268";if(k==="dresden")return"200-11258";if(k==="hannover")return"200-8666";
+  if(k==="nuernberg"||k==="nuremberg")return"200-2857";if(k==="bremen")return"200-4271";
+  if(k==="essen")return"200-9649";if(k==="dortmund")return"200-9646";
   if(k==="bangkok")return"200-31654";if(k==="mailand"||k==="milan")return"200-45017";if(k==="palermo")return"200-45979";
   if(k==="wien"||k==="vienna")return"200-2390";if(k==="zuerich"||k==="zurich")return"200-31231";
   if(k==="paris")return"200-15475";if(k==="london")return"200-26259";
   if(k==="rom"||k==="rome")return"200-44337";if(k==="barcelona")return"200-29132";if(k==="madrid")return"200-29963";
   if(k==="lissabon"||k==="lisbon")return"200-27651";if(k==="dubai")return"200-69036";if(k==="istanbul")return"200-31932";
   if(k==="amsterdam")return"200-17523";if(k==="prag"||k==="prague")return"200-40533";if(k==="warschau"||k==="warsaw")return"200-48673";
+  if(k==="mallorca"||k==="palma de mallorca")return"200-28499";if(k==="antalya")return"200-31926";
+  if(k==="hurghada")return"200-66858";if(k==="punta cana")return"200-191521";if(k==="puerto plata")return"200-68723";
   if(k==="phuket")return"200-31687";if(k==="chiang mai")return"200-31661";if(k==="koh samui"||k==="ko samui")return"200-31693";
   if(k==="krabi")return"200-31673";if(k==="singapur"||k==="singapore")return"200-31591";
   if(k==="kuala lumpur")return"200-25824";if(k==="tokio"||k==="tokyo")return"200-27358";
@@ -431,43 +435,25 @@ function getTid(city){
   if(k==="dumaguete")return"200-74054";
   return"";
 }
+function getTrCountryId(country,code){
+  var c=normCity(country),k=String(code||"").toLowerCase();
+  if(k==="de"||c==="deutschland"||c==="germany")return"200-43";
+  if(k==="at"||c==="oesterreich"||c==="austria")return"200-13";
+  if(k==="ch"||c==="schweiz"||c==="switzerland")return"200-204";
+  if(k==="es"||c==="spanien"||c==="spain")return"200-195";
+  if(k==="it"||c==="italien"||c==="italy")return"200-105";
+  if(k==="fr"||c==="frankreich"||c==="france")return"200-73";
+  if(k==="gr"||c==="griechenland"||c==="greece")return"200-84";
+  if(k==="tr"||c==="tuerkei"||c==="turkey")return"200-215";
+  if(k==="th"||c==="thailand")return"200-209";
+  if(k==="ph"||c==="philippinen"||c==="philippines")return"200-168";
+  if(k==="do"||c==="dominikanische republik"||c==="dominican republic")return"200-46";
+  if(k==="eg"||c==="aegypten"||c==="egypt")return"200-63";
+  if(k==="us"||c==="usa"||c==="united states"||c==="vereinigte staaten")return"200-223";
+  return"";
+}
 function slugify(s){
   return normCity(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
-}
-function buildTrUrl(tid,slug,ci,co,px,rm,st,qFull){
-  var e=isEn(),trBase=e?"/en-GB":"/de";
-  var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
-  var perRm=Math.max(1,Math.floor(px/rm));
-  var rem=px%rm,rc="";
-  for(var i=0;i<rm;i++){
-    rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
-  }
-  if(!tid){
-    return P+H_TR+trBase+"/srl?q="+qFull+
-      "&search=dr-"+dt1+"-"+dt2+";rc-"+rc+(st>0?";st-"+st:"");
-  }
-  var path=slug?"/odr/hotels-"+slug:"/odr/hotels";
-  return P+H_TR+trBase+path+"?search="+tid+
-    ";dr-"+dt1+"-"+dt2+";rc-"+rc+(st>0?";st-"+st:"");
-}
-function fetchTrDest(query,done){
-  var key=normCity(query);
-  if(!key){done(null);return;}
-  if(trCache.hasOwnProperty(key)){done(trCache.valueOf()[key]);return;}
-  var e=isEn(),trBase=e?"/en-GB":"/de";
-  var api=P+H_TR+trBase+"/api/v1/geo/autocomplete?query="+
-    encodeURIComponent(query)+"&limit=5";
-  fetch(api).then(function(r){return r.json();}).then(function(j){
-    var items=(j&&(j.suggestions||j.results||j.items||j))||new Array();
-    var first=items&&items.at?items.at(0):null;
-    if(first){
-      var rawId=String(first.id||first.conceptId||first.pathId||"");
-      var tid=rawId.indexOf("-")>-1?rawId:(rawId?"200-"+rawId:"");
-      var slug=slugify(first.slug||first.name||query);
-      var res=tid?{tid:tid,slug:slug}:null;
-      trCache[key]=res;done(res);
-    }else{done(null);}
-  }).catch(function(){done(null);});
 }
 function upd(){
   var e=isEn(),loc=e?"en-GB":"de-DE";
@@ -530,8 +516,20 @@ function upd(){
     $("h5").href=aid
       ?(ag+"&city="+aid)
       :(ag+"&textToSearch="+q+"&searchText="+qFull);
+    var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+    var perRm=Math.max(1,Math.floor(px/rm));
+    var rem=px%rm,rc="";
+    for(var i=0;i<rm;i++){
+      rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
+    }
+    var trBase=e?"/en-GB":"/de";
+    var trUseId=tid||getTrCountryId(selCountry,cc);
     var trSlug=slugify(fullCity||city);
-    $("h6").href=buildTrUrl(tid,trSlug,ci,co,px,rm,st,qFull);
+    var trSrch=(trUseId?trUseId+";":"")+"dr-"+dt1+"-"+dt2+
+      ";rc-"+rc+(st>0?";st-"+st:"");
+    $("h6").href=trUseId
+      ?(P+H_TR+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
+      :(P+H_TR+trBase+"/odr/hotels?search="+trSrch);
     $("h8").href=P+"www.airbnb.de"+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px;
@@ -570,8 +568,6 @@ function showAc(list,msg){
       selCountry=it.country||"";
       cc=(it.country_code||"de").toLowerCase();
       box.style.display="none";upd();
-      var qFull=(it.name&&selCountry)?(it.name+", "+selCountry):it.name;
-      fetchTrDest(qFull,function(){upd();});
     };
     box.appendChild(d);
   });
@@ -631,24 +627,6 @@ $("city").addEventListener("input",function(){
       showAc(res,errMsg);
     });
   },200);
-});
-$("h6").addEventListener("click",function(ev){
-  var city=$("city").value.trim();
-  var ci=$("ci").value,co=$("co").value;
-  var px=+$("px").value||2,rm=+$("rm").value||1;
-  var st=+$("st").value||0;
-  var fullCity=(city&&selCountry)?(city+", "+selCountry):city;
-  var qFull=encodeURIComponent(fullCity);
-  var knownTid=getTid(city);
-  if(!city||!ci||!co||knownTid)return;
-  ev.preventDefault();
-  var win=window.open("about:blank","_blank");
-  fetchTrDest(fullCity||city,function(hit){
-    var url=hit
-      ?buildTrUrl(hit.tid,hit.slug,ci,co,px,rm,st,qFull)
-      :buildTrUrl("",slugify(fullCity||city),ci,co,px,rm,st,qFull);
-    if(win){win.location.href=url;}else{window.open(url,"_blank");}
-  });
 });
 document.addEventListener("click",function(ev){
   if(!$("lc").contains(ev.target)&&ev.target!==$("city")){
