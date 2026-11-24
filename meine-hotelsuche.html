@@ -435,26 +435,11 @@ function getTid(city){
   if(k==="dumaguete")return"200-74054";
   return"";
 }
-function getTrCountryId(country,code){
-  var c=normCity(country),k=String(code||"").toLowerCase();
-  if(k==="de"||c==="deutschland"||c==="germany")return"200-43";
-  if(k==="at"||c==="oesterreich"||c==="austria")return"200-13";
-  if(k==="ch"||c==="schweiz"||c==="switzerland")return"200-204";
-  if(k==="es"||c==="spanien"||c==="spain")return"200-195";
-  if(k==="it"||c==="italien"||c==="italy")return"200-105";
-  if(k==="fr"||c==="frankreich"||c==="france")return"200-73";
-  if(k==="gr"||c==="griechenland"||c==="greece")return"200-84";
-  if(k==="tr"||c==="tuerkei"||c==="turkey")return"200-215";
-  if(k==="th"||c==="thailand")return"200-209";
-  if(k==="ph"||c==="philippinen"||c==="philippines")return"200-168";
-  if(k==="do"||c==="dominikanische republik"||c==="dominican republic")return"200-46";
-  if(k==="eg"||c==="aegypten"||c==="egypt")return"200-63";
-  if(k==="us"||c==="usa"||c==="united states"||c==="vereinigte staaten")return"200-223";
-  return"";
-}
-function slugify(s){
-  return normCity(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
-}
+Verwende Code mit Vorsicht.
+
+Block 5 von 6
+
+javascript
 function upd(){
   var e=isEn(),loc=e?"en-GB":"de-DE";
   var now=new Date(),t=iso(now);
@@ -523,13 +508,19 @@ function upd(){
       rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
     }
     var trBase=e?"/en-GB":"/de";
-    var trUseId=tid||getTrCountryId(selCountry,cc);
-    var trSlug=slugify(fullCity||city);
-    var trSrch=(trUseId?trUseId+";":"")+"dr-"+dt1+"-"+dt2+
-      ";rc-"+rc+(st>0?";st-"+st:"");
-    $("h6").href=trUseId
-      ?(P+H_TR+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
-      :(P+H_TR+trBase+"/odr/hotels?search="+trSrch);
+    var trRoom=px===1?"1":(px===2?"7":"9");
+    if(tid){
+      var trSrch=tid+";dr-"+dt1+"-"+dt2+
+        ";rc-"+rc+(st>0?";st-"+st:"");
+      $("h6").href=P+H_TR+trBase+"/odr/hotels?search="+trSrch;
+    }else{
+      $("h6").href=P+H_TR+
+        "/?aDateRange%5Barr%5D="+ci+
+        "&aDateRange%5Bdep%5D="+co+
+        "&iRoomType="+trRoom+
+        "&iPathId=0&sQuery="+qFull+
+        (st>0?"&aHotelStars="+st:"");
+    }
     $("h8").href=P+"www.airbnb.de"+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px;
@@ -552,6 +543,11 @@ function upd(){
     }));
   }catch(err){}
 }
+Verwende Code mit Vorsicht.
+
+Block 6 von 6
+
+javascript
 function showAc(list,msg){
   var box=$("lc");box.innerHTML="";
   if(msg){
