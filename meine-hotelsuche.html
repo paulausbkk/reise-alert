@@ -98,7 +98,7 @@ html,body{
   margin-bottom:16px
 }
 .f{
-  margin-bottom:14px;display:flex;
+ margin-bottom:14px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
@@ -249,7 +249,7 @@ input,select{
         <select id="rm">
           <option value="1" id="rm1" selected>1 Zimmer</option>
           <option value="2" id="rm2">2 Zimmer</option>
-  <option value="3" id="rm3">3 Zimmer</option>
+<option value="3" id="rm3">3 Zimmer</option>
         </select>
       </div>
     </div>
@@ -393,11 +393,24 @@ function getAid(city){
   if(k==="rom"||k==="rome")return"16582";if(k==="barcelona")return"14563";if(k==="madrid")return"16583";
   if(k==="lissabon"||k==="lisbon")return"15192";if(k==="dubai")return"2994";if(k==="istanbul")return"14932";
   if(k==="amsterdam")return"13868";if(k==="prag"||k==="prague")return"16578";if(k==="warschau"||k==="warsaw")return"16107";
+  if(k==="budapest")return"15129";if(k==="athen"||k==="athens")return"16575";if(k==="mailand")return"4894";
+  if(k==="venedig"||k==="venice")return"16585";if(k==="florenz"||k==="florence")return"16581";
+  if(k==="neapel"||k==="naples")return"16584";if(k==="bruessel"||k==="brussels")return"14672";
+  if(k==="kopenhagen"||k==="copenhagen")return"14830";if(k==="stockholm")return"16143";
+  if(k==="oslo")return"15987";if(k==="helsinki")return"15283";if(k==="dublin")return"14916";
+  if(k==="new york")return"318";if(k==="los angeles")return"12772";if(k==="miami")return"12840";
+  if(k==="las vegas")return"17072";if(k==="toronto")return"16254";if(k==="sydney")return"14370";
+  if(k==="melbourne")return"14367";if(k==="auckland")return"14453";if(k==="kairo"||k==="cairo")return"14708";
+  if(k==="hurghada")return"15342";if(k==="marrakesch"||k==="marrakech")return"15654";
+  if(k==="kapstadt"||k==="cape town")return"14722";if(k==="seoul")return"14690";
+  if(k==="hongkong"||k==="hong kong")return"16808";if(k==="taipeh"||k==="taipei")return"4951";
+  if(k==="pattaya")return"8584";if(k==="hua hin")return"17019";if(k==="khao lak")return"15443";
   if(k==="phuket")return"16056";if(k==="chiang mai")return"7401";if(k==="koh samui"||k==="ko samui")return"16573";
   if(k==="krabi")return"14865";if(k==="bali"||k==="denpasar")return"17193";if(k==="da nang"||k==="danang")return"16440";
   if(k==="hoi an")return"16552";if(k==="ho-chi-minh-stadt"||k==="saigon")return"13170";if(k==="hanoi")return"2758";
   if(k==="singapur"||k==="singapore")return"4064";if(k==="kuala lumpur")return"14524";if(k==="tokio"||k==="tokyo")return"5085";
   if(k==="manila")return"1622";if(k==="cebu")return"4001";if(k==="dumaguete")return"16565";if(k==="pagadian")return"89122";
+  if(k==="boracay")return"15903";if(k==="palawan"||k==="puerto princesa")return"16069";
   return"";
 }
 function getBid(city){
@@ -434,8 +447,8 @@ function getTid(city){
   if(k==="manila")return"200-74077";if(k==="cebu"||k==="cebu city")return"200-74046";
   if(k==="dumaguete")return"200-74054";
   return"";
-}
-function upd(){
+  }
+  function upd(){
   var e=isEn(),loc=e?"en-GB":"de-DE";
   var now=new Date(),t=iso(now);
   $("dt").textContent=now.toLocaleDateString(loc)+
