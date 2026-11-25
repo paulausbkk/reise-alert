@@ -310,7 +310,6 @@ input,select{
     <a id="h5" href="#" target="_blank" rel="noreferrer noopener"
       class="btn b5 htl">Agoda</a>
     <a id="h6" href="#" target="_blank" rel="noreferrer noopener"
-      onclick="return openTrivago(event)"
       class="btn b6 htl">Trivago</a>
     <a id="h8" href="#" target="_blank"
       class="btn b8 off">Airbnb</a>
@@ -602,44 +601,6 @@ function slugify(s){
   return normCity(s).replace(/^-+|-+$/g,"")
     .split(" ").join("-").split(".").join("-");
 }
-function openTrivago(ev){
-  if(ev)ev.preventDefault();
-  var e=isEn(),city=$("city").value.trim();
-  var fullCity=(city&&selCountry)?(city+", "+selCountry):city;
-  var ci=$("ci").value,co=$("co").value;
-  var px=+$("px").value||2,rm=+$("rm").value||1;
-  var st=+$("st").value||0;
-  var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
-  var perRm=Math.max(1,Math.floor(px/rm));
-  var rem=px%rm,rc="";
-  for(var i=0;i<rm;i++){
-    rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
-  }
-  var trHost=H_TR+(e?".com":".de");
-  var trBase=e?"/en-US":"/de";
-  var trSlug=slugify(city||"hotels");
-  var tid=getTid(city);
-  var tail="dr-"+dt1+"-"+dt2+";rc-"+rc+(st>0?";st-"+st:"");
-  var fallback=$("h6").href;
-  var win=window.open("about:blank","_blank");
-  function go(u){
-    if(win){win.location.href=u;}else{window.location.href=u;}
-  }
-  if(tid){
-    go(P+trHost+trBase+"/srl/hotels-"+trSlug+"?search="+tid+";"+tail);
-    return false;
-  }
-  var api=P+trHost+"/api/v1/accommodation/search/suggestions?query="+
-    encodeURIComponent(fullCity||city);
-  fetch(api).then(function(r){return r.json();}).then(function(j){
-    var m=JSON.stringify(j||"").match(/200-\d+/);
-    if(m&&m.length>0){
-      go(P+trHost+trBase+"/srl/hotels-"+trSlug+
-        "?search="+m.slice(0,1).join("")+";"+tail);
-    }else{go(fallback);}
-  }).catch(function(){go(fallback);});
-  return false;
-}
 function upd(){
   readLang();
   var e=isEn(),loc=e?"en-GB":"de-DE";
@@ -724,10 +685,13 @@ function upd(){
     var trSlug=slugify(city);
     var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
       ";rc-"+rc+(st>0?";st-"+st:"");
+    var rType=rm>1?"9":(px===1?"1":"7");
     $("h6").href=tid
-      ?(P+trHost+trBase+"/srl/hotels-"+trSlug+"?search="+trSrch)
-      :(P+trHost+trBase+"/srl/hotels-"+trSlug+"?sQuery="+qFull+
-        "&search="+trSrch);
+      ?(P+trHost+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
+      :(P+trHost+trBase+"/srl?sQuery="+qFull+
+        "&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+
+        "&iRoomType="+rType+
+        "&aRooms%5B0%5D%5Badults%5D="+px);
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
