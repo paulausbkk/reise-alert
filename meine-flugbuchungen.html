@@ -145,9 +145,13 @@ select{border-color:#93c5fd;color:var(--t)}
 .cpbtn{
   height:39px;padding:0 12px;background:#e0f2fe;color:#0369a1;
   border:1px solid #7dd3fc;border-radius:8px;font-weight:bold;
-  cursor:pointer;white-space:nowrap;font-size:.82rem
+  cursor:pointer;white-space:nowrap;font-size:.82rem;
+  transition:background .2s,color .2s,border-color .2s
 }
 .cpbtn:hover{background:#bae6fd}
+.cpbtn.ok,.cpbtn.ok:hover{
+  background:#16a34a;color:#ffffff;border-color:#15803d
+}
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
   border-left:5px solid #0284c7;border-radius:8px;
@@ -306,7 +310,7 @@ select{border-color:#93c5fd;color:var(--t)}
         <div class="inrow">
           <input type="text" id="u3" placeholder="z.B. ABC123">
           <button type="button" class="cpbtn" id="cpPnr"
-            onclick="cp('u3','PNR')">📋 Kopieren</button>
+            onclick="cp('u3','PNR',this)">📋 Kopieren</button>
         </div>
       </div>
       <div class="f" id="f_fn">
@@ -314,7 +318,7 @@ select{border-color:#93c5fd;color:var(--t)}
         <div class="inrow">
           <input type="text" id="u_fn" placeholder="z.B. MAX">
           <button type="button" class="cpbtn" id="cpFn"
-            onclick="cp('u_fn','Vorname')">📋 Kopieren</button>
+            onclick="cp('u_fn','Vorname',this)">📋 Kopieren</button>
         </div>
       </div>
       <div class="f req" id="f_ln">
@@ -322,7 +326,7 @@ select{border-color:#93c5fd;color:var(--t)}
         <div class="inrow">
           <input type="text" id="u6" placeholder="z.B. MUSTERMANN">
           <button type="button" class="cpbtn" id="cpLn"
-            onclick="cp('u6','Nachname')">📋 Kopieren</button>
+            onclick="cp('u6','Nachname',this)">📋 Kopieren</button>
         </div>
       </div>
       <div class="f" id="f_mail">
@@ -330,7 +334,7 @@ select{border-color:#93c5fd;color:var(--t)}
         <div class="inrow">
           <input type="email" id="u4" placeholder="name@beispiel.de">
           <button type="button" class="cpbtn" id="cpMail"
-            onclick="cp('u4','E-Mail')">📋 Kopieren</button>
+            onclick="cp('u4','E-Mail',this)">📋 Kopieren</button>
         </div>
       </div>
     </div>
@@ -344,7 +348,9 @@ select{border-color:#93c5fd;color:var(--t)}
           <input type="text" id="u_tknr"
             placeholder="z.B. 235-1234567890">
           <button type="button" class="cpbtn" id="cpTk"
-            onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
+            onclick="cp('u_tknr','Ticket-Nr.',this)">
+            📋 Kopieren
+          </button>
         </div>
       </div>
       <div class="f">
@@ -352,7 +358,7 @@ select{border-color:#93c5fd;color:var(--t)}
         <div class="inrow">
           <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
           <button type="button" class="cpbtn" id="cpPp"
-            onclick="cp('u_pp','Pass-Nr.')">📋 Kopieren</button>
+            onclick="cp('u_pp','Pass-Nr.',this)">📋 Kopieren</button>
         </div>
       </div>
     </div>
@@ -381,6 +387,7 @@ select{border-color:#93c5fd;color:var(--t)}
 const byId=id=>document.getElementById(id);
 const keys="u5;u3;u_fn;u6;u4;u_tknr;u_pp".split(";");
 const upKeys="u3;u_fn;u6;u_pp".split(";");
+const cpIds="cpPnr;cpFn;cpLn;cpMail;cpTk;cpPp".split(";");
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let ci=0,bgmOn=false,lang="de";
 try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
@@ -409,6 +416,14 @@ const guides={
   mom:"1. 'Trips' öffnen|2. Mit Buchungs-E-Mail einloggen",
   opo:"1. 'Meine Reisen'|2. E-Mail & Buchungsnummer"
 };
+
+function resetCpBtns(){
+  const cpTxt=isEn()?"📋 Copy":"📋 Kopieren";
+  cpIds.forEach(cid=>{
+    const b=byId(cid);
+    if(b){b.classList.remove("ok");b.textContent=cpTxt;}
+  });
+}
 
 function applyLang(){
   const e=isEn();
@@ -441,10 +456,7 @@ function applyLang(){
     ?"Ticket Number (optional)":"Ticketnummer (freiwillig)";
   byId("lblPp").textContent=e
     ?"Passport Number (optional)":"Reisepassnummer (freiwillig)";
-  const cpTxt=e?"📋 Copy":"📋 Kopieren";
-  byId("cpPnr").textContent=cpTxt;byId("cpFn").textContent=cpTxt;
-  byId("cpLn").textContent=cpTxt;byId("cpMail").textContent=cpTxt;
-  byId("cpTk").textContent=cpTxt;byId("cpPp").textContent=cpTxt;
+  resetCpBtns();
   byId("btnNote").textContent=e?"1️⃣ Open Sticky Note":"1️⃣ Spickzettel öffnen";
   byId("go").textContent=e
     ?"2️⃣ Open Airline Website ➡️":"2️⃣ Airline-Seite öffnen ➡️";
@@ -492,7 +504,7 @@ function normCaps(){
     if(el){const up=el.value.toUpperCase();if(el.value!==up)el.value=up;}
   });
 }
-function cp(id,label){
+function cp(id,label,btn){
   normCaps();const el=byId(id),val=el.value.trim();
   if(!val){
     byId("ts").textContent=isEn()
@@ -502,6 +514,10 @@ function cp(id,label){
   }
   if(navigator.clipboard)navigator.clipboard.writeText(val).catch(()=>{});
   else{el.select();try{document.execCommand("copy")}catch(e){}}
+  if(btn){
+    btn.classList.add("ok");
+    btn.textContent=isEn()?"✅ Copied":"✅ Kopiert";
+  }
   byId("ts").textContent=isEn()
     ?"✅ "+label+" ("+val+") copied!":"✅ "+label+" ("+val+") kopiert!";
   byId("ts").style.display="block";
@@ -587,7 +603,11 @@ async function openNote(){
           btn.style.color="#fff";btn.style.border="none";
           btn.style.borderRadius="4px";btn.style.padding="4px 8px";
           btn.style.cursor="pointer";btn.style.fontSize="12px";
-          btn.onclick=()=>{navigator.clipboard.writeText(val);btn.textContent="✅";};
+          btn.onclick=()=>{
+            navigator.clipboard.writeText(val);
+            btn.style.background="#16a34a";
+            btn.textContent="✅";
+          };
           row.appendChild(txt);row.appendChild(btn);b.appendChild(row);
         }
       });
@@ -644,7 +664,8 @@ function sv(){
   applyLang();sv();setInterval(updClock,1000);
 })();
 keys.forEach(k=>{
-  byId(k).addEventListener("input",sv);byId(k).addEventListener("change",sv);
+  byId(k).addEventListener("input",()=>{resetCpBtns();sv();});
+  byId(k).addEventListener("change",()=>{resetCpBtns();sv();});
 });
 </script>
 </body>
