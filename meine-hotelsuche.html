@@ -440,69 +440,69 @@ function normCity(s){
     .replace(/\u00e4/g,"ae").replace(/\u00f6/g,"oe")
     .replace(/\u00fc/g,"ue").replace(/\u00df/g,"ss");
 }
-function getAgodaSlug(city){
+function getAid(city){
   var k=normCity(city);
-  if(k==="bangkok")return"bangkok-th";
-  if(k==="mailand"||k==="milan")return"milan-it";
-  if(k==="palermo")return"palermo-it";
-  if(k==="berlin")return"berlin-de";
-  if(k==="hamburg")return"hamburg-de";
-  if(k==="muenchen"||k==="munich")return"munich-de";
-  if(k==="frankfurt"||k==="frankfurt am main")return"frankfurt-am-main-de";
-  if(k==="koeln"||k==="cologne")return"cologne-de";
-  if(k==="duesseldorf")return"dusseldorf-de";
-  if(k==="stuttgart")return"stuttgart-de";
-  if(k==="wien"||k==="vienna")return"vienna-at";
-  if(k==="hannover")return"hannover-de";
-  if(k==="leipzig")return"leipzig-de";
-  if(k==="dresden")return"dresden-de";
-  if(k==="nuernberg"||k==="nuremberg")return"nuremberg-de";
-  if(k==="bremen")return"bremen-de";
-  if(k==="zuerich"||k==="zurich")return"zurich-ch";
-  if(k==="paris")return"paris-fr";
-  if(k==="london")return"london-gb";
-  if(k==="rom"||k==="rome")return"rome-it";
-  if(k==="barcelona")return"barcelona-es";
-  if(k==="madrid")return"madrid-es";
-  if(k==="lissabon"||k==="lisbon")return"lisbon-pt";
-  if(k==="dubai")return"dubai-ae";
-  if(k==="istanbul")return"istanbul-tr";
-  if(k==="amsterdam")return"amsterdam-nl";
-  if(k==="prag"||k==="prague")return"prague-cz";
-  if(k==="warschau"||k==="warsaw")return"warsaw-pl";
-  if(k==="budapest")return"budapest-hu";
-  if(k==="athen"||k==="athens")return"athens-gr";
-  if(k==="venedig"||k==="venice")return"venice-it";
-  if(k==="florenz"||k==="florence")return"florence-it";
-  if(k==="neapel"||k==="naples")return"naples-it";
-  if(k==="bruessel"||k==="brussels")return"brussels-be";
-  if(k==="kopenhagen"||k==="copenhagen")return"copenhagen-dk";
-  if(k==="stockholm")return"stockholm-se";
-  if(k==="oslo")return"oslo-no";
-  if(k==="helsinki")return"helsinki-fi";
-  if(k==="dublin")return"dublin-ie";
-  if(k==="new york")return"new-york-ny-us";
-  if(k==="los angeles")return"los-angeles-ca-us";
-  if(k==="miami")return"miami-fl-us";
-  if(k==="las vegas")return"las-vegas-nv-us";
-  if(k==="toronto")return"toronto-on-ca";
-  if(k==="sydney")return"sydney-nsw-au";
-  if(k==="melbourne")return"melbourne-vic-au";
-  if(k==="auckland")return"auckland-nz";
-  if(k==="kairo"||k==="cairo")return"cairo-eg";
-  if(k==="hurghada")return"hurghada-eg";
-  if(k==="marrakesch"||k==="marrakech")return"marrakech-ma";
-  if(k==="phuket")return"phuket-th";
-  if(k==="chiang mai")return"chiang-mai-th";
-  if(k==="koh samui"||k==="ko samui")return"koh-samui-th";
-  if(k==="krabi")return"krabi-th";
-  if(k==="singapur"||k==="singapore")return"singapore-sg";
-  if(k==="kuala lumpur")return"kuala-lumpur-my";
-  if(k==="tokio"||k==="tokyo")return"tokyo-jp";
-  if(k==="manila")return"manila-ph";
-  if(k==="cebu"||k==="cebu city")return"cebu-ph";
-  if(k==="dumaguete")return"dumaguete-ph";
-  if(k==="pagadian")return"pagadian-ph";
+  if(k==="bangkok")return"9395";
+  if(k==="mailand"||k==="milan")return"4894";
+  if(k==="palermo")return"16011";
+  if(k==="berlin")return"16154";
+  if(k==="hamburg")return"15727";
+  if(k==="muenchen"||k==="munich")return"15836";
+  if(k==="frankfurt"||k==="frankfurt am main")return"15778";
+  if(k==="koeln"||k==="cologne")return"15722";
+  if(k==="duesseldorf")return"15737";
+  if(k==="stuttgart")return"15791";
+  if(k==="wien"||k==="vienna")return"14756";
+  if(k==="hannover")return"15751";
+  if(k==="leipzig")return"15760";
+  if(k==="dresden")return"15740";
+  if(k==="nuernberg"||k==="nuremberg")return"15793";
+  if(k==="bremen")return"15716";
+  if(k==="zuerich"||k==="zurich")return"16590";
+  if(k==="paris")return"15470";
+  if(k==="london")return"233";
+  if(k==="rom"||k==="rome")return"16582";
+  if(k==="barcelona")return"14563";
+  if(k==="madrid")return"16583";
+  if(k==="lissabon"||k==="lisbon")return"15192";
+  if(k==="dubai")return"2994";
+  if(k==="istanbul")return"14932";
+  if(k==="amsterdam")return"13868";
+  if(k==="prag"||k==="prague")return"16578";
+  if(k==="warschau"||k==="warsaw")return"16107";
+  if(k==="budapest")return"15129";
+  if(k==="athen"||k==="athens")return"16575";
+  if(k==="venedig"||k==="venice")return"16585";
+  if(k==="florenz"||k==="florence")return"16581";
+  if(k==="neapel"||k==="naples")return"16584";
+  if(k==="bruessel"||k==="brussels")return"14672";
+  if(k==="kopenhagen"||k==="copenhagen")return"14830";
+  if(k==="stockholm")return"16143";
+  if(k==="oslo")return"15987";
+  if(k==="helsinki")return"15283";
+  if(k==="dublin")return"14916";
+  if(k==="new york")return"318";
+  if(k==="los angeles")return"12772";
+  if(k==="miami")return"12840";
+  if(k==="las vegas")return"17072";
+  if(k==="toronto")return"16254";
+  if(k==="sydney")return"14370";
+  if(k==="melbourne")return"14367";
+  if(k==="auckland")return"14453";
+  if(k==="kairo"||k==="cairo")return"14708";
+  if(k==="hurghada")return"15342";
+  if(k==="marrakesch"||k==="marrakech")return"15654";
+  if(k==="phuket")return"16056";
+  if(k==="chiang mai")return"7401";
+  if(k==="koh samui"||k==="ko samui")return"17198";
+  if(k==="krabi")return"14865";
+  if(k==="singapur"||k==="singapore")return"4064";
+  if(k==="kuala lumpur")return"14524";
+  if(k==="tokio"||k==="tokyo")return"5085";
+  if(k==="manila")return"15644";
+  if(k==="cebu"||k==="cebu city")return"4001";
+  if(k==="dumaguete")return"14925";
+  if(k==="pagadian")return"85509";
   return"";
 }
 function getBid(city){
@@ -623,11 +623,9 @@ function upd(){
   }
   var px=+$("px").value||2,rm=+$("rm").value||1;
   var st=+$("st").value||0,ab=$("ab").checked;
-  var agSlug=getAgodaSlug(city);
-  if(!agSlug&&city&&selCountry&&cc&&cc.length===2){
-    agSlug=slugify(city)+"-"+cc.toLowerCase();
-  }
-  var bid=getBid(city),tid=getTid(city);
+  var aid=getAid(city),bid=getBid(city),tid=getTid(city);
+  var agCitySlug=(city&&selCountry&&cc&&cc.length===2)
+    ?(slugify(city)+"-"+cc.toLowerCase()):"";
   $("f4").action=P+H_BK+"/searchresults.html";
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off",ab);
@@ -672,14 +670,16 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-gb":"de-de";
-    var agParams="?checkin="+ci+"&checkout="+co+
-      "&checkIn="+ci+"&los="+n+"&adults="+px+
-      "&children=0&rooms="+rm+"&currency=EUR&locale="+agLoc+
+    var agSearch=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
+      "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
+      "&currency=EUR&locale="+agLoc+"&hl="+agLoc+
+      "&language="+agLoc+"&cid=1844104"+
       (st>0?"&hotelStarRating="+st:"");
-    $("h5").href=agSlug
-      ?(P+H_AG+"/"+agLoc+"/city/"+agSlug+".html"+agParams)
-      :(P+H_AG+"/"+agLoc+"/search"+agParams+
-        "&city=0&textToSearch="+qFull);
+    $("h5").href=aid
+      ?(agSearch+"&city="+aid)
+      :(agCitySlug
+        ?(P+H_AG+"/"+agLoc+"/city/"+agCitySlug+".html")
+        :(agSearch+"&textToSearch="+qFull));
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
