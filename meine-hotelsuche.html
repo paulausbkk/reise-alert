@@ -307,9 +307,9 @@ input,select{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="#" target="_blank"
+    <a id="h5" href="#" target="_blank" rel="noreferrer noopener"
       class="btn b5 htl">Agoda</a>
-    <a id="h6" href="#" target="_blank"
+    <a id="h6" href="#" target="_blank" rel="noreferrer noopener"
       class="btn b6 htl">Trivago</a>
     <a id="h8" href="#" target="_blank"
       class="btn b8 off">Airbnb</a>
@@ -673,9 +673,8 @@ function upd(){
       (st>0?"&hotelStarRating="+st:"");
     $("h5").href=agSlug
       ?(P+H_AG+"/"+agLoc+"/city/"+agSlug+".html"+agParams)
-      :(P+H_AG+"/"+agLoc+
-        "/pages/agoda/default/DestinationSearchResult.aspx"+
-        agParams+"&city=0&textToSearch="+qFull);
+      :(P+H_AG+"/"+agLoc+"/search"+agParams+
+        "&city=0&textToSearch="+qFull);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
