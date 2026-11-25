@@ -39,43 +39,9 @@ html,body{
   0%,100%{transform:translateY(0) rotate(-4deg)}
   50%{transform:translateY(-3px) rotate(4deg)}
 }
-@keyframes orbitBtn{
-  0%{
-    transform:translate(-165px,0px) rotate(-45deg);
-    opacity:.75
-  }
-  12%{
-    transform:translate(-115px,-22px) rotate(25deg);
-    opacity:.9
-  }
-  25%{
-    transform:translate(0px,-25px) rotate(45deg);
-    opacity:1
-  }
-  38%{
-    transform:translate(115px,-22px) rotate(65deg);
-    opacity:.9
-  }
-  50%{
-    transform:translate(165px,0px) rotate(135deg);
-    opacity:.75
-  }
-  62%{
-    transform:translate(115px,22px) rotate(205deg);
-    opacity:.9
-  }
-  75%{
-    transform:translate(0px,25px) rotate(225deg);
-    opacity:1
-  }
-  88%{
-    transform:translate(-115px,22px) rotate(245deg);
-    opacity:.9
-  }
-  100%{
-    transform:translate(-165px,0px) rotate(315deg);
-    opacity:.75
-  }
+@keyframes orbitSmooth{
+  0%{offset-distance:0%}
+  100%{offset-distance:100%}
 }
 .f-btn{
   position:relative;overflow:hidden;
@@ -97,15 +63,17 @@ html,body{
 }
 .f-btn:active{transform:scale(.98)}
 .btn-p{
-  position:absolute;top:50%;left:50%;
-  margin-top:-9px;margin-left:-9px;
-  font-size:1rem;pointer-events:none;user-select:none;
-  animation:orbitBtn 36s infinite linear;z-index:1
+  position:absolute;top:0;left:0;
+  font-size:.95rem;pointer-events:none;user-select:none;
+  offset-path:inset(5px round 11px);
+  offset-rotate:auto 45deg;
+  opacity:.85;
+  animation:orbitSmooth 22s infinite linear;z-index:1
 }
 .btn-p.p1{animation-delay:0s}
-.btn-p.p2{animation-delay:-9s}
-.btn-p.p3{animation-delay:-18s}
-.btn-p.p4{animation-delay:-27s}
+.btn-p.p2{animation-delay:-5.5s}
+.btn-p.p3{animation-delay:-11s}
+.btn-p.p4{animation-delay:-16.5s}
 .w-icon{
   position:relative;z-index:2;
   display:flex;align-items:center;justify-content:center;
@@ -298,7 +266,7 @@ body:has(#ow:checked) .st{
     <div class="seg st" id="st">HIN & RÜCK</div>
     <span class="seg act" id="navAct">✈️ Flugsuche (Aktiv)</span>
     <a href="meine-hotelsuche.html" class="seg upg" id="navHtl">
-      🏨 Meine Hotelsuche ➡️
+      🏨 Hotelsuche ➡️
     </a>
     <a href="meine-flugbuchungen.html" class="seg upg" id="navBkg">
       ✈️ Meine Flugbuchungen ➡️
@@ -449,7 +417,6 @@ body:has(#ow:checked) .st{
     </div>
   </div>
 </div>
-
 <div class="bb">
   <div class="bf">
     <a id="u1" href="#" onclick="upd()"
@@ -471,7 +438,7 @@ body:has(#ow:checked) .st{
   </div>
 </div>
 <script>
-var $ = function(id){ return document.getElementById(id); };
+var byId = function(id){ return document.getElementById(id); };
 var P = "https:" + String.fromCharCode(47, 47);
 var H_KW = "www." + String.fromCharCode(107,105,119,105) + ".com";
 var H_TR = "www." + String.fromCharCode(116,114,105,112) + ".com";
@@ -490,59 +457,63 @@ function isEn(){ return lang === "en"; }
 function applyLang(){
   var e = isEn();
   document.documentElement.lang = e ? "en" : "de";
-  $("pgTit").textContent = e
+  byId("pgTit").textContent = e
     ? "✈️ Travel Config PRO v30 – Flight Search"
     : "✈️ Reisekonfiguration PRO v30 – Flugsuche";
-  $("hTit").textContent = e
+  byId("hTit").textContent = e
     ? "✈️ Travel Config PRO v30 – Flight Search"
     : "✈️ Reisekonfiguration PRO v30 – Flugsuche";
-  $("navAct").textContent = e
+  byId("navAct").textContent = e
     ? "✈️ Flight Search (Active)" : "✈️ Flugsuche (Aktiv)";
-  $("navHtl").textContent = e
-    ? "🏨 My Hotel Search ➡️" : "🏨 Meine Hotelsuche ➡️";
-  $("navBkg").textContent = e
+  byId("navHtl").textContent = e
+    ? "🏨 Hotel Search ➡️" : "🏨 Hotelsuche ➡️";
+  byId("navBkg").textContent = e
     ? "✈️ My Flight Bookings ➡️" : "✈️ Meine Flugbuchungen ➡️";
-  $("navHome").textContent = e
+  byId("navHome").textContent = e
     ? "🏠 Back to Home" : "🏠 Zurück zur Startseite";
-  $("c1Tit").textContent = e
+  byId("c1Tit").textContent = e
     ? "📋 Core Travel Data (Direct Jump)"
     : "📋 Kern-Reisedaten (Direkt-Absprung)";
-  $("lblOrig").textContent = e
+  byId("lblOrig").textContent = e
     ? "Departure (IATA or City)" : "Abflug (IATA oder Stadt)";
-  $("i1").placeholder = e ? "e.g. BER, FRA, MUC" : "z.B. BER, FRA, MUC";
-  $("lblDest").textContent = e
+  byId("i1").placeholder = e ? "e.g. BER, FRA, MUC" : "z.B. BER, FRA, MUC";
+  byId("lblDest").textContent = e
     ? "Destination (IATA or City)" : "Ziel (IATA oder Stadt)";
-  $("i2").placeholder = e ? "e.g. BKK, DAD, CEB" : "z.B. BKK, DAD, CEB";
-  $("lblOd").textContent = e ? "Outbound Flight" : "Hinflug";
-  $("lblRd").textContent = e ? "Return Flight" : "Rückflug";
-  $("c2Tit").textContent = e
+  byId("i2").placeholder = e ? "e.g. BKK, DAD, CEB" : "z.B. BKK, DAD, CEB";
+  byId("lblOd").textContent = e ? "Outbound Flight" : "Hinflug";
+  byId("lblRd").textContent = e ? "Return Flight" : "Rückflug";
+  byId("c2Tit").textContent = e
     ? "⚙️ Filters & Flight Parameters" : "⚙️ Filter & Flug-Parameter";
-  $("lblOw").textContent = e ? "One-Way Only" : "Nur Hinflug (One-Way)";
-  $("lblPx").textContent = e ? "Passengers" : "Personenzahl";
-  $("px1").textContent = e ? "1 Person" : "1 Person";
-  $("px2").textContent = e ? "2 Persons" : "2 Personen";
-  $("px3").textContent = e ? "3 Persons" : "3 Personen";
-  $("px4").textContent = e ? "4 Persons" : "4 Personen";
-  $("lblNs").textContent = e
+  byId("lblOw").textContent = e ? "One-Way Only" : "Nur Hinflug (One-Way)";
+  byId("lblPx").textContent = e ? "Passengers" : "Personenzahl";
+  byId("px1").textContent = e ? "1 Person" : "1 Person";
+  byId("px2").textContent = e ? "2 Persons" : "2 Personen";
+  byId("px3").textContent = e ? "3 Persons" : "3 Personen";
+  byId("px4").textContent = e ? "4 Persons" : "4 Personen";
+  byId("lblNs").textContent = e
     ? "Direct Flights Only (Non-Stop)" : "Nur Direktflüge (Non-Stop)";
-  $("lblS1").textContent = e ? "Max. 1 Stop" : "Max. 1 Stop";
-  $("lblS2").textContent = e ? "Max. 2 Stops" : "Max. 2 Stopps";
-  $("lblLc").textContent = e
+  byId("lblS1").textContent = e ? "Max. 1 Stop" : "Max. 1 Stop";
+  byId("lblS2").textContent = e ? "Max. 2 Stops" : "Max. 2 Stopps";
+  byId("lblLc").textContent = e
     ? "Incl. Low-Cost Airlines (extra)"
     : "Inkl. Low-Cost Airlines (zusätzlich)";
-  $("hintBox").innerHTML = e
-    ? "ℹ️ <b>Note:</b> Baggage must be selected on the " +
-      "respective provider website you click."
-    : "ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend " +
-      "angeklickten Website beim Anbieter ausgewählt werden.";
-  $("expSub").textContent = e
+  var hb = byId("hintBox");
+  hb.textContent = "";
+  var b1 = document.createElement("b");
+  b1.textContent = e ? "ℹ️ Note: " : "ℹ️ Hinweis: ";
+  hb.appendChild(b1);
+  hb.appendChild(document.createTextNode(e
+    ? "Baggage must be selected on the respective provider website you click."
+    : "Gepäck muss auf der entsprechend angeklickten Website beim Anbieter ausgewählt werden."));
+  byId("expSub").textContent = e
     ? "Select stops on website" : "Stopps auf Website wählen";
-  $("trpSub").textContent = e
+  byId("trpSub").textContent = e
     ? "Select stops on website" : "Stopps auf Website wählen";
   renderFlightBgm();
 }
+
 function renderFlightBgm(){
-  var b = $("mbtn");
+  var b = byId("mbtn");
   if(!b) return;
   b.classList.toggle("on", bgmRunning);
   if(bgmRunning){
@@ -573,23 +544,23 @@ function toggleFlightBgm(){
 }
 
 function activateFlightPage(){
-  var m = $("fModal");
+  var m = byId("fModal");
   if(m) m.style.display = "none";
   startFlightBgm();
 }
 
-var fb = $("fActBtn");
+var fb = byId("fActBtn");
 if(fb){
   fb.addEventListener("pointerdown", activateFlightPage);
   fb.addEventListener("click", activateFlightPage);
 }
-
 function iata(val){
   var s = String(val || "").trim().toUpperCase();
   var p1 = s.indexOf("("), p2 = s.indexOf(")");
   if(p1 >= 0 && p2 > p1) return s.slice(p1 + 1, p2).trim();
   return s.slice(0, 3);
 }
+
 function kiwiSlug(code, rawVal){
   var c = String(code || "").toUpperCase();
   if(c === "BER") return "berlin-deutschland";
@@ -640,61 +611,62 @@ function iso(d){
 function updClock(){
   var e = isEn();
   var now = new Date();
-  var dtEl = $("dt");
+  var dtEl = byId("dt");
   if(dtEl){
     var loc = e ? "en-GB" : "de-DE";
     dtEl.textContent = now.toLocaleDateString(loc) +
       " \u2022 " + now.toLocaleTimeString(loc);
   }
 }
+
 function upd(){
   var e = isEn();
   var now = new Date(), today = iso(now);
   updClock();
-  var ow = $("ow").checked;
-  $("st").textContent = ow
+  var ow = byId("ow").checked;
+  byId("st").textContent = ow
     ? (e ? "ONE-WAY" : "NUR HINFLUG")
     : (e ? "ROUND-TRIP" : "HIN & R\u00dcCK");
-  var hr = $("hr").value;
-  $("hrl").textContent = e
+  var hr = byId("hr").value;
+  byId("hrl").textContent = e
     ? "Max. Travel Time (" + hr + " hrs)"
     : "Max. Reisezeit (" + hr + " Std.)";
 
-  var raw1 = $("i1").value, raw2 = $("i2").value;
+  var raw1 = byId("i1").value, raw2 = byId("i2").value;
   var o = iata(raw1) || "BER";
   var d = iata(raw2) || "BKK";
-  var odVal = $("od").value;
+  var odVal = byId("od").value;
   if(odVal){
-    $("rd").min = odVal;
-    if(!$("rd").value || $("rd").value < odVal){
-      $("rd").value = odVal;
+    byId("rd").min = odVal;
+    if(!byId("rd").value || byId("rd").value < odVal){
+      byId("rd").value = odVal;
     }
   } else {
-    $("rd").min = today;
+    byId("rd").min = today;
   }
   var od = odVal || today;
-  var rd = $("rd").value || od;
-  var px = $("px").value || "1";
+  var rd = byId("rd").value || od;
+  var px = byId("px").value || "1";
   var sOd = od.replace(/-/g, "").slice(2);
   var sRd = rd.replace(/-/g, "").slice(2);
 
-  var stopK = $("ns").checked ? "?fs=stops=0" :
-    ($("s1").checked ? "?fs=stops=-2" : "");
+  var stopK = byId("ns").checked ? "?fs=stops=0" :
+    (byId("s1").checked ? "?fs=stops=-2" : "");
 
-  $("u1").href = P + "www.skyscanner.de" +
+  byId("u1").href = P + "www.skyscanner.de" +
     "/transport/fluge/" + o.toLowerCase() + "/" +
     d.toLowerCase() + "/" + sOd +
     (ow ? "/" : "/" + sRd + "/") + "?adults=" + px;
 
-  $("u2").href = P + "www.kayak.de" + "/flights/" +
+  byId("u2").href = P + "www.kayak.de" + "/flights/" +
     o + "-" + d + "/" + od +
     (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
 
-  $("u3").href = P + "www.momondo.de" + "/flight-search/" +
+  byId("u3").href = P + "www.momondo.de" + "/flight-search/" +
     o + "-" + d + "/" + od +
     (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
 
-  $("u4").href = P + "www.expedia.de" +
+  byId("u4").href = P + "www.expedia.de" +
     "/Flights-Search?trip=" + (ow ? "oneway" : "roundtrip") +
     "&leg1=from:" + o + ",to:" + d + ",departure:" + od + "TANYT" +
     (ow ? "" : "&leg2=from:" + d + ",to:" + o +
@@ -702,15 +674,16 @@ function upd(){
     "&passengers=adults:" + px + "&mode=search";
 
   var kwFrom = kiwiSlug(o, raw1), kwTo = kiwiSlug(d, raw2);
-  var kwStop = $("ns").checked ? "&stopNumber=0" :
-    ($("s1").checked ? "&stopNumber=1" : ($("s2").checked ? "&stopNumber=2" : ""));
-  $("u5").href = P + H_KW + "/de/search/results/" +
+  var kwStop = byId("ns").checked ? "&stopNumber=0" :
+    (byId("s1").checked ? "&stopNumber=1" :
+      (byId("s2").checked ? "&stopNumber=2" : ""));
+  byId("u5").href = P + H_KW + "/de/search/results/" +
     kwFrom + "/" + kwTo + "/" + od + "/" +
     (ow ? "no-return" : rd) + "?adults=" + px + kwStop;
 
   var trLoc = e ? "en-XX" : "de-DE";
-  var trNonstop = $("ns").checked ? "&nonstop=true" : "";
-  $("u6").href = P + H_TR + "/flights/showfarefirst" +
+  var trNonstop = byId("ns").checked ? "&nonstop=true" : "";
+  byId("u6").href = P + H_TR + "/flights/showfarefirst" +
     "?dcity=" + o.toLowerCase() + "&acity=" + d.toLowerCase() +
     "&ddate=" + od +
     (ow ? "&triptype=ow" : "&rdate=" + rd + "&triptype=rt") +
@@ -721,7 +694,7 @@ function upd(){
 
 var lastStop = "";
 "ns;s1;s2".split(";").forEach(function(id){
-  var el = $(id);
+  var el = byId(id);
   el.addEventListener("click", function(){
     if(lastStop === id){
       el.checked = false;
@@ -734,12 +707,12 @@ var lastStop = "";
 });
 
 "i1;i2;od;rd;ow;px;hr;ns;s1;s2;lc".split(";").forEach(function(id){
-  $(id).addEventListener("input", upd);
-  $(id).addEventListener("change", upd);
+  byId(id).addEventListener("input", upd);
+  byId(id).addEventListener("change", upd);
 });
 var todayStr = iso(new Date());
-$("od").min = todayStr;
-$("rd").min = todayStr;
+byId("od").min = todayStr;
+byId("rd").min = todayStr;
 applyLang();
 upd();
 setInterval(updClock, 1000);
