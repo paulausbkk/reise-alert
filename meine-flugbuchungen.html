@@ -347,7 +347,7 @@ select{border-color:#93c5fd;color:var(--t)}
             onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
         </div>
       </div>
-       <div class="f">
+      <div class="f">
         <label for="u_pp" id="lblPp">Reisepassnummer (freiwillig)</label>
         <div class="inrow">
           <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
@@ -373,7 +373,8 @@ select{border-color:#93c5fd;color:var(--t)}
     ℹ️ <b>Hinweis:</b> Rot markierte Felder sind für die gewählte
     Airline Pflicht. Freiwillige Angaben (grau) wie
     <b>Ticketnummer</b> oder <b>Reisepassnummer</b> erscheinen
-    zusätzlich auf Ihrem Notizzettel. Diese Angaben benötigen Sie unter Umständen auf der Seite der Airline.
+    zusätzlich auf Ihrem Notizzettel. Diese Angaben benötigen Sie
+    unter Umständen auf der Seite der Airline.
   </div>
 </div>
 <script>
@@ -462,8 +463,8 @@ function applyLang(){
   hb.appendChild(document.createTextNode(e?" or ":" oder "));
   hb.appendChild(b3);
   hb.appendChild(document.createTextNode(e
-    ?" also appear on your sticky note."
-    :" erscheinen zusätzlich auf Ihrem Notizzettel."));
+    ?" also appear on your sticky note. You may need these details on the airline's website."
+    :" erscheinen zusätzlich auf Ihrem Notizzettel. Diese Angaben benötigen Sie unter Umständen auf der Seite der Airline."));
   updBgmBtn();
 }
 function updBgmBtn(){
