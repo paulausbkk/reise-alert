@@ -681,14 +681,10 @@ function upd(){
     }
     var trHost=H_TR+(e?".com":".de");
     var trBase=e?"/en-US":"/de";
-    var trSlug=slugify(city);
-    var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
-      ";rc-"+rc+(st>0?";st-"+st:"");
-    $("h6").href=tid
-      ?(P+trHost+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
-      :(P+trHost+trBase+"/srl?query="+qFull+"&sQuery="+qFull+
-        "&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+
-        "&search="+trSrch);
+    var trSrch="dr-"+dt1+"-"+dt2+"%3Brc-"+rc+
+      (st>0?"%3Bst-"+st:"");
+    $("h6").href=P+trHost+trBase+"/srl?sQuery="+qFull+
+      "&search="+trSrch;
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
