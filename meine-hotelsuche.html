@@ -594,7 +594,8 @@ function getTid(city){
   if(k==="manila")return"200-74077";
   if(k==="cebu"||k==="cebu city")return"200-74046";
   if(k==="dumaguete")return"200-74054";
-  return"";
+  retu
+rn"";
 }
 function slugify(s){
   return normCity(s).replace(/^-+|-+$/g,"")
@@ -624,8 +625,6 @@ function upd(){
   var px=+$("px").value||2,rm=+$("rm").value||1;
   var st=+$("st").value||0,ab=$("ab").checked;
   var aid=getAid(city),bid=getBid(city),tid=getTid(city);
-  var agCitySlug=(city&&selCountry&&cc&&cc.length===2)
-    ?(slugify(city)+"-"+cc.toLowerCase()):"";
   $("f4").action=P+H_BK+"/searchresults.html";
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off",ab);
@@ -673,13 +672,11 @@ function upd(){
     var agSearch=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
       "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
       "&currency=EUR&locale="+agLoc+"&hl="+agLoc+
-      "&language="+agLoc+"&cid=1844104"+
+      "&language="+agLoc+
       (st>0?"&hotelStarRating="+st:"");
     $("h5").href=aid
       ?(agSearch+"&city="+aid)
-      :(agCitySlug
-        ?(P+H_AG+"/"+agLoc+"/city/"+agCitySlug+".html")
-        :(agSearch+"&textToSearch="+qFull));
+      :(agSearch+"&city=0&textToSearch="+qFull);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
