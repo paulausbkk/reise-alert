@@ -328,12 +328,13 @@ input,select{
   </div>
 </div>
 <script>
-var $=function(id){return document.getElementById(id);};
+var byId=function(id){return document.getElementById(id);};
 var P="https:"+String.fromCharCode(47,47);
 var H_AG="www."+String.fromCharCode(97,103,111,100,97)+".com";
 var H_BK="www."+String.fromCharCode(98,111,111,107,105,110,103)+".com";
 var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111);
-var H_OM="geocoding-api."+String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
+var H_OM="geocoding-api."+
+  String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
 function readLang(){
   try{lang=(localStorage.getItem("pab_lang")==="en")?"en":"de";}catch(e){}
@@ -343,91 +344,85 @@ function isEn(){return lang==="en";}
 function applyLang(){
   readLang();
   var e=isEn();document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e
+  byId("pgTit").textContent=e
     ?"🏨 My Hotel Search PRO v128"
     :"🏨 Meine Hotelsuche PRO v128";
-  $("hTit").textContent=e
+  byId("hTit").textContent=e
     ?"🏨 My Hotel Search PRO v128"
     :"🏨 Meine Hotelsuche PRO v128";
-  $("navAct").textContent=e
+  byId("navAct").textContent=e
     ?"🏨 HOTELS (ACTIVE)"
     :"🏨 HOTELSUCHE (AKTIV)";
-  $("navHome").textContent=e
+  byId("navHome").textContent=e
     ?"🏠 Back to Home"
     :"🏠 Zurück zur Startseite";
-  $("navFlt").textContent=e
+  byId("navFlt").textContent=e
     ?"✈️ Flight Search"
     :"✈️ Flugsuche";
-  $("navBkg").textContent=e
+  byId("navBkg").textContent=e
     ?"✈️ My Current Bookings ➡️"
     :"✈️ Meine aktuellen Buchungen ➡️";
-  $("c1Tit").textContent=e
+  byId("c1Tit").textContent=e
     ?"📍 Destination & Travel Dates"
     :"📍 Zielort & Reisedaten";
-  $("lblCity").textContent=e
+  byId("lblCity").textContent=e
     ?"Destination (any city worldwide)"
     :"Reiseziel (beliebige Stadt weltweit)";
-  $("city").placeholder=e
+  byId("city").placeholder=e
     ?"e.g. Milan, Pagadian, Bangkok"
     :"z.B. Mailand, Pagadian, Bangkok";
-  $("lblCi").textContent=e
+  byId("lblCi").textContent=e
     ?"Check-in (Arrival)"
     :"Check-in (Anreise)";
-  $("lblCo").textContent=e
+  byId("lblCo").textContent=e
     ?"Check-out (Departure)"
     :"Check-out (Abreise)";
-  $("c2Tit").textContent=e
+  byId("c2Tit").textContent=e
     ?"🛏️ Guests, Rooms & Hotel Filters"
     :"🛏️ Gäste, Zimmer & Hotel-Filter";
-  $("lblPx").textContent=e?"Guests":"Personenzahl";
-  $("px1").textContent=e?"1 Adult":"1 Erwachsener";
-  $("px2").textContent=e?"2 Adults":"2 Erwachsene";
-  $("px3").textContent=e?"3 Adults":"3 Erwachsene";
-  $("px4").textContent=e?"4 Adults":"4 Erwachsene";
-  $("lblRm").textContent=e?"Rooms":"Zimmer";
-  $("rm1").textContent=e?"1 Room":"1 Zimmer";
-  $("rm2").textContent=e?"2 Rooms":"2 Zimmer";
-  $("rm3").textContent=e?"3 Rooms":"3 Zimmer";
-  $("lblSt").textContent=e?"Minimum Stars":"Mindest-Sterne";
-  $("st0").textContent=e?"All Categories":"Alle Kategorien";
-  $("st3").textContent=e?"3+ Stars ⭐⭐⭐":"Ab 3 Sterne ⭐⭐⭐";
-  $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
-  $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
-  $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
-  $("hintBox").innerHTML=e
-    ?"<div>ℹ️ <b>Important Notice on Hotel Search:</b> Please "
-      +"make sure to check all filters (e.g. 5 stars) on the booking "
-      +"page and re-apply them if needed, as not all portals "
-      +"transfer them automatically. Smaller towns may also not be "
-      +"passed directly – since your dates and guest count are "
-      +"already filled in, simply type your destination there to "
-      +"start. We apologize for this technical limitation!</div>"
-    :"<div>ℹ️ <b>Wichtiger Hinweis zur Hotelsuche:</b> Bitte "
-      +"kontrollieren Sie auf der Buchungsseite unbedingt alle "
-      +"Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf "
-      +"neu ein, da nicht alle Portale sie automatisch übernehmen. "
-      +"Kleinere Orte werden teils ebenfalls nicht direkt übertragen "
-      +"– da Reisedaten und Personenanzahl bereits hinterlegt sind, "
-      +"tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten "
-      +"diese technische Einschränkung der Anbieter zu "
-      +"entschuldigen!</div>";
-  $("b_lng").value=e?"en-gb":"de";updBgmBtn();
+  byId("lblPx").textContent=e?"Guests":"Personenzahl";
+  byId("px1").textContent=e?"1 Adult":"1 Erwachsener";
+  byId("px2").textContent=e?"2 Adults":"2 Erwachsene";
+  byId("px3").textContent=e?"3 Adults":"3 Erwachsene";
+  byId("px4").textContent=e?"4 Adults":"4 Erwachsene";
+  byId("lblRm").textContent=e?"Rooms":"Zimmer";
+  byId("rm1").textContent=e?"1 Room":"1 Zimmer";
+  byId("rm2").textContent=e?"2 Rooms":"2 Zimmer";
+  byId("rm3").textContent=e?"3 Rooms":"3 Zimmer";
+  byId("lblSt").textContent=e?"Minimum Stars":"Mindest-Sterne";
+  byId("st0").textContent=e?"All Categories":"Alle Kategorien";
+  byId("st3").textContent=e?"3+ Stars ⭐⭐⭐":"Ab 3 Sterne ⭐⭐⭐";
+  byId("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
+  byId("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
+  byId("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
+  var hb=byId("hintBox");hb.textContent="";
+  var wrap=document.createElement("div");
+  var b1=document.createElement("b");
+  b1.textContent=e
+    ?"ℹ️ Important Notice on Hotel Search: "
+    :"ℹ️ Wichtiger Hinweis zur Hotelsuche: ";
+  wrap.appendChild(b1);
+  wrap.appendChild(document.createTextNode(e
+    ?"Please make sure to check all filters (e.g. 5 stars) on the booking page and re-apply them if needed, as not all portals transfer them automatically. Smaller towns may also not be passed directly – since your dates and guest count are already filled in, simply type your destination there to start. We apologize for this technical limitation!"
+    :"Bitte kontrollieren Sie auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf neu ein, da nicht alle Portale sie automatisch übernehmen. Kleinere Orte werden teils ebenfalls nicht direkt übertragen – da Reisedaten und Personenanzahl bereits hinterlegt sind, tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten diese technische Einschränkung der Anbieter zu entschuldigen!"));
+  hb.appendChild(wrap);
+  byId("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
-  var b=$("mbtn");if(!b)return;
+  var b=byId("mbtn");if(!b)return;
   b.textContent=bgmOn
     ?(isEn()?"🔇 Music Off":"🔇 Musik Aus")
     :(isEn()?"🎵 Music On":"🎵 Musik An");
   b.classList.toggle("off",!bgmOn);
 }
 function playBgm(){
-  var a=$("bgm");if(!a)return;a.volume=1.0;
+  var a=byId("bgm");if(!a)return;a.volume=1.0;
   a.play()
     .then(function(){bgmOn=true;updBgmBtn();})
     .catch(function(){bgmOn=false;updBgmBtn();});
 }
 function toggleBgm(){
-  var a=$("bgm");if(!a)return;
+  var a=byId("bgm");if(!a)return;
   if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}else{playBgm();}
 }
 function enterHotel(){
@@ -609,43 +604,43 @@ function upd(){
   readLang();
   var e=isEn(),loc=e?"en-GB":"de-DE";
   var now=new Date(),t=iso(now);
-  $("dt").textContent=now.toLocaleDateString(loc)+
+  byId("dt").textContent=now.toLocaleDateString(loc)+
     " \u2022 "+now.toLocaleTimeString(loc);
-  var city=$("city").value.trim();
+  var city=byId("city").value.trim();
   var fullCity=(city&&selCountry)?(city+", "+selCountry):city;
-  var ci=$("ci").value,co=$("co").value;
+  var ci=byId("ci").value,co=byId("co").value;
   if(ci){
     var dMin=new Date(ci+"T12:00:00");
     dMin.setDate(dMin.getDate()+1);
     var nextDay=iso(dMin);
-    $("co").min=nextDay;
+    byId("co").min=nextDay;
     if(!co||co<=ci){
       co=nextDay;
-      $("co").value=nextDay;
+      byId("co").value=nextDay;
     }
   }else{
-    $("co").min=t;
+    byId("co").min=t;
   }
-  var px=+$("px").value||2,rm=+$("rm").value||1;
-  var st=+$("st").value||0,ab=$("ab").checked;
+  var px=+byId("px").value||2,rm=+byId("rm").value||1;
+  var st=+byId("st").value||0,ab=byId("ab").checked;
   var aid=getAid(city),bid=getBid(city),tid=getTid(city);
-  $("f4").action=P+H_BK+"/searchresults.html";
+  byId("f4").action=P+H_BK+"/searchresults.html";
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off",ab);
   });
-  $("h8").classList.toggle("off",!ab);
+  byId("h8").classList.toggle("off",!ab);
   var bad=(ci&&ci<t)||(co&&co<=t)||(ci&&co&&co<=ci);
-  $("cib").classList.toggle("err",Boolean(ci&&ci<t));
-  $("cob").classList.toggle("err",Boolean(bad));
+  byId("cib").classList.toggle("err",Boolean(ci&&ci<t));
+  byId("cob").classList.toggle("err",Boolean(bad));
   if(ci&&co&&!bad){
     var dA=new Date(ci+"T12:00:00"),dB=new Date(co+"T12:00:00");
     var n=Math.max(1,Math.round((dB-dA)/86400000));
-    $("nt").textContent=e
+    byId("nt").textContent=e
       ?n+(n===1?" NIGHT":" NIGHTS")
       :n+(n===1?" NACHT":" N\u00c4CHTE");
-    $("info").style.background="#eff6ff";
-    $("info").style.color="#1e3a8a";
-    $("info").textContent=e
+    byId("info").style.background="#eff6ff";
+    byId("info").style.color="#1e3a8a";
+    byId("info").textContent=e
       ?"Selection: "+(fullCity||"Destination")+" \u2022 "+n+
         (n===1?" Night":" Nights")+" \u2022 "+px+
         " Guests \u2022 "+rm+" Rm."
@@ -657,30 +652,31 @@ function upd(){
     var bFilt=st>0?"class="+st:"";
     var dom=e?".com":".de";
     var hPath="/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
-    $("h1").href=P+"www.kayak"+dom+hPath+(e?"?lang=en":"");
-    $("h2").href=P+"www.expedia"+dom+
+    byId("h1").href=P+"www.kayak"+dom+hPath+(e?"?lang=en":"");
+    byId("h2").href=P+"www.expedia"+dom+
       "/Hotel-Search?destination="+qFull+
       "&startDate="+ci+"&endDate="+co+
       "&adults="+px+"&rooms="+rm+
       (e?"&langid=1033":"")+
       (st>0?"&star="+(st*10):"");
-    $("h3").href=P+"www.momondo"+dom+hPath+(e?"?lang=en":"");
-    $("b_ss").value=fullCity;$("b_ssne").value=fullCity;
-    $("b_ssu").value=fullCity;$("b_did").disabled=!bid;
-    $("b_did").value=bid;$("b_dty").disabled=!bid;
-    $("b_dty").value=bid?"city":"";
-    $("b_ci").value=ci;$("b_co").value=co;
-    $("b_px").value=px;$("b_rm").value=rm;
-    $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
+    byId("h3").href=P+"www.momondo"+dom+hPath+(e?"?lang=en":"");
+    byId("b_ss").value=fullCity;byId("b_ssne").value=fullCity;
+    byId("b_ssu").value=fullCity;byId("b_did").disabled=!bid;
+    byId("b_did").value=bid;byId("b_dty").disabled=!bid;
+    byId("b_dty").value=bid?"city":"";
+    byId("b_ci").value=ci;byId("b_co").value=co;
+    byId("b_px").value=px;byId("b_rm").value=rm;
+    byId("b_flt").disabled=!bFilt;byId("b_flt").value=bFilt;
     var agLoc=e?"en-gb":"de-de";
     var ag=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
       "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
       "&currency=EUR&locale="+agLoc+"&hl="+agLoc+"&language="+agLoc+
+      "&selectedproperty=0&searchType=1"+
       (e?"&cid=1844104":"")+
       (st>0?"&hotelStarRating="+st:"");
-    $("h5").href=aid
-      ?(ag+"&city="+aid)
-      :(ag+"&textToSearch="+q+"&searchText="+qFull);
+    byId("h5").href=aid
+      ?(ag+"&city="+aid+"&textToSearch="+q)
+      :(ag+"&textToSearch="+qFull+"&q="+qFull+"&countryId=0");
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
@@ -692,22 +688,22 @@ function upd(){
     var trSlug=slugify(city);
     var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
       ";rc-"+rc+(st>0?";st-"+st:"");
-    $("h6").href=tid
+    byId("h6").href=tid
       ?(P+trHost+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
       :(P+trHost+trBase+"/srl?query="+qFull+"&sQuery="+qFull+
         "&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+
         "&search="+trSrch);
-    $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
+    byId("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
       (e?"&locale=en":"&locale=de");
   }else{
-    $("nt").textContent=e
+    byId("nt").textContent=e
       ?(bad?"CHECK DATES":"DATES")
       :(bad?"DATUM PR\u00dcFEN":"ZEITRAUM");
-    $("info").style.background=bad?"#fee2e2":"#eff6ff";
-    $("info").style.color=bad?"#991b1b":"#1e3a8a";
-    $("info").textContent=e
+    byId("info").style.background=bad?"#fee2e2":"#eff6ff";
+    byId("info").style.color=bad?"#991b1b":"#1e3a8a";
+    byId("info").textContent=e
       ?(bad?"Please check dates."
         :"Please select destination, check-in and check-out.")
       :(bad?"Bitte Datum pr\u00fcfen."
@@ -715,13 +711,13 @@ function upd(){
   }
   try{
     localStorage.setItem("rk_hotel",JSON.stringify({
-      city:$("city").value,country:selCountry,cc:cc,ci:ci,co:co,
+      city:byId("city").value,country:selCountry,cc:cc,ci:ci,co:co,
       px:px,rm:rm,st:st,ab:ab
     }));
   }catch(err){}
 }
 function showAc(list,msg){
-  var box=$("lc");box.innerHTML="";
+  var box=byId("lc");box.textContent="";
   if(msg){
     var m=document.createElement("div");
     m.textContent=msg;m.style.color="#64748b";
@@ -732,7 +728,7 @@ function showAc(list,msg){
     var d=document.createElement("div");
     d.textContent=it.name+(it.country?" ("+it.country+")":"");
     d.onmousedown=function(ev){
-      ev.preventDefault();$("city").value=it.name;
+      ev.preventDefault();byId("city").value=it.name;
       selCountry=it.country||"";
       cc=(it.country_code||"de").toLowerCase();
       box.style.display="none";upd();
@@ -784,54 +780,55 @@ function searchWorldCities(q,done){
     else{tryPhoton();}
   }).catch(tryPhoton);
 }
-$("city").addEventListener("input",function(){
+byId("city").addEventListener("input",function(){
   selCountry="";upd();clearTimeout(acT);
-  var q=$("city").value.trim(),box=$("lc");
+  var q=byId("city").value.trim(),box=byId("lc");
   if(q.length<2){box.style.display="none";return;}
   showAc(null,isEn()?"🔍 Searching worldwide...":"🔍 Suche weltweit...");
   acT=setTimeout(function(){
     searchWorldCities(q,function(res,errMsg){
-      if($("city").value.trim()!==q)return;
+      if(byId("city").value.trim()!==q)return;
       showAc(res,errMsg);
     });
   },200);
 });
 document.addEventListener("click",function(ev){
-  if(!$("lc").contains(ev.target)&&ev.target!==$("city")){
-    $("lc").style.display="none";
+  if(!byId("lc").contains(ev.target)&&ev.target!==byId("city")){
+    byId("lc").style.display="none";
   }
 });
 var todayStr=iso(new Date());
 try{
   var saved=JSON.parse(localStorage.getItem("rk_hotel")||"null");
   if(saved){
-    if(saved.city)$("city").value=saved.city;
+    if(saved.city)byId("city").value=saved.city;
     if(saved.country)selCountry=saved.country;
     if(saved.cc)cc=saved.cc;
-    if(saved.ci&&saved.ci>=todayStr)$("ci").value=saved.ci;
-    if(saved.co&&saved.co>todayStr)$("co").value=saved.co;
-    if(saved.px)$("px").value=saved.px;
-    if(saved.rm)$("rm").value=saved.rm;
-    if(saved.st)$("st").value=saved.st;
-    if(saved.ab!==undefined)$("ab").checked=saved.ab;
+    if(saved.ci&&saved.ci>=todayStr)byId("ci").value=saved.ci;
+    if(saved.co&&saved.co>todayStr)byId("co").value=saved.co;
+    if(saved.px)byId("px").value=saved.px;
+    if(saved.rm)byId("rm").value=saved.rm;
+    if(saved.st)byId("st").value=saved.st;
+    if(saved.ab!==undefined)byId("ab").checked=saved.ab;
   }
 }catch(err){}
 var d1=new Date();
 d1.setDate(d1.getDate()+1);
-$("ci").min=todayStr;
-if(!$("ci").value)$("ci").value=iso(d1);
-var d2=new Date($("ci").value+"T12:00:00");
+byId("ci").min=todayStr;
+if(!byId("ci").value)byId("ci").value=iso(d1);
+var d2=new Date(byId("ci").value+"T12:00:00");
 d2.setDate(d2.getDate()+1);
-$("co").min=iso(d2);
-if(!$("co").value||$("co").value<=$("ci").value)$("co").value=iso(d2);
+byId("co").min=iso(d2);
+if(!byId("co").value||byId("co").value<=byId("ci").value){
+  byId("co").value=iso(d2);
+}
 "city;ci;co;px;rm;st;ab".split(";").forEach(function(id){
-  $(id).addEventListener("input",upd);
-  $(id).addEventListener("change",upd);
+  byId(id).addEventListener("input",upd);
+  byId(id).addEventListener("change",upd);
 });
-$("f4").addEventListener("submit",upd);
-window.addEventListener("pageshow",function(){applyLang();upd();});
-applyLang();upd();
+applyLang();
+upd();
+setInterval(upd,1000);
 </script>
 </body>
 </html>
-  
