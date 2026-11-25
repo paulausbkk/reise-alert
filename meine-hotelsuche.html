@@ -307,9 +307,9 @@ input,select{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="#" target="_blank" rel="noreferrer noopener"
+    <a id="h5" href="#" target="_blank"
       class="btn b5 htl">Agoda</a>
-    <a id="h6" href="#" target="_blank" rel="noreferrer noopener"
+    <a id="h6" href="#" target="_blank"
       class="btn b6 htl">Trivago</a>
     <a id="h8" href="#" target="_blank"
       class="btn b8 off">Airbnb</a>
@@ -327,13 +327,13 @@ input,select{
     </div>
   </div>
 </div>
+<script>
 var $=function(id){return document.getElementById(id);};
 var P="https:"+String.fromCharCode(47,47);
 var H_AG="www."+String.fromCharCode(97,103,111,100,97)+".com";
 var H_BK="www."+String.fromCharCode(98,111,111,107,105,110,103)+".com";
 var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111);
-var H_OM="geocoding-api."+
-  String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
+var H_OM="geocoding-api."+String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
 function readLang(){
   try{lang=(localStorage.getItem("pab_lang")==="en")?"en":"de";}catch(e){}
@@ -394,17 +394,23 @@ function applyLang(){
   $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
   $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
-  var hb=$("hintBox");hb.textContent="";
-  var wrap=document.createElement("div");
-  var b1=document.createElement("b");
-  b1.textContent=e
-    ?"ℹ️ Important Notice on Hotel Search: "
-    :"ℹ️ Wichtiger Hinweis zur Hotelsuche: ";
-  wrap.appendChild(b1);
-  wrap.appendChild(document.createTextNode(e
-    ?"Please make sure to check all filters (e.g. 5 stars) on the booking page and re-apply them if needed, as not all portals transfer them automatically. Smaller towns may also not be passed directly – since your dates and guest count are already filled in, simply type your destination there to start. We apologize for this technical limitation!"
-    :"Bitte kontrollieren Sie auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf neu ein, da nicht alle Portale sie automatisch übernehmen. Kleinere Orte werden teils ebenfalls nicht direkt übertragen – da Reisedaten und Personenanzahl bereits hinterlegt sind, tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten diese technische Einschränkung der Anbieter zu entschuldigen!"));
-  hb.appendChild(wrap);
+  $("hintBox").innerHTML=e
+    ?"<div>ℹ️ <b>Important Notice on Hotel Search:</b> Please "
+      +"make sure to check all filters (e.g. 5 stars) on the booking "
+      +"page and re-apply them if needed, as not all portals "
+      +"transfer them automatically. Smaller towns may also not be "
+      +"passed directly – since your dates and guest count are "
+      +"already filled in, simply type your destination there to "
+      +"start. We apologize for this technical limitation!</div>"
+    :"<div>ℹ️ <b>Wichtiger Hinweis zur Hotelsuche:</b> Bitte "
+      +"kontrollieren Sie auf der Buchungsseite unbedingt alle "
+      +"Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf "
+      +"neu ein, da nicht alle Portale sie automatisch übernehmen. "
+      +"Kleinere Orte werden teils ebenfalls nicht direkt übertragen "
+      +"– da Reisedaten und Personenanzahl bereits hinterlegt sind, "
+      +"tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten "
+      +"diese technische Einschränkung der Anbieter zu "
+      +"entschuldigen!</div>";
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
@@ -443,18 +449,24 @@ function getAid(city){
   var k=normCity(city);
   if(k==="bangkok")return"9395";
   if(k==="mailand"||k==="milan")return"4894";
-  if(k==="berlin")return"14618";
-  if(k==="hamburg")return"15760";
-  if(k==="muenchen"||k==="munich")return"15810";
-  if(k==="frankfurt"||k==="frankfurt am main")return"15748";
+  if(k==="palermo")return"16011";
+  if(k==="berlin")return"16154";
+  if(k==="hamburg")return"15727";
+  if(k==="muenchen"||k==="munich")return"15836";
+  if(k==="frankfurt"||k==="frankfurt am main")return"15778";
   if(k==="koeln"||k==="cologne")return"15722";
   if(k==="duesseldorf")return"15737";
   if(k==="stuttgart")return"15791";
-  if(k==="wien"||k==="vienna")return"16582";
+  if(k==="wien"||k==="vienna")return"14756";
+  if(k==="hannover")return"15751";
+  if(k==="leipzig")return"15760";
+  if(k==="dresden")return"15740";
+  if(k==="nuernberg"||k==="nuremberg")return"15793";
+  if(k==="bremen")return"15716";
   if(k==="zuerich"||k==="zurich")return"16590";
   if(k==="paris")return"15470";
   if(k==="london")return"233";
-  if(k==="rom"||k==="rome")return"16587";
+  if(k==="rom"||k==="rome")return"16582";
   if(k==="barcelona")return"14563";
   if(k==="madrid")return"16583";
   if(k==="lissabon"||k==="lisbon")return"15192";
@@ -462,28 +474,33 @@ function getAid(city){
   if(k==="istanbul")return"14932";
   if(k==="amsterdam")return"13868";
   if(k==="prag"||k==="prague")return"16578";
+  if(k==="warschau"||k==="warsaw")return"16107";
   if(k==="budapest")return"15129";
   if(k==="athen"||k==="athens")return"16575";
   if(k==="venedig"||k==="venice")return"16585";
   if(k==="florenz"||k==="florence")return"16581";
   if(k==="neapel"||k==="naples")return"16584";
+  if(k==="bruessel"||k==="brussels")return"14672";
+  if(k==="kopenhagen"||k==="copenhagen")return"14830";
+  if(k==="stockholm")return"16143";
+  if(k==="oslo")return"15987";
+  if(k==="helsinki")return"15283";
+  if(k==="dublin")return"14916";
   if(k==="new york")return"318";
   if(k==="los angeles")return"12772";
   if(k==="miami")return"12840";
   if(k==="las vegas")return"17072";
+  if(k==="toronto")return"16254";
   if(k==="sydney")return"14370";
   if(k==="melbourne")return"14367";
   if(k==="auckland")return"14453";
   if(k==="kairo"||k==="cairo")return"14708";
   if(k==="hurghada")return"15342";
+  if(k==="marrakesch"||k==="marrakech")return"15654";
   if(k==="phuket")return"16056";
   if(k==="chiang mai")return"7401";
   if(k==="koh samui"||k==="ko samui")return"17198";
   if(k==="krabi")return"14865";
-  if(k==="da nang"||k==="danang")return"16440";
-  if(k==="hoi an")return"16552";
-  if(k==="hanoi")return"2758";
-  if(k==="ho-chi-minh-stadt"||k==="saigon")return"13170";
   if(k==="singapur"||k==="singapore")return"4064";
   if(k==="kuala lumpur")return"14524";
   if(k==="tokio"||k==="tokyo")return"5085";
@@ -656,14 +673,14 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-gb":"de-de";
-    var agSearch=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
+    var ag=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
       "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
-      "&currency=EUR&locale="+agLoc+"&hl="+agLoc+
-      "&language="+agLoc+
+      "&currency=EUR&locale="+agLoc+"&hl="+agLoc+"&language="+agLoc+
+      (e?"&cid=1844104":"")+
       (st>0?"&hotelStarRating="+st:"");
     $("h5").href=aid
-      ?(agSearch+"&city="+aid)
-      :agSearch;
+      ?(ag+"&city="+aid)
+      :(ag+"&textToSearch="+q+"&searchText="+qFull);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
@@ -704,7 +721,7 @@ function upd(){
   }catch(err){}
 }
 function showAc(list,msg){
-  var box=$("lc");box.textContent="";
+  var box=$("lc");box.innerHTML="";
   if(msg){
     var m=document.createElement("div");
     m.textContent=msg;m.style.color="#64748b";
@@ -806,16 +823,15 @@ if(!$("ci").value)$("ci").value=iso(d1);
 var d2=new Date($("ci").value+"T12:00:00");
 d2.setDate(d2.getDate()+1);
 $("co").min=iso(d2);
-if(!$("co").value||$("co").value<=$("ci").value){
-  $("co").value=iso(d2);
-}
+if(!$("co").value||$("co").value<=$("ci").value)$("co").value=iso(d2);
 "city;ci;co;px;rm;st;ab".split(";").forEach(function(id){
   $(id).addEventListener("input",upd);
   $(id).addEventListener("change",upd);
 });
-applyLang();
-upd();
-setInterval(upd,1000);
+$("f4").addEventListener("submit",upd);
+window.addEventListener("pageshow",function(){applyLang();upd();});
+applyLang();upd();
 </script>
 </body>
 </html>
+  
