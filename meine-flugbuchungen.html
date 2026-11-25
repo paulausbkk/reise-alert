@@ -126,16 +126,21 @@ html,body{
 }
 .f{margin-bottom:10px;display:flex;flex-direction:column}
 .f:last-child{margin-bottom:0}
-.f.off{display:none}
 label{
   font-weight:bold;font-size:.84rem;
-  margin-bottom:4px;color:#1e3a8a
+  margin-bottom:4px;color:#64748b
 }
+.f.req label{color:#b91c1c}
 .inrow{display:flex;gap:8px;align-items:center}
 input,select{
-  height:39px;padding:0 12px;border:1px solid #93c5fd;
+  height:39px;padding:0 12px;border:1px solid #cbd5e1;
   border-radius:8px;box-sizing:border-box;font-size:.96rem;
-  background:#f8fafc;color:var(--t);width:100%
+  background:#f8fafc;color:#475569;width:100%
+}
+select{border-color:#93c5fd;color:var(--t)}
+.f.req input{
+  border:2px solid #dc2626;background:#fef2f2;color:#7f1d1d;
+  font-weight:bold
 }
 .cpbtn{
   height:39px;padding:0 12px;background:#e0f2fe;color:#0369a1;
@@ -227,7 +232,7 @@ input,select{
     <div>
       <div class="ct" id="cTit">🎫 Airline & Buchungsdaten</div>
       <div class="f">
-        <label for="u5" id="lblPort">
+        <label for="u5" id="lblPort" style="color:#1e3a8a">
           Airline oder Buchungsportal wählen
         </label>
         <select id="u5">
@@ -296,7 +301,7 @@ input,select{
           </option>
         </select>
       </div>
-      <div class="f" id="f_pnr">
+      <div class="f req" id="f_pnr">
         <label for="u3" id="lblPnr">Buchungscode (PNR)</label>
         <div class="inrow">
           <input type="text" id="u3" placeholder="z.B. ABC123">
@@ -304,7 +309,7 @@ input,select{
             onclick="cp('u3','PNR')">📋 Kopieren</button>
         </div>
       </div>
-      <div class="f off" id="f_fn">
+      <div class="f" id="f_fn">
         <label for="u_fn" id="lblFn">Vorname (wie im Pass)</label>
         <div class="inrow">
           <input type="text" id="u_fn" placeholder="z.B. MAX">
@@ -312,7 +317,7 @@ input,select{
             onclick="cp('u_fn','Vorname')">📋 Kopieren</button>
         </div>
       </div>
-      <div class="f" id="f_ln">
+      <div class="f req" id="f_ln">
         <label for="u6" id="lblLn">Nachname (wie im Pass)</label>
         <div class="inrow">
           <input type="text" id="u6" placeholder="z.B. MUSTERMANN">
@@ -320,7 +325,7 @@ input,select{
             onclick="cp('u6','Nachname')">📋 Kopieren</button>
         </div>
       </div>
-      <div class="f off" id="f_mail">
+      <div class="f" id="f_mail">
         <label for="u4" id="lblMail">Buchungs-E-Mail</label>
         <div class="inrow">
           <input type="email" id="u4" placeholder="name@beispiel.de">
@@ -342,7 +347,7 @@ input,select{
             onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
         </div>
       </div>
-      <div class="f">
+       <div class="f">
         <label for="u_pp" id="lblPp">Reisepassnummer (freiwillig)</label>
         <div class="inrow">
           <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
@@ -352,7 +357,7 @@ input,select{
       </div>
     </div>
     <div class="bn" id="hint">
-      Benötigt: Buchungscode (PNR) + Nachname
+      🔴 Rot markiert = Pflichtfelder für diese Airline
     </div>
   </div>
 </div>
@@ -365,10 +370,10 @@ input,select{
   </div>
   <div id="ts"></div>
   <div class="hintbox" id="hintBox">
-    ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie
-    <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
-    erscheinen diese nachher auf Ihrem Notizzettel,
-    wenn Sie die Seite Ihrer Airline aufrufen.
+    ℹ️ <b>Hinweis:</b> Rot markierte Felder sind für die gewählte
+    Airline Pflicht. Freiwillige Angaben (grau) wie
+    <b>Ticketnummer</b> oder <b>Reisepassnummer</b> erscheinen
+    zusätzlich auf Ihrem Notizzettel.
   </div>
 </div>
 <script>
@@ -451,14 +456,14 @@ function applyLang(){
   b3.textContent=e?"Passport Number":"Reisepassnummer";
   hb.appendChild(b1);
   hb.appendChild(document.createTextNode(e
-    ?"If you enter optional details such as "
-    :"Wenn Sie freiwillige Angaben wie "));
+    ?"Red fields are required for this airline. Optional fields (grey) such as "
+    :"Rot markierte Felder sind für die gewählte Airline Pflicht. Freiwillige Angaben (grau) wie "));
   hb.appendChild(b2);
   hb.appendChild(document.createTextNode(e?" or ":" oder "));
   hb.appendChild(b3);
   hb.appendChild(document.createTextNode(e
-    ?" here, they will appear on your sticky note when you open your airline's website."
-    :" hier eintragen, erscheinen diese nachher auf Ihrem Notizzettel, wenn Sie die Seite Ihrer Airline aufrufen."));
+    ?" also appear on your sticky note."
+    :" erscheinen zusätzlich auf Ihrem Notizzettel."));
   updBgmBtn();
 }
 function updBgmBtn(){
@@ -600,24 +605,26 @@ function sv(){
   normCaps();updClock();
   const e=isEn(),parts=byId("u5").value.split("|");
   parts.shift();const mode=parts.shift();byId("go").href=parts.join("|");
-  const isMailOnly=(mode==="mail_only"),isFnLn=(mode==="pnr_fn_ln");
-  const isLn=(mode==="pnr_ln"||isFnLn),isMail=(mode==="mail_pnr"||isMailOnly);
-  byId("f_pnr").classList.toggle("off",isMailOnly);
-  byId("f_fn").classList.toggle("off",!isFnLn);
-  byId("f_ln").classList.toggle("off",!isLn);
-  byId("f_mail").classList.toggle("off",!isMail);
+  const reqPnr=(mode==="pnr_ln"||mode==="pnr_fn_ln"||mode==="mail_pnr");
+  const reqFn=(mode==="pnr_fn_ln");
+  const reqLn=(mode==="pnr_ln"||mode==="pnr_fn_ln");
+  const reqMail=(mode==="mail_pnr"||mode==="mail_only");
+  byId("f_pnr").classList.toggle("req",reqPnr);
+  byId("f_fn").classList.toggle("req",reqFn);
+  byId("f_ln").classList.toggle("req",reqLn);
+  byId("f_mail").classList.toggle("req",reqMail);
   if(mode==="pnr_ln")byId("hint").textContent=e
-    ?"Required: Booking Code (PNR) + Last Name"
-    :"Benötigt: Buchungscode (PNR) + Nachname";
+    ?"🔴 Required: Booking Code (PNR) + Last Name"
+    :"🔴 Benötigt: Buchungscode (PNR) + Nachname";
   if(mode==="pnr_fn_ln")byId("hint").textContent=e
-    ?"Required (VietJet Air): Booking Code (PNR) + First & Last Name"
-    :"Benötigt (VietJet Air): Buchungscode (PNR) + Vor- & Nachname";
+    ?"🔴 Required (VietJet Air): Booking Code (PNR) + First & Last Name"
+    :"🔴 Benötigt (VietJet Air): Buchungscode (PNR) + Vor- & Nachname";
   if(mode==="mail_pnr")byId("hint").textContent=e
-    ?"Required: Booking Email + Booking Code (PNR)"
-    :"Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
+    ?"🔴 Required: Booking Email + Booking Code (PNR)"
+    :"🔴 Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
   if(mode==="mail_only")byId("hint").textContent=e
-    ?"Required: Log in with your booking email on the portal"
-    :"Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
+    ?"🔴 Required: Log in with your booking email on the portal"
+    :"🔴 Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
   const d={};
   keys.forEach(k=>Object.defineProperty(d,k,{value:byId(k).value,enumerable:true}));
   try{localStorage.setItem("rk_upg",JSON.stringify(d))}catch(err){}
