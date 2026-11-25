@@ -701,7 +701,7 @@ function upd(){
     $("nt").textContent=e
       ?(bad?"CHECK DATES":"DATES")
       :(bad?"DATUM PR\u00dcFEN":"ZEITRAUM");
-    $("info").style.background="#fee2e2":"#eff6ff";
+    $("info").style.background=bad?"#fee2e2":"#eff6ff";
     $("info").style.color=bad?"#991b1b":"#1e3a8a";
     $("info").textContent=e
       ?(bad?"Please check dates."
