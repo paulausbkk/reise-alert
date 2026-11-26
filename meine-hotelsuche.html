@@ -347,7 +347,7 @@ var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111);
 var H_OM="geocoding-api."+
   String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
-var agCache={},agBusy="",trCache={},trBusy="";
+var agCache={},agBusy="";
 function readLang(){
   try{lang=(localStorage.getItem("pab_lang")==="en")?"en":"de";}catch(e){}
 }
@@ -421,7 +421,7 @@ var BK_DB="bangkok:-3414440;mailand:-121726;milan:-121726;"+
 var TR_DB="seevetal:200-5994;bangkok:200-15893";
 function getAid(c){return findId(AG_DB,normCity(c),agCache);}
 function getBid(c){return findId(BK_DB,normCity(c),null);}
-function getTid(c){return findId(TR_DB,normCity(c),trCache);}
+function getTid(c){return findId(TR_DB,normCity(c),null);}
 function resolveAgodaId(city){
   var k=normCity(city);
   if(!k||k.length<2||k===agBusy||getAid(city))return;
@@ -440,41 +440,6 @@ function resolveAgodaId(city){
       }
     }
   }).catch(function(){});
-}
-function saveTid(k,cid){
-  Object.defineProperty(trCache,k,{
-    value:String(cid),configurable:true
-  });
-  upd();
-}
-function parseTrivago(j){
-  var a=(j&&j.suggestions)?j.suggestions:((j&&j.data)?j.data:j);
-  if(Array.isArray(a))for(var i=0;i<a.length;i++){
-    var it=a.slice(i,i+1).pop();
-    var cid=it&&(it.conceptId||it.id||it.entityId);
-    if(cid&&String(cid).indexOf("200-")===0)return String(cid);
-  }
-  var m=JSON.stringify(j||"").match(/200-\d{3,8}/);
-  return m?m.shift():"";
-}
-function resolveTrivagoId(city){
-  var k=normCity(city);
-  if(!k||k.length<2||k===trBusy||getTid(city))return;
-  trBusy=k;
-  var raw=P+H_TR+(isEn()?".com":".de")+
-    "/api/v1/autosuggest?query="+encodeURIComponent(city)+
-    "&locale="+(isEn()?"en-US":"de-DE");
-  var p1=P+"api.allorigins.win/raw?url="+encodeURIComponent(raw);
-  var p2=P+"corsproxy.io/?"+encodeURIComponent(raw);
-  fetch(p1).then(function(r){return r.json();}).then(function(j){
-    var cid=parseTrivago(j);
-    if(cid){saveTid(k,cid);}else{throw new Error("no");}
-  }).catch(function(){
-    fetch(p2).then(function(r){return r.json();}).then(function(j){
-      var cid=parseTrivago(j);
-      if(cid)saveTid(k,cid);
-    }).catch(function(){});
-  });
 }
 function applyLang(){
   readLang();var e=isEn();
@@ -595,7 +560,6 @@ function upd(){
   var st=+$("st").value||0,ab=$("ab").checked;
   var aid=getAid(city),bid=getBid(city),tid=getTid(city);
   if(city&&!aid)resolveAgodaId(city);
-  if(city&&!tid)resolveTrivagoId(city);
   $("f4").action=P+H_BK+"/searchresults.html";
   document.querySelectorAll(".htl").forEach(function(el){
     el.classList.toggle("off",ab);
@@ -653,7 +617,9 @@ function upd(){
       (selCountry?("-"+slugify(selCountry)):"");
     var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
       ";drs-40;rc-"+rm+"-"+px+(st>0?";st-"+st:"");
-    $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+"?search="+trSrch;
+    var trQ=tid?"":("&sQuery="+qFull+"&q="+q);
+    $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+
+      "?search="+trSrch+trQ;
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
