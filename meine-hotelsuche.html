@@ -202,13 +202,6 @@ input,select{
   </div>
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
-<script>
-function enterHotel(){
-  var w=document.getElementById("wOverlay");
-  if(w)w.style.display="none";
-  if(typeof playBgm==="function")playBgm();
-}
-</script>
 <div class="hdr">
   <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v128</h1>
   <div class="cp">
@@ -343,7 +336,7 @@ var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111);
 var H_OM="geocoding-api."+
   String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
-var agCache={},agBusy="",trCache={},trBusy="";
+var agCache={},agBusy="";
 function readLang(){
   try{lang=(localStorage.getItem("pab_lang")==="en")?"en":"de";}catch(e){}
 }
@@ -353,26 +346,26 @@ function applyLang(){
   readLang();
   var e=isEn();document.documentElement.lang=e?"en":"de";
   $("pgTit").textContent=e
-    ?"\uD83C\uDFE8 My Hotel Search PRO v128"
-    :"\uD83C\uDFE8 Meine Hotelsuche PRO v128";
+    ?"🏨 My Hotel Search PRO v128"
+    :"🏨 Meine Hotelsuche PRO v128";
   $("hTit").textContent=e
-    ?"\uD83C\uDFE8 My Hotel Search PRO v128"
-    :"\uD83C\uDFE8 Meine Hotelsuche PRO v128";
+    ?"🏨 My Hotel Search PRO v128"
+    :"🏨 Meine Hotelsuche PRO v128";
   $("navAct").textContent=e
-    ?"\uD83C\uDFE8 HOTELS (ACTIVE)"
-    :"\uD83C\uDFE8 HOTELSUCHE (AKTIV)";
+    ?"🏨 HOTELS (ACTIVE)"
+    :"🏨 HOTELSUCHE (AKTIV)";
   $("navHome").textContent=e
-    ?"\uD83C\uDFE0 Back to Home"
-    :"\uD83C\uDFE0 Zur\u00fcck zur Startseite";
+    ?"🏠 Back to Home"
+    :"🏠 Zurück zur Startseite";
   $("navFlt").textContent=e
-    ?"\u2708\uFE0F Flight Search"
-    :"\u2708\uFE0F Flugsuche";
+    ?"✈️ Flight Search"
+    :"✈️ Flugsuche";
   $("navBkg").textContent=e
-    ?"\u2708\uFE0F My Current Bookings \u27A1\uFE0F"
-    :"\u2708\uFE0F Meine aktuellen Buchungen \u27A1\uFE0F";
+    ?"✈️ My Current Bookings ➡️"
+    :"✈️ Meine aktuellen Buchungen ➡️";
   $("c1Tit").textContent=e
-    ?"\uD83D\uDCCD Destination & Travel Dates"
-    :"\uD83D\uDCCD Zielort & Reisedaten";
+    ?"📍 Destination & Travel Dates"
+    :"📍 Zielort & Reisedaten";
   $("lblCity").textContent=e
     ?"Destination (any city worldwide)"
     :"Reiseziel (beliebige Stadt weltweit)";
@@ -386,8 +379,8 @@ function applyLang(){
     ?"Check-out (Departure)"
     :"Check-out (Abreise)";
   $("c2Tit").textContent=e
-    ?"\uD83D\uDECF\uFE0F Guests, Rooms & Hotel Filters"
-    :"\uD83D\uDECF\uFE0F G\u00e4ste, Zimmer & Hotel-Filter";
+    ?"🛏️ Guests, Rooms & Hotel Filters"
+    :"🛏️ Gäste, Zimmer & Hotel-Filter";
   $("lblPx").textContent=e?"Guests":"Personenzahl";
   $("px1").textContent=e?"1 Adult":"1 Erwachsener";
   $("px2").textContent=e?"2 Adults":"2 Erwachsene";
@@ -399,28 +392,28 @@ function applyLang(){
   $("rm3").textContent=e?"3 Rooms":"3 Zimmer";
   $("lblSt").textContent=e?"Minimum Stars":"Mindest-Sterne";
   $("st0").textContent=e?"All Categories":"Alle Kategorien";
-  $("st3").textContent=e?"3+ Stars \u2B50\u2B50\u2B50":"Ab 3 Sterne \u2B50\u2B50\u2B50";
-  $("st4").textContent=e?"4+ Stars \u2B50\u2B50\u2B50\u2B50":"Ab 4 Sterne \u2B50\u2B50\u2B50\u2B50";
-  $("st5").textContent=e?"5 Stars \u2B50\u2B50\u2B50\u2B50\u2B50":"5 Sterne \u2B50\u2B50\u2B50\u2B50\u2B50";
+  $("st3").textContent=e?"3+ Stars ⭐⭐⭐":"Ab 3 Sterne ⭐⭐⭐";
+  $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
+  $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
   var hb=$("hintBox");hb.textContent="";
   var wrap=document.createElement("div");
   var b1=document.createElement("b");
   b1.textContent=e
-    ?"\u2139\uFE0F Important Notice on Hotel Search: "
-    :"\u2139\uFE0F Wichtiger Hinweis zur Hotelsuche: ";
+    ?"ℹ️ Important Notice on Hotel Search: "
+    :"ℹ️ Wichtiger Hinweis zur Hotelsuche: ";
   wrap.appendChild(b1);
   wrap.appendChild(document.createTextNode(e
-    ?"Please make sure to check all filters (e.g. 5 stars) on the booking page and re-apply them if needed, as not all portals transfer them automatically. Smaller towns may also not be passed directly - since your dates and guest count are already filled in, simply type your destination there to start. We apologize for this technical limitation!"
-    :"Bitte kontrollieren Sie auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf neu ein, da nicht alle Portale sie automatisch \u00fcbernehmen. Kleinere Orte werden teils ebenfalls nicht direkt \u00fcbertragen - da Reisedaten und Personenanzahl bereits hinterlegt sind, tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten diese technische Einschr\u00e4nkung der Anbieter zu entschuldigen!"));
+    ?"Please make sure to check all filters (e.g. 5 stars) on the booking page and re-apply them if needed, as not all portals transfer them automatically. Smaller towns may also not be passed directly – since your dates and guest count are already filled in, simply type your destination there to start. We apologize for this technical limitation!"
+    :"Bitte kontrollieren Sie auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf neu ein, da nicht alle Portale sie automatisch übernehmen. Kleinere Orte werden teils ebenfalls nicht direkt übertragen – da Reisedaten und Personenanzahl bereits hinterlegt sind, tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten diese technische Einschränkung der Anbieter zu entschuldigen!"));
   hb.appendChild(wrap);
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
   var b=$("mbtn");if(!b)return;
   b.textContent=bgmOn
-    ?(isEn()?"\uD83D\uDD07 Music Off":"\uD83D\uDD07 Musik Aus")
-    :(isEn()?"\uD83C\uDFB5 Music On":"\uD83C\uDFB5 Musik An");
+    ?(isEn()?"🔇 Music Off":"🔇 Musik Aus")
+    :(isEn()?"🎵 Music On":"🎵 Musik An");
   b.classList.toggle("off",!bgmOn);
 }
 function playBgm(){
@@ -432,6 +425,11 @@ function playBgm(){
 function toggleBgm(){
   var a=$("bgm");if(!a)return;
   if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}else{playBgm();}
+}
+function enterHotel(){
+  var w=$("wOverlay");
+  if(w)w.style.display="none";
+  playBgm();
 }
 function iso(d){
   var m=String(d.getMonth()+1),t=String(d.getDate());
@@ -578,10 +576,6 @@ function getBid(city){
 }
 function getTid(city){
   var k=normCity(city);
-  if(Object.prototype.hasOwnProperty.call(trCache,k)){
-    return Object.getOwnPropertyDescriptor(trCache,k).value;
-  }
-  if(k==="seevetal")return"200-5994";
   if(k==="berlin")return"200-3848";
   if(k==="hamburg")return"200-9644";
   if(k==="muenchen"||k==="munich")return"200-2855";
@@ -627,9 +621,62 @@ function getTid(city){
   if(k==="tokio"||k==="tokyo")return"200-27358";
   return"";
 }
-function resolveTrivagoId(city){
-  var k=normCity(city);
-  if(!k||k.length0?"class="+st:"";
+function slugify(s){
+  return normCity(s).replace(/^-+|-+$/g,"")
+    .split(" ").join("-").split(".").join("-");
+}
+function upd(){
+  readLang();
+  var e=isEn(),loc=e?"en-GB":"de-DE";
+  var now=new Date(),t=iso(now);
+  $("dt").textContent=now.toLocaleDateString(loc)+
+    " \u2022 "+now.toLocaleTimeString(loc);
+  var city=$("city").value.trim();
+  var fullCity=(city&&selCountry)?(city+", "+selCountry):city;
+  var ci=$("ci").value,co=$("co").value;
+  if(ci){
+    var dMin=new Date(ci+"T12:00:00");
+    dMin.setDate(dMin.getDate()+1);
+    var nextDay=iso(dMin);
+    $("co").min=nextDay;
+    if(!co||co<=ci){
+      co=nextDay;
+      $("co").value=nextDay;
+    }
+  }else{
+    $("co").min=t;
+  }
+  var px=+$("px").value||2,rm=+$("rm").value||1;
+  var st=+$("st").value||0,ab=$("ab").checked;
+  var aid=getAid(city),bid=getBid(city),tid=getTid(city);
+  if(city&&!aid)resolveAgodaId(city);
+  $("f4").action=P+H_BK+"/searchresults.html";
+  document.querySelectorAll(".htl").forEach(function(el){
+    el.classList.toggle("off",ab);
+  });
+  $("h8").classList.toggle("off",!ab);
+  var bad=(ci&&ci<t)||(co&&co<=t)||(ci&&co&&co<=ci);
+  $("cib").classList.toggle("err",Boolean(ci&&ci<t));
+  $("cob").classList.toggle("err",Boolean(bad));
+  if(ci&&co&&!bad){
+    var dA=new Date(ci+"T12:00:00"),dB=new Date(co+"T12:00:00");
+    var n=Math.max(1,Math.round((dB-dA)/86400000));
+    $("nt").textContent=e
+      ?n+(n===1?" NIGHT":" NIGHTS")
+      :n+(n===1?" NACHT":" N\u00c4CHTE");
+    $("info").style.background="#eff6ff";
+    $("info").style.color="#1e3a8a";
+    $("info").textContent=e
+      ?"Selection: "+(fullCity||"Destination")+" \u2022 "+n+
+        (n===1?" Night":" Nights")+" \u2022 "+px+
+        " Guests \u2022 "+rm+" Rm."
+      :"Auswahl: "+(fullCity||"Ziel")+" \u2022 "+n+
+        (n===1?" Nacht":" N\u00e4chte")+" \u2022 "+px+
+        " Pers. \u2022 "+rm+" Zi.";
+    var q=encodeURIComponent(city);
+    var qMom=encodeURIComponent(normCity(city));
+    var qFull=encodeURIComponent(fullCity);
+    var bFilt=st>0?"class="+st:"";
     var dom=e?".com":".de";
     var hPath="/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
     var mPath="/hotels/"+qMom+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
@@ -654,14 +701,24 @@ function resolveTrivagoId(city){
       "checkIn="+ci+"&checkOut="+co+"&los="+n+
       "&rooms="+rm+"&adults="+px+"&children=0"+
       "&currency=EUR&cid=1844104";
-  var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+        var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+    var perRm=Math.max(1,Math.floor(px/rm));
+    var rem=px%rm,rc="";
+    for(var i=0;i<rm;i++){
+      rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
+    }
     var trHost=H_TR+(e?".com":".de");
     var trBase=e?"/en-US":"/de";
-    var trSlug=slugify(city)+
-      (selCountry?("-"+slugify(selCountry)):"");
+    var trSlug=slugify(city);
     var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
-      ";drs-40;rc-"+rm+"-"+px+(st>0?";st-"+st:"");
-    $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+"?search="+trSrch;
+      ";rc-"+rc+(st>0?";st-"+st:"");
+    var rType=rm>1?"9":(px===1?"1":"7");
+    $("h6").href=tid
+      ?(P+trHost+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
+      :(P+trHost+trBase+"/srl?sQuery="+qFull+
+        "&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+
+        "&iRoomType="+rType+
+        "&aRooms%5B0%5D%5Badults%5D="+px);
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
@@ -753,9 +810,7 @@ $("city").addEventListener("input",function(){
   selCountry="";upd();clearTimeout(acT);
   var q=$("city").value.trim(),box=$("lc");
   if(q.length<2){box.style.display="none";return;}
-  showAc(null,isEn()
-    ?"\uD83D\uDD0D Searching worldwide..."
-    :"\uD83D\uDD0D Suche weltweit...");
+  showAc(null,isEn()?"🔍 Searching worldwide...":"🔍 Suche weltweit...");
   acT=setTimeout(function(){
     searchWorldCities(q,function(res,errMsg){
       if($("city").value.trim()!==q)return;
@@ -803,7 +858,3 @@ setInterval(upd,1000);
 </script>
 </body>
 </html>
-
-
-
-  
