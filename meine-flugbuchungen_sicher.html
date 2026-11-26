@@ -36,43 +36,9 @@ html,body{
   0%,100%{transform:translateY(0) rotate(-4deg)}
   50%{transform:translateY(-3px) rotate(4deg)}
 }
-@keyframes orbitBtn{
-  0%{
-    transform:translate(-165px,0px) rotate(-45deg);
-    opacity:.75
-  }
-  12%{
-    transform:translate(-115px,-22px) rotate(25deg);
-    opacity:.9
-  }
-  25%{
-    transform:translate(0px,-25px) rotate(45deg);
-    opacity:1
-  }
-  38%{
-    transform:translate(115px,-22px) rotate(65deg);
-    opacity:.9
-  }
-  50%{
-    transform:translate(165px,0px) rotate(135deg);
-    opacity:.75
-  }
-  62%{
-    transform:translate(115px,22px) rotate(205deg);
-    opacity:.9
-  }
-  75%{
-    transform:translate(0px,25px) rotate(225deg);
-    opacity:1
-  }
-  88%{
-    transform:translate(-115px,22px) rotate(245deg);
-    opacity:.9
-  }
-  100%{
-    transform:translate(-165px,0px) rotate(315deg);
-    opacity:.75
-  }
+@keyframes orbitSmooth{
+  0%{offset-distance:0%}
+  100%{offset-distance:100%}
 }
 .w-btn{
   position:relative;overflow:hidden;
@@ -93,15 +59,17 @@ html,body{
 }
 .w-btn:active{transform:scale(.98)}
 .btn-p{
-  position:absolute;top:50%;left:50%;
-  margin-top:-9px;margin-left:-9px;
-  font-size:1rem;pointer-events:none;user-select:none;
-  animation:orbitBtn 36s infinite linear;z-index:1
+  position:absolute;top:0;left:0;
+  font-size:.95rem;pointer-events:none;user-select:none;
+  offset-path:inset(5px round 11px);
+  offset-rotate:auto 45deg;
+  opacity:.85;
+  animation:orbitSmooth 22s infinite linear;z-index:1
 }
 .btn-p.p1{animation-delay:0s}
-.btn-p.p2{animation-delay:-9s}
-.btn-p.p3{animation-delay:-18s}
-.btn-p.p4{animation-delay:-27s}
+.btn-p.p2{animation-delay:-5.5s}
+.btn-p.p3{animation-delay:-11s}
+.btn-p.p4{animation-delay:-16.5s}
 .w-icon{
   position:relative;z-index:2;
   display:flex;align-items:center;justify-content:center;
@@ -109,10 +77,7 @@ html,body{
   background:rgba(255,255,255,.18);border:1px solid #bae6fd;
   font-size:1.45rem;animation:iconFloat 2.4s infinite ease-in-out
 }
-.w-txt{
-  position:relative;z-index:2;
-  display:flex;flex-direction:column
-}
+.w-txt{position:relative;z-index:2;display:flex;flex-direction:column}
 .w-line{white-space:nowrap}
 .w-btn-en{
   display:block;font-size:.82rem;font-weight:bold;
@@ -161,23 +126,32 @@ html,body{
 }
 .f{margin-bottom:10px;display:flex;flex-direction:column}
 .f:last-child{margin-bottom:0}
-.f.off{display:none}
 label{
   font-weight:bold;font-size:.84rem;
-  margin-bottom:4px;color:#1e3a8a
+  margin-bottom:4px;color:#64748b
 }
+.f.req label{color:#b91c1c}
 .inrow{display:flex;gap:8px;align-items:center}
 input,select{
-  height:39px;padding:0 12px;border:1px solid #93c5fd;
+  height:39px;padding:0 12px;border:1px solid #cbd5e1;
   border-radius:8px;box-sizing:border-box;font-size:.96rem;
-  background:#f8fafc;color:var(--t);width:100%
+  background:#f8fafc;color:#475569;width:100%
+}
+select{border-color:#93c5fd;color:var(--t)}
+.f.req input{
+  border:2px solid #dc2626;background:#fef2f2;color:#7f1d1d;
+  font-weight:bold
 }
 .cpbtn{
   height:39px;padding:0 12px;background:#e0f2fe;color:#0369a1;
   border:1px solid #7dd3fc;border-radius:8px;font-weight:bold;
-  cursor:pointer;white-space:nowrap;font-size:.82rem
+  cursor:pointer;white-space:nowrap;font-size:.82rem;
+  transition:background .2s,color .2s,border-color .2s
 }
 .cpbtn:hover{background:#bae6fd}
+.cpbtn.ok,.cpbtn.ok:hover{
+  background:#16a34a;color:#ffffff;border-color:#15803d
+}
 .bn{
   background:#eff6ff;border:1px solid #93c5fd;
   border-left:5px solid #0284c7;border-radius:8px;
@@ -194,9 +168,7 @@ input,select{
   border-radius:12px;padding:13px 16px;
   box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
-.acts{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px
-}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .abtn{
   display:flex;align-items:center;justify-content:center;
   height:44px;border-radius:9px;font-weight:bold;font-size:.92rem;
@@ -252,7 +224,7 @@ input,select{
     </span>
     <a href="index.html" class="seg nav" id="navFlt">✈️ Flugsuche</a>
     <a href="meine-hotelsuche.html" class="seg upg" id="navHtl">
-      🏨 Meine Hotelsuche ➡️
+      🏨 Hotelsuche ➡️
     </a>
     <a href="../index.html" class="seg nav" id="navHome">
       🏠 Zurück zur Startseite
@@ -264,61 +236,105 @@ input,select{
     <div>
       <div class="ct" id="cTit">🎫 Airline & Buchungsdaten</div>
       <div class="f">
-        <label for="u5" id="lblPort">Airline oder Buchungsportal wählen</label>
+        <label for="u5" id="lblPort" style="color:#1e3a8a">
+          Airline oder Buchungsportal wählen
+        </label>
         <select id="u5">
-          <option value="tk|pnr_ln|https://turkishairlines.com">Turkish Airlines</option>
-          <option value="lh|pnr_ln|https://lufthansa.com">Lufthansa</option>
-          <option value="qr|pnr_ln|https://qatarairways.com">Qatar Airways</option>
-          <option value="ek|pnr_ln|https://emirates.com">Emirates</option>
-          <option value="sq|pnr_ln|https://singaporeair.com">Singapore Airlines</option>
-          <option value="tg|pnr_ln|https://thaiairways.com">Thai Airways</option>
-          <option value="cx|pnr_ln|https://cathaypacific.com">Cathay Pacific</option>
-          <option value="pr|pnr_ln|https://philippineairlines.com">Philippine Airlines</option>
-          <option value="5j|pnr_ln|https://cebupacificair.com">Cebu Pacific</option>
-          <option value="tr|pnr_ln|https://flyscoot.com">Scoot</option>
-          <option value="pg|pnr_ln|https://bangkokair.com">Bangkok Airways</option>
-          <option value="vj|pnr_fn_ln|https://vietjetair.com">VietJet Air</option>
-          <option value="ak|mail_pnr|https://airasia.com">AirAsia</option>
-          <option value="gtg|mail_pnr|https://gotogate.de">Gotogate</option>
-          <option value="exp|mail_only|https://expedia.de">Expedia</option>
-          <option value="trp|mail_pnr|https://trip.com">Trip.com</option>
-          <option value="kwi|mail_only|https://kiwi.com">Kiwi.com</option>
-          <option value="sky|mail_only|https://skyscanner.de">Skyscanner</option>
-          <option value="kyk|mail_only|https://kayak.de">Kayak</option>
-          <option value="mom|mail_only|https://momondo.de">Momondo</option>
-          <option value="opo|mail_pnr|https://opodo.de">Opodo</option>
+          <option value="tk|pnr_ln|https://turkishairlines.com">
+            Turkish Airlines
+          </option>
+          <option value="lh|pnr_ln|https://lufthansa.com">
+            Lufthansa
+          </option>
+          <option value="qr|pnr_ln|https://qatarairways.com">
+            Qatar Airways
+          </option>
+          <option value="ek|pnr_ln|https://emirates.com">
+            Emirates
+          </option>
+          <option value="sq|pnr_ln|https://singaporeair.com">
+            Singapore Airlines
+          </option>
+          <option value="tg|pnr_ln|https://thaiairways.com">
+            Thai Airways
+          </option>
+          <option value="cx|pnr_ln|https://cathaypacific.com">
+            Cathay Pacific
+          </option>
+          <option value="pr|pnr_ln|https://philippineairlines.com">
+            Philippine Airlines
+          </option>
+          <option value="5j|pnr_ln|https://cebupacificair.com">
+            Cebu Pacific
+          </option>
+          <option value="tr|pnr_ln|https://flyscoot.com">
+            Scoot
+          </option>
+          <option value="pg|pnr_ln|https://bangkokair.com">
+            Bangkok Airways
+          </option>
+          <option value="vj|pnr_fn_ln|https://vietjetair.com">
+            VietJet Air
+          </option>
+          <option value="ak|mail_pnr|https://airasia.com">
+            AirAsia
+          </option>
+          <option value="gtg|mail_pnr|https://gotogate.de">
+            Gotogate
+          </option>
+          <option value="exp|mail_only|https://expedia.de">
+            Expedia
+          </option>
+          <option value="trp|mail_pnr|https://trip.com">
+            Trip.com
+          </option>
+          <option value="kwi|mail_only|https://kiwi.com">
+            Kiwi.com
+          </option>
+          <option value="sky|mail_only|https://skyscanner.de">
+            Skyscanner
+          </option>
+          <option value="kyk|mail_only|https://kayak.de">
+            Kayak
+          </option>
+          <option value="mom|mail_only|https://momondo.de">
+            Momondo
+          </option>
+          <option value="opo|mail_pnr|https://opodo.de">
+            Opodo
+          </option>
         </select>
       </div>
-      <div class="f" id="f_pnr">
+      <div class="f req" id="f_pnr">
         <label for="u3" id="lblPnr">Buchungscode (PNR)</label>
         <div class="inrow">
           <input type="text" id="u3" placeholder="z.B. ABC123">
           <button type="button" class="cpbtn" id="cpPnr"
-            onclick="cp('u3','PNR')">📋 Kopieren</button>
+            onclick="cp('u3','PNR',this)">📋 Kopieren</button>
         </div>
       </div>
-      <div class="f off" id="f_fn">
+      <div class="f" id="f_fn">
         <label for="u_fn" id="lblFn">Vorname (wie im Pass)</label>
         <div class="inrow">
           <input type="text" id="u_fn" placeholder="z.B. MAX">
           <button type="button" class="cpbtn" id="cpFn"
-            onclick="cp('u_fn','Vorname')">📋 Kopieren</button>
+            onclick="cp('u_fn','Vorname',this)">📋 Kopieren</button>
         </div>
       </div>
-      <div class="f" id="f_ln">
+      <div class="f req" id="f_ln">
         <label for="u6" id="lblLn">Nachname (wie im Pass)</label>
         <div class="inrow">
           <input type="text" id="u6" placeholder="z.B. MUSTERMANN">
           <button type="button" class="cpbtn" id="cpLn"
-            onclick="cp('u6','Nachname')">📋 Kopieren</button>
+            onclick="cp('u6','Nachname',this)">📋 Kopieren</button>
         </div>
       </div>
-      <div class="f off" id="f_mail">
+      <div class="f" id="f_mail">
         <label for="u4" id="lblMail">Buchungs-E-Mail</label>
         <div class="inrow">
           <input type="email" id="u4" placeholder="name@beispiel.de">
           <button type="button" class="cpbtn" id="cpMail"
-            onclick="cp('u4','E-Mail')">📋 Kopieren</button>
+            onclick="cp('u4','E-Mail',this)">📋 Kopieren</button>
         </div>
       </div>
     </div>
@@ -329,9 +345,12 @@ input,select{
       <div class="f">
         <label for="u_tknr" id="lblTk">Ticketnummer (freiwillig)</label>
         <div class="inrow">
-          <input type="text" id="u_tknr" placeholder="z.B. 235-1234567890">
+          <input type="text" id="u_tknr"
+            placeholder="z.B. 235-1234567890">
           <button type="button" class="cpbtn" id="cpTk"
-            onclick="cp('u_tknr','Ticket-Nr.')">📋 Kopieren</button>
+            onclick="cp('u_tknr','Ticket-Nr.',this)">
+            📋 Kopieren
+          </button>
         </div>
       </div>
       <div class="f">
@@ -339,11 +358,13 @@ input,select{
         <div class="inrow">
           <input type="text" id="u_pp" placeholder="z.B. C01X00T47">
           <button type="button" class="cpbtn" id="cpPp"
-            onclick="cp('u_pp','Pass-Nr.')">📋 Kopieren</button>
+            onclick="cp('u_pp','Pass-Nr.',this)">📋 Kopieren</button>
         </div>
       </div>
     </div>
-    <div class="bn" id="hint">Benötigt: Buchungscode (PNR) + Nachname</div>
+    <div class="bn" id="hint">
+      🔴 Rot markiert = Pflichtfelder für diese Airline
+    </div>
   </div>
 </div>
 <div class="bb">
@@ -355,216 +376,211 @@ input,select{
   </div>
   <div id="ts"></div>
   <div class="hintbox" id="hintBox">
-    ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie
-    <b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier eintragen,
-    erscheinen diese nachher auf Ihrem Notizzettel,
-    wenn Sie die Seite Ihrer Airline aufrufen.
+    ℹ️ <b>Hinweis:</b> Rot markierte Felder sind für die gewählte
+    Airline Pflicht. Freiwillige Angaben (grau) wie
+    <b>Ticketnummer</b> oder <b>Reisepassnummer</b> erscheinen
+    zusätzlich auf Ihrem Notizzettel. Diese Angaben benötigen Sie
+    unter Umständen auf der Seite der Airline.
   </div>
 </div>
 <script>
-const $=id=>document.getElementById(id);
-const P="https:"+String.fromCharCode(47,47);
+const byId=id=>document.getElementById(id);
 const keys="u5;u3;u_fn;u6;u4;u_tknr;u_pp".split(";");
 const upKeys="u3;u_fn;u6;u_pp".split(";");
+const cpIds="cpPnr;cpFn;cpLn;cpMail;cpTk;cpPp".split(";");
 const cols="#0284c7;#0369a1;#1d4ed8;#0077b6;#0ea5e9;#1e40af".split(";");
 let ci=0,bgmOn=false,lang="de";
 try{if(localStorage.getItem("pab_lang")==="en")lang="en";}catch(e){}
 function isEn(){return lang==="en";}
 
 const guides={
-  tk:"1. 'Buchung verwalten' wählen.|2. PNR eingeben.|3. Nachname eingeben.",
-  lh:"1. 'Meine Buchungen' öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
-  qr:"1. 'Buchung verwalten' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  ek:"1. 'Buchung verwalten' klicken.|2. Nachname eingeben.|3. Buchungsreferenz eingeben.",
-  sq:"1. 'Buchung verwalten' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  tg:"1. 'Meine Buchung' öffnen.|2. Buchungscode eingeben.|3. Nachname eingeben.",
-  cx:"1. 'Buchung verwalten' öffnen.|2. Vor- & Nachname eingeben.|3. Buchungsreferenz eingeben.",
-  pr:"1. 'Manage Booking' öffnen.|2. PNR eingeben.|3. Nachname eingeben.",
-  "5j":"1. 'Manage Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  tr:"1. 'Manage My Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname oder E-Mail eingeben.",
-  pg:"1. 'Manage Booking' öffnen.|2. Buchungsreferenz eingeben.|3. Nachname eingeben.",
-  vj:"1. 'My Booking' öffnen.|2. Buchungscode eingeben.|3. Nachname & Vorname eingeben.",
-  ak:"1. 'Purchases' öffnen.|2. Mit Buchungs-E-Mail einloggen oder PNR verknüpfen.",
-  gtg:"1. 'Meine Buchungen' öffnen.|2. Buchungs-E-Mail eingeben.|3. Bestellnummer / PNR eingeben.",
-  exp:"1. 'Meine Reisen' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  trp:"1. 'Buchungen suchen' öffnen.|2. Buchungs-E-Mail eingeben.|3. Buchungsnummer eingeben.",
-  kwi:"1. 'Buchungen verwalten' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  sky:"1. 'Anmelden' wählen.|2. Mit Buchungs-E-Mail einloggen.",
-  kyk:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  mom:"1. 'Trips' öffnen.|2. Mit Buchungs-E-Mail einloggen.",
-  opo:"1. 'Meine Reisen' öffnen.|2. Buchungs-E-Mail & Buchungsnummer eingeben."
+  tk:"1. 'Buchung verwalten'|2. PNR eingeben|3. Nachname",
+  lh:"1. 'Meine Buchungen'|2. Buchungscode|3. Nachname",
+  qr:"1. 'Buchung verwalten'|2. Referenz|3. Nachname",
+  ek:"1. 'Buchung verwalten'|2. Nachname|3. Referenz",
+  sq:"1. 'Buchung verwalten'|2. Referenz|3. Nachname",
+  tg:"1. 'Meine Buchung'|2. Buchungscode|3. Nachname",
+  cx:"1. 'Buchung verwalten'|2. Vor-/Nachname|3. Referenz",
+  pr:"1. 'Manage Booking'|2. PNR eingeben|3. Nachname",
+  "5j":"1. 'Manage Booking'|2. Referenz|3. Nachname",
+  tr:"1. 'Manage My Booking'|2. Referenz|3. Nachname/E-Mail",
+  pg:"1. 'Manage Booking'|2. Referenz|3. Nachname",
+  vj:"1. 'My Booking'|2. Buchungscode|3. Nach-/Vorname",
+  ak:"1. 'Purchases'|2. Mit Buchungs-E-Mail einloggen",
+  gtg:"1. 'Meine Buchungen'|2. E-Mail|3. Bestellnummer/PNR",
+  exp:"1. 'Meine Reisen'|2. Mit Buchungs-E-Mail einloggen",
+  trp:"1. 'Buchungen suchen'|2. E-Mail|3. Buchungsnummer",
+  kwi:"1. 'Buchungen verwalten'|2. Mit Buchungs-E-Mail einloggen",
+  sky:"1. 'Anmelden'|2. Mit Buchungs-E-Mail einloggen",
+  kyk:"1. 'Trips' öffnen|2. Mit Buchungs-E-Mail einloggen",
+  mom:"1. 'Trips' öffnen|2. Mit Buchungs-E-Mail einloggen",
+  opo:"1. 'Meine Reisen'|2. E-Mail & Buchungsnummer"
 };
+
+function resetCpBtns(){
+  const cpTxt=isEn()?"📋 Copy":"📋 Kopieren";
+  cpIds.forEach(cid=>{
+    const b=byId(cid);
+    if(b){b.classList.remove("ok");b.textContent=cpTxt;}
+  });
+}
+
 function applyLang(){
   const e=isEn();
   document.documentElement.lang=e?"en":"de";
-  $("pgTit").textContent=e
-    ?"✈️ My Current Bookings PRO"
-    :"✈️ Meine aktuellen Buchungen PRO";
-  $("hTit").textContent=e
-    ?"✈️ My Current Bookings PRO"
-    :"✈️ Meine aktuellen Buchungen PRO";
-  $("navAct").textContent=e
+  byId("pgTit").textContent=e
+    ?"✈️ My Current Bookings PRO":"✈️ Meine aktuellen Buchungen PRO";
+  byId("hTit").textContent=e
+    ?"✈️ My Current Bookings PRO":"✈️ Meine aktuellen Buchungen PRO";
+  byId("navAct").textContent=e
     ?"✈️ MY CURRENT BOOKINGS (ACTIVE)"
     :"✈️ MEINE AKTUELLEN BUCHUNGEN (AKTIV)";
-  $("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
-  $("navHtl").textContent=e
-    ?"🏨 My Hotel Search ➡️"
-    :"🏨 Meine Hotelsuche ➡️";
-  $("navHome").textContent=e
-    ?"🏠 Back to Home"
-    :"🏠 Zurück zur Startseite";
-  $("cTit").textContent=e
-    ?"🎫 Airline & Booking Details"
-    :"🎫 Airline & Buchungsdaten";
-  $("lblPort").textContent=e
+  byId("navFlt").textContent=e?"✈️ Flight Search":"✈️ Flugsuche";
+  byId("navHtl").textContent=e?"🏨 Hotel Search ➡️":"🏨 Hotelsuche ➡️";
+  byId("navHome").textContent=e?"🏠 Back to Home":"🏠 Zurück zur Startseite";
+  byId("cTit").textContent=e
+    ?"🎫 Airline & Booking Details":"🎫 Airline & Buchungsdaten";
+  byId("lblPort").textContent=e
     ?"Select Airline or Booking Portal"
     :"Airline oder Buchungsportal wählen";
-  $("lblPnr").textContent=e
-    ?"Booking Code (PNR)"
-    :"Buchungscode (PNR)";
-  $("lblFn").textContent=e
-    ?"First Name (as in passport)"
-    :"Vorname (wie im Pass)";
-  $("lblLn").textContent=e
-    ?"Last Name (as in passport)"
-    :"Nachname (wie im Pass)";
-  $("lblMail").textContent=e
-    ?"Booking Email"
-    :"Buchungs-E-Mail";
-  $("cTit2").textContent=e
-    ?"🛂 Travel Documents & Status"
-    :"🛂 Reisedokumente & Status";
-  $("lblTk").textContent=e
-    ?"Ticket Number (optional)"
-    :"Ticketnummer (freiwillig)";
-  $("lblPp").textContent=e
-    ?"Passport Number (optional)"
-    :"Reisepassnummer (freiwillig)";
-  const cpTxt=e?"📋 Copy":"📋 Kopieren";
-  $("cpPnr").textContent=cpTxt;
-  $("cpFn").textContent=cpTxt;
-  $("cpLn").textContent=cpTxt;
-  $("cpMail").textContent=cpTxt;
-  $("cpTk").textContent=cpTxt;
-  $("cpPp").textContent=cpTxt;
-  $("btnNote").textContent=e
-    ?"1️⃣ Open Sticky Note"
-    :"1️⃣ Spickzettel öffnen";
-  $("go").textContent=e
-    ?"2️⃣ Open Airline Website ➡️"
-    :"2️⃣ Airline-Seite öffnen ➡️";
-  $("hintBox").innerHTML=e
-    ?"ℹ️ <b>Note:</b> If you enter optional details such as "
-      +"<b>Ticket Number</b> or <b>Passport Number</b> here, "
-      +"they will appear on your sticky note when you open your "
-      +"airline's website."
-    :"ℹ️ <b>Hinweis:</b> Wenn Sie freiwillige Angaben wie "
-      +"<b>Ticketnummer</b> oder <b>Reisepassnummer</b> hier "
-      +"eintragen, erscheinen diese nachher auf Ihrem Notizzettel, "
-      +"wenn Sie die Seite Ihrer Airline aufrufen.";
+  byId("lblPnr").textContent=e
+    ?"Booking Code (PNR)":"Buchungscode (PNR)";
+  byId("lblFn").textContent=e
+    ?"First Name (as in passport)":"Vorname (wie im Pass)";
+  byId("lblLn").textContent=e
+    ?"Last Name (as in passport)":"Nachname (wie im Pass)";
+  byId("lblMail").textContent=e?"Booking Email":"Buchungs-E-Mail";
+  byId("cTit2").textContent=e
+    ?"🛂 Travel Documents & Status":"🛂 Reisedokumente & Status";
+  byId("lblTk").textContent=e
+    ?"Ticket Number (optional)":"Ticketnummer (freiwillig)";
+  byId("lblPp").textContent=e
+    ?"Passport Number (optional)":"Reisepassnummer (freiwillig)";
+  resetCpBtns();
+  byId("btnNote").textContent=e?"1️⃣ Open Sticky Note":"1️⃣ Spickzettel öffnen";
+  byId("go").textContent=e
+    ?"2️⃣ Open Airline Website ➡️":"2️⃣ Airline-Seite öffnen ➡️";
+  const hb=byId("hintBox");hb.textContent="";
+  const b1=document.createElement("b");
+  b1.textContent=e?"ℹ️ Note: ":"ℹ️ Hinweis: ";
+  const b2=document.createElement("b");
+  b2.textContent=e?"Ticket Number":"Ticketnummer";
+  const b3=document.createElement("b");
+  b3.textContent=e?"Passport Number":"Reisepassnummer";
+  hb.appendChild(b1);
+  hb.appendChild(document.createTextNode(e
+    ?"Red fields are required for this airline. Optional fields (grey) such as "
+    :"Rot markierte Felder sind für die gewählte Airline Pflicht. Freiwillige Angaben (grau) wie "));
+  hb.appendChild(b2);
+  hb.appendChild(document.createTextNode(e?" or ":" oder "));
+  hb.appendChild(b3);
+  hb.appendChild(document.createTextNode(e
+    ?" also appear on your sticky note. You may need these details on the airline's website."
+    :" erscheinen zusätzlich auf Ihrem Notizzettel. Diese Angaben benötigen Sie unter Umständen auf der Seite der Airline."));
   updBgmBtn();
 }
 function updBgmBtn(){
-  const b=$("mbtn");if(!b)return;
+  const b=byId("mbtn");if(!b)return;
   b.textContent=bgmOn
     ?(isEn()?"🔇 Music Off":"🔇 Musik Aus")
     :(isEn()?"🎵 Music On":"🎵 Musik An");
   b.classList.toggle("off",!bgmOn);
 }
 function playBgm(){
-  const a=$("bgm");if(!a)return;a.volume=1.0;
-  a.play()
-    .then(()=>{bgmOn=true;updBgmBtn();})
+  const a=byId("bgm");if(!a)return;a.volume=1.0;
+  a.play().then(()=>{bgmOn=true;updBgmBtn();})
     .catch(()=>{bgmOn=false;updBgmBtn();});
 }
 function toggleBgm(){
-  const a=$("bgm");if(!a)return;
+  const a=byId("bgm");if(!a)return;
   if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}else{playBgm();}
 }
 function enterBookings(){
-  const w=$("wOverlay");if(w)w.style.display="none";
-  playBgm();
+  const w=byId("wOverlay");if(w)w.style.display="none";playBgm();
 }
 function normCaps(){
   upKeys.forEach(k=>{
-    const el=$(k);
-    if(el&&el.value){
-      const up=el.value.toUpperCase();
-      if(el.value!==up)el.value=up;
-    }
+    const el=byId(k);
+    if(el){const up=el.value.toUpperCase();if(el.value!==up)el.value=up;}
   });
 }
-function cp(id,label){
-  normCaps();
-  const el=$(id);
-  const val=el.value.trim();
+function cp(id,label,btn){
+  normCaps();const el=byId(id),val=el.value.trim();
   if(!val){
-    $("ts").textContent=isEn()
+    byId("ts").textContent=isEn()
       ?"⚠️ Please enter "+label+" first!"
       :"⚠️ Bitte zuerst "+label+" eintragen!";
-    $("ts").style.display="block";
-    return;
+    byId("ts").style.display="block";return;
   }
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(val).catch(()=>{});
-  }else{
-    el.select();try{document.execCommand("copy")}catch(e){}
+  if(navigator.clipboard)navigator.clipboard.writeText(val).catch(()=>{});
+  else{el.select();try{document.execCommand("copy")}catch(e){}}
+  if(btn){
+    btn.classList.add("ok");
+    btn.textContent=isEn()?"✅ Copied":"✅ Kopiert";
   }
-  $("ts").textContent=isEn()
-    ?"✅ "+label+" ("+val+") copied!"
-    :"✅ "+label+" ("+val+") kopiert!";
-  $("ts").style.display="block";
+  byId("ts").textContent=isEn()
+    ?"✅ "+label+" ("+val+") copied!":"✅ "+label+" ("+val+") kopiert!";
+  byId("ts").style.display="block";
 }
 async function openNote(){
-  sv();
-  const parts=$("u5").value.split("|");
-  const code=parts.shift();
-  const airlineName=$("u5").options.item($("u5").selectedIndex).text;
+  sv();const parts=byId("u5").value.split("|"),code=parts.shift();
+  const airlineName=byId("u5").options.item(byId("u5").selectedIndex).text;
   const stepTxt=Object.getOwnPropertyDescriptor(guides,code);
   const stepList=(stepTxt?stepTxt.value:"").split("|");
-  const items="PNR|u3;Vorname|u_fn;Nachname|u6;E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp".split(";");
+  const items=(
+    "PNR|u3;Vorname|u_fn;Nachname|u6;"+
+    "E-Mail|u4;Ticket-Nr.|u_tknr;Pass-Nr.|u_pp"
+  ).split(";");
   let clipAll="";
   items.forEach(it=>{
-    const p=it.split("|");const lbl=p.shift();const id=p.join("");
-    let val=$(id).value.trim();
+    const p=it.split("|"),lbl=p.shift(),id=p.join("");
+    let val=byId(id).value.trim();
     if(upKeys.includes(id))val=val.toUpperCase();
     if(val)clipAll+=lbl+": "+val+" | ";
   });
   if(clipAll){
     try{
       navigator.clipboard.writeText(clipAll);
-      $("ts").textContent=isEn()
+      byId("ts").textContent=isEn()
         ?"✅ Sticky note started! Now click button 2."
         :"✅ Spickzettel gestartet! Jetzt auf Button 2 klicken.";
-      $("ts").style.display="block";
+      byId("ts").style.display="block";
     }catch(e){}
   }
   if("documentPictureInPicture" in window){
     try{
-      const pip=await window.documentPictureInPicture.requestWindow({width:300,height:400});
+      const pip=await window.documentPictureInPicture.requestWindow({
+        width:300,height:400
+      });
       const b=pip.document.body;
       b.style.margin="0";b.style.padding="7px";
       b.style.background="#f0f9ff";b.style.fontFamily="sans-serif";
       const h=pip.document.createElement("div");
-      h.textContent="📌 "+airlineName;
-      h.style.fontWeight="bold";h.style.color="#0c4a6e";
-      h.style.fontSize="14px";h.style.marginBottom="6px";
-      h.style.borderBottom="2px solid #0284c7";h.style.paddingBottom="4px";
-      b.appendChild(h);
-      if(stepList.length&&stepList.join("")){
+      h.textContent="📌 "+airlineName;h.style.fontWeight="bold";
+      h.style.color="#0c4a6e";h.style.fontSize="14px";
+      h.style.marginBottom="6px";h.style.borderBottom="2px solid #0284c7";
+      h.style.paddingBottom="4px";b.appendChild(h);
+      if(stepList.join("")){
         const box=pip.document.createElement("div");
         box.style.background="#fef2f2";box.style.border="2px solid #991b1b";
         box.style.borderRadius="6px";box.style.padding="7px 9px";
         box.style.marginBottom="7px";box.style.fontSize="13.5px";
         box.style.fontWeight="bold";box.style.color="#991b1b";
         box.style.lineHeight="1.38";
-        const gTitle=isEn()?"🧭 Guide:":"🧭 Anleitung:";
-        box.innerHTML="<div style='font-size:14.5px;font-weight:bold;color:#7f1d1d;margin-bottom:3px'>"+gTitle+"</div>"+stepList.join("<br>");
+        const gt=pip.document.createElement("div");
+        gt.style.fontSize="14.5px";gt.style.fontWeight="bold";
+        gt.style.color="#7f1d1d";gt.style.marginBottom="3px";
+        gt.textContent=isEn()?"🧭 Guide:":"🧭 Anleitung:";
+        box.appendChild(gt);
+        stepList.forEach((st,idx)=>{
+          if(idx>0)box.appendChild(pip.document.createElement("br"));
+          box.appendChild(pip.document.createTextNode(st));
+        });
         b.appendChild(box);
       }
       items.forEach(it=>{
-        const p=it.split("|");const lbl=p.shift();const id=p.join("");
-        let val=$(id).value.trim();
+        const p=it.split("|"),lbl=p.shift(),id=p.join("");
+        let val=byId(id).value.trim();
         if(upKeys.includes(id))val=val.toUpperCase();
         if(val){
           const row=pip.document.createElement("div");
@@ -573,13 +589,25 @@ async function openNote(){
           row.style.border="1px solid #93c5fd";row.style.padding="4px 6px";
           row.style.borderRadius="4px";row.style.marginBottom="4px";
           const txt=pip.document.createElement("div");
-          txt.innerHTML="<div style='font-size:9px;color:#475569;font-weight:bold;line-height:1.1'>"+lbl+"</div><div style='font-size:14px;font-weight:bold;color:#0f172a;line-height:1.2'>"+val+"</div>";
+          const d1=pip.document.createElement("div");
+          d1.style.fontSize="9px";d1.style.color="#475569";
+          d1.style.fontWeight="bold";d1.style.lineHeight="1.1";
+          d1.textContent=lbl;
+          const d2=pip.document.createElement("div");
+          d2.style.fontSize="14px";d2.style.fontWeight="bold";
+          d2.style.color="#0f172a";d2.style.lineHeight="1.2";
+          d2.textContent=val;
+          txt.appendChild(d1);txt.appendChild(d2);
           const btn=pip.document.createElement("button");
           btn.textContent="📋";btn.style.background="#0284c7";
           btn.style.color="#fff";btn.style.border="none";
           btn.style.borderRadius="4px";btn.style.padding="4px 8px";
           btn.style.cursor="pointer";btn.style.fontSize="12px";
-          btn.onclick=()=>{navigator.clipboard.writeText(val);btn.textContent="✅";};
+          btn.onclick=()=>{
+            navigator.clipboard.writeText(val);
+            btn.style.background="#16a34a";
+            btn.textContent="✅";
+          };
           row.appendChild(txt);row.appendChild(btn);b.appendChild(row);
         }
       });
@@ -588,32 +616,38 @@ async function openNote(){
   }
 }
 function updClock(){
-  const e=isEn(),loc=e?"en-GB":"de-DE";
-  const now=new Date();
-  const dtEl=$("dt");
+  const e=isEn(),loc=e?"en-GB":"de-DE",now=new Date(),dtEl=byId("dt");
   if(!dtEl)return;
   dtEl.textContent=now.toLocaleDateString(loc)+" • "+now.toLocaleTimeString(loc);
   const idx=ci++%cols.length;
   dtEl.style.setProperty("background-color",cols.slice(idx,idx+1).join(""),"important");
 }
 function sv(){
-  normCaps();
-  updClock();
-  const e=isEn();
-  const parts=$("u5").value.split("|");
-  parts.shift();
-  const mode=parts.shift();
-  $("go").href=parts.join("|");
-  $("f_pnr").classList.toggle("off",mode==="mail_only");
-  $("f_fn").classList.toggle("off",mode!=="pnr_fn_ln");
-  $("f_ln").classList.toggle("off",mode!=="pnr_ln"&&mode!=="pnr_fn_ln");
-  $("f_mail").classList.toggle("off",mode!=="mail_pnr"&&mode!=="mail_only");
-  if(mode==="pnr_ln")$("hint").textContent=e?"Required: Booking Code (PNR) + Last Name":"Benötigt: Buchungscode (PNR) + Nachname";
-  if(mode==="pnr_fn_ln")$("hint").textContent=e?"Required (VietJet Air): Booking Code (PNR) + First Name + Last Name":"Benötigt (VietJet Air): Buchungscode (PNR) + Vorname + Nachname";
-  if(mode==="mail_pnr")$("hint").textContent=e?"Required: Booking Email + Booking Code (PNR)":"Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
-  if(mode==="mail_only")$("hint").textContent=e?"Required: Log in with your booking email on the portal":"Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
+  normCaps();updClock();
+  const e=isEn(),parts=byId("u5").value.split("|");
+  parts.shift();const mode=parts.shift();byId("go").href=parts.join("|");
+  const reqPnr=(mode==="pnr_ln"||mode==="pnr_fn_ln"||mode==="mail_pnr");
+  const reqFn=(mode==="pnr_fn_ln");
+  const reqLn=(mode==="pnr_ln"||mode==="pnr_fn_ln");
+  const reqMail=(mode==="mail_pnr"||mode==="mail_only");
+  byId("f_pnr").classList.toggle("req",reqPnr);
+  byId("f_fn").classList.toggle("req",reqFn);
+  byId("f_ln").classList.toggle("req",reqLn);
+  byId("f_mail").classList.toggle("req",reqMail);
+  if(mode==="pnr_ln")byId("hint").textContent=e
+    ?"🔴 Required: Booking Code (PNR) + Last Name"
+    :"🔴 Benötigt: Buchungscode (PNR) + Nachname";
+  if(mode==="pnr_fn_ln")byId("hint").textContent=e
+    ?"🔴 Required (VietJet Air): Booking Code (PNR) + First & Last Name"
+    :"🔴 Benötigt (VietJet Air): Buchungscode (PNR) + Vor- & Nachname";
+  if(mode==="mail_pnr")byId("hint").textContent=e
+    ?"🔴 Required: Booking Email + Booking Code (PNR)"
+    :"🔴 Benötigt: Buchungs-E-Mail + Buchungscode (PNR)";
+  if(mode==="mail_only")byId("hint").textContent=e
+    ?"🔴 Required: Log in with your booking email on the portal"
+    :"🔴 Benötigt: Login mit deiner Buchungs-E-Mail beim Portal";
   const d={};
-  keys.forEach(k=>Object.defineProperty(d,k,{value:$(k).value,enumerable:true}));
+  keys.forEach(k=>Object.defineProperty(d,k,{value:byId(k).value,enumerable:true}));
   try{localStorage.setItem("rk_upg",JSON.stringify(d))}catch(err){}
 }
 (function ld(){
@@ -623,17 +657,15 @@ function sv(){
       const d=JSON.parse(raw);
       keys.forEach(k=>{
         const desc=Object.getOwnPropertyDescriptor(d,k);
-        if(desc&&desc.value!==undefined)$(k).value=desc.value;
+        if(desc){if(desc.value!==undefined)byId(k).value=desc.value;}
       });
     }
   }catch(e){}
-  applyLang();
-  sv();
-  setInterval(updClock,1000);
+  applyLang();sv();setInterval(updClock,1000);
 })();
 keys.forEach(k=>{
-  $(k).addEventListener("input",sv);
-  $(k).addEventListener("change",sv);
+  byId(k).addEventListener("input",()=>{resetCpBtns();sv();});
+  byId(k).addEventListener("change",()=>{resetCpBtns();sv();});
 });
 </script>
 </body>
