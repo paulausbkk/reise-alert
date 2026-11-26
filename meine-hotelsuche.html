@@ -238,7 +238,7 @@ input,select{
       <input type="date" id="co">
     </div>
   </div>
-   <div class="card">
+  <div class="card">
     <div class="ct" id="c2Tit">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
       <div class="f" style="margin:0">
@@ -598,30 +598,6 @@ function slugify(s){
   return normCity(s).replace(/^-+|-+$/g,"")
     .split(" ").join("-").split(".").join("-");
 }
-function getAgodaCitySlug(city){
-  var k=normCity(city);
-  if(k==="mailand")return"milan";
-  if(k==="muenchen")return"munich";
-  if(k==="koeln")return"cologne";
-  if(k==="nuernberg")return"nuremberg";
-  if(k==="wien")return"vienna";
-  if(k==="zuerich")return"zurich";
-  if(k==="rom")return"rome";
-  if(k==="lissabon")return"lisbon";
-  if(k==="prag")return"prague";
-  if(k==="warschau")return"warsaw";
-  if(k==="athen")return"athens";
-  if(k==="venedig")return"venice";
-  if(k==="florenz")return"florence";
-  if(k==="neapel")return"naples";
-  if(k==="bruessel")return"brussels";
-  if(k==="kopenhagen")return"copenhagen";
-  if(k==="kairo")return"cairo";
-  if(k==="marrakesch")return"marrakech";
-  if(k==="singapur")return"singapore";
-  if(k==="tokio")return"tokyo";
-  return slugify(city);
-}
 function upd(){
   readLang();
   var e=isEn(),loc=e?"en-GB":"de-DE";
@@ -690,14 +666,11 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-gb":"de-de";
-    var agSlug=getAgodaCitySlug(city);
-    var agQ="checkIn="+ci+"&checkOut="+co+"&los="+n+
+    $("h5").href=P+H_AG+"/"+agLoc+"/search?textToSearch="+q+
+      "&checkIn="+ci+"&checkOut="+co+"&los="+n+
       "&adults="+px+"&children=0&rooms="+rm+
       "&currency=EUR&cid=1844104";
-    $("h5").href=aid
-      ?(P+H_AG+"/"+agLoc+"/search?city="+aid+"&"+agQ)
-      :(P+H_AG+"/"+agLoc+"/city/"+agSlug+"-"+cc+".html?"+agQ);
- var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
     for(var i=0;i<rm;i++){
@@ -854,3 +827,5 @@ setInterval(upd,1000);
 </script>
 </body>
 </html>
+
+  
