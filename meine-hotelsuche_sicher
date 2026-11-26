@@ -238,7 +238,7 @@ input,select{
       <input type="date" id="co">
     </div>
   </div>
-  <div class="card">
+   <div class="card">
     <div class="ct" id="c2Tit">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
       <div class="f" style="margin:0">
@@ -646,10 +646,12 @@ function upd(){
         (n===1?" Nacht":" N\u00e4chte")+" \u2022 "+px+
         " Pers. \u2022 "+rm+" Zi.";
     var q=encodeURIComponent(city);
+    var qMom=encodeURIComponent(normCity(city));
     var qFull=encodeURIComponent(fullCity);
     var bFilt=st>0?"class="+st:"";
     var dom=e?".com":".de";
     var hPath="/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
+    var mPath="/hotels/"+qMom+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
     $("h1").href=P+"www.kayak"+dom+hPath+(e?"?lang=en":"");
     $("h2").href=P+"www.expedia"+dom+
       "/Hotel-Search?destination="+qFull+
@@ -657,7 +659,7 @@ function upd(){
       "&adults="+px+"&rooms="+rm+
       (e?"&langid=1033":"")+
       (st>0?"&star="+(st*10):"");
-    $("h3").href=P+"www.momondo"+dom+hPath+(e?"?lang=en":"");
+    $("h3").href=P+"www.momondo"+dom+mPath+(e?"?lang=en":"");
     $("b_ss").value=fullCity;$("b_ssne").value=fullCity;
     $("b_ssu").value=fullCity;$("b_did").disabled=!bid;
     $("b_did").value=bid;$("b_dty").disabled=!bid;
