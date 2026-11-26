@@ -628,6 +628,7 @@ function upd(){
     ? (e ? "ONE-WAY" : "NUR HINFLUG")
     : (e ? "ROUND-TRIP" : "HIN & R\u00dcCK");
   var hr = byId("hr").value;
+  var mins = Number(hr) * 60;
   byId("hrl").textContent = e
     ? "Max. Travel Time (" + hr + " hrs)"
     : "Max. Reisezeit (" + hr + " Std.)";
@@ -650,13 +651,17 @@ function upd(){
   var sOd = od.replace(/-/g, "").slice(2);
   var sRd = rd.replace(/-/g, "").slice(2);
 
-  var stopK = byId("ns").checked ? "?fs=stops=0" :
-    (byId("s1").checked ? "?fs=stops=-2" : "");
+  var stopK = byId("ns").checked
+    ? "?fs=stops=0;legdur=-" + mins
+    : (byId("s1").checked
+      ? "?fs=stops=-2;legdur=-" + mins
+      : "?fs=legdur=-" + mins);
 
   byId("u1").href = P + "www.skyscanner.de" +
     "/transport/fluge/" + o.toLowerCase() + "/" +
     d.toLowerCase() + "/" + sOd +
-    (ow ? "/" : "/" + sRd + "/") + "?adults=" + px;
+    (ow ? "/" : "/" + sRd + "/") +
+    "?adults=" + px + "&duration=" + mins;
 
   byId("u2").href = P + "www.kayak.de" + "/flights/" +
     o + "-" + d + "/" + od +
@@ -679,7 +684,8 @@ function upd(){
       (byId("s2").checked ? "&stopNumber=2" : ""));
   byId("u5").href = P + H_KW + "/de/search/results/" +
     kwFrom + "/" + kwTo + "/" + od + "/" +
-    (ow ? "no-return" : rd) + "?adults=" + px + kwStop;
+    (ow ? "no-return" : rd) + "?adults=" + px +
+    kwStop + "&maxFlightDuration=" + hr;
 
   var trLoc = e ? "en-XX" : "de-DE";
   var trNonstop = byId("ns").checked ? "&nonstop=true" : "";
