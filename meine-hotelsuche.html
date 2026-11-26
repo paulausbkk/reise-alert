@@ -418,7 +418,7 @@ var BK_DB="bangkok:-3414440;mailand:-121726;milan:-121726;"+
   "kuala lumpur:-2403010;tokio:-246227;tokyo:-246227;"+
   "manila:-2437894;cebu:-2421265;dumaguete:-2424739;"+
   "pagadian:-2443809";
-var TR_DB="seevetal:200-5994";
+var TR_DB="seevetal:200-5994;bangkok:200-15893";
 function getAid(c){return findId(AG_DB,normCity(c),agCache);}
 function getBid(c){return findId(BK_DB,normCity(c),null);}
 function getTid(c){return findId(TR_DB,normCity(c),trCache);}
@@ -441,26 +441,40 @@ function resolveAgodaId(city){
     }
   }).catch(function(){});
 }
+function saveTid(k,cid){
+  Object.defineProperty(trCache,k,{
+    value:String(cid),configurable:true
+  });
+  upd();
+}
+function parseTrivago(j){
+  var a=(j&&j.suggestions)?j.suggestions:((j&&j.data)?j.data:j);
+  if(Array.isArray(a))for(var i=0;i<a.length;i++){
+    var it=a.slice(i,i+1).pop();
+    var cid=it&&(it.conceptId||it.id||it.entityId);
+    if(cid&&String(cid).indexOf("200-")===0)return String(cid);
+  }
+  var m=JSON.stringify(j||"").match(/200-\d{3,8}/);
+  return m?m.shift():"";
+}
 function resolveTrivagoId(city){
   var k=normCity(city);
   if(!k||k.length<2||k===trBusy||getTid(city))return;
   trBusy=k;
-  var u=P+H_TR+(isEn()?".com":".de")+
+  var raw=P+H_TR+(isEn()?".com":".de")+
     "/api/v1/autosuggest?query="+encodeURIComponent(city)+
     "&locale="+(isEn()?"en-US":"de-DE");
-  fetch(u).then(function(r){return r.json();}).then(function(j){
-    var a=(j&&j.suggestions)?j.suggestions:((j&&j.data)?j.data:j);
-    if(Array.isArray(a))for(var i=0;i<a.length;i++){
-      var it=a.slice(i,i+1).pop();
-      var cid=it&&(it.conceptId||it.id||it.entityId);
-      if(cid&&String(cid).indexOf("200-")===0){
-        Object.defineProperty(trCache,k,{
-          value:String(cid),configurable:true
-        });
-        upd();break;
-      }
-    }
-  }).catch(function(){});
+  var p1=P+"api.allorigins.win/raw?url="+encodeURIComponent(raw);
+  var p2=P+"corsproxy.io/?"+encodeURIComponent(raw);
+  fetch(p1).then(function(r){return r.json();}).then(function(j){
+    var cid=parseTrivago(j);
+    if(cid){saveTid(k,cid);}else{throw new Error("no");}
+  }).catch(function(){
+    fetch(p2).then(function(r){return r.json();}).then(function(j){
+      var cid=parseTrivago(j);
+      if(cid)saveTid(k,cid);
+    }).catch(function(){});
+  });
 }
 function applyLang(){
   readLang();var e=isEn();
