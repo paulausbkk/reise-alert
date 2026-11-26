@@ -336,7 +336,7 @@ var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111);
 var H_OM="geocoding-api."+
   String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
-var agCache={},agBusy="";
+var agCache={},agBusy="",trCache={},trBusy="";
 function readLang(){
   try{lang=(localStorage.getItem("pab_lang")==="en")?"en":"de";}catch(e){}
 }
@@ -576,6 +576,10 @@ function getBid(city){
 }
 function getTid(city){
   var k=normCity(city);
+  if(Object.prototype.hasOwnProperty.call(trCache,k)){
+    return Object.getOwnPropertyDescriptor(trCache,k).value;
+  }
+  if(k==="seevetal")return"200-5994";
   if(k==="berlin")return"200-3848";
   if(k==="hamburg")return"200-9644";
   if(k==="muenchen"||k==="munich")return"200-2855";
@@ -621,62 +625,9 @@ function getTid(city){
   if(k==="tokio"||k==="tokyo")return"200-27358";
   return"";
 }
-function slugify(s){
-  return normCity(s).replace(/^-+|-+$/g,"")
-    .split(" ").join("-").split(".").join("-");
-}
-function upd(){
-  readLang();
-  var e=isEn(),loc=e?"en-GB":"de-DE";
-  var now=new Date(),t=iso(now);
-  $("dt").textContent=now.toLocaleDateString(loc)+
-    " \u2022 "+now.toLocaleTimeString(loc);
-  var city=$("city").value.trim();
-  var fullCity=(city&&selCountry)?(city+", "+selCountry):city;
-  var ci=$("ci").value,co=$("co").value;
-  if(ci){
-    var dMin=new Date(ci+"T12:00:00");
-    dMin.setDate(dMin.getDate()+1);
-    var nextDay=iso(dMin);
-    $("co").min=nextDay;
-    if(!co||co<=ci){
-      co=nextDay;
-      $("co").value=nextDay;
-    }
-  }else{
-    $("co").min=t;
-  }
-  var px=+$("px").value||2,rm=+$("rm").value||1;
-  var st=+$("st").value||0,ab=$("ab").checked;
-  var aid=getAid(city),bid=getBid(city),tid=getTid(city);
-  if(city&&!aid)resolveAgodaId(city);
-  $("f4").action=P+H_BK+"/searchresults.html";
-  document.querySelectorAll(".htl").forEach(function(el){
-    el.classList.toggle("off",ab);
-  });
-  $("h8").classList.toggle("off",!ab);
-  var bad=(ci&&ci<t)||(co&&co<=t)||(ci&&co&&co<=ci);
-  $("cib").classList.toggle("err",Boolean(ci&&ci<t));
-  $("cob").classList.toggle("err",Boolean(bad));
-  if(ci&&co&&!bad){
-    var dA=new Date(ci+"T12:00:00"),dB=new Date(co+"T12:00:00");
-    var n=Math.max(1,Math.round((dB-dA)/86400000));
-    $("nt").textContent=e
-      ?n+(n===1?" NIGHT":" NIGHTS")
-      :n+(n===1?" NACHT":" N\u00c4CHTE");
-    $("info").style.background="#eff6ff";
-    $("info").style.color="#1e3a8a";
-    $("info").textContent=e
-      ?"Selection: "+(fullCity||"Destination")+" \u2022 "+n+
-        (n===1?" Night":" Nights")+" \u2022 "+px+
-        " Guests \u2022 "+rm+" Rm."
-      :"Auswahl: "+(fullCity||"Ziel")+" \u2022 "+n+
-        (n===1?" Nacht":" N\u00e4chte")+" \u2022 "+px+
-        " Pers. \u2022 "+rm+" Zi.";
-    var q=encodeURIComponent(city);
-    var qMom=encodeURIComponent(normCity(city));
-    var qFull=encodeURIComponent(fullCity);
-    var bFilt=st>0?"class="+st:"";
+function resolveTrivagoId(city){
+  var k=normCity(city);
+  if(!k||k.length0?"class="+st:"";
     var dom=e?".com":".de";
     var hPath="/hotels/"+q+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
     var mPath="/hotels/"+qMom+"/"+ci+"/"+co+"/"+px+"adults/"+rm+"rooms";
@@ -701,24 +652,14 @@ function upd(){
       "checkIn="+ci+"&checkOut="+co+"&los="+n+
       "&rooms="+rm+"&adults="+px+"&children=0"+
       "&currency=EUR&cid=1844104";
-        var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
-    var perRm=Math.max(1,Math.floor(px/rm));
-    var rem=px%rm,rc="";
-    for(var i=0;i<rm;i++){
-      rc+=(i>0?"-":"")+(perRm+(i<rem?1:0));
-    }
+   var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var trHost=H_TR+(e?".com":".de");
     var trBase=e?"/en-US":"/de";
-    var trSlug=slugify(city);
+    var trSlug=slugify(city)+
+      (selCountry?("-"+slugify(selCountry)):"");
     var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
-      ";rc-"+rc+(st>0?";st-"+st:"");
-    var rType=rm>1?"9":(px===1?"1":"7");
-    $("h6").href=tid
-      ?(P+trHost+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
-      :(P+trHost+trBase+"/srl?sQuery="+qFull+
-        "&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+
-        "&iRoomType="+rType+
-        "&aRooms%5B0%5D%5Badults%5D="+px);
+      ";drs-40;rc-"+rm+"-"+px+(st>0?";st-"+st:"");
+    $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+"?search="+trSrch;
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
