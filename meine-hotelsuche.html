@@ -238,7 +238,7 @@ input,select{
       <input type="date" id="co">
     </div>
   </div>
-  <div class="card">
+   <div class="card">
     <div class="ct" id="c2Tit">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
       <div class="f" style="margin:0">
@@ -452,13 +452,14 @@ function getAid(city){
   if(k==="koeln"||k==="cologne")return"15722";
   if(k==="duesseldorf")return"15737";
   if(k==="stuttgart")return"15791";
-    if(k==="wien"||k==="vienna")return"14756";
+if(k==="wien"||k==="vienna")return"14756";
   if(k==="hannover")return"15751";
   if(k==="leipzig")return"15760";
   if(k==="dresden")return"15740";
   if(k==="nuernberg"||k==="nuremberg")return"15793";
   if(k==="bremen")return"15716";
   if(k==="zuerich"||k==="zurich")return"16590";
+  if(k==="bern"||k==="berne")return"14612";
   if(k==="paris")return"15470";
   if(k==="london")return"233";
   if(k==="rom"||k==="rome")return"16582";
@@ -562,7 +563,7 @@ function getTid(city){
   if(k==="hannover")return"200-8666";
   if(k==="nuernberg"||k==="nuremberg")return"200-2857";
   if(k==="bremen")return"200-4271";
-  if(k==="essen")return"200-9649";
+   if(k==="essen")return"200-9649";
   if(k==="dortmund")return"200-9646";
   if(k==="mailand"||k==="milan")return"200-45017";
   if(k==="palermo")return"200-45979";
@@ -666,14 +667,13 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-gb":"de-de";
-    var agTarget=aid?("city="+aid):("textToSearch="+qFull);
-    $("h5").href=P+H_AG+"/"+agLoc+"/search?"+agTarget+
+    var agTarget=aid?("city="+aid):("searchText="+qFull);
+    $("h5").href=P+H_AG+"/search?"+agTarget+
       "&checkIn="+ci+"&checkOut="+co+"&los="+n+
       "&adults="+px+"&children=0&rooms="+rm+
-      "&currency=EUR&locale="+agLoc+"&hl="+agLoc+
-      "&language="+agLoc+"&cid=1844104"+
+      "&currency=EUR&locale="+agLoc+"&cid=1844104"+
       (st>0?"&hotelStarRating="+st:"");
-     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
     for(var i=0;i<rm;i++){
