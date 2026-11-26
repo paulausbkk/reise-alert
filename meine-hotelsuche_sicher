@@ -307,9 +307,9 @@ input,select{
       <input type="hidden" name="selected_currency" value="EUR">
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
-    <a id="h5" href="#" target="_blank"
+    <a id="h5" href="#" target="_blank" rel="noreferrer noopener"
       class="btn b5 htl">Agoda</a>
-    <a id="h6" href="#" target="_blank"
+    <a id="h6" href="#" target="_blank" rel="noreferrer noopener"
       class="btn b6 htl">Trivago</a>
     <a id="h8" href="#" target="_blank"
       class="btn b8 off">Airbnb</a>
@@ -333,7 +333,8 @@ var P="https:"+String.fromCharCode(47,47);
 var H_AG="www."+String.fromCharCode(97,103,111,100,97)+".com";
 var H_BK="www."+String.fromCharCode(98,111,111,107,105,110,103)+".com";
 var H_TR="www."+String.fromCharCode(116,114,105,118,97,103,111);
-var H_OM="geocoding-api."+String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
+var H_OM="geocoding-api."+
+  String.fromCharCode(111,112,101,110,45,109,101,116,101,111)+".com";
 var acT=null,cc="de",selCountry="",bgmOn=false,lang="de";
 function readLang(){
   try{lang=(localStorage.getItem("pab_lang")==="en")?"en":"de";}catch(e){}
@@ -394,23 +395,17 @@ function applyLang(){
   $("st4").textContent=e?"4+ Stars ⭐⭐⭐⭐":"Ab 4 Sterne ⭐⭐⭐⭐";
   $("st5").textContent=e?"5 Stars ⭐⭐⭐⭐⭐":"5 Sterne ⭐⭐⭐⭐⭐";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
-  $("hintBox").innerHTML=e
-    ?"<div>ℹ️ <b>Important Notice on Hotel Search:</b> Please "
-      +"make sure to check all filters (e.g. 5 stars) on the booking "
-      +"page and re-apply them if needed, as not all portals "
-      +"transfer them automatically. Smaller towns may also not be "
-      +"passed directly – since your dates and guest count are "
-      +"already filled in, simply type your destination there to "
-      +"start. We apologize for this technical limitation!</div>"
-    :"<div>ℹ️ <b>Wichtiger Hinweis zur Hotelsuche:</b> Bitte "
-      +"kontrollieren Sie auf der Buchungsseite unbedingt alle "
-      +"Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf "
-      +"neu ein, da nicht alle Portale sie automatisch übernehmen. "
-      +"Kleinere Orte werden teils ebenfalls nicht direkt übertragen "
-      +"– da Reisedaten und Personenanzahl bereits hinterlegt sind, "
-      +"tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten "
-      +"diese technische Einschränkung der Anbieter zu "
-      +"entschuldigen!</div>";
+  var hb=$("hintBox");hb.textContent="";
+  var wrap=document.createElement("div");
+  var b1=document.createElement("b");
+  b1.textContent=e
+    ?"ℹ️ Important Notice on Hotel Search: "
+    :"ℹ️ Wichtiger Hinweis zur Hotelsuche: ";
+  wrap.appendChild(b1);
+  wrap.appendChild(document.createTextNode(e
+    ?"Please make sure to check all filters (e.g. 5 stars) on the booking page and re-apply them if needed, as not all portals transfer them automatically. Smaller towns may also not be passed directly – since your dates and guest count are already filled in, simply type your destination there to start. We apologize for this technical limitation!"
+    :"Bitte kontrollieren Sie auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne) und stellen Sie diese bei Bedarf neu ein, da nicht alle Portale sie automatisch übernehmen. Kleinere Orte werden teils ebenfalls nicht direkt übertragen – da Reisedaten und Personenanzahl bereits hinterlegt sind, tippen Sie dort einfach noch Ihren Zielort ein. Wir bitten diese technische Einschränkung der Anbieter zu entschuldigen!"));
+  hb.appendChild(wrap);
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
 function updBgmBtn(){
@@ -589,6 +584,7 @@ function getTid(city){
   if(k==="hurghada")return"200-66858";
   if(k==="punta cana")return"200-191521";
   if(k==="puerto plata")return"200-68723";
+  if(k==="bangkok")return"200-31654";
   if(k==="phuket")return"200-31687";
   if(k==="chiang mai")return"200-31661";
   if(k==="koh samui"||k==="ko samui")return"200-31693";
@@ -596,9 +592,6 @@ function getTid(city){
   if(k==="singapur"||k==="singapore")return"200-31591";
   if(k==="kuala lumpur")return"200-25824";
   if(k==="tokio"||k==="tokyo")return"200-27358";
-  if(k==="manila")return"200-74077";
-  if(k==="cebu"||k==="cebu city")return"200-74046";
-  if(k==="dumaguete")return"200-74054";
   return"";
 }
 function slugify(s){
@@ -673,14 +666,11 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-gb":"de-de";
-    var ag=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
+    $("h5").href=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
       "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
-      "&currency=EUR&locale="+agLoc+"&hl="+agLoc+"&language="+agLoc+
-      (e?"&cid=1844104":"")+
+      "&currency=EUR&locale="+agLoc+"&hl="+agLoc+
+      "&language="+agLoc+"&cid=1844104"+
       (st>0?"&hotelStarRating="+st:"");
-    $("h5").href=aid
-      ?(ag+"&city="+aid)
-      :(ag+"&textToSearch="+q+"&searchText="+qFull);
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
@@ -692,11 +682,13 @@ function upd(){
     var trSlug=slugify(city);
     var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
       ";rc-"+rc+(st>0?";st-"+st:"");
+    var rType=rm>1?"9":(px===1?"1":"7");
     $("h6").href=tid
       ?(P+trHost+trBase+"/odr/hotels-"+trSlug+"?search="+trSrch)
-      :(P+trHost+trBase+"/srl?query="+qFull+"&sQuery="+qFull+
+      :(P+trHost+trBase+"/srl?sQuery="+qFull+
         "&aDateRange%5Barr%5D="+ci+"&aDateRange%5Bdep%5D="+co+
-        "&search="+trSrch);
+        "&iRoomType="+rType+
+        "&aRooms%5B0%5D%5Badults%5D="+px);
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
@@ -721,7 +713,7 @@ function upd(){
   }catch(err){}
 }
 function showAc(list,msg){
-  var box=$("lc");box.innerHTML="";
+  var box=$("lc");box.textContent="";
   if(msg){
     var m=document.createElement("div");
     m.textContent=msg;m.style.color="#64748b";
@@ -823,15 +815,16 @@ if(!$("ci").value)$("ci").value=iso(d1);
 var d2=new Date($("ci").value+"T12:00:00");
 d2.setDate(d2.getDate()+1);
 $("co").min=iso(d2);
-if(!$("co").value||$("co").value<=$("ci").value)$("co").value=iso(d2);
+if(!$("co").value||$("co").value<=$("ci").value){
+  $("co").value=iso(d2);
+}
 "city;ci;co;px;rm;st;ab".split(";").forEach(function(id){
   $(id).addEventListener("input",upd);
   $(id).addEventListener("change",upd);
 });
-$("f4").addEventListener("submit",upd);
-window.addEventListener("pageshow",function(){applyLang();upd();});
-applyLang();upd();
+applyLang();
+upd();
+setInterval(upd,1000);
 </script>
 </body>
 </html>
-  
