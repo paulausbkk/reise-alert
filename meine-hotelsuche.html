@@ -238,7 +238,7 @@ input,select{
       <input type="date" id="co">
     </div>
   </div>
-  <div class="card">
+   <div class="card">
     <div class="ct" id="c2Tit">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
       <div class="f" style="margin:0">
@@ -652,7 +652,7 @@ function resolveTrivagoId(city){
       "checkIn="+ci+"&checkOut="+co+"&los="+n+
       "&rooms="+rm+"&adults="+px+"&children=0"+
       "&currency=EUR&cid=1844104";
-   var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+  var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var trHost=H_TR+(e?".com":".de");
     var trBase=e?"/en-US":"/de";
     var trSlug=slugify(city)+
