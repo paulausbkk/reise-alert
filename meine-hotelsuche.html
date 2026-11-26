@@ -202,6 +202,13 @@ input,select{
   </div>
 </div>
 <audio id="bgm" src="../musik.mp3" loop preload="auto"></audio>
+<script>
+function enterHotel(){
+  var w=document.getElementById("wOverlay");
+  if(w)w.style.display="none";
+  if(typeof playBgm==="function")playBgm();
+}
+</script>
 <div class="hdr">
   <h1 class="tit" id="hTit">🏨 Meine Hotelsuche PRO v128</h1>
   <div class="cp">
@@ -238,7 +245,7 @@ input,select{
       <input type="date" id="co">
     </div>
   </div>
-  <div class="card">
+   <div class="card">
     <div class="ct" id="c2Tit">🛏️ Gäste, Zimmer & Hotel-Filter</div>
     <div class="f2">
       <div class="f" style="margin:0">
@@ -426,11 +433,6 @@ function toggleBgm(){
   var a=$("bgm");if(!a)return;
   if(bgmOn){a.pause();bgmOn=false;updBgmBtn();}else{playBgm();}
 }
-function enterHotel(){
-  var w=$("wOverlay");
-  if(w)w.style.display="none";
-  playBgm();
-}
 function iso(d){
   var m=String(d.getMonth()+1),t=String(d.getDate());
   if(m.length<2)m="0"+m;if(t.length<2)t="0"+t;
@@ -457,7 +459,7 @@ function getAid(city){
   if(k==="koeln"||k==="cologne")return"15722";
   if(k==="duesseldorf")return"15737";
   if(k==="stuttgart")return"15791";
-   if(k==="wien"||k==="vienna")return"14756";
+  if(k==="wien"||k==="vienna")return"14756";
   if(k==="hannover")return"15751";
   if(k==="leipzig")return"15760";
   if(k==="dresden")return"15740";
@@ -652,7 +654,7 @@ function resolveTrivagoId(city){
       "checkIn="+ci+"&checkOut="+co+"&los="+n+
       "&rooms="+rm+"&adults="+px+"&children=0"+
       "&currency=EUR&cid=1844104";
-    var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+  var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var trHost=H_TR+(e?".com":".de");
     var trBase=e?"/en-US":"/de";
     var trSlug=slugify(city)+
