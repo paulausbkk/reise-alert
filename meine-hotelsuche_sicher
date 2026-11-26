@@ -698,10 +698,10 @@ function upd(){
     var agLoc=e?"en-gb":"de-de";
     $("h5").href=P+H_AG+"/"+agLoc+"/search?"+
       (aid?("city="+aid+"&"):"")+
-      "checkIn="+ci+"&checkOut="+co+"&los="+n+
+      "checkIn="+ci+"&los="+n+
       "&rooms="+rm+"&adults="+px+"&children=0"+
       "&currency=EUR&cid=1844104";
- var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
     for(var i=0;i<rm;i++){
@@ -858,3 +858,9 @@ setInterval(upd,1000);
 </script>
 </body>
 </html>
+
+
+
+
+
+
