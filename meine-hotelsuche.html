@@ -452,7 +452,7 @@ function getAid(city){
   if(k==="koeln"||k==="cologne")return"15722";
   if(k==="duesseldorf")return"15737";
   if(k==="stuttgart")return"15791";
-  if(k==="wien"||k==="vienna")return"14756";
+    if(k==="wien"||k==="vienna")return"14756";
   if(k==="hannover")return"15751";
   if(k==="leipzig")return"15760";
   if(k==="dresden")return"15740";
@@ -666,12 +666,14 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-gb":"de-de";
-    $("h5").href=P+H_AG+"/"+agLoc+"/search?checkIn="+ci+
-      "&los="+n+"&adults="+px+"&children=0&rooms="+rm+
+    var agTarget=aid?("city="+aid):("textToSearch="+qFull);
+    $("h5").href=P+H_AG+"/"+agLoc+"/search?"+agTarget+
+      "&checkIn="+ci+"&checkOut="+co+"&los="+n+
+      "&adults="+px+"&children=0&rooms="+rm+
       "&currency=EUR&locale="+agLoc+"&hl="+agLoc+
       "&language="+agLoc+"&cid=1844104"+
       (st>0?"&hotelStarRating="+st:"");
-    var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
+     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var perRm=Math.max(1,Math.floor(px/rm));
     var rem=px%rm,rc="";
     for(var i=0;i<rm;i++){
