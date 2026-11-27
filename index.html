@@ -306,7 +306,7 @@ body:has(#ow:checked) .st{
       <option value="Leipzig/Halle (LEJ)">
       <option value="Düsseldorf (DUS)">
       <option value="Hamburg (HAM)">
-       <option value="Köln/Bonn (CGN)">
+  <option value="Köln/Bonn (CGN)">
       <option value="Stuttgart (STR)">
       <option value="Hannover (HAJ)">
       <option value="Nürnberg (NUE)">
@@ -707,12 +707,14 @@ function upd(){
     o + "-" + d + "/" + od +
     (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
 
-  byId("u4").href = P + "www.expedia.de" +
+  var expHost = e ? "://expedia.com" : "www.expedia.de";
+  byId("u4").href = P + expHost +
     "/Flights-Search?trip=" + (ow ? "oneway" : "roundtrip") +
     "&leg1=from:" + o + ",to:" + d + ",departure:" + od + "TANYT" +
     (ow ? "" : "&leg2=from:" + d + ",to:" + o +
       ",departure:" + rd + "TANYT") +
-    "&passengers=adults:" + px + "&mode=search";
+    "&passengers=adults:" + px + "&mode=search" +
+    (e ? "&langid=1033" : "");
 
   var kwFrom = kiwiSlug(o, raw1), kwTo = kiwiSlug(d, raw2);
   var kwStop = byId("ns").checked ? "&stopNumber=0" :
