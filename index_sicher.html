@@ -137,7 +137,7 @@ html,body{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
   padding:11px 16px;background:#ffffff;box-sizing:border-box;
   box-shadow:0 4px 12px rgba(3,105,161,.08);
-  display:flex;flex-direction:column;justify-content:space-between
+  display:flex;flex-direction:column;justify-content:flex-start
 }
 .ct{
   font-weight:bold;font-size:1.02rem;color:var(--d);
@@ -269,7 +269,7 @@ body:has(#ow:checked) .st{
     <button type="button" class="mbtn" id="mbtn"
       onclick="toggleFlightBgm()">🎵 Musik An</button>
     <div class="seg" id="dt">23.11.2026 • 10:57:00</div>
-    <div class="seg st" id="st">HIN & RÜCK</div>
+    <div class="seg" id="st">HIN & RÜCK</div>
     <span class="seg act" id="navAct">✈️ Flugsuche (Aktiv)</span>
     <a href="meine-hotelsuche.html" class="seg upg" id="navHtl">
       🏨 Hotelsuche ➡️
@@ -298,7 +298,7 @@ body:has(#ow:checked) .st{
             list="airports" placeholder="z.B. BKK, DAD, CEB">
         </div>
       </div>
-    </div>
+         </div>
     <datalist id="airports">
       <option value="Berlin Brandenburg (BER)">
       <option value="Frankfurt am Main (FRA)">
@@ -306,7 +306,7 @@ body:has(#ow:checked) .st{
       <option value="Leipzig/Halle (LEJ)">
       <option value="Düsseldorf (DUS)">
       <option value="Hamburg (HAM)">
-  <option value="Köln/Bonn (CGN)">
+      <option value="Köln/Bonn (CGN)">
       <option value="Stuttgart (STR)">
       <option value="Hannover (HAJ)">
       <option value="Nürnberg (NUE)">
@@ -569,7 +569,6 @@ function stopFlightBgm(){
   renderFlightBgm();
   bgmPlayer.pause();
 }
-
 function toggleFlightBgm(){
   if(bgmRunning){
     stopFlightBgm();
@@ -589,6 +588,7 @@ if(fb){
   fb.addEventListener("pointerdown", activateFlightPage);
   fb.addEventListener("click", activateFlightPage);
 }
+
 function iata(val){
   var s = String(val || "").trim().toUpperCase();
   var p1 = s.indexOf("("), p2 = s.indexOf(")");
