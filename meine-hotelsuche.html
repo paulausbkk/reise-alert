@@ -740,15 +740,10 @@ function upd(){
     var trBase=e?"/en-US":"/de";
     var trSlug=slugify(city)+
       (selCountry?("-"+slugify(selCountry)):"");
-    var trDates="dr-"+dt1+"-"+dt2+";drs-40;rc-"+rm+"-"+px+
-      (st>0?";st-"+st:"");
-    if(tid){
-      $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+
-        "?search="+tid+";"+trDates;
-    }else{
-      $("h6").href=P+trHost+trBase+"/s/hotels?search="+trDates+
-        "&sQuery="+qFull+"&q="+q;
-    }
+    var trTid=tid||"200-15893";
+    $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+
+      "?search="+trTid+";dr-"+dt1+"-"+dt2+";drs-40;rc-"+
+      rm+"-"+px+(st>0?";st-"+st:"");
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
