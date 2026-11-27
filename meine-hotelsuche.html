@@ -154,11 +154,43 @@ input,select{
   display:flex;align-items:center;justify-content:center;
   height:44px;color:#fff;font-weight:bold;border-radius:8px;
   font-size:.84rem;text-transform:uppercase;text-decoration:none;
-  border:none;cursor:pointer;width:100%
+  border:none;cursor:pointer;width:100%;overflow:hidden
 }
 .b1{background:#0284c7}.b2{background:#1d4ed8}
 .b3{background:#0369a1}.b4{background:#1e3a8a}
 .b5{background:#2563eb}.b6{background:#0077b6}.b8{background:#0ea5e9}
+.btn-warn{
+  flex-direction:column;justify-content:center;gap:2px;
+  padding:2px 0;box-sizing:border-box
+}
+.btn-main{
+  font-size:.82rem;line-height:1.05;letter-spacing:.4px
+}
+.btn-tick{
+  width:100%;overflow:hidden;white-space:nowrap;
+  background:rgba(15,23,42,.36);padding:2px 0;
+  font-size:.63rem;font-weight:bold;text-transform:none;
+  color:#fde047;line-height:1.1;
+  -webkit-mask-image:linear-gradient(
+    90deg,transparent 0%,#000 10%,#000 90%,transparent 100%
+  );
+  mask-image:linear-gradient(
+    90deg,transparent 0%,#000 10%,#000 90%,transparent 100%
+  )
+}
+.btn-track{
+  display:inline-flex;width:max-content;
+  will-change:transform;
+  animation:btnLoop 24s linear infinite
+}
+.btn-track span{
+  display:inline-block;padding-right:36px
+}
+.btn-warn:hover .btn-track{animation-play-state:paused}
+@keyframes btnLoop{
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(-50%,0,0)}
+}
 .off{opacity:.28;pointer-events:none;filter:grayscale(80%)}
 .err{opacity:.4}
 .swc{
@@ -182,9 +214,17 @@ input,select{
 .hint{
   margin-top:12px;background:#0f2942;color:#fff;
   border:3px solid #991b1b;border-left:7px solid #991b1b;
-  border-radius:8px;padding:12px 16px;
-  font-size:.94rem;line-height:1.45;
+  border-radius:8px;padding:9px 14px;
+  font-size:1.01rem;line-height:1.34;
   flex:1;display:flex;flex-direction:column;justify-content:center
+}
+.b-ag{
+  background:#38bdf8;color:#0f172a;font-weight:900;
+  padding:1px 6px;border-radius:5px;letter-spacing:.4px
+}
+.b-tr{
+  background:#fb923c;color:#0f172a;font-weight:900;
+  padding:1px 6px;border-radius:5px;letter-spacing:.4px
 }
 </style>
 </head>
@@ -319,22 +359,57 @@ function enterHotel(){
       <button type="submit" class="btn b4">Booking.com</button>
     </form>
     <a id="h5" href="#" target="_blank" rel="noreferrer noopener"
-      class="btn b5 htl">Agoda</a>
+      class="btn b5 htl btn-warn">
+      <span class="btn-main">⚠️ Agoda</span>
+      <span class="btn-tick">
+        <span class="btn-track">
+          <span class="agTick">
+            Beachten Sie dringend die unten stehenden Hinweise in
+            dieser Suche &nbsp;&bull;&nbsp;
+          </span>
+          <span class="agTick" aria-hidden="true">
+            Beachten Sie dringend die unten stehenden Hinweise in
+            dieser Suche &nbsp;&bull;&nbsp;
+          </span>
+        </span>
+      </span>
+    </a>
     <a id="h6" href="#" target="_blank" rel="noreferrer noopener"
-      class="btn b6 htl">Trivago</a>
+      class="btn b6 htl btn-warn">
+      <span class="btn-main">⚠️ Trivago</span>
+      <span class="btn-tick">
+        <span class="btn-track">
+          <span class="trTick">
+            Beachten Sie dringend die unten stehenden Hinweise in
+            dieser Suche &nbsp;&bull;&nbsp;
+          </span>
+          <span class="trTick" aria-hidden="true">
+            Beachten Sie dringend die unten stehenden Hinweise in
+            dieser Suche &nbsp;&bull;&nbsp;
+          </span>
+        </span>
+      </span>
+    </a>
     <a id="h8" href="#" target="_blank"
       class="btn b8 off">Airbnb</a>
   </div>
   <div class="hint" id="hintBox">
     <div>
       ℹ️ <b>Wichtiger Hinweis zur Hotelsuche:</b> Bitte kontrollieren
-      Sie auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne)
-      und stellen Sie diese bei Bedarf neu ein, da nicht alle Portale
-      sie automatisch übernehmen. Kleinere Orte werden teils ebenfalls
-      nicht direkt übertragen – da Reisedaten und Personenanzahl
-      bereits hinterlegt sind, tippen Sie dort einfach noch Ihren
-      Zielort ein. Wir bitten diese technische Einschränkung der
-      Anbieter zu entschuldigen!
+      und ergänzen Sie je nach Bedarf auf der Buchungsseite unbedingt
+      alle Filter (z. B. 5 Sterne, mit Balkon usw.). Stellen Sie diese
+      bei Bedarf direkt auf der aktivierten Seite ein und aktivieren Sie
+      dort die Suche, um optimale Ergebnisse zu erhalten.
+      <span class="b-ag">AGODA</span> und
+      <span class="b-tr">TRIVAGO</span> akzeptieren über unsere Suche
+      keine kleineren Orte! Große Städte wie Bangkok oder Paris laufen
+      sauber durch. Da Sie Reisedaten und Personenanzahl bereits über
+      unsere Seite hinterlegt haben, tippen Sie dort einfach bei
+      <span class="b-ag">AGODA</span> und
+      <span class="b-tr">TRIVAGO</span> nur Ihren Zielort ein und
+      starten die Suche. Wir bitten diese technische Einschränkung der
+      Anbieter zu entschuldigen! Wir hätten gern mehr geliefert, aber
+      die mögen uns nicht. 🤣
     </div>
   </div>
 </div>
@@ -441,6 +516,10 @@ function resolveAgodaId(city){
     }
   }).catch(function(){});
 }
+function makeBadge(cls,txt){
+  var sp=document.createElement("span");
+  sp.className=cls;sp.textContent=txt;return sp;
+}
 function applyLang(){
   readLang();var e=isEn();
   document.documentElement.lang=e?"en":"de";
@@ -500,6 +579,13 @@ function applyLang(){
     ?"5 Stars \u2B50\u2B50\u2B50\u2B50\u2B50"
     :"5 Sterne \u2B50\u2B50\u2B50\u2B50\u2B50";
   $("lblAb").textContent=e?"Airbnb Only":"Nur Airbnb";
+  var tickTxt=e
+    ?"Please urgently read the notices below in this search \u2022 "
+    :"Beachten Sie dringend die unten stehenden Hinweise "+
+      "in dieser Suche \u2022 ";
+  document.querySelectorAll(".agTick,.trTick").forEach(function(el){
+    el.textContent=tickTxt;
+  });
   var hb=$("hintBox");hb.textContent="";
   var wrap=document.createElement("div");
   var b1=document.createElement("b");
@@ -507,21 +593,55 @@ function applyLang(){
     ?"\u2139\uFE0F Important Notice on Hotel Search: "
     :"\u2139\uFE0F Wichtiger Hinweis zur Hotelsuche: ";
   wrap.appendChild(b1);
-  var tEn="Please make sure to check all filters (e.g. 5 stars) "+
-    "on the booking page and re-apply them if needed, as not all "+
-    "portals transfer them automatically. Smaller towns may also "+
-    "not be passed directly - since your dates and guest count "+
-    "are already filled in, simply type your destination there "+
-    "to start. We apologize for this technical limitation!";
-  var tDe="Bitte kontrollieren Sie auf der Buchungsseite "+
-    "unbedingt alle Filter (z. B. 5 Sterne) und stellen Sie "+
-    "diese bei Bedarf neu ein, da nicht alle Portale sie "+
-    "automatisch \u00fcbernehmen. Kleinere Orte werden teils "+
-    "ebenfalls nicht direkt \u00fcbertragen - da Reisedaten und "+
-    "Personenanzahl bereits hinterlegt sind, tippen Sie dort "+
-    "einfach noch Ihren Zielort ein. Wir bitten diese "+
-    "technische Einschr\u00e4nkung der Anbieter zu entschuldigen!";
-  wrap.appendChild(document.createTextNode(e?tEn:tDe));
+  if(e){
+    wrap.appendChild(document.createTextNode(
+      "Please check and add all filters (e.g. 5 stars, balcony, "+
+      "etc.) on the booking page as needed, and start the search "+
+      "there for best results. "
+    ));
+    wrap.appendChild(makeBadge("b-ag","AGODA"));
+    wrap.appendChild(document.createTextNode(" and "));
+    wrap.appendChild(makeBadge("b-tr","TRIVAGO"));
+    wrap.appendChild(document.createTextNode(
+      " do not accept smaller towns via our search! Big cities "+
+      "like Bangkok or Paris work smoothly. Since dates and guests "+
+      "are already entered, simply type your destination at "
+    ));
+    wrap.appendChild(makeBadge("b-ag","AGODA"));
+    wrap.appendChild(document.createTextNode(" and "));
+    wrap.appendChild(makeBadge("b-tr","TRIVAGO"));
+    wrap.appendChild(document.createTextNode(
+      " and start searching. Sorry for this technical limitation "+
+      "\u2013 we would have loved to deliver more, but they don't "+
+      "like us. \uD83E\uDD23"
+    ));
+  }else{
+    wrap.appendChild(document.createTextNode(
+      "Bitte kontrollieren und erg\u00e4nzen Sie je nach Bedarf "+
+      "auf der Buchungsseite unbedingt alle Filter (z. B. 5 Sterne, "+
+      "mit Balkon usw.). Stellen Sie diese bei Bedarf direkt auf der "+
+      "aktivierten Seite ein und aktivieren Sie dort die Suche, um "+
+      "optimale Ergebnisse zu erhalten. "
+    ));
+    wrap.appendChild(makeBadge("b-ag","AGODA"));
+    wrap.appendChild(document.createTextNode(" und "));
+    wrap.appendChild(makeBadge("b-tr","TRIVAGO"));
+    wrap.appendChild(document.createTextNode(
+      " akzeptieren \u00fcber unsere Suche keine kleineren Orte! "+
+      "Gro\u00dfe St\u00e4dte wie Bangkok oder Paris laufen sauber "+
+      "durch. Da Sie Reisedaten und Personenanzahl bereits \u00fcber "+
+      "unsere Seite hinterlegt haben, tippen Sie dort einfach bei "
+    ));
+    wrap.appendChild(makeBadge("b-ag","AGODA"));
+    wrap.appendChild(document.createTextNode(" und "));
+    wrap.appendChild(makeBadge("b-tr","TRIVAGO"));
+    wrap.appendChild(document.createTextNode(
+      " nur Ihren Zielort ein und starten die Suche. Wir bitten "+
+      "diese technische Einschr\u00e4nkung der Anbieter zu "+
+      "entschuldigen! Wir h\u00e4tten gern mehr geliefert, aber die "+
+      "m\u00f6gen uns nicht. \uD83E\uDD23"
+    ));
+  }
   hb.appendChild(wrap);
   $("b_lng").value=e?"en-gb":"de";updBgmBtn();
 }
