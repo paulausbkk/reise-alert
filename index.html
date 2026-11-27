@@ -162,12 +162,12 @@ label{
   box-shadow:0 0 0 3px rgba(2,132,199,.15)
 }
 @keyframes pulseHint{
-  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
-  50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
+  0%,100%{border-color:#b91c1c;box-shadow:0 0 6px rgba(220,38,38,.35)}
+  50%{border-color:#ef4444;box-shadow:0 0 18px rgba(239,68,68,.85)}
 }
 .bn{
-  background:#0f2942;border:3px solid #991b1b;
-  border-left:7px solid #991b1b;border-radius:8px;
+  background:#0f2942;border:4px solid #dc2626;
+  border-left:11px solid #b91c1c;border-radius:10px;
   padding:11px 14px;color:#fff;font-weight:bold;
   font-size:.88rem;line-height:1.4;
   animation:pulseHint 2.2s infinite ease-in-out
@@ -298,7 +298,7 @@ body:has(#ow:checked) .st{
       <option value="Leipzig/Halle (LEJ)">
       <option value="Düsseldorf (DUS)">
       <option value="Hamburg (HAM)">
-      <option value="Köln/Bonn (CGN)">
+ <option value="Köln/Bonn (CGN)">
       <option value="Stuttgart (STR)">
       <option value="Hannover (HAJ)">
       <option value="Nürnberg (NUE)">
@@ -413,7 +413,13 @@ body:has(#ow:checked) .st{
     </div>
     <div class="bn" id="hintBox">
       ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend
-      angeklickten Website beim Anbieter ausgewählt werden.
+      angeklickten Website beim Anbieter ausgewählt werden. Außerdem
+      müssen Sie dort auch Ihre gewünschte Reiseklasse, also Economy,
+      Premium Economy, Business, First Class oder anderes wählen. Des
+      Weiteren achten Sie bitte dringend darauf, dass der
+      Schieberegler Reisezeit entsprechend gesetzt ist. Ist dies nicht
+      der Fall, werden unter Umständen keine Suchergebnisse
+      ausgegeben.
     </div>
   </div>
 </div>
@@ -503,8 +509,19 @@ function applyLang(){
   b1.textContent = e ? "ℹ️ Note: " : "ℹ️ Hinweis: ";
   hb.appendChild(b1);
   hb.appendChild(document.createTextNode(e
-    ? "Baggage must be selected on the respective provider website you click."
-    : "Gepäck muss auf der entsprechend angeklickten Website beim Anbieter ausgewählt werden."));
+    ? "Baggage must be selected on the respective provider website "+
+      "you click. You must also select your desired cabin class "+
+      "there, such as Economy, Premium Economy, Business, First "+
+      "Class or other. Furthermore, please make sure the travel "+
+      "time slider is set accordingly. Otherwise, no search "+
+      "results may be displayed."
+    : "Gepäck muss auf der entsprechend angeklickten Website beim "+
+      "Anbieter ausgewählt werden. Außerdem müssen Sie dort auch "+
+      "Ihre gewünschte Reiseklasse, also Economy, Premium Economy, "+
+      "Business, First Class oder anderes wählen. Des Weiteren "+
+      "achten Sie bitte dringend darauf, dass der Schieberegler "+
+      "Reisezeit entsprechend gesetzt ist. Ist dies nicht der "+
+      "Fall, werden unter Umständen keine Suchergebnisse ausgegeben."));
   byId("expSub").textContent = e
     ? "Select stops on website" : "Stopps auf Website wählen";
   byId("trpSub").textContent = e
@@ -651,6 +668,14 @@ function upd(){
   var sOd = od.replace(/-/g, "").slice(2);
   var sRd = rd.replace(/-/g, "").slice(2);
 
+  var skyStop = byId("ns").checked
+    ? "&preferdirects=true&stops=0"
+    : (byId("s1").checked
+      ? "&preferdirects=false&stops=1"
+      : (byId("s2").checked
+        ? "&preferdirects=false&stops=2"
+        : ""));
+
   var stopK = byId("ns").checked
     ? "?fs=stops=0;legdur=-" + mins
     : (byId("s1").checked
@@ -661,7 +686,7 @@ function upd(){
     "/transport/fluge/" + o.toLowerCase() + "/" +
     d.toLowerCase() + "/" + sOd +
     (ow ? "/" : "/" + sRd + "/") +
-    "?adults=" + px + "&duration=" + mins;
+    "?adults=" + px + "&duration=" + mins + skyStop;
 
   byId("u2").href = P + "www.kayak.de" + "/flights/" +
     o + "-" + d + "/" + od +
@@ -671,6 +696,10 @@ function upd(){
     o + "-" + d + "/" + od +
     (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
 
+  var expStop = ns ? "&options=nonstop:true" : "";
+  var expLeg2 = ow ? "" : ("&leg2=from:" + d + ",to:" + o +
+    ",departure:" + rd + "TANYT");
+  var expDom = e ? "://expedia.com" : "www.expedia.de";
   byId("u4").href = P + "www.expedia.de" +
     "/Flights-Search?trip=" + (ow ? "oneway" : "roundtrip") +
     "&leg1=from:" + o + ",to:" + d + ",departure:" + od + "TANYT" +
@@ -725,3 +754,6 @@ setInterval(updClock, 1000);
 </script>
 </body>
 </html>
+
+
+        
