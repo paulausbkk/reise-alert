@@ -10,10 +10,10 @@
   --b:#bae6fd;--g:#0ea5e9;--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe
 }
 html,body{
-  margin:0;padding:14px;
+  margin:0;padding:8px 14px;min-height:100vh;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
-  min-height:100vh;font-family:sans-serif;color:var(--t);
-  box-sizing:border-box
+  font-family:sans-serif;color:var(--t);box-sizing:border-box;
+  display:flex;flex-direction:column
 }
 .f-modal{
   position:fixed;inset:0;background:rgba(15,41,66,.9);
@@ -36,8 +36,8 @@ html,body{
   color:#0369a1;margin-top:4px
 }
 @keyframes iconFloat{
-  0%,100%{transform:translateY(0) rotate(-4deg)}
-  50%{transform:translateY(-3px) rotate(4deg)}
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-3px) rotate(3deg)}
 }
 @keyframes orbitSmooth{
   0%{offset-distance:0%}
@@ -92,12 +92,12 @@ html,body{
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:10px 14px;border-radius:12px;
-  margin-bottom:16px;flex-wrap:wrap;gap:8px;
+  background:#0f2942;padding:8px 14px;border-radius:12px;
+  margin-bottom:9px;flex-wrap:wrap;gap:8px;flex-shrink:0;
   box-shadow:0 4px 14px rgba(15,41,66,.18)
 }
 .tit{
-  font-weight:bold;color:#fff;font-size:1.12rem;margin:0;
+  font-weight:bold;color:#fff;font-size:1.1rem;margin:0;
   letter-spacing:.2px
 }
 .cp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
@@ -129,32 +129,36 @@ html,body{
   background:#0284c7;border-color:#7dd3fc;
   box-shadow:0 0 8px rgba(125,211,252,.5)
 }
-.row{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px}
+.row{
+  display:flex;flex-wrap:wrap;gap:12px;
+  margin-bottom:9px;flex-shrink:0
+}
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:18px 20px;background:#ffffff;box-sizing:border-box;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
+  padding:11px 16px;background:#ffffff;box-sizing:border-box;
+  box-shadow:0 4px 12px rgba(3,105,161,.08);
+  display:flex;flex-direction:column;justify-content:space-between
 }
 .ct{
-  font-weight:bold;font-size:1.06rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:7px;
-  margin-bottom:14px
+  font-weight:bold;font-size:1.02rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:4px;
+  margin-bottom:8px
 }
 .f{
-  margin-bottom:13px;display:flex;
+  margin-bottom:7px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:13px
+  gap:10px;margin-bottom:7px
 }
 label{
-  font-weight:bold;font-size:.84rem;
-  margin-bottom:4px;color:#1e3a8a
+  font-weight:bold;font-size:.82rem;
+  margin-bottom:3px;color:#1e3a8a
 }
 .inp,.dat,select{
-  height:41px;padding:0 12px;border:1px solid #93c5fd;
-  border-radius:8px;box-sizing:border-box;font-size:.96rem;
+  height:37px;padding:0 12px;border:1px solid #93c5fd;
+  border-radius:8px;box-sizing:border-box;font-size:.94rem;
   background:#f8fafc;color:var(--t);width:100%;transition:.2s
 }
 .inp:focus,.dat:focus,select:focus{
@@ -162,20 +166,22 @@ label{
   box-shadow:0 0 0 3px rgba(2,132,199,.15)
 }
 @keyframes pulseHint{
-  0%,100%{border-color:#7f1d1d;box-shadow:0 0 0 rgba(185,28,28,0)}
-  50%{border-color:#dc2626;box-shadow:0 0 14px rgba(185,28,28,.7)}
+  0%,100%{border-color:#b91c1c;box-shadow:0 0 6px rgba(220,38,38,.35)}
+  50%{border-color:#ef4444;box-shadow:0 0 18px rgba(239,68,68,.85)}
 }
 .bn{
-  background:#0f2942;border:3px solid #991b1b;
-  border-left:7px solid #991b1b;border-radius:8px;
-  padding:11px 14px;color:#fff;font-weight:bold;
-  font-size:.88rem;line-height:1.4;
+  background:#0f2942;border:4px solid #dc2626;
+  border-left:11px solid #b91c1c;border-radius:10px;
+  padding:8px 12px;color:#fff;font-weight:bold;
+  font-size:.84rem;line-height:1.28;
+  flex:1;display:flex;align-items:center;
   animation:pulseHint 2.2s infinite ease-in-out
 }
 .bb{
   border:1px solid #93c5fd;background:#ffffff;
-  border-radius:12px;padding:16px 20px;
-  box-shadow:0 4px 12px rgba(3,105,161,.08)
+  border-radius:12px;padding:9px 16px;
+  box-shadow:0 4px 12px rgba(3,105,161,.08);
+  flex:1;display:flex;flex-direction:column;justify-content:center
 }
 .bf{
   display:grid;
@@ -184,7 +190,7 @@ label{
 }
 .btn{
   display:flex;flex-direction:column;align-items:center;
-  justify-content:center;height:46px;color:#fff;font-weight:bold;
+  justify-content:center;height:44px;color:#fff;font-weight:bold;
   border-radius:8px;font-size:.84rem;text-transform:uppercase;
   text-decoration:none;text-align:center;line-height:1.15;
   padding:0 6px;box-shadow:0 2px 6px rgba(15,41,66,.15)
@@ -195,7 +201,7 @@ label{
 }
 .b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
 .b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
-.rng{width:100%;height:41px;accent-color:#0284c7;cursor:pointer}
+.rng{width:100%;height:32px;accent-color:#0284c7;cursor:pointer}
 body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
 body:has(#ow:checked) #rb input{background:#e2e8f0!important}
 body:has(#ow:checked) .st{
@@ -204,7 +210,7 @@ body:has(#ow:checked) .st{
 .swc{
   display:flex;align-items:center;justify-content:space-between;
   background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-  border-radius:8px;min-height:41px;gap:8px
+  border-radius:8px;min-height:37px;gap:8px
 }
 .swc.yl{background:#e0f2fe;border:1px solid #7dd3fc}
 .swc.split{
@@ -213,7 +219,7 @@ body:has(#ow:checked) .st{
 }
 .swh{
   display:flex;align-items:center;justify-content:space-between;
-  padding:4px 10px;gap:6px;min-height:28px
+  padding:2px 10px;gap:6px;min-height:24px
 }
 .swh:first-child{border-bottom:1px solid #7dd3fc}
 .sw{
@@ -278,17 +284,19 @@ body:has(#ow:checked) .st{
 </div>
 <div class="row">
   <div class="card">
-    <div class="ct" id="c1Tit">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-    <div class="f2" style="margin-bottom:14px">
-      <div class="f" style="margin:0">
-        <label for="i1" id="lblOrig">Abflug (IATA oder Stadt)</label>
-        <input type="text" class="inp" id="i1"
-          list="airports" placeholder="z.B. BER, FRA, MUC">
-      </div>
-      <div class="f" style="margin:0">
-        <label for="i2" id="lblDest">Ziel (IATA oder Stadt)</label>
-        <input type="text" class="inp" id="i2"
-          list="airports" placeholder="z.B. BKK, DAD, CEB">
+    <div>
+      <div class="ct" id="c1Tit">📋 Kern-Reisedaten (Direkt-Absprung)</div>
+      <div class="f2" style="margin-bottom:10px">
+        <div class="f" style="margin:0">
+          <label for="i1" id="lblOrig">Abflug (IATA oder Stadt)</label>
+          <input type="text" class="inp" id="i1"
+            list="airports" placeholder="z.B. BER, FRA, MUC">
+        </div>
+        <div class="f" style="margin:0">
+          <label for="i2" id="lblDest">Ziel (IATA oder Stadt)</label>
+          <input type="text" class="inp" id="i2"
+            list="airports" placeholder="z.B. BKK, DAD, CEB">
+        </div>
       </div>
     </div>
     <datalist id="airports">
@@ -298,7 +306,7 @@ body:has(#ow:checked) .st{
       <option value="Leipzig/Halle (LEJ)">
       <option value="Düsseldorf (DUS)">
       <option value="Hamburg (HAM)">
-      <option value="Köln/Bonn (CGN)">
+  <option value="Köln/Bonn (CGN)">
       <option value="Stuttgart (STR)">
       <option value="Hannover (HAJ)">
       <option value="Nürnberg (NUE)">
@@ -340,87 +348,99 @@ body:has(#ow:checked) .st{
     </div>
   </div>
   <div class="card">
-    <div class="ct" id="c2Tit">⚙️ Filter & Flug-Parameter</div>
-    <div class="f2" style="align-items:end">
-      <div class="swc">
-        <label for="ow" id="lblOw"
-          style="margin:0;cursor:pointer;font-size:.82rem">
-          Nur Hinflug (One-Way)
-        </label>
-        <label class="sw">
-          <input type="checkbox" id="ow"><span class="sl"></span>
-        </label>
-      </div>
-      <div class="f" style="margin:0">
-        <label for="px" id="lblPx">Personenzahl</label>
-        <select id="px">
-          <option value="1" id="px1">1 Person</option>
-          <option value="2" id="px2">2 Personen</option>
-          <option value="3" id="px3">3 Personen</option>
-          <option value="4" id="px4">4 Personen</option>
-        </select>
-      </div>
-    </div>
-    <div class="f">
-      <label for="hr" id="hrl">Max. Reisezeit (1 – 36 Std.)</label>
-      <input type="range" class="rng" id="hr"
-        min="1" max="36" value="14">
-    </div>
-    <div class="f2">
-      <div class="swc yl">
-        <label for="ns" id="lblNs"
-          style="margin:0;cursor:pointer;font-size:.82rem">
-          Nur Direktflüge (Non-Stop)
-        </label>
-        <label class="sw">
-          <input type="radio" name="stops" id="ns">
-          <span class="sl"></span>
-        </label>
-      </div>
-      <div class="swc yl split">
-        <div class="swh">
-          <label for="s1" id="lblS1"
-            style="margin:0;cursor:pointer;font-size:.8rem">
-            Max. 1 Stop
+    <div>
+      <div class="ct" id="c2Tit">⚙️ Filter & Flug-Parameter</div>
+      <div class="f2" style="align-items:end">
+        <div class="swc">
+          <label for="ow" id="lblOw"
+            style="margin:0;cursor:pointer;font-size:.82rem">
+            Nur Hinflug (One-Way)
           </label>
-          <label class="sw sm">
-            <input type="radio" name="stops" id="s1">
+          <label class="sw">
+            <input type="checkbox" id="ow"><span class="sl"></span>
+          </label>
+        </div>
+        <div class="f" style="margin:0">
+          <label for="px" id="lblPx">Personenzahl</label>
+          <select id="px">
+            <option value="1" id="px1">1 Person</option>
+            <option value="2" id="px2">2 Personen</option>
+            <option value="3" id="px3">3 Personen</option>
+            <option value="4" id="px4">4 Personen</option>
+          </select>
+        </div>
+      </div>
+      <div class="f">
+        <label for="hr" id="hrl">Max. Reisezeit (1 – 36 Std.)</label>
+        <input type="range" class="rng" id="hr"
+          min="1" max="36" value="14">
+      </div>
+      <div class="f2">
+        <div class="swc yl">
+          <label for="ns" id="lblNs"
+            style="margin:0;cursor:pointer;font-size:.82rem">
+            Nur Direktflüge (Non-Stop)
+          </label>
+          <label class="sw">
+            <input type="radio" name="stops" id="ns">
             <span class="sl"></span>
           </label>
         </div>
-        <div class="swh">
-          <label for="s2" id="lblS2"
-            style="margin:0;cursor:pointer;font-size:.8rem">
-            Max. 2 Stopps
-          </label>
-          <label class="sw sm">
-            <input type="radio" name="stops" id="s2">
-            <span class="sl"></span>
-          </label>
+        <div class="swc yl split">
+          <div class="swh">
+            <label for="s1" id="lblS1"
+              style="margin:0;cursor:pointer;font-size:.8rem">
+              Max. 1 Stop
+            </label>
+            <label class="sw sm">
+              <input type="radio" name="stops" id="s1">
+              <span class="sl"></span>
+            </label>
+          </div>
+          <div class="swh">
+            <label for="s2" id="lblS2"
+              style="margin:0;cursor:pointer;font-size:.8rem">
+              Max. 2 Stopps
+            </label>
+            <label class="sw sm">
+              <input type="radio" name="stops" id="s2">
+              <span class="sl"></span>
+            </label>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="f" style="margin-bottom:12px">
-      <div class="swc">
-        <label for="lc" id="lblLc"
-          style="margin:0;cursor:pointer;font-size:.82rem">
-          Inkl. Low-Cost Airlines (zusätzlich)
-        </label>
-        <label class="sw">
-          <input type="checkbox" id="lc"><span class="sl"></span>
-        </label>
+      <div class="f" style="margin-bottom:7px">
+        <div class="swc">
+          <label for="lc" id="lblLc"
+            style="margin:0;cursor:pointer;font-size:.82rem">
+            Inkl. Low-Cost Airlines (zusätzlich)
+          </label>
+          <label class="sw">
+            <input type="checkbox" id="lc"><span class="sl"></span>
+          </label>
+        </div>
       </div>
     </div>
     <div class="bn" id="hintBox">
-      ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend
-      angeklickten Website beim Anbieter ausgewählt werden.
+      <div>
+        ℹ️ <b>Hinweis:</b> Gepäck muss auf der entsprechend
+        angeklickten Website beim Anbieter ausgewählt werden. Außerdem
+        müssen Sie dort auch Ihre gewünschte Reiseklasse, also Economy,
+        Premium Economy, Business, First Class oder anderes wählen. Des
+        Weiteren achten Sie bitte dringend darauf, dass der
+        Schieberegler Reisezeit entsprechend gesetzt ist. Ist dies nicht
+        der Fall, werden unter Umständen keine Suchergebnisse
+        ausgegeben.
+      </div>
     </div>
   </div>
 </div>
 <div class="bb">
   <div class="bf">
     <a id="u1" href="#" onclick="upd()"
-      target="_blank" class="btn b2">Skyscanner</a>
+      target="_blank" class="btn b2">
+      Skyscanner<span class="sub" id="skySub">Stopps auf Website wählen</span>
+    </a>
     <a id="u2" href="#" onclick="upd()"
       target="_blank" class="btn b3">Kayak</a>
     <a id="u3" href="#" onclick="upd()"
@@ -499,12 +519,27 @@ function applyLang(){
     : "Inkl. Low-Cost Airlines (zusätzlich)";
   var hb = byId("hintBox");
   hb.textContent = "";
+  var wrap = document.createElement("div");
   var b1 = document.createElement("b");
   b1.textContent = e ? "ℹ️ Note: " : "ℹ️ Hinweis: ";
-  hb.appendChild(b1);
-  hb.appendChild(document.createTextNode(e
-    ? "Baggage must be selected on the respective provider website you click."
-    : "Gepäck muss auf der entsprechend angeklickten Website beim Anbieter ausgewählt werden."));
+  wrap.appendChild(b1);
+  wrap.appendChild(document.createTextNode(e
+    ? "Baggage must be selected on the respective provider website "+
+      "you click. You must also select your desired cabin class "+
+      "there, such as Economy, Premium Economy, Business, First "+
+      "Class or other. Furthermore, please make sure the travel "+
+      "time slider is set accordingly. Otherwise, no search "+
+      "results may be displayed."
+    : "Gepäck muss auf der entsprechend angeklickten Website beim "+
+      "Anbieter ausgewählt werden. Außerdem müssen Sie dort auch "+
+      "Ihre gewünschte Reiseklasse, also Economy, Premium Economy, "+
+      "Business, First Class oder anderes wählen. Des Weiteren "+
+      "achten Sie bitte dringend darauf, dass der Schieberegler "+
+      "Reisezeit entsprechend gesetzt ist. Ist dies nicht der "+
+      "Fall, werden unter Umständen keine Suchergebnisse ausgegeben."));
+  hb.appendChild(wrap);
+  byId("skySub").textContent = e
+    ? "Select stops on website" : "Stopps auf Website wählen";
   byId("expSub").textContent = e
     ? "Select stops on website" : "Stopps auf Website wählen";
   byId("trpSub").textContent = e
@@ -661,7 +696,8 @@ function upd(){
     "/transport/fluge/" + o.toLowerCase() + "/" +
     d.toLowerCase() + "/" + sOd +
     (ow ? "/" : "/" + sRd + "/") +
-    "?adults=" + px + "&duration=" + mins;
+    "?adults=" + px + "&duration=" + mins +
+    "&preferdirects=" + (byId("ns").checked ? "true" : "false");
 
   byId("u2").href = P + "www.kayak.de" + "/flights/" +
     o + "-" + d + "/" + od +
@@ -671,12 +707,14 @@ function upd(){
     o + "-" + d + "/" + od +
     (ow ? "" : "/" + rd) + "/" + px + "adults" + stopK;
 
-  byId("u4").href = P + "www.expedia.de" +
+  var expHost = e ? "://expedia.com" : "www.expedia.de";
+  byId("u4").href = P + expHost +
     "/Flights-Search?trip=" + (ow ? "oneway" : "roundtrip") +
     "&leg1=from:" + o + ",to:" + d + ",departure:" + od + "TANYT" +
     (ow ? "" : "&leg2=from:" + d + ",to:" + o +
       ",departure:" + rd + "TANYT") +
-    "&passengers=adults:" + px + "&mode=search";
+    "&passengers=adults:" + px + "&mode=search" +
+    (e ? "&langid=1033" : "");
 
   var kwFrom = kiwiSlug(o, raw1), kwTo = kiwiSlug(d, raw2);
   var kwStop = byId("ns").checked ? "&stopNumber=0" :
