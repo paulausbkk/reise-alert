@@ -740,10 +740,10 @@ function upd(){
     var trBase=e?"/en-GB":"/de";
     var trSlug=slugify(city)+
       (selCountry?("-"+slugify(selCountry)):"");
-    var trSrch=(tid?(tid+";"):"")+"dr-"+dt1+"-"+dt2+
-      ";drs-40;rc-"+rm+"-"+px+(st>0?";st-"+st:"");
+    var trTid=tid||"200-0";
     $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+
-      "?search="+trSrch;
+      "?search="+trTid+";dr-"+dt1+"-"+dt2+";drs-40;rc-"+
+      rm+"-"+px+(st>0?";st-"+st:"");
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
