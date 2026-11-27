@@ -736,8 +736,8 @@ function upd(){
       "&rooms="+rm+"&adults="+px+"&children=0"+
       "&currency=EUR&cid=1844104";
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
-    var trHost=H_TR+(e?".com":".de");
-    var trBase=e?"/en-US":"/de";
+    var trHost=H_TR+(e?".co.uk":".de");
+    var trBase=e?"/en-GB":"/de";
     var trSlug=slugify(city)+
       (selCountry?("-"+slugify(selCountry)):"");
     var trTid=tid||"200-0";
