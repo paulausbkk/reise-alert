@@ -740,7 +740,7 @@ function upd(){
     var trBase=e?"/en-US":"/de";
     var trSlug=slugify(city)+
       (selCountry?("-"+slugify(selCountry)):"");
-    var trTid=tid||"200-15893";
+    var trTid=tid||"200-0";
     $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+
       "?search="+trTid+";dr-"+dt1+"-"+dt2+";drs-40;rc-"+
       rm+"-"+px+(st>0?";st-"+st:"");
