@@ -480,35 +480,6 @@ var AG_DB="seevetal:71402;bangkok:9395;mailand:4894;milan:4894;"+
   "krabi:14865;singapur:4064;singapore:4064;kuala lumpur:14524;"+
   "tokio:5085;tokyo:5085;manila:15644;cebu:4001;"+
   "cebu city:4001;dumaguete:14925;pagadian:85509";
-var AG_SLUG="bangkok:bangkok-th;mailand:milan-it;milan:milan-it;"+
-  "palermo:palermo-it;berlin:berlin-de;hamburg:hamburg-de;"+
-  "muenchen:munich-de;munich:munich-de;frankfurt:frankfurt-am-main-de;"+
-  "frankfurt am main:frankfurt-am-main-de;koeln:cologne-de;"+
-  "cologne:cologne-de;duesseldorf:dusseldorf-de;stuttgart:stuttgart-de;"+
-  "wien:vienna-at;vienna:vienna-at;hannover:hanover-de;"+
-  "leipzig:leipzig-de;dresden:dresden-de;nuernberg:nuremberg-de;"+
-  "nuremberg:nuremberg-de;bremen:bremen-de;zuerich:zurich-ch;"+
-  "zurich:zurich-ch;paris:paris-fr;london:london-gb;rom:rome-it;"+
-  "rome:rome-it;barcelona:barcelona-es;madrid:madrid-es;"+
-  "lissabon:lisbon-pt;lisbon:lisbon-pt;dubai:dubai-ae;"+
-  "istanbul:istanbul-tr;amsterdam:amsterdam-nl;prag:prague-cz;"+
-  "prague:prague-cz;warschau:warsaw-pl;warsaw:warsaw-pl;"+
-  "budapest:budapest-hu;athen:athens-gr;athens:athens-gr;"+
-  "venedig:venice-it;venice:venice-it;florenz:florence-it;"+
-  "florence:florence-it;neapel:naples-it;naples:naples-it;"+
-  "bruessel:brussels-be;brussels:brussels-be;kopenhagen:copenhagen-dk;"+
-  "copenhagen:copenhagen-dk;stockholm:stockholm-se;oslo:oslo-no;"+
-  "helsinki:helsinki-fi;dublin:dublin-ie;new york:new-york-ny-us;"+
-  "los angeles:los-angeles-ca-us;miami:miami-fl-us;"+
-  "las vegas:las-vegas-nv-us;toronto:toronto-on-ca;"+
-  "sydney:sydney-nsw-au;melbourne:melbourne-vic-au;"+
-  "auckland:auckland-nz;kairo:cairo-eg;cairo:cairo-eg;"+
-  "hurghada:hurghada-eg;marrakesch:marrakech-ma;marrakech:marrakech-ma;"+
-  "phuket:phuket-th;chiang mai:chiang-mai-th;koh samui:ko-samui-th;"+
-  "ko samui:ko-samui-th;krabi:krabi-th;singapur:singapore-sg;"+
-  "singapore:singapore-sg;kuala lumpur:kuala-lumpur-my;"+
-  "tokio:tokyo-jp;tokyo:tokyo-jp;manila:manila-ph;cebu:cebu-ph;"+
-  "cebu city:cebu-ph;dumaguete:dumaguete-ph";
 var BK_DB="bangkok:-3414440;mailand:-121726;milan:-121726;"+
   "palermo:-123798;berlin:-1746443;hamburg:-1785434;"+
   "muenchen:-1829149;munich:-1829149;frankfurt:-1771148;"+
@@ -527,22 +498,10 @@ var BK_DB="bangkok:-3414440;mailand:-121726;milan:-121726;"+
   "kuala lumpur:-2403010;tokio:-246227;tokyo:-246227;"+
   "manila:-2437894;cebu:-2421265;dumaguete:-2424739;"+
   "pagadian:-2443809";
-var TR_DB="seevetal:200-5994;bangkok:200-15893;berlin:200-15470;"+
-  "hamburg:200-15678;muenchen:200-15808;munich:200-15808;"+
-  "frankfurt:200-15615;frankfurt am main:200-15615;"+
-  "koeln:200-15731;cologne:200-15731;duesseldorf:200-15572;"+
-  "stuttgart:200-15916;wien:200-15226;vienna:200-15226;"+
-  "zuerich:200-69374;zurich:200-69374;paris:200-65712;"+
-  "london:200-68727;mailand:200-66389;milan:200-66389;"+
-  "rom:200-66559;rome:200-66559;barcelona:200-66066;"+
-  "madrid:200-66171;dubai:200-64631;istanbul:200-69214;"+
-  "amsterdam:200-67527;prag:200-65201;prague:200-65201;"+
-  "phuket:200-15899;chiang mai:200-15894;koh samui:200-15896;"+
-  "ko samui:200-15896;singapur:200-15950;singapore:200-15950;"+
-  "tokio:200-67141;tokyo:200-67141;manila:200-15931;"+
-  "cebu:200-15928;cebu city:200-15928";
+var TR_DB="seevetal:200-5994;bangkok:200-15893;berlin:200-15759;"+
+  "paris:200-22146;london:200-34657;mailand:200-46894;"+
+  "milan:200-46894";
 function getAid(c){return findId(AG_DB,normCity(c),agCache);}
-function getAslug(c){return findId(AG_SLUG,normCity(c),null);}
 function getBid(c){return findId(BK_DB,normCity(c),null);}
 function getTid(c){return findId(TR_DB,normCity(c),null);}
 function resolveAgodaId(city){
@@ -726,8 +685,7 @@ function upd(){
   }else{$("co").min=t;}
   var px=+$("px").value||2,rm=+$("rm").value||1;
   var st=+$("st").value||0,ab=$("ab").checked;
-  var aid=getAid(city),aslug=getAslug(city);
-  var bid=getBid(city),tid=getTid(city);
+  var aid=getAid(city),bid=getBid(city),tid=getTid(city);
   if(city&&!aid)resolveAgodaId(city);
   $("f4").action=P+H_BK+"/searchresults.html";
   document.querySelectorAll(".htl").forEach(function(el){
@@ -774,30 +732,21 @@ function upd(){
     $("b_px").value=px;$("b_rm").value=rm;
     $("b_flt").disabled=!bFilt;$("b_flt").value=bFilt;
     var agLoc=e?"en-gb":"de-de";
-    var agQ="cid=1844104&checkIn="+ci+"&checkOut="+co+
-      "&los="+n+"&rooms="+rm+"&adults="+px+"&children=0"+
-      "&currency=EUR"+(st>0?"&hotelStarRating="+st:"");
-    if(aslug){
-      $("h5").href=P+H_AG+"/"+agLoc+"/city/"+aslug+".html?"+agQ;
-    }else if(aid){
-      $("h5").href=P+H_AG+"/"+agLoc+"/pages/agoda/default/"+
-        "WaitPage.aspx?city="+aid+"&"+agQ;
-    }else{
-      $("h5").href=P+H_AG+"/"+agLoc+"/city/"+slugify(city)+
-        "-"+(cc||"de")+".html?"+agQ;
-    }
+    $("h5").href=P+H_AG+"/"+agLoc+"/search?"+
+      (aid?("city="+aid+"&"):"")+
+      "checkIn="+ci+"&checkOut="+co+"&los="+n+
+      "&rooms="+rm+"&adults="+px+"&children=0"+
+      "&currency=EUR&cid=1844104";
     var dt1=ci.replace(/-/g,""),dt2=co.replace(/-/g,"");
     var trHost=H_TR+(e?".com":".de");
     var trBase=e?"/en-US":"/de";
-    if(tid){
-      $("h6").href=P+trHost+trBase+"/lm/hotels-"+slugify(city)+
-        "?search="+tid+";dr-"+dt1+"-"+dt2+";drs-40;rc-"+
-        rm+"-"+px+(st>0?";st-"+st:"");
-    }else{
-      $("h6").href=P+trHost+trBase+"/lm?search=dr-"+dt1+"-"+dt2+
-        ";drs-40;rc-"+rm+"-"+px+(st>0?";st-"+st:"")+
-        "&sQuery="+qFull+"&q="+q;
-    }
+    var trSlug=slugify(city)+
+      (selCountry?("-"+slugify(selCountry)):"");
+    var trSrch=(tid?tid+";":"")+"dr-"+dt1+"-"+dt2+
+      ";drs-40;rc-"+rm+"-"+px+(st>0?";st-"+st:"");
+    var trQ=tid?"":("&sQuery="+qFull+"&q="+q);
+    $("h6").href=P+trHost+trBase+"/lm/hotels-"+trSlug+
+      "?search="+trSrch+trQ;
     $("h8").href=P+"www.airbnb"+dom+"/s/"+qFull+
       "/homes?tab_id=home_tab&checkin="+ci+
       "&checkout="+co+"&adults="+px+
