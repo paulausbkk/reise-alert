@@ -10,7 +10,7 @@
   --b:#bae6fd;--g:#0ea5e9;--v:#0284c7;--lg:#0284c7;--ly:#e0f2fe
 }
 html,body{
-  margin:0;padding:14px;
+  margin:0;padding:10px 14px;
   background:linear-gradient(180deg,#dbeafe 0%,#f0f9ff 100%);
   min-height:100vh;font-family:sans-serif;color:var(--t);
   box-sizing:border-box
@@ -92,8 +92,8 @@ html,body{
 }
 .hdr{
   display:flex;justify-content:space-between;align-items:center;
-  background:#0f2942;padding:10px 14px;border-radius:12px;
-  margin-bottom:16px;flex-wrap:wrap;gap:8px;
+  background:#0f2942;padding:9px 14px;border-radius:12px;
+  margin-bottom:10px;flex-wrap:wrap;gap:8px;
   box-shadow:0 4px 14px rgba(15,41,66,.18)
 }
 .tit{
@@ -129,31 +129,31 @@ html,body{
   background:#0284c7;border-color:#7dd3fc;
   box-shadow:0 0 8px rgba(125,211,252,.5)
 }
-.row{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:16px}
+.row{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px}
 .card{
   flex:1 1 420px;border:1px solid #93c5fd;border-radius:12px;
-  padding:18px 20px;background:#ffffff;box-sizing:border-box;
+  padding:13px 18px;background:#ffffff;box-sizing:border-box;
   box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
 .ct{
-  font-weight:bold;font-size:1.06rem;color:var(--d);
-  border-bottom:2px solid #e0f2fe;padding-bottom:7px;
-  margin-bottom:14px
+  font-weight:bold;font-size:1.05rem;color:var(--d);
+  border-bottom:2px solid #e0f2fe;padding-bottom:5px;
+  margin-bottom:10px
 }
 .f{
-  margin-bottom:13px;display:flex;
+  margin-bottom:9px;display:flex;
   flex-direction:column;position:relative
 }
 .f2{
   display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;margin-bottom:13px
+  gap:10px;margin-bottom:9px
 }
 label{
   font-weight:bold;font-size:.84rem;
   margin-bottom:4px;color:#1e3a8a
 }
 .inp,.dat,select{
-  height:41px;padding:0 12px;border:1px solid #93c5fd;
+  height:39px;padding:0 12px;border:1px solid #93c5fd;
   border-radius:8px;box-sizing:border-box;font-size:.96rem;
   background:#f8fafc;color:var(--t);width:100%;transition:.2s
 }
@@ -168,13 +168,13 @@ label{
 .bn{
   background:#0f2942;border:4px solid #dc2626;
   border-left:11px solid #b91c1c;border-radius:10px;
-  padding:7px 11px;color:#fff;font-weight:bold;
-  font-size:.78rem;line-height:1.24;
+  padding:5px 10px;color:#fff;font-weight:bold;
+  font-size:.73rem;line-height:1.18;
   animation:pulseHint 2.2s infinite ease-in-out
 }
 .bb{
   border:1px solid #93c5fd;background:#ffffff;
-  border-radius:12px;padding:16px 20px;
+  border-radius:12px;padding:11px 18px;
   box-shadow:0 4px 12px rgba(3,105,161,.08)
 }
 .bf{
@@ -184,7 +184,7 @@ label{
 }
 .btn{
   display:flex;flex-direction:column;align-items:center;
-  justify-content:center;height:46px;color:#fff;font-weight:bold;
+  justify-content:center;height:44px;color:#fff;font-weight:bold;
   border-radius:8px;font-size:.84rem;text-transform:uppercase;
   text-decoration:none;text-align:center;line-height:1.15;
   padding:0 6px;box-shadow:0 2px 6px rgba(15,41,66,.15)
@@ -195,7 +195,7 @@ label{
 }
 .b2{background:#0284c7}.b3{background:#1d4ed8}.b4{background:#0369a1}
 .b5{background:#1e3a8a}.b6{background:#2563eb}.b7{background:#0077b6}
-.rng{width:100%;height:41px;accent-color:#0284c7;cursor:pointer}
+.rng{width:100%;height:36px;accent-color:#0284c7;cursor:pointer}
 body:has(#ow:checked) #rb{opacity:.28;pointer-events:none}
 body:has(#ow:checked) #rb input{background:#e2e8f0!important}
 body:has(#ow:checked) .st{
@@ -204,7 +204,7 @@ body:has(#ow:checked) .st{
 .swc{
   display:flex;align-items:center;justify-content:space-between;
   background:#f0f9ff;padding:0 12px;border:1px solid #bae6fd;
-  border-radius:8px;min-height:41px;gap:8px
+  border-radius:8px;min-height:38px;gap:8px
 }
 .swc.yl{background:#e0f2fe;border:1px solid #7dd3fc}
 .swc.split{
@@ -213,7 +213,7 @@ body:has(#ow:checked) .st{
 }
 .swh{
   display:flex;align-items:center;justify-content:space-between;
-  padding:4px 10px;gap:6px;min-height:28px
+  padding:3px 10px;gap:6px;min-height:26px
 }
 .swh:first-child{border-bottom:1px solid #7dd3fc}
 .sw{
@@ -279,7 +279,7 @@ body:has(#ow:checked) .st{
 <div class="row">
   <div class="card">
     <div class="ct" id="c1Tit">📋 Kern-Reisedaten (Direkt-Absprung)</div>
-    <div class="f2" style="margin-bottom:14px">
+    <div class="f2" style="margin-bottom:12px">
       <div class="f" style="margin:0">
         <label for="i1" id="lblOrig">Abflug (IATA oder Stadt)</label>
         <input type="text" class="inp" id="i1"
@@ -298,7 +298,7 @@ body:has(#ow:checked) .st{
       <option value="Leipzig/Halle (LEJ)">
       <option value="Düsseldorf (DUS)">
       <option value="Hamburg (HAM)">
-      <option value="Köln/Bonn (CGN)">
+  <option value="Köln/Bonn (CGN)">
       <option value="Stuttgart (STR)">
       <option value="Hannover (HAJ)">
       <option value="Nürnberg (NUE)">
@@ -400,7 +400,7 @@ body:has(#ow:checked) .st{
         </div>
       </div>
     </div>
-    <div class="f" style="margin-bottom:12px">
+    <div class="f" style="margin-bottom:8px">
       <div class="swc">
         <label for="lc" id="lblLc"
           style="margin:0;cursor:pointer;font-size:.82rem">
@@ -426,7 +426,9 @@ body:has(#ow:checked) .st{
 <div class="bb">
   <div class="bf">
     <a id="u1" href="#" onclick="upd()"
-      target="_blank" class="btn b2">Skyscanner</a>
+      target="_blank" class="btn b2">
+      Skyscanner<span class="sub" id="skySub">Stopps auf Website wählen</span>
+    </a>
     <a id="u2" href="#" onclick="upd()"
       target="_blank" class="btn b3">Kayak</a>
     <a id="u3" href="#" onclick="upd()"
@@ -522,6 +524,8 @@ function applyLang(){
       "achten Sie bitte dringend darauf, dass der Schieberegler "+
       "Reisezeit entsprechend gesetzt ist. Ist dies nicht der "+
       "Fall, werden unter Umständen keine Suchergebnisse ausgegeben."));
+  byId("skySub").textContent = e
+    ? "Select stops on website" : "Stopps auf Website wählen";
   byId("expSub").textContent = e
     ? "Select stops on website" : "Stopps auf Website wählen";
   byId("trpSub").textContent = e
@@ -668,14 +672,6 @@ function upd(){
   var sOd = od.replace(/-/g, "").slice(2);
   var sRd = rd.replace(/-/g, "").slice(2);
 
-  var skyStop = byId("ns").checked
-    ? "&preferdirects=true&stops=0"
-    : (byId("s1").checked
-      ? "&preferdirects=false&stops=1"
-      : (byId("s2").checked
-        ? "&preferdirects=false&stops=2"
-        : ""));
-
   var stopK = byId("ns").checked
     ? "?fs=stops=0;legdur=-" + mins
     : (byId("s1").checked
@@ -686,7 +682,8 @@ function upd(){
     "/transport/fluge/" + o.toLowerCase() + "/" +
     d.toLowerCase() + "/" + sOd +
     (ow ? "/" : "/" + sRd + "/") +
-    "?adults=" + px + "&duration=" + mins + skyStop;
+    "?adults=" + px + "&duration=" + mins +
+    "&preferdirects=" + (byId("ns").checked ? "true" : "false");
 
   byId("u2").href = P + "www.kayak.de" + "/flights/" +
     o + "-" + d + "/" + od +
